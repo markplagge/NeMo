@@ -5,7 +5,6 @@
 
 //includes
 #include "ross.h"
-#include "model.h"
 
 //add your command line opts
 const tw_optdef model_opts[] = {

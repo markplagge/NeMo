@@ -10,12 +10,15 @@ SET(model_srcs
 	
 	assist.c
 	assist.h
-	libs\simclist.h
-	libs\simclist.c
-	models\neuron_model.c
-	models\neuron_model.h
-	models\synapse.h
-	models\model.h
+	libs/simclist.h
+	libs/simclist.c
+	models/neuron_model.c
+	models/neuron_model.h
+	models/synapse.h
+	model_driver.c
+	
+	model_main.c
+	
 )
 
 # Set the executable name here: sr-model
@@ -25,6 +28,6 @@ SET(model_srcs
 ADD_EXECUTABLE(tnt_benchmark model_main.c ${model_srcs})
 
 
-TARGET_LINK_LIBRARIES(sr-model ROSS m)
+TARGET_LINK_LIBRARIES(tnt_benchmark ROSS m)
 ## Alternatively, use this command with ROSSIO
 #TARGET_LINK_LIBRARIES(sr-model ROSS ROSSIO m)
