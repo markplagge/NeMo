@@ -1,7 +1,7 @@
 //
 // Created by plaggm on 3/18/15.
 //
-
+/** Simplified neuron model for benchmarking */
 #ifndef _TNT_MAIN_NEURON_MODEL_H_
 #define _TNT_MAIN_NEURON_MODEL_H_
 
