@@ -7,7 +7,7 @@
 
 #ifndef SYNAPSE_H
 #define    SYNAPSE_H
-#include "spike_generator.h"
+#include "../spike_generator.h"
 #ifdef    __cplusplus
 extern "C" {
 #endif

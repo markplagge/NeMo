@@ -78,14 +78,20 @@ extern int DEBUG_MODE;
 
 
 //Variable Size defs (for tweakability)
-#define ul uint_least32_t
-#define fstl int_fast32_t
+
 #define _idType int_fast16_t //  unsigned int
 //neuron specific type redefs - for potentially integrating weird bit length variable sizes or what not:
 #define _neVoltType uint_fast32_t
 #define _neStatType int_fast32_t
+#define _bitIDType int_32_t
+
+
+
 
 //hard coded sim paramaters:
+
+
+
 
 #define END  			1000
 #define GVT_INT  		16

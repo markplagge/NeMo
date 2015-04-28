@@ -2,7 +2,7 @@
 // Created by plaggm on 3/18/15.
 //
 
-#include <assist.h>
+#include "../assist.h"
 #include <stdbool.h>
 #include "neuron_model.h"
 

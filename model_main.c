@@ -5,23 +5,69 @@
 
 //includes
 #include "ross.h"
-
+#include "model_main.h"
 //add your command line opts
-const tw_optdef model_opts[] = {
-	TWOPT_GROUP("ROSS Model"),
-	TWOPT_UINT("setting_1", setting_1, "first setting for this model"),
-	TWOPT_END(),
+
+tw_lptype model_lps[] = {
+
+		{
+
+				(init_f) neuron_init,
+				(pre_run_f) pre_run,
+				(event_f) neuron_event,
+				(revent_f) neuron_reverse,
+				(final_f) neuron_final,
+				(map_f) NULL, //TODO: Check with Elsa about setting this to null for linear mapping.
+				sizeof(neuronState)
+		},
+		{
+
+				(init_f) synapse_init,
+				(pre_run_f) pre_run,
+				(event_f) synapse_event,
+				(revent_f) synapse_reverse,
+				(final_f) synapse_final,
+				(map_f) NULL,
+				sizeof(synapseState)
+		},
+		{0}
+
+
 };
-
-
 //for doxygen
 #define model_main main
+/*********************************************************************************************'
+ * Main function definitions. Based on the prototype tnt_main
+ * this model implements the neuromorphic baseline benchmark.
+ * */
+void neuron_init(neuronState *s, tw_lp *lp) {
+	tw_lpid self = lp->gid;
 
+}
+// Function for bitwise switches from local to non local && back.
+//todo: implement a pseudo Morton number implemenetation here, sort of like
+/*
+ *      //morton test
+        unsigned long long gid = 0;
+        uint32_t core = 0;
+        uint32_t local = 1;
+//interleave the values
+
+        gid = gid | core;
+        printf("Gid post one or is %lu \n", gid);
+        gid = ((gid | core) << 32) | local;
+        printf("Post Both is %lu \n", gid);
+
+
+ */
+
+
+///////////////MAIN///////////////////////
 int model_main (int argc, char* argv[]) {
 	int i;
 	int num_lps_per_pe;
 
-	tw_opt_add(model_opts);
+	tw_opt_add(app_opt);
 	tw_init(&argc, &argv);
 
 	//Do some error checking?
@@ -45,11 +91,8 @@ int model_main (int argc, char* argv[]) {
 	// g_tw_nkp
 	// g_tw_synchronization_protocol
 
-	//assume 1 lp per node
-	num_lps_per_pe = 1;
-
 	//set up LPs within ROSS
-	tw_define_lps(num_lps_per_pe, sizeof(message), 0);
+
 	// g_tw_nlp gets set by tw_define_lps
 
 	for (i = 0; i < g_tw_nlp; i++) {

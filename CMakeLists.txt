@@ -6,23 +6,19 @@ INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR})
 
 # Files you have included in your model
 SET(model_srcs
-	model_driver.c  
-	
 	assist.c
 	assist.h
-	libs/simclist.h
-	libs/simclist.c
 	models/neuron_model.c
 	models/neuron_model.h
 	models/synapse.h
-	model_driver.c
-	
+	spike_generator.c
+	spike_generator.h
+	model_main.h
 	model_main.c
 	
 )
 
-# Set the executable name here: sr-model
-# You will be executing the ./sr-model binary
+
 # Main function (in this case) is found in model_main.c
 
 ADD_EXECUTABLE(tnt_benchmark model_main.c ${model_srcs})

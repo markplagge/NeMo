@@ -11,7 +11,7 @@ extern "C" {
 
 #include <stdbool.h>
 
-#include "assist.h"
+#include "../assist.h"
 #include "ross.h" //trying to minimize calls to ross from here, but certian defs are really needed.
 
 
