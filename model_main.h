@@ -132,6 +132,8 @@ void gen_final(spikeGenState *gen_state,tw_lp *lp);
 //Mapping funtions
 
 /** Given a global ID, return the core number */
-tw_lpid getCoreID(gid_t global);
-
+_regionIDType getCoreID(gid_t global);
+_regionIDType getLocalID(gid_t global);
+void getLocalIDs(gid_t global, _regionIDType * core, _regionIDType *local );
+gid_t getGlobalID(_regionIDType core, _regionIDType local);
 #endif //ROSS_TOP_MODEL_MAIN_H

@@ -61,6 +61,12 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 
  */
 
+/**Mapping and Location Functions */
+_regionIDType getCoreID(gid_t global);
+_regionIDType getLocalID(gid_t global);
+void getLocalIDs(gid_t global, _regionIDType * core, _regionIDType *local );
+gid_t getGlobalID(_regionIDType core, _regionIDType local);
+
 
 ///////////////MAIN///////////////////////
 int model_main (int argc, char* argv[]) {

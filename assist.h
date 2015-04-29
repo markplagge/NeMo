@@ -83,7 +83,7 @@ extern int DEBUG_MODE;
 //neuron specific type redefs - for potentially integrating weird bit length variable sizes or what not:
 #define _neVoltType uint_fast32_t
 #define _neStatType int_fast32_t
-#define _bitIDType int_32_t
+#define _regionIDType int_32_t
 
 
 
