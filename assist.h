@@ -47,7 +47,7 @@
 #include "ross.h"
 #include <stdbool.h>
 #include <sys/types.h>
-
+#include <inttypes.h>
 extern int NEURONS_IN_CORE;
 extern int SYNAPSES_IN_CORE;
 extern int CORES_IN_SIM;
@@ -83,7 +83,11 @@ extern int DEBUG_MODE;
 //neuron specific type redefs - for potentially integrating weird bit length variable sizes or what not:
 #define _neVoltType uint_fast32_t
 #define _neStatType int_fast32_t
-#define _regionIDType int_32_t
+#define regid_t uint32_t
+
+
+#define LOC(a) ((regid_t)a)
+#define CORE(a) ((regid_t)(((gid_t)(a) >> 32) & 0xFFFFFFFF))
 
 
 

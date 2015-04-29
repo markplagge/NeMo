@@ -6,6 +6,8 @@
 //includes
 #include "ross.h"
 #include "model_main.h"
+#include "../tnt_main/models/neuron_model.h"
+#include "../../../tnt_main/models/neuron_model.h"
 //add your command line opts
 
 tw_lptype model_lps[] = {
@@ -42,30 +44,26 @@ tw_lptype model_lps[] = {
  * */
 void neuron_init(neuronState *s, tw_lp *lp) {
 	tw_lpid self = lp->gid;
+	s->coreID = CORE(gid);
+	s->neuronID = LOC(gid);
+	s->prVoltage = 0;
 
 }
+
 // Function for bitwise switches from local to non local && back.
-//todo: implement a pseudo Morton number implemenetation here, sort of like
-/*
- *      //morton test
-        unsigned long long gid = 0;
-        uint32_t core = 0;
-        uint32_t local = 1;
-//interleave the values
 
-        gid = gid | core;
-        printf("Gid post one or is %lu \n", gid);
-        gid = ((gid | core) << 32) | local;
-        printf("Post Both is %lu \n", gid);
-
-
- */
 
 /**Mapping and Location Functions */
-_regionIDType getCoreID(gid_t global);
-_regionIDType getLocalID(gid_t global);
-void getLocalIDs(gid_t global, _regionIDType * core, _regionIDType *local );
-gid_t getGlobalID(_regionIDType core, _regionIDType local);
+void getLocalIDs(gid_t global, regid_t * core, regid_t *local ){
+	(*core) = CORE(global);
+	(*local)= LOC(global);
+}
+gid_t globalID(regid_t core, regid_t local){
+	gid_t returnVal = 0;
+	returnVal = ((uint64_t)core << 32) | local;
+	return returnVal;
+}
+
 
 
 ///////////////MAIN///////////////////////
