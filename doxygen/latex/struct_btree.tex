@@ -1,0 +1,167 @@
+\hypertarget{struct_btree}{}\section{Btree Struct Reference}
+\label{struct_btree}\index{Btree@{Btree}}
+
+
+Collaboration diagram for Btree\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structsqlite3}{sqlite3} $\ast$ \hyperlink{struct_btree_ad6e663497d2c934364b3bcf07496b30b}{db}
+\item 
+\hyperlink{struct_bt_shared}{Bt\+Shared} $\ast$ \hyperlink{struct_btree_a2bc66d19c064bb25ff335241f8c621df}{p\+Bt}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_btree_a2c8099ca044cfb9efe8e8f1868335882}{in\+Trans}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_btree_a31049bc7f1be67cb3456bbb3ac791f99}{sharable}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_btree_a43f3e82288339ce627521922c87afa2d}{locked}
+\item 
+int \hyperlink{struct_btree_a97898981f2186862b2aeaa212556fa07}{want\+To\+Lock}
+\item 
+int \hyperlink{struct_btree_a0368c820089e3c6f7bc698c6bbe82339}{n\+Backup}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_btree_a3a60e67667c7473065ef0c3a8785c6ea}{i\+Data\+Version}
+\item 
+\hyperlink{struct_btree}{Btree} $\ast$ \hyperlink{struct_btree_a685ec01d7281c1aee9e1621da9fdc6e6}{p\+Next}
+\item 
+\hyperlink{struct_btree}{Btree} $\ast$ \hyperlink{struct_btree_a5073b2001300b8d13b12d202d174569d}{p\+Prev}
+\item 
+\hyperlink{struct_bt_lock}{Bt\+Lock} \hyperlink{struct_btree_a6e91b33e34747daf58cc28ca4994925b}{lock}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 52459 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_btree_ad6e663497d2c934364b3bcf07496b30b}{}\index{Btree@{Btree}!db@{db}}
+\index{db@{db}!Btree@{Btree}}
+\subsubsection[{db}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3}$\ast$ db}\label{struct_btree_ad6e663497d2c934364b3bcf07496b30b}
+
+
+Definition at line 52460 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Begin\+Trans(), sqlite3\+Btree\+Copy\+File(), and sqlite3\+Btree\+Open().
+
+\hypertarget{struct_btree_a3a60e67667c7473065ef0c3a8785c6ea}{}\index{Btree@{Btree}!i\+Data\+Version@{i\+Data\+Version}}
+\index{i\+Data\+Version@{i\+Data\+Version}!Btree@{Btree}}
+\subsubsection[{i\+Data\+Version}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} i\+Data\+Version}\label{struct_btree_a3a60e67667c7473065ef0c3a8785c6ea}
+
+
+Definition at line 52467 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Commit\+Phase\+Two(), and sqlite3\+Btree\+Get\+Meta().
+
+\hypertarget{struct_btree_a2c8099ca044cfb9efe8e8f1868335882}{}\index{Btree@{Btree}!in\+Trans@{in\+Trans}}
+\index{in\+Trans@{in\+Trans}!Btree@{Btree}}
+\subsubsection[{in\+Trans}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} in\+Trans}\label{struct_btree_a2c8099ca044cfb9efe8e8f1868335882}
+
+
+Definition at line 52462 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Begin\+Trans(), sqlite3\+Btree\+Commit\+Phase\+One(), sqlite3\+Btree\+Commit\+Phase\+Two(), sqlite3\+Btree\+Is\+In\+Read\+Trans(), sqlite3\+Btree\+Is\+In\+Trans(), sqlite3\+Btree\+Open(), sqlite3\+Btree\+Rollback(), and sqlite3\+Btree\+Savepoint().
+
+\hypertarget{struct_btree_a6e91b33e34747daf58cc28ca4994925b}{}\index{Btree@{Btree}!lock@{lock}}
+\index{lock@{lock}!Btree@{Btree}}
+\subsubsection[{lock}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bt\+Lock} lock}\label{struct_btree_a6e91b33e34747daf58cc28ca4994925b}
+
+
+Definition at line 52471 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Begin\+Trans(), and sqlite3\+Btree\+Open().
+
+\hypertarget{struct_btree_a43f3e82288339ce627521922c87afa2d}{}\index{Btree@{Btree}!locked@{locked}}
+\index{locked@{locked}!Btree@{Btree}}
+\subsubsection[{locked}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} locked}\label{struct_btree_a43f3e82288339ce627521922c87afa2d}
+
+
+Definition at line 52464 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Enter().
+
+\hypertarget{struct_btree_a0368c820089e3c6f7bc698c6bbe82339}{}\index{Btree@{Btree}!n\+Backup@{n\+Backup}}
+\index{n\+Backup@{n\+Backup}!Btree@{Btree}}
+\subsubsection[{n\+Backup}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Backup}\label{struct_btree_a0368c820089e3c6f7bc698c6bbe82339}
+
+
+Definition at line 52466 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+backup\+\_\+finish(), sqlite3\+\_\+backup\+\_\+init(), and sqlite3\+Btree\+Is\+In\+Backup().
+
+\hypertarget{struct_btree_a2bc66d19c064bb25ff335241f8c621df}{}\index{Btree@{Btree}!p\+Bt@{p\+Bt}}
+\index{p\+Bt@{p\+Bt}!Btree@{Btree}}
+\subsubsection[{p\+Bt}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bt\+Shared}$\ast$ p\+Bt}\label{struct_btree_a2bc66d19c064bb25ff335241f8c621df}
+
+
+Definition at line 52461 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+backup\+\_\+step(), sqlite3\+Btree\+Begin\+Stmt(), sqlite3\+Btree\+Begin\+Trans(), sqlite3\+Btree\+Checkpoint(), sqlite3\+Btree\+Clear\+Table(), sqlite3\+Btree\+Close(), sqlite3\+Btree\+Commit\+Phase\+One(), sqlite3\+Btree\+Commit\+Phase\+Two(), sqlite3\+Btree\+Copy\+File(), sqlite3\+Btree\+Delete(), sqlite3\+Btree\+Get\+Auto\+Vacuum(), sqlite3\+Btree\+Get\+Filename(), sqlite3\+Btree\+Get\+Journalname(), sqlite3\+Btree\+Get\+Meta(), sqlite3\+Btree\+Get\+Page\+Size(), sqlite3\+Btree\+Get\+Reserve\+No\+Mutex(), sqlite3\+Btree\+Incr\+Vacuum(), sqlite3\+Btree\+Insert(), sqlite3\+Btree\+Integrity\+Check(), sqlite3\+Btree\+Is\+Readonly(), sqlite3\+Btree\+Last\+Page(), sqlite3\+Btree\+Max\+Page\+Count(), sqlite3\+Btree\+New\+Db(), sqlite3\+Btree\+Open(), sqlite3\+Btree\+Pager(), sqlite3\+Btree\+Rollback(), sqlite3\+Btree\+Savepoint(), sqlite3\+Btree\+Schema(), sqlite3\+Btree\+Secure\+Delete(), sqlite3\+Btree\+Set\+Auto\+Vacuum(), sqlite3\+Btree\+Set\+Cache\+Size(), sqlite3\+Btree\+Set\+Pager\+Flags(), sqlite3\+Btree\+Set\+Page\+Size(), sqlite3\+Btree\+Set\+Version(), sqlite3\+Btree\+Sync\+Disabled(), sqlite3\+Btree\+Trip\+All\+Cursors(), and sqlite3\+Btree\+Update\+Meta().
+
+\hypertarget{struct_btree_a685ec01d7281c1aee9e1621da9fdc6e6}{}\index{Btree@{Btree}!p\+Next@{p\+Next}}
+\index{p\+Next@{p\+Next}!Btree@{Btree}}
+\subsubsection[{p\+Next}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Btree}$\ast$ p\+Next}\label{struct_btree_a685ec01d7281c1aee9e1621da9fdc6e6}
+
+
+Definition at line 52468 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Close(), and sqlite3\+Btree\+Open().
+
+\hypertarget{struct_btree_a5073b2001300b8d13b12d202d174569d}{}\index{Btree@{Btree}!p\+Prev@{p\+Prev}}
+\index{p\+Prev@{p\+Prev}!Btree@{Btree}}
+\subsubsection[{p\+Prev}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Btree}$\ast$ p\+Prev}\label{struct_btree_a5073b2001300b8d13b12d202d174569d}
+
+
+Definition at line 52469 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Close(), and sqlite3\+Btree\+Open().
+
+\hypertarget{struct_btree_a31049bc7f1be67cb3456bbb3ac791f99}{}\index{Btree@{Btree}!sharable@{sharable}}
+\index{sharable@{sharable}!Btree@{Btree}}
+\subsubsection[{sharable}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} sharable}\label{struct_btree_a31049bc7f1be67cb3456bbb3ac791f99}
+
+
+Definition at line 52463 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Begin\+Trans(), sqlite3\+Btree\+Close(), sqlite3\+Btree\+Enter(), sqlite3\+Btree\+Leave(), sqlite3\+Btree\+Lock\+Table(), sqlite3\+Btree\+Open(), and sqlite3\+Btree\+Sharable().
+
+\hypertarget{struct_btree_a97898981f2186862b2aeaa212556fa07}{}\index{Btree@{Btree}!want\+To\+Lock@{want\+To\+Lock}}
+\index{want\+To\+Lock@{want\+To\+Lock}!Btree@{Btree}}
+\subsubsection[{want\+To\+Lock}]{\setlength{\rightskip}{0pt plus 5cm}int want\+To\+Lock}\label{struct_btree_a97898981f2186862b2aeaa212556fa07}
+
+
+Definition at line 52465 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Enter(), and sqlite3\+Btree\+Leave().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

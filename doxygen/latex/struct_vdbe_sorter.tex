@@ -1,0 +1,258 @@
+\hypertarget{struct_vdbe_sorter}{}\section{Vdbe\+Sorter Struct Reference}
+\label{struct_vdbe_sorter}\index{Vdbe\+Sorter@{Vdbe\+Sorter}}
+
+
+Collaboration diagram for Vdbe\+Sorter\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{struct_vdbe_sorter_acc7b17ceec962249897b35cf74e32d12}{mn\+Pma\+Size}
+\item 
+int \hyperlink{struct_vdbe_sorter_a9a5eae87f8e640583165c77d5402113f}{mx\+Pma\+Size}
+\item 
+int \hyperlink{struct_vdbe_sorter_acedcae3c3e7ca617dac7746222492789}{mx\+Keysize}
+\item 
+int \hyperlink{struct_vdbe_sorter_a286de60ddf262ee4d36ee947f4ae00c9}{pgsz}
+\item 
+\hyperlink{struct_pma_reader}{Pma\+Reader} $\ast$ \hyperlink{struct_vdbe_sorter_a3313718acd02fe735e372faedbf6e369}{p\+Reader}
+\item 
+\hyperlink{struct_merge_engine}{Merge\+Engine} $\ast$ \hyperlink{struct_vdbe_sorter_ab9ebb5ec47cc445078cf9ffb98b9e66f}{p\+Merger}
+\item 
+\hyperlink{structsqlite3}{sqlite3} $\ast$ \hyperlink{struct_vdbe_sorter_ad6e663497d2c934364b3bcf07496b30b}{db}
+\item 
+\hyperlink{struct_key_info}{Key\+Info} $\ast$ \hyperlink{struct_vdbe_sorter_a2394c1e8402fe40753205256757b4165}{p\+Key\+Info}
+\item 
+\hyperlink{struct_unpacked_record}{Unpacked\+Record} $\ast$ \hyperlink{struct_vdbe_sorter_a3c35478dbef83c35370e3230491c4a87}{p\+Unpacked}
+\item 
+\hyperlink{struct_sorter_list}{Sorter\+List} \hyperlink{struct_vdbe_sorter_a0b728adf85f50e92f631147bac5f46ac}{list}
+\item 
+int \hyperlink{struct_vdbe_sorter_ab87539ef411d9bf1c22e417fbeddc961}{i\+Memory}
+\item 
+int \hyperlink{struct_vdbe_sorter_a54d2c7df7024509fff9a4b7a1d13742e}{n\+Memory}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_vdbe_sorter_ab5160dba26e99bef22a9244cd277ffad}{b\+Use\+P\+M\+A}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_vdbe_sorter_a57cf86dcc60eea39f93b5da24d777897}{b\+Use\+Threads}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_vdbe_sorter_ac894894ccae70e0d1291ee9c50e14ea4}{i\+Prev}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_vdbe_sorter_a90ad8d082c3b140c204a0042533f671e}{n\+Task}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_vdbe_sorter_a00cac7e718b98d0a019a2123af7c17bb}{type\+Mask}
+\item 
+\hyperlink{struct_sort_subtask}{Sort\+Subtask} \hyperlink{struct_vdbe_sorter_ac38bdaba4ffeee1b32ffa791206fa109}{a\+Task} \mbox{[}1\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 78246 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_vdbe_sorter_ac38bdaba4ffeee1b32ffa791206fa109}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!a\+Task@{a\+Task}}
+\index{a\+Task@{a\+Task}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{a\+Task}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Sort\+Subtask} a\+Task\mbox{[}1\mbox{]}}\label{struct_vdbe_sorter_ac38bdaba4ffeee1b32ffa791206fa109}
+
+
+Definition at line 78264 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Init(), sqlite3\+Vdbe\+Sorter\+Reset(), and sqlite3\+Vdbe\+Sorter\+Rewind().
+
+\hypertarget{struct_vdbe_sorter_ab5160dba26e99bef22a9244cd277ffad}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!b\+Use\+P\+M\+A@{b\+Use\+P\+M\+A}}
+\index{b\+Use\+P\+M\+A@{b\+Use\+P\+M\+A}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{b\+Use\+P\+M\+A}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} b\+Use\+P\+M\+A}\label{struct_vdbe_sorter_ab5160dba26e99bef22a9244cd277ffad}
+
+
+Definition at line 78259 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Next(), sqlite3\+Vdbe\+Sorter\+Reset(), and sqlite3\+Vdbe\+Sorter\+Rewind().
+
+\hypertarget{struct_vdbe_sorter_a57cf86dcc60eea39f93b5da24d777897}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!b\+Use\+Threads@{b\+Use\+Threads}}
+\index{b\+Use\+Threads@{b\+Use\+Threads}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{b\+Use\+Threads}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} b\+Use\+Threads}\label{struct_vdbe_sorter_a57cf86dcc60eea39f93b5da24d777897}
+
+
+Definition at line 78260 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Init(), and sqlite3\+Vdbe\+Sorter\+Next().
+
+\hypertarget{struct_vdbe_sorter_ad6e663497d2c934364b3bcf07496b30b}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!db@{db}}
+\index{db@{db}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{db}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3}$\ast$ db}\label{struct_vdbe_sorter_ad6e663497d2c934364b3bcf07496b30b}
+
+
+Definition at line 78253 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Init().
+
+\hypertarget{struct_vdbe_sorter_ab87539ef411d9bf1c22e417fbeddc961}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!i\+Memory@{i\+Memory}}
+\index{i\+Memory@{i\+Memory}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{i\+Memory}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Memory}\label{struct_vdbe_sorter_ab87539ef411d9bf1c22e417fbeddc961}
+
+
+Definition at line 78257 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Reset(), and sqlite3\+Vdbe\+Sorter\+Write().
+
+\hypertarget{struct_vdbe_sorter_ac894894ccae70e0d1291ee9c50e14ea4}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!i\+Prev@{i\+Prev}}
+\index{i\+Prev@{i\+Prev}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{i\+Prev}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} i\+Prev}\label{struct_vdbe_sorter_ac894894ccae70e0d1291ee9c50e14ea4}
+
+
+Definition at line 78261 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Init().
+
+\hypertarget{struct_vdbe_sorter_a0b728adf85f50e92f631147bac5f46ac}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!list@{list}}
+\index{list@{list}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{list}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Sorter\+List} list}\label{struct_vdbe_sorter_a0b728adf85f50e92f631147bac5f46ac}
+
+
+Definition at line 78256 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Close(), sqlite3\+Vdbe\+Sorter\+Init(), sqlite3\+Vdbe\+Sorter\+Next(), sqlite3\+Vdbe\+Sorter\+Reset(), sqlite3\+Vdbe\+Sorter\+Rewind(), and sqlite3\+Vdbe\+Sorter\+Write().
+
+\hypertarget{struct_vdbe_sorter_acc7b17ceec962249897b35cf74e32d12}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!mn\+Pma\+Size@{mn\+Pma\+Size}}
+\index{mn\+Pma\+Size@{mn\+Pma\+Size}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{mn\+Pma\+Size}]{\setlength{\rightskip}{0pt plus 5cm}int mn\+Pma\+Size}\label{struct_vdbe_sorter_acc7b17ceec962249897b35cf74e32d12}
+
+
+Definition at line 78247 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Init(), and sqlite3\+Vdbe\+Sorter\+Write().
+
+\hypertarget{struct_vdbe_sorter_acedcae3c3e7ca617dac7746222492789}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!mx\+Keysize@{mx\+Keysize}}
+\index{mx\+Keysize@{mx\+Keysize}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{mx\+Keysize}]{\setlength{\rightskip}{0pt plus 5cm}int mx\+Keysize}\label{struct_vdbe_sorter_acedcae3c3e7ca617dac7746222492789}
+
+
+Definition at line 78249 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Reset(), and sqlite3\+Vdbe\+Sorter\+Write().
+
+\hypertarget{struct_vdbe_sorter_a9a5eae87f8e640583165c77d5402113f}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!mx\+Pma\+Size@{mx\+Pma\+Size}}
+\index{mx\+Pma\+Size@{mx\+Pma\+Size}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{mx\+Pma\+Size}]{\setlength{\rightskip}{0pt plus 5cm}int mx\+Pma\+Size}\label{struct_vdbe_sorter_a9a5eae87f8e640583165c77d5402113f}
+
+
+Definition at line 78248 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Init(), and sqlite3\+Vdbe\+Sorter\+Write().
+
+\hypertarget{struct_vdbe_sorter_a54d2c7df7024509fff9a4b7a1d13742e}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!n\+Memory@{n\+Memory}}
+\index{n\+Memory@{n\+Memory}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{n\+Memory}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Memory}\label{struct_vdbe_sorter_a54d2c7df7024509fff9a4b7a1d13742e}
+
+
+Definition at line 78258 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Init(), and sqlite3\+Vdbe\+Sorter\+Write().
+
+\hypertarget{struct_vdbe_sorter_a90ad8d082c3b140c204a0042533f671e}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!n\+Task@{n\+Task}}
+\index{n\+Task@{n\+Task}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{n\+Task}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} n\+Task}\label{struct_vdbe_sorter_a90ad8d082c3b140c204a0042533f671e}
+
+
+Definition at line 78262 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Init(), and sqlite3\+Vdbe\+Sorter\+Reset().
+
+\hypertarget{struct_vdbe_sorter_a286de60ddf262ee4d36ee947f4ae00c9}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!pgsz@{pgsz}}
+\index{pgsz@{pgsz}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{pgsz}]{\setlength{\rightskip}{0pt plus 5cm}int pgsz}\label{struct_vdbe_sorter_a286de60ddf262ee4d36ee947f4ae00c9}
+
+
+Definition at line 78250 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Init().
+
+\hypertarget{struct_vdbe_sorter_a2394c1e8402fe40753205256757b4165}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!p\+Key\+Info@{p\+Key\+Info}}
+\index{p\+Key\+Info@{p\+Key\+Info}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{p\+Key\+Info}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Key\+Info}$\ast$ p\+Key\+Info}\label{struct_vdbe_sorter_a2394c1e8402fe40753205256757b4165}
+
+
+Definition at line 78254 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Init().
+
+\hypertarget{struct_vdbe_sorter_ab9ebb5ec47cc445078cf9ffb98b9e66f}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!p\+Merger@{p\+Merger}}
+\index{p\+Merger@{p\+Merger}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{p\+Merger}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Merge\+Engine}$\ast$ p\+Merger}\label{struct_vdbe_sorter_ab9ebb5ec47cc445078cf9ffb98b9e66f}
+
+
+Definition at line 78252 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Next(), and sqlite3\+Vdbe\+Sorter\+Reset().
+
+\hypertarget{struct_vdbe_sorter_a3313718acd02fe735e372faedbf6e369}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!p\+Reader@{p\+Reader}}
+\index{p\+Reader@{p\+Reader}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{p\+Reader}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pma\+Reader}$\ast$ p\+Reader}\label{struct_vdbe_sorter_a3313718acd02fe735e372faedbf6e369}
+
+
+Definition at line 78251 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Next(), and sqlite3\+Vdbe\+Sorter\+Reset().
+
+\hypertarget{struct_vdbe_sorter_a3c35478dbef83c35370e3230491c4a87}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!p\+Unpacked@{p\+Unpacked}}
+\index{p\+Unpacked@{p\+Unpacked}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{p\+Unpacked}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Unpacked\+Record}$\ast$ p\+Unpacked}\label{struct_vdbe_sorter_a3c35478dbef83c35370e3230491c4a87}
+
+
+Definition at line 78255 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Compare(), and sqlite3\+Vdbe\+Sorter\+Reset().
+
+\hypertarget{struct_vdbe_sorter_a00cac7e718b98d0a019a2123af7c17bb}{}\index{Vdbe\+Sorter@{Vdbe\+Sorter}!type\+Mask@{type\+Mask}}
+\index{type\+Mask@{type\+Mask}!Vdbe\+Sorter@{Vdbe\+Sorter}}
+\subsubsection[{type\+Mask}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} type\+Mask}\label{struct_vdbe_sorter_a00cac7e718b98d0a019a2123af7c17bb}
+
+
+Definition at line 78263 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Init(), and sqlite3\+Vdbe\+Sorter\+Write().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

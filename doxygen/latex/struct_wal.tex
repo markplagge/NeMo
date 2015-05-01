@@ -1,0 +1,285 @@
+\hypertarget{struct_wal}{}\section{Wal Struct Reference}
+\label{struct_wal}\index{Wal@{Wal}}
+
+
+Collaboration diagram for Wal\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structsqlite3__vfs}{sqlite3\+\_\+vfs} $\ast$ \hyperlink{struct_wal_a59603ca1cedf2bda0ee4e65eb610a0b5}{p\+Vfs}
+\item 
+\hyperlink{structsqlite3__file}{sqlite3\+\_\+file} $\ast$ \hyperlink{struct_wal_a563d948db79b528e98ecde97be738efd}{p\+Db\+Fd}
+\item 
+\hyperlink{structsqlite3__file}{sqlite3\+\_\+file} $\ast$ \hyperlink{struct_wal_ad8a716292b0beff8f69c9917de90b9c0}{p\+Wal\+Fd}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_wal_adfec8c5d31fed9aa5fcd3e9a4b576645}{i\+Callback}
+\item 
+\hyperlink{sqlite3_8c_a2a0f0f4ae7001eb54351f77ea1cdbcfd}{i64} \hyperlink{struct_wal_abb75a5d3d5d1f85ef95bf88712fc4682}{mx\+Wal\+Size}
+\item 
+int \hyperlink{struct_wal_a488fc6fabac12f933024f02806a1d326}{n\+Wi\+Data}
+\item 
+int \hyperlink{struct_wal_ace35af8f2d47788c9995a1561f4829d8}{sz\+First\+Block}
+\item 
+volatile \hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} $\ast$$\ast$ \hyperlink{struct_wal_a470aa4f074ede83f75c2896983a9bdf6}{ap\+Wi\+Data}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_wal_a24f238e67ca9d783c8e9c89ba9003659}{sz\+Page}
+\item 
+\hyperlink{sqlite3_8c_a7b32340f65cd15f029caad258fb3355c}{i16} \hyperlink{struct_wal_a9fa541ff052d6a89740302a636c242df}{read\+Lock}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_wal_ac97576f0f90c31296207602245d41195}{sync\+Flags}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_wal_a97470c2be335613df4fd3af652fa60dc}{exclusive\+Mode}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_wal_ae97068d177001a108b055686f9a8cfa4}{write\+Lock}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_wal_af145362fcbabd01f23d11f7a1906aca8}{ckpt\+Lock}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_wal_a109225a7975b2a37251bfa2079d3ad59}{read\+Only}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_wal_ac1c71bec4181078ec81e31c8f50cbf60}{truncate\+On\+Commit}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_wal_a79658a9018249026bc019cb526820709}{sync\+Header}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_wal_a844f9eb46098c2a96dd9118be0060d64}{pad\+To\+Sector\+Boundary}
+\item 
+\hyperlink{struct_wal_index_hdr}{Wal\+Index\+Hdr} \hyperlink{struct_wal_aa5e86412b1010c9ee3a5793bb974b50f}{hdr}
+\item 
+const char $\ast$ \hyperlink{struct_wal_a1ce1fadb7980c34f6b8c4b77ddfbb70b}{z\+Wal\+Name}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_wal_aecbfeebc7a36d1a384f77380aafce538}{n\+Ckpt}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 49344 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_wal_a470aa4f074ede83f75c2896983a9bdf6}{}\index{Wal@{Wal}!ap\+Wi\+Data@{ap\+Wi\+Data}}
+\index{ap\+Wi\+Data@{ap\+Wi\+Data}!Wal@{Wal}}
+\subsubsection[{ap\+Wi\+Data}]{\setlength{\rightskip}{0pt plus 5cm}volatile {\bf u32}$\ast$$\ast$ ap\+Wi\+Data}\label{struct_wal_a470aa4f074ede83f75c2896983a9bdf6}
+
+
+Definition at line 49352 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Close().
+
+\hypertarget{struct_wal_af145362fcbabd01f23d11f7a1906aca8}{}\index{Wal@{Wal}!ckpt\+Lock@{ckpt\+Lock}}
+\index{ckpt\+Lock@{ckpt\+Lock}!Wal@{Wal}}
+\subsubsection[{ckpt\+Lock}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} ckpt\+Lock}\label{struct_wal_af145362fcbabd01f23d11f7a1906aca8}
+
+
+Definition at line 49358 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Checkpoint().
+
+\hypertarget{struct_wal_a97470c2be335613df4fd3af652fa60dc}{}\index{Wal@{Wal}!exclusive\+Mode@{exclusive\+Mode}}
+\index{exclusive\+Mode@{exclusive\+Mode}!Wal@{Wal}}
+\subsubsection[{exclusive\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} exclusive\+Mode}\label{struct_wal_a97470c2be335613df4fd3af652fa60dc}
+
+
+Definition at line 49356 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Close(), sqlite3\+Wal\+Exclusive\+Mode(), sqlite3\+Wal\+Heap\+Memory(), and sqlite3\+Wal\+Open().
+
+\hypertarget{struct_wal_aa5e86412b1010c9ee3a5793bb974b50f}{}\index{Wal@{Wal}!hdr@{hdr}}
+\index{hdr@{hdr}!Wal@{Wal}}
+\subsubsection[{hdr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Wal\+Index\+Hdr} hdr}\label{struct_wal_aa5e86412b1010c9ee3a5793bb974b50f}
+
+
+Definition at line 49363 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Begin\+Write\+Transaction(), sqlite3\+Wal\+Checkpoint(), sqlite3\+Wal\+Dbsize(), sqlite3\+Wal\+Find\+Frame(), sqlite3\+Wal\+Frames(), sqlite3\+Wal\+Read\+Frame(), sqlite3\+Wal\+Savepoint(), sqlite3\+Wal\+Savepoint\+Undo(), and sqlite3\+Wal\+Undo().
+
+\hypertarget{struct_wal_adfec8c5d31fed9aa5fcd3e9a4b576645}{}\index{Wal@{Wal}!i\+Callback@{i\+Callback}}
+\index{i\+Callback@{i\+Callback}!Wal@{Wal}}
+\subsubsection[{i\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} i\+Callback}\label{struct_wal_adfec8c5d31fed9aa5fcd3e9a4b576645}
+
+
+Definition at line 49348 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Callback(), and sqlite3\+Wal\+Frames().
+
+\hypertarget{struct_wal_abb75a5d3d5d1f85ef95bf88712fc4682}{}\index{Wal@{Wal}!mx\+Wal\+Size@{mx\+Wal\+Size}}
+\index{mx\+Wal\+Size@{mx\+Wal\+Size}!Wal@{Wal}}
+\subsubsection[{mx\+Wal\+Size}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i64} mx\+Wal\+Size}\label{struct_wal_abb75a5d3d5d1f85ef95bf88712fc4682}
+
+
+Definition at line 49349 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Close(), sqlite3\+Wal\+Frames(), sqlite3\+Wal\+Limit(), and sqlite3\+Wal\+Open().
+
+\hypertarget{struct_wal_aecbfeebc7a36d1a384f77380aafce538}{}\index{Wal@{Wal}!n\+Ckpt@{n\+Ckpt}}
+\index{n\+Ckpt@{n\+Ckpt}!Wal@{Wal}}
+\subsubsection[{n\+Ckpt}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} n\+Ckpt}\label{struct_wal_aecbfeebc7a36d1a384f77380aafce538}
+
+
+Definition at line 49365 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Frames(), sqlite3\+Wal\+Savepoint(), and sqlite3\+Wal\+Savepoint\+Undo().
+
+\hypertarget{struct_wal_a488fc6fabac12f933024f02806a1d326}{}\index{Wal@{Wal}!n\+Wi\+Data@{n\+Wi\+Data}}
+\index{n\+Wi\+Data@{n\+Wi\+Data}!Wal@{Wal}}
+\subsubsection[{n\+Wi\+Data}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Wi\+Data}\label{struct_wal_a488fc6fabac12f933024f02806a1d326}
+
+
+Definition at line 49350 of file sqlite3.\+c.
+
+\hypertarget{struct_wal_a844f9eb46098c2a96dd9118be0060d64}{}\index{Wal@{Wal}!pad\+To\+Sector\+Boundary@{pad\+To\+Sector\+Boundary}}
+\index{pad\+To\+Sector\+Boundary@{pad\+To\+Sector\+Boundary}!Wal@{Wal}}
+\subsubsection[{pad\+To\+Sector\+Boundary}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} pad\+To\+Sector\+Boundary}\label{struct_wal_a844f9eb46098c2a96dd9118be0060d64}
+
+
+Definition at line 49362 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Frames(), and sqlite3\+Wal\+Open().
+
+\hypertarget{struct_wal_a563d948db79b528e98ecde97be738efd}{}\index{Wal@{Wal}!p\+Db\+Fd@{p\+Db\+Fd}}
+\index{p\+Db\+Fd@{p\+Db\+Fd}!Wal@{Wal}}
+\subsubsection[{p\+Db\+Fd}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+file}$\ast$ p\+Db\+Fd}\label{struct_wal_a563d948db79b528e98ecde97be738efd}
+
+
+Definition at line 49346 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Checkpoint(), sqlite3\+Wal\+Close(), and sqlite3\+Wal\+Open().
+
+\hypertarget{struct_wal_a59603ca1cedf2bda0ee4e65eb610a0b5}{}\index{Wal@{Wal}!p\+Vfs@{p\+Vfs}}
+\index{p\+Vfs@{p\+Vfs}!Wal@{Wal}}
+\subsubsection[{p\+Vfs}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+vfs}$\ast$ p\+Vfs}\label{struct_wal_a59603ca1cedf2bda0ee4e65eb610a0b5}
+
+
+Definition at line 49345 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Close(), and sqlite3\+Wal\+Open().
+
+\hypertarget{struct_wal_ad8a716292b0beff8f69c9917de90b9c0}{}\index{Wal@{Wal}!p\+Wal\+Fd@{p\+Wal\+Fd}}
+\index{p\+Wal\+Fd@{p\+Wal\+Fd}!Wal@{Wal}}
+\subsubsection[{p\+Wal\+Fd}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+file}$\ast$ p\+Wal\+Fd}\label{struct_wal_ad8a716292b0beff8f69c9917de90b9c0}
+
+
+Definition at line 49347 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Close(), sqlite3\+Wal\+Frames(), sqlite3\+Wal\+Open(), and sqlite3\+Wal\+Read\+Frame().
+
+\hypertarget{struct_wal_a9fa541ff052d6a89740302a636c242df}{}\index{Wal@{Wal}!read\+Lock@{read\+Lock}}
+\index{read\+Lock@{read\+Lock}!Wal@{Wal}}
+\subsubsection[{read\+Lock}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i16} read\+Lock}\label{struct_wal_a9fa541ff052d6a89740302a636c242df}
+
+
+Definition at line 49354 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Dbsize(), sqlite3\+Wal\+End\+Read\+Transaction(), sqlite3\+Wal\+Exclusive\+Mode(), sqlite3\+Wal\+Find\+Frame(), and sqlite3\+Wal\+Open().
+
+\hypertarget{struct_wal_a109225a7975b2a37251bfa2079d3ad59}{}\index{Wal@{Wal}!read\+Only@{read\+Only}}
+\index{read\+Only@{read\+Only}!Wal@{Wal}}
+\subsubsection[{read\+Only}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} read\+Only}\label{struct_wal_a109225a7975b2a37251bfa2079d3ad59}
+
+
+Definition at line 49359 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Begin\+Write\+Transaction(), sqlite3\+Wal\+Checkpoint(), and sqlite3\+Wal\+Open().
+
+\hypertarget{struct_wal_ac97576f0f90c31296207602245d41195}{}\index{Wal@{Wal}!sync\+Flags@{sync\+Flags}}
+\index{sync\+Flags@{sync\+Flags}!Wal@{Wal}}
+\subsubsection[{sync\+Flags}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} sync\+Flags}\label{struct_wal_ac97576f0f90c31296207602245d41195}
+
+
+Definition at line 49355 of file sqlite3.\+c.
+
+\hypertarget{struct_wal_a79658a9018249026bc019cb526820709}{}\index{Wal@{Wal}!sync\+Header@{sync\+Header}}
+\index{sync\+Header@{sync\+Header}!Wal@{Wal}}
+\subsubsection[{sync\+Header}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} sync\+Header}\label{struct_wal_a79658a9018249026bc019cb526820709}
+
+
+Definition at line 49361 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Frames(), and sqlite3\+Wal\+Open().
+
+\hypertarget{struct_wal_ace35af8f2d47788c9995a1561f4829d8}{}\index{Wal@{Wal}!sz\+First\+Block@{sz\+First\+Block}}
+\index{sz\+First\+Block@{sz\+First\+Block}!Wal@{Wal}}
+\subsubsection[{sz\+First\+Block}]{\setlength{\rightskip}{0pt plus 5cm}int sz\+First\+Block}\label{struct_wal_ace35af8f2d47788c9995a1561f4829d8}
+
+
+Definition at line 49351 of file sqlite3.\+c.
+
+\hypertarget{struct_wal_a24f238e67ca9d783c8e9c89ba9003659}{}\index{Wal@{Wal}!sz\+Page@{sz\+Page}}
+\index{sz\+Page@{sz\+Page}!Wal@{Wal}}
+\subsubsection[{sz\+Page}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} sz\+Page}\label{struct_wal_a24f238e67ca9d783c8e9c89ba9003659}
+
+
+Definition at line 49353 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Frames().
+
+\hypertarget{struct_wal_ac1c71bec4181078ec81e31c8f50cbf60}{}\index{Wal@{Wal}!truncate\+On\+Commit@{truncate\+On\+Commit}}
+\index{truncate\+On\+Commit@{truncate\+On\+Commit}!Wal@{Wal}}
+\subsubsection[{truncate\+On\+Commit}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} truncate\+On\+Commit}\label{struct_wal_ac1c71bec4181078ec81e31c8f50cbf60}
+
+
+Definition at line 49360 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+End\+Write\+Transaction(), and sqlite3\+Wal\+Frames().
+
+\hypertarget{struct_wal_ae97068d177001a108b055686f9a8cfa4}{}\index{Wal@{Wal}!write\+Lock@{write\+Lock}}
+\index{write\+Lock@{write\+Lock}!Wal@{Wal}}
+\subsubsection[{write\+Lock}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} write\+Lock}\label{struct_wal_ae97068d177001a108b055686f9a8cfa4}
+
+
+Definition at line 49357 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Begin\+Write\+Transaction(), sqlite3\+Wal\+Checkpoint(), sqlite3\+Wal\+End\+Write\+Transaction(), and sqlite3\+Wal\+Undo().
+
+\hypertarget{struct_wal_a1ce1fadb7980c34f6b8c4b77ddfbb70b}{}\index{Wal@{Wal}!z\+Wal\+Name@{z\+Wal\+Name}}
+\index{z\+Wal\+Name@{z\+Wal\+Name}!Wal@{Wal}}
+\subsubsection[{z\+Wal\+Name}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ z\+Wal\+Name}\label{struct_wal_a1ce1fadb7980c34f6b8c4b77ddfbb70b}
+
+
+Definition at line 49364 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Wal\+Close(), and sqlite3\+Wal\+Open().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

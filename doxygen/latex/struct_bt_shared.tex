@@ -1,0 +1,364 @@
+\hypertarget{struct_bt_shared}{}\section{Bt\+Shared Struct Reference}
+\label{struct_bt_shared}\index{Bt\+Shared@{Bt\+Shared}}
+
+
+Collaboration diagram for Bt\+Shared\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_pager}{Pager} $\ast$ \hyperlink{struct_bt_shared_a916447fa61ba4e11cc93d571a66d3aaf}{p\+Pager}
+\item 
+\hyperlink{structsqlite3}{sqlite3} $\ast$ \hyperlink{struct_bt_shared_ad6e663497d2c934364b3bcf07496b30b}{db}
+\item 
+\hyperlink{struct_bt_cursor}{Bt\+Cursor} $\ast$ \hyperlink{struct_bt_shared_a3719d9ea75c17cb66e4f628b8a4bd106}{p\+Cursor}
+\item 
+\hyperlink{struct_mem_page}{Mem\+Page} $\ast$ \hyperlink{struct_bt_shared_a7bec85d9a111476136787bc98741ef3c}{p\+Page1}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_bt_shared_a886b174119e81e9f1b1988383017b7b9}{open\+Flags}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_bt_shared_a46c2b8ffc42df0dba008a602dc2269a4}{auto\+Vacuum}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_bt_shared_a04b3f93f1a63c4f95f0346725fa8054c}{incr\+Vacuum}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_bt_shared_a0e2268e3b24b632d2e9a345ee9c319c9}{b\+Do\+Truncate}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_bt_shared_ab3bcd3a6018a915020d48ef2f008f9a2}{in\+Transaction}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_bt_shared_ae108776c319d9bbb89d5f8ededa5635b}{max1byte\+Payload}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_bt_shared_af9995be6d30d5d30d783b37074eab08e}{bts\+Flags}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_bt_shared_ae520370dc0940464a186684b0a9b5113}{max\+Local}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_bt_shared_acae49d06fe5c209d808832232cee4a00}{min\+Local}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_bt_shared_aaeea9c389ead7c7a046429260b2dcdea}{max\+Leaf}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_bt_shared_aaab9580fd37da2518624d11a6b0fa3dd}{min\+Leaf}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_bt_shared_a1706c74ca68893675ccff5e7b77c2298}{page\+Size}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_bt_shared_a70b6ce95d7e84acc2a6977de8467cc9d}{usable\+Size}
+\item 
+int \hyperlink{struct_bt_shared_aa2fdd4cb1e67f982a5db1c38ea1ee06f}{n\+Transaction}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_bt_shared_a6b939842a27dd6c712b8a6f878bd0e89}{n\+Page}
+\item 
+void $\ast$ \hyperlink{struct_bt_shared_a9196b055b4bfcce3685531186d868627}{p\+Schema}
+\item 
+void($\ast$ \hyperlink{struct_bt_shared_abd937f71f6aed2873899ffb6ed52e459}{x\+Free\+Schema} )(void $\ast$)
+\item 
+\hyperlink{structsqlite3__mutex}{sqlite3\+\_\+mutex} $\ast$ \hyperlink{struct_bt_shared_a7bcdded0e06fa908fe1a6df19c3dda21}{mutex}
+\item 
+\hyperlink{struct_bitvec}{Bitvec} $\ast$ \hyperlink{struct_bt_shared_a7c495df66ccfb0ad05cca7513fbbb930}{p\+Has\+Content}
+\item 
+int \hyperlink{struct_bt_shared_a3c459f9ae278c22b72583c55ca01acb7}{n\+Ref}
+\item 
+\hyperlink{struct_bt_shared}{Bt\+Shared} $\ast$ \hyperlink{struct_bt_shared_a546c1c14e62f140cc3503f3aa893d971}{p\+Next}
+\item 
+\hyperlink{struct_bt_lock}{Bt\+Lock} $\ast$ \hyperlink{struct_bt_shared_a403bf6a43c2fd8ed0607553518004c91}{p\+Lock}
+\item 
+\hyperlink{struct_btree}{Btree} $\ast$ \hyperlink{struct_bt_shared_a0bc58cbb58aebf87675023a1af689a2b}{p\+Writer}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} $\ast$ \hyperlink{struct_bt_shared_a89d36b1f2b625622fa2b7e49c578bdf2}{p\+Tmp\+Space}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 52521 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_bt_shared_a46c2b8ffc42df0dba008a602dc2269a4}{}\index{Bt\+Shared@{Bt\+Shared}!auto\+Vacuum@{auto\+Vacuum}}
+\index{auto\+Vacuum@{auto\+Vacuum}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{auto\+Vacuum}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} auto\+Vacuum}\label{struct_bt_shared_a46c2b8ffc42df0dba008a602dc2269a4}
+
+
+Definition at line 52528 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Commit\+Phase\+One(), sqlite3\+Btree\+Get\+Auto\+Vacuum(), sqlite3\+Btree\+Incr\+Vacuum(), sqlite3\+Btree\+Integrity\+Check(), sqlite3\+Btree\+Open(), and sqlite3\+Btree\+Set\+Auto\+Vacuum().
+
+\hypertarget{struct_bt_shared_a0e2268e3b24b632d2e9a345ee9c319c9}{}\index{Bt\+Shared@{Bt\+Shared}!b\+Do\+Truncate@{b\+Do\+Truncate}}
+\index{b\+Do\+Truncate@{b\+Do\+Truncate}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{b\+Do\+Truncate}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} b\+Do\+Truncate}\label{struct_bt_shared_a0e2268e3b24b632d2e9a345ee9c319c9}
+
+
+Definition at line 52530 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Commit\+Phase\+One().
+
+\hypertarget{struct_bt_shared_af9995be6d30d5d30d783b37074eab08e}{}\index{Bt\+Shared@{Bt\+Shared}!bts\+Flags@{bts\+Flags}}
+\index{bts\+Flags@{bts\+Flags}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{bts\+Flags}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} bts\+Flags}\label{struct_bt_shared_af9995be6d30d5d30d783b37074eab08e}
+
+
+Definition at line 52537 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Begin\+Trans(), sqlite3\+Btree\+Copy\+File(), sqlite3\+Btree\+Is\+Readonly(), sqlite3\+Btree\+Open(), sqlite3\+Btree\+Savepoint(), sqlite3\+Btree\+Secure\+Delete(), sqlite3\+Btree\+Set\+Auto\+Vacuum(), sqlite3\+Btree\+Set\+Page\+Size(), and sqlite3\+Btree\+Set\+Version().
+
+\hypertarget{struct_bt_shared_ad6e663497d2c934364b3bcf07496b30b}{}\index{Bt\+Shared@{Bt\+Shared}!db@{db}}
+\index{db@{db}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{db}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3}$\ast$ db}\label{struct_bt_shared_ad6e663497d2c934364b3bcf07496b30b}
+
+
+Definition at line 52523 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Open().
+
+\hypertarget{struct_bt_shared_a04b3f93f1a63c4f95f0346725fa8054c}{}\index{Bt\+Shared@{Bt\+Shared}!incr\+Vacuum@{incr\+Vacuum}}
+\index{incr\+Vacuum@{incr\+Vacuum}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{incr\+Vacuum}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} incr\+Vacuum}\label{struct_bt_shared_a04b3f93f1a63c4f95f0346725fa8054c}
+
+
+Definition at line 52529 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Get\+Auto\+Vacuum(), sqlite3\+Btree\+Open(), sqlite3\+Btree\+Set\+Auto\+Vacuum(), and sqlite3\+Btree\+Update\+Meta().
+
+\hypertarget{struct_bt_shared_ab3bcd3a6018a915020d48ef2f008f9a2}{}\index{Bt\+Shared@{Bt\+Shared}!in\+Transaction@{in\+Transaction}}
+\index{in\+Transaction@{in\+Transaction}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{in\+Transaction}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} in\+Transaction}\label{struct_bt_shared_ab3bcd3a6018a915020d48ef2f008f9a2}
+
+
+Definition at line 52532 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+backup\+\_\+step(), sqlite3\+Btree\+Begin\+Trans(), sqlite3\+Btree\+Checkpoint(), sqlite3\+Btree\+Commit\+Phase\+Two(), and sqlite3\+Btree\+Rollback().
+
+\hypertarget{struct_bt_shared_ae108776c319d9bbb89d5f8ededa5635b}{}\index{Bt\+Shared@{Bt\+Shared}!max1byte\+Payload@{max1byte\+Payload}}
+\index{max1byte\+Payload@{max1byte\+Payload}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{max1byte\+Payload}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} max1byte\+Payload}\label{struct_bt_shared_ae108776c319d9bbb89d5f8ededa5635b}
+
+
+Definition at line 52533 of file sqlite3.\+c.
+
+\hypertarget{struct_bt_shared_aaeea9c389ead7c7a046429260b2dcdea}{}\index{Bt\+Shared@{Bt\+Shared}!max\+Leaf@{max\+Leaf}}
+\index{max\+Leaf@{max\+Leaf}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{max\+Leaf}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} max\+Leaf}\label{struct_bt_shared_aaeea9c389ead7c7a046429260b2dcdea}
+
+
+Definition at line 52540 of file sqlite3.\+c.
+
+\hypertarget{struct_bt_shared_ae520370dc0940464a186684b0a9b5113}{}\index{Bt\+Shared@{Bt\+Shared}!max\+Local@{max\+Local}}
+\index{max\+Local@{max\+Local}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{max\+Local}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} max\+Local}\label{struct_bt_shared_ae520370dc0940464a186684b0a9b5113}
+
+
+Definition at line 52538 of file sqlite3.\+c.
+
+\hypertarget{struct_bt_shared_aaab9580fd37da2518624d11a6b0fa3dd}{}\index{Bt\+Shared@{Bt\+Shared}!min\+Leaf@{min\+Leaf}}
+\index{min\+Leaf@{min\+Leaf}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{min\+Leaf}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} min\+Leaf}\label{struct_bt_shared_aaab9580fd37da2518624d11a6b0fa3dd}
+
+
+Definition at line 52541 of file sqlite3.\+c.
+
+\hypertarget{struct_bt_shared_acae49d06fe5c209d808832232cee4a00}{}\index{Bt\+Shared@{Bt\+Shared}!min\+Local@{min\+Local}}
+\index{min\+Local@{min\+Local}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{min\+Local}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} min\+Local}\label{struct_bt_shared_acae49d06fe5c209d808832232cee4a00}
+
+
+Definition at line 52539 of file sqlite3.\+c.
+
+\hypertarget{struct_bt_shared_a7bcdded0e06fa908fe1a6df19c3dda21}{}\index{Bt\+Shared@{Bt\+Shared}!mutex@{mutex}}
+\index{mutex@{mutex}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{mutex}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+mutex}$\ast$ mutex}\label{struct_bt_shared_a7bcdded0e06fa908fe1a6df19c3dda21}
+
+
+Definition at line 52548 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Open().
+
+\hypertarget{struct_bt_shared_a6b939842a27dd6c712b8a6f878bd0e89}{}\index{Bt\+Shared@{Bt\+Shared}!n\+Page@{n\+Page}}
+\index{n\+Page@{n\+Page}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{n\+Page}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} n\+Page}\label{struct_bt_shared_a6b939842a27dd6c712b8a6f878bd0e89}
+
+
+Definition at line 52545 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Begin\+Trans(), sqlite3\+Btree\+Commit\+Phase\+One(), sqlite3\+Btree\+Incr\+Vacuum(), sqlite3\+Btree\+New\+Db(), sqlite3\+Btree\+Rollback(), and sqlite3\+Btree\+Savepoint().
+
+\hypertarget{struct_bt_shared_a3c459f9ae278c22b72583c55ca01acb7}{}\index{Bt\+Shared@{Bt\+Shared}!n\+Ref@{n\+Ref}}
+\index{n\+Ref@{n\+Ref}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{n\+Ref}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Ref}\label{struct_bt_shared_a3c459f9ae278c22b72583c55ca01acb7}
+
+
+Definition at line 52551 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Open().
+
+\hypertarget{struct_bt_shared_aa2fdd4cb1e67f982a5db1c38ea1ee06f}{}\index{Bt\+Shared@{Bt\+Shared}!n\+Transaction@{n\+Transaction}}
+\index{n\+Transaction@{n\+Transaction}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{n\+Transaction}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Transaction}\label{struct_bt_shared_aa2fdd4cb1e67f982a5db1c38ea1ee06f}
+
+
+Definition at line 52544 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Begin\+Trans().
+
+\hypertarget{struct_bt_shared_a886b174119e81e9f1b1988383017b7b9}{}\index{Bt\+Shared@{Bt\+Shared}!open\+Flags@{open\+Flags}}
+\index{open\+Flags@{open\+Flags}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{open\+Flags}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} open\+Flags}\label{struct_bt_shared_a886b174119e81e9f1b1988383017b7b9}
+
+
+Definition at line 52526 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Open().
+
+\hypertarget{struct_bt_shared_a1706c74ca68893675ccff5e7b77c2298}{}\index{Bt\+Shared@{Bt\+Shared}!page\+Size@{page\+Size}}
+\index{page\+Size@{page\+Size}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{page\+Size}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} page\+Size}\label{struct_bt_shared_a1706c74ca68893675ccff5e7b77c2298}
+
+
+Definition at line 52542 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Get\+Page\+Size(), sqlite3\+Btree\+Get\+Reserve\+No\+Mutex(), sqlite3\+Btree\+Open(), and sqlite3\+Btree\+Set\+Page\+Size().
+
+\hypertarget{struct_bt_shared_a3719d9ea75c17cb66e4f628b8a4bd106}{}\index{Bt\+Shared@{Bt\+Shared}!p\+Cursor@{p\+Cursor}}
+\index{p\+Cursor@{p\+Cursor}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{p\+Cursor}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bt\+Cursor}$\ast$ p\+Cursor}\label{struct_bt_shared_a3719d9ea75c17cb66e4f628b8a4bd106}
+
+
+Definition at line 52524 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Close(), sqlite3\+Btree\+Close\+Cursor(), sqlite3\+Btree\+Open(), and sqlite3\+Btree\+Trip\+All\+Cursors().
+
+\hypertarget{struct_bt_shared_a7c495df66ccfb0ad05cca7513fbbb930}{}\index{Bt\+Shared@{Bt\+Shared}!p\+Has\+Content@{p\+Has\+Content}}
+\index{p\+Has\+Content@{p\+Has\+Content}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{p\+Has\+Content}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bitvec}$\ast$ p\+Has\+Content}\label{struct_bt_shared_a7c495df66ccfb0ad05cca7513fbbb930}
+
+
+Definition at line 52549 of file sqlite3.\+c.
+
+\hypertarget{struct_bt_shared_a403bf6a43c2fd8ed0607553518004c91}{}\index{Bt\+Shared@{Bt\+Shared}!p\+Lock@{p\+Lock}}
+\index{p\+Lock@{p\+Lock}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{p\+Lock}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bt\+Lock}$\ast$ p\+Lock}\label{struct_bt_shared_a403bf6a43c2fd8ed0607553518004c91}
+
+
+Definition at line 52553 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Begin\+Trans().
+
+\hypertarget{struct_bt_shared_a546c1c14e62f140cc3503f3aa893d971}{}\index{Bt\+Shared@{Bt\+Shared}!p\+Next@{p\+Next}}
+\index{p\+Next@{p\+Next}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{p\+Next}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bt\+Shared}$\ast$ p\+Next}\label{struct_bt_shared_a546c1c14e62f140cc3503f3aa893d971}
+
+
+Definition at line 52552 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Open().
+
+\hypertarget{struct_bt_shared_a7bec85d9a111476136787bc98741ef3c}{}\index{Bt\+Shared@{Bt\+Shared}!p\+Page1@{p\+Page1}}
+\index{p\+Page1@{p\+Page1}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{p\+Page1}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Mem\+Page}$\ast$ p\+Page1}\label{struct_bt_shared_a7bec85d9a111476136787bc98741ef3c}
+
+
+Definition at line 52525 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Begin\+Trans(), sqlite3\+Btree\+Get\+Meta(), sqlite3\+Btree\+Incr\+Vacuum(), sqlite3\+Btree\+Integrity\+Check(), sqlite3\+Btree\+Open(), sqlite3\+Btree\+Savepoint(), sqlite3\+Btree\+Set\+Version(), and sqlite3\+Btree\+Update\+Meta().
+
+\hypertarget{struct_bt_shared_a916447fa61ba4e11cc93d571a66d3aaf}{}\index{Bt\+Shared@{Bt\+Shared}!p\+Pager@{p\+Pager}}
+\index{p\+Pager@{p\+Pager}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{p\+Pager}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pager}$\ast$ p\+Pager}\label{struct_bt_shared_a916447fa61ba4e11cc93d571a66d3aaf}
+
+
+Definition at line 52522 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Begin\+Stmt(), sqlite3\+Btree\+Begin\+Trans(), sqlite3\+Btree\+Checkpoint(), sqlite3\+Btree\+Close(), sqlite3\+Btree\+Commit\+Phase\+One(), sqlite3\+Btree\+Commit\+Phase\+Two(), sqlite3\+Btree\+Get\+Filename(), sqlite3\+Btree\+Get\+Journalname(), sqlite3\+Btree\+Get\+Meta(), sqlite3\+Btree\+Integrity\+Check(), sqlite3\+Btree\+Max\+Page\+Count(), sqlite3\+Btree\+Open(), sqlite3\+Btree\+Pager(), sqlite3\+Btree\+Rollback(), sqlite3\+Btree\+Savepoint(), sqlite3\+Btree\+Set\+Cache\+Size(), sqlite3\+Btree\+Set\+Pager\+Flags(), sqlite3\+Btree\+Set\+Page\+Size(), and sqlite3\+Btree\+Sync\+Disabled().
+
+\hypertarget{struct_bt_shared_a9196b055b4bfcce3685531186d868627}{}\index{Bt\+Shared@{Bt\+Shared}!p\+Schema@{p\+Schema}}
+\index{p\+Schema@{p\+Schema}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{p\+Schema}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ p\+Schema}\label{struct_bt_shared_a9196b055b4bfcce3685531186d868627}
+
+
+Definition at line 52546 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Close(), and sqlite3\+Btree\+Schema().
+
+\hypertarget{struct_bt_shared_a89d36b1f2b625622fa2b7e49c578bdf2}{}\index{Bt\+Shared@{Bt\+Shared}!p\+Tmp\+Space@{p\+Tmp\+Space}}
+\index{p\+Tmp\+Space@{p\+Tmp\+Space}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{p\+Tmp\+Space}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8}$\ast$ p\+Tmp\+Space}\label{struct_bt_shared_a89d36b1f2b625622fa2b7e49c578bdf2}
+
+
+Definition at line 52556 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Delete(), and sqlite3\+Btree\+Insert().
+
+\hypertarget{struct_bt_shared_a0bc58cbb58aebf87675023a1af689a2b}{}\index{Bt\+Shared@{Bt\+Shared}!p\+Writer@{p\+Writer}}
+\index{p\+Writer@{p\+Writer}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{p\+Writer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Btree}$\ast$ p\+Writer}\label{struct_bt_shared_a0bc58cbb58aebf87675023a1af689a2b}
+
+
+Definition at line 52554 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Begin\+Trans().
+
+\hypertarget{struct_bt_shared_a70b6ce95d7e84acc2a6977de8467cc9d}{}\index{Bt\+Shared@{Bt\+Shared}!usable\+Size@{usable\+Size}}
+\index{usable\+Size@{usable\+Size}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{usable\+Size}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} usable\+Size}\label{struct_bt_shared_a70b6ce95d7e84acc2a6977de8467cc9d}
+
+
+Definition at line 52543 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Get\+Reserve\+No\+Mutex(), sqlite3\+Btree\+Open(), and sqlite3\+Btree\+Set\+Page\+Size().
+
+\hypertarget{struct_bt_shared_abd937f71f6aed2873899ffb6ed52e459}{}\index{Bt\+Shared@{Bt\+Shared}!x\+Free\+Schema@{x\+Free\+Schema}}
+\index{x\+Free\+Schema@{x\+Free\+Schema}!Bt\+Shared@{Bt\+Shared}}
+\subsubsection[{x\+Free\+Schema}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ x\+Free\+Schema) (void $\ast$)}\label{struct_bt_shared_abd937f71f6aed2873899ffb6ed52e459}
+
+
+Definition at line 52547 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Close(), and sqlite3\+Btree\+Schema().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

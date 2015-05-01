@@ -1,0 +1,159 @@
+\hypertarget{struct_where_term}{}\section{Where\+Term Struct Reference}
+\label{struct_where_term}\index{Where\+Term@{Where\+Term}}
+
+
+Collaboration diagram for Where\+Term\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_expr}{Expr} $\ast$ \hyperlink{struct_where_term_aab4193f0accd02e4c2e5e60e105c03ca}{p\+Expr}
+\item 
+int \hyperlink{struct_where_term_a247cff41b07e5d14c9ba6650d89a0060}{i\+Parent}
+\item 
+int \hyperlink{struct_where_term_a5dfdebab7f5ce6a9e8c3985173ed6584}{left\+Cursor}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>int \hyperlink{struct_where_term_afe35f80ea3d374f6d4c0e62e2153cae1}{leftColumn}\\
+\>\hyperlink{struct_where_or_info}{WhereOrInfo} $\ast$ \hyperlink{struct_where_term_a233fab5761379ed04adf6c216578c81a}{pOrInfo}\\
+\>\hyperlink{struct_where_and_info}{WhereAndInfo} $\ast$ \hyperlink{struct_where_term_a150360a9358431e4d53420fc0779a1c1}{pAndInfo}\\
+\} \hyperlink{struct_where_term_a1afabdefa580020042ecaa0c1cc72ea7}{u}\\
+
+\end{tabbing}\item 
+\hyperlink{sqlite3_8c_aa0f9b3b63ad120ac15b96785b05ce733}{Log\+Est} \hyperlink{struct_where_term_ada1f7e88cbf8154b8f353eb87f753e95}{truth\+Prob}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_where_term_a695bfc96317aa1d79ee883b711da4bc3}{e\+Operator}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_where_term_a2fca16b07d01ffb5660833e875675401}{wt\+Flags}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_where_term_ab94097e5c2844a5a1c3ec58e8acb9a3d}{n\+Child}
+\item 
+\hyperlink{struct_where_clause}{Where\+Clause} $\ast$ \hyperlink{struct_where_term_ab85657232a3c235326f1e0dd179e32b7}{p\+W\+C}
+\item 
+\hyperlink{sqlite3_8c_afa77b629897c4457bfdc47d364ba5c3f}{Bitmask} \hyperlink{struct_where_term_a327b0c75e6d1aabcd5ca7fafae1be2db}{prereq\+Right}
+\item 
+\hyperlink{sqlite3_8c_afa77b629897c4457bfdc47d364ba5c3f}{Bitmask} \hyperlink{struct_where_term_ae4bf473a378401a7052787c59b4a6e3a}{prereq\+All}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 115978 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_where_term_a695bfc96317aa1d79ee883b711da4bc3}{}\index{Where\+Term@{Where\+Term}!e\+Operator@{e\+Operator}}
+\index{e\+Operator@{e\+Operator}!Where\+Term@{Where\+Term}}
+\subsubsection[{e\+Operator}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} e\+Operator}\label{struct_where_term_a695bfc96317aa1d79ee883b711da4bc3}
+
+
+Definition at line 115988 of file sqlite3.\+c.
+
+\hypertarget{struct_where_term_a247cff41b07e5d14c9ba6650d89a0060}{}\index{Where\+Term@{Where\+Term}!i\+Parent@{i\+Parent}}
+\index{i\+Parent@{i\+Parent}!Where\+Term@{Where\+Term}}
+\subsubsection[{i\+Parent}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Parent}\label{struct_where_term_a247cff41b07e5d14c9ba6650d89a0060}
+
+
+Definition at line 115980 of file sqlite3.\+c.
+
+\hypertarget{struct_where_term_afe35f80ea3d374f6d4c0e62e2153cae1}{}\index{Where\+Term@{Where\+Term}!left\+Column@{left\+Column}}
+\index{left\+Column@{left\+Column}!Where\+Term@{Where\+Term}}
+\subsubsection[{left\+Column}]{\setlength{\rightskip}{0pt plus 5cm}int left\+Column}\label{struct_where_term_afe35f80ea3d374f6d4c0e62e2153cae1}
+
+
+Definition at line 115983 of file sqlite3.\+c.
+
+\hypertarget{struct_where_term_a5dfdebab7f5ce6a9e8c3985173ed6584}{}\index{Where\+Term@{Where\+Term}!left\+Cursor@{left\+Cursor}}
+\index{left\+Cursor@{left\+Cursor}!Where\+Term@{Where\+Term}}
+\subsubsection[{left\+Cursor}]{\setlength{\rightskip}{0pt plus 5cm}int left\+Cursor}\label{struct_where_term_a5dfdebab7f5ce6a9e8c3985173ed6584}
+
+
+Definition at line 115981 of file sqlite3.\+c.
+
+\hypertarget{struct_where_term_ab94097e5c2844a5a1c3ec58e8acb9a3d}{}\index{Where\+Term@{Where\+Term}!n\+Child@{n\+Child}}
+\index{n\+Child@{n\+Child}!Where\+Term@{Where\+Term}}
+\subsubsection[{n\+Child}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} n\+Child}\label{struct_where_term_ab94097e5c2844a5a1c3ec58e8acb9a3d}
+
+
+Definition at line 115990 of file sqlite3.\+c.
+
+\hypertarget{struct_where_term_a150360a9358431e4d53420fc0779a1c1}{}\index{Where\+Term@{Where\+Term}!p\+And\+Info@{p\+And\+Info}}
+\index{p\+And\+Info@{p\+And\+Info}!Where\+Term@{Where\+Term}}
+\subsubsection[{p\+And\+Info}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Where\+And\+Info}$\ast$ p\+And\+Info}\label{struct_where_term_a150360a9358431e4d53420fc0779a1c1}
+
+
+Definition at line 115985 of file sqlite3.\+c.
+
+\hypertarget{struct_where_term_aab4193f0accd02e4c2e5e60e105c03ca}{}\index{Where\+Term@{Where\+Term}!p\+Expr@{p\+Expr}}
+\index{p\+Expr@{p\+Expr}!Where\+Term@{Where\+Term}}
+\subsubsection[{p\+Expr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expr}$\ast$ p\+Expr}\label{struct_where_term_aab4193f0accd02e4c2e5e60e105c03ca}
+
+
+Definition at line 115979 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+Begin().
+
+\hypertarget{struct_where_term_a233fab5761379ed04adf6c216578c81a}{}\index{Where\+Term@{Where\+Term}!p\+Or\+Info@{p\+Or\+Info}}
+\index{p\+Or\+Info@{p\+Or\+Info}!Where\+Term@{Where\+Term}}
+\subsubsection[{p\+Or\+Info}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Where\+Or\+Info}$\ast$ p\+Or\+Info}\label{struct_where_term_a233fab5761379ed04adf6c216578c81a}
+
+
+Definition at line 115984 of file sqlite3.\+c.
+
+\hypertarget{struct_where_term_ae4bf473a378401a7052787c59b4a6e3a}{}\index{Where\+Term@{Where\+Term}!prereq\+All@{prereq\+All}}
+\index{prereq\+All@{prereq\+All}!Where\+Term@{Where\+Term}}
+\subsubsection[{prereq\+All}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bitmask} prereq\+All}\label{struct_where_term_ae4bf473a378401a7052787c59b4a6e3a}
+
+
+Definition at line 115993 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+Begin().
+
+\hypertarget{struct_where_term_a327b0c75e6d1aabcd5ca7fafae1be2db}{}\index{Where\+Term@{Where\+Term}!prereq\+Right@{prereq\+Right}}
+\index{prereq\+Right@{prereq\+Right}!Where\+Term@{Where\+Term}}
+\subsubsection[{prereq\+Right}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bitmask} prereq\+Right}\label{struct_where_term_a327b0c75e6d1aabcd5ca7fafae1be2db}
+
+
+Definition at line 115992 of file sqlite3.\+c.
+
+\hypertarget{struct_where_term_ab85657232a3c235326f1e0dd179e32b7}{}\index{Where\+Term@{Where\+Term}!p\+W\+C@{p\+W\+C}}
+\index{p\+W\+C@{p\+W\+C}!Where\+Term@{Where\+Term}}
+\subsubsection[{p\+W\+C}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Where\+Clause}$\ast$ p\+W\+C}\label{struct_where_term_ab85657232a3c235326f1e0dd179e32b7}
+
+
+Definition at line 115991 of file sqlite3.\+c.
+
+\hypertarget{struct_where_term_ada1f7e88cbf8154b8f353eb87f753e95}{}\index{Where\+Term@{Where\+Term}!truth\+Prob@{truth\+Prob}}
+\index{truth\+Prob@{truth\+Prob}!Where\+Term@{Where\+Term}}
+\subsubsection[{truth\+Prob}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Log\+Est} truth\+Prob}\label{struct_where_term_ada1f7e88cbf8154b8f353eb87f753e95}
+
+
+Definition at line 115987 of file sqlite3.\+c.
+
+\hypertarget{struct_where_term_a1afabdefa580020042ecaa0c1cc72ea7}{}\index{Where\+Term@{Where\+Term}!u@{u}}
+\index{u@{u}!Where\+Term@{Where\+Term}}
+\subsubsection[{u}]{\setlength{\rightskip}{0pt plus 5cm}union \{ ... \}   u}\label{struct_where_term_a1afabdefa580020042ecaa0c1cc72ea7}
+\hypertarget{struct_where_term_a2fca16b07d01ffb5660833e875675401}{}\index{Where\+Term@{Where\+Term}!wt\+Flags@{wt\+Flags}}
+\index{wt\+Flags@{wt\+Flags}!Where\+Term@{Where\+Term}}
+\subsubsection[{wt\+Flags}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} wt\+Flags}\label{struct_where_term_a2fca16b07d01ffb5660833e875675401}
+
+
+Definition at line 115989 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+Begin().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

@@ -1,0 +1,151 @@
+\hypertarget{struct_mem}{}\section{sqlite3\+\_\+value Struct Reference}
+\label{struct_mem}\index{sqlite3\+\_\+value@{sqlite3\+\_\+value}}
+
+
+Collaboration diagram for sqlite3\+\_\+value\+:
+% FIG 0
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+union \hyperlink{union_mem_1_1_mem_value}{Mem\+Value}
+\end{DoxyCompactItemize}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+union \hyperlink{union_mem_1_1_mem_value}{Mem\+::\+Mem\+Value} \hyperlink{struct_mem_a7ec4547fa6cefb081c68a98628fe43ac}{u}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_mem_a687c73b55452210faa467db4d365a3ee}{flags}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_mem_a9c71ab1f0d39a2b088a6d8a1093159c0}{enc}
+\item 
+int \hyperlink{struct_mem_a76f11d9a0a47b94f72c2d0e77fb32240}{n}
+\item 
+char $\ast$ \hyperlink{struct_mem_a99c0cc44b073a87d419d090571f773a5}{z}
+\item 
+char $\ast$ \hyperlink{struct_mem_a61cff46330bc94e3750512be20335341}{z\+Malloc}
+\item 
+int \hyperlink{struct_mem_a56d1abb60aeee5af56cbe04752733cd3}{sz\+Malloc}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_mem_a95b9bece3b8200fe5d56d20aa4c6ea94}{u\+Temp}
+\item 
+\hyperlink{structsqlite3}{sqlite3} $\ast$ \hyperlink{struct_mem_ad6e663497d2c934364b3bcf07496b30b}{db}
+\item 
+void($\ast$ \hyperlink{struct_mem_ad2185e5192b0df27c6a55ba9b65c94c2}{x\+Del} )(void $\ast$)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 14663 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_mem_ad6e663497d2c934364b3bcf07496b30b}{}\index{Mem@{Mem}!db@{db}}
+\index{db@{db}!Mem@{Mem}}
+\subsubsection[{db}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3}$\ast$ db}\label{struct_mem_ad6e663497d2c934364b3bcf07496b30b}
+
+
+Definition at line 14680 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+context\+\_\+db\+\_\+handle(), sqlite3\+\_\+result\+\_\+error\+\_\+nomem(), sqlite3\+Stmt\+Current\+Time(), sqlite3\+Utf16to8(), sqlite3\+Value\+Free(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Expand\+Sql(), sqlite3\+Vdbe\+Make\+Ready(), sqlite3\+Vdbe\+Mem\+Finalize(), sqlite3\+Vdbe\+Mem\+Grow(), sqlite3\+Vdbe\+Mem\+Init(), sqlite3\+Vdbe\+Mem\+Set\+Row\+Set(), sqlite3\+Vdbe\+Mem\+Set\+Str(), sqlite3\+Vdbe\+Mem\+Too\+Big(), sqlite3\+Vdbe\+Mem\+Translate(), sqlite3\+Vdbe\+Record\+Compare\+With\+Skip(), sqlite3\+Vdbe\+Record\+Unpack(), and sqlite3\+Vdbe\+Set\+Num\+Cols().
+
+\hypertarget{struct_mem_a9c71ab1f0d39a2b088a6d8a1093159c0}{}\index{Mem@{Mem}!enc@{enc}}
+\index{enc@{enc}!Mem@{Mem}}
+\subsubsection[{enc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} enc}\label{struct_mem_a9c71ab1f0d39a2b088a6d8a1093159c0}
+
+
+Definition at line 14673 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+bind\+\_\+value(), sqlite3\+Value\+Text(), sqlite3\+Vdbe\+Change\+Encoding(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Int\+Value(), sqlite3\+Vdbe\+List(), sqlite3\+Vdbe\+Mem\+Handle\+Bom(), sqlite3\+Vdbe\+Mem\+Numerify(), sqlite3\+Vdbe\+Mem\+Set\+Str(), sqlite3\+Vdbe\+Mem\+Set\+Zero\+Blob(), sqlite3\+Vdbe\+Mem\+Stringify(), sqlite3\+Vdbe\+Mem\+Translate(), sqlite3\+Vdbe\+Real\+Value(), sqlite3\+Vdbe\+Record\+Compare\+With\+Skip(), and sqlite3\+Vdbe\+Record\+Unpack().
+
+\hypertarget{struct_mem_a687c73b55452210faa467db4d365a3ee}{}\index{Mem@{Mem}!flags@{flags}}
+\index{flags@{flags}!Mem@{Mem}}
+\subsubsection[{flags}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} flags}\label{struct_mem_a687c73b55452210faa467db4d365a3ee}
+
+
+Definition at line 14672 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+aggregate\+\_\+context(), sqlite3\+\_\+bind\+\_\+value(), sqlite3\+\_\+clear\+\_\+bindings(), sqlite3\+\_\+column\+\_\+value(), sqlite3\+\_\+result\+\_\+error\+\_\+code(), sqlite3\+\_\+value\+\_\+blob(), sqlite3\+\_\+value\+\_\+type(), sqlite3\+Mem\+Compare(), sqlite3\+Value\+Bytes(), sqlite3\+Value\+Text(), sqlite3\+Vdbe\+Change\+Encoding(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Expand\+Sql(), sqlite3\+Vdbe\+Find\+Compare(), sqlite3\+Vdbe\+Get\+Bound\+Value(), sqlite3\+Vdbe\+Int\+Value(), sqlite3\+Vdbe\+List(), sqlite3\+Vdbe\+Make\+Ready(), sqlite3\+Vdbe\+Mem\+Cast(), sqlite3\+Vdbe\+Mem\+Clear\+And\+Resize(), sqlite3\+Vdbe\+Mem\+Copy(), sqlite3\+Vdbe\+Mem\+Expand\+Blob(), sqlite3\+Vdbe\+Mem\+Finalize(), sqlite3\+Vdbe\+Mem\+From\+Btree(), sqlite3\+Vdbe\+Mem\+Grow(), sqlite3\+Vdbe\+Mem\+Handle\+Bom(), sqlite3\+Vdbe\+Mem\+Init(), sqlite3\+Vdbe\+Mem\+Make\+Writeable(), sqlite3\+Vdbe\+Mem\+Move(), sqlite3\+Vdbe\+Mem\+Nul\+Terminate(), sqlite3\+Vdbe\+Mem\+Numerify(), sqlite3\+Vdbe\+Mem\+Set\+Double(), sqlite3\+Vdbe\+Mem\+Set\+Int64(), sqlite3\+Vdbe\+Mem\+Set\+Null(), sqlite3\+Vdbe\+Mem\+Set\+Row\+Set(), sqlite3\+Vdbe\+Mem\+Set\+Str(), sqlite3\+Vdbe\+Mem\+Set\+Zero\+Blob(), sqlite3\+Vdbe\+Mem\+Shallow\+Copy(), sqlite3\+Vdbe\+Mem\+Stringify(), sqlite3\+Vdbe\+Mem\+Too\+Big(), sqlite3\+Vdbe\+Mem\+Translate(), sqlite3\+Vdbe\+Real\+Value(), sqlite3\+Vdbe\+Record\+Compare\+With\+Skip(), sqlite3\+Vdbe\+Serial\+Get(), sqlite3\+Vdbe\+Serial\+Type(), sqlite3\+Vdbe\+Set\+Num\+Cols(), and sqlite3\+Vdbe\+Sorter\+Compare().
+
+\hypertarget{struct_mem_a76f11d9a0a47b94f72c2d0e77fb32240}{}\index{Mem@{Mem}!n@{n}}
+\index{n@{n}!Mem@{Mem}}
+\subsubsection[{n}]{\setlength{\rightskip}{0pt plus 5cm}int n}\label{struct_mem_a76f11d9a0a47b94f72c2d0e77fb32240}
+
+
+Definition at line 14674 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+aggregate\+\_\+count(), sqlite3\+\_\+bind\+\_\+value(), sqlite3\+\_\+value\+\_\+blob(), sqlite3\+Value\+Bytes(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Expand\+Sql(), sqlite3\+Vdbe\+Idx\+Key\+Compare(), sqlite3\+Vdbe\+Idx\+Rowid(), sqlite3\+Vdbe\+Int\+Value(), sqlite3\+Vdbe\+List(), sqlite3\+Vdbe\+Mem\+Expand\+Blob(), sqlite3\+Vdbe\+Mem\+From\+Btree(), sqlite3\+Vdbe\+Mem\+Grow(), sqlite3\+Vdbe\+Mem\+Handle\+Bom(), sqlite3\+Vdbe\+Mem\+Make\+Writeable(), sqlite3\+Vdbe\+Mem\+Numerify(), sqlite3\+Vdbe\+Mem\+Set\+Str(), sqlite3\+Vdbe\+Mem\+Set\+Zero\+Blob(), sqlite3\+Vdbe\+Mem\+Stringify(), sqlite3\+Vdbe\+Mem\+Too\+Big(), sqlite3\+Vdbe\+Mem\+Translate(), sqlite3\+Vdbe\+Real\+Value(), sqlite3\+Vdbe\+Record\+Compare\+With\+Skip(), sqlite3\+Vdbe\+Serial\+Get(), sqlite3\+Vdbe\+Serial\+Put(), sqlite3\+Vdbe\+Serial\+Type(), sqlite3\+Vdbe\+Sorter\+Compare(), sqlite3\+Vdbe\+Sorter\+Rowkey(), and sqlite3\+Vdbe\+Sorter\+Write().
+
+\hypertarget{struct_mem_a56d1abb60aeee5af56cbe04752733cd3}{}\index{Mem@{Mem}!sz\+Malloc@{sz\+Malloc}}
+\index{sz\+Malloc@{sz\+Malloc}!Mem@{Mem}}
+\subsubsection[{sz\+Malloc}]{\setlength{\rightskip}{0pt plus 5cm}int sz\+Malloc}\label{struct_mem_a56d1abb60aeee5af56cbe04752733cd3}
+
+
+Definition at line 14678 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Mem\+Clear\+And\+Resize(), sqlite3\+Vdbe\+Mem\+Finalize(), sqlite3\+Vdbe\+Mem\+Grow(), sqlite3\+Vdbe\+Mem\+Init(), sqlite3\+Vdbe\+Mem\+Make\+Writeable(), sqlite3\+Vdbe\+Mem\+Move(), sqlite3\+Vdbe\+Mem\+Release(), sqlite3\+Vdbe\+Mem\+Set\+Row\+Set(), sqlite3\+Vdbe\+Mem\+Set\+Str(), sqlite3\+Vdbe\+Mem\+Translate(), and sqlite3\+Vdbe\+Record\+Unpack().
+
+\hypertarget{struct_mem_a7ec4547fa6cefb081c68a98628fe43ac}{}\index{Mem@{Mem}!u@{u}}
+\index{u@{u}!Mem@{Mem}}
+\subsubsection[{u}]{\setlength{\rightskip}{0pt plus 5cm}union {\bf Mem\+::\+Mem\+Value}  u}\label{struct_mem_a7ec4547fa6cefb081c68a98628fe43ac}
+\hypertarget{struct_mem_a95b9bece3b8200fe5d56d20aa4c6ea94}{}\index{Mem@{Mem}!u\+Temp@{u\+Temp}}
+\index{u\+Temp@{u\+Temp}!Mem@{Mem}}
+\subsubsection[{u\+Temp}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} u\+Temp}\label{struct_mem_a95b9bece3b8200fe5d56d20aa4c6ea94}
+
+
+Definition at line 14679 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec().
+
+\hypertarget{struct_mem_ad2185e5192b0df27c6a55ba9b65c94c2}{}\index{Mem@{Mem}!x\+Del@{x\+Del}}
+\index{x\+Del@{x\+Del}!Mem@{Mem}}
+\subsubsection[{x\+Del}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ x\+Del) (void $\ast$)}\label{struct_mem_ad2185e5192b0df27c6a55ba9b65c94c2}
+
+
+Definition at line 14681 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Mem\+Grow(), and sqlite3\+Vdbe\+Mem\+Set\+Str().
+
+\hypertarget{struct_mem_a99c0cc44b073a87d419d090571f773a5}{}\index{Mem@{Mem}!z@{z}}
+\index{z@{z}!Mem@{Mem}}
+\subsubsection[{z}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ z}\label{struct_mem_a99c0cc44b073a87d419d090571f773a5}
+
+
+Definition at line 14675 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+aggregate\+\_\+context(), sqlite3\+\_\+bind\+\_\+value(), sqlite3\+\_\+value\+\_\+blob(), sqlite3\+Utf16to8(), sqlite3\+Value\+Text(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Expand\+Sql(), sqlite3\+Vdbe\+Idx\+Key\+Compare(), sqlite3\+Vdbe\+Idx\+Rowid(), sqlite3\+Vdbe\+Int\+Value(), sqlite3\+Vdbe\+List(), sqlite3\+Vdbe\+Mem\+Clear\+And\+Resize(), sqlite3\+Vdbe\+Mem\+Expand\+Blob(), sqlite3\+Vdbe\+Mem\+From\+Btree(), sqlite3\+Vdbe\+Mem\+Grow(), sqlite3\+Vdbe\+Mem\+Handle\+Bom(), sqlite3\+Vdbe\+Mem\+Make\+Writeable(), sqlite3\+Vdbe\+Mem\+Numerify(), sqlite3\+Vdbe\+Mem\+Set\+Str(), sqlite3\+Vdbe\+Mem\+Set\+Zero\+Blob(), sqlite3\+Vdbe\+Mem\+Stringify(), sqlite3\+Vdbe\+Mem\+Translate(), sqlite3\+Vdbe\+Real\+Value(), sqlite3\+Vdbe\+Record\+Compare\+With\+Skip(), sqlite3\+Vdbe\+Serial\+Get(), sqlite3\+Vdbe\+Serial\+Put(), sqlite3\+Vdbe\+Sorter\+Compare(), sqlite3\+Vdbe\+Sorter\+Rowkey(), and sqlite3\+Vdbe\+Sorter\+Write().
+
+\hypertarget{struct_mem_a61cff46330bc94e3750512be20335341}{}\index{Mem@{Mem}!z\+Malloc@{z\+Malloc}}
+\index{z\+Malloc@{z\+Malloc}!Mem@{Mem}}
+\subsubsection[{z\+Malloc}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ z\+Malloc}\label{struct_mem_a61cff46330bc94e3750512be20335341}
+
+
+Definition at line 14677 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Mem\+Clear\+And\+Resize(), sqlite3\+Vdbe\+Mem\+Finalize(), sqlite3\+Vdbe\+Mem\+Grow(), sqlite3\+Vdbe\+Mem\+Make\+Writeable(), sqlite3\+Vdbe\+Mem\+Set\+Row\+Set(), sqlite3\+Vdbe\+Mem\+Set\+Str(), and sqlite3\+Vdbe\+Mem\+Translate().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

@@ -1,0 +1,128 @@
+\hypertarget{struct_str_accum}{}\section{Str\+Accum Struct Reference}
+\label{struct_str_accum}\index{Str\+Accum@{Str\+Accum}}
+
+
+Collaboration diagram for Str\+Accum\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structsqlite3}{sqlite3} $\ast$ \hyperlink{struct_str_accum_ad6e663497d2c934364b3bcf07496b30b}{db}
+\item 
+char $\ast$ \hyperlink{struct_str_accum_a73244b7a261f7cc837bf5f73b487e8c3}{z\+Base}
+\item 
+char $\ast$ \hyperlink{struct_str_accum_a5b0f04eca8815fab4b6b31b41282f992}{z\+Text}
+\item 
+int \hyperlink{struct_str_accum_a3b4b4c05c7ab6c41b9cdf4e8bac74270}{n\+Char}
+\item 
+int \hyperlink{struct_str_accum_aec887fbb53f08664685baf4fb69ba5f5}{n\+Alloc}
+\item 
+int \hyperlink{struct_str_accum_a130d420f3104ea9587bd93b449573886}{mx\+Alloc}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_str_accum_a68041f06bab26b9fecf18e56febbf150}{use\+Malloc}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_str_accum_a3e843437fedb66c308590239ede54574}{acc\+Error}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 12748 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_str_accum_a3e843437fedb66c308590239ede54574}{}\index{Str\+Accum@{Str\+Accum}!acc\+Error@{acc\+Error}}
+\index{acc\+Error@{acc\+Error}!Str\+Accum@{Str\+Accum}}
+\subsubsection[{acc\+Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} acc\+Error}\label{struct_str_accum_a3e843437fedb66c308590239ede54574}
+
+
+Definition at line 12756 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Str\+Accum\+Init(), and sqlite3\+V\+M\+Printf().
+
+\hypertarget{struct_str_accum_ad6e663497d2c934364b3bcf07496b30b}{}\index{Str\+Accum@{Str\+Accum}!db@{db}}
+\index{db@{db}!Str\+Accum@{Str\+Accum}}
+\subsubsection[{db}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3}$\ast$ db}\label{struct_str_accum_ad6e663497d2c934364b3bcf07496b30b}
+
+
+Definition at line 12749 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Str\+Accum\+Init(), sqlite3\+Str\+Accum\+Reset(), sqlite3\+Unique\+Constraint(), sqlite3\+Vdbe\+Expand\+Sql(), and sqlite3\+V\+M\+Printf().
+
+\hypertarget{struct_str_accum_a130d420f3104ea9587bd93b449573886}{}\index{Str\+Accum@{Str\+Accum}!mx\+Alloc@{mx\+Alloc}}
+\index{mx\+Alloc@{mx\+Alloc}!Str\+Accum@{Str\+Accum}}
+\subsubsection[{mx\+Alloc}]{\setlength{\rightskip}{0pt plus 5cm}int mx\+Alloc}\label{struct_str_accum_a130d420f3104ea9587bd93b449573886}
+
+
+Definition at line 12754 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Str\+Accum\+Init().
+
+\hypertarget{struct_str_accum_aec887fbb53f08664685baf4fb69ba5f5}{}\index{Str\+Accum@{Str\+Accum}!n\+Alloc@{n\+Alloc}}
+\index{n\+Alloc@{n\+Alloc}!Str\+Accum@{Str\+Accum}}
+\subsubsection[{n\+Alloc}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Alloc}\label{struct_str_accum_aec887fbb53f08664685baf4fb69ba5f5}
+
+
+Definition at line 12753 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Append\+Char(), sqlite3\+Str\+Accum\+Append(), and sqlite3\+Str\+Accum\+Init().
+
+\hypertarget{struct_str_accum_a3b4b4c05c7ab6c41b9cdf4e8bac74270}{}\index{Str\+Accum@{Str\+Accum}!n\+Char@{n\+Char}}
+\index{n\+Char@{n\+Char}!Str\+Accum@{Str\+Accum}}
+\subsubsection[{n\+Char}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Char}\label{struct_str_accum_a3b4b4c05c7ab6c41b9cdf4e8bac74270}
+
+
+Definition at line 12752 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Append\+Char(), sqlite3\+Str\+Accum\+Append(), sqlite3\+Str\+Accum\+Finish(), and sqlite3\+Str\+Accum\+Init().
+
+\hypertarget{struct_str_accum_a68041f06bab26b9fecf18e56febbf150}{}\index{Str\+Accum@{Str\+Accum}!use\+Malloc@{use\+Malloc}}
+\index{use\+Malloc@{use\+Malloc}!Str\+Accum@{Str\+Accum}}
+\subsubsection[{use\+Malloc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} use\+Malloc}\label{struct_str_accum_a68041f06bab26b9fecf18e56febbf150}
+
+
+Definition at line 12755 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+vmprintf(), sqlite3\+\_\+vsnprintf(), sqlite3\+Btree\+Integrity\+Check(), sqlite3\+Str\+Accum\+Finish(), sqlite3\+Str\+Accum\+Init(), and sqlite3\+Str\+Accum\+Reset().
+
+\hypertarget{struct_str_accum_a73244b7a261f7cc837bf5f73b487e8c3}{}\index{Str\+Accum@{Str\+Accum}!z\+Base@{z\+Base}}
+\index{z\+Base@{z\+Base}!Str\+Accum@{Str\+Accum}}
+\subsubsection[{z\+Base}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ z\+Base}\label{struct_str_accum_a73244b7a261f7cc837bf5f73b487e8c3}
+
+
+Definition at line 12750 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Str\+Accum\+Finish(), sqlite3\+Str\+Accum\+Init(), and sqlite3\+Str\+Accum\+Reset().
+
+\hypertarget{struct_str_accum_a5b0f04eca8815fab4b6b31b41282f992}{}\index{Str\+Accum@{Str\+Accum}!z\+Text@{z\+Text}}
+\index{z\+Text@{z\+Text}!Str\+Accum@{Str\+Accum}}
+\subsubsection[{z\+Text}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ z\+Text}\label{struct_str_accum_a5b0f04eca8815fab4b6b31b41282f992}
+
+
+Definition at line 12751 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Append\+Char(), sqlite3\+Str\+Accum\+Append(), sqlite3\+Str\+Accum\+Finish(), sqlite3\+Str\+Accum\+Init(), and sqlite3\+Str\+Accum\+Reset().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

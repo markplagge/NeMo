@@ -1,0 +1,285 @@
+\hypertarget{struct_index}{}\section{Index Struct Reference}
+\label{struct_index}\index{Index@{Index}}
+
+
+Collaboration diagram for Index\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{struct_index_a661118d86ac4127d40bf3be78d92117d}{z\+Name}
+\item 
+\hyperlink{sqlite3_8c_a7b32340f65cd15f029caad258fb3355c}{i16} $\ast$ \hyperlink{struct_index_a60b1008813549b5b60155ed0f9656000}{ai\+Column}
+\item 
+\hyperlink{sqlite3_8c_aa0f9b3b63ad120ac15b96785b05ce733}{Log\+Est} $\ast$ \hyperlink{struct_index_aab6ba3928ad4eefe19dbf7639b25ad44}{ai\+Row\+Log\+Est}
+\item 
+\hyperlink{struct_table}{Table} $\ast$ \hyperlink{struct_index_a588ce43da42d3ce58d9ac3c5c2c6c4d4}{p\+Table}
+\item 
+char $\ast$ \hyperlink{struct_index_a829718486911afcd2a61c54f28491d76}{z\+Col\+Aff}
+\item 
+\hyperlink{struct_index}{Index} $\ast$ \hyperlink{struct_index_a66a59da0320c08c1411d1fff7b44d5dd}{p\+Next}
+\item 
+\hyperlink{struct_schema}{Schema} $\ast$ \hyperlink{struct_index_ac262c2ca980f0326edbe82bbe7fda205}{p\+Schema}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} $\ast$ \hyperlink{struct_index_ace4725075c963b97eb9a9a0db1be905b}{a\+Sort\+Order}
+\item 
+char $\ast$$\ast$ \hyperlink{struct_index_a7433f80ab83ca3f61a37ab747e351a3a}{az\+Coll}
+\item 
+\hyperlink{struct_expr}{Expr} $\ast$ \hyperlink{struct_index_a5636262a85d6a3220d90d1c7da28e77b}{p\+Part\+Idx\+Where}
+\item 
+int \hyperlink{struct_index_a2943a2c9e4915d379274c39cbb0147d9}{tnum}
+\item 
+\hyperlink{sqlite3_8c_aa0f9b3b63ad120ac15b96785b05ce733}{Log\+Est} \hyperlink{struct_index_af692ae2e419556548771cb3d1ec2b058}{sz\+Idx\+Row}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_index_ad021b71c3156753c5b435d50b6e42255}{n\+Key\+Col}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_index_af9c109e52691a25cd6fef2db6db26023}{n\+Column}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_index_acae3cdb7acfb920686612099f16c0ff4}{on\+Error}
+\item 
+unsigned \hyperlink{struct_index_afad240fb2079e16ef9b5a37f9de33d2a}{idx\+Type}\+:2
+\item 
+unsigned \hyperlink{struct_index_a80ec7995a89046bf631739246c060d43}{b\+Unordered}\+:1
+\item 
+unsigned \hyperlink{struct_index_ab2797a34b09eb3e8a38eb169d86e2b5c}{uniq\+Not\+Null}\+:1
+\item 
+unsigned \hyperlink{struct_index_af51f4d44e128b234d35c43e628d59975}{is\+Resized}\+:1
+\item 
+unsigned \hyperlink{struct_index_a753f098d7b22502da28d12ba59dc68f3}{is\+Covering}\+:1
+\item 
+unsigned \hyperlink{struct_index_aec7ded06f38b4e8c98929cd2f270e59c}{no\+Skip\+Scan}\+:1
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 11731 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_index_a60b1008813549b5b60155ed0f9656000}{}\index{Index@{Index}!ai\+Column@{ai\+Column}}
+\index{ai\+Column@{ai\+Column}!Index@{Index}}
+\subsubsection[{ai\+Column}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i16}$\ast$ ai\+Column}\label{struct_index_a60b1008813549b5b60155ed0f9656000}
+
+
+Definition at line 11733 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+blob\+\_\+open(), sqlite3\+Add\+Collate\+Type(), sqlite3\+Allocate\+Index\+Object(), sqlite3\+Column\+Of\+Index(), sqlite3\+Create\+Index(), sqlite3\+Delete\+From(), sqlite3\+Find\+In\+Index(), sqlite3\+Fk\+Check(), sqlite3\+Fk\+Locate\+Index(), sqlite3\+Fk\+Oldmask(), sqlite3\+Generate\+Constraint\+Checks(), sqlite3\+Generate\+Index\+Key(), sqlite3\+Index\+Affinity\+Str(), sqlite3\+Pragma(), sqlite3\+Unique\+Constraint(), sqlite3\+Update(), and sqlite3\+Where\+End().
+
+\hypertarget{struct_index_aab6ba3928ad4eefe19dbf7639b25ad44}{}\index{Index@{Index}!ai\+Row\+Log\+Est@{ai\+Row\+Log\+Est}}
+\index{ai\+Row\+Log\+Est@{ai\+Row\+Log\+Est}!Index@{Index}}
+\subsubsection[{ai\+Row\+Log\+Est}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Log\+Est}$\ast$ ai\+Row\+Log\+Est}\label{struct_index_aab6ba3928ad4eefe19dbf7639b25ad44}
+
+
+Definition at line 11734 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Allocate\+Index\+Object(), sqlite3\+Default\+Row\+Est(), and sqlite3\+Pragma().
+
+\hypertarget{struct_index_ace4725075c963b97eb9a9a0db1be905b}{}\index{Index@{Index}!a\+Sort\+Order@{a\+Sort\+Order}}
+\index{a\+Sort\+Order@{a\+Sort\+Order}!Index@{Index}}
+\subsubsection[{a\+Sort\+Order}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8}$\ast$ a\+Sort\+Order}\label{struct_index_ace4725075c963b97eb9a9a0db1be905b}
+
+
+Definition at line 11739 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Allocate\+Index\+Object(), sqlite3\+Create\+Index(), sqlite3\+Find\+In\+Index(), sqlite3\+Key\+Info\+Of\+Index(), and sqlite3\+Pragma().
+
+\hypertarget{struct_index_a7433f80ab83ca3f61a37ab747e351a3a}{}\index{Index@{Index}!az\+Coll@{az\+Coll}}
+\index{az\+Coll@{az\+Coll}!Index@{Index}}
+\subsubsection[{az\+Coll}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$$\ast$ az\+Coll}\label{struct_index_a7433f80ab83ca3f61a37ab747e351a3a}
+
+
+Definition at line 11740 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Add\+Collate\+Type(), sqlite3\+Allocate\+Index\+Object(), sqlite3\+Create\+Index(), sqlite3\+Find\+In\+Index(), sqlite3\+Fk\+Locate\+Index(), sqlite3\+Generate\+Constraint\+Checks(), sqlite3\+Key\+Info\+Of\+Index(), and sqlite3\+Pragma().
+
+\hypertarget{struct_index_a80ec7995a89046bf631739246c060d43}{}\index{Index@{Index}!b\+Unordered@{b\+Unordered}}
+\index{b\+Unordered@{b\+Unordered}!Index@{Index}}
+\subsubsection[{b\+Unordered}]{\setlength{\rightskip}{0pt plus 5cm}unsigned b\+Unordered}\label{struct_index_a80ec7995a89046bf631739246c060d43}
+
+
+Definition at line 11748 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Select().
+
+\hypertarget{struct_index_afad240fb2079e16ef9b5a37f9de33d2a}{}\index{Index@{Index}!idx\+Type@{idx\+Type}}
+\index{idx\+Type@{idx\+Type}!Index@{Index}}
+\subsubsection[{idx\+Type}]{\setlength{\rightskip}{0pt plus 5cm}unsigned idx\+Type}\label{struct_index_afad240fb2079e16ef9b5a37f9de33d2a}
+
+
+Definition at line 11747 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Add\+Primary\+Key(), sqlite3\+Create\+Index(), sqlite3\+Drop\+Index(), and sqlite3\+Pragma().
+
+\hypertarget{struct_index_a753f098d7b22502da28d12ba59dc68f3}{}\index{Index@{Index}!is\+Covering@{is\+Covering}}
+\index{is\+Covering@{is\+Covering}!Index@{Index}}
+\subsubsection[{is\+Covering}]{\setlength{\rightskip}{0pt plus 5cm}unsigned is\+Covering}\label{struct_index_a753f098d7b22502da28d12ba59dc68f3}
+
+
+Definition at line 11751 of file sqlite3.\+c.
+
+\hypertarget{struct_index_af51f4d44e128b234d35c43e628d59975}{}\index{Index@{Index}!is\+Resized@{is\+Resized}}
+\index{is\+Resized@{is\+Resized}!Index@{Index}}
+\subsubsection[{is\+Resized}]{\setlength{\rightskip}{0pt plus 5cm}unsigned is\+Resized}\label{struct_index_af51f4d44e128b234d35c43e628d59975}
+
+
+Definition at line 11750 of file sqlite3.\+c.
+
+\hypertarget{struct_index_af9c109e52691a25cd6fef2db6db26023}{}\index{Index@{Index}!n\+Column@{n\+Column}}
+\index{n\+Column@{n\+Column}!Index@{Index}}
+\subsubsection[{n\+Column}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} n\+Column}\label{struct_index_af9c109e52691a25cd6fef2db6db26023}
+
+
+Definition at line 11745 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Allocate\+Index\+Object(), sqlite3\+Column\+Of\+Index(), sqlite3\+Create\+Index(), sqlite3\+Generate\+Constraint\+Checks(), sqlite3\+Generate\+Index\+Key(), sqlite3\+Generate\+Row\+Index\+Delete(), sqlite3\+Index\+Affinity\+Str(), sqlite3\+Key\+Info\+Of\+Index(), and sqlite3\+Pragma().
+
+\hypertarget{struct_index_ad021b71c3156753c5b435d50b6e42255}{}\index{Index@{Index}!n\+Key\+Col@{n\+Key\+Col}}
+\index{n\+Key\+Col@{n\+Key\+Col}!Index@{Index}}
+\subsubsection[{n\+Key\+Col}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} n\+Key\+Col}\label{struct_index_ad021b71c3156753c5b435d50b6e42255}
+
+
+Definition at line 11744 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+blob\+\_\+open(), sqlite3\+Allocate\+Index\+Object(), sqlite3\+Create\+Index(), sqlite3\+Default\+Row\+Est(), sqlite3\+Delete\+From(), sqlite3\+Find\+In\+Index(), sqlite3\+Fk\+Locate\+Index(), sqlite3\+Fk\+Oldmask(), sqlite3\+Generate\+Constraint\+Checks(), sqlite3\+Generate\+Index\+Key(), sqlite3\+Generate\+Row\+Index\+Delete(), sqlite3\+Key\+Info\+Of\+Index(), sqlite3\+Pragma(), sqlite3\+Unique\+Constraint(), and sqlite3\+Update().
+
+\hypertarget{struct_index_aec7ded06f38b4e8c98929cd2f270e59c}{}\index{Index@{Index}!no\+Skip\+Scan@{no\+Skip\+Scan}}
+\index{no\+Skip\+Scan@{no\+Skip\+Scan}!Index@{Index}}
+\subsubsection[{no\+Skip\+Scan}]{\setlength{\rightskip}{0pt plus 5cm}unsigned no\+Skip\+Scan}\label{struct_index_aec7ded06f38b4e8c98929cd2f270e59c}
+
+
+Definition at line 11752 of file sqlite3.\+c.
+
+\hypertarget{struct_index_acae3cdb7acfb920686612099f16c0ff4}{}\index{Index@{Index}!on\+Error@{on\+Error}}
+\index{on\+Error@{on\+Error}!Index@{Index}}
+\subsubsection[{on\+Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} on\+Error}\label{struct_index_acae3cdb7acfb920686612099f16c0ff4}
+
+
+Definition at line 11746 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Create\+Index(), sqlite3\+Generate\+Constraint\+Checks(), and sqlite3\+Update().
+
+\hypertarget{struct_index_a66a59da0320c08c1411d1fff7b44d5dd}{}\index{Index@{Index}!p\+Next@{p\+Next}}
+\index{p\+Next@{p\+Next}!Index@{Index}}
+\subsubsection[{p\+Next}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Index}$\ast$ p\+Next}\label{struct_index_a66a59da0320c08c1411d1fff7b44d5dd}
+
+
+Definition at line 11737 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+blob\+\_\+open(), sqlite3\+Add\+Collate\+Type(), sqlite3\+Complete\+Insertion(), sqlite3\+Create\+Index(), sqlite3\+Delete\+From(), sqlite3\+Delete\+Table(), sqlite3\+End\+Table(), sqlite3\+Find\+In\+Index(), sqlite3\+Fk\+Locate\+Index(), sqlite3\+Generate\+Constraint\+Checks(), sqlite3\+Generate\+Row\+Index\+Delete(), sqlite3\+Insert(), sqlite3\+Open\+Table\+And\+Indices(), sqlite3\+Pragma(), sqlite3\+Primary\+Key\+Index(), sqlite3\+Select(), sqlite3\+Unlink\+And\+Delete\+Index(), sqlite3\+Update(), and sqlite3\+Where\+Begin().
+
+\hypertarget{struct_index_a5636262a85d6a3220d90d1c7da28e77b}{}\index{Index@{Index}!p\+Part\+Idx\+Where@{p\+Part\+Idx\+Where}}
+\index{p\+Part\+Idx\+Where@{p\+Part\+Idx\+Where}!Index@{Index}}
+\subsubsection[{p\+Part\+Idx\+Where}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expr}$\ast$ p\+Part\+Idx\+Where}\label{struct_index_a5636262a85d6a3220d90d1c7da28e77b}
+
+
+Definition at line 11741 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Complete\+Insertion(), sqlite3\+Create\+Index(), sqlite3\+Generate\+Constraint\+Checks(), sqlite3\+Generate\+Index\+Key(), sqlite3\+Pragma(), sqlite3\+Select(), and sqlite3\+Update().
+
+\hypertarget{struct_index_ac262c2ca980f0326edbe82bbe7fda205}{}\index{Index@{Index}!p\+Schema@{p\+Schema}}
+\index{p\+Schema@{p\+Schema}!Index@{Index}}
+\subsubsection[{p\+Schema}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Schema}$\ast$ p\+Schema}\label{struct_index_ac262c2ca980f0326edbe82bbe7fda205}
+
+
+Definition at line 11738 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Create\+Index(), sqlite3\+Delete\+Table(), and sqlite3\+Drop\+Index().
+
+\hypertarget{struct_index_a588ce43da42d3ce58d9ac3c5c2c6c4d4}{}\index{Index@{Index}!p\+Table@{p\+Table}}
+\index{p\+Table@{p\+Table}!Index@{Index}}
+\subsubsection[{p\+Table}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Table}$\ast$ p\+Table}\label{struct_index_a588ce43da42d3ce58d9ac3c5c2c6c4d4}
+
+
+Definition at line 11735 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Analyze(), sqlite3\+Create\+Index(), sqlite3\+Default\+Row\+Est(), sqlite3\+Drop\+Index(), sqlite3\+Generate\+Index\+Key(), sqlite3\+Index\+Affinity\+Str(), sqlite3\+Pragma(), sqlite3\+Unique\+Constraint(), and sqlite3\+Unlink\+And\+Delete\+Index().
+
+\hypertarget{struct_index_af692ae2e419556548771cb3d1ec2b058}{}\index{Index@{Index}!sz\+Idx\+Row@{sz\+Idx\+Row}}
+\index{sz\+Idx\+Row@{sz\+Idx\+Row}!Index@{Index}}
+\subsubsection[{sz\+Idx\+Row}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Log\+Est} sz\+Idx\+Row}\label{struct_index_af692ae2e419556548771cb3d1ec2b058}
+
+
+Definition at line 11743 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Pragma(), and sqlite3\+Select().
+
+\hypertarget{struct_index_a2943a2c9e4915d379274c39cbb0147d9}{}\index{Index@{Index}!tnum@{tnum}}
+\index{tnum@{tnum}!Index@{Index}}
+\subsubsection[{tnum}]{\setlength{\rightskip}{0pt plus 5cm}int tnum}\label{struct_index_a2943a2c9e4915d379274c39cbb0147d9}
+
+
+Definition at line 11742 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Create\+Index(), sqlite3\+Delete\+From(), sqlite3\+Drop\+Index(), sqlite3\+Find\+In\+Index(), sqlite3\+Init\+Callback(), sqlite3\+Open\+Table(), sqlite3\+Open\+Table\+And\+Indices(), sqlite3\+Pragma(), sqlite3\+Select(), and sqlite3\+Where\+Begin().
+
+\hypertarget{struct_index_ab2797a34b09eb3e8a38eb169d86e2b5c}{}\index{Index@{Index}!uniq\+Not\+Null@{uniq\+Not\+Null}}
+\index{uniq\+Not\+Null@{uniq\+Not\+Null}!Index@{Index}}
+\subsubsection[{uniq\+Not\+Null}]{\setlength{\rightskip}{0pt plus 5cm}unsigned uniq\+Not\+Null}\label{struct_index_ab2797a34b09eb3e8a38eb169d86e2b5c}
+
+
+Definition at line 11749 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Create\+Index(), sqlite3\+Generate\+Index\+Key(), sqlite3\+Generate\+Row\+Index\+Delete(), and sqlite3\+Key\+Info\+Of\+Index().
+
+\hypertarget{struct_index_a829718486911afcd2a61c54f28491d76}{}\index{Index@{Index}!z\+Col\+Aff@{z\+Col\+Aff}}
+\index{z\+Col\+Aff@{z\+Col\+Aff}!Index@{Index}}
+\subsubsection[{z\+Col\+Aff}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ z\+Col\+Aff}\label{struct_index_a829718486911afcd2a61c54f28491d76}
+
+
+Definition at line 11736 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Index\+Affinity\+Str().
+
+\hypertarget{struct_index_a661118d86ac4127d40bf3be78d92117d}{}\index{Index@{Index}!z\+Name@{z\+Name}}
+\index{z\+Name@{z\+Name}!Index@{Index}}
+\subsubsection[{z\+Name}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ z\+Name}\label{struct_index_a661118d86ac4127d40bf3be78d92117d}
+
+
+Definition at line 11732 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Create\+Index(), sqlite3\+Delete\+Table(), sqlite3\+Drop\+Index(), and sqlite3\+Pragma().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

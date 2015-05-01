@@ -1,6 +1,10 @@
 //
 // Created by mplagge on 4/28/15.
 //
+/**
+ *  \mainpage True North Timewarp Benchmark Simulation
+ *	This is the TNT Benchmarking sim.
+ */
 
 #ifndef ROSS_TOP_MODEL_MAIN_H
 #define ROSS_TOP_MODEL_MAIN_H
@@ -9,56 +13,82 @@
 #include "assist.h"
 #include "ross.h"
 #include "spike_generator.h"
+#include "libs/sqlite3.h"
 #include <stdio.h>
 
-/** LP definition array.
- * simplified from tnt_main */
 
 
 
-/** Variable holders for command lne params & external variables */
-int NEURONS_IN_CORE = 4;
-int SYNAPSES_IN_CORE = 8;
-int CORES_IN_SIM = 2;
-int THRESHOLD_MAX = 11;
-int THRESHOLD_MIN = 5;
-int SYNAPSE_WEIGHT_MAX= 10;
-int SYNAPSE_WEIGHT_MIN= 5;
-int DENDRITE_MIN= 1;
-int DENDRITE_MAX= 1;
-int DENDRITE_W_MIN=1;
-int DENDRITE_W_MAX=2;
+
+	// Variable holders for command lne params & external variables */
+/**
+ *  Number of neurons per core.
+ */
+int NEURONS_IN_CORE    = 4;
+/**
+ *  Number of synapses per core.
+ */
+int SYNAPSES_IN_CORE   = 4;
+/**
+ *  Each PE can have one or more virtual cores running during the simulation. Default is 2.
+ */
+int CORES_PER_PE       = 2;
+/**
+ *  Determines the maximum and minimum thresholds for a neuron to fire.
+ */
+int THRESHOLD_MAX      = 11;
+/**
+ *  Minimum threshold. @see THRESHOLD_MAX
+ */
+int THRESHOLD_MIN      = 5;
+/**
+ *	Each neuron is connected to the synapses (inputs) within the core it is running in.
+ *	These parameters adjust the input weight given to each synapse. */
+int SYNAPSE_WEIGHT_MAX = 10;
+/** Minimum synapse weight. @see SYNAPSE_WEIGHT_MAX */
+int SYNAPSE_WEIGHT_MIN = 5;
+
+	//int DENDRITE_MIN= 1;
+	//int DENDRITE_MAX= 1;
+	//int DENDRITE_W_MIN=1;
+	//int DENDRITE_W_MAX=2;
 int CORE_SIZE;
-float CLOCK_SPEED = 1;
+float CLOCK_SPEED      = 1;
 //gen lag timer:
-int GEN_LAG = 1000;
-bool USE_OTHER_LEAKS = false;
-bool USE_OTHER_RESET = false;
-int MIN_LEAK = 0;
-int MAX_LEAK = 10;
+tw_stime GEN_LAG            = .5;
+bool USE_OTHER_LEAKS   = false;
+bool USE_OTHER_RESET   = false;
+int MIN_LEAK           = 0;
+int MAX_LEAK           = 10;
 char *ALT_LEAK;
 char *ALT_RESET;
-int MIN_RESET = 0;
-int MAX_RESET = 10;
-int DEBUG_MODE = 0;
+int MIN_RESET          = 0;
+int MAX_RESET          = 10;
+int DEBUG_MODE         = 1;
 ///// Ugly - maybe there's a better way to declare these?
 //ROSS OPTIONS:
 char* configFilePath;
 bool isFile;
-tw_stime lookahead = .00000000001;
-int events_per_pe = 0;
-int EXEC_MEMORY = 100000000;
-int CLOCK_RATE = 10;
+tw_stime lookahead     = .00000000001;
+int events_per_pe      = 0;
+int EXEC_MEMORY        = 100000000;
+int CLOCK_RATE         = 10;
 //Synapses and neuron max values (for off-by-one errors):
-int tt_neurons = 0;
-int tt_synapses = 0;
+int tt_neurons         = 0;
+int tt_synapses        = 0;
 /** Generator Options */
-bool GEN_ON = 1;
-bool GEN_RND = 1;
-int RND_MODE = 0;
-unsigned int GEN_PROB = 50;
-unsigned int GEN_FCT = 5;
-int GEN_OUTBOUND = 4;
+bool GEN_ON            = 1;
+bool GEN_RND           = 1;
+int RND_MODE           = 0;
+unsigned int GEN_PROB  = 50;
+unsigned int GEN_FCT   = 5;
+int GEN_OUTBOUND       = 4;
+
+/** Stats variable - number of neruon messages sent. */
+stat_t neuronSent		= 0;
+	/** Stats Variable - number of synapse messages sent. */
+stat_t synapseSent		= 0;
+
 
 //for benchmark, using simplified options.8
 const tw_optdef app_opt[] = {
@@ -68,7 +98,7 @@ const tw_optdef app_opt[] = {
         TWOPT_GROUP("Non-File Configuration"),
         TWOPT_UINT("neurons", NEURONS_IN_CORE, "Neurons per core"),
         TWOPT_UINT("synapses", SYNAPSES_IN_CORE, "Synapses per core"),
-        TWOPT_UINT("cores", CORES_IN_SIM, "Cores per PE"),
+        TWOPT_UINT("cores", CORES_PER_PE, "Cores per PE - IS NOW SET BY G_TW_NKP"),
         TWOPT_UINT("th_min", THRESHOLD_MIN, "minimum threshold for neurons"),
         TWOPT_UINT("th_max", THRESHOLD_MAX, "maximum threshold for neurons"),
         TWOPT_UINT("wt_min", SYNAPSE_WEIGHT_MIN, "minimum synapse weight"),
@@ -81,6 +111,7 @@ const tw_optdef app_opt[] = {
         TWOPT_ULONG("ftr", GEN_FCT, "Probability or Lambda for geometric or binomial option."),
         TWOPT_ULONG("genout", GEN_OUTBOUND,
                     "Number of outbound connections for generator (Set <= number of synapses per core."),
+		TWOPT_STIME("genlag", GEN_LAG, "Inital lag time for the generator"),
         TWOPT_GROUP("Misc. Settings"),
         TWOPT_FLAG("debug", DEBUG_MODE, "Enable debug output"),
         TWOPT_ULONG("events", events_per_pe, "Events per PE"),
@@ -131,7 +162,19 @@ void gen_final(spikeGenState *gen_state,tw_lp *lp);
 
 //Mapping funtions
 
+void initial_mapping(void);
 /** Given a global ID, return the core number */
-void getLocalIDs(gid_t global, regid_t * core, regid_t *local );
-gid_t globalID(regid_t core, regid_t local);
+void getLocalIDs(tw_lpid global, regid_t * core, regid_t *local );
+tw_lpid globalID(regid_t core, regid_t local);
+tw_lp * mapping_to_local(tw_lpid global);
+tw_peid mapping(tw_lpid gid);
+/** neuron init helper functions: */
+void initRandomWts(neuronState *s, tw_lp *lp);
+void initRandomRecurrance(neuronState *s);
+void setNeuronThreshold(neuronState *s, tw_lp * lp);
+
+void initNeruonWithMap(neuronState *s,tw_lp *lp, tw_pe *pe);
+void initSynapseWithMap(neuronState *s,tw_lp *lp, tw_pe *pe);
+	//shotgun troubleshooting
+
 #endif //ROSS_TOP_MODEL_MAIN_H

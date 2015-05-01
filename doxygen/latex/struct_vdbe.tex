@@ -1,0 +1,718 @@
+\hypertarget{struct_vdbe}{}\section{Vdbe Struct Reference}
+\label{struct_vdbe}\index{Vdbe@{Vdbe}}
+
+
+Collaboration diagram for Vdbe\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structsqlite3}{sqlite3} $\ast$ \hyperlink{struct_vdbe_ad6e663497d2c934364b3bcf07496b30b}{db}
+\item 
+Op $\ast$ \hyperlink{struct_vdbe_a174225cf156b2753600dd11eefc2c992}{a\+Op}
+\item 
+\hyperlink{struct_mem}{Mem} $\ast$ \hyperlink{struct_vdbe_adfd56f8b1cc1790601ff0940d884c200}{a\+Mem}
+\item 
+\hyperlink{struct_mem}{Mem} $\ast$$\ast$ \hyperlink{struct_vdbe_a5af1ceadb4cb7bde73c69b7f51a626bc}{ap\+Arg}
+\item 
+\hyperlink{struct_mem}{Mem} $\ast$ \hyperlink{struct_vdbe_a95e381528e23dabb12c0fc86ffec9928}{a\+Col\+Name}
+\item 
+\hyperlink{struct_mem}{Mem} $\ast$ \hyperlink{struct_vdbe_a879fc40450f639139fce2a774e02dd95}{p\+Result\+Set}
+\item 
+\hyperlink{struct_parse}{Parse} $\ast$ \hyperlink{struct_vdbe_ac700bf257b32cd7e491fde90a081379d}{p\+Parse}
+\item 
+int \hyperlink{struct_vdbe_a857d199d972b4d3864ce420c143508e4}{n\+Mem}
+\item 
+int \hyperlink{struct_vdbe_a33625b7205f0da4b73ec34d2d4aefd64}{n\+Op}
+\item 
+int \hyperlink{struct_vdbe_abd18ebaf2ce9128e5e45bd424af27002}{n\+Cursor}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_vdbe_a1c2f2992893a71ac0ee3f43477000176}{magic}
+\item 
+char $\ast$ \hyperlink{struct_vdbe_a6fcf95fd4e53f09793171bd5b704ac9a}{z\+Err\+Msg}
+\item 
+\hyperlink{struct_vdbe}{Vdbe} $\ast$ \hyperlink{struct_vdbe_a75fede11b9093f9204a677c0d80fec8c}{p\+Prev}
+\item 
+\hyperlink{struct_vdbe}{Vdbe} $\ast$ \hyperlink{struct_vdbe_adee0b3608e49fbf227884d272fdcb86e}{p\+Next}
+\item 
+\hyperlink{struct_vdbe_cursor}{Vdbe\+Cursor} $\ast$$\ast$ \hyperlink{struct_vdbe_ac1dd9d69a090bcc1bdb7afa3b0525eea}{ap\+Csr}
+\item 
+\hyperlink{struct_mem}{Mem} $\ast$ \hyperlink{struct_vdbe_ab72ee9a683e5486c32c8166cb369c222}{a\+Var}
+\item 
+char $\ast$$\ast$ \hyperlink{struct_vdbe_a61698685ffc73e64afd9ed436a5a101a}{az\+Var}
+\item 
+\hyperlink{sqlite3_8c_a8f09a8707e1c321e17c3625018c599ce}{yn\+Var} \hyperlink{struct_vdbe_a8ddc3d06e7916f0973e7f5c80087d086}{n\+Var}
+\item 
+\hyperlink{sqlite3_8c_a8f09a8707e1c321e17c3625018c599ce}{yn\+Var} \hyperlink{struct_vdbe_a11f25595e47d582f06efd3a1dab36958}{nz\+Var}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_vdbe_a44ab771806efd27abbef48af6b1d205f}{cache\+Ctr}
+\item 
+int \hyperlink{struct_vdbe_ac8c81e61335635fa4709d82412b31f06}{pc}
+\item 
+int \hyperlink{struct_vdbe_ac6509c6fe4cbf7bde170597172f8a288}{rc}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_vdbe_a649c97c1eaf660d353f0f37998b8fd56}{n\+Res\+Column}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_vdbe_abea7304ec108b435df4b4399b88977cb}{error\+Action}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_vdbe_ac5bee06812ea7532e4f9f7e56e19fd65}{min\+Write\+File\+Format}
+\item 
+\hyperlink{sqlite3_8c_ad64c07cb8a690e45d78134394494fd0e}{bft} \hyperlink{struct_vdbe_a9d0e7c3b8a77896616381d6c108551e6}{explain}\+:2
+\item 
+\hyperlink{sqlite3_8c_ad64c07cb8a690e45d78134394494fd0e}{bft} \hyperlink{struct_vdbe_a3c8419e4568fd3ba4e90ba3b1a4acae3}{change\+Cnt\+On}\+:1
+\item 
+\hyperlink{sqlite3_8c_ad64c07cb8a690e45d78134394494fd0e}{bft} \hyperlink{struct_vdbe_afe22cf7807da6858c969eb7194f00969}{expired}\+:1
+\item 
+\hyperlink{sqlite3_8c_ad64c07cb8a690e45d78134394494fd0e}{bft} \hyperlink{struct_vdbe_a7d62ea3d8471f23e077b4bc7b8c624d7}{run\+Only\+Once}\+:1
+\item 
+\hyperlink{sqlite3_8c_ad64c07cb8a690e45d78134394494fd0e}{bft} \hyperlink{struct_vdbe_ad44e010197df2be247a419560d5dcd85}{uses\+Stmt\+Journal}\+:1
+\item 
+\hyperlink{sqlite3_8c_ad64c07cb8a690e45d78134394494fd0e}{bft} \hyperlink{struct_vdbe_a5a6264721864a9d3c1f669ece146bec5}{read\+Only}\+:1
+\item 
+\hyperlink{sqlite3_8c_ad64c07cb8a690e45d78134394494fd0e}{bft} \hyperlink{struct_vdbe_a3f128124b41f626e42e76962fc727509}{b\+Is\+Reader}\+:1
+\item 
+\hyperlink{sqlite3_8c_ad64c07cb8a690e45d78134394494fd0e}{bft} \hyperlink{struct_vdbe_adff5e49ef8340e57dc614a23a72143d7}{is\+Prepare\+V2}\+:1
+\item 
+\hyperlink{sqlite3_8c_ad64c07cb8a690e45d78134394494fd0e}{bft} \hyperlink{struct_vdbe_a8f24f569f193f29e92ff1a3528763db2}{doing\+Rerun}\+:1
+\item 
+int \hyperlink{struct_vdbe_a34a2d05071fd1eb026579e78343912a4}{n\+Change}
+\item 
+\hyperlink{sqlite3_8c_aa9f65e0e36379aa834aac7932ba91bc3}{y\+Db\+Mask} \hyperlink{struct_vdbe_acc21071966acb6bde90bbf5bd3ee6474}{btree\+Mask}
+\item 
+\hyperlink{sqlite3_8c_aa9f65e0e36379aa834aac7932ba91bc3}{y\+Db\+Mask} \hyperlink{struct_vdbe_a724d4b924a935d68aa11aeee082ac8e3}{lock\+Mask}
+\item 
+int \hyperlink{struct_vdbe_ae8a83614afba1af0bcb49dc57f06fe97}{i\+Statement}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_vdbe_a6adeb61820e6d85f4d030270dba855fe}{a\+Counter} \mbox{[}5\mbox{]}
+\item 
+\hyperlink{sqlite3_8c_a2a0f0f4ae7001eb54351f77ea1cdbcfd}{i64} \hyperlink{struct_vdbe_ac1227987c154acddc3d7b08760dffbf2}{start\+Time}
+\item 
+\hyperlink{sqlite3_8c_a2a0f0f4ae7001eb54351f77ea1cdbcfd}{i64} \hyperlink{struct_vdbe_aef608fbbc0fa0b8dfa507cdc96c03323}{i\+Current\+Time}
+\item 
+\hyperlink{sqlite3_8c_a2a0f0f4ae7001eb54351f77ea1cdbcfd}{i64} \hyperlink{struct_vdbe_a707c750263dd956c65db6c5c7d316af8}{n\+Fk\+Constraint}
+\item 
+\hyperlink{sqlite3_8c_a2a0f0f4ae7001eb54351f77ea1cdbcfd}{i64} \hyperlink{struct_vdbe_a03ed0e08938984b063b51e0d1e641286}{n\+Stmt\+Def\+Cons}
+\item 
+\hyperlink{sqlite3_8c_a2a0f0f4ae7001eb54351f77ea1cdbcfd}{i64} \hyperlink{struct_vdbe_aba61f311dc8398f1f6ae81dde76089e9}{n\+Stmt\+Def\+Imm\+Cons}
+\item 
+char $\ast$ \hyperlink{struct_vdbe_a9029984574ab59cf7f6d97570833be55}{z\+Sql}
+\item 
+void $\ast$ \hyperlink{struct_vdbe_a2c54a77225c501001750258d6b53f88d}{p\+Free}
+\item 
+\hyperlink{struct_vdbe_frame}{Vdbe\+Frame} $\ast$ \hyperlink{struct_vdbe_ad71093eb5e589645373a69f115714ec7}{p\+Frame}
+\item 
+\hyperlink{struct_vdbe_frame}{Vdbe\+Frame} $\ast$ \hyperlink{struct_vdbe_a3f0f989bef6ce3640b7a508cb9b25901}{p\+Del\+Frame}
+\item 
+int \hyperlink{struct_vdbe_af29664edee858108ea51968053f5fc3c}{n\+Frame}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_vdbe_a6a3eca16f8ab5f330174a1376df81bb4}{expmask}
+\item 
+\hyperlink{struct_sub_program}{Sub\+Program} $\ast$ \hyperlink{struct_vdbe_a3b92cb4ee986d1dfaf28a5ade854311c}{p\+Program}
+\item 
+int \hyperlink{struct_vdbe_a391dfc763758d272dcce42b2b72826a7}{n\+Once\+Flag}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} $\ast$ \hyperlink{struct_vdbe_ae7256911c06e37eb7d9e0ab9bb9df93e}{a\+Once\+Flag}
+\item 
+\hyperlink{struct_aux_data}{Aux\+Data} $\ast$ \hyperlink{struct_vdbe_ad920703177335416d57ee0f5988a928a}{p\+Aux\+Data}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 14816 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_vdbe_a95e381528e23dabb12c0fc86ffec9928}{}\index{Vdbe@{Vdbe}!a\+Col\+Name@{a\+Col\+Name}}
+\index{a\+Col\+Name@{a\+Col\+Name}!Vdbe@{Vdbe}}
+\subsubsection[{a\+Col\+Name}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Mem}$\ast$ a\+Col\+Name}\label{struct_vdbe_a95e381528e23dabb12c0fc86ffec9928}
+
+
+Definition at line 14821 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Clear\+Object(), sqlite3\+Vdbe\+Set\+Col\+Name(), and sqlite3\+Vdbe\+Set\+Num\+Cols().
+
+\hypertarget{struct_vdbe_a6adeb61820e6d85f4d030270dba855fe}{}\index{Vdbe@{Vdbe}!a\+Counter@{a\+Counter}}
+\index{a\+Counter@{a\+Counter}!Vdbe@{Vdbe}}
+\subsubsection[{a\+Counter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} a\+Counter\mbox{[}5\mbox{]}}\label{struct_vdbe_a6adeb61820e6d85f4d030270dba855fe}
+
+
+Definition at line 14857 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+stmt\+\_\+status(), and sqlite3\+Vdbe\+Exec().
+
+\hypertarget{struct_vdbe_adfd56f8b1cc1790601ff0940d884c200}{}\index{Vdbe@{Vdbe}!a\+Mem@{a\+Mem}}
+\index{a\+Mem@{a\+Mem}!Vdbe@{Vdbe}}
+\subsubsection[{a\+Mem}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Mem}$\ast$ a\+Mem}\label{struct_vdbe_adfd56f8b1cc1790601ff0940d884c200}
+
+
+Definition at line 14819 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Frame\+Restore(), sqlite3\+Vdbe\+List(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_vdbe_ae7256911c06e37eb7d9e0ab9bb9df93e}{}\index{Vdbe@{Vdbe}!a\+Once\+Flag@{a\+Once\+Flag}}
+\index{a\+Once\+Flag@{a\+Once\+Flag}!Vdbe@{Vdbe}}
+\subsubsection[{a\+Once\+Flag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8}$\ast$ a\+Once\+Flag}\label{struct_vdbe_ae7256911c06e37eb7d9e0ab9bb9df93e}
+
+
+Definition at line 14873 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Frame\+Restore(), and sqlite3\+Vdbe\+Halt().
+
+\hypertarget{struct_vdbe_a174225cf156b2753600dd11eefc2c992}{}\index{Vdbe@{Vdbe}!a\+Op@{a\+Op}}
+\index{a\+Op@{a\+Op}!Vdbe@{Vdbe}}
+\subsubsection[{a\+Op}]{\setlength{\rightskip}{0pt plus 5cm}Op$\ast$ a\+Op}\label{struct_vdbe_a174225cf156b2753600dd11eefc2c992}
+
+
+Definition at line 14818 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Add\+Op3(), sqlite3\+Vdbe\+Add\+Op\+List(), sqlite3\+Vdbe\+Change\+P1(), sqlite3\+Vdbe\+Change\+P2(), sqlite3\+Vdbe\+Change\+P3(), sqlite3\+Vdbe\+Change\+P4(), sqlite3\+Vdbe\+Change\+P5(), sqlite3\+Vdbe\+Change\+To\+Noop(), sqlite3\+Vdbe\+Clear\+Object(), sqlite3\+Vdbe\+Delete\+Prior\+Opcode(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Frame\+Restore(), sqlite3\+Vdbe\+Get\+Op(), sqlite3\+Vdbe\+List(), sqlite3\+Vdbe\+Make\+Ready(), and sqlite3\+Vdbe\+Take\+Op\+Array().
+
+\hypertarget{struct_vdbe_a5af1ceadb4cb7bde73c69b7f51a626bc}{}\index{Vdbe@{Vdbe}!ap\+Arg@{ap\+Arg}}
+\index{ap\+Arg@{ap\+Arg}!Vdbe@{Vdbe}}
+\subsubsection[{ap\+Arg}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Mem}$\ast$$\ast$ ap\+Arg}\label{struct_vdbe_a5af1ceadb4cb7bde73c69b7f51a626bc}
+
+
+Definition at line 14820 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec().
+
+\hypertarget{struct_vdbe_ac1dd9d69a090bcc1bdb7afa3b0525eea}{}\index{Vdbe@{Vdbe}!ap\+Csr@{ap\+Csr}}
+\index{ap\+Csr@{ap\+Csr}!Vdbe@{Vdbe}}
+\subsubsection[{ap\+Csr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vdbe\+Cursor}$\ast$$\ast$ ap\+Csr}\label{struct_vdbe_ac1dd9d69a090bcc1bdb7afa3b0525eea}
+
+
+Definition at line 14830 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Frame\+Restore().
+
+\hypertarget{struct_vdbe_ab72ee9a683e5486c32c8166cb369c222}{}\index{Vdbe@{Vdbe}!a\+Var@{a\+Var}}
+\index{a\+Var@{a\+Var}!Vdbe@{Vdbe}}
+\subsubsection[{a\+Var}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Mem}$\ast$ a\+Var}\label{struct_vdbe_ab72ee9a683e5486c32c8166cb369c222}
+
+
+Definition at line 14831 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+bind\+\_\+double(), sqlite3\+\_\+bind\+\_\+int64(), sqlite3\+\_\+bind\+\_\+zeroblob(), sqlite3\+\_\+clear\+\_\+bindings(), sqlite3\+Transfer\+Bindings(), sqlite3\+Vdbe\+Clear\+Object(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Expand\+Sql(), sqlite3\+Vdbe\+Get\+Bound\+Value(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_vdbe_a61698685ffc73e64afd9ed436a5a101a}{}\index{Vdbe@{Vdbe}!az\+Var@{az\+Var}}
+\index{az\+Var@{az\+Var}!Vdbe@{Vdbe}}
+\subsubsection[{az\+Var}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$$\ast$ az\+Var}\label{struct_vdbe_a61698685ffc73e64afd9ed436a5a101a}
+
+
+Definition at line 14832 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+bind\+\_\+parameter\+\_\+name(), sqlite3\+Vdbe\+Clear\+Object(), sqlite3\+Vdbe\+Make\+Ready(), and sqlite3\+Vdbe\+Parameter\+Index().
+
+\hypertarget{struct_vdbe_a3f128124b41f626e42e76962fc727509}{}\index{Vdbe@{Vdbe}!b\+Is\+Reader@{b\+Is\+Reader}}
+\index{b\+Is\+Reader@{b\+Is\+Reader}!Vdbe@{Vdbe}}
+\subsubsection[{b\+Is\+Reader}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bft} b\+Is\+Reader}\label{struct_vdbe_a3f128124b41f626e42e76962fc727509}
+
+
+Definition at line 14850 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Halt().
+
+\hypertarget{struct_vdbe_acc21071966acb6bde90bbf5bd3ee6474}{}\index{Vdbe@{Vdbe}!btree\+Mask@{btree\+Mask}}
+\index{btree\+Mask@{btree\+Mask}!Vdbe@{Vdbe}}
+\subsubsection[{btree\+Mask}]{\setlength{\rightskip}{0pt plus 5cm}{\bf y\+Db\+Mask} btree\+Mask}\label{struct_vdbe_acc21071966acb6bde90bbf5bd3ee6474}
+
+
+Definition at line 14854 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Uses\+Btree().
+
+\hypertarget{struct_vdbe_a44ab771806efd27abbef48af6b1d205f}{}\index{Vdbe@{Vdbe}!cache\+Ctr@{cache\+Ctr}}
+\index{cache\+Ctr@{cache\+Ctr}!Vdbe@{Vdbe}}
+\subsubsection[{cache\+Ctr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} cache\+Ctr}\label{struct_vdbe_a44ab771806efd27abbef48af6b1d205f}
+
+
+Definition at line 14835 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Rewind().
+
+\hypertarget{struct_vdbe_a3c8419e4568fd3ba4e90ba3b1a4acae3}{}\index{Vdbe@{Vdbe}!change\+Cnt\+On@{change\+Cnt\+On}}
+\index{change\+Cnt\+On@{change\+Cnt\+On}!Vdbe@{Vdbe}}
+\subsubsection[{change\+Cnt\+On}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bft} change\+Cnt\+On}\label{struct_vdbe_a3c8419e4568fd3ba4e90ba3b1a4acae3}
+
+
+Definition at line 14845 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Count\+Changes(), and sqlite3\+Vdbe\+Halt().
+
+\hypertarget{struct_vdbe_ad6e663497d2c934364b3bcf07496b30b}{}\index{Vdbe@{Vdbe}!db@{db}}
+\index{db@{db}!Vdbe@{Vdbe}}
+\subsubsection[{db}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3}$\ast$ db}\label{struct_vdbe_ad6e663497d2c934364b3bcf07496b30b}
+
+
+Definition at line 14817 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+bind\+\_\+double(), sqlite3\+\_\+bind\+\_\+int64(), sqlite3\+\_\+bind\+\_\+null(), sqlite3\+\_\+bind\+\_\+zeroblob(), sqlite3\+\_\+clear\+\_\+bindings(), sqlite3\+\_\+db\+\_\+handle(), sqlite3\+\_\+finalize(), sqlite3\+\_\+reset(), sqlite3\+\_\+step(), sqlite3\+Transfer\+Bindings(), sqlite3\+Vdbe\+Add\+Parse\+Schema\+Op(), sqlite3\+Vdbe\+Change\+P4(), sqlite3\+Vdbe\+Change\+To\+Noop(), sqlite3\+Vdbe\+Check\+Fk(), sqlite3\+Vdbe\+Close\+Statement(), sqlite3\+Vdbe\+Create(), sqlite3\+Vdbe\+Db(), sqlite3\+Vdbe\+Delete(), sqlite3\+Vdbe\+Delete\+Aux\+Data(), sqlite3\+Vdbe\+Enter(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Expand\+Sql(), sqlite3\+Vdbe\+Frame\+Delete(), sqlite3\+Vdbe\+Frame\+Restore(), sqlite3\+Vdbe\+Free\+Cursor(), sqlite3\+Vdbe\+Get\+Bound\+Value(), sqlite3\+Vdbe\+Get\+Op(), sqlite3\+Vdbe\+Halt(), sqlite3\+Vdbe\+Leave(), sqlite3\+Vdbe\+List(), sqlite3\+Vdbe\+Make\+Ready(), sqlite3\+Vdbe\+Reset(), sqlite3\+Vdbe\+Set\+Col\+Name(), sqlite3\+Vdbe\+Set\+Num\+Cols(), sqlite3\+Vdbe\+Set\+Sql(), sqlite3\+Vdbe\+Transfer\+Error(), sqlite3\+Vdbe\+Uses\+Btree(), and sqlite3\+Vtab\+Import\+Errmsg().
+
+\hypertarget{struct_vdbe_a8f24f569f193f29e92ff1a3528763db2}{}\index{Vdbe@{Vdbe}!doing\+Rerun@{doing\+Rerun}}
+\index{doing\+Rerun@{doing\+Rerun}!Vdbe@{Vdbe}}
+\subsubsection[{doing\+Rerun}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bft} doing\+Rerun}\label{struct_vdbe_a8f24f569f193f29e92ff1a3528763db2}
+
+
+Definition at line 14852 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+step(), and sqlite3\+Vdbe\+Exec().
+
+\hypertarget{struct_vdbe_abea7304ec108b435df4b4399b88977cb}{}\index{Vdbe@{Vdbe}!error\+Action@{error\+Action}}
+\index{error\+Action@{error\+Action}!Vdbe@{Vdbe}}
+\subsubsection[{error\+Action}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} error\+Action}\label{struct_vdbe_abea7304ec108b435df4b4399b88977cb}
+
+
+Definition at line 14842 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Check\+Fk(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Halt(), and sqlite3\+Vdbe\+Rewind().
+
+\hypertarget{struct_vdbe_afe22cf7807da6858c969eb7194f00969}{}\index{Vdbe@{Vdbe}!expired@{expired}}
+\index{expired@{expired}!Vdbe@{Vdbe}}
+\subsubsection[{expired}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bft} expired}\label{struct_vdbe_afe22cf7807da6858c969eb7194f00969}
+
+
+Definition at line 14846 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+clear\+\_\+bindings(), sqlite3\+\_\+expired(), sqlite3\+\_\+transfer\+\_\+bindings(), sqlite3\+Expire\+Prepared\+Statements(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Make\+Ready(), and sqlite3\+Vdbe\+Reset().
+
+\hypertarget{struct_vdbe_a9d0e7c3b8a77896616381d6c108551e6}{}\index{Vdbe@{Vdbe}!explain@{explain}}
+\index{explain@{explain}!Vdbe@{Vdbe}}
+\subsubsection[{explain}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bft} explain}\label{struct_vdbe_a9d0e7c3b8a77896616381d6c108551e6}
+
+
+Definition at line 14844 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+List(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_vdbe_a6a3eca16f8ab5f330174a1376df81bb4}{}\index{Vdbe@{Vdbe}!expmask@{expmask}}
+\index{expmask@{expmask}!Vdbe@{Vdbe}}
+\subsubsection[{expmask}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} expmask}\label{struct_vdbe_a6a3eca16f8ab5f330174a1376df81bb4}
+
+
+Definition at line 14870 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+clear\+\_\+bindings(), sqlite3\+\_\+transfer\+\_\+bindings(), and sqlite3\+Vdbe\+Set\+Varmask().
+
+\hypertarget{struct_vdbe_aef608fbbc0fa0b8dfa507cdc96c03323}{}\index{Vdbe@{Vdbe}!i\+Current\+Time@{i\+Current\+Time}}
+\index{i\+Current\+Time@{i\+Current\+Time}!Vdbe@{Vdbe}}
+\subsubsection[{i\+Current\+Time}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i64} i\+Current\+Time}\label{struct_vdbe_aef608fbbc0fa0b8dfa507cdc96c03323}
+
+
+Definition at line 14861 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Stmt\+Current\+Time(), sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Reset().
+
+\hypertarget{struct_vdbe_adff5e49ef8340e57dc614a23a72143d7}{}\index{Vdbe@{Vdbe}!is\+Prepare\+V2@{is\+Prepare\+V2}}
+\index{is\+Prepare\+V2@{is\+Prepare\+V2}!Vdbe@{Vdbe}}
+\subsubsection[{is\+Prepare\+V2}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bft} is\+Prepare\+V2}\label{struct_vdbe_adff5e49ef8340e57dc614a23a72143d7}
+
+
+Definition at line 14851 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+clear\+\_\+bindings(), sqlite3\+\_\+sql(), sqlite3\+\_\+transfer\+\_\+bindings(), sqlite3\+Vdbe\+Set\+Sql(), and sqlite3\+Vdbe\+Swap().
+
+\hypertarget{struct_vdbe_ae8a83614afba1af0bcb49dc57f06fe97}{}\index{Vdbe@{Vdbe}!i\+Statement@{i\+Statement}}
+\index{i\+Statement@{i\+Statement}!Vdbe@{Vdbe}}
+\subsubsection[{i\+Statement}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Statement}\label{struct_vdbe_ae8a83614afba1af0bcb49dc57f06fe97}
+
+
+Definition at line 14856 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Close\+Statement(), sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Rewind().
+
+\hypertarget{struct_vdbe_a724d4b924a935d68aa11aeee082ac8e3}{}\index{Vdbe@{Vdbe}!lock\+Mask@{lock\+Mask}}
+\index{lock\+Mask@{lock\+Mask}!Vdbe@{Vdbe}}
+\subsubsection[{lock\+Mask}]{\setlength{\rightskip}{0pt plus 5cm}{\bf y\+Db\+Mask} lock\+Mask}\label{struct_vdbe_a724d4b924a935d68aa11aeee082ac8e3}
+
+
+Definition at line 14855 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Enter(), sqlite3\+Vdbe\+Leave(), and sqlite3\+Vdbe\+Uses\+Btree().
+
+\hypertarget{struct_vdbe_a1c2f2992893a71ac0ee3f43477000176}{}\index{Vdbe@{Vdbe}!magic@{magic}}
+\index{magic@{magic}!Vdbe@{Vdbe}}
+\subsubsection[{magic}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} magic}\label{struct_vdbe_a1c2f2992893a71ac0ee3f43477000176}
+
+
+Definition at line 14827 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+stmt\+\_\+busy(), sqlite3\+Vdbe\+Create(), sqlite3\+Vdbe\+Delete(), sqlite3\+Vdbe\+Finalize(), sqlite3\+Vdbe\+Halt(), sqlite3\+Vdbe\+Reset(), and sqlite3\+Vdbe\+Rewind().
+
+\hypertarget{struct_vdbe_ac5bee06812ea7532e4f9f7e56e19fd65}{}\index{Vdbe@{Vdbe}!min\+Write\+File\+Format@{min\+Write\+File\+Format}}
+\index{min\+Write\+File\+Format@{min\+Write\+File\+Format}!Vdbe@{Vdbe}}
+\subsubsection[{min\+Write\+File\+Format}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} min\+Write\+File\+Format}\label{struct_vdbe_ac5bee06812ea7532e4f9f7e56e19fd65}
+
+
+Definition at line 14843 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Rewind().
+
+\hypertarget{struct_vdbe_a34a2d05071fd1eb026579e78343912a4}{}\index{Vdbe@{Vdbe}!n\+Change@{n\+Change}}
+\index{n\+Change@{n\+Change}!Vdbe@{Vdbe}}
+\subsubsection[{n\+Change}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Change}\label{struct_vdbe_a34a2d05071fd1eb026579e78343912a4}
+
+
+Definition at line 14853 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Frame\+Restore(), sqlite3\+Vdbe\+Halt(), and sqlite3\+Vdbe\+Rewind().
+
+\hypertarget{struct_vdbe_abd18ebaf2ce9128e5e45bd424af27002}{}\index{Vdbe@{Vdbe}!n\+Cursor@{n\+Cursor}}
+\index{n\+Cursor@{n\+Cursor}!Vdbe@{Vdbe}}
+\subsubsection[{n\+Cursor}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Cursor}\label{struct_vdbe_abd18ebaf2ce9128e5e45bd424af27002}
+
+
+Definition at line 14826 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Frame\+Restore(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_vdbe_a707c750263dd956c65db6c5c7d316af8}{}\index{Vdbe@{Vdbe}!n\+Fk\+Constraint@{n\+Fk\+Constraint}}
+\index{n\+Fk\+Constraint@{n\+Fk\+Constraint}!Vdbe@{Vdbe}}
+\subsubsection[{n\+Fk\+Constraint}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i64} n\+Fk\+Constraint}\label{struct_vdbe_a707c750263dd956c65db6c5c7d316af8}
+
+
+Definition at line 14862 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Check\+Fk(), sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Rewind().
+
+\hypertarget{struct_vdbe_af29664edee858108ea51968053f5fc3c}{}\index{Vdbe@{Vdbe}!n\+Frame@{n\+Frame}}
+\index{n\+Frame@{n\+Frame}!Vdbe@{Vdbe}}
+\subsubsection[{n\+Frame}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Frame}\label{struct_vdbe_af29664edee858108ea51968053f5fc3c}
+
+
+Definition at line 14869 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec().
+
+\hypertarget{struct_vdbe_a857d199d972b4d3864ce420c143508e4}{}\index{Vdbe@{Vdbe}!n\+Mem@{n\+Mem}}
+\index{n\+Mem@{n\+Mem}!Vdbe@{Vdbe}}
+\subsubsection[{n\+Mem}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Mem}\label{struct_vdbe_a857d199d972b4d3864ce420c143508e4}
+
+
+Definition at line 14824 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Frame\+Restore(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_vdbe_a391dfc763758d272dcce42b2b72826a7}{}\index{Vdbe@{Vdbe}!n\+Once\+Flag@{n\+Once\+Flag}}
+\index{n\+Once\+Flag@{n\+Once\+Flag}!Vdbe@{Vdbe}}
+\subsubsection[{n\+Once\+Flag}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Once\+Flag}\label{struct_vdbe_a391dfc763758d272dcce42b2b72826a7}
+
+
+Definition at line 14872 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Frame\+Restore(), sqlite3\+Vdbe\+Halt(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_vdbe_a33625b7205f0da4b73ec34d2d4aefd64}{}\index{Vdbe@{Vdbe}!n\+Op@{n\+Op}}
+\index{n\+Op@{n\+Op}!Vdbe@{Vdbe}}
+\subsubsection[{n\+Op}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Op}\label{struct_vdbe_a33625b7205f0da4b73ec34d2d4aefd64}
+
+
+Definition at line 14825 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Add\+Op3(), sqlite3\+Vdbe\+Add\+Op\+List(), sqlite3\+Vdbe\+Change\+P1(), sqlite3\+Vdbe\+Change\+P2(), sqlite3\+Vdbe\+Change\+P3(), sqlite3\+Vdbe\+Change\+P4(), sqlite3\+Vdbe\+Change\+P5(), sqlite3\+Vdbe\+Change\+To\+Noop(), sqlite3\+Vdbe\+Clear\+Object(), sqlite3\+Vdbe\+Current\+Addr(), sqlite3\+Vdbe\+Delete\+Prior\+Opcode(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Frame\+Restore(), sqlite3\+Vdbe\+Get\+Op(), sqlite3\+Vdbe\+Jump\+Here(), sqlite3\+Vdbe\+List(), sqlite3\+Vdbe\+Make\+Ready(), sqlite3\+Vdbe\+Resolve\+Label(), and sqlite3\+Vdbe\+Take\+Op\+Array().
+
+\hypertarget{struct_vdbe_a649c97c1eaf660d353f0f37998b8fd56}{}\index{Vdbe@{Vdbe}!n\+Res\+Column@{n\+Res\+Column}}
+\index{n\+Res\+Column@{n\+Res\+Column}!Vdbe@{Vdbe}}
+\subsubsection[{n\+Res\+Column}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} n\+Res\+Column}\label{struct_vdbe_a649c97c1eaf660d353f0f37998b8fd56}
+
+
+Definition at line 14841 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+column\+\_\+count(), sqlite3\+\_\+data\+\_\+count(), sqlite3\+Vdbe\+Clear\+Object(), sqlite3\+Vdbe\+List(), sqlite3\+Vdbe\+Set\+Col\+Name(), and sqlite3\+Vdbe\+Set\+Num\+Cols().
+
+\hypertarget{struct_vdbe_a03ed0e08938984b063b51e0d1e641286}{}\index{Vdbe@{Vdbe}!n\+Stmt\+Def\+Cons@{n\+Stmt\+Def\+Cons}}
+\index{n\+Stmt\+Def\+Cons@{n\+Stmt\+Def\+Cons}!Vdbe@{Vdbe}}
+\subsubsection[{n\+Stmt\+Def\+Cons}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i64} n\+Stmt\+Def\+Cons}\label{struct_vdbe_a03ed0e08938984b063b51e0d1e641286}
+
+
+Definition at line 14863 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Close\+Statement(), and sqlite3\+Vdbe\+Exec().
+
+\hypertarget{struct_vdbe_aba61f311dc8398f1f6ae81dde76089e9}{}\index{Vdbe@{Vdbe}!n\+Stmt\+Def\+Imm\+Cons@{n\+Stmt\+Def\+Imm\+Cons}}
+\index{n\+Stmt\+Def\+Imm\+Cons@{n\+Stmt\+Def\+Imm\+Cons}!Vdbe@{Vdbe}}
+\subsubsection[{n\+Stmt\+Def\+Imm\+Cons}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i64} n\+Stmt\+Def\+Imm\+Cons}\label{struct_vdbe_aba61f311dc8398f1f6ae81dde76089e9}
+
+
+Definition at line 14864 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Close\+Statement(), and sqlite3\+Vdbe\+Exec().
+
+\hypertarget{struct_vdbe_a8ddc3d06e7916f0973e7f5c80087d086}{}\index{Vdbe@{Vdbe}!n\+Var@{n\+Var}}
+\index{n\+Var@{n\+Var}!Vdbe@{Vdbe}}
+\subsubsection[{n\+Var}]{\setlength{\rightskip}{0pt plus 5cm}{\bf yn\+Var} n\+Var}\label{struct_vdbe_a8ddc3d06e7916f0973e7f5c80087d086}
+
+
+Definition at line 14833 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+bind\+\_\+parameter\+\_\+count(), sqlite3\+\_\+clear\+\_\+bindings(), sqlite3\+\_\+transfer\+\_\+bindings(), sqlite3\+Transfer\+Bindings(), sqlite3\+Vdbe\+Clear\+Object(), sqlite3\+Vdbe\+Expand\+Sql(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_vdbe_a11f25595e47d582f06efd3a1dab36958}{}\index{Vdbe@{Vdbe}!nz\+Var@{nz\+Var}}
+\index{nz\+Var@{nz\+Var}!Vdbe@{Vdbe}}
+\subsubsection[{nz\+Var}]{\setlength{\rightskip}{0pt plus 5cm}{\bf yn\+Var} nz\+Var}\label{struct_vdbe_a11f25595e47d582f06efd3a1dab36958}
+
+
+Definition at line 14834 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+bind\+\_\+parameter\+\_\+name(), sqlite3\+Vdbe\+Clear\+Object(), sqlite3\+Vdbe\+Make\+Ready(), and sqlite3\+Vdbe\+Parameter\+Index().
+
+\hypertarget{struct_vdbe_ad920703177335416d57ee0f5988a928a}{}\index{Vdbe@{Vdbe}!p\+Aux\+Data@{p\+Aux\+Data}}
+\index{p\+Aux\+Data@{p\+Aux\+Data}!Vdbe@{Vdbe}}
+\subsubsection[{p\+Aux\+Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Aux\+Data}$\ast$ p\+Aux\+Data}\label{struct_vdbe_ad920703177335416d57ee0f5988a928a}
+
+
+Definition at line 14874 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+get\+\_\+auxdata(), sqlite3\+\_\+set\+\_\+auxdata(), and sqlite3\+Vdbe\+Delete\+Aux\+Data().
+
+\hypertarget{struct_vdbe_ac8c81e61335635fa4709d82412b31f06}{}\index{Vdbe@{Vdbe}!pc@{pc}}
+\index{pc@{pc}!Vdbe@{Vdbe}}
+\subsubsection[{pc}]{\setlength{\rightskip}{0pt plus 5cm}int pc}\label{struct_vdbe_ac8c81e61335635fa4709d82412b31f06}
+
+
+Definition at line 14836 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+step(), sqlite3\+\_\+stmt\+\_\+busy(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Halt(), sqlite3\+Vdbe\+List(), sqlite3\+Vdbe\+Reset(), and sqlite3\+Vdbe\+Rewind().
+
+\hypertarget{struct_vdbe_a3f0f989bef6ce3640b7a508cb9b25901}{}\index{Vdbe@{Vdbe}!p\+Del\+Frame@{p\+Del\+Frame}}
+\index{p\+Del\+Frame@{p\+Del\+Frame}!Vdbe@{Vdbe}}
+\subsubsection[{p\+Del\+Frame}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vdbe\+Frame}$\ast$ p\+Del\+Frame}\label{struct_vdbe_a3f0f989bef6ce3640b7a508cb9b25901}
+
+
+Definition at line 14868 of file sqlite3.\+c.
+
+\hypertarget{struct_vdbe_ad71093eb5e589645373a69f115714ec7}{}\index{Vdbe@{Vdbe}!p\+Frame@{p\+Frame}}
+\index{p\+Frame@{p\+Frame}!Vdbe@{Vdbe}}
+\subsubsection[{p\+Frame}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vdbe\+Frame}$\ast$ p\+Frame}\label{struct_vdbe_ad71093eb5e589645373a69f115714ec7}
+
+
+Definition at line 14867 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec().
+
+\hypertarget{struct_vdbe_a2c54a77225c501001750258d6b53f88d}{}\index{Vdbe@{Vdbe}!p\+Free@{p\+Free}}
+\index{p\+Free@{p\+Free}!Vdbe@{Vdbe}}
+\subsubsection[{p\+Free}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ p\+Free}\label{struct_vdbe_a2c54a77225c501001750258d6b53f88d}
+
+
+Definition at line 14866 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Clear\+Object(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_vdbe_adee0b3608e49fbf227884d272fdcb86e}{}\index{Vdbe@{Vdbe}!p\+Next@{p\+Next}}
+\index{p\+Next@{p\+Next}!Vdbe@{Vdbe}}
+\subsubsection[{p\+Next}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vdbe} $\ast$ p\+Next}\label{struct_vdbe_adee0b3608e49fbf227884d272fdcb86e}
+
+
+Definition at line 14829 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+db\+\_\+status(), sqlite3\+\_\+next\+\_\+stmt(), sqlite3\+Expire\+Prepared\+Statements(), sqlite3\+Vdbe\+Create(), sqlite3\+Vdbe\+Delete(), and sqlite3\+Vdbe\+Swap().
+
+\hypertarget{struct_vdbe_ac700bf257b32cd7e491fde90a081379d}{}\index{Vdbe@{Vdbe}!p\+Parse@{p\+Parse}}
+\index{p\+Parse@{p\+Parse}!Vdbe@{Vdbe}}
+\subsubsection[{p\+Parse}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Parse}$\ast$ p\+Parse}\label{struct_vdbe_ac700bf257b32cd7e491fde90a081379d}
+
+
+Definition at line 14823 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Add\+Op3(), sqlite3\+Vdbe\+Add\+Op\+List(), sqlite3\+Vdbe\+Create(), sqlite3\+Vdbe\+Delete\+Prior\+Opcode(), sqlite3\+Vdbe\+Jump\+Here(), sqlite3\+Vdbe\+Make\+Label(), and sqlite3\+Vdbe\+Resolve\+Label().
+
+\hypertarget{struct_vdbe_a75fede11b9093f9204a677c0d80fec8c}{}\index{Vdbe@{Vdbe}!p\+Prev@{p\+Prev}}
+\index{p\+Prev@{p\+Prev}!Vdbe@{Vdbe}}
+\subsubsection[{p\+Prev}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vdbe}$\ast$ p\+Prev}\label{struct_vdbe_a75fede11b9093f9204a677c0d80fec8c}
+
+
+Definition at line 14829 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Create(), sqlite3\+Vdbe\+Delete(), and sqlite3\+Vdbe\+Swap().
+
+\hypertarget{struct_vdbe_a3b92cb4ee986d1dfaf28a5ade854311c}{}\index{Vdbe@{Vdbe}!p\+Program@{p\+Program}}
+\index{p\+Program@{p\+Program}!Vdbe@{Vdbe}}
+\subsubsection[{p\+Program}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Sub\+Program}$\ast$ p\+Program}\label{struct_vdbe_a3b92cb4ee986d1dfaf28a5ade854311c}
+
+
+Definition at line 14871 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Clear\+Object(), and sqlite3\+Vdbe\+Link\+Sub\+Program().
+
+\hypertarget{struct_vdbe_a879fc40450f639139fce2a774e02dd95}{}\index{Vdbe@{Vdbe}!p\+Result\+Set@{p\+Result\+Set}}
+\index{p\+Result\+Set@{p\+Result\+Set}!Vdbe@{Vdbe}}
+\subsubsection[{p\+Result\+Set}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Mem}$\ast$ p\+Result\+Set}\label{struct_vdbe_a879fc40450f639139fce2a774e02dd95}
+
+
+Definition at line 14822 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+data\+\_\+count(), sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+List().
+
+\hypertarget{struct_vdbe_ac6509c6fe4cbf7bde170597172f8a288}{}\index{Vdbe@{Vdbe}!rc@{rc}}
+\index{rc@{rc}!Vdbe@{Vdbe}}
+\subsubsection[{rc}]{\setlength{\rightskip}{0pt plus 5cm}int rc}\label{struct_vdbe_ac6509c6fe4cbf7bde170597172f8a288}
+
+
+Definition at line 14837 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+step(), sqlite3\+Vdbe\+Check\+Fk(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Halt(), sqlite3\+Vdbe\+List(), sqlite3\+Vdbe\+Reset(), sqlite3\+Vdbe\+Reset\+Step\+Result(), sqlite3\+Vdbe\+Rewind(), and sqlite3\+Vdbe\+Transfer\+Error().
+
+\hypertarget{struct_vdbe_a5a6264721864a9d3c1f669ece146bec5}{}\index{Vdbe@{Vdbe}!read\+Only@{read\+Only}}
+\index{read\+Only@{read\+Only}!Vdbe@{Vdbe}}
+\subsubsection[{read\+Only}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bft} read\+Only}\label{struct_vdbe_a5a6264721864a9d3c1f669ece146bec5}
+
+
+Definition at line 14849 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+stmt\+\_\+readonly(), and sqlite3\+Vdbe\+Halt().
+
+\hypertarget{struct_vdbe_a7d62ea3d8471f23e077b4bc7b8c624d7}{}\index{Vdbe@{Vdbe}!run\+Only\+Once@{run\+Only\+Once}}
+\index{run\+Only\+Once@{run\+Only\+Once}!Vdbe@{Vdbe}}
+\subsubsection[{run\+Only\+Once}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bft} run\+Only\+Once}\label{struct_vdbe_a7d62ea3d8471f23e077b4bc7b8c624d7}
+
+
+Definition at line 14847 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Reset(), and sqlite3\+Vdbe\+Run\+Only\+Once().
+
+\hypertarget{struct_vdbe_ac1227987c154acddc3d7b08760dffbf2}{}\index{Vdbe@{Vdbe}!start\+Time@{start\+Time}}
+\index{start\+Time@{start\+Time}!Vdbe@{Vdbe}}
+\subsubsection[{start\+Time}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i64} start\+Time}\label{struct_vdbe_ac1227987c154acddc3d7b08760dffbf2}
+
+
+Definition at line 14859 of file sqlite3.\+c.
+
+\hypertarget{struct_vdbe_ad44e010197df2be247a419560d5dcd85}{}\index{Vdbe@{Vdbe}!uses\+Stmt\+Journal@{uses\+Stmt\+Journal}}
+\index{uses\+Stmt\+Journal@{uses\+Stmt\+Journal}!Vdbe@{Vdbe}}
+\subsubsection[{uses\+Stmt\+Journal}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bft} uses\+Stmt\+Journal}\label{struct_vdbe_ad44e010197df2be247a419560d5dcd85}
+
+
+Definition at line 14848 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Halt(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_vdbe_a6fcf95fd4e53f09793171bd5b704ac9a}{}\index{Vdbe@{Vdbe}!z\+Err\+Msg@{z\+Err\+Msg}}
+\index{z\+Err\+Msg@{z\+Err\+Msg}!Vdbe@{Vdbe}}
+\subsubsection[{z\+Err\+Msg}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ z\+Err\+Msg}\label{struct_vdbe_a6fcf95fd4e53f09793171bd5b704ac9a}
+
+
+Definition at line 14828 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+step(), sqlite3\+Vdbe\+Check\+Fk(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Halt(), sqlite3\+Vdbe\+List(), sqlite3\+Vdbe\+Reset(), sqlite3\+Vdbe\+Transfer\+Error(), and sqlite3\+Vtab\+Import\+Errmsg().
+
+\hypertarget{struct_vdbe_a9029984574ab59cf7f6d97570833be55}{}\index{Vdbe@{Vdbe}!z\+Sql@{z\+Sql}}
+\index{z\+Sql@{z\+Sql}!Vdbe@{Vdbe}}
+\subsubsection[{z\+Sql}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ z\+Sql}\label{struct_vdbe_a9029984574ab59cf7f6d97570833be55}
+
+
+Definition at line 14865 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+sql(), sqlite3\+Vdbe\+Clear\+Object(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Set\+Sql(), and sqlite3\+Vdbe\+Swap().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

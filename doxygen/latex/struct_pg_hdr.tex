@@ -1,0 +1,167 @@
+\hypertarget{struct_pg_hdr}{}\section{Pg\+Hdr Struct Reference}
+\label{struct_pg_hdr}\index{Pg\+Hdr@{Pg\+Hdr}}
+
+
+Collaboration diagram for Pg\+Hdr\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structsqlite3__pcache__page}{sqlite3\+\_\+pcache\+\_\+page} $\ast$ \hyperlink{struct_pg_hdr_a93dd9756d090be6aaeae1d086dbad7d9}{p\+Page}
+\item 
+void $\ast$ \hyperlink{struct_pg_hdr_aa92f08987c51e4eb7b92e84944ca2af3}{p\+Data}
+\item 
+void $\ast$ \hyperlink{struct_pg_hdr_a484f2fe7f225c408158584262bebab66}{p\+Extra}
+\item 
+\hyperlink{struct_pg_hdr}{Pg\+Hdr} $\ast$ \hyperlink{struct_pg_hdr_a2997dc2dc0dd03fdd59937ca5a4eef8a}{p\+Dirty}
+\item 
+\hyperlink{struct_pager}{Pager} $\ast$ \hyperlink{struct_pg_hdr_a916447fa61ba4e11cc93d571a66d3aaf}{p\+Pager}
+\item 
+\hyperlink{sqlite3_8c_aec0c653e8dd16e4639caf2f8ea54f55c}{Pgno} \hyperlink{struct_pg_hdr_a77cf3333a46c0b2e6d1614dce1a6405a}{pgno}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_pg_hdr_a687c73b55452210faa467db4d365a3ee}{flags}
+\item 
+\hyperlink{sqlite3_8c_a7b32340f65cd15f029caad258fb3355c}{i16} \hyperlink{struct_pg_hdr_ad9e2b8d24729b14017c69dcbd8f6710a}{n\+Ref}
+\item 
+\hyperlink{struct_p_cache}{P\+Cache} $\ast$ \hyperlink{struct_pg_hdr_a0e46130dcee42d121d035a573c45a63d}{p\+Cache}
+\item 
+\hyperlink{struct_pg_hdr}{Pg\+Hdr} $\ast$ \hyperlink{struct_pg_hdr_a9a8b52f1709a2099793247a8ce648e35}{p\+Dirty\+Next}
+\item 
+\hyperlink{struct_pg_hdr}{Pg\+Hdr} $\ast$ \hyperlink{struct_pg_hdr_a0292a09b055dcf8f39e438751dd5e433}{p\+Dirty\+Prev}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 10331 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_pg_hdr_a687c73b55452210faa467db4d365a3ee}{}\index{Pg\+Hdr@{Pg\+Hdr}!flags@{flags}}
+\index{flags@{flags}!Pg\+Hdr@{Pg\+Hdr}}
+\subsubsection[{flags}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} flags}\label{struct_pg_hdr_a687c73b55452210faa467db4d365a3ee}
+
+
+Definition at line 10341 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Pager\+Dont\+Write(), sqlite3\+Pager\+Movepage(), sqlite3\+Pager\+Rekey(), sqlite3\+Pager\+Unref\+Not\+Null(), sqlite3\+Pcache\+Clear\+Sync\+Flags(), sqlite3\+Pcache\+Drop(), sqlite3\+Pcache\+Fetch\+Stress(), sqlite3\+Pcache\+Make\+Clean(), sqlite3\+Pcache\+Make\+Dirty(), sqlite3\+Pcache\+Move(), and sqlite3\+Pcache\+Release().
+
+\hypertarget{struct_pg_hdr_ad9e2b8d24729b14017c69dcbd8f6710a}{}\index{Pg\+Hdr@{Pg\+Hdr}!n\+Ref@{n\+Ref}}
+\index{n\+Ref@{n\+Ref}!Pg\+Hdr@{Pg\+Hdr}}
+\subsubsection[{n\+Ref}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i16} n\+Ref}\label{struct_pg_hdr_ad9e2b8d24729b14017c69dcbd8f6710a}
+
+
+Definition at line 10347 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Pcache\+Fetch\+Finish(), sqlite3\+Pcache\+Fetch\+Stress(), sqlite3\+Pcache\+Make\+Clean(), sqlite3\+Pcache\+Page\+Refcount(), sqlite3\+Pcache\+Ref(), and sqlite3\+Pcache\+Release().
+
+\hypertarget{struct_pg_hdr_a0e46130dcee42d121d035a573c45a63d}{}\index{Pg\+Hdr@{Pg\+Hdr}!p\+Cache@{p\+Cache}}
+\index{p\+Cache@{p\+Cache}!Pg\+Hdr@{Pg\+Hdr}}
+\subsubsection[{p\+Cache}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+Cache}$\ast$ p\+Cache}\label{struct_pg_hdr_a0e46130dcee42d121d035a573c45a63d}
+
+
+Definition at line 10348 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Pcache\+Drop(), sqlite3\+Pcache\+Move(), and sqlite3\+Pcache\+Release().
+
+\hypertarget{struct_pg_hdr_aa92f08987c51e4eb7b92e84944ca2af3}{}\index{Pg\+Hdr@{Pg\+Hdr}!p\+Data@{p\+Data}}
+\index{p\+Data@{p\+Data}!Pg\+Hdr@{Pg\+Hdr}}
+\subsubsection[{p\+Data}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ p\+Data}\label{struct_pg_hdr_aa92f08987c51e4eb7b92e84944ca2af3}
+
+
+Definition at line 10333 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Pager\+Acquire(), sqlite3\+Pager\+Get\+Data(), and sqlite3\+Pcache\+Truncate().
+
+\hypertarget{struct_pg_hdr_a2997dc2dc0dd03fdd59937ca5a4eef8a}{}\index{Pg\+Hdr@{Pg\+Hdr}!p\+Dirty@{p\+Dirty}}
+\index{p\+Dirty@{p\+Dirty}!Pg\+Hdr@{Pg\+Hdr}}
+\subsubsection[{p\+Dirty}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pg\+Hdr}$\ast$ p\+Dirty}\label{struct_pg_hdr_a2997dc2dc0dd03fdd59937ca5a4eef8a}
+
+
+Definition at line 10335 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Pager\+Commit\+Phase\+One(), sqlite3\+Pcache\+Dirty\+List(), and sqlite3\+Wal\+Frames().
+
+\hypertarget{struct_pg_hdr_a9a8b52f1709a2099793247a8ce648e35}{}\index{Pg\+Hdr@{Pg\+Hdr}!p\+Dirty\+Next@{p\+Dirty\+Next}}
+\index{p\+Dirty\+Next@{p\+Dirty\+Next}!Pg\+Hdr@{Pg\+Hdr}}
+\subsubsection[{p\+Dirty\+Next}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pg\+Hdr}$\ast$ p\+Dirty\+Next}\label{struct_pg_hdr_a9a8b52f1709a2099793247a8ce648e35}
+
+
+Definition at line 10350 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Pcache\+Clear\+Sync\+Flags(), sqlite3\+Pcache\+Dirty\+List(), and sqlite3\+Pcache\+Truncate().
+
+\hypertarget{struct_pg_hdr_a0292a09b055dcf8f39e438751dd5e433}{}\index{Pg\+Hdr@{Pg\+Hdr}!p\+Dirty\+Prev@{p\+Dirty\+Prev}}
+\index{p\+Dirty\+Prev@{p\+Dirty\+Prev}!Pg\+Hdr@{Pg\+Hdr}}
+\subsubsection[{p\+Dirty\+Prev}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pg\+Hdr}$\ast$ p\+Dirty\+Prev}\label{struct_pg_hdr_a0292a09b055dcf8f39e438751dd5e433}
+
+
+Definition at line 10351 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Pcache\+Fetch\+Stress(), and sqlite3\+Pcache\+Release().
+
+\hypertarget{struct_pg_hdr_a484f2fe7f225c408158584262bebab66}{}\index{Pg\+Hdr@{Pg\+Hdr}!p\+Extra@{p\+Extra}}
+\index{p\+Extra@{p\+Extra}!Pg\+Hdr@{Pg\+Hdr}}
+\subsubsection[{p\+Extra}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ p\+Extra}\label{struct_pg_hdr_a484f2fe7f225c408158584262bebab66}
+
+
+Definition at line 10334 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Pager\+Get\+Extra().
+
+\hypertarget{struct_pg_hdr_a77cf3333a46c0b2e6d1614dce1a6405a}{}\index{Pg\+Hdr@{Pg\+Hdr}!pgno@{pgno}}
+\index{pgno@{pgno}!Pg\+Hdr@{Pg\+Hdr}}
+\subsubsection[{pgno}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pgno} pgno}\label{struct_pg_hdr_a77cf3333a46c0b2e6d1614dce1a6405a}
+
+
+Definition at line 10337 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Pager\+Movepage(), sqlite3\+Pcache\+Drop(), sqlite3\+Pcache\+Move(), sqlite3\+Pcache\+Truncate(), and sqlite3\+Wal\+Frames().
+
+\hypertarget{struct_pg_hdr_a93dd9756d090be6aaeae1d086dbad7d9}{}\index{Pg\+Hdr@{Pg\+Hdr}!p\+Page@{p\+Page}}
+\index{p\+Page@{p\+Page}!Pg\+Hdr@{Pg\+Hdr}}
+\subsubsection[{p\+Page}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+pcache\+\_\+page}$\ast$ p\+Page}\label{struct_pg_hdr_a93dd9756d090be6aaeae1d086dbad7d9}
+
+
+Definition at line 10332 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Pcache\+Drop(), sqlite3\+Pcache\+Fetch\+Finish(), and sqlite3\+Pcache\+Move().
+
+\hypertarget{struct_pg_hdr_a916447fa61ba4e11cc93d571a66d3aaf}{}\index{Pg\+Hdr@{Pg\+Hdr}!p\+Pager@{p\+Pager}}
+\index{p\+Pager@{p\+Pager}!Pg\+Hdr@{Pg\+Hdr}}
+\subsubsection[{p\+Pager}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pager}$\ast$ p\+Pager}\label{struct_pg_hdr_a916447fa61ba4e11cc93d571a66d3aaf}
+
+
+Definition at line 10336 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Pager\+Acquire(), sqlite3\+Pager\+Dont\+Write(), sqlite3\+Pager\+Unref\+Not\+Null(), and sqlite3\+Pager\+Write().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

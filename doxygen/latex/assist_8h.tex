@@ -1,0 +1,504 @@
+\hypertarget{assist_8h}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/assist.h File Reference}
+\label{assist_8h}\index{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/assist.\+h@{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/assist.\+h}}
+{\ttfamily \#include \char`\"{}ross.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$sys/types.\+h$>$}\\*
+{\ttfamily \#include $<$inttypes.\+h$>$}\\*
+Include dependency graph for assist.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{assist_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{assist_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_synapse_message}{Synapse\+Message}
+\item 
+struct \hyperlink{struct_neuron_message}{Neuron\+Message}
+\item 
+struct \hyperlink{struct_msg___data}{Msg\+\_\+\+Data}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{assist_8h_adc0d1d400308f82e4d42245c2fd946b9}{\+\_\+id\+Type}~int\+\_\+fast16\+\_\+t
+\item 
+\#define \hyperlink{assist_8h_a368ddcd71f7b61cb0f918f22d07ce999}{\+\_\+ne\+Volt\+Type}~uint\+\_\+fast32\+\_\+t
+\item 
+\#define \hyperlink{assist_8h_a7dd2b02e8e5ddb7f5b243002830d964f}{\+\_\+ne\+Stat\+Type}~int\+\_\+fast32\+\_\+t
+\item 
+\#define \hyperlink{assist_8h_ac35d555a6883d7624a8fc918f6cc91c0}{regid\+\_\+t}~uint32\+\_\+t
+\item 
+\#define \hyperlink{assist_8h_a83bb0fed7e64e381d564a9f1cb951fac}{L\+O\+C}(a)~((\hyperlink{mappings_8c_ac35d555a6883d7624a8fc918f6cc91c0}{regid\+\_\+t})a)
+\item 
+\#define \hyperlink{assist_8h_a5bf12e6001846798b26182c47c53df9b}{C\+O\+R\+E}(a)~((\hyperlink{mappings_8c_ac35d555a6883d7624a8fc918f6cc91c0}{regid\+\_\+t})(((\hyperlink{mappings_8c_a672b405f17d1859fc9e26f09afe9a366}{gid\+\_\+t})(a) $>$$>$ 32) \& 0x\+F\+F\+F\+F\+F\+F\+F\+F))
+\item 
+\#define \hyperlink{assist_8h_a29fd18bed01c4d836c7ebfe73a125c3f}{E\+N\+D}~1000
+\item 
+\#define \hyperlink{assist_8h_a20bca70df33b36749ecb55da3ad74769}{G\+V\+T\+\_\+\+I\+N\+T}~16
+\item 
+\#define \hyperlink{assist_8h_aaf4b596256d346dd40bc6f14c3eb9371}{I\+A\+B\+S}(a)~(((a) $<$ 0) ? (-\/a) \+: (a))
+\item 
+\#define \hyperlink{assist_8h_ab4d5664e9822f9bb25ba6ce6022a75df}{R\+E\+M\+Z}(a)~(((a) $<$ 0) ? (0) \+: (a))
+\item 
+\#define \hyperlink{assist_8h_a55f38b4f1b024416a8ffcc850537d08e}{T\+I\+M\+E\+\_\+\+C\+E\+I\+L}~(0)
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84}{events} \{ \hyperlink{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84aa6d4039a2c1978081f4a5dc297684e3b}{N\+E\+U\+R\+O\+N} = 1, 
+\hyperlink{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84a0fc4921596903c454139a4c6814fc839}{S\+Y\+N\+A\+P\+S\+E} = 2, 
+\hyperlink{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84a0cb1b2c6a7db1f1084886c98909a3f36}{I\+N\+I\+T} =3, 
+\hyperlink{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84a90cb05c22c7f003374a28a7cc13c2efa}{S\+P\+K\+G\+N} =4
+ \}
+\begin{DoxyCompactList}\small\item\em Message information\+: \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+long \hyperlink{assist_8h_a49beab5908df591d0cdd535f04dcd855}{get\+Total\+Neurons} ()
+\begin{DoxyCompactList}\small\item\em get\+Total\+Neurons -\/ simple function that gets the total synapses globally \end{DoxyCompactList}\item 
+long \hyperlink{assist_8h_aef81233c3f867780a8df11b7b8657936}{get\+Total\+Synapses} ()
+\begin{DoxyCompactList}\small\item\em \hyperlink{assist_8c}{Assist.\+C} Contains helper functions, used in the model. \end{DoxyCompactList}\item 
+tw\+\_\+stime \hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{get\+Next\+Event\+Time} (tw\+\_\+lp $\ast$lp)
+\begin{DoxyCompactList}\small\item\em Gets the next event time, based on a random function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{assist_8h_a67e8e45768f76b984a60fcff2b7c51aa}{N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}
+\begin{DoxyCompactList}\small\item\em Parameter Defs\+: Neurons in Core Max Syapse Weight Threshold Max Parameters for tuning neurons. \end{DoxyCompactList}\item 
+int \hyperlink{assist_8h_a076b99099b46431255982b2bb8ce06fb}{S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}
+\begin{DoxyCompactList}\small\item\em Number of synapses per core. \end{DoxyCompactList}\item 
+int \hyperlink{assist_8h_a851557110b7442a40078d6ef85c2de76}{C\+O\+R\+E\+S\+\_\+\+P\+E\+R\+\_\+\+P\+E}
+\begin{DoxyCompactList}\small\item\em Each P\+E can have one or more virtual cores running during the simulation. \end{DoxyCompactList}\item 
+int \hyperlink{assist_8h_ad39b86a0b748731175572436f6672264}{C\+O\+R\+E\+\_\+\+S\+I\+Z\+E}
+\item 
+int \hyperlink{assist_8h_a433873baf41da436ba9c1734c8c5ddd2}{T\+H\+R\+E\+S\+H\+O\+L\+D\+\_\+\+M\+A\+X}
+\begin{DoxyCompactList}\small\item\em Determines the maximum and minimum thresholds for a neuron to fire. \end{DoxyCompactList}\item 
+int \hyperlink{assist_8h_a55f4484944f4174b5e677c0a71b30e4a}{T\+H\+R\+E\+S\+H\+O\+L\+D\+\_\+\+M\+I\+N}
+\begin{DoxyCompactList}\small\item\em Minimum threshold. \end{DoxyCompactList}\item 
+int \hyperlink{assist_8h_a20ef6d41d2f384358522fb59fb6226cb}{S\+Y\+N\+A\+P\+S\+E\+\_\+\+W\+E\+I\+G\+H\+T\+\_\+\+M\+A\+X}
+\begin{DoxyCompactList}\small\item\em Each neuron is connected to the synapses (inputs) within the core it is running in. \end{DoxyCompactList}\item 
+int \hyperlink{assist_8h_af38a0e2e2483ef81f7ea5175c366ce82}{S\+Y\+N\+A\+P\+S\+E\+\_\+\+W\+E\+I\+G\+H\+T\+\_\+\+M\+I\+N}
+\begin{DoxyCompactList}\small\item\em Minimum synapse weight. \end{DoxyCompactList}\item 
+int \hyperlink{assist_8h_a0558e7a740a6a936cc8c885b1a6bf05a}{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+M\+I\+N}
+\item 
+int \hyperlink{assist_8h_acd879a3e486663b25520856aa817c05e}{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+M\+A\+X}
+\item 
+int \hyperlink{assist_8h_afb25d4d7e58f38cc423aea854b82e806}{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+W\+\_\+\+M\+I\+N}
+\item 
+int \hyperlink{assist_8h_a36561127c05afb3f4ecd873346a7f240}{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+W\+\_\+\+M\+A\+X}
+\item 
+float \hyperlink{assist_8h_a0cd5ccf63b6dd9b12098d82503d03c05}{C\+L\+O\+C\+K\+\_\+\+S\+P\+E\+E\+D}
+\item 
+bool \hyperlink{assist_8h_a002a2a64f4efdb283983d95f46f92596}{is\+File}
+\item 
+int \hyperlink{assist_8h_a47d27feae0fedebece9a496a627122b9}{events\+\_\+per\+\_\+pe}
+\item 
+int \hyperlink{assist_8h_a7e27e1b193eb12feaaaa6c53a110adec}{exec\+\_\+memory}
+\item 
+int \hyperlink{assist_8h_a9ba9cb271aacdab3589a8a609d8cb1b7}{clock\+\_\+rate}
+\item 
+tw\+\_\+stime \hyperlink{assist_8h_ac877337ae1e75d1b6640f41799f5a72c}{lookahead}
+\item 
+tw\+\_\+stime \hyperlink{assist_8h_af993af1cf4511b3c4d3630b96dc7e945}{end\+\_\+time}
+\item 
+int \hyperlink{assist_8h_ac858bb435ac6b897dd949dbfdc61b5a5}{D\+E\+B\+U\+G\+\_\+\+M\+O\+D\+E}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{assist_8h_adc0d1d400308f82e4d42245c2fd946b9}{}\index{assist.\+h@{assist.\+h}!\+\_\+id\+Type@{\+\_\+id\+Type}}
+\index{\+\_\+id\+Type@{\+\_\+id\+Type}!assist.\+h@{assist.\+h}}
+\subsubsection[{\+\_\+id\+Type}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+id\+Type~int\+\_\+fast16\+\_\+t}\label{assist_8h_adc0d1d400308f82e4d42245c2fd946b9}
+
+
+Definition at line 82 of file assist.\+h.
+
+\hypertarget{assist_8h_a7dd2b02e8e5ddb7f5b243002830d964f}{}\index{assist.\+h@{assist.\+h}!\+\_\+ne\+Stat\+Type@{\+\_\+ne\+Stat\+Type}}
+\index{\+\_\+ne\+Stat\+Type@{\+\_\+ne\+Stat\+Type}!assist.\+h@{assist.\+h}}
+\subsubsection[{\+\_\+ne\+Stat\+Type}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+ne\+Stat\+Type~int\+\_\+fast32\+\_\+t}\label{assist_8h_a7dd2b02e8e5ddb7f5b243002830d964f}
+
+
+Definition at line 85 of file assist.\+h.
+
+\hypertarget{assist_8h_a368ddcd71f7b61cb0f918f22d07ce999}{}\index{assist.\+h@{assist.\+h}!\+\_\+ne\+Volt\+Type@{\+\_\+ne\+Volt\+Type}}
+\index{\+\_\+ne\+Volt\+Type@{\+\_\+ne\+Volt\+Type}!assist.\+h@{assist.\+h}}
+\subsubsection[{\+\_\+ne\+Volt\+Type}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+ne\+Volt\+Type~uint\+\_\+fast32\+\_\+t}\label{assist_8h_a368ddcd71f7b61cb0f918f22d07ce999}
+
+
+Definition at line 84 of file assist.\+h.
+
+\hypertarget{assist_8h_a5bf12e6001846798b26182c47c53df9b}{}\index{assist.\+h@{assist.\+h}!C\+O\+R\+E@{C\+O\+R\+E}}
+\index{C\+O\+R\+E@{C\+O\+R\+E}!assist.\+h@{assist.\+h}}
+\subsubsection[{C\+O\+R\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+O\+R\+E(
+\begin{DoxyParamCaption}
+\item[{}]{a}
+\end{DoxyParamCaption}
+)~(({\bf regid\+\_\+t})((({\bf gid\+\_\+t})(a) $>$$>$ 32) \& 0x\+F\+F\+F\+F\+F\+F\+F\+F))}\label{assist_8h_a5bf12e6001846798b26182c47c53df9b}
+
+
+Definition at line 90 of file assist.\+h.
+
+\hypertarget{assist_8h_a29fd18bed01c4d836c7ebfe73a125c3f}{}\index{assist.\+h@{assist.\+h}!E\+N\+D@{E\+N\+D}}
+\index{E\+N\+D@{E\+N\+D}!assist.\+h@{assist.\+h}}
+\subsubsection[{E\+N\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+N\+D~1000}\label{assist_8h_a29fd18bed01c4d836c7ebfe73a125c3f}
+
+
+Definition at line 100 of file assist.\+h.
+
+\hypertarget{assist_8h_a20bca70df33b36749ecb55da3ad74769}{}\index{assist.\+h@{assist.\+h}!G\+V\+T\+\_\+\+I\+N\+T@{G\+V\+T\+\_\+\+I\+N\+T}}
+\index{G\+V\+T\+\_\+\+I\+N\+T@{G\+V\+T\+\_\+\+I\+N\+T}!assist.\+h@{assist.\+h}}
+\subsubsection[{G\+V\+T\+\_\+\+I\+N\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+V\+T\+\_\+\+I\+N\+T~16}\label{assist_8h_a20bca70df33b36749ecb55da3ad74769}
+
+
+Definition at line 101 of file assist.\+h.
+
+\hypertarget{assist_8h_aaf4b596256d346dd40bc6f14c3eb9371}{}\index{assist.\+h@{assist.\+h}!I\+A\+B\+S@{I\+A\+B\+S}}
+\index{I\+A\+B\+S@{I\+A\+B\+S}!assist.\+h@{assist.\+h}}
+\subsubsection[{I\+A\+B\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\+A\+B\+S(
+\begin{DoxyParamCaption}
+\item[{}]{a}
+\end{DoxyParamCaption}
+)~(((a) $<$ 0) ? (-\/a) \+: (a))}\label{assist_8h_aaf4b596256d346dd40bc6f14c3eb9371}
+
+
+Definition at line 103 of file assist.\+h.
+
+\hypertarget{assist_8h_a83bb0fed7e64e381d564a9f1cb951fac}{}\index{assist.\+h@{assist.\+h}!L\+O\+C@{L\+O\+C}}
+\index{L\+O\+C@{L\+O\+C}!assist.\+h@{assist.\+h}}
+\subsubsection[{L\+O\+C}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+O\+C(
+\begin{DoxyParamCaption}
+\item[{}]{a}
+\end{DoxyParamCaption}
+)~(({\bf regid\+\_\+t})a)}\label{assist_8h_a83bb0fed7e64e381d564a9f1cb951fac}
+
+
+Definition at line 89 of file assist.\+h.
+
+\hypertarget{assist_8h_ac35d555a6883d7624a8fc918f6cc91c0}{}\index{assist.\+h@{assist.\+h}!regid\+\_\+t@{regid\+\_\+t}}
+\index{regid\+\_\+t@{regid\+\_\+t}!assist.\+h@{assist.\+h}}
+\subsubsection[{regid\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}\#define regid\+\_\+t~uint32\+\_\+t}\label{assist_8h_ac35d555a6883d7624a8fc918f6cc91c0}
+
+
+Definition at line 86 of file assist.\+h.
+
+\hypertarget{assist_8h_ab4d5664e9822f9bb25ba6ce6022a75df}{}\index{assist.\+h@{assist.\+h}!R\+E\+M\+Z@{R\+E\+M\+Z}}
+\index{R\+E\+M\+Z@{R\+E\+M\+Z}!assist.\+h@{assist.\+h}}
+\subsubsection[{R\+E\+M\+Z}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+E\+M\+Z(
+\begin{DoxyParamCaption}
+\item[{}]{a}
+\end{DoxyParamCaption}
+)~(((a) $<$ 0) ? (0) \+: (a))}\label{assist_8h_ab4d5664e9822f9bb25ba6ce6022a75df}
+
+
+Definition at line 104 of file assist.\+h.
+
+\hypertarget{assist_8h_a55f38b4f1b024416a8ffcc850537d08e}{}\index{assist.\+h@{assist.\+h}!T\+I\+M\+E\+\_\+\+C\+E\+I\+L@{T\+I\+M\+E\+\_\+\+C\+E\+I\+L}}
+\index{T\+I\+M\+E\+\_\+\+C\+E\+I\+L@{T\+I\+M\+E\+\_\+\+C\+E\+I\+L}!assist.\+h@{assist.\+h}}
+\subsubsection[{T\+I\+M\+E\+\_\+\+C\+E\+I\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+I\+M\+E\+\_\+\+C\+E\+I\+L~(0)}\label{assist_8h_a55f38b4f1b024416a8ffcc850537d08e}
+
+
+Definition at line 105 of file assist.\+h.
+
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84}{}\index{assist.\+h@{assist.\+h}!events@{events}}
+\index{events@{events}!assist.\+h@{assist.\+h}}
+\subsubsection[{events}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf events}}\label{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84}
+
+
+Message information\+: 
+
+State items \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{N\+E\+U\+R\+O\+N@{N\+E\+U\+R\+O\+N}!assist.\+h@{assist.\+h}}\index{assist.\+h@{assist.\+h}!N\+E\+U\+R\+O\+N@{N\+E\+U\+R\+O\+N}}\item[{\em 
+\hypertarget{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84aa6d4039a2c1978081f4a5dc297684e3b}{}N\+E\+U\+R\+O\+N\label{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84aa6d4039a2c1978081f4a5dc297684e3b}
+}]\index{S\+Y\+N\+A\+P\+S\+E@{S\+Y\+N\+A\+P\+S\+E}!assist.\+h@{assist.\+h}}\index{assist.\+h@{assist.\+h}!S\+Y\+N\+A\+P\+S\+E@{S\+Y\+N\+A\+P\+S\+E}}\item[{\em 
+\hypertarget{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84a0fc4921596903c454139a4c6814fc839}{}S\+Y\+N\+A\+P\+S\+E\label{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84a0fc4921596903c454139a4c6814fc839}
+}]\index{I\+N\+I\+T@{I\+N\+I\+T}!assist.\+h@{assist.\+h}}\index{assist.\+h@{assist.\+h}!I\+N\+I\+T@{I\+N\+I\+T}}\item[{\em 
+\hypertarget{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84a0cb1b2c6a7db1f1084886c98909a3f36}{}I\+N\+I\+T\label{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84a0cb1b2c6a7db1f1084886c98909a3f36}
+}]\index{S\+P\+K\+G\+N@{S\+P\+K\+G\+N}!assist.\+h@{assist.\+h}}\index{assist.\+h@{assist.\+h}!S\+P\+K\+G\+N@{S\+P\+K\+G\+N}}\item[{\em 
+\hypertarget{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84a90cb05c22c7f003374a28a7cc13c2efa}{}S\+P\+K\+G\+N\label{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84a90cb05c22c7f003374a28a7cc13c2efa}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 119 of file assist.\+h.
+
+
+\begin{DoxyCode}
+119             \{
+120    \hyperlink{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84aa6d4039a2c1978081f4a5dc297684e3b}{NEURON} = 1,
+121    \hyperlink{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84a0fc4921596903c454139a4c6814fc839}{SYNAPSE} = 2,
+122     \hyperlink{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84a0cb1b2c6a7db1f1084886c98909a3f36}{INIT}=3,
+123     \hyperlink{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84a90cb05c22c7f003374a28a7cc13c2efa}{SPKGN}=4
+124 \};
+\end{DoxyCode}
+
+
+\subsection{Function Documentation}
+\hypertarget{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{}\index{assist.\+h@{assist.\+h}!get\+Next\+Event\+Time@{get\+Next\+Event\+Time}}
+\index{get\+Next\+Event\+Time@{get\+Next\+Event\+Time}!assist.\+h@{assist.\+h}}
+\subsubsection[{get\+Next\+Event\+Time}]{\setlength{\rightskip}{0pt plus 5cm}tw\+\_\+stime get\+Next\+Event\+Time (
+\begin{DoxyParamCaption}
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}
+
+
+Gets the next event time, based on a random function. 
+
+Moved here to allow for easier abstraciton, and random function replacement.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lp} & Reference to the current L\+P so that the function can see the R\+N\+G\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a tw\+\_\+stime value, such that $ 0 < t < 1 $. A delta for the next time slice. 
+\end{DoxyReturn}
+
+
+Definition at line 36 of file assist.\+c.
+
+
+\begin{DoxyCode}
+36                                     \{
+37 
+38     \textcolor{keywordflow}{return} tw\_rand\_unif(lp->rng) / 10;
+39 \}\end{DoxyCode}
+\hypertarget{assist_8h_a49beab5908df591d0cdd535f04dcd855}{}\index{assist.\+h@{assist.\+h}!get\+Total\+Neurons@{get\+Total\+Neurons}}
+\index{get\+Total\+Neurons@{get\+Total\+Neurons}!assist.\+h@{assist.\+h}}
+\subsubsection[{get\+Total\+Neurons}]{\setlength{\rightskip}{0pt plus 5cm}long get\+Total\+Neurons (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{assist_8h_a49beab5908df591d0cdd535f04dcd855}
+
+
+get\+Total\+Neurons -\/ simple function that gets the total synapses globally 
+
+\begin{DoxyReturn}{Returns}
+The number of neurons in the system. 
+\end{DoxyReturn}
+
+
+Definition at line 23 of file assist.\+c.
+
+
+
+References C\+O\+R\+E\+S\+\_\+\+P\+E\+R\+\_\+\+P\+E, and N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E.
+
+
+\begin{DoxyCode}
+23                        \{
+24     \textcolor{keywordflow}{return} \hyperlink{assist_8h_a67e8e45768f76b984a60fcff2b7c51aa}{NEURONS\_IN\_CORE} * \hyperlink{assist_8h_a851557110b7442a40078d6ef85c2de76}{CORES\_PER\_PE};
+25 \}
+\end{DoxyCode}
+\hypertarget{assist_8h_aef81233c3f867780a8df11b7b8657936}{}\index{assist.\+h@{assist.\+h}!get\+Total\+Synapses@{get\+Total\+Synapses}}
+\index{get\+Total\+Synapses@{get\+Total\+Synapses}!assist.\+h@{assist.\+h}}
+\subsubsection[{get\+Total\+Synapses}]{\setlength{\rightskip}{0pt plus 5cm}long get\+Total\+Synapses (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{assist_8h_aef81233c3f867780a8df11b7b8657936}
+
+
+\hyperlink{assist_8c}{Assist.\+C} Contains helper functions, used in the model. 
+
+Functions here should be too generic to include in neuron/synapse Contains all of the global defs as well. get\+Total\+Synapses -\/ simple function that gets the total synapses globally
+
+\begin{DoxyReturn}{Returns}
+The number of synapses in in the sim 
+\end{DoxyReturn}
+
+
+Definition at line 15 of file assist.\+c.
+
+
+
+References C\+O\+R\+E\+S\+\_\+\+P\+E\+R\+\_\+\+P\+E, and S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E.
+
+
+\begin{DoxyCode}
+15                         \{
+16    \textcolor{keywordflow}{return} \hyperlink{assist_8h_a076b99099b46431255982b2bb8ce06fb}{SYNAPSES\_IN\_CORE} * \hyperlink{assist_8h_a851557110b7442a40078d6ef85c2de76}{CORES\_PER\_PE};
+17 \}
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\hypertarget{assist_8h_a9ba9cb271aacdab3589a8a609d8cb1b7}{}\index{assist.\+h@{assist.\+h}!clock\+\_\+rate@{clock\+\_\+rate}}
+\index{clock\+\_\+rate@{clock\+\_\+rate}!assist.\+h@{assist.\+h}}
+\subsubsection[{clock\+\_\+rate}]{\setlength{\rightskip}{0pt plus 5cm}int clock\+\_\+rate}\label{assist_8h_a9ba9cb271aacdab3589a8a609d8cb1b7}
+\hypertarget{assist_8h_a0cd5ccf63b6dd9b12098d82503d03c05}{}\index{assist.\+h@{assist.\+h}!C\+L\+O\+C\+K\+\_\+\+S\+P\+E\+E\+D@{C\+L\+O\+C\+K\+\_\+\+S\+P\+E\+E\+D}}
+\index{C\+L\+O\+C\+K\+\_\+\+S\+P\+E\+E\+D@{C\+L\+O\+C\+K\+\_\+\+S\+P\+E\+E\+D}!assist.\+h@{assist.\+h}}
+\subsubsection[{C\+L\+O\+C\+K\+\_\+\+S\+P\+E\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}float C\+L\+O\+C\+K\+\_\+\+S\+P\+E\+E\+D}\label{assist_8h_a0cd5ccf63b6dd9b12098d82503d03c05}
+
+
+Definition at line 56 of file model\+\_\+main.\+h.
+
+\hypertarget{assist_8h_ad39b86a0b748731175572436f6672264}{}\index{assist.\+h@{assist.\+h}!C\+O\+R\+E\+\_\+\+S\+I\+Z\+E@{C\+O\+R\+E\+\_\+\+S\+I\+Z\+E}}
+\index{C\+O\+R\+E\+\_\+\+S\+I\+Z\+E@{C\+O\+R\+E\+\_\+\+S\+I\+Z\+E}!assist.\+h@{assist.\+h}}
+\subsubsection[{C\+O\+R\+E\+\_\+\+S\+I\+Z\+E}]{\setlength{\rightskip}{0pt plus 5cm}int C\+O\+R\+E\+\_\+\+S\+I\+Z\+E}\label{assist_8h_ad39b86a0b748731175572436f6672264}
+
+
+Definition at line 55 of file model\+\_\+main.\+h.
+
+\hypertarget{assist_8h_a851557110b7442a40078d6ef85c2de76}{}\index{assist.\+h@{assist.\+h}!C\+O\+R\+E\+S\+\_\+\+P\+E\+R\+\_\+\+P\+E@{C\+O\+R\+E\+S\+\_\+\+P\+E\+R\+\_\+\+P\+E}}
+\index{C\+O\+R\+E\+S\+\_\+\+P\+E\+R\+\_\+\+P\+E@{C\+O\+R\+E\+S\+\_\+\+P\+E\+R\+\_\+\+P\+E}!assist.\+h@{assist.\+h}}
+\subsubsection[{C\+O\+R\+E\+S\+\_\+\+P\+E\+R\+\_\+\+P\+E}]{\setlength{\rightskip}{0pt plus 5cm}int C\+O\+R\+E\+S\+\_\+\+P\+E\+R\+\_\+\+P\+E}\label{assist_8h_a851557110b7442a40078d6ef85c2de76}
+
+
+Each P\+E can have one or more virtual cores running during the simulation. 
+
+Default is 2. 
+
+Definition at line 35 of file model\+\_\+main.\+h.
+
+
+
+Referenced by get\+Total\+Neurons(), and get\+Total\+Synapses().
+
+\hypertarget{assist_8h_ac858bb435ac6b897dd949dbfdc61b5a5}{}\index{assist.\+h@{assist.\+h}!D\+E\+B\+U\+G\+\_\+\+M\+O\+D\+E@{D\+E\+B\+U\+G\+\_\+\+M\+O\+D\+E}}
+\index{D\+E\+B\+U\+G\+\_\+\+M\+O\+D\+E@{D\+E\+B\+U\+G\+\_\+\+M\+O\+D\+E}!assist.\+h@{assist.\+h}}
+\subsubsection[{D\+E\+B\+U\+G\+\_\+\+M\+O\+D\+E}]{\setlength{\rightskip}{0pt plus 5cm}int D\+E\+B\+U\+G\+\_\+\+M\+O\+D\+E}\label{assist_8h_ac858bb435ac6b897dd949dbfdc61b5a5}
+
+
+Definition at line 67 of file model\+\_\+main.\+h.
+
+\hypertarget{assist_8h_acd879a3e486663b25520856aa817c05e}{}\index{assist.\+h@{assist.\+h}!D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+M\+A\+X@{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+M\+A\+X}}
+\index{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+M\+A\+X@{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+M\+A\+X}!assist.\+h@{assist.\+h}}
+\subsubsection[{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+M\+A\+X}]{\setlength{\rightskip}{0pt plus 5cm}int D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+M\+A\+X}\label{assist_8h_acd879a3e486663b25520856aa817c05e}
+\hypertarget{assist_8h_a0558e7a740a6a936cc8c885b1a6bf05a}{}\index{assist.\+h@{assist.\+h}!D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+M\+I\+N@{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+M\+I\+N}}
+\index{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+M\+I\+N@{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+M\+I\+N}!assist.\+h@{assist.\+h}}
+\subsubsection[{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+M\+I\+N}]{\setlength{\rightskip}{0pt plus 5cm}int D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+M\+I\+N}\label{assist_8h_a0558e7a740a6a936cc8c885b1a6bf05a}
+\hypertarget{assist_8h_a36561127c05afb3f4ecd873346a7f240}{}\index{assist.\+h@{assist.\+h}!D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+W\+\_\+\+M\+A\+X@{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+W\+\_\+\+M\+A\+X}}
+\index{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+W\+\_\+\+M\+A\+X@{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+W\+\_\+\+M\+A\+X}!assist.\+h@{assist.\+h}}
+\subsubsection[{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+W\+\_\+\+M\+A\+X}]{\setlength{\rightskip}{0pt plus 5cm}int D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+W\+\_\+\+M\+A\+X}\label{assist_8h_a36561127c05afb3f4ecd873346a7f240}
+\hypertarget{assist_8h_afb25d4d7e58f38cc423aea854b82e806}{}\index{assist.\+h@{assist.\+h}!D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+W\+\_\+\+M\+I\+N@{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+W\+\_\+\+M\+I\+N}}
+\index{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+W\+\_\+\+M\+I\+N@{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+W\+\_\+\+M\+I\+N}!assist.\+h@{assist.\+h}}
+\subsubsection[{D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+W\+\_\+\+M\+I\+N}]{\setlength{\rightskip}{0pt plus 5cm}int D\+E\+N\+D\+R\+I\+T\+E\+\_\+\+W\+\_\+\+M\+I\+N}\label{assist_8h_afb25d4d7e58f38cc423aea854b82e806}
+\hypertarget{assist_8h_af993af1cf4511b3c4d3630b96dc7e945}{}\index{assist.\+h@{assist.\+h}!end\+\_\+time@{end\+\_\+time}}
+\index{end\+\_\+time@{end\+\_\+time}!assist.\+h@{assist.\+h}}
+\subsubsection[{end\+\_\+time}]{\setlength{\rightskip}{0pt plus 5cm}tw\+\_\+stime end\+\_\+time}\label{assist_8h_af993af1cf4511b3c4d3630b96dc7e945}
+\hypertarget{assist_8h_a47d27feae0fedebece9a496a627122b9}{}\index{assist.\+h@{assist.\+h}!events\+\_\+per\+\_\+pe@{events\+\_\+per\+\_\+pe}}
+\index{events\+\_\+per\+\_\+pe@{events\+\_\+per\+\_\+pe}!assist.\+h@{assist.\+h}}
+\subsubsection[{events\+\_\+per\+\_\+pe}]{\setlength{\rightskip}{0pt plus 5cm}int events\+\_\+per\+\_\+pe}\label{assist_8h_a47d27feae0fedebece9a496a627122b9}
+
+
+Definition at line 73 of file model\+\_\+main.\+h.
+
+\hypertarget{assist_8h_a7e27e1b193eb12feaaaa6c53a110adec}{}\index{assist.\+h@{assist.\+h}!exec\+\_\+memory@{exec\+\_\+memory}}
+\index{exec\+\_\+memory@{exec\+\_\+memory}!assist.\+h@{assist.\+h}}
+\subsubsection[{exec\+\_\+memory}]{\setlength{\rightskip}{0pt plus 5cm}int exec\+\_\+memory}\label{assist_8h_a7e27e1b193eb12feaaaa6c53a110adec}
+\hypertarget{assist_8h_a002a2a64f4efdb283983d95f46f92596}{}\index{assist.\+h@{assist.\+h}!is\+File@{is\+File}}
+\index{is\+File@{is\+File}!assist.\+h@{assist.\+h}}
+\subsubsection[{is\+File}]{\setlength{\rightskip}{0pt plus 5cm}bool is\+File}\label{assist_8h_a002a2a64f4efdb283983d95f46f92596}
+
+
+Definition at line 71 of file model\+\_\+main.\+h.
+
+
+
+Referenced by neuron\+\_\+init(), and set\+Neuron\+Threshold().
+
+\hypertarget{assist_8h_ac877337ae1e75d1b6640f41799f5a72c}{}\index{assist.\+h@{assist.\+h}!lookahead@{lookahead}}
+\index{lookahead@{lookahead}!assist.\+h@{assist.\+h}}
+\subsubsection[{lookahead}]{\setlength{\rightskip}{0pt plus 5cm}tw\+\_\+stime lookahead}\label{assist_8h_ac877337ae1e75d1b6640f41799f5a72c}
+
+
+Definition at line 72 of file model\+\_\+main.\+h.
+
+\hypertarget{assist_8h_a67e8e45768f76b984a60fcff2b7c51aa}{}\index{assist.\+h@{assist.\+h}!N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E@{N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}}
+\index{N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E@{N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}!assist.\+h@{assist.\+h}}
+\subsubsection[{N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}]{\setlength{\rightskip}{0pt plus 5cm}int N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}\label{assist_8h_a67e8e45768f76b984a60fcff2b7c51aa}
+
+
+Parameter Defs\+: Neurons in Core Max Syapse Weight Threshold Max Parameters for tuning neurons. 
+
+Parameter Defs\+: Neurons in Core Max Syapse Weight Threshold Max Parameters for tuning neurons. 
+
+Definition at line 27 of file model\+\_\+main.\+h.
+
+
+
+Referenced by get\+Total\+Neurons().
+
+\hypertarget{assist_8h_a20ef6d41d2f384358522fb59fb6226cb}{}\index{assist.\+h@{assist.\+h}!S\+Y\+N\+A\+P\+S\+E\+\_\+\+W\+E\+I\+G\+H\+T\+\_\+\+M\+A\+X@{S\+Y\+N\+A\+P\+S\+E\+\_\+\+W\+E\+I\+G\+H\+T\+\_\+\+M\+A\+X}}
+\index{S\+Y\+N\+A\+P\+S\+E\+\_\+\+W\+E\+I\+G\+H\+T\+\_\+\+M\+A\+X@{S\+Y\+N\+A\+P\+S\+E\+\_\+\+W\+E\+I\+G\+H\+T\+\_\+\+M\+A\+X}!assist.\+h@{assist.\+h}}
+\subsubsection[{S\+Y\+N\+A\+P\+S\+E\+\_\+\+W\+E\+I\+G\+H\+T\+\_\+\+M\+A\+X}]{\setlength{\rightskip}{0pt plus 5cm}int S\+Y\+N\+A\+P\+S\+E\+\_\+\+W\+E\+I\+G\+H\+T\+\_\+\+M\+A\+X}\label{assist_8h_a20ef6d41d2f384358522fb59fb6226cb}
+
+
+Each neuron is connected to the synapses (inputs) within the core it is running in. 
+
+These parameters adjust the input weight given to each synapse. 
+
+Definition at line 47 of file model\+\_\+main.\+h.
+
+\hypertarget{assist_8h_af38a0e2e2483ef81f7ea5175c366ce82}{}\index{assist.\+h@{assist.\+h}!S\+Y\+N\+A\+P\+S\+E\+\_\+\+W\+E\+I\+G\+H\+T\+\_\+\+M\+I\+N@{S\+Y\+N\+A\+P\+S\+E\+\_\+\+W\+E\+I\+G\+H\+T\+\_\+\+M\+I\+N}}
+\index{S\+Y\+N\+A\+P\+S\+E\+\_\+\+W\+E\+I\+G\+H\+T\+\_\+\+M\+I\+N@{S\+Y\+N\+A\+P\+S\+E\+\_\+\+W\+E\+I\+G\+H\+T\+\_\+\+M\+I\+N}!assist.\+h@{assist.\+h}}
+\subsubsection[{S\+Y\+N\+A\+P\+S\+E\+\_\+\+W\+E\+I\+G\+H\+T\+\_\+\+M\+I\+N}]{\setlength{\rightskip}{0pt plus 5cm}int S\+Y\+N\+A\+P\+S\+E\+\_\+\+W\+E\+I\+G\+H\+T\+\_\+\+M\+I\+N}\label{assist_8h_af38a0e2e2483ef81f7ea5175c366ce82}
+
+
+Minimum synapse weight. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{model__main_8h_a20ef6d41d2f384358522fb59fb6226cb}{S\+Y\+N\+A\+P\+S\+E\+\_\+\+W\+E\+I\+G\+H\+T\+\_\+\+M\+A\+X} 
+\end{DoxySeeAlso}
+
+
+Definition at line 49 of file model\+\_\+main.\+h.
+
+\hypertarget{assist_8h_a076b99099b46431255982b2bb8ce06fb}{}\index{assist.\+h@{assist.\+h}!S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E@{S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}}
+\index{S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E@{S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}!assist.\+h@{assist.\+h}}
+\subsubsection[{S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}]{\setlength{\rightskip}{0pt plus 5cm}int S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}\label{assist_8h_a076b99099b46431255982b2bb8ce06fb}
+
+
+Number of synapses per core. 
+
+
+
+Definition at line 31 of file model\+\_\+main.\+h.
+
+
+
+Referenced by get\+Total\+Synapses(), and init\+Random\+Wts().
+
+\hypertarget{assist_8h_a433873baf41da436ba9c1734c8c5ddd2}{}\index{assist.\+h@{assist.\+h}!T\+H\+R\+E\+S\+H\+O\+L\+D\+\_\+\+M\+A\+X@{T\+H\+R\+E\+S\+H\+O\+L\+D\+\_\+\+M\+A\+X}}
+\index{T\+H\+R\+E\+S\+H\+O\+L\+D\+\_\+\+M\+A\+X@{T\+H\+R\+E\+S\+H\+O\+L\+D\+\_\+\+M\+A\+X}!assist.\+h@{assist.\+h}}
+\subsubsection[{T\+H\+R\+E\+S\+H\+O\+L\+D\+\_\+\+M\+A\+X}]{\setlength{\rightskip}{0pt plus 5cm}int T\+H\+R\+E\+S\+H\+O\+L\+D\+\_\+\+M\+A\+X}\label{assist_8h_a433873baf41da436ba9c1734c8c5ddd2}
+
+
+Determines the maximum and minimum thresholds for a neuron to fire. 
+
+
+
+Definition at line 39 of file model\+\_\+main.\+h.
+
+\hypertarget{assist_8h_a55f4484944f4174b5e677c0a71b30e4a}{}\index{assist.\+h@{assist.\+h}!T\+H\+R\+E\+S\+H\+O\+L\+D\+\_\+\+M\+I\+N@{T\+H\+R\+E\+S\+H\+O\+L\+D\+\_\+\+M\+I\+N}}
+\index{T\+H\+R\+E\+S\+H\+O\+L\+D\+\_\+\+M\+I\+N@{T\+H\+R\+E\+S\+H\+O\+L\+D\+\_\+\+M\+I\+N}!assist.\+h@{assist.\+h}}
+\subsubsection[{T\+H\+R\+E\+S\+H\+O\+L\+D\+\_\+\+M\+I\+N}]{\setlength{\rightskip}{0pt plus 5cm}int T\+H\+R\+E\+S\+H\+O\+L\+D\+\_\+\+M\+I\+N}\label{assist_8h_a55f4484944f4174b5e677c0a71b30e4a}
+
+
+Minimum threshold. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{model__main_8h_a433873baf41da436ba9c1734c8c5ddd2}{T\+H\+R\+E\+S\+H\+O\+L\+D\+\_\+\+M\+A\+X} 
+\end{DoxySeeAlso}
+
+
+Definition at line 43 of file model\+\_\+main.\+h.
+

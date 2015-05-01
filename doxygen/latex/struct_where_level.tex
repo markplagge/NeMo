@@ -1,0 +1,326 @@
+\hypertarget{struct_where_level}{}\section{Where\+Level Struct Reference}
+\label{struct_where_level}\index{Where\+Level@{Where\+Level}}
+
+
+Collaboration diagram for Where\+Level\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{struct_where_level_a79a899518a34f0fc50ab104412fe1ab1}{i\+Left\+Join}
+\item 
+int \hyperlink{struct_where_level_a103f2fe41869e2e93ecca3ab667b0a5a}{i\+Tab\+Cur}
+\item 
+int \hyperlink{struct_where_level_aecc5f6fc895b5d32e286a8a34ebbec98}{i\+Idx\+Cur}
+\item 
+int \hyperlink{struct_where_level_ad1b2cf3d5417f400ef25e11d7e75668c}{addr\+Brk}
+\item 
+int \hyperlink{struct_where_level_aa890851807d02a557a64464694c2190b}{addr\+Nxt}
+\item 
+int \hyperlink{struct_where_level_a9f619c343c9098910c3b4aad6b570171}{addr\+Skip}
+\item 
+int \hyperlink{struct_where_level_a7d833ccdc1fa083eeb29104ce6f31f41}{addr\+Cont}
+\item 
+int \hyperlink{struct_where_level_ab50af87e2ba502a5a49807b2eaee976e}{addr\+First}
+\item 
+int \hyperlink{struct_where_level_aafb1eec74f5f867b898e92324f78d46f}{addr\+Body}
+\item 
+int \hyperlink{struct_where_level_a1503c6ce7512eec00b17c99515601372}{i\+Like\+Rep\+Cntr}
+\item 
+int \hyperlink{struct_where_level_a04ef159ee611aabe3cbcfe9d5c05f306}{addr\+Like\+Rep}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_where_level_af49ca5d468f3332716f64944ed6f07e9}{i\+From}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_where_level_a0991b29aa40e12f033237266ebe6610c}{op}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_where_level_a47eadd11a1fdd79088fa6e4e6be69cd4}{p3}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_where_level_a8308037057f2acf587d898607ed08fd6}{p5}
+\item 
+int \hyperlink{struct_where_level_a8d5504470de9fec69f0389092910c500}{p1}
+\item 
+int \hyperlink{struct_where_level_a2fbbf5056a49832e7d5e73a15ae2ee05}{p2}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>int \hyperlink{struct_where_level_a38d379d826c7b4c49ecb1127003d77ec}{nIn}\\
+\>\>struct {\bfseries InLoop} \{\\
+\>\>\>int \hyperlink{struct_where_level_ad4234df4b7f768520fbd6a92a2b0023c}{iCur}\\
+\>\>\>int \hyperlink{struct_where_level_a886641bc6cd2d7c225935df257fd81d1}{addrInTop}\\
+\>\>\>\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_where_level_a8ef3a5e578750b0362269451c8ff61fa}{eEndLoopOp}\\
+\>\>\} \hyperlink{struct_where_level_ae0cc3758f11e91d94000fc81e2b6ccea}{aInLoop}\\
+\>\} \hyperlink{struct_where_level_ad1f454e084d0af91edb9f23999732cec}{in}\\
+\>\hyperlink{struct_index}{Index} $\ast$ \hyperlink{struct_where_level_ad38e62acb47a76c40ab4fcbcfdb0ce18}{pCovidx}\\
+\} \hyperlink{struct_where_level_a97b2ee0306e1c3cf789e790a1f64befa}{u}\\
+
+\end{tabbing}\item 
+struct \hyperlink{struct_where_loop}{Where\+Loop} $\ast$ \hyperlink{struct_where_level_a2e21955e3f7fb01607e9b12a7d2101a0}{p\+W\+Loop}
+\item 
+\hyperlink{sqlite3_8c_afa77b629897c4457bfdc47d364ba5c3f}{Bitmask} \hyperlink{struct_where_level_a432cf7620a98e0241a9e3a773683b603}{not\+Ready}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 115793 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_where_level_aafb1eec74f5f867b898e92324f78d46f}{}\index{Where\+Level@{Where\+Level}!addr\+Body@{addr\+Body}}
+\index{addr\+Body@{addr\+Body}!Where\+Level@{Where\+Level}}
+\subsubsection[{addr\+Body}]{\setlength{\rightskip}{0pt plus 5cm}int addr\+Body}\label{struct_where_level_aafb1eec74f5f867b898e92324f78d46f}
+
+
+Definition at line 115802 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+Begin(), and sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_ad1b2cf3d5417f400ef25e11d7e75668c}{}\index{Where\+Level@{Where\+Level}!addr\+Brk@{addr\+Brk}}
+\index{addr\+Brk@{addr\+Brk}!Where\+Level@{Where\+Level}}
+\subsubsection[{addr\+Brk}]{\setlength{\rightskip}{0pt plus 5cm}int addr\+Brk}\label{struct_where_level_ad1b2cf3d5417f400ef25e11d7e75668c}
+
+
+Definition at line 115797 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_a7d833ccdc1fa083eeb29104ce6f31f41}{}\index{Where\+Level@{Where\+Level}!addr\+Cont@{addr\+Cont}}
+\index{addr\+Cont@{addr\+Cont}!Where\+Level@{Where\+Level}}
+\subsubsection[{addr\+Cont}]{\setlength{\rightskip}{0pt plus 5cm}int addr\+Cont}\label{struct_where_level_a7d833ccdc1fa083eeb29104ce6f31f41}
+
+
+Definition at line 115800 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+Begin(), and sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_ab50af87e2ba502a5a49807b2eaee976e}{}\index{Where\+Level@{Where\+Level}!addr\+First@{addr\+First}}
+\index{addr\+First@{addr\+First}!Where\+Level@{Where\+Level}}
+\subsubsection[{addr\+First}]{\setlength{\rightskip}{0pt plus 5cm}int addr\+First}\label{struct_where_level_ab50af87e2ba502a5a49807b2eaee976e}
+
+
+Definition at line 115801 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_a886641bc6cd2d7c225935df257fd81d1}{}\index{Where\+Level@{Where\+Level}!addr\+In\+Top@{addr\+In\+Top}}
+\index{addr\+In\+Top@{addr\+In\+Top}!Where\+Level@{Where\+Level}}
+\subsubsection[{addr\+In\+Top}]{\setlength{\rightskip}{0pt plus 5cm}int addr\+In\+Top}\label{struct_where_level_a886641bc6cd2d7c225935df257fd81d1}
+
+
+Definition at line 115813 of file sqlite3.\+c.
+
+\hypertarget{struct_where_level_a04ef159ee611aabe3cbcfe9d5c05f306}{}\index{Where\+Level@{Where\+Level}!addr\+Like\+Rep@{addr\+Like\+Rep}}
+\index{addr\+Like\+Rep@{addr\+Like\+Rep}!Where\+Level@{Where\+Level}}
+\subsubsection[{addr\+Like\+Rep}]{\setlength{\rightskip}{0pt plus 5cm}int addr\+Like\+Rep}\label{struct_where_level_a04ef159ee611aabe3cbcfe9d5c05f306}
+
+
+Definition at line 115804 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_aa890851807d02a557a64464694c2190b}{}\index{Where\+Level@{Where\+Level}!addr\+Nxt@{addr\+Nxt}}
+\index{addr\+Nxt@{addr\+Nxt}!Where\+Level@{Where\+Level}}
+\subsubsection[{addr\+Nxt}]{\setlength{\rightskip}{0pt plus 5cm}int addr\+Nxt}\label{struct_where_level_aa890851807d02a557a64464694c2190b}
+
+
+Definition at line 115798 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_a9f619c343c9098910c3b4aad6b570171}{}\index{Where\+Level@{Where\+Level}!addr\+Skip@{addr\+Skip}}
+\index{addr\+Skip@{addr\+Skip}!Where\+Level@{Where\+Level}}
+\subsubsection[{addr\+Skip}]{\setlength{\rightskip}{0pt plus 5cm}int addr\+Skip}\label{struct_where_level_a9f619c343c9098910c3b4aad6b570171}
+
+
+Definition at line 115799 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_ae0cc3758f11e91d94000fc81e2b6ccea}{}\index{Where\+Level@{Where\+Level}!a\+In\+Loop@{a\+In\+Loop}}
+\index{a\+In\+Loop@{a\+In\+Loop}!Where\+Level@{Where\+Level}}
+\subsubsection[{a\+In\+Loop}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \} \+::In\+Loop $\ast$ a\+In\+Loop}\label{struct_where_level_ae0cc3758f11e91d94000fc81e2b6ccea}
+\hypertarget{struct_where_level_a8ef3a5e578750b0362269451c8ff61fa}{}\index{Where\+Level@{Where\+Level}!e\+End\+Loop\+Op@{e\+End\+Loop\+Op}}
+\index{e\+End\+Loop\+Op@{e\+End\+Loop\+Op}!Where\+Level@{Where\+Level}}
+\subsubsection[{e\+End\+Loop\+Op}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} e\+End\+Loop\+Op}\label{struct_where_level_a8ef3a5e578750b0362269451c8ff61fa}
+
+
+Definition at line 115814 of file sqlite3.\+c.
+
+\hypertarget{struct_where_level_ad4234df4b7f768520fbd6a92a2b0023c}{}\index{Where\+Level@{Where\+Level}!i\+Cur@{i\+Cur}}
+\index{i\+Cur@{i\+Cur}!Where\+Level@{Where\+Level}}
+\subsubsection[{i\+Cur}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Cur}\label{struct_where_level_ad4234df4b7f768520fbd6a92a2b0023c}
+
+
+Definition at line 115812 of file sqlite3.\+c.
+
+\hypertarget{struct_where_level_af49ca5d468f3332716f64944ed6f07e9}{}\index{Where\+Level@{Where\+Level}!i\+From@{i\+From}}
+\index{i\+From@{i\+From}!Where\+Level@{Where\+Level}}
+\subsubsection[{i\+From}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} i\+From}\label{struct_where_level_af49ca5d468f3332716f64944ed6f07e9}
+
+
+Definition at line 115805 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+Begin().
+
+\hypertarget{struct_where_level_aecc5f6fc895b5d32e286a8a34ebbec98}{}\index{Where\+Level@{Where\+Level}!i\+Idx\+Cur@{i\+Idx\+Cur}}
+\index{i\+Idx\+Cur@{i\+Idx\+Cur}!Where\+Level@{Where\+Level}}
+\subsubsection[{i\+Idx\+Cur}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Idx\+Cur}\label{struct_where_level_aecc5f6fc895b5d32e286a8a34ebbec98}
+
+
+Definition at line 115796 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+Begin(), and sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_a79a899518a34f0fc50ab104412fe1ab1}{}\index{Where\+Level@{Where\+Level}!i\+Left\+Join@{i\+Left\+Join}}
+\index{i\+Left\+Join@{i\+Left\+Join}!Where\+Level@{Where\+Level}}
+\subsubsection[{i\+Left\+Join}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Left\+Join}\label{struct_where_level_a79a899518a34f0fc50ab104412fe1ab1}
+
+
+Definition at line 115794 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_a1503c6ce7512eec00b17c99515601372}{}\index{Where\+Level@{Where\+Level}!i\+Like\+Rep\+Cntr@{i\+Like\+Rep\+Cntr}}
+\index{i\+Like\+Rep\+Cntr@{i\+Like\+Rep\+Cntr}!Where\+Level@{Where\+Level}}
+\subsubsection[{i\+Like\+Rep\+Cntr}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Like\+Rep\+Cntr}\label{struct_where_level_a1503c6ce7512eec00b17c99515601372}
+
+
+Definition at line 115803 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_ad1f454e084d0af91edb9f23999732cec}{}\index{Where\+Level@{Where\+Level}!in@{in}}
+\index{in@{in}!Where\+Level@{Where\+Level}}
+\subsubsection[{in}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}   in}\label{struct_where_level_ad1f454e084d0af91edb9f23999732cec}
+\hypertarget{struct_where_level_a103f2fe41869e2e93ecca3ab667b0a5a}{}\index{Where\+Level@{Where\+Level}!i\+Tab\+Cur@{i\+Tab\+Cur}}
+\index{i\+Tab\+Cur@{i\+Tab\+Cur}!Where\+Level@{Where\+Level}}
+\subsubsection[{i\+Tab\+Cur}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Tab\+Cur}\label{struct_where_level_a103f2fe41869e2e93ecca3ab667b0a5a}
+
+
+Definition at line 115795 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+Begin(), and sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_a38d379d826c7b4c49ecb1127003d77ec}{}\index{Where\+Level@{Where\+Level}!n\+In@{n\+In}}
+\index{n\+In@{n\+In}!Where\+Level@{Where\+Level}}
+\subsubsection[{n\+In}]{\setlength{\rightskip}{0pt plus 5cm}int n\+In}\label{struct_where_level_a38d379d826c7b4c49ecb1127003d77ec}
+
+
+Definition at line 115810 of file sqlite3.\+c.
+
+\hypertarget{struct_where_level_a432cf7620a98e0241a9e3a773683b603}{}\index{Where\+Level@{Where\+Level}!not\+Ready@{not\+Ready}}
+\index{not\+Ready@{not\+Ready}!Where\+Level@{Where\+Level}}
+\subsubsection[{not\+Ready}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bitmask} not\+Ready}\label{struct_where_level_a432cf7620a98e0241a9e3a773683b603}
+
+
+Definition at line 115820 of file sqlite3.\+c.
+
+\hypertarget{struct_where_level_a0991b29aa40e12f033237266ebe6610c}{}\index{Where\+Level@{Where\+Level}!op@{op}}
+\index{op@{op}!Where\+Level@{Where\+Level}}
+\subsubsection[{op}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} op}\label{struct_where_level_a0991b29aa40e12f033237266ebe6610c}
+
+
+Definition at line 115806 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_a8d5504470de9fec69f0389092910c500}{}\index{Where\+Level@{Where\+Level}!p1@{p1}}
+\index{p1@{p1}!Where\+Level@{Where\+Level}}
+\subsubsection[{p1}]{\setlength{\rightskip}{0pt plus 5cm}int p1}\label{struct_where_level_a8d5504470de9fec69f0389092910c500}
+
+
+Definition at line 115807 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_a2fbbf5056a49832e7d5e73a15ae2ee05}{}\index{Where\+Level@{Where\+Level}!p2@{p2}}
+\index{p2@{p2}!Where\+Level@{Where\+Level}}
+\subsubsection[{p2}]{\setlength{\rightskip}{0pt plus 5cm}int p2}\label{struct_where_level_a2fbbf5056a49832e7d5e73a15ae2ee05}
+
+
+Definition at line 115807 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_a47eadd11a1fdd79088fa6e4e6be69cd4}{}\index{Where\+Level@{Where\+Level}!p3@{p3}}
+\index{p3@{p3}!Where\+Level@{Where\+Level}}
+\subsubsection[{p3}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} p3}\label{struct_where_level_a47eadd11a1fdd79088fa6e4e6be69cd4}
+
+
+Definition at line 115806 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_a8308037057f2acf587d898607ed08fd6}{}\index{Where\+Level@{Where\+Level}!p5@{p5}}
+\index{p5@{p5}!Where\+Level@{Where\+Level}}
+\subsubsection[{p5}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} p5}\label{struct_where_level_a8308037057f2acf587d898607ed08fd6}
+
+
+Definition at line 115806 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_ad38e62acb47a76c40ab4fcbcfdb0ce18}{}\index{Where\+Level@{Where\+Level}!p\+Covidx@{p\+Covidx}}
+\index{p\+Covidx@{p\+Covidx}!Where\+Level@{Where\+Level}}
+\subsubsection[{p\+Covidx}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Index}$\ast$ p\+Covidx}\label{struct_where_level_ad38e62acb47a76c40ab4fcbcfdb0ce18}
+
+
+Definition at line 115817 of file sqlite3.\+c.
+
+\hypertarget{struct_where_level_a2e21955e3f7fb01607e9b12a7d2101a0}{}\index{Where\+Level@{Where\+Level}!p\+W\+Loop@{p\+W\+Loop}}
+\index{p\+W\+Loop@{p\+W\+Loop}!Where\+Level@{Where\+Level}}
+\subsubsection[{p\+W\+Loop}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Where\+Loop}$\ast$ p\+W\+Loop}\label{struct_where_level_a2e21955e3f7fb01607e9b12a7d2101a0}
+
+
+Definition at line 115819 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+Begin(), and sqlite3\+Where\+End().
+
+\hypertarget{struct_where_level_a97b2ee0306e1c3cf789e790a1f64befa}{}\index{Where\+Level@{Where\+Level}!u@{u}}
+\index{u@{u}!Where\+Level@{Where\+Level}}
+\subsubsection[{u}]{\setlength{\rightskip}{0pt plus 5cm}union \{ ... \}   u}\label{struct_where_level_a97b2ee0306e1c3cf789e790a1f64befa}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

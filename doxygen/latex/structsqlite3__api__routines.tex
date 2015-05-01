@@ -1,0 +1,1860 @@
+\hypertarget{structsqlite3__api__routines}{}\section{sqlite3\+\_\+api\+\_\+routines Struct Reference}
+\label{structsqlite3__api__routines}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+
+
+Collaboration diagram for sqlite3\+\_\+api\+\_\+routines\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_ab685b51623f261c6ad88c4db73f6157c}{aggregate\+\_\+context} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, int n\+Bytes)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ab3ac1965fdb669f6316ca7cec9f87877}{aggregate\+\_\+count} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a330ba6acb16254aab7a1d7f5785727d0}{bind\+\_\+blob} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int, const void $\ast$, int n, void($\ast$)(void $\ast$))
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ab4d39a409179d9867682778b2a5fef30}{bind\+\_\+double} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int, double)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ad202f7ba64d1fbcbe903ae656292852b}{bind\+\_\+int} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_aedceaa5c8cf3964a314cfa9e27169ae9}{bind\+\_\+int64} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int, \hyperlink{sqlite3_8c_a520a95f9080c018b2fade39885bd2e2a}{sqlite\+\_\+int64})
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a2dd582c7cf3a0bb65c1f8da45700bbac}{bind\+\_\+null} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a7441ab05f379ac808cfad8d6005eed61}{bind\+\_\+parameter\+\_\+count} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a43a564bb094d5b9a86304beb50f69430}{bind\+\_\+parameter\+\_\+index} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, const char $\ast$z\+Name)
+\item 
+const char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a1680ea8ab78f3c1a459a4c56a91ca496}{bind\+\_\+parameter\+\_\+name} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_aea3f9722b1cfa2911ada47656ca88ce8}{bind\+\_\+text} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int, const char $\ast$, int n, void($\ast$)(void $\ast$))
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a8dae957f5c7a3a2efd105d4bac1e85f6}{bind\+\_\+text16} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int, const void $\ast$, int, void($\ast$)(void $\ast$))
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a64fdf8888afea154aed93725bd9bb1a3}{bind\+\_\+value} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int, const sqlite3\+\_\+value $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a8050bb68d78bf3e6368042e37102bd36}{busy\+\_\+handler} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, int($\ast$)(void $\ast$, int), void $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a6a89f6f95a1807a592fe8b74ebe5620b}{busy\+\_\+timeout} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, int ms)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_afa73164142c6aaa87d16b3afacf0900a}{changes} )(\hyperlink{structsqlite3}{sqlite3} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ab3156009cfdafa2aa5985cd47515132b}{close} )(\hyperlink{structsqlite3}{sqlite3} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ab8f092534ece161ead0aab80770984e1}{collation\+\_\+needed} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, void $\ast$, void($\ast$)(void $\ast$, \hyperlink{structsqlite3}{sqlite3} $\ast$, int e\+Text\+Rep, const char $\ast$))
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_af506e60ba603419f01920da2968776ad}{collation\+\_\+needed16} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, void $\ast$, void($\ast$)(void $\ast$, \hyperlink{structsqlite3}{sqlite3} $\ast$, int e\+Text\+Rep, const void $\ast$))
+\item 
+const void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_afd0e3c2c6e6eb5000317676b71434ed0}{column\+\_\+blob} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int i\+Col)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ae1fab582ffc2298db1a581c5dd0600a9}{column\+\_\+bytes} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int i\+Col)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a219edb83765e8077a8ccc1f24f20aa99}{column\+\_\+bytes16} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int i\+Col)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a520b006b5146d066933c2fcea314366e}{column\+\_\+count} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$p\+Stmt)
+\item 
+const char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a18d0b5a6a6a10404c348b987f328127c}{column\+\_\+database\+\_\+name} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int)
+\item 
+const void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a985c0731ddd0bafff880747a307a43d9}{column\+\_\+database\+\_\+name16} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int)
+\item 
+const char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_ae97b4b0b98a715c66528a87e57160c1e}{column\+\_\+decltype} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int i)
+\item 
+const void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_aa852f9a24c9f0503ae4ba31bbc853fcc}{column\+\_\+decltype16} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int)
+\item 
+double($\ast$ \hyperlink{structsqlite3__api__routines_aa17d48cd9e1033459492792eea5b58e0}{column\+\_\+double} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int i\+Col)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ab905e24ea0a592436e42d95a9ccf5a66}{column\+\_\+int} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int i\+Col)
+\item 
+\hyperlink{sqlite3_8c_a520a95f9080c018b2fade39885bd2e2a}{sqlite\+\_\+int64}($\ast$ \hyperlink{structsqlite3__api__routines_a1c8174b05fe17b5adf1f51410c2a7574}{column\+\_\+int64} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int i\+Col)
+\item 
+const char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a1559513a2896c2f329ab535947d7b01a}{column\+\_\+name} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int)
+\item 
+const void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_af02fc8b5183845a5cd23f865992f874b}{column\+\_\+name16} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int)
+\item 
+const char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a73748d4fc1d34e9a147c1781667bd1c8}{column\+\_\+origin\+\_\+name} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int)
+\item 
+const void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_ad98229e18c6cddc831512179a1695418}{column\+\_\+origin\+\_\+name16} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int)
+\item 
+const char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a1ea5266d202a57ddaffc1b7951b43305}{column\+\_\+table\+\_\+name} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int)
+\item 
+const void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a5ab49c39dc125f958df10ecc88fd9b12}{column\+\_\+table\+\_\+name16} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int)
+\item 
+const unsigned char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a66f8d504265c0869a251f94e96b1873f}{column\+\_\+text} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int i\+Col)
+\item 
+const void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a78b3c83097ee83e73ed99b4267d229e5}{column\+\_\+text16} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int i\+Col)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a492811fa922de6f677e915b1cf9a53a0}{column\+\_\+type} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int i\+Col)
+\item 
+sqlite3\+\_\+value $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_aefb5910a72db46607d30a1d7d8e1545a}{column\+\_\+value} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int i\+Col)
+\item 
+void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_aeaaa1a1102ac1a488fff8dab42260993}{commit\+\_\+hook} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, int($\ast$)(void $\ast$), void $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a01aaed823d8c17a17f125d1abaf5eac9}{complete} )(const char $\ast$\hyperlink{structsqlite3__api__routines_a2659f30cca776687b888db7a811642ac}{sql})
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a6d6690a5ad824d944df098f0efb92c06}{complete16} )(const void $\ast$\hyperlink{structsqlite3__api__routines_a2659f30cca776687b888db7a811642ac}{sql})
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_aba03b11b6904d9c6796bb4ada1a0adbe}{create\+\_\+collation} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, int, void $\ast$, int($\ast$)(void $\ast$, int, const void $\ast$, int, const void $\ast$))
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a2a103db00b3e96982f961473802801f3}{create\+\_\+collation16} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const void $\ast$, int, void $\ast$, int($\ast$)(void $\ast$, int, const void $\ast$, int, const void $\ast$))
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a6efc8419dc21d8abea4bd5cbc323b0fe}{create\+\_\+function} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, int, int, void $\ast$, void($\ast$x\+Func)(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$), void($\ast$x\+Step)(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$), void($\ast$x\+Final)(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$))
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a92b6252a9902db87b47529c31f1dc97c}{create\+\_\+function16} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const void $\ast$, int, int, void $\ast$, void($\ast$x\+Func)(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$), void($\ast$x\+Step)(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$), void($\ast$x\+Final)(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$))
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ab2793fe92f6ecd986d036e43915f0c5b}{create\+\_\+module} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, const \hyperlink{structsqlite3__module}{sqlite3\+\_\+module} $\ast$, void $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_af251752525fef010bd8d98fd5af26aa3}{data\+\_\+count} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$p\+Stmt)
+\item 
+\hyperlink{structsqlite3}{sqlite3} $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_aac07d5898204bc18ddf5b45cc52c3062}{db\+\_\+handle} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ab96c11c4adf08d1f0bdcff2cb643796e}{declare\+\_\+vtab} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a59467cfa1e3c74205cea906d16629647}{enable\+\_\+shared\+\_\+cache} )(int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a9cf1e23a3f17f5fdafb327194466cc80}{errcode} )(\hyperlink{structsqlite3}{sqlite3} $\ast$db)
+\item 
+const char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_aa8406d8ac4fb37fa9772c0ea1293c4c0}{errmsg} )(\hyperlink{structsqlite3}{sqlite3} $\ast$)
+\item 
+const void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a819557ae1f065e16705e927ed1c8544b}{errmsg16} )(\hyperlink{structsqlite3}{sqlite3} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ac07c98ed980b0f1f7f1c1b6c95390f66}{exec} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, \hyperlink{sqlite3_8h_aede337a366367e94a52d849482967ddd}{sqlite3\+\_\+callback}, void $\ast$, char $\ast$$\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a9c5e16f9d478ad089c7ddb2320ce52e9}{expired} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_adf6d460eae9a5dd4edef98a6f0bcfabb}{finalize} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$p\+Stmt)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a00cac9e5111cbc007e391e5017fa5af5}{free} )(void $\ast$)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a9eb7ca42560b20ece336d287c1310092}{free\+\_\+table} )(char $\ast$$\ast$result)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ab572e00bb6528214f3df218c02ada7d2}{get\+\_\+autocommit} )(\hyperlink{structsqlite3}{sqlite3} $\ast$)
+\item 
+void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a1a7c357699dbe4d5599433c442843466}{get\+\_\+auxdata} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a06283d641523bfc7591489d1e52029ac}{get\+\_\+table} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, char $\ast$$\ast$$\ast$, int $\ast$, int $\ast$, char $\ast$$\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a854a8b54dbe2dd948fe7af169b06cd23}{global\+\_\+recover} )(void)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_ad5f1fb9f2b2fcb656a7e850cbc276cb1}{interruptx} )(\hyperlink{structsqlite3}{sqlite3} $\ast$)
+\item 
+\hyperlink{sqlite3_8c_a520a95f9080c018b2fade39885bd2e2a}{sqlite\+\_\+int64}($\ast$ \hyperlink{structsqlite3__api__routines_a03d51b30a03196c58fd61b31cb1d471f}{last\+\_\+insert\+\_\+rowid} )(\hyperlink{structsqlite3}{sqlite3} $\ast$)
+\item 
+const char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a199d2b1839aa9615cfdf85f81a797331}{libversion} )(void)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_af9c96766eac22c55e28a48ba1ccc0ee5}{libversion\+\_\+number} )(void)
+\item 
+void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a020ab363e4dd7537af45b0728af40a35}{malloc} )(int)
+\item 
+char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a0102945940718ef900528749b85a5325}{mprintf} )(const char $\ast$,...)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a9a5afaf1d25c526dda2af954066ff30a}{open} )(const char $\ast$, \hyperlink{structsqlite3}{sqlite3} $\ast$$\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_af9495065c5993f238d091cfc80c4fe60}{open16} )(const void $\ast$, \hyperlink{structsqlite3}{sqlite3} $\ast$$\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ae8b041015a252c244ca9fbfdbe0c23aa}{prepare} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, int, \hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$$\ast$, const char $\ast$$\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ac467657df3c662c8a5864889c2f8735f}{prepare16} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const void $\ast$, int, \hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$$\ast$, const void $\ast$$\ast$)
+\item 
+void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a6909e8b0ffe34fab2244523389cf9c9b}{profile} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, void($\ast$)(void $\ast$, const char $\ast$, \hyperlink{sqlite3_8c_a127a9c18f6d067a05b994f5d0111ee25}{sqlite\+\_\+uint64}), void $\ast$)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a1544c31b38ea099c227c826469fbec71}{progress\+\_\+handler} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, int, int($\ast$)(void $\ast$), void $\ast$)
+\item 
+void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a8fda0095e70860055f3a94fd229fcc77}{realloc} )(void $\ast$, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a9306f6bfcddcbc6d67a69c8139e6cef6}{reset} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$p\+Stmt)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a74bf6ce8a7217120babcb02333696681}{result\+\_\+blob} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, const void $\ast$, int, void($\ast$)(void $\ast$))
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a172b6861ee637d431052ec5dc165477a}{result\+\_\+double} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, double)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_aa1417502f22656ef502d34c01a9d9731}{result\+\_\+error} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, const char $\ast$, int)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a3e8b406b1d8634148f895a2e47d7098b}{result\+\_\+error16} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, const void $\ast$, int)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_aebada6b302203c8ba65aa99ffd4e9c77}{result\+\_\+int} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, int)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a7f590fad87a305a9f66bae82d2d9c3ba}{result\+\_\+int64} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, \hyperlink{sqlite3_8c_a520a95f9080c018b2fade39885bd2e2a}{sqlite\+\_\+int64})
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a09fc82ef59beb0f303e4c68e748adeb6}{result\+\_\+null} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_af0c394a09036ff030c268b8277341214}{result\+\_\+text} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, const char $\ast$, int, void($\ast$)(void $\ast$))
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_ab1869eccf5949255f142c9f09709c8d9}{result\+\_\+text16} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, const void $\ast$, int, void($\ast$)(void $\ast$))
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_acce9c11266b4572acd0994d313c77d37}{result\+\_\+text16be} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, const void $\ast$, int, void($\ast$)(void $\ast$))
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_adc71601355bbd4236f52aafbe34843c8}{result\+\_\+text16le} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, const void $\ast$, int, void($\ast$)(void $\ast$))
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a901b5a6ff17bfe95b691c27ee941c326}{result\+\_\+value} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, sqlite3\+\_\+value $\ast$)
+\item 
+void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_ab42e52c0ffe58ae495cc2e799fc8275b}{rollback\+\_\+hook} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, void($\ast$)(void $\ast$), void $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_afdbfe4085932e5c2bfadf5b4b8d2278b}{set\+\_\+authorizer} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, int($\ast$)(void $\ast$, int, const char $\ast$, const char $\ast$, const char $\ast$, const char $\ast$), void $\ast$)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a2db853a215f5c43c900061c268897718}{set\+\_\+auxdata} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, int, void $\ast$, void($\ast$)(void $\ast$))
+\item 
+char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a61d6499efb17e9f027d75e9cbe1cc546}{snprintf} )(int, char $\ast$, const char $\ast$,...)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a60d8cfc980ce5b99515b59965dd77119}{step} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a63d4de3a8546d4b0f6c7d88bc786c89c}{table\+\_\+column\+\_\+metadata} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, const char $\ast$, const char $\ast$, char const $\ast$$\ast$, char const $\ast$$\ast$, int $\ast$, int $\ast$, int $\ast$)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_ab7f7f471e9b8dc39c4a63f0eb49425f8}{thread\+\_\+cleanup} )(void)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a407aeda4a00461c7fcb2c91b92f173eb}{total\+\_\+changes} )(\hyperlink{structsqlite3}{sqlite3} $\ast$)
+\item 
+void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_af9d9e1f7f5e00bbecbfa5c23138c4154}{trace} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, void($\ast$x\+Trace)(void $\ast$, const char $\ast$), void $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a848b170b255643a1b3eda56a56da0eb7}{transfer\+\_\+bindings} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, \hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$)
+\item 
+void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a8239aff5ecf8ec2dfdf41c57e6a4444c}{update\+\_\+hook} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, void($\ast$)(void $\ast$, int, char const $\ast$, char const $\ast$, \hyperlink{sqlite3_8c_a520a95f9080c018b2fade39885bd2e2a}{sqlite\+\_\+int64}), void $\ast$)
+\item 
+void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a53fe3c5bee52784ecc5da8b1f2f6f562}{user\+\_\+data} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$)
+\item 
+const void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_af0cad7cef3019e2ab150b694894b65ec}{value\+\_\+blob} )(sqlite3\+\_\+value $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a47dbf2fc0d87899ecc9651b11c7adb90}{value\+\_\+bytes} )(sqlite3\+\_\+value $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a1a066bfc11cb88a8c2036831b0a4e113}{value\+\_\+bytes16} )(sqlite3\+\_\+value $\ast$)
+\item 
+double($\ast$ \hyperlink{structsqlite3__api__routines_a3a64abf666b3ecab7caf669701004db4}{value\+\_\+double} )(sqlite3\+\_\+value $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a8c05f2a220e674c0c5a053ad703dd059}{value\+\_\+int} )(sqlite3\+\_\+value $\ast$)
+\item 
+\hyperlink{sqlite3_8c_a520a95f9080c018b2fade39885bd2e2a}{sqlite\+\_\+int64}($\ast$ \hyperlink{structsqlite3__api__routines_a92d79e3dc71cf16389ff7b99c3cc1480}{value\+\_\+int64} )(sqlite3\+\_\+value $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ab425fadd72ab82f1f7177950311d3da4}{value\+\_\+numeric\+\_\+type} )(sqlite3\+\_\+value $\ast$)
+\item 
+const unsigned char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a5e6ca1b3e3e55d39699bad63c21138a3}{value\+\_\+text} )(sqlite3\+\_\+value $\ast$)
+\item 
+const void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a10348e6f3c2009240752cad262ec5226}{value\+\_\+text16} )(sqlite3\+\_\+value $\ast$)
+\item 
+const void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a2d7b7d52b459c02632b8df2de00bf595}{value\+\_\+text16be} )(sqlite3\+\_\+value $\ast$)
+\item 
+const void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a2bf569f598d827c577bcbbb36e9a815b}{value\+\_\+text16le} )(sqlite3\+\_\+value $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a4b0847874847fb18c16dc079275e00b4}{value\+\_\+type} )(sqlite3\+\_\+value $\ast$)
+\item 
+char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a36b2c16f8536849536034592361cae1e}{vmprintf} )(const char $\ast$, va\+\_\+list)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a51cace8e3c8a535241634eb9788ccafc}{overload\+\_\+function} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$z\+Func\+Name, int n\+Arg)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_aa1832f166f601aa57ead3191e60f4046}{prepare\+\_\+v2} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, int, \hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$$\ast$, const char $\ast$$\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a31bf3acae352ca43abbb39b138fe2c44}{prepare16\+\_\+v2} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const void $\ast$, int, \hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$$\ast$, const void $\ast$$\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a01a8faefed89a0869f1b816d0ff68a26}{clear\+\_\+bindings} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a27b33b7aa00bc2e6cf467e5e8aede3ca}{create\+\_\+module\+\_\+v2} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, const \hyperlink{structsqlite3__module}{sqlite3\+\_\+module} $\ast$, void $\ast$, void($\ast$x\+Destroy)(void $\ast$))
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_af5f00f48cbe09e3f20da7a319dacb980}{bind\+\_\+zeroblob} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a6eb0457daa03438d90456f349727307c}{blob\+\_\+bytes} )(\hyperlink{sqlite3_8c_a3eb4857c157c542bb3fb7d8cbf38a662}{sqlite3\+\_\+blob} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_aa34d89a77100af517c61cdb4b49ecec8}{blob\+\_\+close} )(\hyperlink{sqlite3_8c_a3eb4857c157c542bb3fb7d8cbf38a662}{sqlite3\+\_\+blob} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a393cdfc5f8d12f2f3f4da93c9fb91d4e}{blob\+\_\+open} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, const char $\ast$, const char $\ast$, \hyperlink{sqlite3_8c_a0a4d3e6c1ad46f90e746b920ab6ca0d2}{sqlite3\+\_\+int64}, int, \hyperlink{sqlite3_8c_a3eb4857c157c542bb3fb7d8cbf38a662}{sqlite3\+\_\+blob} $\ast$$\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a1bdd1257c6b9865418d523040b002cc8}{blob\+\_\+read} )(\hyperlink{sqlite3_8c_a3eb4857c157c542bb3fb7d8cbf38a662}{sqlite3\+\_\+blob} $\ast$, void $\ast$, int, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a839a00c8de419e217288953ed6e5944e}{blob\+\_\+write} )(\hyperlink{sqlite3_8c_a3eb4857c157c542bb3fb7d8cbf38a662}{sqlite3\+\_\+blob} $\ast$, const void $\ast$, int, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_af08608f15c694b8f19f4ad8b7c82e43f}{create\+\_\+collation\+\_\+v2} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, int, void $\ast$, int($\ast$)(void $\ast$, int, const void $\ast$, int, const void $\ast$), void($\ast$)(void $\ast$))
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a0b02da5c8741506c6c10c3a4cf6b768b}{file\+\_\+control} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, int, void $\ast$)
+\item 
+\hyperlink{sqlite3_8c_a0a4d3e6c1ad46f90e746b920ab6ca0d2}{sqlite3\+\_\+int64}($\ast$ \hyperlink{structsqlite3__api__routines_a36b5143cf264308003cba66ffe90b12e}{memory\+\_\+highwater} )(int)
+\item 
+\hyperlink{sqlite3_8c_a0a4d3e6c1ad46f90e746b920ab6ca0d2}{sqlite3\+\_\+int64}($\ast$ \hyperlink{structsqlite3__api__routines_ae625a716ceecf9b19286decb320142f2}{memory\+\_\+used} )(void)
+\item 
+\hyperlink{structsqlite3__mutex}{sqlite3\+\_\+mutex} $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a1af4db8b3172987e3a0a7a6563236adb}{mutex\+\_\+alloc} )(int)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_ada638e2fd1599c0afb7a5f446a994f5e}{mutex\+\_\+enter} )(\hyperlink{structsqlite3__mutex}{sqlite3\+\_\+mutex} $\ast$)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a18fbbf680b1a0e6a2e14f7f3a4d7b888}{mutex\+\_\+free} )(\hyperlink{structsqlite3__mutex}{sqlite3\+\_\+mutex} $\ast$)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a2992e367409871e35e5094a8ea2e7be2}{mutex\+\_\+leave} )(\hyperlink{structsqlite3__mutex}{sqlite3\+\_\+mutex} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_af79d9da98d2257754895a48ae553dd06}{mutex\+\_\+try} )(\hyperlink{structsqlite3__mutex}{sqlite3\+\_\+mutex} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a64695f272360a807813ba8d1af0291aa}{open\+\_\+v2} )(const char $\ast$, \hyperlink{structsqlite3}{sqlite3} $\ast$$\ast$, int, const char $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a2275a7d0406cec003d58bdb60747493c}{release\+\_\+memory} )(int)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a9c42918f230eb77d09c0f46d85ebbac9}{result\+\_\+error\+\_\+nomem} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a3bc7020e5cbc0cbc74fc06d747a1d275}{result\+\_\+error\+\_\+toobig} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a6a3c1e64ef0dc8389947bc64d17734cc}{sleep} )(int)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a7bb8b7b64350d63cfa35e32084bbbec5}{soft\+\_\+heap\+\_\+limit} )(int)
+\item 
+\hyperlink{structsqlite3__vfs}{sqlite3\+\_\+vfs} $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_abdee7a148d38c624c4807e3225e0146d}{vfs\+\_\+find} )(const char $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a0f71f0c3cbbdf64014e036e6a9ec4946}{vfs\+\_\+register} )(\hyperlink{structsqlite3__vfs}{sqlite3\+\_\+vfs} $\ast$, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a09efe186d4fccb340af27ca4d005543e}{vfs\+\_\+unregister} )(\hyperlink{structsqlite3__vfs}{sqlite3\+\_\+vfs} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a08f3a80dbc09846ef724b924ecea4887}{xthreadsafe} )(void)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a34442387580fc801fe447b0b01a832ec}{result\+\_\+zeroblob} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, int)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a3b70121ec78ad5f66bf83ecb90aba6b5}{result\+\_\+error\+\_\+code} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a8c973156a0d2c8339ceac7f599102368}{test\+\_\+control} )(int,...)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a36225fe3584feaef472030aa19f994a2}{randomness} )(int, void $\ast$)
+\item 
+\hyperlink{structsqlite3}{sqlite3} $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_ae2cf2d3a199a126857e80c067cd8bf48}{context\+\_\+db\+\_\+handle} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a96808678170875483108bb329d07e025}{extended\+\_\+result\+\_\+codes} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a9d676e25f8e233d2e72fec5dd11e5c55}{limit} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, int, int)
+\item 
+\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_ad7e3588eb6c4aca4ef8d5c3ee52a5edc}{next\+\_\+stmt} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, \hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$)
+\item 
+const char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a2659f30cca776687b888db7a811642ac}{sql} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ac5a157dacf31fbfee695baf18a8482cf}{status} )(int, int $\ast$, int $\ast$, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a816d793eaeccf7c741f3477cf90860c1}{backup\+\_\+finish} )(\hyperlink{structsqlite3__backup}{sqlite3\+\_\+backup} $\ast$)
+\item 
+\hyperlink{structsqlite3__backup}{sqlite3\+\_\+backup} $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a594f970b6a80732c2c51071207646d01}{backup\+\_\+init} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, \hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a62168e01fc680e06319aa85f7bc517b2}{backup\+\_\+pagecount} )(\hyperlink{structsqlite3__backup}{sqlite3\+\_\+backup} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a25c20bd7dd623a812864631e51727f1c}{backup\+\_\+remaining} )(\hyperlink{structsqlite3__backup}{sqlite3\+\_\+backup} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_acebca92abb5df03f4ad215f90697962c}{backup\+\_\+step} )(\hyperlink{structsqlite3__backup}{sqlite3\+\_\+backup} $\ast$, int)
+\item 
+const char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a860fe638b621444281202e3ded4fcd80}{compileoption\+\_\+get} )(int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ae4519132382d8a2a96ff7fb756404e47}{compileoption\+\_\+used} )(const char $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a1a912b5c2885793c368c811d6c4a1fe1}{create\+\_\+function\+\_\+v2} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, int, int, void $\ast$, void($\ast$x\+Func)(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$), void($\ast$x\+Step)(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$), void($\ast$x\+Final)(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$), void($\ast$x\+Destroy)(void $\ast$))
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a1a068c64c4681b33e8477b65f7e2c56d}{db\+\_\+config} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, int,...)
+\item 
+\hyperlink{structsqlite3__mutex}{sqlite3\+\_\+mutex} $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a5128f423679ab47a44f61c026d53c3f2}{db\+\_\+mutex} )(\hyperlink{structsqlite3}{sqlite3} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a84994959cfb23f6e01eb63c52836d3f3}{db\+\_\+status} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, int, int $\ast$, int $\ast$, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_aa890ed7620f82f9380420e7ba9ebecca}{extended\+\_\+errcode} )(\hyperlink{structsqlite3}{sqlite3} $\ast$)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_af983b682fce013e15d082e45311d1636}{log} )(int, const char $\ast$,...)
+\item 
+\hyperlink{sqlite3_8c_a0a4d3e6c1ad46f90e746b920ab6ca0d2}{sqlite3\+\_\+int64}($\ast$ \hyperlink{structsqlite3__api__routines_afa29f15f67123c56fd32499431ad4fb9}{soft\+\_\+heap\+\_\+limit64} )(\hyperlink{sqlite3_8c_a0a4d3e6c1ad46f90e746b920ab6ca0d2}{sqlite3\+\_\+int64})
+\item 
+const char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a610a8651f1de9fc059e448fe2ee6a7ea}{sourceid} )(void)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a3447f99a2af09362727c363b6a41f79b}{stmt\+\_\+status} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a4cb03ff57968d95f6b082e7f1484a921}{strnicmp} )(const char $\ast$, const char $\ast$, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_aa15644f817581573e744b6a0b768c2fb}{unlock\+\_\+notify} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, void($\ast$)(void $\ast$$\ast$, int), void $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ae0a51f393afbd3c36fefa2ad121fffa4}{wal\+\_\+autocheckpoint} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a1c989ac9fcf949d52270282a38b5d5db}{wal\+\_\+checkpoint} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$)
+\item 
+void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a57c617f1b3746de420874110e58e15f7}{wal\+\_\+hook} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, int($\ast$)(void $\ast$, \hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, int), void $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_af2b9e57cc5bbdc635490235dfc1dc57a}{blob\+\_\+reopen} )(\hyperlink{sqlite3_8c_a3eb4857c157c542bb3fb7d8cbf38a662}{sqlite3\+\_\+blob} $\ast$, \hyperlink{sqlite3_8c_a0a4d3e6c1ad46f90e746b920ab6ca0d2}{sqlite3\+\_\+int64})
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ac7793309e4ad5af153467746dee7606b}{vtab\+\_\+config} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, int op,...)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_abe082a65a65f2b458dc2a90e04f6401a}{vtab\+\_\+on\+\_\+conflict} )(\hyperlink{structsqlite3}{sqlite3} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a2f172367a40d5e1c0709deb177f2a81e}{close\+\_\+v2} )(\hyperlink{structsqlite3}{sqlite3} $\ast$)
+\item 
+const char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a0db6c1395cbeed5927f8cf58199d683c}{db\+\_\+filename} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a2a04c7c12414aa6d7e03cc56d29ded8d}{db\+\_\+readonly} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_aebcaae009deec2da0f62049e41748aad}{db\+\_\+release\+\_\+memory} )(\hyperlink{structsqlite3}{sqlite3} $\ast$)
+\item 
+const char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a16a09ec4c2c5af6736eb73e8d0110f99}{errstr} )(int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ab6ce1529912d488d417a61f585b9a2f9}{stmt\+\_\+busy} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_add589eb134334b8249eff03f7556c90d}{stmt\+\_\+readonly} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a4a4d0359c8a7c68edb15957cf45c0082}{stricmp} )(const char $\ast$, const char $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a61df047cb68e954a5a8bdddf0f1e0d4f}{uri\+\_\+boolean} )(const char $\ast$, const char $\ast$, int)
+\item 
+\hyperlink{sqlite3_8c_a0a4d3e6c1ad46f90e746b920ab6ca0d2}{sqlite3\+\_\+int64}($\ast$ \hyperlink{structsqlite3__api__routines_a2ce954afa2ad1e413234a4412378af04}{uri\+\_\+int64} )(const char $\ast$, const char $\ast$, \hyperlink{sqlite3_8c_a0a4d3e6c1ad46f90e746b920ab6ca0d2}{sqlite3\+\_\+int64})
+\item 
+const char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a1b4ccc1050d61f2addba3a5acc6c8bbc}{uri\+\_\+parameter} )(const char $\ast$, const char $\ast$)
+\item 
+char $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a10f112f1a39aea290157e4fb13b7aaf1}{vsnprintf} )(int, char $\ast$, const char $\ast$, va\+\_\+list)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_aad374c8fe2ba7b9ffa27a33ce46433a9}{wal\+\_\+checkpoint\+\_\+v2} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, int, int $\ast$, int $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_aade9ee14eb586a61cb9d611c28fcaf70}{auto\+\_\+extension} )(void($\ast$)(void))
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a6d21d0fa176db371fcd8e2353a9135ba}{bind\+\_\+blob64} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int, const void $\ast$, \hyperlink{sqlite3_8c_a181c20ecfd72bc6627635746d382c610}{sqlite3\+\_\+uint64}, void($\ast$)(void $\ast$))
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a1b88c42d9886d3a9110dfdf19e1ad539}{bind\+\_\+text64} )(\hyperlink{sqlite3_8c_af2a033da1327cdd77f0a174a09aedd0c}{sqlite3\+\_\+stmt} $\ast$, int, const char $\ast$, \hyperlink{sqlite3_8c_a181c20ecfd72bc6627635746d382c610}{sqlite3\+\_\+uint64}, void($\ast$)(void $\ast$), unsigned char)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_a6acef5f8196481f86b71c60619468d23}{cancel\+\_\+auto\+\_\+extension} )(void($\ast$)(void))
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ad9234c15dcf607e79e3168a32cf9a611}{load\+\_\+extension} )(\hyperlink{structsqlite3}{sqlite3} $\ast$, const char $\ast$, const char $\ast$, char $\ast$$\ast$)
+\item 
+void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_ab8c993d0e3cdaa5f343618be6281ff90}{malloc64} )(\hyperlink{sqlite3_8c_a181c20ecfd72bc6627635746d382c610}{sqlite3\+\_\+uint64})
+\item 
+\hyperlink{sqlite3_8c_a181c20ecfd72bc6627635746d382c610}{sqlite3\+\_\+uint64}($\ast$ \hyperlink{structsqlite3__api__routines_af1044837dbbd9f43cc04104cdf509787}{msize} )(void $\ast$)
+\item 
+void $\ast$($\ast$ \hyperlink{structsqlite3__api__routines_a8b1ea7659f5ba58a60afd4c83b012c4a}{realloc64} )(void $\ast$, \hyperlink{sqlite3_8c_a181c20ecfd72bc6627635746d382c610}{sqlite3\+\_\+uint64})
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_aef8ba7d5f8d6ce8841b86ce43abf48d8}{reset\+\_\+auto\+\_\+extension} )(void)
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_a240a03a7ab8b6e0b1e124fa9132ba721}{result\+\_\+blob64} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, const void $\ast$, \hyperlink{sqlite3_8c_a181c20ecfd72bc6627635746d382c610}{sqlite3\+\_\+uint64}, void($\ast$)(void $\ast$))
+\item 
+void($\ast$ \hyperlink{structsqlite3__api__routines_ae7893880dc360bde005efb439340caca}{result\+\_\+text64} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, const char $\ast$, \hyperlink{sqlite3_8c_a181c20ecfd72bc6627635746d382c610}{sqlite3\+\_\+uint64}, void($\ast$)(void $\ast$), unsigned char)
+\item 
+int($\ast$ \hyperlink{structsqlite3__api__routines_ab57cdd985ed3e28d8fc6a74011b031cc}{strglob} )(const char $\ast$, const char $\ast$)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 101898 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{structsqlite3__api__routines_ab685b51623f261c6ad88c4db73f6157c}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!aggregate\+\_\+context@{aggregate\+\_\+context}}
+\index{aggregate\+\_\+context@{aggregate\+\_\+context}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{aggregate\+\_\+context}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$($\ast$ aggregate\+\_\+context) ({\bf sqlite3\+\_\+context} $\ast$, int n\+Bytes)}\label{structsqlite3__api__routines_ab685b51623f261c6ad88c4db73f6157c}
+
+
+Definition at line 101899 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ab3ac1965fdb669f6316ca7cec9f87877}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!aggregate\+\_\+count@{aggregate\+\_\+count}}
+\index{aggregate\+\_\+count@{aggregate\+\_\+count}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{aggregate\+\_\+count}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ aggregate\+\_\+count) ({\bf sqlite3\+\_\+context} $\ast$)}\label{structsqlite3__api__routines_ab3ac1965fdb669f6316ca7cec9f87877}
+
+
+Definition at line 101900 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aade9ee14eb586a61cb9d611c28fcaf70}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!auto\+\_\+extension@{auto\+\_\+extension}}
+\index{auto\+\_\+extension@{auto\+\_\+extension}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{auto\+\_\+extension}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ auto\+\_\+extension) (void($\ast$)(void))}\label{structsqlite3__api__routines_aade9ee14eb586a61cb9d611c28fcaf70}
+
+
+Definition at line 102118 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a816d793eaeccf7c741f3477cf90860c1}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!backup\+\_\+finish@{backup\+\_\+finish}}
+\index{backup\+\_\+finish@{backup\+\_\+finish}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{backup\+\_\+finish}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ backup\+\_\+finish) ({\bf sqlite3\+\_\+backup} $\ast$)}\label{structsqlite3__api__routines_a816d793eaeccf7c741f3477cf90860c1}
+
+
+Definition at line 102075 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a594f970b6a80732c2c51071207646d01}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!backup\+\_\+init@{backup\+\_\+init}}
+\index{backup\+\_\+init@{backup\+\_\+init}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{backup\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+backup}$\ast$($\ast$ backup\+\_\+init) ({\bf sqlite3} $\ast$, const char $\ast$, {\bf sqlite3} $\ast$, const char $\ast$)}\label{structsqlite3__api__routines_a594f970b6a80732c2c51071207646d01}
+
+
+Definition at line 102076 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a62168e01fc680e06319aa85f7bc517b2}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!backup\+\_\+pagecount@{backup\+\_\+pagecount}}
+\index{backup\+\_\+pagecount@{backup\+\_\+pagecount}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{backup\+\_\+pagecount}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ backup\+\_\+pagecount) ({\bf sqlite3\+\_\+backup} $\ast$)}\label{structsqlite3__api__routines_a62168e01fc680e06319aa85f7bc517b2}
+
+
+Definition at line 102077 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a25c20bd7dd623a812864631e51727f1c}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!backup\+\_\+remaining@{backup\+\_\+remaining}}
+\index{backup\+\_\+remaining@{backup\+\_\+remaining}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{backup\+\_\+remaining}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ backup\+\_\+remaining) ({\bf sqlite3\+\_\+backup} $\ast$)}\label{structsqlite3__api__routines_a25c20bd7dd623a812864631e51727f1c}
+
+
+Definition at line 102078 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_acebca92abb5df03f4ad215f90697962c}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!backup\+\_\+step@{backup\+\_\+step}}
+\index{backup\+\_\+step@{backup\+\_\+step}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{backup\+\_\+step}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ backup\+\_\+step) ({\bf sqlite3\+\_\+backup} $\ast$, int)}\label{structsqlite3__api__routines_acebca92abb5df03f4ad215f90697962c}
+
+
+Definition at line 102079 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a330ba6acb16254aab7a1d7f5785727d0}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!bind\+\_\+blob@{bind\+\_\+blob}}
+\index{bind\+\_\+blob@{bind\+\_\+blob}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{bind\+\_\+blob}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ bind\+\_\+blob) ({\bf sqlite3\+\_\+stmt} $\ast$, int, const void $\ast$, int n, void($\ast$)(void $\ast$))}\label{structsqlite3__api__routines_a330ba6acb16254aab7a1d7f5785727d0}
+
+
+Definition at line 101901 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a6d21d0fa176db371fcd8e2353a9135ba}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!bind\+\_\+blob64@{bind\+\_\+blob64}}
+\index{bind\+\_\+blob64@{bind\+\_\+blob64}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{bind\+\_\+blob64}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ bind\+\_\+blob64) ({\bf sqlite3\+\_\+stmt} $\ast$, int, const void $\ast$, {\bf sqlite3\+\_\+uint64}, void($\ast$)(void $\ast$))}\label{structsqlite3__api__routines_a6d21d0fa176db371fcd8e2353a9135ba}
+
+
+Definition at line 102119 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ab4d39a409179d9867682778b2a5fef30}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!bind\+\_\+double@{bind\+\_\+double}}
+\index{bind\+\_\+double@{bind\+\_\+double}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{bind\+\_\+double}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ bind\+\_\+double) ({\bf sqlite3\+\_\+stmt} $\ast$, int, double)}\label{structsqlite3__api__routines_ab4d39a409179d9867682778b2a5fef30}
+
+
+Definition at line 101902 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ad202f7ba64d1fbcbe903ae656292852b}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!bind\+\_\+int@{bind\+\_\+int}}
+\index{bind\+\_\+int@{bind\+\_\+int}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{bind\+\_\+int}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ bind\+\_\+int) ({\bf sqlite3\+\_\+stmt} $\ast$, int, int)}\label{structsqlite3__api__routines_ad202f7ba64d1fbcbe903ae656292852b}
+
+
+Definition at line 101903 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aedceaa5c8cf3964a314cfa9e27169ae9}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!bind\+\_\+int64@{bind\+\_\+int64}}
+\index{bind\+\_\+int64@{bind\+\_\+int64}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{bind\+\_\+int64}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ bind\+\_\+int64) ({\bf sqlite3\+\_\+stmt} $\ast$, int, {\bf sqlite\+\_\+int64})}\label{structsqlite3__api__routines_aedceaa5c8cf3964a314cfa9e27169ae9}
+
+
+Definition at line 101904 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a2dd582c7cf3a0bb65c1f8da45700bbac}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!bind\+\_\+null@{bind\+\_\+null}}
+\index{bind\+\_\+null@{bind\+\_\+null}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{bind\+\_\+null}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ bind\+\_\+null) ({\bf sqlite3\+\_\+stmt} $\ast$, int)}\label{structsqlite3__api__routines_a2dd582c7cf3a0bb65c1f8da45700bbac}
+
+
+Definition at line 101905 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a7441ab05f379ac808cfad8d6005eed61}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!bind\+\_\+parameter\+\_\+count@{bind\+\_\+parameter\+\_\+count}}
+\index{bind\+\_\+parameter\+\_\+count@{bind\+\_\+parameter\+\_\+count}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{bind\+\_\+parameter\+\_\+count}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ bind\+\_\+parameter\+\_\+count) ({\bf sqlite3\+\_\+stmt} $\ast$)}\label{structsqlite3__api__routines_a7441ab05f379ac808cfad8d6005eed61}
+
+
+Definition at line 101906 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a43a564bb094d5b9a86304beb50f69430}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!bind\+\_\+parameter\+\_\+index@{bind\+\_\+parameter\+\_\+index}}
+\index{bind\+\_\+parameter\+\_\+index@{bind\+\_\+parameter\+\_\+index}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{bind\+\_\+parameter\+\_\+index}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ bind\+\_\+parameter\+\_\+index) ({\bf sqlite3\+\_\+stmt} $\ast$, const char $\ast$z\+Name)}\label{structsqlite3__api__routines_a43a564bb094d5b9a86304beb50f69430}
+
+
+Definition at line 101907 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a1680ea8ab78f3c1a459a4c56a91ca496}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!bind\+\_\+parameter\+\_\+name@{bind\+\_\+parameter\+\_\+name}}
+\index{bind\+\_\+parameter\+\_\+name@{bind\+\_\+parameter\+\_\+name}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{bind\+\_\+parameter\+\_\+name}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$($\ast$ bind\+\_\+parameter\+\_\+name) ({\bf sqlite3\+\_\+stmt} $\ast$, int)}\label{structsqlite3__api__routines_a1680ea8ab78f3c1a459a4c56a91ca496}
+
+
+Definition at line 101908 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aea3f9722b1cfa2911ada47656ca88ce8}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!bind\+\_\+text@{bind\+\_\+text}}
+\index{bind\+\_\+text@{bind\+\_\+text}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{bind\+\_\+text}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ bind\+\_\+text) ({\bf sqlite3\+\_\+stmt} $\ast$, int, const char $\ast$, int n, void($\ast$)(void $\ast$))}\label{structsqlite3__api__routines_aea3f9722b1cfa2911ada47656ca88ce8}
+
+
+Definition at line 101909 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a8dae957f5c7a3a2efd105d4bac1e85f6}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!bind\+\_\+text16@{bind\+\_\+text16}}
+\index{bind\+\_\+text16@{bind\+\_\+text16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{bind\+\_\+text16}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ bind\+\_\+text16) ({\bf sqlite3\+\_\+stmt} $\ast$, int, const void $\ast$, int, void($\ast$)(void $\ast$))}\label{structsqlite3__api__routines_a8dae957f5c7a3a2efd105d4bac1e85f6}
+
+
+Definition at line 101910 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a1b88c42d9886d3a9110dfdf19e1ad539}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!bind\+\_\+text64@{bind\+\_\+text64}}
+\index{bind\+\_\+text64@{bind\+\_\+text64}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{bind\+\_\+text64}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ bind\+\_\+text64) ({\bf sqlite3\+\_\+stmt} $\ast$, int, const char $\ast$, {\bf sqlite3\+\_\+uint64}, void($\ast$)(void $\ast$), unsigned char)}\label{structsqlite3__api__routines_a1b88c42d9886d3a9110dfdf19e1ad539}
+
+
+Definition at line 102121 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a64fdf8888afea154aed93725bd9bb1a3}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!bind\+\_\+value@{bind\+\_\+value}}
+\index{bind\+\_\+value@{bind\+\_\+value}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{bind\+\_\+value}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ bind\+\_\+value) ({\bf sqlite3\+\_\+stmt} $\ast$, int, const sqlite3\+\_\+value $\ast$)}\label{structsqlite3__api__routines_a64fdf8888afea154aed93725bd9bb1a3}
+
+
+Definition at line 101911 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_af5f00f48cbe09e3f20da7a319dacb980}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!bind\+\_\+zeroblob@{bind\+\_\+zeroblob}}
+\index{bind\+\_\+zeroblob@{bind\+\_\+zeroblob}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{bind\+\_\+zeroblob}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ bind\+\_\+zeroblob) ({\bf sqlite3\+\_\+stmt} $\ast$, int, int)}\label{structsqlite3__api__routines_af5f00f48cbe09e3f20da7a319dacb980}
+
+
+Definition at line 102037 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a6eb0457daa03438d90456f349727307c}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!blob\+\_\+bytes@{blob\+\_\+bytes}}
+\index{blob\+\_\+bytes@{blob\+\_\+bytes}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{blob\+\_\+bytes}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ blob\+\_\+bytes) ({\bf sqlite3\+\_\+blob} $\ast$)}\label{structsqlite3__api__routines_a6eb0457daa03438d90456f349727307c}
+
+
+Definition at line 102038 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aa34d89a77100af517c61cdb4b49ecec8}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!blob\+\_\+close@{blob\+\_\+close}}
+\index{blob\+\_\+close@{blob\+\_\+close}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{blob\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ blob\+\_\+close) ({\bf sqlite3\+\_\+blob} $\ast$)}\label{structsqlite3__api__routines_aa34d89a77100af517c61cdb4b49ecec8}
+
+
+Definition at line 102039 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a393cdfc5f8d12f2f3f4da93c9fb91d4e}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!blob\+\_\+open@{blob\+\_\+open}}
+\index{blob\+\_\+open@{blob\+\_\+open}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{blob\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ blob\+\_\+open) ({\bf sqlite3} $\ast$, const char $\ast$, const char $\ast$, const char $\ast$, {\bf sqlite3\+\_\+int64}, int, {\bf sqlite3\+\_\+blob} $\ast$$\ast$)}\label{structsqlite3__api__routines_a393cdfc5f8d12f2f3f4da93c9fb91d4e}
+
+
+Definition at line 102040 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a1bdd1257c6b9865418d523040b002cc8}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!blob\+\_\+read@{blob\+\_\+read}}
+\index{blob\+\_\+read@{blob\+\_\+read}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{blob\+\_\+read}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ blob\+\_\+read) ({\bf sqlite3\+\_\+blob} $\ast$, void $\ast$, int, int)}\label{structsqlite3__api__routines_a1bdd1257c6b9865418d523040b002cc8}
+
+
+Definition at line 102042 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_af2b9e57cc5bbdc635490235dfc1dc57a}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!blob\+\_\+reopen@{blob\+\_\+reopen}}
+\index{blob\+\_\+reopen@{blob\+\_\+reopen}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{blob\+\_\+reopen}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ blob\+\_\+reopen) ({\bf sqlite3\+\_\+blob} $\ast$, {\bf sqlite3\+\_\+int64})}\label{structsqlite3__api__routines_af2b9e57cc5bbdc635490235dfc1dc57a}
+
+
+Definition at line 102100 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a839a00c8de419e217288953ed6e5944e}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!blob\+\_\+write@{blob\+\_\+write}}
+\index{blob\+\_\+write@{blob\+\_\+write}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{blob\+\_\+write}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ blob\+\_\+write) ({\bf sqlite3\+\_\+blob} $\ast$, const void $\ast$, int, int)}\label{structsqlite3__api__routines_a839a00c8de419e217288953ed6e5944e}
+
+
+Definition at line 102043 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a8050bb68d78bf3e6368042e37102bd36}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!busy\+\_\+handler@{busy\+\_\+handler}}
+\index{busy\+\_\+handler@{busy\+\_\+handler}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{busy\+\_\+handler}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ busy\+\_\+handler) ({\bf sqlite3} $\ast$, int($\ast$)(void $\ast$, int), void $\ast$)}\label{structsqlite3__api__routines_a8050bb68d78bf3e6368042e37102bd36}
+
+
+Definition at line 101912 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a6a89f6f95a1807a592fe8b74ebe5620b}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!busy\+\_\+timeout@{busy\+\_\+timeout}}
+\index{busy\+\_\+timeout@{busy\+\_\+timeout}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{busy\+\_\+timeout}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ busy\+\_\+timeout) ({\bf sqlite3} $\ast$, int ms)}\label{structsqlite3__api__routines_a6a89f6f95a1807a592fe8b74ebe5620b}
+
+
+Definition at line 101913 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a6acef5f8196481f86b71c60619468d23}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!cancel\+\_\+auto\+\_\+extension@{cancel\+\_\+auto\+\_\+extension}}
+\index{cancel\+\_\+auto\+\_\+extension@{cancel\+\_\+auto\+\_\+extension}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{cancel\+\_\+auto\+\_\+extension}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ cancel\+\_\+auto\+\_\+extension) (void($\ast$)(void))}\label{structsqlite3__api__routines_a6acef5f8196481f86b71c60619468d23}
+
+
+Definition at line 102123 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_afa73164142c6aaa87d16b3afacf0900a}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!changes@{changes}}
+\index{changes@{changes}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{changes}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ changes) ({\bf sqlite3} $\ast$)}\label{structsqlite3__api__routines_afa73164142c6aaa87d16b3afacf0900a}
+
+
+Definition at line 101914 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a01a8faefed89a0869f1b816d0ff68a26}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!clear\+\_\+bindings@{clear\+\_\+bindings}}
+\index{clear\+\_\+bindings@{clear\+\_\+bindings}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{clear\+\_\+bindings}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ clear\+\_\+bindings) ({\bf sqlite3\+\_\+stmt} $\ast$)}\label{structsqlite3__api__routines_a01a8faefed89a0869f1b816d0ff68a26}
+
+
+Definition at line 102032 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ab3156009cfdafa2aa5985cd47515132b}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!close@{close}}
+\index{close@{close}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ close) ({\bf sqlite3} $\ast$)}\label{structsqlite3__api__routines_ab3156009cfdafa2aa5985cd47515132b}
+
+
+Definition at line 101915 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a2f172367a40d5e1c0709deb177f2a81e}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!close\+\_\+v2@{close\+\_\+v2}}
+\index{close\+\_\+v2@{close\+\_\+v2}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{close\+\_\+v2}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ close\+\_\+v2) ({\bf sqlite3} $\ast$)}\label{structsqlite3__api__routines_a2f172367a40d5e1c0709deb177f2a81e}
+
+
+Definition at line 102104 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ab8f092534ece161ead0aab80770984e1}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!collation\+\_\+needed@{collation\+\_\+needed}}
+\index{collation\+\_\+needed@{collation\+\_\+needed}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{collation\+\_\+needed}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ collation\+\_\+needed) ({\bf sqlite3} $\ast$, void $\ast$, void($\ast$)(void $\ast$, {\bf sqlite3} $\ast$,int e\+Text\+Rep, const char $\ast$))}\label{structsqlite3__api__routines_ab8f092534ece161ead0aab80770984e1}
+
+
+Definition at line 101916 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_af506e60ba603419f01920da2968776ad}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!collation\+\_\+needed16@{collation\+\_\+needed16}}
+\index{collation\+\_\+needed16@{collation\+\_\+needed16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{collation\+\_\+needed16}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ collation\+\_\+needed16) ({\bf sqlite3} $\ast$, void $\ast$, void($\ast$)(void $\ast$, {\bf sqlite3} $\ast$,int e\+Text\+Rep, const void $\ast$))}\label{structsqlite3__api__routines_af506e60ba603419f01920da2968776ad}
+
+
+Definition at line 101918 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_afd0e3c2c6e6eb5000317676b71434ed0}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+blob@{column\+\_\+blob}}
+\index{column\+\_\+blob@{column\+\_\+blob}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+blob}]{\setlength{\rightskip}{0pt plus 5cm}const void$\ast$($\ast$ column\+\_\+blob) ({\bf sqlite3\+\_\+stmt} $\ast$, int i\+Col)}\label{structsqlite3__api__routines_afd0e3c2c6e6eb5000317676b71434ed0}
+
+
+Definition at line 101920 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ae1fab582ffc2298db1a581c5dd0600a9}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+bytes@{column\+\_\+bytes}}
+\index{column\+\_\+bytes@{column\+\_\+bytes}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+bytes}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ column\+\_\+bytes) ({\bf sqlite3\+\_\+stmt} $\ast$, int i\+Col)}\label{structsqlite3__api__routines_ae1fab582ffc2298db1a581c5dd0600a9}
+
+
+Definition at line 101921 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a219edb83765e8077a8ccc1f24f20aa99}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+bytes16@{column\+\_\+bytes16}}
+\index{column\+\_\+bytes16@{column\+\_\+bytes16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+bytes16}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ column\+\_\+bytes16) ({\bf sqlite3\+\_\+stmt} $\ast$, int i\+Col)}\label{structsqlite3__api__routines_a219edb83765e8077a8ccc1f24f20aa99}
+
+
+Definition at line 101922 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a520b006b5146d066933c2fcea314366e}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+count@{column\+\_\+count}}
+\index{column\+\_\+count@{column\+\_\+count}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+count}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ column\+\_\+count) ({\bf sqlite3\+\_\+stmt} $\ast$p\+Stmt)}\label{structsqlite3__api__routines_a520b006b5146d066933c2fcea314366e}
+
+
+Definition at line 101923 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a18d0b5a6a6a10404c348b987f328127c}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+database\+\_\+name@{column\+\_\+database\+\_\+name}}
+\index{column\+\_\+database\+\_\+name@{column\+\_\+database\+\_\+name}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+database\+\_\+name}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$($\ast$ column\+\_\+database\+\_\+name) ({\bf sqlite3\+\_\+stmt} $\ast$, int)}\label{structsqlite3__api__routines_a18d0b5a6a6a10404c348b987f328127c}
+
+
+Definition at line 101924 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a985c0731ddd0bafff880747a307a43d9}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+database\+\_\+name16@{column\+\_\+database\+\_\+name16}}
+\index{column\+\_\+database\+\_\+name16@{column\+\_\+database\+\_\+name16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+database\+\_\+name16}]{\setlength{\rightskip}{0pt plus 5cm}const void$\ast$($\ast$ column\+\_\+database\+\_\+name16) ({\bf sqlite3\+\_\+stmt} $\ast$, int)}\label{structsqlite3__api__routines_a985c0731ddd0bafff880747a307a43d9}
+
+
+Definition at line 101925 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ae97b4b0b98a715c66528a87e57160c1e}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+decltype@{column\+\_\+decltype}}
+\index{column\+\_\+decltype@{column\+\_\+decltype}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+decltype}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$($\ast$ column\+\_\+decltype) ({\bf sqlite3\+\_\+stmt} $\ast$, int i)}\label{structsqlite3__api__routines_ae97b4b0b98a715c66528a87e57160c1e}
+
+
+Definition at line 101926 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aa852f9a24c9f0503ae4ba31bbc853fcc}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+decltype16@{column\+\_\+decltype16}}
+\index{column\+\_\+decltype16@{column\+\_\+decltype16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+decltype16}]{\setlength{\rightskip}{0pt plus 5cm}const void$\ast$($\ast$ column\+\_\+decltype16) ({\bf sqlite3\+\_\+stmt} $\ast$, int)}\label{structsqlite3__api__routines_aa852f9a24c9f0503ae4ba31bbc853fcc}
+
+
+Definition at line 101927 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aa17d48cd9e1033459492792eea5b58e0}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+double@{column\+\_\+double}}
+\index{column\+\_\+double@{column\+\_\+double}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+double}]{\setlength{\rightskip}{0pt plus 5cm}double($\ast$ column\+\_\+double) ({\bf sqlite3\+\_\+stmt} $\ast$, int i\+Col)}\label{structsqlite3__api__routines_aa17d48cd9e1033459492792eea5b58e0}
+
+
+Definition at line 101928 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ab905e24ea0a592436e42d95a9ccf5a66}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+int@{column\+\_\+int}}
+\index{column\+\_\+int@{column\+\_\+int}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+int}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ column\+\_\+int) ({\bf sqlite3\+\_\+stmt} $\ast$, int i\+Col)}\label{structsqlite3__api__routines_ab905e24ea0a592436e42d95a9ccf5a66}
+
+
+Definition at line 101929 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a1c8174b05fe17b5adf1f51410c2a7574}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+int64@{column\+\_\+int64}}
+\index{column\+\_\+int64@{column\+\_\+int64}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+int64}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite\+\_\+int64}($\ast$ column\+\_\+int64) ({\bf sqlite3\+\_\+stmt} $\ast$, int i\+Col)}\label{structsqlite3__api__routines_a1c8174b05fe17b5adf1f51410c2a7574}
+
+
+Definition at line 101930 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a1559513a2896c2f329ab535947d7b01a}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+name@{column\+\_\+name}}
+\index{column\+\_\+name@{column\+\_\+name}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+name}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$($\ast$ column\+\_\+name) ({\bf sqlite3\+\_\+stmt} $\ast$, int)}\label{structsqlite3__api__routines_a1559513a2896c2f329ab535947d7b01a}
+
+
+Definition at line 101931 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_af02fc8b5183845a5cd23f865992f874b}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+name16@{column\+\_\+name16}}
+\index{column\+\_\+name16@{column\+\_\+name16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+name16}]{\setlength{\rightskip}{0pt plus 5cm}const void$\ast$($\ast$ column\+\_\+name16) ({\bf sqlite3\+\_\+stmt} $\ast$, int)}\label{structsqlite3__api__routines_af02fc8b5183845a5cd23f865992f874b}
+
+
+Definition at line 101932 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a73748d4fc1d34e9a147c1781667bd1c8}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+origin\+\_\+name@{column\+\_\+origin\+\_\+name}}
+\index{column\+\_\+origin\+\_\+name@{column\+\_\+origin\+\_\+name}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+origin\+\_\+name}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$($\ast$ column\+\_\+origin\+\_\+name) ({\bf sqlite3\+\_\+stmt} $\ast$, int)}\label{structsqlite3__api__routines_a73748d4fc1d34e9a147c1781667bd1c8}
+
+
+Definition at line 101933 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ad98229e18c6cddc831512179a1695418}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+origin\+\_\+name16@{column\+\_\+origin\+\_\+name16}}
+\index{column\+\_\+origin\+\_\+name16@{column\+\_\+origin\+\_\+name16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+origin\+\_\+name16}]{\setlength{\rightskip}{0pt plus 5cm}const void$\ast$($\ast$ column\+\_\+origin\+\_\+name16) ({\bf sqlite3\+\_\+stmt} $\ast$, int)}\label{structsqlite3__api__routines_ad98229e18c6cddc831512179a1695418}
+
+
+Definition at line 101934 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a1ea5266d202a57ddaffc1b7951b43305}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+table\+\_\+name@{column\+\_\+table\+\_\+name}}
+\index{column\+\_\+table\+\_\+name@{column\+\_\+table\+\_\+name}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+table\+\_\+name}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$($\ast$ column\+\_\+table\+\_\+name) ({\bf sqlite3\+\_\+stmt} $\ast$, int)}\label{structsqlite3__api__routines_a1ea5266d202a57ddaffc1b7951b43305}
+
+
+Definition at line 101935 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a5ab49c39dc125f958df10ecc88fd9b12}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+table\+\_\+name16@{column\+\_\+table\+\_\+name16}}
+\index{column\+\_\+table\+\_\+name16@{column\+\_\+table\+\_\+name16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+table\+\_\+name16}]{\setlength{\rightskip}{0pt plus 5cm}const void$\ast$($\ast$ column\+\_\+table\+\_\+name16) ({\bf sqlite3\+\_\+stmt} $\ast$, int)}\label{structsqlite3__api__routines_a5ab49c39dc125f958df10ecc88fd9b12}
+
+
+Definition at line 101936 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a66f8d504265c0869a251f94e96b1873f}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+text@{column\+\_\+text}}
+\index{column\+\_\+text@{column\+\_\+text}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+text}]{\setlength{\rightskip}{0pt plus 5cm}const unsigned char$\ast$($\ast$ column\+\_\+text) ({\bf sqlite3\+\_\+stmt} $\ast$, int i\+Col)}\label{structsqlite3__api__routines_a66f8d504265c0869a251f94e96b1873f}
+
+
+Definition at line 101937 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a78b3c83097ee83e73ed99b4267d229e5}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+text16@{column\+\_\+text16}}
+\index{column\+\_\+text16@{column\+\_\+text16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+text16}]{\setlength{\rightskip}{0pt plus 5cm}const void$\ast$($\ast$ column\+\_\+text16) ({\bf sqlite3\+\_\+stmt} $\ast$, int i\+Col)}\label{structsqlite3__api__routines_a78b3c83097ee83e73ed99b4267d229e5}
+
+
+Definition at line 101938 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a492811fa922de6f677e915b1cf9a53a0}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+type@{column\+\_\+type}}
+\index{column\+\_\+type@{column\+\_\+type}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+type}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ column\+\_\+type) ({\bf sqlite3\+\_\+stmt} $\ast$, int i\+Col)}\label{structsqlite3__api__routines_a492811fa922de6f677e915b1cf9a53a0}
+
+
+Definition at line 101939 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aefb5910a72db46607d30a1d7d8e1545a}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!column\+\_\+value@{column\+\_\+value}}
+\index{column\+\_\+value@{column\+\_\+value}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{column\+\_\+value}]{\setlength{\rightskip}{0pt plus 5cm}sqlite3\+\_\+value$\ast$($\ast$ column\+\_\+value) ({\bf sqlite3\+\_\+stmt} $\ast$, int i\+Col)}\label{structsqlite3__api__routines_aefb5910a72db46607d30a1d7d8e1545a}
+
+
+Definition at line 101940 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aeaaa1a1102ac1a488fff8dab42260993}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!commit\+\_\+hook@{commit\+\_\+hook}}
+\index{commit\+\_\+hook@{commit\+\_\+hook}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{commit\+\_\+hook}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$($\ast$ commit\+\_\+hook) ({\bf sqlite3} $\ast$, int($\ast$)(void $\ast$), void $\ast$)}\label{structsqlite3__api__routines_aeaaa1a1102ac1a488fff8dab42260993}
+
+
+Definition at line 101941 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a860fe638b621444281202e3ded4fcd80}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!compileoption\+\_\+get@{compileoption\+\_\+get}}
+\index{compileoption\+\_\+get@{compileoption\+\_\+get}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{compileoption\+\_\+get}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$($\ast$ compileoption\+\_\+get) (int)}\label{structsqlite3__api__routines_a860fe638b621444281202e3ded4fcd80}
+
+
+Definition at line 102080 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ae4519132382d8a2a96ff7fb756404e47}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!compileoption\+\_\+used@{compileoption\+\_\+used}}
+\index{compileoption\+\_\+used@{compileoption\+\_\+used}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{compileoption\+\_\+used}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ compileoption\+\_\+used) (const char $\ast$)}\label{structsqlite3__api__routines_ae4519132382d8a2a96ff7fb756404e47}
+
+
+Definition at line 102081 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a01aaed823d8c17a17f125d1abaf5eac9}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!complete@{complete}}
+\index{complete@{complete}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{complete}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ complete) (const char $\ast${\bf sql})}\label{structsqlite3__api__routines_a01aaed823d8c17a17f125d1abaf5eac9}
+
+
+Definition at line 101942 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a6d6690a5ad824d944df098f0efb92c06}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!complete16@{complete16}}
+\index{complete16@{complete16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{complete16}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ complete16) (const void $\ast${\bf sql})}\label{structsqlite3__api__routines_a6d6690a5ad824d944df098f0efb92c06}
+
+
+Definition at line 101943 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ae2cf2d3a199a126857e80c067cd8bf48}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!context\+\_\+db\+\_\+handle@{context\+\_\+db\+\_\+handle}}
+\index{context\+\_\+db\+\_\+handle@{context\+\_\+db\+\_\+handle}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{context\+\_\+db\+\_\+handle}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3}$\ast$($\ast$ context\+\_\+db\+\_\+handle) ({\bf sqlite3\+\_\+context} $\ast$)}\label{structsqlite3__api__routines_ae2cf2d3a199a126857e80c067cd8bf48}
+
+
+Definition at line 102069 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aba03b11b6904d9c6796bb4ada1a0adbe}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!create\+\_\+collation@{create\+\_\+collation}}
+\index{create\+\_\+collation@{create\+\_\+collation}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{create\+\_\+collation}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ create\+\_\+collation) ({\bf sqlite3} $\ast$, const char $\ast$, int, void $\ast$, int($\ast$)(void $\ast$, int, const void $\ast$, int, const void $\ast$))}\label{structsqlite3__api__routines_aba03b11b6904d9c6796bb4ada1a0adbe}
+
+
+Definition at line 101944 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a2a103db00b3e96982f961473802801f3}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!create\+\_\+collation16@{create\+\_\+collation16}}
+\index{create\+\_\+collation16@{create\+\_\+collation16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{create\+\_\+collation16}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ create\+\_\+collation16) ({\bf sqlite3} $\ast$, const void $\ast$, int, void $\ast$, int($\ast$)(void $\ast$, int, const void $\ast$, int, const void $\ast$))}\label{structsqlite3__api__routines_a2a103db00b3e96982f961473802801f3}
+
+
+Definition at line 101946 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_af08608f15c694b8f19f4ad8b7c82e43f}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!create\+\_\+collation\+\_\+v2@{create\+\_\+collation\+\_\+v2}}
+\index{create\+\_\+collation\+\_\+v2@{create\+\_\+collation\+\_\+v2}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{create\+\_\+collation\+\_\+v2}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ create\+\_\+collation\+\_\+v2) ({\bf sqlite3} $\ast$, const char $\ast$, int, void $\ast$, int($\ast$)(void $\ast$, int, const void $\ast$, int, const void $\ast$), void($\ast$)(void $\ast$))}\label{structsqlite3__api__routines_af08608f15c694b8f19f4ad8b7c82e43f}
+
+
+Definition at line 102044 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a6efc8419dc21d8abea4bd5cbc323b0fe}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!create\+\_\+function@{create\+\_\+function}}
+\index{create\+\_\+function@{create\+\_\+function}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{create\+\_\+function}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ create\+\_\+function) ({\bf sqlite3} $\ast$, const char $\ast$, int, int, void $\ast$, void($\ast$x\+Func)({\bf sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$), void($\ast$x\+Step)({\bf sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$), void($\ast$x\+Final)({\bf sqlite3\+\_\+context} $\ast$))}\label{structsqlite3__api__routines_a6efc8419dc21d8abea4bd5cbc323b0fe}
+
+
+Definition at line 101948 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a92b6252a9902db87b47529c31f1dc97c}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!create\+\_\+function16@{create\+\_\+function16}}
+\index{create\+\_\+function16@{create\+\_\+function16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{create\+\_\+function16}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ create\+\_\+function16) ({\bf sqlite3} $\ast$, const void $\ast$, int, int, void $\ast$, void($\ast$x\+Func)({\bf sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$), void($\ast$x\+Step)({\bf sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$), void($\ast$x\+Final)({\bf sqlite3\+\_\+context} $\ast$))}\label{structsqlite3__api__routines_a92b6252a9902db87b47529c31f1dc97c}
+
+
+Definition at line 101952 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a1a912b5c2885793c368c811d6c4a1fe1}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!create\+\_\+function\+\_\+v2@{create\+\_\+function\+\_\+v2}}
+\index{create\+\_\+function\+\_\+v2@{create\+\_\+function\+\_\+v2}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{create\+\_\+function\+\_\+v2}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ create\+\_\+function\+\_\+v2) ({\bf sqlite3} $\ast$, const char $\ast$, int, int, void $\ast$, void($\ast$x\+Func)({\bf sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$), void($\ast$x\+Step)({\bf sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$), void($\ast$x\+Final)({\bf sqlite3\+\_\+context} $\ast$), void($\ast$x\+Destroy)(void $\ast$))}\label{structsqlite3__api__routines_a1a912b5c2885793c368c811d6c4a1fe1}
+
+
+Definition at line 102082 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ab2793fe92f6ecd986d036e43915f0c5b}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!create\+\_\+module@{create\+\_\+module}}
+\index{create\+\_\+module@{create\+\_\+module}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{create\+\_\+module}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ create\+\_\+module) ({\bf sqlite3} $\ast$, const char $\ast$, const {\bf sqlite3\+\_\+module} $\ast$, void $\ast$)}\label{structsqlite3__api__routines_ab2793fe92f6ecd986d036e43915f0c5b}
+
+
+Definition at line 101956 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a27b33b7aa00bc2e6cf467e5e8aede3ca}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!create\+\_\+module\+\_\+v2@{create\+\_\+module\+\_\+v2}}
+\index{create\+\_\+module\+\_\+v2@{create\+\_\+module\+\_\+v2}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{create\+\_\+module\+\_\+v2}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ create\+\_\+module\+\_\+v2) ({\bf sqlite3} $\ast$, const char $\ast$, const {\bf sqlite3\+\_\+module} $\ast$, void $\ast$, void($\ast$x\+Destroy)(void $\ast$))}\label{structsqlite3__api__routines_a27b33b7aa00bc2e6cf467e5e8aede3ca}
+
+
+Definition at line 102034 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_af251752525fef010bd8d98fd5af26aa3}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!data\+\_\+count@{data\+\_\+count}}
+\index{data\+\_\+count@{data\+\_\+count}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{data\+\_\+count}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ data\+\_\+count) ({\bf sqlite3\+\_\+stmt} $\ast$p\+Stmt)}\label{structsqlite3__api__routines_af251752525fef010bd8d98fd5af26aa3}
+
+
+Definition at line 101957 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a1a068c64c4681b33e8477b65f7e2c56d}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!db\+\_\+config@{db\+\_\+config}}
+\index{db\+\_\+config@{db\+\_\+config}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{db\+\_\+config}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ db\+\_\+config) ({\bf sqlite3} $\ast$, int,...)}\label{structsqlite3__api__routines_a1a068c64c4681b33e8477b65f7e2c56d}
+
+
+Definition at line 102087 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a0db6c1395cbeed5927f8cf58199d683c}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!db\+\_\+filename@{db\+\_\+filename}}
+\index{db\+\_\+filename@{db\+\_\+filename}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{db\+\_\+filename}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$($\ast$ db\+\_\+filename) ({\bf sqlite3} $\ast$, const char $\ast$)}\label{structsqlite3__api__routines_a0db6c1395cbeed5927f8cf58199d683c}
+
+
+Definition at line 102105 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aac07d5898204bc18ddf5b45cc52c3062}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!db\+\_\+handle@{db\+\_\+handle}}
+\index{db\+\_\+handle@{db\+\_\+handle}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{db\+\_\+handle}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3}$\ast$($\ast$ db\+\_\+handle) ({\bf sqlite3\+\_\+stmt} $\ast$)}\label{structsqlite3__api__routines_aac07d5898204bc18ddf5b45cc52c3062}
+
+
+Definition at line 101958 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a5128f423679ab47a44f61c026d53c3f2}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!db\+\_\+mutex@{db\+\_\+mutex}}
+\index{db\+\_\+mutex@{db\+\_\+mutex}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{db\+\_\+mutex}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+mutex}$\ast$($\ast$ db\+\_\+mutex) ({\bf sqlite3} $\ast$)}\label{structsqlite3__api__routines_a5128f423679ab47a44f61c026d53c3f2}
+
+
+Definition at line 102088 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a2a04c7c12414aa6d7e03cc56d29ded8d}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!db\+\_\+readonly@{db\+\_\+readonly}}
+\index{db\+\_\+readonly@{db\+\_\+readonly}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{db\+\_\+readonly}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ db\+\_\+readonly) ({\bf sqlite3} $\ast$, const char $\ast$)}\label{structsqlite3__api__routines_a2a04c7c12414aa6d7e03cc56d29ded8d}
+
+
+Definition at line 102106 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aebcaae009deec2da0f62049e41748aad}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!db\+\_\+release\+\_\+memory@{db\+\_\+release\+\_\+memory}}
+\index{db\+\_\+release\+\_\+memory@{db\+\_\+release\+\_\+memory}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{db\+\_\+release\+\_\+memory}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ db\+\_\+release\+\_\+memory) ({\bf sqlite3} $\ast$)}\label{structsqlite3__api__routines_aebcaae009deec2da0f62049e41748aad}
+
+
+Definition at line 102107 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a84994959cfb23f6e01eb63c52836d3f3}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!db\+\_\+status@{db\+\_\+status}}
+\index{db\+\_\+status@{db\+\_\+status}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{db\+\_\+status}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ db\+\_\+status) ({\bf sqlite3} $\ast$, int, int $\ast$, int $\ast$, int)}\label{structsqlite3__api__routines_a84994959cfb23f6e01eb63c52836d3f3}
+
+
+Definition at line 102089 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ab96c11c4adf08d1f0bdcff2cb643796e}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!declare\+\_\+vtab@{declare\+\_\+vtab}}
+\index{declare\+\_\+vtab@{declare\+\_\+vtab}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{declare\+\_\+vtab}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ declare\+\_\+vtab) ({\bf sqlite3} $\ast$, const char $\ast$)}\label{structsqlite3__api__routines_ab96c11c4adf08d1f0bdcff2cb643796e}
+
+
+Definition at line 101959 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a59467cfa1e3c74205cea906d16629647}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!enable\+\_\+shared\+\_\+cache@{enable\+\_\+shared\+\_\+cache}}
+\index{enable\+\_\+shared\+\_\+cache@{enable\+\_\+shared\+\_\+cache}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{enable\+\_\+shared\+\_\+cache}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ enable\+\_\+shared\+\_\+cache) (int)}\label{structsqlite3__api__routines_a59467cfa1e3c74205cea906d16629647}
+
+
+Definition at line 101960 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a9cf1e23a3f17f5fdafb327194466cc80}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!errcode@{errcode}}
+\index{errcode@{errcode}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{errcode}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ errcode) ({\bf sqlite3} $\ast$db)}\label{structsqlite3__api__routines_a9cf1e23a3f17f5fdafb327194466cc80}
+
+
+Definition at line 101961 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aa8406d8ac4fb37fa9772c0ea1293c4c0}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!errmsg@{errmsg}}
+\index{errmsg@{errmsg}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{errmsg}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$($\ast$ errmsg) ({\bf sqlite3} $\ast$)}\label{structsqlite3__api__routines_aa8406d8ac4fb37fa9772c0ea1293c4c0}
+
+
+Definition at line 101962 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a819557ae1f065e16705e927ed1c8544b}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!errmsg16@{errmsg16}}
+\index{errmsg16@{errmsg16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{errmsg16}]{\setlength{\rightskip}{0pt plus 5cm}const void$\ast$($\ast$ errmsg16) ({\bf sqlite3} $\ast$)}\label{structsqlite3__api__routines_a819557ae1f065e16705e927ed1c8544b}
+
+
+Definition at line 101963 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a16a09ec4c2c5af6736eb73e8d0110f99}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!errstr@{errstr}}
+\index{errstr@{errstr}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{errstr}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$($\ast$ errstr) (int)}\label{structsqlite3__api__routines_a16a09ec4c2c5af6736eb73e8d0110f99}
+
+
+Definition at line 102108 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ac07c98ed980b0f1f7f1c1b6c95390f66}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!exec@{exec}}
+\index{exec@{exec}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{exec}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ exec) ({\bf sqlite3} $\ast$, const char $\ast$, {\bf sqlite3\+\_\+callback}, void $\ast$, char $\ast$$\ast$)}\label{structsqlite3__api__routines_ac07c98ed980b0f1f7f1c1b6c95390f66}
+
+
+Definition at line 101964 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a9c5e16f9d478ad089c7ddb2320ce52e9}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!expired@{expired}}
+\index{expired@{expired}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{expired}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ expired) ({\bf sqlite3\+\_\+stmt} $\ast$)}\label{structsqlite3__api__routines_a9c5e16f9d478ad089c7ddb2320ce52e9}
+
+
+Definition at line 101965 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aa890ed7620f82f9380420e7ba9ebecca}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!extended\+\_\+errcode@{extended\+\_\+errcode}}
+\index{extended\+\_\+errcode@{extended\+\_\+errcode}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{extended\+\_\+errcode}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ extended\+\_\+errcode) ({\bf sqlite3} $\ast$)}\label{structsqlite3__api__routines_aa890ed7620f82f9380420e7ba9ebecca}
+
+
+Definition at line 102090 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a96808678170875483108bb329d07e025}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!extended\+\_\+result\+\_\+codes@{extended\+\_\+result\+\_\+codes}}
+\index{extended\+\_\+result\+\_\+codes@{extended\+\_\+result\+\_\+codes}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{extended\+\_\+result\+\_\+codes}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ extended\+\_\+result\+\_\+codes) ({\bf sqlite3} $\ast$, int)}\label{structsqlite3__api__routines_a96808678170875483108bb329d07e025}
+
+
+Definition at line 102070 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a0b02da5c8741506c6c10c3a4cf6b768b}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!file\+\_\+control@{file\+\_\+control}}
+\index{file\+\_\+control@{file\+\_\+control}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{file\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ file\+\_\+control) ({\bf sqlite3} $\ast$, const char $\ast$, int, void $\ast$)}\label{structsqlite3__api__routines_a0b02da5c8741506c6c10c3a4cf6b768b}
+
+
+Definition at line 102047 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_adf6d460eae9a5dd4edef98a6f0bcfabb}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!finalize@{finalize}}
+\index{finalize@{finalize}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{finalize}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ finalize) ({\bf sqlite3\+\_\+stmt} $\ast$p\+Stmt)}\label{structsqlite3__api__routines_adf6d460eae9a5dd4edef98a6f0bcfabb}
+
+
+Definition at line 101966 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a00cac9e5111cbc007e391e5017fa5af5}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!free@{free}}
+\index{free@{free}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{free}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ free) (void $\ast$)}\label{structsqlite3__api__routines_a00cac9e5111cbc007e391e5017fa5af5}
+
+
+Definition at line 101967 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a9eb7ca42560b20ece336d287c1310092}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!free\+\_\+table@{free\+\_\+table}}
+\index{free\+\_\+table@{free\+\_\+table}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{free\+\_\+table}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ free\+\_\+table) (char $\ast$$\ast$result)}\label{structsqlite3__api__routines_a9eb7ca42560b20ece336d287c1310092}
+
+
+Definition at line 101968 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ab572e00bb6528214f3df218c02ada7d2}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!get\+\_\+autocommit@{get\+\_\+autocommit}}
+\index{get\+\_\+autocommit@{get\+\_\+autocommit}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{get\+\_\+autocommit}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ get\+\_\+autocommit) ({\bf sqlite3} $\ast$)}\label{structsqlite3__api__routines_ab572e00bb6528214f3df218c02ada7d2}
+
+
+Definition at line 101969 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a1a7c357699dbe4d5599433c442843466}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!get\+\_\+auxdata@{get\+\_\+auxdata}}
+\index{get\+\_\+auxdata@{get\+\_\+auxdata}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{get\+\_\+auxdata}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$($\ast$ get\+\_\+auxdata) ({\bf sqlite3\+\_\+context} $\ast$, int)}\label{structsqlite3__api__routines_a1a7c357699dbe4d5599433c442843466}
+
+
+Definition at line 101970 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a06283d641523bfc7591489d1e52029ac}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!get\+\_\+table@{get\+\_\+table}}
+\index{get\+\_\+table@{get\+\_\+table}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{get\+\_\+table}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ get\+\_\+table) ({\bf sqlite3} $\ast$, const char $\ast$, char $\ast$$\ast$$\ast$, int $\ast$, int $\ast$, char $\ast$$\ast$)}\label{structsqlite3__api__routines_a06283d641523bfc7591489d1e52029ac}
+
+
+Definition at line 101971 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a854a8b54dbe2dd948fe7af169b06cd23}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!global\+\_\+recover@{global\+\_\+recover}}
+\index{global\+\_\+recover@{global\+\_\+recover}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{global\+\_\+recover}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ global\+\_\+recover) (void)}\label{structsqlite3__api__routines_a854a8b54dbe2dd948fe7af169b06cd23}
+
+
+Definition at line 101972 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ad5f1fb9f2b2fcb656a7e850cbc276cb1}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!interruptx@{interruptx}}
+\index{interruptx@{interruptx}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{interruptx}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ interruptx) ({\bf sqlite3} $\ast$)}\label{structsqlite3__api__routines_ad5f1fb9f2b2fcb656a7e850cbc276cb1}
+
+
+Definition at line 101973 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a03d51b30a03196c58fd61b31cb1d471f}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!last\+\_\+insert\+\_\+rowid@{last\+\_\+insert\+\_\+rowid}}
+\index{last\+\_\+insert\+\_\+rowid@{last\+\_\+insert\+\_\+rowid}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{last\+\_\+insert\+\_\+rowid}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite\+\_\+int64}($\ast$ last\+\_\+insert\+\_\+rowid) ({\bf sqlite3} $\ast$)}\label{structsqlite3__api__routines_a03d51b30a03196c58fd61b31cb1d471f}
+
+
+Definition at line 101974 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a199d2b1839aa9615cfdf85f81a797331}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!libversion@{libversion}}
+\index{libversion@{libversion}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{libversion}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$($\ast$ libversion) (void)}\label{structsqlite3__api__routines_a199d2b1839aa9615cfdf85f81a797331}
+
+
+Definition at line 101975 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_af9c96766eac22c55e28a48ba1ccc0ee5}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!libversion\+\_\+number@{libversion\+\_\+number}}
+\index{libversion\+\_\+number@{libversion\+\_\+number}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{libversion\+\_\+number}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ libversion\+\_\+number) (void)}\label{structsqlite3__api__routines_af9c96766eac22c55e28a48ba1ccc0ee5}
+
+
+Definition at line 101976 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a9d676e25f8e233d2e72fec5dd11e5c55}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!limit@{limit}}
+\index{limit@{limit}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{limit}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ limit) ({\bf sqlite3} $\ast$, int, int)}\label{structsqlite3__api__routines_a9d676e25f8e233d2e72fec5dd11e5c55}
+
+
+Definition at line 102071 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ad9234c15dcf607e79e3168a32cf9a611}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!load\+\_\+extension@{load\+\_\+extension}}
+\index{load\+\_\+extension@{load\+\_\+extension}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{load\+\_\+extension}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ load\+\_\+extension) ({\bf sqlite3} $\ast$, const char $\ast$, const char $\ast$, char $\ast$$\ast$)}\label{structsqlite3__api__routines_ad9234c15dcf607e79e3168a32cf9a611}
+
+
+Definition at line 102124 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_af983b682fce013e15d082e45311d1636}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!log@{log}}
+\index{log@{log}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{log}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ log) (int, const char $\ast$,...)}\label{structsqlite3__api__routines_af983b682fce013e15d082e45311d1636}
+
+
+Definition at line 102091 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a020ab363e4dd7537af45b0728af40a35}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!malloc@{malloc}}
+\index{malloc@{malloc}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{malloc}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$($\ast$ malloc) (int)}\label{structsqlite3__api__routines_a020ab363e4dd7537af45b0728af40a35}
+
+
+Definition at line 101977 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ab8c993d0e3cdaa5f343618be6281ff90}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!malloc64@{malloc64}}
+\index{malloc64@{malloc64}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{malloc64}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$($\ast$ malloc64) ({\bf sqlite3\+\_\+uint64})}\label{structsqlite3__api__routines_ab8c993d0e3cdaa5f343618be6281ff90}
+
+
+Definition at line 102125 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a36b5143cf264308003cba66ffe90b12e}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!memory\+\_\+highwater@{memory\+\_\+highwater}}
+\index{memory\+\_\+highwater@{memory\+\_\+highwater}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{memory\+\_\+highwater}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+int64}($\ast$ memory\+\_\+highwater) (int)}\label{structsqlite3__api__routines_a36b5143cf264308003cba66ffe90b12e}
+
+
+Definition at line 102048 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ae625a716ceecf9b19286decb320142f2}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!memory\+\_\+used@{memory\+\_\+used}}
+\index{memory\+\_\+used@{memory\+\_\+used}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{memory\+\_\+used}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+int64}($\ast$ memory\+\_\+used) (void)}\label{structsqlite3__api__routines_ae625a716ceecf9b19286decb320142f2}
+
+
+Definition at line 102049 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a0102945940718ef900528749b85a5325}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!mprintf@{mprintf}}
+\index{mprintf@{mprintf}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{mprintf}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$($\ast$ mprintf) (const char $\ast$,...)}\label{structsqlite3__api__routines_a0102945940718ef900528749b85a5325}
+
+
+Definition at line 101978 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_af1044837dbbd9f43cc04104cdf509787}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!msize@{msize}}
+\index{msize@{msize}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{msize}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+uint64}($\ast$ msize) (void $\ast$)}\label{structsqlite3__api__routines_af1044837dbbd9f43cc04104cdf509787}
+
+
+Definition at line 102126 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a1af4db8b3172987e3a0a7a6563236adb}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!mutex\+\_\+alloc@{mutex\+\_\+alloc}}
+\index{mutex\+\_\+alloc@{mutex\+\_\+alloc}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{mutex\+\_\+alloc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+mutex}$\ast$($\ast$ mutex\+\_\+alloc) (int)}\label{structsqlite3__api__routines_a1af4db8b3172987e3a0a7a6563236adb}
+
+
+Definition at line 102050 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ada638e2fd1599c0afb7a5f446a994f5e}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!mutex\+\_\+enter@{mutex\+\_\+enter}}
+\index{mutex\+\_\+enter@{mutex\+\_\+enter}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{mutex\+\_\+enter}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ mutex\+\_\+enter) ({\bf sqlite3\+\_\+mutex} $\ast$)}\label{structsqlite3__api__routines_ada638e2fd1599c0afb7a5f446a994f5e}
+
+
+Definition at line 102051 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a18fbbf680b1a0e6a2e14f7f3a4d7b888}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!mutex\+\_\+free@{mutex\+\_\+free}}
+\index{mutex\+\_\+free@{mutex\+\_\+free}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{mutex\+\_\+free}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ mutex\+\_\+free) ({\bf sqlite3\+\_\+mutex} $\ast$)}\label{structsqlite3__api__routines_a18fbbf680b1a0e6a2e14f7f3a4d7b888}
+
+
+Definition at line 102052 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a2992e367409871e35e5094a8ea2e7be2}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!mutex\+\_\+leave@{mutex\+\_\+leave}}
+\index{mutex\+\_\+leave@{mutex\+\_\+leave}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{mutex\+\_\+leave}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ mutex\+\_\+leave) ({\bf sqlite3\+\_\+mutex} $\ast$)}\label{structsqlite3__api__routines_a2992e367409871e35e5094a8ea2e7be2}
+
+
+Definition at line 102053 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_af79d9da98d2257754895a48ae553dd06}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!mutex\+\_\+try@{mutex\+\_\+try}}
+\index{mutex\+\_\+try@{mutex\+\_\+try}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{mutex\+\_\+try}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ mutex\+\_\+try) ({\bf sqlite3\+\_\+mutex} $\ast$)}\label{structsqlite3__api__routines_af79d9da98d2257754895a48ae553dd06}
+
+
+Definition at line 102054 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ad7e3588eb6c4aca4ef8d5c3ee52a5edc}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!next\+\_\+stmt@{next\+\_\+stmt}}
+\index{next\+\_\+stmt@{next\+\_\+stmt}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{next\+\_\+stmt}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+stmt}$\ast$($\ast$ next\+\_\+stmt) ({\bf sqlite3} $\ast$, {\bf sqlite3\+\_\+stmt} $\ast$)}\label{structsqlite3__api__routines_ad7e3588eb6c4aca4ef8d5c3ee52a5edc}
+
+
+Definition at line 102072 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a9a5afaf1d25c526dda2af954066ff30a}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!open@{open}}
+\index{open@{open}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ open) (const char $\ast$, {\bf sqlite3} $\ast$$\ast$)}\label{structsqlite3__api__routines_a9a5afaf1d25c526dda2af954066ff30a}
+
+
+Definition at line 101979 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_af9495065c5993f238d091cfc80c4fe60}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!open16@{open16}}
+\index{open16@{open16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{open16}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ open16) (const void $\ast$, {\bf sqlite3} $\ast$$\ast$)}\label{structsqlite3__api__routines_af9495065c5993f238d091cfc80c4fe60}
+
+
+Definition at line 101980 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a64695f272360a807813ba8d1af0291aa}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!open\+\_\+v2@{open\+\_\+v2}}
+\index{open\+\_\+v2@{open\+\_\+v2}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{open\+\_\+v2}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ open\+\_\+v2) (const char $\ast$, {\bf sqlite3} $\ast$$\ast$, int, const char $\ast$)}\label{structsqlite3__api__routines_a64695f272360a807813ba8d1af0291aa}
+
+
+Definition at line 102055 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a51cace8e3c8a535241634eb9788ccafc}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!overload\+\_\+function@{overload\+\_\+function}}
+\index{overload\+\_\+function@{overload\+\_\+function}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{overload\+\_\+function}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ overload\+\_\+function) ({\bf sqlite3} $\ast$, const char $\ast$z\+Func\+Name, int n\+Arg)}\label{structsqlite3__api__routines_a51cace8e3c8a535241634eb9788ccafc}
+
+
+Definition at line 102028 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ae8b041015a252c244ca9fbfdbe0c23aa}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!prepare@{prepare}}
+\index{prepare@{prepare}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{prepare}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ prepare) ({\bf sqlite3} $\ast$, const char $\ast$, int, {\bf sqlite3\+\_\+stmt} $\ast$$\ast$, const char $\ast$$\ast$)}\label{structsqlite3__api__routines_ae8b041015a252c244ca9fbfdbe0c23aa}
+
+
+Definition at line 101981 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ac467657df3c662c8a5864889c2f8735f}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!prepare16@{prepare16}}
+\index{prepare16@{prepare16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{prepare16}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ prepare16) ({\bf sqlite3} $\ast$, const void $\ast$, int, {\bf sqlite3\+\_\+stmt} $\ast$$\ast$, const void $\ast$$\ast$)}\label{structsqlite3__api__routines_ac467657df3c662c8a5864889c2f8735f}
+
+
+Definition at line 101982 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a31bf3acae352ca43abbb39b138fe2c44}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!prepare16\+\_\+v2@{prepare16\+\_\+v2}}
+\index{prepare16\+\_\+v2@{prepare16\+\_\+v2}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{prepare16\+\_\+v2}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ prepare16\+\_\+v2) ({\bf sqlite3} $\ast$, const void $\ast$, int, {\bf sqlite3\+\_\+stmt} $\ast$$\ast$, const void $\ast$$\ast$)}\label{structsqlite3__api__routines_a31bf3acae352ca43abbb39b138fe2c44}
+
+
+Definition at line 102031 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aa1832f166f601aa57ead3191e60f4046}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!prepare\+\_\+v2@{prepare\+\_\+v2}}
+\index{prepare\+\_\+v2@{prepare\+\_\+v2}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{prepare\+\_\+v2}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ prepare\+\_\+v2) ({\bf sqlite3} $\ast$, const char $\ast$, int, {\bf sqlite3\+\_\+stmt} $\ast$$\ast$, const char $\ast$$\ast$)}\label{structsqlite3__api__routines_aa1832f166f601aa57ead3191e60f4046}
+
+
+Definition at line 102030 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a6909e8b0ffe34fab2244523389cf9c9b}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!profile@{profile}}
+\index{profile@{profile}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{profile}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$($\ast$ profile) ({\bf sqlite3} $\ast$, void($\ast$)(void $\ast$, const char $\ast$, {\bf sqlite\+\_\+uint64}), void $\ast$)}\label{structsqlite3__api__routines_a6909e8b0ffe34fab2244523389cf9c9b}
+
+
+Definition at line 101983 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a1544c31b38ea099c227c826469fbec71}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!progress\+\_\+handler@{progress\+\_\+handler}}
+\index{progress\+\_\+handler@{progress\+\_\+handler}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{progress\+\_\+handler}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ progress\+\_\+handler) ({\bf sqlite3} $\ast$, int, int($\ast$)(void $\ast$), void $\ast$)}\label{structsqlite3__api__routines_a1544c31b38ea099c227c826469fbec71}
+
+
+Definition at line 101984 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a36225fe3584feaef472030aa19f994a2}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!randomness@{randomness}}
+\index{randomness@{randomness}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{randomness}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ randomness) (int, void $\ast$)}\label{structsqlite3__api__routines_a36225fe3584feaef472030aa19f994a2}
+
+
+Definition at line 102068 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a8fda0095e70860055f3a94fd229fcc77}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!realloc@{realloc}}
+\index{realloc@{realloc}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{realloc}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$($\ast$ realloc) (void $\ast$, int)}\label{structsqlite3__api__routines_a8fda0095e70860055f3a94fd229fcc77}
+
+
+Definition at line 101985 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a8b1ea7659f5ba58a60afd4c83b012c4a}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!realloc64@{realloc64}}
+\index{realloc64@{realloc64}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{realloc64}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$($\ast$ realloc64) (void $\ast$, {\bf sqlite3\+\_\+uint64})}\label{structsqlite3__api__routines_a8b1ea7659f5ba58a60afd4c83b012c4a}
+
+
+Definition at line 102127 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a2275a7d0406cec003d58bdb60747493c}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!release\+\_\+memory@{release\+\_\+memory}}
+\index{release\+\_\+memory@{release\+\_\+memory}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{release\+\_\+memory}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ release\+\_\+memory) (int)}\label{structsqlite3__api__routines_a2275a7d0406cec003d58bdb60747493c}
+
+
+Definition at line 102056 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a9306f6bfcddcbc6d67a69c8139e6cef6}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!reset@{reset}}
+\index{reset@{reset}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{reset}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ reset) ({\bf sqlite3\+\_\+stmt} $\ast$p\+Stmt)}\label{structsqlite3__api__routines_a9306f6bfcddcbc6d67a69c8139e6cef6}
+
+
+Definition at line 101986 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aef8ba7d5f8d6ce8841b86ce43abf48d8}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!reset\+\_\+auto\+\_\+extension@{reset\+\_\+auto\+\_\+extension}}
+\index{reset\+\_\+auto\+\_\+extension@{reset\+\_\+auto\+\_\+extension}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{reset\+\_\+auto\+\_\+extension}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ reset\+\_\+auto\+\_\+extension) (void)}\label{structsqlite3__api__routines_aef8ba7d5f8d6ce8841b86ce43abf48d8}
+
+
+Definition at line 102128 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a74bf6ce8a7217120babcb02333696681}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+blob@{result\+\_\+blob}}
+\index{result\+\_\+blob@{result\+\_\+blob}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+blob}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+blob) ({\bf sqlite3\+\_\+context} $\ast$, const void $\ast$, int, void($\ast$)(void $\ast$))}\label{structsqlite3__api__routines_a74bf6ce8a7217120babcb02333696681}
+
+
+Definition at line 101987 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a240a03a7ab8b6e0b1e124fa9132ba721}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+blob64@{result\+\_\+blob64}}
+\index{result\+\_\+blob64@{result\+\_\+blob64}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+blob64}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+blob64) ({\bf sqlite3\+\_\+context} $\ast$, const void $\ast$, {\bf sqlite3\+\_\+uint64}, void($\ast$)(void $\ast$))}\label{structsqlite3__api__routines_a240a03a7ab8b6e0b1e124fa9132ba721}
+
+
+Definition at line 102129 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a172b6861ee637d431052ec5dc165477a}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+double@{result\+\_\+double}}
+\index{result\+\_\+double@{result\+\_\+double}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+double}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+double) ({\bf sqlite3\+\_\+context} $\ast$, double)}\label{structsqlite3__api__routines_a172b6861ee637d431052ec5dc165477a}
+
+
+Definition at line 101988 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aa1417502f22656ef502d34c01a9d9731}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+error@{result\+\_\+error}}
+\index{result\+\_\+error@{result\+\_\+error}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+error}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+error) ({\bf sqlite3\+\_\+context} $\ast$, const char $\ast$, int)}\label{structsqlite3__api__routines_aa1417502f22656ef502d34c01a9d9731}
+
+
+Definition at line 101989 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a3e8b406b1d8634148f895a2e47d7098b}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+error16@{result\+\_\+error16}}
+\index{result\+\_\+error16@{result\+\_\+error16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+error16}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+error16) ({\bf sqlite3\+\_\+context} $\ast$, const void $\ast$, int)}\label{structsqlite3__api__routines_a3e8b406b1d8634148f895a2e47d7098b}
+
+
+Definition at line 101990 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a3b70121ec78ad5f66bf83ecb90aba6b5}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+error\+\_\+code@{result\+\_\+error\+\_\+code}}
+\index{result\+\_\+error\+\_\+code@{result\+\_\+error\+\_\+code}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+error\+\_\+code}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+error\+\_\+code) ({\bf sqlite3\+\_\+context} $\ast$, int)}\label{structsqlite3__api__routines_a3b70121ec78ad5f66bf83ecb90aba6b5}
+
+
+Definition at line 102066 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a9c42918f230eb77d09c0f46d85ebbac9}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+error\+\_\+nomem@{result\+\_\+error\+\_\+nomem}}
+\index{result\+\_\+error\+\_\+nomem@{result\+\_\+error\+\_\+nomem}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+error\+\_\+nomem}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+error\+\_\+nomem) ({\bf sqlite3\+\_\+context} $\ast$)}\label{structsqlite3__api__routines_a9c42918f230eb77d09c0f46d85ebbac9}
+
+
+Definition at line 102057 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a3bc7020e5cbc0cbc74fc06d747a1d275}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+error\+\_\+toobig@{result\+\_\+error\+\_\+toobig}}
+\index{result\+\_\+error\+\_\+toobig@{result\+\_\+error\+\_\+toobig}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+error\+\_\+toobig}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+error\+\_\+toobig) ({\bf sqlite3\+\_\+context} $\ast$)}\label{structsqlite3__api__routines_a3bc7020e5cbc0cbc74fc06d747a1d275}
+
+
+Definition at line 102058 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aebada6b302203c8ba65aa99ffd4e9c77}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+int@{result\+\_\+int}}
+\index{result\+\_\+int@{result\+\_\+int}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+int}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+int) ({\bf sqlite3\+\_\+context} $\ast$, int)}\label{structsqlite3__api__routines_aebada6b302203c8ba65aa99ffd4e9c77}
+
+
+Definition at line 101991 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a7f590fad87a305a9f66bae82d2d9c3ba}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+int64@{result\+\_\+int64}}
+\index{result\+\_\+int64@{result\+\_\+int64}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+int64}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+int64) ({\bf sqlite3\+\_\+context} $\ast$, {\bf sqlite\+\_\+int64})}\label{structsqlite3__api__routines_a7f590fad87a305a9f66bae82d2d9c3ba}
+
+
+Definition at line 101992 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a09fc82ef59beb0f303e4c68e748adeb6}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+null@{result\+\_\+null}}
+\index{result\+\_\+null@{result\+\_\+null}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+null}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+null) ({\bf sqlite3\+\_\+context} $\ast$)}\label{structsqlite3__api__routines_a09fc82ef59beb0f303e4c68e748adeb6}
+
+
+Definition at line 101993 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_af0c394a09036ff030c268b8277341214}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+text@{result\+\_\+text}}
+\index{result\+\_\+text@{result\+\_\+text}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+text}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+text) ({\bf sqlite3\+\_\+context} $\ast$, const char $\ast$, int, void($\ast$)(void $\ast$))}\label{structsqlite3__api__routines_af0c394a09036ff030c268b8277341214}
+
+
+Definition at line 101994 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ab1869eccf5949255f142c9f09709c8d9}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+text16@{result\+\_\+text16}}
+\index{result\+\_\+text16@{result\+\_\+text16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+text16}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+text16) ({\bf sqlite3\+\_\+context} $\ast$, const void $\ast$, int, void($\ast$)(void $\ast$))}\label{structsqlite3__api__routines_ab1869eccf5949255f142c9f09709c8d9}
+
+
+Definition at line 101995 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_acce9c11266b4572acd0994d313c77d37}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+text16be@{result\+\_\+text16be}}
+\index{result\+\_\+text16be@{result\+\_\+text16be}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+text16be}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+text16be) ({\bf sqlite3\+\_\+context} $\ast$, const void $\ast$, int, void($\ast$)(void $\ast$))}\label{structsqlite3__api__routines_acce9c11266b4572acd0994d313c77d37}
+
+
+Definition at line 101996 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_adc71601355bbd4236f52aafbe34843c8}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+text16le@{result\+\_\+text16le}}
+\index{result\+\_\+text16le@{result\+\_\+text16le}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+text16le}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+text16le) ({\bf sqlite3\+\_\+context} $\ast$, const void $\ast$, int, void($\ast$)(void $\ast$))}\label{structsqlite3__api__routines_adc71601355bbd4236f52aafbe34843c8}
+
+
+Definition at line 101997 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ae7893880dc360bde005efb439340caca}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+text64@{result\+\_\+text64}}
+\index{result\+\_\+text64@{result\+\_\+text64}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+text64}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+text64) ({\bf sqlite3\+\_\+context} $\ast$, const char $\ast$, {\bf sqlite3\+\_\+uint64}, void($\ast$)(void $\ast$), unsigned char)}\label{structsqlite3__api__routines_ae7893880dc360bde005efb439340caca}
+
+
+Definition at line 102131 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a901b5a6ff17bfe95b691c27ee941c326}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+value@{result\+\_\+value}}
+\index{result\+\_\+value@{result\+\_\+value}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+value}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+value) ({\bf sqlite3\+\_\+context} $\ast$, sqlite3\+\_\+value $\ast$)}\label{structsqlite3__api__routines_a901b5a6ff17bfe95b691c27ee941c326}
+
+
+Definition at line 101998 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a34442387580fc801fe447b0b01a832ec}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!result\+\_\+zeroblob@{result\+\_\+zeroblob}}
+\index{result\+\_\+zeroblob@{result\+\_\+zeroblob}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{result\+\_\+zeroblob}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ result\+\_\+zeroblob) ({\bf sqlite3\+\_\+context} $\ast$, int)}\label{structsqlite3__api__routines_a34442387580fc801fe447b0b01a832ec}
+
+
+Definition at line 102065 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ab42e52c0ffe58ae495cc2e799fc8275b}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!rollback\+\_\+hook@{rollback\+\_\+hook}}
+\index{rollback\+\_\+hook@{rollback\+\_\+hook}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{rollback\+\_\+hook}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$($\ast$ rollback\+\_\+hook) ({\bf sqlite3} $\ast$, void($\ast$)(void $\ast$), void $\ast$)}\label{structsqlite3__api__routines_ab42e52c0ffe58ae495cc2e799fc8275b}
+
+
+Definition at line 101999 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_afdbfe4085932e5c2bfadf5b4b8d2278b}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!set\+\_\+authorizer@{set\+\_\+authorizer}}
+\index{set\+\_\+authorizer@{set\+\_\+authorizer}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{set\+\_\+authorizer}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ set\+\_\+authorizer) ({\bf sqlite3} $\ast$, int($\ast$)(void $\ast$, int, const char $\ast$, const char $\ast$,const char $\ast$, const char $\ast$), void $\ast$)}\label{structsqlite3__api__routines_afdbfe4085932e5c2bfadf5b4b8d2278b}
+
+
+Definition at line 102000 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a2db853a215f5c43c900061c268897718}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!set\+\_\+auxdata@{set\+\_\+auxdata}}
+\index{set\+\_\+auxdata@{set\+\_\+auxdata}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{set\+\_\+auxdata}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ set\+\_\+auxdata) ({\bf sqlite3\+\_\+context} $\ast$, int, void $\ast$, void($\ast$)(void $\ast$))}\label{structsqlite3__api__routines_a2db853a215f5c43c900061c268897718}
+
+
+Definition at line 102002 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a6a3c1e64ef0dc8389947bc64d17734cc}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!sleep@{sleep}}
+\index{sleep@{sleep}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{sleep}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ sleep) (int)}\label{structsqlite3__api__routines_a6a3c1e64ef0dc8389947bc64d17734cc}
+
+
+Definition at line 102059 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a61d6499efb17e9f027d75e9cbe1cc546}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!snprintf@{snprintf}}
+\index{snprintf@{snprintf}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{snprintf}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$($\ast$ snprintf) (int, char $\ast$, const char $\ast$,...)}\label{structsqlite3__api__routines_a61d6499efb17e9f027d75e9cbe1cc546}
+
+
+Definition at line 102003 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a7bb8b7b64350d63cfa35e32084bbbec5}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!soft\+\_\+heap\+\_\+limit@{soft\+\_\+heap\+\_\+limit}}
+\index{soft\+\_\+heap\+\_\+limit@{soft\+\_\+heap\+\_\+limit}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{soft\+\_\+heap\+\_\+limit}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ soft\+\_\+heap\+\_\+limit) (int)}\label{structsqlite3__api__routines_a7bb8b7b64350d63cfa35e32084bbbec5}
+
+
+Definition at line 102060 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_afa29f15f67123c56fd32499431ad4fb9}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!soft\+\_\+heap\+\_\+limit64@{soft\+\_\+heap\+\_\+limit64}}
+\index{soft\+\_\+heap\+\_\+limit64@{soft\+\_\+heap\+\_\+limit64}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{soft\+\_\+heap\+\_\+limit64}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+int64}($\ast$ soft\+\_\+heap\+\_\+limit64) ({\bf sqlite3\+\_\+int64})}\label{structsqlite3__api__routines_afa29f15f67123c56fd32499431ad4fb9}
+
+
+Definition at line 102092 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a610a8651f1de9fc059e448fe2ee6a7ea}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!sourceid@{sourceid}}
+\index{sourceid@{sourceid}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{sourceid}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$($\ast$ sourceid) (void)}\label{structsqlite3__api__routines_a610a8651f1de9fc059e448fe2ee6a7ea}
+
+
+Definition at line 102093 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a2659f30cca776687b888db7a811642ac}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!sql@{sql}}
+\index{sql@{sql}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{sql}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$($\ast$ sql) ({\bf sqlite3\+\_\+stmt} $\ast$)}\label{structsqlite3__api__routines_a2659f30cca776687b888db7a811642ac}
+
+
+Definition at line 102073 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ac5a157dacf31fbfee695baf18a8482cf}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!status@{status}}
+\index{status@{status}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{status}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ status) (int, int $\ast$, int $\ast$, int)}\label{structsqlite3__api__routines_ac5a157dacf31fbfee695baf18a8482cf}
+
+
+Definition at line 102074 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a60d8cfc980ce5b99515b59965dd77119}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!step@{step}}
+\index{step@{step}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{step}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ step) ({\bf sqlite3\+\_\+stmt} $\ast$)}\label{structsqlite3__api__routines_a60d8cfc980ce5b99515b59965dd77119}
+
+
+Definition at line 102004 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ab6ce1529912d488d417a61f585b9a2f9}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!stmt\+\_\+busy@{stmt\+\_\+busy}}
+\index{stmt\+\_\+busy@{stmt\+\_\+busy}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{stmt\+\_\+busy}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ stmt\+\_\+busy) ({\bf sqlite3\+\_\+stmt} $\ast$)}\label{structsqlite3__api__routines_ab6ce1529912d488d417a61f585b9a2f9}
+
+
+Definition at line 102109 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_add589eb134334b8249eff03f7556c90d}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!stmt\+\_\+readonly@{stmt\+\_\+readonly}}
+\index{stmt\+\_\+readonly@{stmt\+\_\+readonly}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{stmt\+\_\+readonly}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ stmt\+\_\+readonly) ({\bf sqlite3\+\_\+stmt} $\ast$)}\label{structsqlite3__api__routines_add589eb134334b8249eff03f7556c90d}
+
+
+Definition at line 102110 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a3447f99a2af09362727c363b6a41f79b}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!stmt\+\_\+status@{stmt\+\_\+status}}
+\index{stmt\+\_\+status@{stmt\+\_\+status}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{stmt\+\_\+status}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ stmt\+\_\+status) ({\bf sqlite3\+\_\+stmt} $\ast$, int, int)}\label{structsqlite3__api__routines_a3447f99a2af09362727c363b6a41f79b}
+
+
+Definition at line 102094 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ab57cdd985ed3e28d8fc6a74011b031cc}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!strglob@{strglob}}
+\index{strglob@{strglob}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{strglob}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ strglob) (const char $\ast$, const char $\ast$)}\label{structsqlite3__api__routines_ab57cdd985ed3e28d8fc6a74011b031cc}
+
+
+Definition at line 102133 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a4a4d0359c8a7c68edb15957cf45c0082}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!stricmp@{stricmp}}
+\index{stricmp@{stricmp}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{stricmp}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ stricmp) (const char $\ast$, const char $\ast$)}\label{structsqlite3__api__routines_a4a4d0359c8a7c68edb15957cf45c0082}
+
+
+Definition at line 102111 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a4cb03ff57968d95f6b082e7f1484a921}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!strnicmp@{strnicmp}}
+\index{strnicmp@{strnicmp}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{strnicmp}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ strnicmp) (const char $\ast$, const char $\ast$, int)}\label{structsqlite3__api__routines_a4cb03ff57968d95f6b082e7f1484a921}
+
+
+Definition at line 102095 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a63d4de3a8546d4b0f6c7d88bc786c89c}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!table\+\_\+column\+\_\+metadata@{table\+\_\+column\+\_\+metadata}}
+\index{table\+\_\+column\+\_\+metadata@{table\+\_\+column\+\_\+metadata}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{table\+\_\+column\+\_\+metadata}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ table\+\_\+column\+\_\+metadata) ({\bf sqlite3} $\ast$, const char $\ast$, const char $\ast$, const char $\ast$, char const $\ast$$\ast$, char const $\ast$$\ast$, int $\ast$, int $\ast$, int $\ast$)}\label{structsqlite3__api__routines_a63d4de3a8546d4b0f6c7d88bc786c89c}
+
+
+Definition at line 102005 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a8c973156a0d2c8339ceac7f599102368}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!test\+\_\+control@{test\+\_\+control}}
+\index{test\+\_\+control@{test\+\_\+control}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{test\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ test\+\_\+control) (int,...)}\label{structsqlite3__api__routines_a8c973156a0d2c8339ceac7f599102368}
+
+
+Definition at line 102067 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ab7f7f471e9b8dc39c4a63f0eb49425f8}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!thread\+\_\+cleanup@{thread\+\_\+cleanup}}
+\index{thread\+\_\+cleanup@{thread\+\_\+cleanup}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{thread\+\_\+cleanup}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ thread\+\_\+cleanup) (void)}\label{structsqlite3__api__routines_ab7f7f471e9b8dc39c4a63f0eb49425f8}
+
+
+Definition at line 102007 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a407aeda4a00461c7fcb2c91b92f173eb}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!total\+\_\+changes@{total\+\_\+changes}}
+\index{total\+\_\+changes@{total\+\_\+changes}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{total\+\_\+changes}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ total\+\_\+changes) ({\bf sqlite3} $\ast$)}\label{structsqlite3__api__routines_a407aeda4a00461c7fcb2c91b92f173eb}
+
+
+Definition at line 102008 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_af9d9e1f7f5e00bbecbfa5c23138c4154}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!trace@{trace}}
+\index{trace@{trace}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{trace}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$($\ast$ trace) ({\bf sqlite3} $\ast$, void($\ast$x\+Trace)(void $\ast$, const char $\ast$), void $\ast$)}\label{structsqlite3__api__routines_af9d9e1f7f5e00bbecbfa5c23138c4154}
+
+
+Definition at line 102009 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a848b170b255643a1b3eda56a56da0eb7}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!transfer\+\_\+bindings@{transfer\+\_\+bindings}}
+\index{transfer\+\_\+bindings@{transfer\+\_\+bindings}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{transfer\+\_\+bindings}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ transfer\+\_\+bindings) ({\bf sqlite3\+\_\+stmt} $\ast$, {\bf sqlite3\+\_\+stmt} $\ast$)}\label{structsqlite3__api__routines_a848b170b255643a1b3eda56a56da0eb7}
+
+
+Definition at line 102010 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aa15644f817581573e744b6a0b768c2fb}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!unlock\+\_\+notify@{unlock\+\_\+notify}}
+\index{unlock\+\_\+notify@{unlock\+\_\+notify}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{unlock\+\_\+notify}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ unlock\+\_\+notify) ({\bf sqlite3} $\ast$, void($\ast$)(void $\ast$$\ast$, int), void $\ast$)}\label{structsqlite3__api__routines_aa15644f817581573e744b6a0b768c2fb}
+
+
+Definition at line 102096 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a8239aff5ecf8ec2dfdf41c57e6a4444c}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!update\+\_\+hook@{update\+\_\+hook}}
+\index{update\+\_\+hook@{update\+\_\+hook}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{update\+\_\+hook}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$($\ast$ update\+\_\+hook) ({\bf sqlite3} $\ast$, void($\ast$)(void $\ast$, int,char const $\ast$, char const $\ast$,{\bf sqlite\+\_\+int64}), void $\ast$)}\label{structsqlite3__api__routines_a8239aff5ecf8ec2dfdf41c57e6a4444c}
+
+
+Definition at line 102011 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a61df047cb68e954a5a8bdddf0f1e0d4f}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!uri\+\_\+boolean@{uri\+\_\+boolean}}
+\index{uri\+\_\+boolean@{uri\+\_\+boolean}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{uri\+\_\+boolean}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ uri\+\_\+boolean) (const char $\ast$, const char $\ast$, int)}\label{structsqlite3__api__routines_a61df047cb68e954a5a8bdddf0f1e0d4f}
+
+
+Definition at line 102112 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a2ce954afa2ad1e413234a4412378af04}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!uri\+\_\+int64@{uri\+\_\+int64}}
+\index{uri\+\_\+int64@{uri\+\_\+int64}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{uri\+\_\+int64}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+int64}($\ast$ uri\+\_\+int64) (const char $\ast$, const char $\ast$, {\bf sqlite3\+\_\+int64})}\label{structsqlite3__api__routines_a2ce954afa2ad1e413234a4412378af04}
+
+
+Definition at line 102113 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a1b4ccc1050d61f2addba3a5acc6c8bbc}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!uri\+\_\+parameter@{uri\+\_\+parameter}}
+\index{uri\+\_\+parameter@{uri\+\_\+parameter}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{uri\+\_\+parameter}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$($\ast$ uri\+\_\+parameter) (const char $\ast$, const char $\ast$)}\label{structsqlite3__api__routines_a1b4ccc1050d61f2addba3a5acc6c8bbc}
+
+
+Definition at line 102114 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a53fe3c5bee52784ecc5da8b1f2f6f562}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!user\+\_\+data@{user\+\_\+data}}
+\index{user\+\_\+data@{user\+\_\+data}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{user\+\_\+data}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$($\ast$ user\+\_\+data) ({\bf sqlite3\+\_\+context} $\ast$)}\label{structsqlite3__api__routines_a53fe3c5bee52784ecc5da8b1f2f6f562}
+
+
+Definition at line 102013 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_af0cad7cef3019e2ab150b694894b65ec}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!value\+\_\+blob@{value\+\_\+blob}}
+\index{value\+\_\+blob@{value\+\_\+blob}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{value\+\_\+blob}]{\setlength{\rightskip}{0pt plus 5cm}const void$\ast$($\ast$ value\+\_\+blob) (sqlite3\+\_\+value $\ast$)}\label{structsqlite3__api__routines_af0cad7cef3019e2ab150b694894b65ec}
+
+
+Definition at line 102014 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a47dbf2fc0d87899ecc9651b11c7adb90}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!value\+\_\+bytes@{value\+\_\+bytes}}
+\index{value\+\_\+bytes@{value\+\_\+bytes}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{value\+\_\+bytes}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ value\+\_\+bytes) (sqlite3\+\_\+value $\ast$)}\label{structsqlite3__api__routines_a47dbf2fc0d87899ecc9651b11c7adb90}
+
+
+Definition at line 102015 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a1a066bfc11cb88a8c2036831b0a4e113}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!value\+\_\+bytes16@{value\+\_\+bytes16}}
+\index{value\+\_\+bytes16@{value\+\_\+bytes16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{value\+\_\+bytes16}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ value\+\_\+bytes16) (sqlite3\+\_\+value $\ast$)}\label{structsqlite3__api__routines_a1a066bfc11cb88a8c2036831b0a4e113}
+
+
+Definition at line 102016 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a3a64abf666b3ecab7caf669701004db4}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!value\+\_\+double@{value\+\_\+double}}
+\index{value\+\_\+double@{value\+\_\+double}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{value\+\_\+double}]{\setlength{\rightskip}{0pt plus 5cm}double($\ast$ value\+\_\+double) (sqlite3\+\_\+value $\ast$)}\label{structsqlite3__api__routines_a3a64abf666b3ecab7caf669701004db4}
+
+
+Definition at line 102017 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a8c05f2a220e674c0c5a053ad703dd059}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!value\+\_\+int@{value\+\_\+int}}
+\index{value\+\_\+int@{value\+\_\+int}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{value\+\_\+int}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ value\+\_\+int) (sqlite3\+\_\+value $\ast$)}\label{structsqlite3__api__routines_a8c05f2a220e674c0c5a053ad703dd059}
+
+
+Definition at line 102018 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a92d79e3dc71cf16389ff7b99c3cc1480}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!value\+\_\+int64@{value\+\_\+int64}}
+\index{value\+\_\+int64@{value\+\_\+int64}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{value\+\_\+int64}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite\+\_\+int64}($\ast$ value\+\_\+int64) (sqlite3\+\_\+value $\ast$)}\label{structsqlite3__api__routines_a92d79e3dc71cf16389ff7b99c3cc1480}
+
+
+Definition at line 102019 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ab425fadd72ab82f1f7177950311d3da4}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!value\+\_\+numeric\+\_\+type@{value\+\_\+numeric\+\_\+type}}
+\index{value\+\_\+numeric\+\_\+type@{value\+\_\+numeric\+\_\+type}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{value\+\_\+numeric\+\_\+type}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ value\+\_\+numeric\+\_\+type) (sqlite3\+\_\+value $\ast$)}\label{structsqlite3__api__routines_ab425fadd72ab82f1f7177950311d3da4}
+
+
+Definition at line 102020 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a5e6ca1b3e3e55d39699bad63c21138a3}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!value\+\_\+text@{value\+\_\+text}}
+\index{value\+\_\+text@{value\+\_\+text}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{value\+\_\+text}]{\setlength{\rightskip}{0pt plus 5cm}const unsigned char$\ast$($\ast$ value\+\_\+text) (sqlite3\+\_\+value $\ast$)}\label{structsqlite3__api__routines_a5e6ca1b3e3e55d39699bad63c21138a3}
+
+
+Definition at line 102021 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a10348e6f3c2009240752cad262ec5226}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!value\+\_\+text16@{value\+\_\+text16}}
+\index{value\+\_\+text16@{value\+\_\+text16}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{value\+\_\+text16}]{\setlength{\rightskip}{0pt plus 5cm}const void$\ast$($\ast$ value\+\_\+text16) (sqlite3\+\_\+value $\ast$)}\label{structsqlite3__api__routines_a10348e6f3c2009240752cad262ec5226}
+
+
+Definition at line 102022 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a2d7b7d52b459c02632b8df2de00bf595}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!value\+\_\+text16be@{value\+\_\+text16be}}
+\index{value\+\_\+text16be@{value\+\_\+text16be}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{value\+\_\+text16be}]{\setlength{\rightskip}{0pt plus 5cm}const void$\ast$($\ast$ value\+\_\+text16be) (sqlite3\+\_\+value $\ast$)}\label{structsqlite3__api__routines_a2d7b7d52b459c02632b8df2de00bf595}
+
+
+Definition at line 102023 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a2bf569f598d827c577bcbbb36e9a815b}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!value\+\_\+text16le@{value\+\_\+text16le}}
+\index{value\+\_\+text16le@{value\+\_\+text16le}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{value\+\_\+text16le}]{\setlength{\rightskip}{0pt plus 5cm}const void$\ast$($\ast$ value\+\_\+text16le) (sqlite3\+\_\+value $\ast$)}\label{structsqlite3__api__routines_a2bf569f598d827c577bcbbb36e9a815b}
+
+
+Definition at line 102024 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a4b0847874847fb18c16dc079275e00b4}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!value\+\_\+type@{value\+\_\+type}}
+\index{value\+\_\+type@{value\+\_\+type}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{value\+\_\+type}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ value\+\_\+type) (sqlite3\+\_\+value $\ast$)}\label{structsqlite3__api__routines_a4b0847874847fb18c16dc079275e00b4}
+
+
+Definition at line 102025 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_abdee7a148d38c624c4807e3225e0146d}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!vfs\+\_\+find@{vfs\+\_\+find}}
+\index{vfs\+\_\+find@{vfs\+\_\+find}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{vfs\+\_\+find}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+vfs}$\ast$($\ast$ vfs\+\_\+find) (const char $\ast$)}\label{structsqlite3__api__routines_abdee7a148d38c624c4807e3225e0146d}
+
+
+Definition at line 102061 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a0f71f0c3cbbdf64014e036e6a9ec4946}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!vfs\+\_\+register@{vfs\+\_\+register}}
+\index{vfs\+\_\+register@{vfs\+\_\+register}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{vfs\+\_\+register}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ vfs\+\_\+register) ({\bf sqlite3\+\_\+vfs} $\ast$, int)}\label{structsqlite3__api__routines_a0f71f0c3cbbdf64014e036e6a9ec4946}
+
+
+Definition at line 102062 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a09efe186d4fccb340af27ca4d005543e}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!vfs\+\_\+unregister@{vfs\+\_\+unregister}}
+\index{vfs\+\_\+unregister@{vfs\+\_\+unregister}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{vfs\+\_\+unregister}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ vfs\+\_\+unregister) ({\bf sqlite3\+\_\+vfs} $\ast$)}\label{structsqlite3__api__routines_a09efe186d4fccb340af27ca4d005543e}
+
+
+Definition at line 102063 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a36b2c16f8536849536034592361cae1e}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!vmprintf@{vmprintf}}
+\index{vmprintf@{vmprintf}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{vmprintf}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$($\ast$ vmprintf) (const char $\ast$, va\+\_\+list)}\label{structsqlite3__api__routines_a36b2c16f8536849536034592361cae1e}
+
+
+Definition at line 102026 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a10f112f1a39aea290157e4fb13b7aaf1}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!vsnprintf@{vsnprintf}}
+\index{vsnprintf@{vsnprintf}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{vsnprintf}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$($\ast$ vsnprintf) (int, char $\ast$, const char $\ast$, va\+\_\+list)}\label{structsqlite3__api__routines_a10f112f1a39aea290157e4fb13b7aaf1}
+
+
+Definition at line 102115 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ac7793309e4ad5af153467746dee7606b}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!vtab\+\_\+config@{vtab\+\_\+config}}
+\index{vtab\+\_\+config@{vtab\+\_\+config}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{vtab\+\_\+config}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ vtab\+\_\+config) ({\bf sqlite3} $\ast$, int op,...)}\label{structsqlite3__api__routines_ac7793309e4ad5af153467746dee7606b}
+
+
+Definition at line 102101 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_abe082a65a65f2b458dc2a90e04f6401a}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!vtab\+\_\+on\+\_\+conflict@{vtab\+\_\+on\+\_\+conflict}}
+\index{vtab\+\_\+on\+\_\+conflict@{vtab\+\_\+on\+\_\+conflict}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{vtab\+\_\+on\+\_\+conflict}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ vtab\+\_\+on\+\_\+conflict) ({\bf sqlite3} $\ast$)}\label{structsqlite3__api__routines_abe082a65a65f2b458dc2a90e04f6401a}
+
+
+Definition at line 102102 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_ae0a51f393afbd3c36fefa2ad121fffa4}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!wal\+\_\+autocheckpoint@{wal\+\_\+autocheckpoint}}
+\index{wal\+\_\+autocheckpoint@{wal\+\_\+autocheckpoint}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{wal\+\_\+autocheckpoint}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ wal\+\_\+autocheckpoint) ({\bf sqlite3} $\ast$, int)}\label{structsqlite3__api__routines_ae0a51f393afbd3c36fefa2ad121fffa4}
+
+
+Definition at line 102097 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a1c989ac9fcf949d52270282a38b5d5db}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!wal\+\_\+checkpoint@{wal\+\_\+checkpoint}}
+\index{wal\+\_\+checkpoint@{wal\+\_\+checkpoint}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{wal\+\_\+checkpoint}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ wal\+\_\+checkpoint) ({\bf sqlite3} $\ast$, const char $\ast$)}\label{structsqlite3__api__routines_a1c989ac9fcf949d52270282a38b5d5db}
+
+
+Definition at line 102098 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_aad374c8fe2ba7b9ffa27a33ce46433a9}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!wal\+\_\+checkpoint\+\_\+v2@{wal\+\_\+checkpoint\+\_\+v2}}
+\index{wal\+\_\+checkpoint\+\_\+v2@{wal\+\_\+checkpoint\+\_\+v2}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{wal\+\_\+checkpoint\+\_\+v2}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ wal\+\_\+checkpoint\+\_\+v2) ({\bf sqlite3} $\ast$, const char $\ast$, int, int $\ast$, int $\ast$)}\label{structsqlite3__api__routines_aad374c8fe2ba7b9ffa27a33ce46433a9}
+
+
+Definition at line 102116 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a57c617f1b3746de420874110e58e15f7}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!wal\+\_\+hook@{wal\+\_\+hook}}
+\index{wal\+\_\+hook@{wal\+\_\+hook}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{wal\+\_\+hook}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$($\ast$ wal\+\_\+hook) ({\bf sqlite3} $\ast$, int($\ast$)(void $\ast$, {\bf sqlite3} $\ast$, const char $\ast$, int), void $\ast$)}\label{structsqlite3__api__routines_a57c617f1b3746de420874110e58e15f7}
+
+
+Definition at line 102099 of file sqlite3.\+c.
+
+\hypertarget{structsqlite3__api__routines_a08f3a80dbc09846ef724b924ecea4887}{}\index{sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}!xthreadsafe@{xthreadsafe}}
+\index{xthreadsafe@{xthreadsafe}!sqlite3\+\_\+api\+\_\+routines@{sqlite3\+\_\+api\+\_\+routines}}
+\subsubsection[{xthreadsafe}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ xthreadsafe) (void)}\label{structsqlite3__api__routines_a08f3a80dbc09846ef724b924ecea4887}
+
+
+Definition at line 102064 of file sqlite3.\+c.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

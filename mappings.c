@@ -11,20 +11,20 @@
 #define _neVoltType uint_fast32_t
 #define _neStatType int_fast32_t
 #define regid_t uint32_t
-#define gid_t uint64_t
+
 
 
 #define LOC(a) ((regid_t)a)
-#define CORE(a) ((regid_t)(((gid_t)(a) >> 32) & 0xFFFFFFFF))
+#define CORE(a) ((regid_t)(((tw_lpid)(a) >> 32) & 0xFFFFFFFF))
 
 
 
-void getLocalIDs(gid_t global, regid_t * core, regid_t *local ){
+void getLocalIDs(tw_lpid global, regid_t * core, regid_t *local ){
 	(*core) = CORE(global);
 	(*local)= LOC(global);
 }
-gid_t globalID(regid_t core, regid_t local){
-	gid_t returnVal = 0;
+tw_lpid globalID(regid_t core, regid_t local){
+	tw_lpid returnVal = 0;
 	returnVal = ((uint64_t)core << 32) | local;
 	return returnVal;
 }
@@ -44,7 +44,7 @@ void * testVal(void * str){
 		for(long j = startj; j <endj; j++){
 			regid_t core = i;
 			regid_t local = j;
-			gid_t global = globalID(core,local);
+			tw_lpid global = globalID(core,local);
 
 			core = CORE(global);
 			local = LOC(local);
@@ -100,12 +100,12 @@ int main() {
 
 
 
-	gid_t global;
+	tw_lpid global;
 	regid_t core = 72000;
 
 	regid_t local = 0;
 	global = globalID(core,local);
-	gid_t g2 = global;
+	tw_lpid g2 = global;
 	printf("Core is :%u\n\n\n",CORE(global));
 
 
@@ -139,7 +139,7 @@ int main() {
 		{
 			regid_t core = i;
 			regid_t local = j;
-			gid_t global = globalID(core,local);
+			tw_lpid global = globalID(core,local);
 			assert(i == core);
 			assert(j == local);
 

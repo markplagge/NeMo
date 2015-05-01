@@ -1,0 +1,98 @@
+\hypertarget{union_mem_1_1_mem_value}{}\section{sqlite3\+\_\+value\+:\+:Mem\+Value Union Reference}
+\label{union_mem_1_1_mem_value}\index{sqlite3\+\_\+value\+::\+Mem\+Value@{sqlite3\+\_\+value\+::\+Mem\+Value}}
+
+
+Collaboration diagram for sqlite3\+\_\+value\+:\+:Mem\+Value\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{union_mem_1_1_mem_value_a880a49112fedae68e714341a9a082fb6}{r}
+\item 
+\hyperlink{sqlite3_8c_a2a0f0f4ae7001eb54351f77ea1cdbcfd}{i64} \hyperlink{union_mem_1_1_mem_value_a42e49a9fe14f213f132f6817fcb4a97b}{i}
+\item 
+int \hyperlink{union_mem_1_1_mem_value_aac4adea394a18cc831013e53685e05eb}{n\+Zero}
+\item 
+\hyperlink{struct_func_def}{Func\+Def} $\ast$ \hyperlink{union_mem_1_1_mem_value_a09b4cd9b3fcd86a6d7d9ec00b185ec25}{p\+Def}
+\item 
+\hyperlink{struct_row_set}{Row\+Set} $\ast$ \hyperlink{union_mem_1_1_mem_value_abca52c9345f143f58a581345e0afd619}{p\+Row\+Set}
+\item 
+\hyperlink{struct_vdbe_frame}{Vdbe\+Frame} $\ast$ \hyperlink{union_mem_1_1_mem_value_ad71093eb5e589645373a69f115714ec7}{p\+Frame}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 14664 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{union_mem_1_1_mem_value_a42e49a9fe14f213f132f6817fcb4a97b}{}\index{Mem\+::\+Mem\+Value@{Mem\+::\+Mem\+Value}!i@{i}}
+\index{i@{i}!Mem\+::\+Mem\+Value@{Mem\+::\+Mem\+Value}}
+\subsubsection[{i}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i64} i}\label{union_mem_1_1_mem_value_a42e49a9fe14f213f132f6817fcb4a97b}
+
+
+Definition at line 14666 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+bind\+\_\+value(), sqlite3\+Mem\+Compare(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Expand\+Sql(), sqlite3\+Vdbe\+Idx\+Rowid(), sqlite3\+Vdbe\+Integer\+Affinity(), sqlite3\+Vdbe\+Int\+Value(), sqlite3\+Vdbe\+List(), sqlite3\+Vdbe\+Mem\+Integerify(), sqlite3\+Vdbe\+Mem\+Numerify(), sqlite3\+Vdbe\+Mem\+Set\+Int64(), sqlite3\+Vdbe\+Mem\+Stringify(), sqlite3\+Vdbe\+Real\+Value(), sqlite3\+Vdbe\+Record\+Compare\+With\+Skip(), sqlite3\+Vdbe\+Serial\+Get(), sqlite3\+Vdbe\+Serial\+Put(), and sqlite3\+Vdbe\+Serial\+Type().
+
+\hypertarget{union_mem_1_1_mem_value_aac4adea394a18cc831013e53685e05eb}{}\index{Mem\+::\+Mem\+Value@{Mem\+::\+Mem\+Value}!n\+Zero@{n\+Zero}}
+\index{n\+Zero@{n\+Zero}!Mem\+::\+Mem\+Value@{Mem\+::\+Mem\+Value}}
+\subsubsection[{n\+Zero}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Zero}\label{union_mem_1_1_mem_value_aac4adea394a18cc831013e53685e05eb}
+
+
+Definition at line 14667 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+bind\+\_\+value(), sqlite3\+Value\+Bytes(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Expand\+Sql(), sqlite3\+Vdbe\+Mem\+Expand\+Blob(), sqlite3\+Vdbe\+Mem\+Set\+Zero\+Blob(), sqlite3\+Vdbe\+Mem\+Too\+Big(), and sqlite3\+Vdbe\+Serial\+Type().
+
+\hypertarget{union_mem_1_1_mem_value_a09b4cd9b3fcd86a6d7d9ec00b185ec25}{}\index{Mem\+::\+Mem\+Value@{Mem\+::\+Mem\+Value}!p\+Def@{p\+Def}}
+\index{p\+Def@{p\+Def}!Mem\+::\+Mem\+Value@{Mem\+::\+Mem\+Value}}
+\subsubsection[{p\+Def}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Func\+Def}$\ast$ p\+Def}\label{union_mem_1_1_mem_value_a09b4cd9b3fcd86a6d7d9ec00b185ec25}
+
+
+Definition at line 14668 of file sqlite3.\+c.
+
+\hypertarget{union_mem_1_1_mem_value_ad71093eb5e589645373a69f115714ec7}{}\index{Mem\+::\+Mem\+Value@{Mem\+::\+Mem\+Value}!p\+Frame@{p\+Frame}}
+\index{p\+Frame@{p\+Frame}!Mem\+::\+Mem\+Value@{Mem\+::\+Mem\+Value}}
+\subsubsection[{p\+Frame}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vdbe\+Frame}$\ast$ p\+Frame}\label{union_mem_1_1_mem_value_ad71093eb5e589645373a69f115714ec7}
+
+
+Definition at line 14670 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec().
+
+\hypertarget{union_mem_1_1_mem_value_abca52c9345f143f58a581345e0afd619}{}\index{Mem\+::\+Mem\+Value@{Mem\+::\+Mem\+Value}!p\+Row\+Set@{p\+Row\+Set}}
+\index{p\+Row\+Set@{p\+Row\+Set}!Mem\+::\+Mem\+Value@{Mem\+::\+Mem\+Value}}
+\subsubsection[{p\+Row\+Set}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Row\+Set}$\ast$ p\+Row\+Set}\label{union_mem_1_1_mem_value_abca52c9345f143f58a581345e0afd619}
+
+
+Definition at line 14669 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Mem\+Set\+Row\+Set().
+
+\hypertarget{union_mem_1_1_mem_value_a880a49112fedae68e714341a9a082fb6}{}\index{Mem\+::\+Mem\+Value@{Mem\+::\+Mem\+Value}!r@{r}}
+\index{r@{r}!Mem\+::\+Mem\+Value@{Mem\+::\+Mem\+Value}}
+\subsubsection[{r}]{\setlength{\rightskip}{0pt plus 5cm}double r}\label{union_mem_1_1_mem_value_a880a49112fedae68e714341a9a082fb6}
+
+
+Definition at line 14665 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+bind\+\_\+value(), sqlite3\+Mem\+Compare(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Expand\+Sql(), sqlite3\+Vdbe\+Integer\+Affinity(), sqlite3\+Vdbe\+Int\+Value(), sqlite3\+Vdbe\+Mem\+Numerify(), sqlite3\+Vdbe\+Mem\+Realify(), sqlite3\+Vdbe\+Mem\+Set\+Double(), sqlite3\+Vdbe\+Mem\+Stringify(), sqlite3\+Vdbe\+Real\+Value(), sqlite3\+Vdbe\+Record\+Compare\+With\+Skip(), and sqlite3\+Vdbe\+Serial\+Put().
+
+
+
+The documentation for this union was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

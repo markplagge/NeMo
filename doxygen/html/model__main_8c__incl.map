@@ -1,0 +1,7 @@
+<map id="/Users/Mark/Development/TrueNorth/tnt_benchmark/model_main.c" name="/Users/Mark/Development/TrueNorth/tnt_benchmark/model_main.c">
+<area shape="rect" id="node2" href="$model__main_8h.html" title="model_main.h" alt="" coords="315,105,420,131"/>
+<area shape="rect" id="node3" href="$neuron__model_8h.html" title="models/neuron_model.h" alt="" coords="53,252,217,277"/>
+<area shape="rect" id="node5" href="$assist_8h.html" title="../assist.h" alt="" coords="106,325,183,351"/>
+<area shape="rect" id="node9" href="$synapse_8h.html" title="models/synapse.h" alt="" coords="201,179,330,204"/>
+<area shape="rect" id="node10" href="$spike__generator_8h.html" title="spike_generate defines a LP state and functions that generate output at a tuneable rate..." alt="" coords="242,252,380,277"/>
+</map>

@@ -1,0 +1,167 @@
+\hypertarget{struct_schema}{}\section{Schema Struct Reference}
+\label{struct_schema}\index{Schema@{Schema}}
+
+
+Collaboration diagram for Schema\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{struct_schema_afc13a3e8bf268d80381d605f3cbd3875}{schema\+\_\+cookie}
+\item 
+int \hyperlink{struct_schema_a609e1623fdce8c8ab1d6b772fa881d96}{i\+Generation}
+\item 
+\hyperlink{struct_hash}{Hash} \hyperlink{struct_schema_a65de868624ee47575ce7cc560badd0e7}{tbl\+Hash}
+\item 
+\hyperlink{struct_hash}{Hash} \hyperlink{struct_schema_ae4ced04fecd92a71adb8e64a4de17541}{idx\+Hash}
+\item 
+\hyperlink{struct_hash}{Hash} \hyperlink{struct_schema_acf95030df2de6addfbc5ae894c7a9b67}{trig\+Hash}
+\item 
+\hyperlink{struct_hash}{Hash} \hyperlink{struct_schema_af04ec7c35bed826152f53e5690b2cbf1}{fkey\+Hash}
+\item 
+\hyperlink{struct_table}{Table} $\ast$ \hyperlink{struct_schema_ae178bc4bdd3ca5ffe4351c10d96950f3}{p\+Seq\+Tab}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_schema_a7d836a44b011f0174f4ae911402287a1}{file\+\_\+format}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_schema_a9c71ab1f0d39a2b088a6d8a1093159c0}{enc}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_schema_a8ad465bc0138580015ac7522b584ea91}{schema\+Flags}
+\item 
+int \hyperlink{struct_schema_adc2cfac3a357c5424aafa9d351a2e6ea}{cache\+\_\+size}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 10861 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_schema_adc2cfac3a357c5424aafa9d351a2e6ea}{}\index{Schema@{Schema}!cache\+\_\+size@{cache\+\_\+size}}
+\index{cache\+\_\+size@{cache\+\_\+size}!Schema@{Schema}}
+\subsubsection[{cache\+\_\+size}]{\setlength{\rightskip}{0pt plus 5cm}int cache\+\_\+size}\label{struct_schema_adc2cfac3a357c5424aafa9d351a2e6ea}
+
+
+Definition at line 10872 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Pragma(), and sqlite3\+Vdbe\+Sorter\+Init().
+
+\hypertarget{struct_schema_a9c71ab1f0d39a2b088a6d8a1093159c0}{}\index{Schema@{Schema}!enc@{enc}}
+\index{enc@{enc}!Schema@{Schema}}
+\subsubsection[{enc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} enc}\label{struct_schema_a9c71ab1f0d39a2b088a6d8a1093159c0}
+
+
+Definition at line 10870 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Schema\+Get().
+
+\hypertarget{struct_schema_a7d836a44b011f0174f4ae911402287a1}{}\index{Schema@{Schema}!file\+\_\+format@{file\+\_\+format}}
+\index{file\+\_\+format@{file\+\_\+format}!Schema@{Schema}}
+\subsubsection[{file\+\_\+format}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} file\+\_\+format}\label{struct_schema_a7d836a44b011f0174f4ae911402287a1}
+
+
+Definition at line 10869 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Create\+Index(), sqlite3\+Schema\+Get(), and sqlite3\+Vdbe\+Exec().
+
+\hypertarget{struct_schema_af04ec7c35bed826152f53e5690b2cbf1}{}\index{Schema@{Schema}!fkey\+Hash@{fkey\+Hash}}
+\index{fkey\+Hash@{fkey\+Hash}!Schema@{Schema}}
+\subsubsection[{fkey\+Hash}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Hash} fkey\+Hash}\label{struct_schema_af04ec7c35bed826152f53e5690b2cbf1}
+
+
+Definition at line 10867 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+db\+\_\+status(), sqlite3\+Create\+Foreign\+Key(), sqlite3\+Fk\+Delete(), sqlite3\+Fk\+References(), sqlite3\+Schema\+Clear(), and sqlite3\+Schema\+Get().
+
+\hypertarget{struct_schema_ae4ced04fecd92a71adb8e64a4de17541}{}\index{Schema@{Schema}!idx\+Hash@{idx\+Hash}}
+\index{idx\+Hash@{idx\+Hash}!Schema@{Schema}}
+\subsubsection[{idx\+Hash}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Hash} idx\+Hash}\label{struct_schema_ae4ced04fecd92a71adb8e64a4de17541}
+
+
+Definition at line 10865 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+db\+\_\+status(), sqlite3\+Analysis\+Load(), sqlite3\+Delete\+Table(), sqlite3\+Root\+Page\+Moved(), sqlite3\+Schema\+Clear(), sqlite3\+Schema\+Get(), and sqlite3\+Unlink\+And\+Delete\+Index().
+
+\hypertarget{struct_schema_a609e1623fdce8c8ab1d6b772fa881d96}{}\index{Schema@{Schema}!i\+Generation@{i\+Generation}}
+\index{i\+Generation@{i\+Generation}!Schema@{Schema}}
+\subsubsection[{i\+Generation}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Generation}\label{struct_schema_a609e1623fdce8c8ab1d6b772fa881d96}
+
+
+Definition at line 10863 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+blob\+\_\+open(), sqlite3\+Finish\+Coding(), sqlite3\+Schema\+Clear(), and sqlite3\+Vdbe\+Exec().
+
+\hypertarget{struct_schema_ae178bc4bdd3ca5ffe4351c10d96950f3}{}\index{Schema@{Schema}!p\+Seq\+Tab@{p\+Seq\+Tab}}
+\index{p\+Seq\+Tab@{p\+Seq\+Tab}!Schema@{Schema}}
+\subsubsection[{p\+Seq\+Tab}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Table}$\ast$ p\+Seq\+Tab}\label{struct_schema_ae178bc4bdd3ca5ffe4351c10d96950f3}
+
+
+Definition at line 10868 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Autoincrement\+Begin(), sqlite3\+Autoincrement\+End(), sqlite3\+End\+Table(), sqlite3\+Schema\+Clear(), and sqlite3\+Start\+Table().
+
+\hypertarget{struct_schema_afc13a3e8bf268d80381d605f3cbd3875}{}\index{Schema@{Schema}!schema\+\_\+cookie@{schema\+\_\+cookie}}
+\index{schema\+\_\+cookie@{schema\+\_\+cookie}!Schema@{Schema}}
+\subsubsection[{schema\+\_\+cookie}]{\setlength{\rightskip}{0pt plus 5cm}int schema\+\_\+cookie}\label{struct_schema_afc13a3e8bf268d80381d605f3cbd3875}
+
+
+Definition at line 10862 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+blob\+\_\+open(), sqlite3\+Change\+Cookie(), sqlite3\+Code\+Verify\+Schema(), and sqlite3\+Vdbe\+Exec().
+
+\hypertarget{struct_schema_a8ad465bc0138580015ac7522b584ea91}{}\index{Schema@{Schema}!schema\+Flags@{schema\+Flags}}
+\index{schema\+Flags@{schema\+Flags}!Schema@{Schema}}
+\subsubsection[{schema\+Flags}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} schema\+Flags}\label{struct_schema_a8ad465bc0138580015ac7522b584ea91}
+
+
+Definition at line 10871 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Schema\+Clear(), and sqlite3\+View\+Get\+Column\+Names().
+
+\hypertarget{struct_schema_a65de868624ee47575ce7cc560badd0e7}{}\index{Schema@{Schema}!tbl\+Hash@{tbl\+Hash}}
+\index{tbl\+Hash@{tbl\+Hash}!Schema@{Schema}}
+\subsubsection[{tbl\+Hash}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Hash} tbl\+Hash}\label{struct_schema_a65de868624ee47575ce7cc560badd0e7}
+
+
+Definition at line 10864 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+db\+\_\+status(), sqlite3\+Pragma(), sqlite3\+Root\+Page\+Moved(), sqlite3\+Schema\+Clear(), and sqlite3\+Schema\+Get().
+
+\hypertarget{struct_schema_acf95030df2de6addfbc5ae894c7a9b67}{}\index{Schema@{Schema}!trig\+Hash@{trig\+Hash}}
+\index{trig\+Hash@{trig\+Hash}!Schema@{Schema}}
+\subsubsection[{trig\+Hash}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Hash} trig\+Hash}\label{struct_schema_acf95030df2de6addfbc5ae894c7a9b67}
+
+
+Definition at line 10866 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+db\+\_\+status(), sqlite3\+Begin\+Trigger(), sqlite3\+Finish\+Trigger(), sqlite3\+Schema\+Clear(), sqlite3\+Schema\+Get(), sqlite3\+Trigger\+List(), and sqlite3\+Unlink\+And\+Delete\+Trigger().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

@@ -1,0 +1,128 @@
+\hypertarget{structsqlite3__context}{}\section{sqlite3\+\_\+context Struct Reference}
+\label{structsqlite3__context}\index{sqlite3\+\_\+context@{sqlite3\+\_\+context}}
+
+
+Collaboration diagram for sqlite3\+\_\+context\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_mem}{Mem} $\ast$ \hyperlink{structsqlite3__context_ac4a03ce06815fb834cf607e3610c3023}{p\+Out}
+\item 
+\hyperlink{struct_func_def}{Func\+Def} $\ast$ \hyperlink{structsqlite3__context_a3859b9ebe9b2002c8ffb62f1a52e5c4d}{p\+Func}
+\item 
+\hyperlink{struct_mem}{Mem} $\ast$ \hyperlink{structsqlite3__context_a7635916f8de63cb13cfe0579469bb583}{p\+Mem}
+\item 
+\hyperlink{struct_vdbe}{Vdbe} $\ast$ \hyperlink{structsqlite3__context_ac73302f0c912cb7b3c9b1cea509e6077}{p\+Vdbe}
+\item 
+int \hyperlink{structsqlite3__context_a7d4638420dcef0fb9e0120bad40857e3}{i\+Op}
+\item 
+int \hyperlink{structsqlite3__context_ab70049122fc3811f1ca7ac2229839a26}{is\+Error}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{structsqlite3__context_ad40ba195f4593759f0397fa436e47c89}{skip\+Flag}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{structsqlite3__context_a8899b33d4af2040a45f2159eed439c0b}{f\+Error\+Or\+Aux}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 14771 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{structsqlite3__context_a8899b33d4af2040a45f2159eed439c0b}{}\index{sqlite3\+\_\+context@{sqlite3\+\_\+context}!f\+Error\+Or\+Aux@{f\+Error\+Or\+Aux}}
+\index{f\+Error\+Or\+Aux@{f\+Error\+Or\+Aux}!sqlite3\+\_\+context@{sqlite3\+\_\+context}}
+\subsubsection[{f\+Error\+Or\+Aux}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} f\+Error\+Or\+Aux}\label{structsqlite3__context_a8899b33d4af2040a45f2159eed439c0b}
+
+
+Definition at line 14779 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+result\+\_\+error(), sqlite3\+\_\+result\+\_\+error16(), sqlite3\+\_\+result\+\_\+error\+\_\+code(), sqlite3\+\_\+result\+\_\+error\+\_\+nomem(), sqlite3\+\_\+result\+\_\+error\+\_\+toobig(), sqlite3\+\_\+set\+\_\+auxdata(), and sqlite3\+Vdbe\+Exec().
+
+\hypertarget{structsqlite3__context_a7d4638420dcef0fb9e0120bad40857e3}{}\index{sqlite3\+\_\+context@{sqlite3\+\_\+context}!i\+Op@{i\+Op}}
+\index{i\+Op@{i\+Op}!sqlite3\+\_\+context@{sqlite3\+\_\+context}}
+\subsubsection[{i\+Op}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Op}\label{structsqlite3__context_a7d4638420dcef0fb9e0120bad40857e3}
+
+
+Definition at line 14776 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+get\+\_\+auxdata(), sqlite3\+\_\+set\+\_\+auxdata(), and sqlite3\+Vdbe\+Exec().
+
+\hypertarget{structsqlite3__context_ab70049122fc3811f1ca7ac2229839a26}{}\index{sqlite3\+\_\+context@{sqlite3\+\_\+context}!is\+Error@{is\+Error}}
+\index{is\+Error@{is\+Error}!sqlite3\+\_\+context@{sqlite3\+\_\+context}}
+\subsubsection[{is\+Error}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Error}\label{structsqlite3__context_ab70049122fc3811f1ca7ac2229839a26}
+
+
+Definition at line 14777 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+result\+\_\+error(), sqlite3\+\_\+result\+\_\+error16(), sqlite3\+\_\+result\+\_\+error\+\_\+code(), sqlite3\+\_\+result\+\_\+error\+\_\+nomem(), sqlite3\+\_\+result\+\_\+error\+\_\+toobig(), sqlite3\+\_\+set\+\_\+auxdata(), sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Mem\+Finalize().
+
+\hypertarget{structsqlite3__context_a3859b9ebe9b2002c8ffb62f1a52e5c4d}{}\index{sqlite3\+\_\+context@{sqlite3\+\_\+context}!p\+Func@{p\+Func}}
+\index{p\+Func@{p\+Func}!sqlite3\+\_\+context@{sqlite3\+\_\+context}}
+\subsubsection[{p\+Func}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Func\+Def}$\ast$ p\+Func}\label{structsqlite3__context_a3859b9ebe9b2002c8ffb62f1a52e5c4d}
+
+
+Definition at line 14773 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+user\+\_\+data(), sqlite3\+Invalid\+Function(), sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Mem\+Finalize().
+
+\hypertarget{structsqlite3__context_a7635916f8de63cb13cfe0579469bb583}{}\index{sqlite3\+\_\+context@{sqlite3\+\_\+context}!p\+Mem@{p\+Mem}}
+\index{p\+Mem@{p\+Mem}!sqlite3\+\_\+context@{sqlite3\+\_\+context}}
+\subsubsection[{p\+Mem}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Mem}$\ast$ p\+Mem}\label{structsqlite3__context_a7635916f8de63cb13cfe0579469bb583}
+
+
+Definition at line 14774 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+aggregate\+\_\+context(), sqlite3\+\_\+aggregate\+\_\+count(), sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Mem\+Finalize().
+
+\hypertarget{structsqlite3__context_ac4a03ce06815fb834cf607e3610c3023}{}\index{sqlite3\+\_\+context@{sqlite3\+\_\+context}!p\+Out@{p\+Out}}
+\index{p\+Out@{p\+Out}!sqlite3\+\_\+context@{sqlite3\+\_\+context}}
+\subsubsection[{p\+Out}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Mem}$\ast$ p\+Out}\label{structsqlite3__context_ac4a03ce06815fb834cf607e3610c3023}
+
+
+Definition at line 14772 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+context\+\_\+db\+\_\+handle(), sqlite3\+\_\+result\+\_\+double(), sqlite3\+\_\+result\+\_\+error(), sqlite3\+\_\+result\+\_\+error\+\_\+code(), sqlite3\+\_\+result\+\_\+error\+\_\+nomem(), sqlite3\+\_\+result\+\_\+error\+\_\+toobig(), sqlite3\+\_\+result\+\_\+int(), sqlite3\+\_\+result\+\_\+int64(), sqlite3\+\_\+result\+\_\+null(), sqlite3\+\_\+result\+\_\+value(), sqlite3\+\_\+result\+\_\+zeroblob(), sqlite3\+Stmt\+Current\+Time(), sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Mem\+Finalize().
+
+\hypertarget{structsqlite3__context_ac73302f0c912cb7b3c9b1cea509e6077}{}\index{sqlite3\+\_\+context@{sqlite3\+\_\+context}!p\+Vdbe@{p\+Vdbe}}
+\index{p\+Vdbe@{p\+Vdbe}!sqlite3\+\_\+context@{sqlite3\+\_\+context}}
+\subsubsection[{p\+Vdbe}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vdbe}$\ast$ p\+Vdbe}\label{structsqlite3__context_ac73302f0c912cb7b3c9b1cea509e6077}
+
+
+Definition at line 14775 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+get\+\_\+auxdata(), sqlite3\+\_\+set\+\_\+auxdata(), sqlite3\+Stmt\+Current\+Time(), and sqlite3\+Vdbe\+Exec().
+
+\hypertarget{structsqlite3__context_ad40ba195f4593759f0397fa436e47c89}{}\index{sqlite3\+\_\+context@{sqlite3\+\_\+context}!skip\+Flag@{skip\+Flag}}
+\index{skip\+Flag@{skip\+Flag}!sqlite3\+\_\+context@{sqlite3\+\_\+context}}
+\subsubsection[{skip\+Flag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} skip\+Flag}\label{structsqlite3__context_ad40ba195f4593759f0397fa436e47c89}
+
+
+Definition at line 14778 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

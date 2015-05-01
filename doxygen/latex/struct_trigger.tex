@@ -1,0 +1,154 @@
+\hypertarget{struct_trigger}{}\section{Trigger Struct Reference}
+\label{struct_trigger}\index{Trigger@{Trigger}}
+
+
+Collaboration diagram for Trigger\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{struct_trigger_a661118d86ac4127d40bf3be78d92117d}{z\+Name}
+\item 
+char $\ast$ \hyperlink{struct_trigger_abc4810aa7718733bfc48b1973f4c92f8}{table}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_trigger_a0991b29aa40e12f033237266ebe6610c}{op}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_trigger_a98ed40aa0adcb5616ec4499aaab16f3a}{tr\+\_\+tm}
+\item 
+\hyperlink{struct_expr}{Expr} $\ast$ \hyperlink{struct_trigger_ab548cb17db3157472b7bcedf090a51e1}{p\+When}
+\item 
+\hyperlink{struct_id_list}{Id\+List} $\ast$ \hyperlink{struct_trigger_a3c7046da4f11b74f98e0611dac37d586}{p\+Columns}
+\item 
+\hyperlink{struct_schema}{Schema} $\ast$ \hyperlink{struct_trigger_ac262c2ca980f0326edbe82bbe7fda205}{p\+Schema}
+\item 
+\hyperlink{struct_schema}{Schema} $\ast$ \hyperlink{struct_trigger_a55c2d533138b9f0d4ff75efd6423c1b4}{p\+Tab\+Schema}
+\item 
+\hyperlink{struct_trigger_step}{Trigger\+Step} $\ast$ \hyperlink{struct_trigger_a1864547b78df5071eee17260d8dd5631}{step\+\_\+list}
+\item 
+\hyperlink{struct_trigger}{Trigger} $\ast$ \hyperlink{struct_trigger_a2729170b472b9b62b8c6a558d58d6819}{p\+Next}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 12654 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_trigger_a0991b29aa40e12f033237266ebe6610c}{}\index{Trigger@{Trigger}!op@{op}}
+\index{op@{op}!Trigger@{Trigger}}
+\subsubsection[{op}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} op}\label{struct_trigger_a0991b29aa40e12f033237266ebe6610c}
+
+
+Definition at line 12657 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Begin\+Trigger(), sqlite3\+Code\+Row\+Trigger(), sqlite3\+Trigger\+Colmask(), and sqlite3\+Triggers\+Exist().
+
+\hypertarget{struct_trigger_a3c7046da4f11b74f98e0611dac37d586}{}\index{Trigger@{Trigger}!p\+Columns@{p\+Columns}}
+\index{p\+Columns@{p\+Columns}!Trigger@{Trigger}}
+\subsubsection[{p\+Columns}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Id\+List}$\ast$ p\+Columns}\label{struct_trigger_a3c7046da4f11b74f98e0611dac37d586}
+
+
+Definition at line 12660 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Begin\+Trigger(), sqlite3\+Code\+Row\+Trigger(), sqlite3\+Delete\+Trigger(), sqlite3\+Trigger\+Colmask(), and sqlite3\+Triggers\+Exist().
+
+\hypertarget{struct_trigger_a2729170b472b9b62b8c6a558d58d6819}{}\index{Trigger@{Trigger}!p\+Next@{p\+Next}}
+\index{p\+Next@{p\+Next}!Trigger@{Trigger}}
+\subsubsection[{p\+Next}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Trigger}$\ast$ p\+Next}\label{struct_trigger_a2729170b472b9b62b8c6a558d58d6819}
+
+
+Definition at line 12665 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Code\+Drop\+Table(), sqlite3\+Code\+Row\+Trigger(), sqlite3\+Finish\+Trigger(), sqlite3\+Trigger\+Colmask(), sqlite3\+Trigger\+List(), sqlite3\+Triggers\+Exist(), and sqlite3\+Unlink\+And\+Delete\+Trigger().
+
+\hypertarget{struct_trigger_ac262c2ca980f0326edbe82bbe7fda205}{}\index{Trigger@{Trigger}!p\+Schema@{p\+Schema}}
+\index{p\+Schema@{p\+Schema}!Trigger@{Trigger}}
+\subsubsection[{p\+Schema}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Schema}$\ast$ p\+Schema}\label{struct_trigger_ac262c2ca980f0326edbe82bbe7fda205}
+
+
+Definition at line 12662 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Begin\+Trigger(), sqlite3\+Drop\+Trigger\+Ptr(), sqlite3\+Finish\+Trigger(), and sqlite3\+Unlink\+And\+Delete\+Trigger().
+
+\hypertarget{struct_trigger_a55c2d533138b9f0d4ff75efd6423c1b4}{}\index{Trigger@{Trigger}!p\+Tab\+Schema@{p\+Tab\+Schema}}
+\index{p\+Tab\+Schema@{p\+Tab\+Schema}!Trigger@{Trigger}}
+\subsubsection[{p\+Tab\+Schema}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Schema}$\ast$ p\+Tab\+Schema}\label{struct_trigger_a55c2d533138b9f0d4ff75efd6423c1b4}
+
+
+Definition at line 12663 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Begin\+Trigger(), sqlite3\+Finish\+Trigger(), sqlite3\+Trigger\+List(), and sqlite3\+Unlink\+And\+Delete\+Trigger().
+
+\hypertarget{struct_trigger_ab548cb17db3157472b7bcedf090a51e1}{}\index{Trigger@{Trigger}!p\+When@{p\+When}}
+\index{p\+When@{p\+When}!Trigger@{Trigger}}
+\subsubsection[{p\+When}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expr}$\ast$ p\+When}\label{struct_trigger_ab548cb17db3157472b7bcedf090a51e1}
+
+
+Definition at line 12659 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Begin\+Trigger(), sqlite3\+Delete\+Trigger(), and sqlite3\+Finish\+Trigger().
+
+\hypertarget{struct_trigger_a1864547b78df5071eee17260d8dd5631}{}\index{Trigger@{Trigger}!step\+\_\+list@{step\+\_\+list}}
+\index{step\+\_\+list@{step\+\_\+list}!Trigger@{Trigger}}
+\subsubsection[{step\+\_\+list}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Trigger\+Step}$\ast$ step\+\_\+list}\label{struct_trigger_a1864547b78df5071eee17260d8dd5631}
+
+
+Definition at line 12664 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Delete\+Trigger(), and sqlite3\+Finish\+Trigger().
+
+\hypertarget{struct_trigger_abc4810aa7718733bfc48b1973f4c92f8}{}\index{Trigger@{Trigger}!table@{table}}
+\index{table@{table}!Trigger@{Trigger}}
+\subsubsection[{table}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ table}\label{struct_trigger_abc4810aa7718733bfc48b1973f4c92f8}
+
+
+Definition at line 12656 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Begin\+Trigger(), sqlite3\+Delete\+Trigger(), sqlite3\+Finish\+Trigger(), and sqlite3\+Trigger\+List().
+
+\hypertarget{struct_trigger_a98ed40aa0adcb5616ec4499aaab16f3a}{}\index{Trigger@{Trigger}!tr\+\_\+tm@{tr\+\_\+tm}}
+\index{tr\+\_\+tm@{tr\+\_\+tm}!Trigger@{Trigger}}
+\subsubsection[{tr\+\_\+tm}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} tr\+\_\+tm}\label{struct_trigger_a98ed40aa0adcb5616ec4499aaab16f3a}
+
+
+Definition at line 12658 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Begin\+Trigger(), sqlite3\+Code\+Row\+Trigger(), sqlite3\+Trigger\+Colmask(), and sqlite3\+Triggers\+Exist().
+
+\hypertarget{struct_trigger_a661118d86ac4127d40bf3be78d92117d}{}\index{Trigger@{Trigger}!z\+Name@{z\+Name}}
+\index{z\+Name@{z\+Name}!Trigger@{Trigger}}
+\subsubsection[{z\+Name}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ z\+Name}\label{struct_trigger_a661118d86ac4127d40bf3be78d92117d}
+
+
+Definition at line 12655 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Begin\+Trigger(), sqlite3\+Code\+Row\+Trigger\+Direct(), sqlite3\+Delete\+Trigger(), sqlite3\+Drop\+Trigger\+Ptr(), and sqlite3\+Finish\+Trigger().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

@@ -1,0 +1,254 @@
+\hypertarget{struct_vdbe_frame}{}\section{Vdbe\+Frame Struct Reference}
+\label{struct_vdbe_frame}\index{Vdbe\+Frame@{Vdbe\+Frame}}
+
+
+Collaboration diagram for Vdbe\+Frame\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_vdbe}{Vdbe} $\ast$ \hyperlink{struct_vdbe_frame_a84655845ca6a8a0f807b442af4e7384b}{v}
+\item 
+\hyperlink{struct_vdbe_frame}{Vdbe\+Frame} $\ast$ \hyperlink{struct_vdbe_frame_a6ede48174ab6d1a31e3ed0506f5bf467}{p\+Parent}
+\item 
+Op $\ast$ \hyperlink{struct_vdbe_frame_a174225cf156b2753600dd11eefc2c992}{a\+Op}
+\item 
+\hyperlink{sqlite3_8c_a2a0f0f4ae7001eb54351f77ea1cdbcfd}{i64} $\ast$ \hyperlink{struct_vdbe_frame_aed4f7f86306b16502f77aebf2d09a5ff}{an\+Exec}
+\item 
+\hyperlink{struct_mem}{Mem} $\ast$ \hyperlink{struct_vdbe_frame_adfd56f8b1cc1790601ff0940d884c200}{a\+Mem}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} $\ast$ \hyperlink{struct_vdbe_frame_ae7256911c06e37eb7d9e0ab9bb9df93e}{a\+Once\+Flag}
+\item 
+\hyperlink{struct_vdbe_cursor}{Vdbe\+Cursor} $\ast$$\ast$ \hyperlink{struct_vdbe_frame_ac1dd9d69a090bcc1bdb7afa3b0525eea}{ap\+Csr}
+\item 
+void $\ast$ \hyperlink{struct_vdbe_frame_aa80a17db18ac71350fa401959c59e642}{token}
+\item 
+\hyperlink{sqlite3_8c_a2a0f0f4ae7001eb54351f77ea1cdbcfd}{i64} \hyperlink{struct_vdbe_frame_ac7e3735a03635ad8ee39c159a889a920}{last\+Rowid}
+\item 
+int \hyperlink{struct_vdbe_frame_abd18ebaf2ce9128e5e45bd424af27002}{n\+Cursor}
+\item 
+int \hyperlink{struct_vdbe_frame_ac8c81e61335635fa4709d82412b31f06}{pc}
+\item 
+int \hyperlink{struct_vdbe_frame_a33625b7205f0da4b73ec34d2d4aefd64}{n\+Op}
+\item 
+int \hyperlink{struct_vdbe_frame_a857d199d972b4d3864ce420c143508e4}{n\+Mem}
+\item 
+int \hyperlink{struct_vdbe_frame_a391dfc763758d272dcce42b2b72826a7}{n\+Once\+Flag}
+\item 
+int \hyperlink{struct_vdbe_frame_a9c084a923065e168ff226201223a6c2d}{n\+Child\+Mem}
+\item 
+int \hyperlink{struct_vdbe_frame_a02ffedf6eb36618010bd2d4dba030bc8}{n\+Child\+Csr}
+\item 
+int \hyperlink{struct_vdbe_frame_a34a2d05071fd1eb026579e78343912a4}{n\+Change}
+\item 
+int \hyperlink{struct_vdbe_frame_a1efef3b338ec76df8eb738429ca474c0}{n\+Db\+Change}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 14630 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_vdbe_frame_adfd56f8b1cc1790601ff0940d884c200}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!a\+Mem@{a\+Mem}}
+\index{a\+Mem@{a\+Mem}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{a\+Mem}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Mem}$\ast$ a\+Mem}\label{struct_vdbe_frame_adfd56f8b1cc1790601ff0940d884c200}
+
+
+Definition at line 14635 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Frame\+Restore().
+
+\hypertarget{struct_vdbe_frame_aed4f7f86306b16502f77aebf2d09a5ff}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!an\+Exec@{an\+Exec}}
+\index{an\+Exec@{an\+Exec}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{an\+Exec}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i64}$\ast$ an\+Exec}\label{struct_vdbe_frame_aed4f7f86306b16502f77aebf2d09a5ff}
+
+
+Definition at line 14634 of file sqlite3.\+c.
+
+\hypertarget{struct_vdbe_frame_ae7256911c06e37eb7d9e0ab9bb9df93e}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!a\+Once\+Flag@{a\+Once\+Flag}}
+\index{a\+Once\+Flag@{a\+Once\+Flag}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{a\+Once\+Flag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8}$\ast$ a\+Once\+Flag}\label{struct_vdbe_frame_ae7256911c06e37eb7d9e0ab9bb9df93e}
+
+
+Definition at line 14636 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Frame\+Restore().
+
+\hypertarget{struct_vdbe_frame_a174225cf156b2753600dd11eefc2c992}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!a\+Op@{a\+Op}}
+\index{a\+Op@{a\+Op}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{a\+Op}]{\setlength{\rightskip}{0pt plus 5cm}Op$\ast$ a\+Op}\label{struct_vdbe_frame_a174225cf156b2753600dd11eefc2c992}
+
+
+Definition at line 14633 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Frame\+Restore().
+
+\hypertarget{struct_vdbe_frame_ac1dd9d69a090bcc1bdb7afa3b0525eea}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!ap\+Csr@{ap\+Csr}}
+\index{ap\+Csr@{ap\+Csr}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{ap\+Csr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vdbe\+Cursor}$\ast$$\ast$ ap\+Csr}\label{struct_vdbe_frame_ac1dd9d69a090bcc1bdb7afa3b0525eea}
+
+
+Definition at line 14637 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Frame\+Restore().
+
+\hypertarget{struct_vdbe_frame_ac7e3735a03635ad8ee39c159a889a920}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!last\+Rowid@{last\+Rowid}}
+\index{last\+Rowid@{last\+Rowid}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{last\+Rowid}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i64} last\+Rowid}\label{struct_vdbe_frame_ac7e3735a03635ad8ee39c159a889a920}
+
+
+Definition at line 14639 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Frame\+Restore().
+
+\hypertarget{struct_vdbe_frame_a34a2d05071fd1eb026579e78343912a4}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!n\+Change@{n\+Change}}
+\index{n\+Change@{n\+Change}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{n\+Change}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Change}\label{struct_vdbe_frame_a34a2d05071fd1eb026579e78343912a4}
+
+
+Definition at line 14647 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Frame\+Restore().
+
+\hypertarget{struct_vdbe_frame_a02ffedf6eb36618010bd2d4dba030bc8}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!n\+Child\+Csr@{n\+Child\+Csr}}
+\index{n\+Child\+Csr@{n\+Child\+Csr}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{n\+Child\+Csr}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Child\+Csr}\label{struct_vdbe_frame_a02ffedf6eb36618010bd2d4dba030bc8}
+
+
+Definition at line 14646 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Frame\+Delete().
+
+\hypertarget{struct_vdbe_frame_a9c084a923065e168ff226201223a6c2d}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!n\+Child\+Mem@{n\+Child\+Mem}}
+\index{n\+Child\+Mem@{n\+Child\+Mem}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{n\+Child\+Mem}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Child\+Mem}\label{struct_vdbe_frame_a9c084a923065e168ff226201223a6c2d}
+
+
+Definition at line 14645 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Frame\+Delete().
+
+\hypertarget{struct_vdbe_frame_abd18ebaf2ce9128e5e45bd424af27002}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!n\+Cursor@{n\+Cursor}}
+\index{n\+Cursor@{n\+Cursor}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{n\+Cursor}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Cursor}\label{struct_vdbe_frame_abd18ebaf2ce9128e5e45bd424af27002}
+
+
+Definition at line 14640 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Frame\+Restore().
+
+\hypertarget{struct_vdbe_frame_a1efef3b338ec76df8eb738429ca474c0}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!n\+Db\+Change@{n\+Db\+Change}}
+\index{n\+Db\+Change@{n\+Db\+Change}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{n\+Db\+Change}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Db\+Change}\label{struct_vdbe_frame_a1efef3b338ec76df8eb738429ca474c0}
+
+
+Definition at line 14648 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Frame\+Restore().
+
+\hypertarget{struct_vdbe_frame_a857d199d972b4d3864ce420c143508e4}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!n\+Mem@{n\+Mem}}
+\index{n\+Mem@{n\+Mem}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{n\+Mem}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Mem}\label{struct_vdbe_frame_a857d199d972b4d3864ce420c143508e4}
+
+
+Definition at line 14643 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Frame\+Restore().
+
+\hypertarget{struct_vdbe_frame_a391dfc763758d272dcce42b2b72826a7}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!n\+Once\+Flag@{n\+Once\+Flag}}
+\index{n\+Once\+Flag@{n\+Once\+Flag}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{n\+Once\+Flag}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Once\+Flag}\label{struct_vdbe_frame_a391dfc763758d272dcce42b2b72826a7}
+
+
+Definition at line 14644 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Frame\+Restore().
+
+\hypertarget{struct_vdbe_frame_a33625b7205f0da4b73ec34d2d4aefd64}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!n\+Op@{n\+Op}}
+\index{n\+Op@{n\+Op}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{n\+Op}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Op}\label{struct_vdbe_frame_a33625b7205f0da4b73ec34d2d4aefd64}
+
+
+Definition at line 14642 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Frame\+Restore().
+
+\hypertarget{struct_vdbe_frame_ac8c81e61335635fa4709d82412b31f06}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!pc@{pc}}
+\index{pc@{pc}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{pc}]{\setlength{\rightskip}{0pt plus 5cm}int pc}\label{struct_vdbe_frame_ac8c81e61335635fa4709d82412b31f06}
+
+
+Definition at line 14641 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), and sqlite3\+Vdbe\+Frame\+Restore().
+
+\hypertarget{struct_vdbe_frame_a6ede48174ab6d1a31e3ed0506f5bf467}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!p\+Parent@{p\+Parent}}
+\index{p\+Parent@{p\+Parent}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{p\+Parent}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vdbe\+Frame}$\ast$ p\+Parent}\label{struct_vdbe_frame_a6ede48174ab6d1a31e3ed0506f5bf467}
+
+
+Definition at line 14632 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec().
+
+\hypertarget{struct_vdbe_frame_aa80a17db18ac71350fa401959c59e642}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!token@{token}}
+\index{token@{token}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{token}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ token}\label{struct_vdbe_frame_aa80a17db18ac71350fa401959c59e642}
+
+
+Definition at line 14638 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec().
+
+\hypertarget{struct_vdbe_frame_a84655845ca6a8a0f807b442af4e7384b}{}\index{Vdbe\+Frame@{Vdbe\+Frame}!v@{v}}
+\index{v@{v}!Vdbe\+Frame@{Vdbe\+Frame}}
+\subsubsection[{v}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vdbe}$\ast$ v}\label{struct_vdbe_frame_a84655845ca6a8a0f807b442af4e7384b}
+
+
+Definition at line 14631 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec(), sqlite3\+Vdbe\+Frame\+Delete(), and sqlite3\+Vdbe\+Frame\+Restore().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

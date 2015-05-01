@@ -15,9 +15,9 @@ extern "C" {
 //Synapses have a dest. core and an ID number.
 
 typedef struct SynapseState {
-   unsigned int synID;
-   unsigned int coreID;
-   tw_lpid *dests;
+   regid_t synID;
+   regid_t coreID;
+   gid_t *dests;
    //unsigned int coreDest;
 	spikeGenState *spikeGen;
 } synapseState;

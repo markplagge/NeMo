@@ -1,0 +1,154 @@
+\hypertarget{struct_func_def}{}\section{Func\+Def Struct Reference}
+\label{struct_func_def}\index{Func\+Def@{Func\+Def}}
+
+
+Collaboration diagram for Func\+Def\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{sqlite3_8c_a7b32340f65cd15f029caad258fb3355c}{i16} \hyperlink{struct_func_def_a40bc3848b668eb072f0a52f662d78d9a}{n\+Arg}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_func_def_a046acf0266e49bab3fee2be79eee4993}{func\+Flags}
+\item 
+void $\ast$ \hyperlink{struct_func_def_a8d75dbe9027a94780bc2f31670400613}{p\+User\+Data}
+\item 
+\hyperlink{struct_func_def}{Func\+Def} $\ast$ \hyperlink{struct_func_def_ad76d035fd062a7a1568a052ede09ea6e}{p\+Next}
+\item 
+void($\ast$ \hyperlink{struct_func_def_a0ab77577dd4a4a51c4182b9ca4c72c36}{x\+Func} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$)
+\item 
+void($\ast$ \hyperlink{struct_func_def_a47b7ab6a7f27a9fa11ecf8105df6b32c}{x\+Step} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$)
+\item 
+void($\ast$ \hyperlink{struct_func_def_a41e296d3e0af2a6f7c80c94139988e77}{x\+Finalize} )(\hyperlink{structsqlite3__context}{sqlite3\+\_\+context} $\ast$)
+\item 
+char $\ast$ \hyperlink{struct_func_def_a661118d86ac4127d40bf3be78d92117d}{z\+Name}
+\item 
+\hyperlink{struct_func_def}{Func\+Def} $\ast$ \hyperlink{struct_func_def_aa8c6f56dcfbdae15ece45ba7b71a13bb}{p\+Hash}
+\item 
+\hyperlink{struct_func_destructor}{Func\+Destructor} $\ast$ \hyperlink{struct_func_def_ad1dfb003b093e5f8b868da1d6676c484}{p\+Destructor}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 11202 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_func_def_a046acf0266e49bab3fee2be79eee4993}{}\index{Func\+Def@{Func\+Def}!func\+Flags@{func\+Flags}}
+\index{func\+Flags@{func\+Flags}!Func\+Def@{Func\+Def}}
+\subsubsection[{func\+Flags}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} func\+Flags}\label{struct_func_def_a046acf0266e49bab3fee2be79eee4993}
+
+
+Definition at line 11204 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Create\+Func(), sqlite3\+Expr\+Code\+Target(), sqlite3\+Is\+Like\+Function(), and sqlite3\+Vtab\+Overload\+Function().
+
+\hypertarget{struct_func_def_a40bc3848b668eb072f0a52f662d78d9a}{}\index{Func\+Def@{Func\+Def}!n\+Arg@{n\+Arg}}
+\index{n\+Arg@{n\+Arg}!Func\+Def@{Func\+Def}}
+\subsubsection[{n\+Arg}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i16} n\+Arg}\label{struct_func_def_a40bc3848b668eb072f0a52f662d78d9a}
+
+
+Definition at line 11203 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Create\+Func().
+
+\hypertarget{struct_func_def_ad1dfb003b093e5f8b868da1d6676c484}{}\index{Func\+Def@{Func\+Def}!p\+Destructor@{p\+Destructor}}
+\index{p\+Destructor@{p\+Destructor}!Func\+Def@{Func\+Def}}
+\subsubsection[{p\+Destructor}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Func\+Destructor}$\ast$ p\+Destructor}\label{struct_func_def_ad1dfb003b093e5f8b868da1d6676c484}
+
+
+Definition at line 11212 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Create\+Func().
+
+\hypertarget{struct_func_def_aa8c6f56dcfbdae15ece45ba7b71a13bb}{}\index{Func\+Def@{Func\+Def}!p\+Hash@{p\+Hash}}
+\index{p\+Hash@{p\+Hash}!Func\+Def@{Func\+Def}}
+\subsubsection[{p\+Hash}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Func\+Def}$\ast$ p\+Hash}\label{struct_func_def_aa8c6f56dcfbdae15ece45ba7b71a13bb}
+
+
+Definition at line 11211 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Func\+Def\+Insert(), and sqlite3\+Leave\+Mutex\+And\+Close\+Zombie().
+
+\hypertarget{struct_func_def_ad76d035fd062a7a1568a052ede09ea6e}{}\index{Func\+Def@{Func\+Def}!p\+Next@{p\+Next}}
+\index{p\+Next@{p\+Next}!Func\+Def@{Func\+Def}}
+\subsubsection[{p\+Next}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Func\+Def}$\ast$ p\+Next}\label{struct_func_def_ad76d035fd062a7a1568a052ede09ea6e}
+
+
+Definition at line 11206 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Find\+Function(), sqlite3\+Func\+Def\+Insert(), and sqlite3\+Leave\+Mutex\+And\+Close\+Zombie().
+
+\hypertarget{struct_func_def_a8d75dbe9027a94780bc2f31670400613}{}\index{Func\+Def@{Func\+Def}!p\+User\+Data@{p\+User\+Data}}
+\index{p\+User\+Data@{p\+User\+Data}!Func\+Def@{Func\+Def}}
+\subsubsection[{p\+User\+Data}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ p\+User\+Data}\label{struct_func_def_a8d75dbe9027a94780bc2f31670400613}
+
+
+Definition at line 11205 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+user\+\_\+data(), sqlite3\+Create\+Func(), sqlite3\+Is\+Like\+Function(), and sqlite3\+Vtab\+Overload\+Function().
+
+\hypertarget{struct_func_def_a41e296d3e0af2a6f7c80c94139988e77}{}\index{Func\+Def@{Func\+Def}!x\+Finalize@{x\+Finalize}}
+\index{x\+Finalize@{x\+Finalize}!Func\+Def@{Func\+Def}}
+\subsubsection[{x\+Finalize}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ x\+Finalize) ({\bf sqlite3\+\_\+context} $\ast$)}\label{struct_func_def_a41e296d3e0af2a6f7c80c94139988e77}
+
+
+Definition at line 11209 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Create\+Func(), and sqlite3\+Vdbe\+Mem\+Finalize().
+
+\hypertarget{struct_func_def_a0ab77577dd4a4a51c4182b9ca4c72c36}{}\index{Func\+Def@{Func\+Def}!x\+Func@{x\+Func}}
+\index{x\+Func@{x\+Func}!Func\+Def@{Func\+Def}}
+\subsubsection[{x\+Func}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ x\+Func) ({\bf sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$)}\label{struct_func_def_a0ab77577dd4a4a51c4182b9ca4c72c36}
+
+
+Definition at line 11207 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Create\+Func(), sqlite3\+Expr\+Code\+Target(), sqlite3\+Find\+Function(), sqlite3\+Vdbe\+Exec(), and sqlite3\+Vtab\+Overload\+Function().
+
+\hypertarget{struct_func_def_a47b7ab6a7f27a9fa11ecf8105df6b32c}{}\index{Func\+Def@{Func\+Def}!x\+Step@{x\+Step}}
+\index{x\+Step@{x\+Step}!Func\+Def@{Func\+Def}}
+\subsubsection[{x\+Step}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ x\+Step) ({\bf sqlite3\+\_\+context} $\ast$, int, sqlite3\+\_\+value $\ast$$\ast$)}\label{struct_func_def_a47b7ab6a7f27a9fa11ecf8105df6b32c}
+
+
+Definition at line 11208 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Create\+Func(), sqlite3\+Find\+Function(), and sqlite3\+Vdbe\+Exec().
+
+\hypertarget{struct_func_def_a661118d86ac4127d40bf3be78d92117d}{}\index{Func\+Def@{Func\+Def}!z\+Name@{z\+Name}}
+\index{z\+Name@{z\+Name}!Func\+Def@{Func\+Def}}
+\subsubsection[{z\+Name}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ z\+Name}\label{struct_func_def_a661118d86ac4127d40bf3be78d92117d}
+
+
+Definition at line 11210 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Func\+Def\+Insert(), sqlite3\+Invalid\+Function(), and sqlite3\+Vtab\+Overload\+Function().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

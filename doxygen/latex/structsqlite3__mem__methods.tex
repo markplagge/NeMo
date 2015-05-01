@@ -1,0 +1,129 @@
+\hypertarget{structsqlite3__mem__methods}{}\section{sqlite3\+\_\+mem\+\_\+methods Struct Reference}
+\label{structsqlite3__mem__methods}\index{sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}}
+
+
+{\ttfamily \#include $<$sqlite3.\+h$>$}
+
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+void $\ast$($\ast$ \hyperlink{structsqlite3__mem__methods_a7eb33731499ee82125a79071c9df4cc7}{x\+Malloc} )(int)
+\item 
+void($\ast$ \hyperlink{structsqlite3__mem__methods_a91abab31fe16927c08291ab9b332bf8f}{x\+Free} )(void $\ast$)
+\item 
+void $\ast$($\ast$ \hyperlink{structsqlite3__mem__methods_a10a9a571a4b40370c8f684e3dfbd9aed}{x\+Realloc} )(void $\ast$, int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__mem__methods_a37f680cda62590be32b36d962b6ce009}{x\+Size} )(void $\ast$)
+\item 
+int($\ast$ \hyperlink{structsqlite3__mem__methods_a02b48fb7c072d77a055859d16cd94077}{x\+Roundup} )(int)
+\item 
+int($\ast$ \hyperlink{structsqlite3__mem__methods_a707c4748dcafc75384a806d13bb68bdd}{x\+Init} )(void $\ast$)
+\item 
+void($\ast$ \hyperlink{structsqlite3__mem__methods_a34a88425495f42099aadbe3fa9676a06}{x\+Shutdown} )(void $\ast$)
+\item 
+void $\ast$ \hyperlink{structsqlite3__mem__methods_a2edf2e7445f2f46196126195c7710f75}{p\+App\+Data}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 1671 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{structsqlite3__mem__methods_a2edf2e7445f2f46196126195c7710f75}{}\index{sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}!p\+App\+Data@{p\+App\+Data}}
+\index{p\+App\+Data@{p\+App\+Data}!sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}}
+\subsubsection[{p\+App\+Data}]{\setlength{\rightskip}{0pt plus 5cm}void $\ast$ p\+App\+Data}\label{structsqlite3__mem__methods_a2edf2e7445f2f46196126195c7710f75}
+
+
+Definition at line 1679 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Malloc\+End(), and sqlite3\+Malloc\+Init().
+
+\hypertarget{structsqlite3__mem__methods_a91abab31fe16927c08291ab9b332bf8f}{}\index{sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}!x\+Free@{x\+Free}}
+\index{x\+Free@{x\+Free}!sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}}
+\subsubsection[{x\+Free}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ x\+Free)(void $\ast$)}\label{structsqlite3__mem__methods_a91abab31fe16927c08291ab9b332bf8f}
+
+
+Definition at line 1673 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+free(), and sqlite3\+Scratch\+Free().
+
+\hypertarget{structsqlite3__mem__methods_a707c4748dcafc75384a806d13bb68bdd}{}\index{sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}!x\+Init@{x\+Init}}
+\index{x\+Init@{x\+Init}!sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}}
+\subsubsection[{x\+Init}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ x\+Init)(void $\ast$)}\label{structsqlite3__mem__methods_a707c4748dcafc75384a806d13bb68bdd}
+
+
+Definition at line 1677 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Malloc\+Init().
+
+\hypertarget{structsqlite3__mem__methods_a7eb33731499ee82125a79071c9df4cc7}{}\index{sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}!x\+Malloc@{x\+Malloc}}
+\index{x\+Malloc@{x\+Malloc}!sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}}
+\subsubsection[{x\+Malloc}]{\setlength{\rightskip}{0pt plus 5cm}void $\ast$($\ast$ x\+Malloc)(int)}\label{structsqlite3__mem__methods_a7eb33731499ee82125a79071c9df4cc7}
+
+
+Definition at line 1672 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+config(), sqlite3\+Malloc(), and sqlite3\+Malloc\+Init().
+
+\hypertarget{structsqlite3__mem__methods_a10a9a571a4b40370c8f684e3dfbd9aed}{}\index{sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}!x\+Realloc@{x\+Realloc}}
+\index{x\+Realloc@{x\+Realloc}!sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}}
+\subsubsection[{x\+Realloc}]{\setlength{\rightskip}{0pt plus 5cm}void $\ast$($\ast$ x\+Realloc)(void $\ast$, int)}\label{structsqlite3__mem__methods_a10a9a571a4b40370c8f684e3dfbd9aed}
+
+
+Definition at line 1674 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Realloc().
+
+\hypertarget{structsqlite3__mem__methods_a02b48fb7c072d77a055859d16cd94077}{}\index{sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}!x\+Roundup@{x\+Roundup}}
+\index{x\+Roundup@{x\+Roundup}!sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}}
+\subsubsection[{x\+Roundup}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ x\+Roundup)(int)}\label{structsqlite3__mem__methods_a02b48fb7c072d77a055859d16cd94077}
+
+
+Definition at line 1676 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+db\+\_\+status(), and sqlite3\+Realloc().
+
+\hypertarget{structsqlite3__mem__methods_a34a88425495f42099aadbe3fa9676a06}{}\index{sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}!x\+Shutdown@{x\+Shutdown}}
+\index{x\+Shutdown@{x\+Shutdown}!sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}}
+\subsubsection[{x\+Shutdown}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ x\+Shutdown)(void $\ast$)}\label{structsqlite3__mem__methods_a34a88425495f42099aadbe3fa9676a06}
+
+
+Definition at line 1678 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Malloc\+End().
+
+\hypertarget{structsqlite3__mem__methods_a37f680cda62590be32b36d962b6ce009}{}\index{sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}!x\+Size@{x\+Size}}
+\index{x\+Size@{x\+Size}!sqlite3\+\_\+mem\+\_\+methods@{sqlite3\+\_\+mem\+\_\+methods}}
+\subsubsection[{x\+Size}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ x\+Size)(void $\ast$)}\label{structsqlite3__mem__methods_a37f680cda62590be32b36d962b6ce009}
+
+
+Definition at line 1675 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+msize(), sqlite3\+Db\+Malloc\+Size(), and sqlite3\+Malloc\+Size().
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\item 
+libs/\hyperlink{sqlite3_8h}{sqlite3.\+h}\end{DoxyCompactItemize}

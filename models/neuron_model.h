@@ -12,6 +12,7 @@ extern "C" {
 #include <stdbool.h>
 
 #include "../assist.h"
+
 #include "ross.h" //trying to minimize calls to ross from here, but certian defs are really needed.
 
 
@@ -77,8 +78,8 @@ void resetLinear(void *neuronState);
 *
 */
 typedef struct NeuronModel {
-   _idType coreID; // local coreID
-   _idType neuronID; //local neuron ID (each core has some number of neurons)
+   regid_t coreID; // local coreID
+   regid_t neuronID; //local neuron ID (each core has some number of neurons)
    _neVoltType cVoltage; //current "voltage" contained in the neuron.
    _neVoltType prVoltage; //previous neuron voltage.
    _neVoltType threshold; //neuron's threshold voltage
@@ -111,8 +112,8 @@ typedef struct NeuronModel {
 	/**Reverse Leak Functuon */
 	reverseLeakDel reverseLeak;
 
-   _idType dendriteLocalDest;
-   _idType dendriteCore;
+   regid_t dendriteLocalDest;
+   regid_t dendriteCore;
 	tw_lpid dendriteDest;
 
 		//Parameters from the paper:

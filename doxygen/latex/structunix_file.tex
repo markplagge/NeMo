@@ -1,0 +1,132 @@
+\hypertarget{structunix_file}{}\section{unix\+File Struct Reference}
+\label{structunix_file}\index{unix\+File@{unix\+File}}
+
+
+Collaboration diagram for unix\+File\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structsqlite3__io__methods}{sqlite3\+\_\+io\+\_\+methods} const $\ast$ \hyperlink{structunix_file_a4543ba4f315142783b138112898c5c59}{p\+Method}
+\item 
+\hyperlink{structsqlite3__vfs}{sqlite3\+\_\+vfs} $\ast$ \hyperlink{structunix_file_a59603ca1cedf2bda0ee4e65eb610a0b5}{p\+Vfs}
+\item 
+\hyperlink{structunix_inode_info}{unix\+Inode\+Info} $\ast$ \hyperlink{structunix_file_afe19cb877f2c3a50ca04a8272ed435b8}{p\+Inode}
+\item 
+int \hyperlink{structunix_file_a16611451551e3d15916bae723c3f59f7}{h}
+\item 
+unsigned char \hyperlink{structunix_file_a074528e86f4417f8c3ce538e07908824}{e\+File\+Lock}
+\item 
+unsigned short int \hyperlink{structunix_file_a703267dc2b2f5100ed329cc2bfab7699}{ctrl\+Flags}
+\item 
+int \hyperlink{structunix_file_aabab360690091497ac312b35a13e4c56}{last\+Errno}
+\item 
+void $\ast$ \hyperlink{structunix_file_aab5edf9be7a69d30e33ed8d8a89291ea}{locking\+Context}
+\item 
+\hyperlink{struct_unix_unused_fd}{Unix\+Unused\+Fd} $\ast$ \hyperlink{structunix_file_a7ecad57bed967765906dd7d10af97be1}{p\+Unused}
+\item 
+const char $\ast$ \hyperlink{structunix_file_adfe0c5350fc7ff271fd542aa50bdc259}{z\+Path}
+\item 
+\hyperlink{structunix_shm}{unix\+Shm} $\ast$ \hyperlink{structunix_file_aa155aff7111790d83ffdb16892b15dae}{p\+Shm}
+\item 
+int \hyperlink{structunix_file_aec8d343f93783cd4e6a649d4b157ac8c}{sz\+Chunk}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 25444 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{structunix_file_a703267dc2b2f5100ed329cc2bfab7699}{}\index{unix\+File@{unix\+File}!ctrl\+Flags@{ctrl\+Flags}}
+\index{ctrl\+Flags@{ctrl\+Flags}!unix\+File@{unix\+File}}
+\subsubsection[{ctrl\+Flags}]{\setlength{\rightskip}{0pt plus 5cm}unsigned short int ctrl\+Flags}\label{structunix_file_a703267dc2b2f5100ed329cc2bfab7699}
+
+
+Definition at line 25450 of file sqlite3.\+c.
+
+\hypertarget{structunix_file_a074528e86f4417f8c3ce538e07908824}{}\index{unix\+File@{unix\+File}!e\+File\+Lock@{e\+File\+Lock}}
+\index{e\+File\+Lock@{e\+File\+Lock}!unix\+File@{unix\+File}}
+\subsubsection[{e\+File\+Lock}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char e\+File\+Lock}\label{structunix_file_a074528e86f4417f8c3ce538e07908824}
+
+
+Definition at line 25449 of file sqlite3.\+c.
+
+\hypertarget{structunix_file_a16611451551e3d15916bae723c3f59f7}{}\index{unix\+File@{unix\+File}!h@{h}}
+\index{h@{h}!unix\+File@{unix\+File}}
+\subsubsection[{h}]{\setlength{\rightskip}{0pt plus 5cm}int h}\label{structunix_file_a16611451551e3d15916bae723c3f59f7}
+
+
+Definition at line 25448 of file sqlite3.\+c.
+
+\hypertarget{structunix_file_aabab360690091497ac312b35a13e4c56}{}\index{unix\+File@{unix\+File}!last\+Errno@{last\+Errno}}
+\index{last\+Errno@{last\+Errno}!unix\+File@{unix\+File}}
+\subsubsection[{last\+Errno}]{\setlength{\rightskip}{0pt plus 5cm}int last\+Errno}\label{structunix_file_aabab360690091497ac312b35a13e4c56}
+
+
+Definition at line 25451 of file sqlite3.\+c.
+
+\hypertarget{structunix_file_aab5edf9be7a69d30e33ed8d8a89291ea}{}\index{unix\+File@{unix\+File}!locking\+Context@{locking\+Context}}
+\index{locking\+Context@{locking\+Context}!unix\+File@{unix\+File}}
+\subsubsection[{locking\+Context}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ locking\+Context}\label{structunix_file_aab5edf9be7a69d30e33ed8d8a89291ea}
+
+
+Definition at line 25452 of file sqlite3.\+c.
+
+\hypertarget{structunix_file_afe19cb877f2c3a50ca04a8272ed435b8}{}\index{unix\+File@{unix\+File}!p\+Inode@{p\+Inode}}
+\index{p\+Inode@{p\+Inode}!unix\+File@{unix\+File}}
+\subsubsection[{p\+Inode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf unix\+Inode\+Info}$\ast$ p\+Inode}\label{structunix_file_afe19cb877f2c3a50ca04a8272ed435b8}
+
+
+Definition at line 25447 of file sqlite3.\+c.
+
+\hypertarget{structunix_file_a4543ba4f315142783b138112898c5c59}{}\index{unix\+File@{unix\+File}!p\+Method@{p\+Method}}
+\index{p\+Method@{p\+Method}!unix\+File@{unix\+File}}
+\subsubsection[{p\+Method}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+io\+\_\+methods} const$\ast$ p\+Method}\label{structunix_file_a4543ba4f315142783b138112898c5c59}
+
+
+Definition at line 25445 of file sqlite3.\+c.
+
+\hypertarget{structunix_file_aa155aff7111790d83ffdb16892b15dae}{}\index{unix\+File@{unix\+File}!p\+Shm@{p\+Shm}}
+\index{p\+Shm@{p\+Shm}!unix\+File@{unix\+File}}
+\subsubsection[{p\+Shm}]{\setlength{\rightskip}{0pt plus 5cm}{\bf unix\+Shm}$\ast$ p\+Shm}\label{structunix_file_aa155aff7111790d83ffdb16892b15dae}
+
+
+Definition at line 25455 of file sqlite3.\+c.
+
+\hypertarget{structunix_file_a7ecad57bed967765906dd7d10af97be1}{}\index{unix\+File@{unix\+File}!p\+Unused@{p\+Unused}}
+\index{p\+Unused@{p\+Unused}!unix\+File@{unix\+File}}
+\subsubsection[{p\+Unused}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Unix\+Unused\+Fd}$\ast$ p\+Unused}\label{structunix_file_a7ecad57bed967765906dd7d10af97be1}
+
+
+Definition at line 25453 of file sqlite3.\+c.
+
+\hypertarget{structunix_file_a59603ca1cedf2bda0ee4e65eb610a0b5}{}\index{unix\+File@{unix\+File}!p\+Vfs@{p\+Vfs}}
+\index{p\+Vfs@{p\+Vfs}!unix\+File@{unix\+File}}
+\subsubsection[{p\+Vfs}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+vfs}$\ast$ p\+Vfs}\label{structunix_file_a59603ca1cedf2bda0ee4e65eb610a0b5}
+
+
+Definition at line 25446 of file sqlite3.\+c.
+
+\hypertarget{structunix_file_aec8d343f93783cd4e6a649d4b157ac8c}{}\index{unix\+File@{unix\+File}!sz\+Chunk@{sz\+Chunk}}
+\index{sz\+Chunk@{sz\+Chunk}!unix\+File@{unix\+File}}
+\subsubsection[{sz\+Chunk}]{\setlength{\rightskip}{0pt plus 5cm}int sz\+Chunk}\label{structunix_file_aec8d343f93783cd4e6a649d4b157ac8c}
+
+
+Definition at line 25456 of file sqlite3.\+c.
+
+\hypertarget{structunix_file_adfe0c5350fc7ff271fd542aa50bdc259}{}\index{unix\+File@{unix\+File}!z\+Path@{z\+Path}}
+\index{z\+Path@{z\+Path}!unix\+File@{unix\+File}}
+\subsubsection[{z\+Path}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ z\+Path}\label{structunix_file_adfe0c5350fc7ff271fd542aa50bdc259}
+
+
+Definition at line 25454 of file sqlite3.\+c.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

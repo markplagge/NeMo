@@ -1,0 +1,180 @@
+\hypertarget{structsqlite3__backup}{}\section{sqlite3\+\_\+backup Struct Reference}
+\label{structsqlite3__backup}\index{sqlite3\+\_\+backup@{sqlite3\+\_\+backup}}
+
+
+Collaboration diagram for sqlite3\+\_\+backup\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structsqlite3}{sqlite3} $\ast$ \hyperlink{structsqlite3__backup_a4fe8f1d9456d5a379a3b1f6ffd50fbe0}{p\+Dest\+Db}
+\item 
+\hyperlink{struct_btree}{Btree} $\ast$ \hyperlink{structsqlite3__backup_a845b397227de5c11118fa9db6b80ebde}{p\+Dest}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{structsqlite3__backup_aefa4865e79a3a7868ca8177fa42130b1}{i\+Dest\+Schema}
+\item 
+int \hyperlink{structsqlite3__backup_a6eb18cf037082296899340a3b2200425}{b\+Dest\+Locked}
+\item 
+\hyperlink{sqlite3_8c_aec0c653e8dd16e4639caf2f8ea54f55c}{Pgno} \hyperlink{structsqlite3__backup_a1f54c0b52e2d890531dd9d7c9b8961b0}{i\+Next}
+\item 
+\hyperlink{structsqlite3}{sqlite3} $\ast$ \hyperlink{structsqlite3__backup_a6ad9342dfbfe7f65e4f4c9c74b4d082b}{p\+Src\+Db}
+\item 
+\hyperlink{struct_btree}{Btree} $\ast$ \hyperlink{structsqlite3__backup_aee09321030964a76af7f5e63ea20cb9c}{p\+Src}
+\item 
+int \hyperlink{structsqlite3__backup_ac6509c6fe4cbf7bde170597172f8a288}{rc}
+\item 
+\hyperlink{sqlite3_8c_aec0c653e8dd16e4639caf2f8ea54f55c}{Pgno} \hyperlink{structsqlite3__backup_af36e03f9d5806ab7fa1530a3950cc014}{n\+Remaining}
+\item 
+\hyperlink{sqlite3_8c_aec0c653e8dd16e4639caf2f8ea54f55c}{Pgno} \hyperlink{structsqlite3__backup_a40c352fa743b4e8ae8ca29ab5c947f5c}{n\+Pagecount}
+\item 
+int \hyperlink{structsqlite3__backup_a46ccfc2d96bd0831d4610c6da0738ecc}{is\+Attached}
+\item 
+\hyperlink{structsqlite3__backup}{sqlite3\+\_\+backup} $\ast$ \hyperlink{structsqlite3__backup_a76f1349753f0e489a86cacd7afe3aa3a}{p\+Next}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 62351 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{structsqlite3__backup_a6eb18cf037082296899340a3b2200425}{}\index{sqlite3\+\_\+backup@{sqlite3\+\_\+backup}!b\+Dest\+Locked@{b\+Dest\+Locked}}
+\index{b\+Dest\+Locked@{b\+Dest\+Locked}!sqlite3\+\_\+backup@{sqlite3\+\_\+backup}}
+\subsubsection[{b\+Dest\+Locked}]{\setlength{\rightskip}{0pt plus 5cm}int b\+Dest\+Locked}\label{structsqlite3__backup_a6eb18cf037082296899340a3b2200425}
+
+
+Definition at line 62355 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+backup\+\_\+step().
+
+\hypertarget{structsqlite3__backup_aefa4865e79a3a7868ca8177fa42130b1}{}\index{sqlite3\+\_\+backup@{sqlite3\+\_\+backup}!i\+Dest\+Schema@{i\+Dest\+Schema}}
+\index{i\+Dest\+Schema@{i\+Dest\+Schema}!sqlite3\+\_\+backup@{sqlite3\+\_\+backup}}
+\subsubsection[{i\+Dest\+Schema}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} i\+Dest\+Schema}\label{structsqlite3__backup_aefa4865e79a3a7868ca8177fa42130b1}
+
+
+Definition at line 62354 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+backup\+\_\+step().
+
+\hypertarget{structsqlite3__backup_a1f54c0b52e2d890531dd9d7c9b8961b0}{}\index{sqlite3\+\_\+backup@{sqlite3\+\_\+backup}!i\+Next@{i\+Next}}
+\index{i\+Next@{i\+Next}!sqlite3\+\_\+backup@{sqlite3\+\_\+backup}}
+\subsubsection[{i\+Next}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pgno} i\+Next}\label{structsqlite3__backup_a1f54c0b52e2d890531dd9d7c9b8961b0}
+
+
+Definition at line 62357 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+backup\+\_\+init(), sqlite3\+\_\+backup\+\_\+step(), sqlite3\+Backup\+Restart(), sqlite3\+Backup\+Update(), and sqlite3\+Btree\+Copy\+File().
+
+\hypertarget{structsqlite3__backup_a46ccfc2d96bd0831d4610c6da0738ecc}{}\index{sqlite3\+\_\+backup@{sqlite3\+\_\+backup}!is\+Attached@{is\+Attached}}
+\index{is\+Attached@{is\+Attached}!sqlite3\+\_\+backup@{sqlite3\+\_\+backup}}
+\subsubsection[{is\+Attached}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Attached}\label{structsqlite3__backup_a46ccfc2d96bd0831d4610c6da0738ecc}
+
+
+Definition at line 62369 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+backup\+\_\+finish(), sqlite3\+\_\+backup\+\_\+init(), and sqlite3\+\_\+backup\+\_\+step().
+
+\hypertarget{structsqlite3__backup_a40c352fa743b4e8ae8ca29ab5c947f5c}{}\index{sqlite3\+\_\+backup@{sqlite3\+\_\+backup}!n\+Pagecount@{n\+Pagecount}}
+\index{n\+Pagecount@{n\+Pagecount}!sqlite3\+\_\+backup@{sqlite3\+\_\+backup}}
+\subsubsection[{n\+Pagecount}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pgno} n\+Pagecount}\label{structsqlite3__backup_a40c352fa743b4e8ae8ca29ab5c947f5c}
+
+
+Definition at line 62367 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+backup\+\_\+pagecount(), and sqlite3\+\_\+backup\+\_\+step().
+
+\hypertarget{structsqlite3__backup_af36e03f9d5806ab7fa1530a3950cc014}{}\index{sqlite3\+\_\+backup@{sqlite3\+\_\+backup}!n\+Remaining@{n\+Remaining}}
+\index{n\+Remaining@{n\+Remaining}!sqlite3\+\_\+backup@{sqlite3\+\_\+backup}}
+\subsubsection[{n\+Remaining}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pgno} n\+Remaining}\label{structsqlite3__backup_af36e03f9d5806ab7fa1530a3950cc014}
+
+
+Definition at line 62366 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+backup\+\_\+remaining(), and sqlite3\+\_\+backup\+\_\+step().
+
+\hypertarget{structsqlite3__backup_a845b397227de5c11118fa9db6b80ebde}{}\index{sqlite3\+\_\+backup@{sqlite3\+\_\+backup}!p\+Dest@{p\+Dest}}
+\index{p\+Dest@{p\+Dest}!sqlite3\+\_\+backup@{sqlite3\+\_\+backup}}
+\subsubsection[{p\+Dest}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Btree}$\ast$ p\+Dest}\label{structsqlite3__backup_a845b397227de5c11118fa9db6b80ebde}
+
+
+Definition at line 62353 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+backup\+\_\+finish(), sqlite3\+\_\+backup\+\_\+init(), sqlite3\+\_\+backup\+\_\+step(), and sqlite3\+Btree\+Copy\+File().
+
+\hypertarget{structsqlite3__backup_a4fe8f1d9456d5a379a3b1f6ffd50fbe0}{}\index{sqlite3\+\_\+backup@{sqlite3\+\_\+backup}!p\+Dest\+Db@{p\+Dest\+Db}}
+\index{p\+Dest\+Db@{p\+Dest\+Db}!sqlite3\+\_\+backup@{sqlite3\+\_\+backup}}
+\subsubsection[{p\+Dest\+Db}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3}$\ast$ p\+Dest\+Db}\label{structsqlite3__backup_a4fe8f1d9456d5a379a3b1f6ffd50fbe0}
+
+
+Definition at line 62352 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+backup\+\_\+finish(), sqlite3\+\_\+backup\+\_\+init(), sqlite3\+\_\+backup\+\_\+step(), and sqlite3\+Backup\+Update().
+
+\hypertarget{structsqlite3__backup_a76f1349753f0e489a86cacd7afe3aa3a}{}\index{sqlite3\+\_\+backup@{sqlite3\+\_\+backup}!p\+Next@{p\+Next}}
+\index{p\+Next@{p\+Next}!sqlite3\+\_\+backup@{sqlite3\+\_\+backup}}
+\subsubsection[{p\+Next}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+backup}$\ast$ p\+Next}\label{structsqlite3__backup_a76f1349753f0e489a86cacd7afe3aa3a}
+
+
+Definition at line 62370 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+backup\+\_\+finish(), sqlite3\+Backup\+Restart(), and sqlite3\+Backup\+Update().
+
+\hypertarget{structsqlite3__backup_aee09321030964a76af7f5e63ea20cb9c}{}\index{sqlite3\+\_\+backup@{sqlite3\+\_\+backup}!p\+Src@{p\+Src}}
+\index{p\+Src@{p\+Src}!sqlite3\+\_\+backup@{sqlite3\+\_\+backup}}
+\subsubsection[{p\+Src}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Btree}$\ast$ p\+Src}\label{structsqlite3__backup_aee09321030964a76af7f5e63ea20cb9c}
+
+
+Definition at line 62359 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+backup\+\_\+finish(), sqlite3\+\_\+backup\+\_\+init(), sqlite3\+\_\+backup\+\_\+step(), and sqlite3\+Btree\+Copy\+File().
+
+\hypertarget{structsqlite3__backup_a6ad9342dfbfe7f65e4f4c9c74b4d082b}{}\index{sqlite3\+\_\+backup@{sqlite3\+\_\+backup}!p\+Src\+Db@{p\+Src\+Db}}
+\index{p\+Src\+Db@{p\+Src\+Db}!sqlite3\+\_\+backup@{sqlite3\+\_\+backup}}
+\subsubsection[{p\+Src\+Db}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3}$\ast$ p\+Src\+Db}\label{structsqlite3__backup_a6ad9342dfbfe7f65e4f4c9c74b4d082b}
+
+
+Definition at line 62358 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+backup\+\_\+finish(), sqlite3\+\_\+backup\+\_\+init(), sqlite3\+\_\+backup\+\_\+step(), and sqlite3\+Btree\+Copy\+File().
+
+\hypertarget{structsqlite3__backup_ac6509c6fe4cbf7bde170597172f8a288}{}\index{sqlite3\+\_\+backup@{sqlite3\+\_\+backup}!rc@{rc}}
+\index{rc@{rc}!sqlite3\+\_\+backup@{sqlite3\+\_\+backup}}
+\subsubsection[{rc}]{\setlength{\rightskip}{0pt plus 5cm}int rc}\label{structsqlite3__backup_ac6509c6fe4cbf7bde170597172f8a288}
+
+
+Definition at line 62361 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+backup\+\_\+finish(), sqlite3\+\_\+backup\+\_\+step(), and sqlite3\+Backup\+Update().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

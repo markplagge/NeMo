@@ -1,0 +1,470 @@
+\hypertarget{struct_sqlite3_config}{}\section{Sqlite3\+Config Struct Reference}
+\label{struct_sqlite3_config}\index{Sqlite3\+Config@{Sqlite3\+Config}}
+
+
+Collaboration diagram for Sqlite3\+Config\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{struct_sqlite3_config_a8dfc655e09e968f581673d82fce0769a}{b\+Memstat}
+\item 
+int \hyperlink{struct_sqlite3_config_a9b19cb17e4c7a75ebc366513f84ae3bb}{b\+Core\+Mutex}
+\item 
+int \hyperlink{struct_sqlite3_config_a13bc99b79aa8349932f788be7415077c}{b\+Full\+Mutex}
+\item 
+int \hyperlink{struct_sqlite3_config_ad7b7a342d22db7302e7c2891d9ada29c}{b\+Open\+Uri}
+\item 
+int \hyperlink{struct_sqlite3_config_a7491b8e0d85db8c5aa3c412487a4f31d}{b\+Use\+Cis}
+\item 
+int \hyperlink{struct_sqlite3_config_a0faee16932dbed888694e892b8230c6d}{mx\+Strlen}
+\item 
+int \hyperlink{struct_sqlite3_config_a05b2ce44944a6e771f6c75bb32db984b}{never\+Corrupt}
+\item 
+int \hyperlink{struct_sqlite3_config_a60ef70cefa59c42de0133555420243a0}{sz\+Lookaside}
+\item 
+int \hyperlink{struct_sqlite3_config_af7546c4257d5b6d4ebcea412f3329067}{n\+Lookaside}
+\item 
+\hyperlink{structsqlite3__mem__methods}{sqlite3\+\_\+mem\+\_\+methods} \hyperlink{struct_sqlite3_config_a1330f8bd731e42003426946f2e7df47f}{m}
+\item 
+\hyperlink{structsqlite3__mutex__methods}{sqlite3\+\_\+mutex\+\_\+methods} \hyperlink{struct_sqlite3_config_a7139046a63b0fa38ee9d2dfa0ced3019}{mutex}
+\item 
+\hyperlink{structsqlite3__pcache__methods2}{sqlite3\+\_\+pcache\+\_\+methods2} \hyperlink{struct_sqlite3_config_a78ebacd69f832305f42dec645ba48a2c}{pcache2}
+\item 
+void $\ast$ \hyperlink{struct_sqlite3_config_a5d36d9050528de8c61e7be52131215e6}{p\+Heap}
+\item 
+int \hyperlink{struct_sqlite3_config_a0ea077b3d2d24303af5a30df4d9d5edf}{n\+Heap}
+\item 
+int \hyperlink{struct_sqlite3_config_a2dfb8267a9ac25087c2b53d6f3ed937d}{mn\+Req}
+\item 
+int \hyperlink{struct_sqlite3_config_ade278f37a74995898e7aeac99d97c9aa}{mx\+Req}
+\item 
+\hyperlink{sqlite3_8c_a0a4d3e6c1ad46f90e746b920ab6ca0d2}{sqlite3\+\_\+int64} \hyperlink{struct_sqlite3_config_a16be0b65471da845d6b829adf5f17957}{sz\+Mmap}
+\item 
+\hyperlink{sqlite3_8c_a0a4d3e6c1ad46f90e746b920ab6ca0d2}{sqlite3\+\_\+int64} \hyperlink{struct_sqlite3_config_ad96e6aa2ef236c16df4ff57b6c11b2f1}{mx\+Mmap}
+\item 
+void $\ast$ \hyperlink{struct_sqlite3_config_a5816c3e492705243db472d471eedf71c}{p\+Scratch}
+\item 
+int \hyperlink{struct_sqlite3_config_a27161f3af9d9fa4dc7c97ce5fbc5704e}{sz\+Scratch}
+\item 
+int \hyperlink{struct_sqlite3_config_a7810b251a0971066e959228e5ec17ba5}{n\+Scratch}
+\item 
+void $\ast$ \hyperlink{struct_sqlite3_config_a192685931829ee40cbef934bf644c7ce}{p\+Page}
+\item 
+int \hyperlink{struct_sqlite3_config_a0ead96b04a1cc6dc6ec781782e82d052}{sz\+Page}
+\item 
+int \hyperlink{struct_sqlite3_config_a006467184a1acc90b6f1b18626889e08}{n\+Page}
+\item 
+int \hyperlink{struct_sqlite3_config_aec08e91dd93acd0b206d1a672ea703f5}{mx\+Parser\+Stack}
+\item 
+int \hyperlink{struct_sqlite3_config_a5c1b69700e52ef116cbc6fdde53ef47d}{shared\+Cache\+Enabled}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_sqlite3_config_a0f0553f38ecaca298abe54686a1c4bcb}{sz\+Pma}
+\item 
+int \hyperlink{struct_sqlite3_config_a6fbd614062a06fdd84bb4ba9d44c2028}{is\+Init}
+\item 
+int \hyperlink{struct_sqlite3_config_adbf46645b827d0c7b368e6b1298a196e}{in\+Progress}
+\item 
+int \hyperlink{struct_sqlite3_config_a5e1feee8fb346216d60009b8f8706ae9}{is\+Mutex\+Init}
+\item 
+int \hyperlink{struct_sqlite3_config_ab3402c7fd0c57cc1383280eb49ebb159}{is\+Malloc\+Init}
+\item 
+int \hyperlink{struct_sqlite3_config_ae992d949693471b5a7afeac185afd014}{is\+P\+Cache\+Init}
+\item 
+int \hyperlink{struct_sqlite3_config_a82be072aed4e06af77240a619da95f76}{n\+Ref\+Init\+Mutex}
+\item 
+\hyperlink{structsqlite3__mutex}{sqlite3\+\_\+mutex} $\ast$ \hyperlink{struct_sqlite3_config_a2739bff623111fe6e200c987e10378c9}{p\+Init\+Mutex}
+\item 
+void($\ast$ \hyperlink{struct_sqlite3_config_a7a8507f3e16dc355181b5f226ec31d19}{x\+Log} )(void $\ast$, int, const char $\ast$)
+\item 
+void $\ast$ \hyperlink{struct_sqlite3_config_ad86c50ffe8e4c213307b5f89c582d743}{p\+Log\+Arg}
+\item 
+int($\ast$ \hyperlink{struct_sqlite3_config_ad7abf49f736329ee72d954343b39a706}{x\+Test\+Callback} )(int)
+\item 
+int \hyperlink{struct_sqlite3_config_a148fb0a51b89a6ecacc43a61b445cbe1}{b\+Localtime\+Fault}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 12777 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_sqlite3_config_a9b19cb17e4c7a75ebc366513f84ae3bb}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!b\+Core\+Mutex@{b\+Core\+Mutex}}
+\index{b\+Core\+Mutex@{b\+Core\+Mutex}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{b\+Core\+Mutex}]{\setlength{\rightskip}{0pt plus 5cm}int b\+Core\+Mutex}\label{struct_sqlite3_config_a9b19cb17e4c7a75ebc366513f84ae3bb}
+
+
+Definition at line 12779 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+config(), sqlite3\+\_\+initialize(), sqlite3\+Btree\+Open(), sqlite3\+Malloc\+Init(), sqlite3\+Mutex\+Alloc(), sqlite3\+Mutex\+Init(), and sqlite3\+Vdbe\+Sorter\+Init().
+
+\hypertarget{struct_sqlite3_config_a13bc99b79aa8349932f788be7415077c}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!b\+Full\+Mutex@{b\+Full\+Mutex}}
+\index{b\+Full\+Mutex@{b\+Full\+Mutex}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{b\+Full\+Mutex}]{\setlength{\rightskip}{0pt plus 5cm}int b\+Full\+Mutex}\label{struct_sqlite3_config_a13bc99b79aa8349932f788be7415077c}
+
+
+Definition at line 12780 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+config().
+
+\hypertarget{struct_sqlite3_config_a148fb0a51b89a6ecacc43a61b445cbe1}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!b\+Localtime\+Fault@{b\+Localtime\+Fault}}
+\index{b\+Localtime\+Fault@{b\+Localtime\+Fault}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{b\+Localtime\+Fault}]{\setlength{\rightskip}{0pt plus 5cm}int b\+Localtime\+Fault}\label{struct_sqlite3_config_a148fb0a51b89a6ecacc43a61b445cbe1}
+
+
+Definition at line 12829 of file sqlite3.\+c.
+
+\hypertarget{struct_sqlite3_config_a8dfc655e09e968f581673d82fce0769a}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!b\+Memstat@{b\+Memstat}}
+\index{b\+Memstat@{b\+Memstat}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{b\+Memstat}]{\setlength{\rightskip}{0pt plus 5cm}int b\+Memstat}\label{struct_sqlite3_config_a8dfc655e09e968f581673d82fce0769a}
+
+
+Definition at line 12778 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+free(), sqlite3\+Malloc(), sqlite3\+Realloc(), sqlite3\+Scratch\+Free(), and sqlite3\+Scratch\+Malloc().
+
+\hypertarget{struct_sqlite3_config_ad7b7a342d22db7302e7c2891d9ada29c}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!b\+Open\+Uri@{b\+Open\+Uri}}
+\index{b\+Open\+Uri@{b\+Open\+Uri}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{b\+Open\+Uri}]{\setlength{\rightskip}{0pt plus 5cm}int b\+Open\+Uri}\label{struct_sqlite3_config_ad7b7a342d22db7302e7c2891d9ada29c}
+
+
+Definition at line 12781 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Parse\+Uri().
+
+\hypertarget{struct_sqlite3_config_a7491b8e0d85db8c5aa3c412487a4f31d}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!b\+Use\+Cis@{b\+Use\+Cis}}
+\index{b\+Use\+Cis@{b\+Use\+Cis}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{b\+Use\+Cis}]{\setlength{\rightskip}{0pt plus 5cm}int b\+Use\+Cis}\label{struct_sqlite3_config_a7491b8e0d85db8c5aa3c412487a4f31d}
+
+
+Definition at line 12782 of file sqlite3.\+c.
+
+\hypertarget{struct_sqlite3_config_adbf46645b827d0c7b368e6b1298a196e}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!in\+Progress@{in\+Progress}}
+\index{in\+Progress@{in\+Progress}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{in\+Progress}]{\setlength{\rightskip}{0pt plus 5cm}int in\+Progress}\label{struct_sqlite3_config_adbf46645b827d0c7b368e6b1298a196e}
+
+
+Definition at line 12807 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+initialize().
+
+\hypertarget{struct_sqlite3_config_a6fbd614062a06fdd84bb4ba9d44c2028}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!is\+Init@{is\+Init}}
+\index{is\+Init@{is\+Init}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{is\+Init}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Init}\label{struct_sqlite3_config_a6fbd614062a06fdd84bb4ba9d44c2028}
+
+
+Definition at line 12806 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+config(), sqlite3\+\_\+initialize(), sqlite3\+\_\+shutdown(), and sqlite3\+\_\+test\+\_\+control().
+
+\hypertarget{struct_sqlite3_config_ab3402c7fd0c57cc1383280eb49ebb159}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!is\+Malloc\+Init@{is\+Malloc\+Init}}
+\index{is\+Malloc\+Init@{is\+Malloc\+Init}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{is\+Malloc\+Init}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Malloc\+Init}\label{struct_sqlite3_config_ab3402c7fd0c57cc1383280eb49ebb159}
+
+
+Definition at line 12809 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+initialize(), and sqlite3\+\_\+shutdown().
+
+\hypertarget{struct_sqlite3_config_a5e1feee8fb346216d60009b8f8706ae9}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!is\+Mutex\+Init@{is\+Mutex\+Init}}
+\index{is\+Mutex\+Init@{is\+Mutex\+Init}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{is\+Mutex\+Init}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Mutex\+Init}\label{struct_sqlite3_config_a5e1feee8fb346216d60009b8f8706ae9}
+
+
+Definition at line 12808 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+initialize(), and sqlite3\+\_\+shutdown().
+
+\hypertarget{struct_sqlite3_config_ae992d949693471b5a7afeac185afd014}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!is\+P\+Cache\+Init@{is\+P\+Cache\+Init}}
+\index{is\+P\+Cache\+Init@{is\+P\+Cache\+Init}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{is\+P\+Cache\+Init}]{\setlength{\rightskip}{0pt plus 5cm}int is\+P\+Cache\+Init}\label{struct_sqlite3_config_ae992d949693471b5a7afeac185afd014}
+
+
+Definition at line 12810 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+initialize(), and sqlite3\+\_\+shutdown().
+
+\hypertarget{struct_sqlite3_config_a1330f8bd731e42003426946f2e7df47f}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!m@{m}}
+\index{m@{m}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{m}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+mem\+\_\+methods} m}\label{struct_sqlite3_config_a1330f8bd731e42003426946f2e7df47f}
+
+
+Definition at line 12787 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+config(), sqlite3\+\_\+db\+\_\+status(), sqlite3\+\_\+free(), sqlite3\+\_\+msize(), sqlite3\+Db\+Malloc\+Size(), sqlite3\+Malloc(), sqlite3\+Malloc\+End(), sqlite3\+Malloc\+Init(), sqlite3\+Malloc\+Size(), sqlite3\+Realloc(), and sqlite3\+Scratch\+Free().
+
+\hypertarget{struct_sqlite3_config_a2dfb8267a9ac25087c2b53d6f3ed937d}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!mn\+Req@{mn\+Req}}
+\index{mn\+Req@{mn\+Req}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{mn\+Req}]{\setlength{\rightskip}{0pt plus 5cm}int mn\+Req}\label{struct_sqlite3_config_a2dfb8267a9ac25087c2b53d6f3ed937d}
+
+
+Definition at line 12792 of file sqlite3.\+c.
+
+\hypertarget{struct_sqlite3_config_a7139046a63b0fa38ee9d2dfa0ced3019}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!mutex@{mutex}}
+\index{mutex@{mutex}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{mutex}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+mutex\+\_\+methods} mutex}\label{struct_sqlite3_config_a7139046a63b0fa38ee9d2dfa0ced3019}
+
+
+Definition at line 12788 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+mutex\+\_\+alloc(), sqlite3\+\_\+mutex\+\_\+enter(), sqlite3\+\_\+mutex\+\_\+free(), sqlite3\+\_\+mutex\+\_\+leave(), sqlite3\+\_\+mutex\+\_\+try(), sqlite3\+Mutex\+Alloc(), sqlite3\+Mutex\+End(), and sqlite3\+Mutex\+Init().
+
+\hypertarget{struct_sqlite3_config_ad96e6aa2ef236c16df4ff57b6c11b2f1}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!mx\+Mmap@{mx\+Mmap}}
+\index{mx\+Mmap@{mx\+Mmap}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{mx\+Mmap}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+int64} mx\+Mmap}\label{struct_sqlite3_config_ad96e6aa2ef236c16df4ff57b6c11b2f1}
+
+
+Definition at line 12794 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+config().
+
+\hypertarget{struct_sqlite3_config_aec08e91dd93acd0b206d1a672ea703f5}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!mx\+Parser\+Stack@{mx\+Parser\+Stack}}
+\index{mx\+Parser\+Stack@{mx\+Parser\+Stack}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{mx\+Parser\+Stack}]{\setlength{\rightskip}{0pt plus 5cm}int mx\+Parser\+Stack}\label{struct_sqlite3_config_aec08e91dd93acd0b206d1a672ea703f5}
+
+
+Definition at line 12801 of file sqlite3.\+c.
+
+\hypertarget{struct_sqlite3_config_ade278f37a74995898e7aeac99d97c9aa}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!mx\+Req@{mx\+Req}}
+\index{mx\+Req@{mx\+Req}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{mx\+Req}]{\setlength{\rightskip}{0pt plus 5cm}int mx\+Req}\label{struct_sqlite3_config_ade278f37a74995898e7aeac99d97c9aa}
+
+
+Definition at line 12792 of file sqlite3.\+c.
+
+\hypertarget{struct_sqlite3_config_a0faee16932dbed888694e892b8230c6d}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!mx\+Strlen@{mx\+Strlen}}
+\index{mx\+Strlen@{mx\+Strlen}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{mx\+Strlen}]{\setlength{\rightskip}{0pt plus 5cm}int mx\+Strlen}\label{struct_sqlite3_config_a0faee16932dbed888694e892b8230c6d}
+
+
+Definition at line 12783 of file sqlite3.\+c.
+
+\hypertarget{struct_sqlite3_config_a05b2ce44944a6e771f6c75bb32db984b}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!never\+Corrupt@{never\+Corrupt}}
+\index{never\+Corrupt@{never\+Corrupt}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{never\+Corrupt}]{\setlength{\rightskip}{0pt plus 5cm}int never\+Corrupt}\label{struct_sqlite3_config_a05b2ce44944a6e771f6c75bb32db984b}
+
+
+Definition at line 12784 of file sqlite3.\+c.
+
+\hypertarget{struct_sqlite3_config_a0ea077b3d2d24303af5a30df4d9d5edf}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!n\+Heap@{n\+Heap}}
+\index{n\+Heap@{n\+Heap}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{n\+Heap}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Heap}\label{struct_sqlite3_config_a0ea077b3d2d24303af5a30df4d9d5edf}
+
+
+Definition at line 12791 of file sqlite3.\+c.
+
+\hypertarget{struct_sqlite3_config_af7546c4257d5b6d4ebcea412f3329067}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!n\+Lookaside@{n\+Lookaside}}
+\index{n\+Lookaside@{n\+Lookaside}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{n\+Lookaside}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Lookaside}\label{struct_sqlite3_config_af7546c4257d5b6d4ebcea412f3329067}
+
+
+Definition at line 12786 of file sqlite3.\+c.
+
+\hypertarget{struct_sqlite3_config_a006467184a1acc90b6f1b18626889e08}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!n\+Page@{n\+Page}}
+\index{n\+Page@{n\+Page}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{n\+Page}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Page}\label{struct_sqlite3_config_a006467184a1acc90b6f1b18626889e08}
+
+
+Definition at line 12800 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+initialize(), and sqlite3\+Malloc\+Init().
+
+\hypertarget{struct_sqlite3_config_a82be072aed4e06af77240a619da95f76}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!n\+Ref\+Init\+Mutex@{n\+Ref\+Init\+Mutex}}
+\index{n\+Ref\+Init\+Mutex@{n\+Ref\+Init\+Mutex}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{n\+Ref\+Init\+Mutex}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Ref\+Init\+Mutex}\label{struct_sqlite3_config_a82be072aed4e06af77240a619da95f76}
+
+
+Definition at line 12811 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+initialize().
+
+\hypertarget{struct_sqlite3_config_a7810b251a0971066e959228e5ec17ba5}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!n\+Scratch@{n\+Scratch}}
+\index{n\+Scratch@{n\+Scratch}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{n\+Scratch}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Scratch}\label{struct_sqlite3_config_a7810b251a0971066e959228e5ec17ba5}
+
+
+Definition at line 12797 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Malloc\+Init().
+
+\hypertarget{struct_sqlite3_config_a78ebacd69f832305f42dec645ba48a2c}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!pcache2@{pcache2}}
+\index{pcache2@{pcache2}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{pcache2}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+pcache\+\_\+methods2} pcache2}\label{struct_sqlite3_config_a78ebacd69f832305f42dec645ba48a2c}
+
+
+Definition at line 12789 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+config(), sqlite3\+Pcache\+Close(), sqlite3\+Pcache\+Drop(), sqlite3\+Pcache\+Fetch(), sqlite3\+Pcache\+Fetch\+Stress(), sqlite3\+Pcache\+Initialize(), sqlite3\+Pcache\+Move(), sqlite3\+Pcache\+Pagecount(), sqlite3\+Pcache\+Set\+Cachesize(), sqlite3\+Pcache\+Set\+Page\+Size(), sqlite3\+Pcache\+Shrink(), sqlite3\+Pcache\+Shutdown(), and sqlite3\+Pcache\+Truncate().
+
+\hypertarget{struct_sqlite3_config_a5d36d9050528de8c61e7be52131215e6}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!p\+Heap@{p\+Heap}}
+\index{p\+Heap@{p\+Heap}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{p\+Heap}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ p\+Heap}\label{struct_sqlite3_config_a5d36d9050528de8c61e7be52131215e6}
+
+
+Definition at line 12790 of file sqlite3.\+c.
+
+\hypertarget{struct_sqlite3_config_a2739bff623111fe6e200c987e10378c9}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!p\+Init\+Mutex@{p\+Init\+Mutex}}
+\index{p\+Init\+Mutex@{p\+Init\+Mutex}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{p\+Init\+Mutex}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+mutex}$\ast$ p\+Init\+Mutex}\label{struct_sqlite3_config_a2739bff623111fe6e200c987e10378c9}
+
+
+Definition at line 12812 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+initialize().
+
+\hypertarget{struct_sqlite3_config_ad86c50ffe8e4c213307b5f89c582d743}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!p\+Log\+Arg@{p\+Log\+Arg}}
+\index{p\+Log\+Arg@{p\+Log\+Arg}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{p\+Log\+Arg}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ p\+Log\+Arg}\label{struct_sqlite3_config_ad86c50ffe8e4c213307b5f89c582d743}
+
+
+Definition at line 12814 of file sqlite3.\+c.
+
+\hypertarget{struct_sqlite3_config_a192685931829ee40cbef934bf644c7ce}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!p\+Page@{p\+Page}}
+\index{p\+Page@{p\+Page}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{p\+Page}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ p\+Page}\label{struct_sqlite3_config_a192685931829ee40cbef934bf644c7ce}
+
+
+Definition at line 12798 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+initialize(), and sqlite3\+Malloc\+Init().
+
+\hypertarget{struct_sqlite3_config_a5816c3e492705243db472d471eedf71c}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!p\+Scratch@{p\+Scratch}}
+\index{p\+Scratch@{p\+Scratch}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{p\+Scratch}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ p\+Scratch}\label{struct_sqlite3_config_a5816c3e492705243db472d471eedf71c}
+
+
+Definition at line 12795 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Malloc\+Init(), sqlite3\+Scratch\+Free(), and sqlite3\+Vdbe\+Sorter\+Init().
+
+\hypertarget{struct_sqlite3_config_a5c1b69700e52ef116cbc6fdde53ef47d}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!shared\+Cache\+Enabled@{shared\+Cache\+Enabled}}
+\index{shared\+Cache\+Enabled@{shared\+Cache\+Enabled}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{shared\+Cache\+Enabled}]{\setlength{\rightskip}{0pt plus 5cm}int shared\+Cache\+Enabled}\label{struct_sqlite3_config_a5c1b69700e52ef116cbc6fdde53ef47d}
+
+
+Definition at line 12802 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+enable\+\_\+shared\+\_\+cache().
+
+\hypertarget{struct_sqlite3_config_a60ef70cefa59c42de0133555420243a0}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!sz\+Lookaside@{sz\+Lookaside}}
+\index{sz\+Lookaside@{sz\+Lookaside}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{sz\+Lookaside}]{\setlength{\rightskip}{0pt plus 5cm}int sz\+Lookaside}\label{struct_sqlite3_config_a60ef70cefa59c42de0133555420243a0}
+
+
+Definition at line 12785 of file sqlite3.\+c.
+
+\hypertarget{struct_sqlite3_config_a16be0b65471da845d6b829adf5f17957}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!sz\+Mmap@{sz\+Mmap}}
+\index{sz\+Mmap@{sz\+Mmap}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{sz\+Mmap}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+int64} sz\+Mmap}\label{struct_sqlite3_config_a16be0b65471da845d6b829adf5f17957}
+
+
+Definition at line 12793 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+config(), and sqlite3\+Pragma().
+
+\hypertarget{struct_sqlite3_config_a0ead96b04a1cc6dc6ec781782e82d052}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!sz\+Page@{sz\+Page}}
+\index{sz\+Page@{sz\+Page}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{sz\+Page}]{\setlength{\rightskip}{0pt plus 5cm}int sz\+Page}\label{struct_sqlite3_config_a0ead96b04a1cc6dc6ec781782e82d052}
+
+
+Definition at line 12799 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+initialize(), and sqlite3\+Malloc\+Init().
+
+\hypertarget{struct_sqlite3_config_a0f0553f38ecaca298abe54686a1c4bcb}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!sz\+Pma@{sz\+Pma}}
+\index{sz\+Pma@{sz\+Pma}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{sz\+Pma}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} sz\+Pma}\label{struct_sqlite3_config_a0f0553f38ecaca298abe54686a1c4bcb}
+
+
+Definition at line 12803 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Sorter\+Init().
+
+\hypertarget{struct_sqlite3_config_a27161f3af9d9fa4dc7c97ce5fbc5704e}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!sz\+Scratch@{sz\+Scratch}}
+\index{sz\+Scratch@{sz\+Scratch}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{sz\+Scratch}]{\setlength{\rightskip}{0pt plus 5cm}int sz\+Scratch}\label{struct_sqlite3_config_a27161f3af9d9fa4dc7c97ce5fbc5704e}
+
+
+Definition at line 12796 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Malloc\+Init(), and sqlite3\+Scratch\+Malloc().
+
+\hypertarget{struct_sqlite3_config_a7a8507f3e16dc355181b5f226ec31d19}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!x\+Log@{x\+Log}}
+\index{x\+Log@{x\+Log}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{x\+Log}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ x\+Log) (void $\ast$, int, const char $\ast$)}\label{struct_sqlite3_config_a7a8507f3e16dc355181b5f226ec31d19}
+
+
+Definition at line 12813 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+log().
+
+\hypertarget{struct_sqlite3_config_ad7abf49f736329ee72d954343b39a706}{}\index{Sqlite3\+Config@{Sqlite3\+Config}!x\+Test\+Callback@{x\+Test\+Callback}}
+\index{x\+Test\+Callback@{x\+Test\+Callback}!Sqlite3\+Config@{Sqlite3\+Config}}
+\subsubsection[{x\+Test\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ x\+Test\+Callback) (int)}\label{struct_sqlite3_config_ad7abf49f736329ee72d954343b39a706}
+
+
+Definition at line 12827 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Fault\+Sim().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

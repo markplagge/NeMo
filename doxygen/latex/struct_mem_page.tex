@@ -1,0 +1,292 @@
+\hypertarget{struct_mem_page}{}\section{Mem\+Page Struct Reference}
+\label{struct_mem_page}\index{Mem\+Page@{Mem\+Page}}
+
+
+Collaboration diagram for Mem\+Page\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_mem_page_a7318e02c1fe25199c0198f703c630337}{is\+Init}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_mem_page_a178fc8eac371aba46bbdb4042d2b6040}{n\+Overflow}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_mem_page_a0a18797b49604a12c9423fcd16a8a03c}{int\+Key}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_mem_page_a4890917911842a160e87e23a59bb99c9}{int\+Key\+Leaf}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_mem_page_a4453f74c1cd8ac8c8312c04ddb840094}{no\+Payload}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_mem_page_a72158adbdb111e2d20c18fdbe71fbd28}{leaf}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_mem_page_a41b31a2714c96b8661dd7d3beb33e502}{hdr\+Offset}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_mem_page_aaa3442066b65e5022cc4aeb3e03e62ea}{child\+Ptr\+Size}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_mem_page_ae108776c319d9bbb89d5f8ededa5635b}{max1byte\+Payload}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_mem_page_a8eaec6ef6a9a6fbeb51396cae4427567}{b\+Busy}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_mem_page_ae520370dc0940464a186684b0a9b5113}{max\+Local}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_mem_page_acae49d06fe5c209d808832232cee4a00}{min\+Local}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_mem_page_adda6243a1481abb2611fdf378cccb161}{cell\+Offset}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_mem_page_a8b19fe94efd4afc543f05f4e58603bcb}{n\+Free}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_mem_page_af6e66bd78bd9dfd8b79478b8aa086f09}{n\+Cell}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_mem_page_ae5f02929a64d10719bd0186687524afd}{mask\+Page}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_mem_page_a387d18f12379bccb6e2d1b9842a5c3ff}{ai\+Ovfl} \mbox{[}5\mbox{]}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} $\ast$ \hyperlink{struct_mem_page_a1a39c11853c230782c10dc115064a62a}{ap\+Ovfl} \mbox{[}5\mbox{]}
+\item 
+\hyperlink{struct_bt_shared}{Bt\+Shared} $\ast$ \hyperlink{struct_mem_page_a2bc66d19c064bb25ff335241f8c621df}{p\+Bt}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} $\ast$ \hyperlink{struct_mem_page_a13132202291db0dcb602d32de00dd312}{a\+Data}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} $\ast$ \hyperlink{struct_mem_page_a1967815674f08d2a4d3555c654aeafb4}{a\+Data\+End}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} $\ast$ \hyperlink{struct_mem_page_a8f99cccf1b4bf600f3d429e9ea967dc9}{a\+Cell\+Idx}
+\item 
+Db\+Page $\ast$ \hyperlink{struct_mem_page_aa1db4f5467c8257caf8afe796f799c98}{p\+Db\+Page}
+\item 
+\hyperlink{sqlite3_8c_aec0c653e8dd16e4639caf2f8ea54f55c}{Pgno} \hyperlink{struct_mem_page_a77cf3333a46c0b2e6d1614dce1a6405a}{pgno}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 52385 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_mem_page_a8f99cccf1b4bf600f3d429e9ea967dc9}{}\index{Mem\+Page@{Mem\+Page}!a\+Cell\+Idx@{a\+Cell\+Idx}}
+\index{a\+Cell\+Idx@{a\+Cell\+Idx}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{a\+Cell\+Idx}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8}$\ast$ a\+Cell\+Idx}\label{struct_mem_page_a8f99cccf1b4bf600f3d429e9ea967dc9}
+
+
+Definition at line 52408 of file sqlite3.\+c.
+
+\hypertarget{struct_mem_page_a13132202291db0dcb602d32de00dd312}{}\index{Mem\+Page@{Mem\+Page}!a\+Data@{a\+Data}}
+\index{a\+Data@{a\+Data}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{a\+Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8}$\ast$ a\+Data}\label{struct_mem_page_a13132202291db0dcb602d32de00dd312}
+
+
+Definition at line 52406 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Begin\+Trans(), sqlite3\+Btree\+Count(), sqlite3\+Btree\+Get\+Meta(), sqlite3\+Btree\+Incr\+Vacuum(), sqlite3\+Btree\+Integrity\+Check(), sqlite3\+Btree\+Moveto\+Unpacked(), sqlite3\+Btree\+Rollback(), sqlite3\+Btree\+Savepoint(), sqlite3\+Btree\+Set\+Version(), and sqlite3\+Btree\+Update\+Meta().
+
+\hypertarget{struct_mem_page_a1967815674f08d2a4d3555c654aeafb4}{}\index{Mem\+Page@{Mem\+Page}!a\+Data\+End@{a\+Data\+End}}
+\index{a\+Data\+End@{a\+Data\+End}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{a\+Data\+End}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8}$\ast$ a\+Data\+End}\label{struct_mem_page_a1967815674f08d2a4d3555c654aeafb4}
+
+
+Definition at line 52407 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Moveto\+Unpacked().
+
+\hypertarget{struct_mem_page_a387d18f12379bccb6e2d1b9842a5c3ff}{}\index{Mem\+Page@{Mem\+Page}!ai\+Ovfl@{ai\+Ovfl}}
+\index{ai\+Ovfl@{ai\+Ovfl}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{ai\+Ovfl}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} ai\+Ovfl\mbox{[}5\mbox{]}}\label{struct_mem_page_a387d18f12379bccb6e2d1b9842a5c3ff}
+
+
+Definition at line 52402 of file sqlite3.\+c.
+
+\hypertarget{struct_mem_page_a1a39c11853c230782c10dc115064a62a}{}\index{Mem\+Page@{Mem\+Page}!ap\+Ovfl@{ap\+Ovfl}}
+\index{ap\+Ovfl@{ap\+Ovfl}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{ap\+Ovfl}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8}$\ast$ ap\+Ovfl\mbox{[}5\mbox{]}}\label{struct_mem_page_a1a39c11853c230782c10dc115064a62a}
+
+
+Definition at line 52404 of file sqlite3.\+c.
+
+\hypertarget{struct_mem_page_a8eaec6ef6a9a6fbeb51396cae4427567}{}\index{Mem\+Page@{Mem\+Page}!b\+Busy@{b\+Busy}}
+\index{b\+Busy@{b\+Busy}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{b\+Busy}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} b\+Busy}\label{struct_mem_page_a8eaec6ef6a9a6fbeb51396cae4427567}
+
+
+Definition at line 52395 of file sqlite3.\+c.
+
+\hypertarget{struct_mem_page_adda6243a1481abb2611fdf378cccb161}{}\index{Mem\+Page@{Mem\+Page}!cell\+Offset@{cell\+Offset}}
+\index{cell\+Offset@{cell\+Offset}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{cell\+Offset}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} cell\+Offset}\label{struct_mem_page_adda6243a1481abb2611fdf378cccb161}
+
+
+Definition at line 52398 of file sqlite3.\+c.
+
+\hypertarget{struct_mem_page_aaa3442066b65e5022cc4aeb3e03e62ea}{}\index{Mem\+Page@{Mem\+Page}!child\+Ptr\+Size@{child\+Ptr\+Size}}
+\index{child\+Ptr\+Size@{child\+Ptr\+Size}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{child\+Ptr\+Size}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} child\+Ptr\+Size}\label{struct_mem_page_aaa3442066b65e5022cc4aeb3e03e62ea}
+
+
+Definition at line 52393 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Moveto\+Unpacked().
+
+\hypertarget{struct_mem_page_a41b31a2714c96b8661dd7d3beb33e502}{}\index{Mem\+Page@{Mem\+Page}!hdr\+Offset@{hdr\+Offset}}
+\index{hdr\+Offset@{hdr\+Offset}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{hdr\+Offset}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} hdr\+Offset}\label{struct_mem_page_a41b31a2714c96b8661dd7d3beb33e502}
+
+
+Definition at line 52392 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Count(), and sqlite3\+Btree\+Moveto\+Unpacked().
+
+\hypertarget{struct_mem_page_a0a18797b49604a12c9423fcd16a8a03c}{}\index{Mem\+Page@{Mem\+Page}!int\+Key@{int\+Key}}
+\index{int\+Key@{int\+Key}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{int\+Key}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} int\+Key}\label{struct_mem_page_a0a18797b49604a12c9423fcd16a8a03c}
+
+
+Definition at line 52388 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Count(), and sqlite3\+Btree\+Moveto\+Unpacked().
+
+\hypertarget{struct_mem_page_a4890917911842a160e87e23a59bb99c9}{}\index{Mem\+Page@{Mem\+Page}!int\+Key\+Leaf@{int\+Key\+Leaf}}
+\index{int\+Key\+Leaf@{int\+Key\+Leaf}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{int\+Key\+Leaf}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} int\+Key\+Leaf}\label{struct_mem_page_a4890917911842a160e87e23a59bb99c9}
+
+
+Definition at line 52389 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Moveto\+Unpacked().
+
+\hypertarget{struct_mem_page_a7318e02c1fe25199c0198f703c630337}{}\index{Mem\+Page@{Mem\+Page}!is\+Init@{is\+Init}}
+\index{is\+Init@{is\+Init}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{is\+Init}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} is\+Init}\label{struct_mem_page_a7318e02c1fe25199c0198f703c630337}
+
+
+Definition at line 52386 of file sqlite3.\+c.
+
+\hypertarget{struct_mem_page_a72158adbdb111e2d20c18fdbe71fbd28}{}\index{Mem\+Page@{Mem\+Page}!leaf@{leaf}}
+\index{leaf@{leaf}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{leaf}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} leaf}\label{struct_mem_page_a72158adbdb111e2d20c18fdbe71fbd28}
+
+
+Definition at line 52391 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Count(), sqlite3\+Btree\+Delete(), sqlite3\+Btree\+Insert(), sqlite3\+Btree\+Moveto\+Unpacked(), sqlite3\+Btree\+Next(), and sqlite3\+Btree\+Previous().
+
+\hypertarget{struct_mem_page_ae5f02929a64d10719bd0186687524afd}{}\index{Mem\+Page@{Mem\+Page}!mask\+Page@{mask\+Page}}
+\index{mask\+Page@{mask\+Page}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{mask\+Page}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} mask\+Page}\label{struct_mem_page_ae5f02929a64d10719bd0186687524afd}
+
+
+Definition at line 52401 of file sqlite3.\+c.
+
+\hypertarget{struct_mem_page_ae108776c319d9bbb89d5f8ededa5635b}{}\index{Mem\+Page@{Mem\+Page}!max1byte\+Payload@{max1byte\+Payload}}
+\index{max1byte\+Payload@{max1byte\+Payload}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{max1byte\+Payload}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} max1byte\+Payload}\label{struct_mem_page_ae108776c319d9bbb89d5f8ededa5635b}
+
+
+Definition at line 52394 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Moveto\+Unpacked().
+
+\hypertarget{struct_mem_page_ae520370dc0940464a186684b0a9b5113}{}\index{Mem\+Page@{Mem\+Page}!max\+Local@{max\+Local}}
+\index{max\+Local@{max\+Local}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{max\+Local}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} max\+Local}\label{struct_mem_page_ae520370dc0940464a186684b0a9b5113}
+
+
+Definition at line 52396 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Moveto\+Unpacked().
+
+\hypertarget{struct_mem_page_acae49d06fe5c209d808832232cee4a00}{}\index{Mem\+Page@{Mem\+Page}!min\+Local@{min\+Local}}
+\index{min\+Local@{min\+Local}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{min\+Local}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} min\+Local}\label{struct_mem_page_acae49d06fe5c209d808832232cee4a00}
+
+
+Definition at line 52397 of file sqlite3.\+c.
+
+\hypertarget{struct_mem_page_af6e66bd78bd9dfd8b79478b8aa086f09}{}\index{Mem\+Page@{Mem\+Page}!n\+Cell@{n\+Cell}}
+\index{n\+Cell@{n\+Cell}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{n\+Cell}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} n\+Cell}\label{struct_mem_page_af6e66bd78bd9dfd8b79478b8aa086f09}
+
+
+Definition at line 52400 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Count(), sqlite3\+Btree\+Delete(), sqlite3\+Btree\+Insert(), sqlite3\+Btree\+Moveto\+Unpacked(), and sqlite3\+Btree\+Next().
+
+\hypertarget{struct_mem_page_a8b19fe94efd4afc543f05f4e58603bcb}{}\index{Mem\+Page@{Mem\+Page}!n\+Free@{n\+Free}}
+\index{n\+Free@{n\+Free}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{n\+Free}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} n\+Free}\label{struct_mem_page_a8b19fe94efd4afc543f05f4e58603bcb}
+
+
+Definition at line 52399 of file sqlite3.\+c.
+
+\hypertarget{struct_mem_page_a4453f74c1cd8ac8c8312c04ddb840094}{}\index{Mem\+Page@{Mem\+Page}!no\+Payload@{no\+Payload}}
+\index{no\+Payload@{no\+Payload}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{no\+Payload}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} no\+Payload}\label{struct_mem_page_a4453f74c1cd8ac8c8312c04ddb840094}
+
+
+Definition at line 52390 of file sqlite3.\+c.
+
+\hypertarget{struct_mem_page_a178fc8eac371aba46bbdb4042d2b6040}{}\index{Mem\+Page@{Mem\+Page}!n\+Overflow@{n\+Overflow}}
+\index{n\+Overflow@{n\+Overflow}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{n\+Overflow}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} n\+Overflow}\label{struct_mem_page_a178fc8eac371aba46bbdb4042d2b6040}
+
+
+Definition at line 52387 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Insert().
+
+\hypertarget{struct_mem_page_a2bc66d19c064bb25ff335241f8c621df}{}\index{Mem\+Page@{Mem\+Page}!p\+Bt@{p\+Bt}}
+\index{p\+Bt@{p\+Bt}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{p\+Bt}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bt\+Shared}$\ast$ p\+Bt}\label{struct_mem_page_a2bc66d19c064bb25ff335241f8c621df}
+
+
+Definition at line 52405 of file sqlite3.\+c.
+
+\hypertarget{struct_mem_page_aa1db4f5467c8257caf8afe796f799c98}{}\index{Mem\+Page@{Mem\+Page}!p\+Db\+Page@{p\+Db\+Page}}
+\index{p\+Db\+Page@{p\+Db\+Page}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{p\+Db\+Page}]{\setlength{\rightskip}{0pt plus 5cm}Db\+Page$\ast$ p\+Db\+Page}\label{struct_mem_page_aa1db4f5467c8257caf8afe796f799c98}
+
+
+Definition at line 52409 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Begin\+Trans(), sqlite3\+Btree\+Delete(), sqlite3\+Btree\+Incr\+Vacuum(), sqlite3\+Btree\+Insert(), sqlite3\+Btree\+Set\+Version(), and sqlite3\+Btree\+Update\+Meta().
+
+\hypertarget{struct_mem_page_a77cf3333a46c0b2e6d1614dce1a6405a}{}\index{Mem\+Page@{Mem\+Page}!pgno@{pgno}}
+\index{pgno@{pgno}!Mem\+Page@{Mem\+Page}}
+\subsubsection[{pgno}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pgno} pgno}\label{struct_mem_page_a77cf3333a46c0b2e6d1614dce1a6405a}
+
+
+Definition at line 52410 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Delete().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

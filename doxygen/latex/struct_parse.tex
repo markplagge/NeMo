@@ -1,0 +1,947 @@
+\hypertarget{struct_parse}{}\section{Parse Struct Reference}
+\label{struct_parse}\index{Parse@{Parse}}
+
+
+Collaboration diagram for Parse\+:
+% FIG 0
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_parse_1_1y_col_cache}{y\+Col\+Cache}
+\end{DoxyCompactItemize}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structsqlite3}{sqlite3} $\ast$ \hyperlink{struct_parse_ad6e663497d2c934364b3bcf07496b30b}{db}
+\item 
+char $\ast$ \hyperlink{struct_parse_a6fcf95fd4e53f09793171bd5b704ac9a}{z\+Err\+Msg}
+\item 
+\hyperlink{struct_vdbe}{Vdbe} $\ast$ \hyperlink{struct_parse_ac73302f0c912cb7b3c9b1cea509e6077}{p\+Vdbe}
+\item 
+int \hyperlink{struct_parse_ac6509c6fe4cbf7bde170597172f8a288}{rc}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_parse_a12d1772418cdeef91cea6350395f21e5}{col\+Names\+Set}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_parse_ab88e9b991c31238e6c7af0564bb247dd}{check\+Schema}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_parse_a64c4a569459a2f34e4a43d42d7a2394c}{nested}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_parse_a41f182977278836caadbc1a77ee4a7fc}{n\+Temp\+Reg}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_parse_af41df25710d2a2fab855aff36da94eab}{is\+Multi\+Write}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_parse_a4ebd564464352b98cd6d48895c32a25c}{may\+Abort}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_parse_ab0fc7b7138dbafcc6c38a0676d12109f}{has\+Compound}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_parse_ac2d1b74cf6f7d0a3b0036997b6cb1051}{ok\+Const\+Factor}
+\item 
+int \hyperlink{struct_parse_a6876558d9922578aecf96e36ce54e8f3}{a\+Temp\+Reg} \mbox{[}8\mbox{]}
+\item 
+int \hyperlink{struct_parse_a01a7e2c048df6599804b75acab426ef0}{n\+Range\+Reg}
+\item 
+int \hyperlink{struct_parse_ac5a9ccf4d81b2a452e159a9753d8385d}{i\+Range\+Reg}
+\item 
+int \hyperlink{struct_parse_a60ebed73c4dbe105fdc4be21a01fd09c}{n\+Err}
+\item 
+int \hyperlink{struct_parse_ad80776c870a2ec9334ba0d32de602aa4}{n\+Tab}
+\item 
+int \hyperlink{struct_parse_a857d199d972b4d3864ce420c143508e4}{n\+Mem}
+\item 
+int \hyperlink{struct_parse_a46b5e828fc2b936c5f110ed39acbab4c}{n\+Set}
+\item 
+int \hyperlink{struct_parse_a8b26e5a5e9547ab221d19c9e5c56f174}{n\+Once}
+\item 
+int \hyperlink{struct_parse_aefbb8e03fd662e3f265fd1500454c7b0}{n\+Op\+Alloc}
+\item 
+int \hyperlink{struct_parse_af657414acf52d6c2f3b80cecb27a7039}{i\+Fixed\+Op}
+\item 
+int \hyperlink{struct_parse_a199c7e2d7e263358656b2cbea891ed79}{ck\+Base}
+\item 
+int \hyperlink{struct_parse_afa0328857cc33ca8154f18fdcabe1493}{i\+Part\+Idx\+Tab}
+\item 
+int \hyperlink{struct_parse_a267ccb9cdda746f8e4ac595057806893}{i\+Cache\+Level}
+\item 
+int \hyperlink{struct_parse_a0336978d6835b35b995c8e5d9420617a}{i\+Cache\+Cnt}
+\item 
+int \hyperlink{struct_parse_af5a14ba3fa9c2cb9827402a81a53a986}{n\+Label}
+\item 
+int $\ast$ \hyperlink{struct_parse_a5ba7d7db3dd21c05465292dbc43abf68}{a\+Label}
+\item 
+struct \hyperlink{struct_parse_1_1y_col_cache}{Parse\+::y\+Col\+Cache} \hyperlink{struct_parse_ad38afd0aaa16c8a42be41d57b244c755}{a\+Col\+Cache} \mbox{[}\hyperlink{sqlite3_8c_a93bdf7a445214ebff384cce4c990a078}{S\+Q\+L\+I\+T\+E\+\_\+\+N\+\_\+\+C\+O\+L\+C\+A\+C\+H\+E}\mbox{]}
+\item 
+\hyperlink{struct_expr_list}{Expr\+List} $\ast$ \hyperlink{struct_parse_a15a4706ea881fbe875ab67f3ebd5f952}{p\+Const\+Expr}
+\item 
+\hyperlink{struct_token}{Token} \hyperlink{struct_parse_ae7b8e7eeb5898d90d0b59cd04c9302ab}{constraint\+Name}
+\item 
+\hyperlink{sqlite3_8c_aa9f65e0e36379aa834aac7932ba91bc3}{y\+Db\+Mask} \hyperlink{struct_parse_a034fad25a08bebdfcb10fd5ef97010a9}{write\+Mask}
+\item 
+\hyperlink{sqlite3_8c_aa9f65e0e36379aa834aac7932ba91bc3}{y\+Db\+Mask} \hyperlink{struct_parse_a83a8d0c8ab1f8283a1023308a2b63e36}{cookie\+Mask}
+\item 
+int \hyperlink{struct_parse_a74ad814028af05ec5642589b5fffcc35}{cookie\+Value} \mbox{[}\hyperlink{sqlite3_8c_ac6ac68ce9bff1bc9d8018890df9f45c4}{S\+Q\+L\+I\+T\+E\+\_\+\+M\+A\+X\+\_\+\+A\+T\+T\+A\+C\+H\+E\+D}+2\mbox{]}
+\item 
+int \hyperlink{struct_parse_afcd981375c0bf35857b02dd8b6eb404c}{reg\+Rowid}
+\item 
+int \hyperlink{struct_parse_a4c486443f1dec8ebc5ed3d7bebd5ab3f}{reg\+Root}
+\item 
+int \hyperlink{struct_parse_a6ccdb6f869078cb97158ed463cdfe3e8}{n\+Max\+Arg}
+\item 
+int \hyperlink{struct_parse_a089d91549eb1eb389c4a660bb3e8a6c0}{n\+Table\+Lock}
+\item 
+\hyperlink{struct_table_lock}{Table\+Lock} $\ast$ \hyperlink{struct_parse_a2a8278088c2da698f2cbd33fa56a5834}{a\+Table\+Lock}
+\item 
+\hyperlink{struct_autoinc_info}{Autoinc\+Info} $\ast$ \hyperlink{struct_parse_af29cefdbafae7365c8fc16b81766a646}{p\+Ainc}
+\item 
+\hyperlink{struct_parse}{Parse} $\ast$ \hyperlink{struct_parse_adb730f8e7fa964ef4dd94d64eaed12b6}{p\+Toplevel}
+\item 
+\hyperlink{struct_table}{Table} $\ast$ \hyperlink{struct_parse_aef9d50c97b68250054207a21b19c6543}{p\+Trigger\+Tab}
+\item 
+int \hyperlink{struct_parse_af5f471745ae69852db1968e036d15e30}{addr\+Cr\+Tab}
+\item 
+int \hyperlink{struct_parse_a5e0fd8725f252f5ecaceeb20a054c566}{addr\+Skip\+P\+K}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_parse_ad94b55c666d5c00f9be8f0245af57bad}{n\+Query\+Loop}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_parse_a5570817d80b8691fbc101651329665c2}{oldmask}
+\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_parse_aa36ace4eeccdcabc2a3295de12277fb9}{newmask}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_parse_a9c29be1e83ed4451bfec886577d22b5b}{e\+Trigger\+Op}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_parse_a08f37932fed75dc4be553b8db2378db5}{e\+Orconf}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_parse_ae3495fc2dbc5996dd427e9244b1cf8e6}{disable\+Triggers}
+\item 
+int \hyperlink{struct_parse_a4daa0b7f57ad0254db068b40eaa0d8b9}{n\+Var}
+\item 
+int \hyperlink{struct_parse_aeb9c5f4bed2bb8dfd350896fe67e9312}{nz\+Var}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_parse_a3813b936696feff0b9e68c70c22fc0ea}{i\+Pk\+Sort\+Order}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_parse_a8f3eca69a1045d4da99782215c858394}{b\+Free\+With}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_parse_a2b62234e0234e2065724146f00c574cd}{explain}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_parse_ac0510fd1157fb5ff185aa29a41c13e80}{declare\+Vtab}
+\item 
+int \hyperlink{struct_parse_ac2e869640141f1ea530ea807d40a0a8f}{n\+Vtab\+Lock}
+\item 
+int \hyperlink{struct_parse_acec6917b7abc43bce31bbdc924c37872}{n\+Alias}
+\item 
+int \hyperlink{struct_parse_a17d981419afeee27eb36a8b43183e49a}{n\+Height}
+\item 
+int \hyperlink{struct_parse_a859d1cc55df407e1fb09827e8feed3af}{i\+Select\+Id}
+\item 
+int \hyperlink{struct_parse_a3be2f867adaaf8dbbd088858f4eeca69}{i\+Next\+Select\+Id}
+\item 
+char $\ast$$\ast$ \hyperlink{struct_parse_a61698685ffc73e64afd9ed436a5a101a}{az\+Var}
+\item 
+\hyperlink{struct_vdbe}{Vdbe} $\ast$ \hyperlink{struct_parse_a0eb9386bc6675b699f91ebe6ba1ee13e}{p\+Reprepare}
+\item 
+const char $\ast$ \hyperlink{struct_parse_a348e455e10b33438eb61659f0364d546}{z\+Tail}
+\item 
+\hyperlink{struct_table}{Table} $\ast$ \hyperlink{struct_parse_ae0a32c951e7d0c8ae0f96529a5dba80f}{p\+New\+Table}
+\item 
+\hyperlink{struct_trigger}{Trigger} $\ast$ \hyperlink{struct_parse_a5c343988d894c6f7b44b19d76cdd72d4}{p\+New\+Trigger}
+\item 
+const char $\ast$ \hyperlink{struct_parse_a7daea745aae6a12901c52fd4f28608dc}{z\+Auth\+Context}
+\item 
+\hyperlink{struct_token}{Token} \hyperlink{struct_parse_ad1e8faf5ff45a16dd39d4b93503e1186}{s\+Name\+Token}
+\item 
+\hyperlink{struct_token}{Token} \hyperlink{struct_parse_ad72a7eb7cdb0855411e66aac2daddee6}{s\+Last\+Token}
+\item 
+\hyperlink{struct_token}{Token} \hyperlink{struct_parse_a34c336844414b2c1bedbd11eac1f3567}{s\+Arg}
+\item 
+\hyperlink{struct_table}{Table} $\ast$$\ast$ \hyperlink{struct_parse_ab7345e654d91517cb318cce751069b27}{ap\+Vtab\+Lock}
+\item 
+\hyperlink{struct_table}{Table} $\ast$ \hyperlink{struct_parse_a47daa61bd1c950512bbd9d55da0dc59b}{p\+Zombie\+Tab}
+\item 
+\hyperlink{struct_trigger_prg}{Trigger\+Prg} $\ast$ \hyperlink{struct_parse_ae2902e8934695ce83b045eb613e58ea6}{p\+Trigger\+Prg}
+\item 
+\hyperlink{struct_with}{With} $\ast$ \hyperlink{struct_parse_a49014e0850234bf861fd5de6ea610b7e}{p\+With}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 12499 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_parse_ad38afd0aaa16c8a42be41d57b244c755}{}\index{Parse@{Parse}!a\+Col\+Cache@{a\+Col\+Cache}}
+\index{a\+Col\+Cache@{a\+Col\+Cache}!Parse@{Parse}}
+\subsubsection[{a\+Col\+Cache}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Parse\+::y\+Col\+Cache}  a\+Col\+Cache\mbox{[}{\bf S\+Q\+L\+I\+T\+E\+\_\+\+N\+\_\+\+C\+O\+L\+C\+A\+C\+H\+E}\mbox{]}}\label{struct_parse_ad38afd0aaa16c8a42be41d57b244c755}
+\hypertarget{struct_parse_af5f471745ae69852db1968e036d15e30}{}\index{Parse@{Parse}!addr\+Cr\+Tab@{addr\+Cr\+Tab}}
+\index{addr\+Cr\+Tab@{addr\+Cr\+Tab}!Parse@{Parse}}
+\subsubsection[{addr\+Cr\+Tab}]{\setlength{\rightskip}{0pt plus 5cm}int addr\+Cr\+Tab}\label{struct_parse_af5f471745ae69852db1968e036d15e30}
+
+
+Definition at line 12557 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Start\+Table().
+
+\hypertarget{struct_parse_a5e0fd8725f252f5ecaceeb20a054c566}{}\index{Parse@{Parse}!addr\+Skip\+P\+K@{addr\+Skip\+P\+K}}
+\index{addr\+Skip\+P\+K@{addr\+Skip\+P\+K}!Parse@{Parse}}
+\subsubsection[{addr\+Skip\+P\+K}]{\setlength{\rightskip}{0pt plus 5cm}int addr\+Skip\+P\+K}\label{struct_parse_a5e0fd8725f252f5ecaceeb20a054c566}
+
+
+Definition at line 12558 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Add\+Primary\+Key().
+
+\hypertarget{struct_parse_a5ba7d7db3dd21c05465292dbc43abf68}{}\index{Parse@{Parse}!a\+Label@{a\+Label}}
+\index{a\+Label@{a\+Label}!Parse@{Parse}}
+\subsubsection[{a\+Label}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ a\+Label}\label{struct_parse_a5ba7d7db3dd21c05465292dbc43abf68}
+
+
+Definition at line 12527 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Parser\+Reset(), sqlite3\+Vdbe\+Make\+Label(), and sqlite3\+Vdbe\+Resolve\+Label().
+
+\hypertarget{struct_parse_ab7345e654d91517cb318cce751069b27}{}\index{Parse@{Parse}!ap\+Vtab\+Lock@{ap\+Vtab\+Lock}}
+\index{ap\+Vtab\+Lock@{ap\+Vtab\+Lock}!Parse@{Parse}}
+\subsubsection[{ap\+Vtab\+Lock}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Table}$\ast$$\ast$ ap\+Vtab\+Lock}\label{struct_parse_ab7345e654d91517cb318cce751069b27}
+
+
+Definition at line 12598 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Finish\+Coding(), sqlite3\+Run\+Parser(), and sqlite3\+Vtab\+Make\+Writable().
+
+\hypertarget{struct_parse_a2a8278088c2da698f2cbd33fa56a5834}{}\index{Parse@{Parse}!a\+Table\+Lock@{a\+Table\+Lock}}
+\index{a\+Table\+Lock@{a\+Table\+Lock}!Parse@{Parse}}
+\subsubsection[{a\+Table\+Lock}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Table\+Lock}$\ast$ a\+Table\+Lock}\label{struct_parse_a2a8278088c2da698f2cbd33fa56a5834}
+
+
+Definition at line 12550 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Run\+Parser(), and sqlite3\+Table\+Lock().
+
+\hypertarget{struct_parse_a6876558d9922578aecf96e36ce54e8f3}{}\index{Parse@{Parse}!a\+Temp\+Reg@{a\+Temp\+Reg}}
+\index{a\+Temp\+Reg@{a\+Temp\+Reg}!Parse@{Parse}}
+\subsubsection[{a\+Temp\+Reg}]{\setlength{\rightskip}{0pt plus 5cm}int a\+Temp\+Reg\mbox{[}8\mbox{]}}\label{struct_parse_a6876558d9922578aecf96e36ce54e8f3}
+
+
+Definition at line 12512 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Get\+Temp\+Reg(), and sqlite3\+Release\+Temp\+Reg().
+
+\hypertarget{struct_parse_a61698685ffc73e64afd9ed436a5a101a}{}\index{Parse@{Parse}!az\+Var@{az\+Var}}
+\index{az\+Var@{az\+Var}!Parse@{Parse}}
+\subsubsection[{az\+Var}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$$\ast$ az\+Var}\label{struct_parse_a61698685ffc73e64afd9ed436a5a101a}
+
+
+Definition at line 12588 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Expr\+Assign\+Var\+Number(), sqlite3\+Expr\+Code\+Target(), sqlite3\+Run\+Parser(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_parse_a8f3eca69a1045d4da99782215c858394}{}\index{Parse@{Parse}!b\+Free\+With@{b\+Free\+With}}
+\index{b\+Free\+With@{b\+Free\+With}!Parse@{Parse}}
+\subsubsection[{b\+Free\+With}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} b\+Free\+With}\label{struct_parse_a8f3eca69a1045d4da99782215c858394}
+
+
+Definition at line 12576 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Run\+Parser(), and sqlite3\+With\+Push().
+
+\hypertarget{struct_parse_ab88e9b991c31238e6c7af0564bb247dd}{}\index{Parse@{Parse}!check\+Schema@{check\+Schema}}
+\index{check\+Schema@{check\+Schema}!Parse@{Parse}}
+\subsubsection[{check\+Schema}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} check\+Schema}\label{struct_parse_ab88e9b991c31238e6c7af0564bb247dd}
+
+
+Definition at line 12505 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Create\+Index(), sqlite3\+Drop\+Index(), sqlite3\+Drop\+Trigger(), sqlite3\+Insert(), sqlite3\+Locate\+Table(), and sqlite3\+Update().
+
+\hypertarget{struct_parse_a199c7e2d7e263358656b2cbea891ed79}{}\index{Parse@{Parse}!ck\+Base@{ck\+Base}}
+\index{ck\+Base@{ck\+Base}!Parse@{Parse}}
+\subsubsection[{ck\+Base}]{\setlength{\rightskip}{0pt plus 5cm}int ck\+Base}\label{struct_parse_a199c7e2d7e263358656b2cbea891ed79}
+
+
+Definition at line 12522 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Expr\+Code\+Target(), and sqlite3\+Generate\+Constraint\+Checks().
+
+\hypertarget{struct_parse_a12d1772418cdeef91cea6350395f21e5}{}\index{Parse@{Parse}!col\+Names\+Set@{col\+Names\+Set}}
+\index{col\+Names\+Set@{col\+Names\+Set}!Parse@{Parse}}
+\subsubsection[{col\+Names\+Set}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} col\+Names\+Set}\label{struct_parse_a12d1772418cdeef91cea6350395f21e5}
+
+
+Definition at line 12504 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Finish\+Coding().
+
+\hypertarget{struct_parse_ae7b8e7eeb5898d90d0b59cd04c9302ab}{}\index{Parse@{Parse}!constraint\+Name@{constraint\+Name}}
+\index{constraint\+Name@{constraint\+Name}!Parse@{Parse}}
+\subsubsection[{constraint\+Name}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Token} constraint\+Name}\label{struct_parse_ae7b8e7eeb5898d90d0b59cd04c9302ab}
+
+
+Definition at line 12537 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Add\+Check\+Constraint().
+
+\hypertarget{struct_parse_a83a8d0c8ab1f8283a1023308a2b63e36}{}\index{Parse@{Parse}!cookie\+Mask@{cookie\+Mask}}
+\index{cookie\+Mask@{cookie\+Mask}!Parse@{Parse}}
+\subsubsection[{cookie\+Mask}]{\setlength{\rightskip}{0pt plus 5cm}{\bf y\+Db\+Mask} cookie\+Mask}\label{struct_parse_a83a8d0c8ab1f8283a1023308a2b63e36}
+
+
+Definition at line 12539 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Code\+Verify\+Schema(), and sqlite3\+Finish\+Coding().
+
+\hypertarget{struct_parse_a74ad814028af05ec5642589b5fffcc35}{}\index{Parse@{Parse}!cookie\+Value@{cookie\+Value}}
+\index{cookie\+Value@{cookie\+Value}!Parse@{Parse}}
+\subsubsection[{cookie\+Value}]{\setlength{\rightskip}{0pt plus 5cm}int cookie\+Value\mbox{[}{\bf S\+Q\+L\+I\+T\+E\+\_\+\+M\+A\+X\+\_\+\+A\+T\+T\+A\+C\+H\+E\+D}+2\mbox{]}}\label{struct_parse_a74ad814028af05ec5642589b5fffcc35}
+
+
+Definition at line 12540 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Code\+Verify\+Schema(), and sqlite3\+Finish\+Coding().
+
+\hypertarget{struct_parse_ad6e663497d2c934364b3bcf07496b30b}{}\index{Parse@{Parse}!db@{db}}
+\index{db@{db}!Parse@{Parse}}
+\subsubsection[{db}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3}$\ast$ db}\label{struct_parse_ad6e663497d2c934364b3bcf07496b30b}
+
+
+Definition at line 12500 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+blob\+\_\+open(), sqlite3\+\_\+declare\+\_\+vtab(), sqlite3\+Add\+Check\+Constraint(), sqlite3\+Add\+Collate\+Type(), sqlite3\+Add\+Column(), sqlite3\+Add\+Column\+Type(), sqlite3\+Add\+Default\+Value(), sqlite3\+Add\+Primary\+Key(), sqlite3\+Alter\+Begin\+Add\+Column(), sqlite3\+Alter\+Finish\+Add\+Column(), sqlite3\+Alter\+Rename\+Table(), sqlite3\+Analyze(), sqlite3\+Auth\+Check(), sqlite3\+Auth\+Read(), sqlite3\+Auth\+Read\+Col(), sqlite3\+Autoincrement\+Begin(), sqlite3\+Autoincrement\+End(), sqlite3\+Begin\+Transaction(), sqlite3\+Begin\+Trigger(), sqlite3\+Change\+Cookie(), sqlite3\+Check\+Coll\+Seq(), sqlite3\+Check\+Object\+Name(), sqlite3\+Code\+Drop\+Table(), sqlite3\+Code\+Row\+Trigger\+Direct(), sqlite3\+Code\+Subselect(), sqlite3\+Code\+Verify\+Named\+Schema(), sqlite3\+Code\+Verify\+Schema(), sqlite3\+Create\+Foreign\+Key(), sqlite3\+Create\+Index(), sqlite3\+Create\+View(), sqlite3\+Delete\+From(), sqlite3\+Drop\+Index(), sqlite3\+Drop\+Table(), sqlite3\+Drop\+Trigger(), sqlite3\+Drop\+Trigger\+Ptr(), sqlite3\+End\+Table(), sqlite3\+Error\+Msg(), sqlite3\+Expr\+Add\+Collate\+Token(), sqlite3\+Expr\+Assign\+Var\+Number(), sqlite3\+Expr\+Cache\+Store(), sqlite3\+Expr\+Check\+Height(), sqlite3\+Expr\+Code\+At\+Init(), sqlite3\+Expr\+Code\+Target(), sqlite3\+Expr\+Coll\+Seq(), sqlite3\+Expr\+Function(), sqlite3\+Expr\+List\+Append(), sqlite3\+Expr\+List\+Check\+Length(), sqlite3\+Expr\+List\+Set\+Span(), sqlite3\+Find\+In\+Index(), sqlite3\+Finish\+Coding(), sqlite3\+Finish\+Trigger(), sqlite3\+Fix\+Expr(), sqlite3\+Fix\+Init(), sqlite3\+Fk\+Actions(), sqlite3\+Fk\+Check(), sqlite3\+Fk\+Drop\+Table(), sqlite3\+Fk\+Locate\+Index(), sqlite3\+Fk\+Oldmask(), sqlite3\+Fk\+Required(), sqlite3\+Generate\+Constraint\+Checks(), sqlite3\+Get\+Coll\+Seq(), sqlite3\+Get\+Vdbe(), sqlite3\+Insert(), sqlite3\+Is\+Read\+Only(), sqlite3\+Key\+Info\+Of\+Index(), sqlite3\+Locate\+Coll\+Seq(), sqlite3\+Locate\+Table(), sqlite3\+Materialize\+View(), sqlite3\+Nested\+Parse(), sqlite3\+Open\+Table\+And\+Indices(), sqlite3\+Open\+Temp\+Database(), sqlite3\+Parser\+Reset(), sqlite3\+P\+Expr(), sqlite3\+Pragma(), sqlite3\+Read\+Schema(), sqlite3\+Reindex(), sqlite3\+Resolve\+Order\+Group\+By(), sqlite3\+Result\+Set\+Of\+Select(), sqlite3\+Rowid\+Constraint(), sqlite3\+Run\+Parser(), sqlite3\+Savepoint(), sqlite3\+Select(), sqlite3\+Select\+New(), sqlite3\+Select\+Prep(), sqlite3\+Src\+List\+Append\+From\+Term(), sqlite3\+Start\+Table(), sqlite3\+Table\+Lock(), sqlite3\+Trigger\+List(), sqlite3\+Triggers\+Exist(), sqlite3\+Two\+Part\+Name(), sqlite3\+Unique\+Constraint(), sqlite3\+Update(), sqlite3\+Vdbe\+Create(), sqlite3\+View\+Get\+Column\+Names(), sqlite3\+Vtab\+Begin\+Parse(), sqlite3\+Vtab\+Call\+Connect(), sqlite3\+Vtab\+Finish\+Parse(), sqlite3\+Vtab\+Make\+Writable(), sqlite3\+Where\+Begin(), sqlite3\+Where\+End(), and sqlite3\+With\+Add().
+
+\hypertarget{struct_parse_ac0510fd1157fb5ff185aa29a41c13e80}{}\index{Parse@{Parse}!declare\+Vtab@{declare\+Vtab}}
+\index{declare\+Vtab@{declare\+Vtab}!Parse@{Parse}}
+\subsubsection[{declare\+Vtab}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} declare\+Vtab}\label{struct_parse_ac0510fd1157fb5ff185aa29a41c13e80}
+
+
+Definition at line 12579 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+declare\+\_\+vtab().
+
+\hypertarget{struct_parse_ae3495fc2dbc5996dd427e9244b1cf8e6}{}\index{Parse@{Parse}!disable\+Triggers@{disable\+Triggers}}
+\index{disable\+Triggers@{disable\+Triggers}!Parse@{Parse}}
+\subsubsection[{disable\+Triggers}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} disable\+Triggers}\label{struct_parse_ae3495fc2dbc5996dd427e9244b1cf8e6}
+
+
+Definition at line 12564 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Fk\+Check(), sqlite3\+Fk\+Drop\+Table(), sqlite3\+Fk\+Locate\+Index(), and sqlite3\+Trigger\+List().
+
+\hypertarget{struct_parse_a08f37932fed75dc4be553b8db2378db5}{}\index{Parse@{Parse}!e\+Orconf@{e\+Orconf}}
+\index{e\+Orconf@{e\+Orconf}!Parse@{Parse}}
+\subsubsection[{e\+Orconf}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} e\+Orconf}\label{struct_parse_a08f37932fed75dc4be553b8db2378db5}
+
+
+Definition at line 12563 of file sqlite3.\+c.
+
+\hypertarget{struct_parse_a9c29be1e83ed4451bfec886577d22b5b}{}\index{Parse@{Parse}!e\+Trigger\+Op@{e\+Trigger\+Op}}
+\index{e\+Trigger\+Op@{e\+Trigger\+Op}!Parse@{Parse}}
+\subsubsection[{e\+Trigger\+Op}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} e\+Trigger\+Op}\label{struct_parse_a9c29be1e83ed4451bfec886577d22b5b}
+
+
+Definition at line 12562 of file sqlite3.\+c.
+
+\hypertarget{struct_parse_a2b62234e0234e2065724146f00c574cd}{}\index{Parse@{Parse}!explain@{explain}}
+\index{explain@{explain}!Parse@{Parse}}
+\subsubsection[{explain}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} explain}\label{struct_parse_a2b62234e0234e2065724146f00c574cd}
+
+
+Definition at line 12577 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Begin\+Parse(), sqlite3\+Code\+Subselect(), sqlite3\+Open\+Temp\+Database(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_parse_ab0fc7b7138dbafcc6c38a0676d12109f}{}\index{Parse@{Parse}!has\+Compound@{has\+Compound}}
+\index{has\+Compound@{has\+Compound}!Parse@{Parse}}
+\subsubsection[{has\+Compound}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} has\+Compound}\label{struct_parse_ab0fc7b7138dbafcc6c38a0676d12109f}
+
+
+Definition at line 12510 of file sqlite3.\+c.
+
+\hypertarget{struct_parse_a0336978d6835b35b995c8e5d9420617a}{}\index{Parse@{Parse}!i\+Cache\+Cnt@{i\+Cache\+Cnt}}
+\index{i\+Cache\+Cnt@{i\+Cache\+Cnt}!Parse@{Parse}}
+\subsubsection[{i\+Cache\+Cnt}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Cache\+Cnt}\label{struct_parse_a0336978d6835b35b995c8e5d9420617a}
+
+
+Definition at line 12525 of file sqlite3.\+c.
+
+\hypertarget{struct_parse_a267ccb9cdda746f8e4ac595057806893}{}\index{Parse@{Parse}!i\+Cache\+Level@{i\+Cache\+Level}}
+\index{i\+Cache\+Level@{i\+Cache\+Level}!Parse@{Parse}}
+\subsubsection[{i\+Cache\+Level}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Cache\+Level}\label{struct_parse_a267ccb9cdda746f8e4ac595057806893}
+
+
+Definition at line 12524 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Expr\+Cache\+Pop(), and sqlite3\+Expr\+Cache\+Push().
+
+\hypertarget{struct_parse_af657414acf52d6c2f3b80cecb27a7039}{}\index{Parse@{Parse}!i\+Fixed\+Op@{i\+Fixed\+Op}}
+\index{i\+Fixed\+Op@{i\+Fixed\+Op}!Parse@{Parse}}
+\subsubsection[{i\+Fixed\+Op}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Fixed\+Op}\label{struct_parse_af657414acf52d6c2f3b80cecb27a7039}
+
+
+Definition at line 12521 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Delete\+Prior\+Opcode(), sqlite3\+Vdbe\+Jump\+Here(), and sqlite3\+Vdbe\+Resolve\+Label().
+
+\hypertarget{struct_parse_a3be2f867adaaf8dbbd088858f4eeca69}{}\index{Parse@{Parse}!i\+Next\+Select\+Id@{i\+Next\+Select\+Id}}
+\index{i\+Next\+Select\+Id@{i\+Next\+Select\+Id}!Parse@{Parse}}
+\subsubsection[{i\+Next\+Select\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Next\+Select\+Id}\label{struct_parse_a3be2f867adaaf8dbbd088858f4eeca69}
+
+
+Definition at line 12586 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Code\+Subselect(), and sqlite3\+Select().
+
+\hypertarget{struct_parse_afa0328857cc33ca8154f18fdcabe1493}{}\index{Parse@{Parse}!i\+Part\+Idx\+Tab@{i\+Part\+Idx\+Tab}}
+\index{i\+Part\+Idx\+Tab@{i\+Part\+Idx\+Tab}!Parse@{Parse}}
+\subsubsection[{i\+Part\+Idx\+Tab}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Part\+Idx\+Tab}\label{struct_parse_afa0328857cc33ca8154f18fdcabe1493}
+
+
+Definition at line 12523 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Expr\+Code\+Target(), and sqlite3\+Generate\+Index\+Key().
+
+\hypertarget{struct_parse_a3813b936696feff0b9e68c70c22fc0ea}{}\index{Parse@{Parse}!i\+Pk\+Sort\+Order@{i\+Pk\+Sort\+Order}}
+\index{i\+Pk\+Sort\+Order@{i\+Pk\+Sort\+Order}!Parse@{Parse}}
+\subsubsection[{i\+Pk\+Sort\+Order}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} i\+Pk\+Sort\+Order}\label{struct_parse_a3813b936696feff0b9e68c70c22fc0ea}
+
+
+Definition at line 12575 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Add\+Primary\+Key().
+
+\hypertarget{struct_parse_ac5a9ccf4d81b2a452e159a9753d8385d}{}\index{Parse@{Parse}!i\+Range\+Reg@{i\+Range\+Reg}}
+\index{i\+Range\+Reg@{i\+Range\+Reg}!Parse@{Parse}}
+\subsubsection[{i\+Range\+Reg}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Range\+Reg}\label{struct_parse_ac5a9ccf4d81b2a452e159a9753d8385d}
+
+
+Definition at line 12514 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Get\+Temp\+Range(), and sqlite3\+Release\+Temp\+Range().
+
+\hypertarget{struct_parse_a859d1cc55df407e1fb09827e8feed3af}{}\index{Parse@{Parse}!i\+Select\+Id@{i\+Select\+Id}}
+\index{i\+Select\+Id@{i\+Select\+Id}!Parse@{Parse}}
+\subsubsection[{i\+Select\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Select\+Id}\label{struct_parse_a859d1cc55df407e1fb09827e8feed3af}
+
+
+Definition at line 12585 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Code\+Subselect(), and sqlite3\+Select().
+
+\hypertarget{struct_parse_af41df25710d2a2fab855aff36da94eab}{}\index{Parse@{Parse}!is\+Multi\+Write@{is\+Multi\+Write}}
+\index{is\+Multi\+Write@{is\+Multi\+Write}!Parse@{Parse}}
+\subsubsection[{is\+Multi\+Write}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} is\+Multi\+Write}\label{struct_parse_af41df25710d2a2fab855aff36da94eab}
+
+
+Definition at line 12508 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Begin\+Write\+Operation(), sqlite3\+Fk\+Check(), sqlite3\+Multi\+Write(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_parse_a4ebd564464352b98cd6d48895c32a25c}{}\index{Parse@{Parse}!may\+Abort@{may\+Abort}}
+\index{may\+Abort@{may\+Abort}!Parse@{Parse}}
+\subsubsection[{may\+Abort}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} may\+Abort}\label{struct_parse_a4ebd564464352b98cd6d48895c32a25c}
+
+
+Definition at line 12509 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+May\+Abort(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_parse_acec6917b7abc43bce31bbdc924c37872}{}\index{Parse@{Parse}!n\+Alias@{n\+Alias}}
+\index{n\+Alias@{n\+Alias}!Parse@{Parse}}
+\subsubsection[{n\+Alias}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Alias}\label{struct_parse_acec6917b7abc43bce31bbdc924c37872}
+
+
+Definition at line 12582 of file sqlite3.\+c.
+
+\hypertarget{struct_parse_a60ebed73c4dbe105fdc4be21a01fd09c}{}\index{Parse@{Parse}!n\+Err@{n\+Err}}
+\index{n\+Err@{n\+Err}!Parse@{Parse}}
+\subsubsection[{n\+Err}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Err}\label{struct_parse_a60ebed73c4dbe105fdc4be21a01fd09c}
+
+
+Definition at line 12515 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Alter\+Finish\+Add\+Column(), sqlite3\+Create\+Index(), sqlite3\+Create\+View(), sqlite3\+Delete\+From(), sqlite3\+End\+Table(), sqlite3\+Error\+Msg(), sqlite3\+Expr\+Assign\+Var\+Number(), sqlite3\+Expr\+Set\+Height\+And\+Flags(), sqlite3\+Find\+In\+Index(), sqlite3\+Finish\+Coding(), sqlite3\+Finish\+Trigger(), sqlite3\+Insert(), sqlite3\+Key\+Info\+Of\+Index(), sqlite3\+Nested\+Parse(), sqlite3\+P\+Expr(), sqlite3\+Pragma(), sqlite3\+Read\+Schema(), sqlite3\+Resolve\+Expr\+Names(), sqlite3\+Result\+Set\+Of\+Select(), sqlite3\+Run\+Parser(), sqlite3\+Select(), sqlite3\+Select\+Prep(), sqlite3\+Start\+Table(), sqlite3\+Update(), and sqlite3\+Where\+Begin().
+
+\hypertarget{struct_parse_a64c4a569459a2f34e4a43d42d7a2394c}{}\index{Parse@{Parse}!nested@{nested}}
+\index{nested@{nested}!Parse@{Parse}}
+\subsubsection[{nested}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} nested}\label{struct_parse_a64c4a569459a2f34e4a43d42d7a2394c}
+
+
+Definition at line 12506 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Check\+Object\+Name(), sqlite3\+Complete\+Insertion(), sqlite3\+Delete\+From(), sqlite3\+Finish\+Coding(), sqlite3\+Insert(), sqlite3\+Is\+Read\+Only(), sqlite3\+Nested\+Parse(), sqlite3\+Run\+Parser(), sqlite3\+Start\+Table(), and sqlite3\+Update().
+
+\hypertarget{struct_parse_aa36ace4eeccdcabc2a3295de12277fb9}{}\index{Parse@{Parse}!newmask@{newmask}}
+\index{newmask@{newmask}!Parse@{Parse}}
+\subsubsection[{newmask}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} newmask}\label{struct_parse_aa36ace4eeccdcabc2a3295de12277fb9}
+
+
+Definition at line 12561 of file sqlite3.\+c.
+
+\hypertarget{struct_parse_a17d981419afeee27eb36a8b43183e49a}{}\index{Parse@{Parse}!n\+Height@{n\+Height}}
+\index{n\+Height@{n\+Height}!Parse@{Parse}}
+\subsubsection[{n\+Height}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Height}\label{struct_parse_a17d981419afeee27eb36a8b43183e49a}
+
+
+Definition at line 12583 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Resolve\+Expr\+Names(), and sqlite3\+Select().
+
+\hypertarget{struct_parse_af5a14ba3fa9c2cb9827402a81a53a986}{}\index{Parse@{Parse}!n\+Label@{n\+Label}}
+\index{n\+Label@{n\+Label}!Parse@{Parse}}
+\subsubsection[{n\+Label}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Label}\label{struct_parse_af5a14ba3fa9c2cb9827402a81a53a986}
+
+
+Definition at line 12526 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Make\+Label().
+
+\hypertarget{struct_parse_a6ccdb6f869078cb97158ed463cdfe3e8}{}\index{Parse@{Parse}!n\+Max\+Arg@{n\+Max\+Arg}}
+\index{n\+Max\+Arg@{n\+Max\+Arg}!Parse@{Parse}}
+\subsubsection[{n\+Max\+Arg}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Max\+Arg}\label{struct_parse_a6ccdb6f869078cb97158ed463cdfe3e8}
+
+
+Definition at line 12543 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_parse_a857d199d972b4d3864ce420c143508e4}{}\index{Parse@{Parse}!n\+Mem@{n\+Mem}}
+\index{n\+Mem@{n\+Mem}!Parse@{Parse}}
+\subsubsection[{n\+Mem}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Mem}\label{struct_parse_a857d199d972b4d3864ce420c143508e4}
+
+
+Definition at line 12517 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+blob\+\_\+open(), sqlite3\+Alter\+Rename\+Table(), sqlite3\+Code\+Row\+Trigger\+Direct(), sqlite3\+Code\+Subselect(), sqlite3\+Create\+Index(), sqlite3\+Delete\+From(), sqlite3\+Drop\+Trigger\+Ptr(), sqlite3\+Expr\+Code\+And\+Cache(), sqlite3\+Expr\+Code\+Target(), sqlite3\+Expr\+Code\+Temp(), sqlite3\+Find\+In\+Index(), sqlite3\+Finish\+Coding(), sqlite3\+Generate\+Row\+Delete(), sqlite3\+Get\+Temp\+Range(), sqlite3\+Get\+Temp\+Reg(), sqlite3\+Insert(), sqlite3\+Pragma(), sqlite3\+Select(), sqlite3\+Start\+Table(), sqlite3\+Update(), sqlite3\+Vdbe\+Make\+Ready(), and sqlite3\+Vtab\+Finish\+Parse().
+
+\hypertarget{struct_parse_a8b26e5a5e9547ab221d19c9e5c56f174}{}\index{Parse@{Parse}!n\+Once@{n\+Once}}
+\index{n\+Once@{n\+Once}!Parse@{Parse}}
+\subsubsection[{n\+Once}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Once}\label{struct_parse_a8b26e5a5e9547ab221d19c9e5c56f174}
+
+
+Definition at line 12519 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Code\+Once(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_parse_aefbb8e03fd662e3f265fd1500454c7b0}{}\index{Parse@{Parse}!n\+Op\+Alloc@{n\+Op\+Alloc}}
+\index{n\+Op\+Alloc@{n\+Op\+Alloc}!Parse@{Parse}}
+\subsubsection[{n\+Op\+Alloc}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Op\+Alloc}\label{struct_parse_aefbb8e03fd662e3f265fd1500454c7b0}
+
+
+Definition at line 12520 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Add\+Op3(), sqlite3\+Vdbe\+Add\+Op\+List(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_parse_ad94b55c666d5c00f9be8f0245af57bad}{}\index{Parse@{Parse}!n\+Query\+Loop@{n\+Query\+Loop}}
+\index{n\+Query\+Loop@{n\+Query\+Loop}!Parse@{Parse}}
+\subsubsection[{n\+Query\+Loop}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} n\+Query\+Loop}\label{struct_parse_ad94b55c666d5c00f9be8f0245af57bad}
+
+
+Definition at line 12559 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+declare\+\_\+vtab(), sqlite3\+Find\+In\+Index(), sqlite3\+Where\+Begin(), and sqlite3\+Where\+End().
+
+\hypertarget{struct_parse_a01a7e2c048df6599804b75acab426ef0}{}\index{Parse@{Parse}!n\+Range\+Reg@{n\+Range\+Reg}}
+\index{n\+Range\+Reg@{n\+Range\+Reg}!Parse@{Parse}}
+\subsubsection[{n\+Range\+Reg}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Range\+Reg}\label{struct_parse_a01a7e2c048df6599804b75acab426ef0}
+
+
+Definition at line 12513 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Clear\+Temp\+Reg\+Cache(), sqlite3\+Get\+Temp\+Range(), and sqlite3\+Release\+Temp\+Range().
+
+\hypertarget{struct_parse_a46b5e828fc2b936c5f110ed39acbab4c}{}\index{Parse@{Parse}!n\+Set@{n\+Set}}
+\index{n\+Set@{n\+Set}!Parse@{Parse}}
+\subsubsection[{n\+Set}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Set}\label{struct_parse_a46b5e828fc2b936c5f110ed39acbab4c}
+
+
+Definition at line 12518 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Finish\+Coding().
+
+\hypertarget{struct_parse_ad80776c870a2ec9334ba0d32de602aa4}{}\index{Parse@{Parse}!n\+Tab@{n\+Tab}}
+\index{n\+Tab@{n\+Tab}!Parse@{Parse}}
+\subsubsection[{n\+Tab}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Tab}\label{struct_parse_ad80776c870a2ec9334ba0d32de602aa4}
+
+
+Definition at line 12516 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+blob\+\_\+open(), sqlite3\+Code\+Subselect(), sqlite3\+Delete\+From(), sqlite3\+End\+Table(), sqlite3\+Find\+In\+Index(), sqlite3\+Finish\+Coding(), sqlite3\+Fk\+Check(), sqlite3\+Insert(), sqlite3\+Open\+Master\+Table(), sqlite3\+Open\+Table\+And\+Indices(), sqlite3\+Pragma(), sqlite3\+Select(), sqlite3\+Update(), sqlite3\+Vdbe\+Make\+Ready(), sqlite3\+View\+Get\+Column\+Names(), and sqlite3\+Where\+Begin().
+
+\hypertarget{struct_parse_a089d91549eb1eb389c4a660bb3e8a6c0}{}\index{Parse@{Parse}!n\+Table\+Lock@{n\+Table\+Lock}}
+\index{n\+Table\+Lock@{n\+Table\+Lock}!Parse@{Parse}}
+\subsubsection[{n\+Table\+Lock}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Table\+Lock}\label{struct_parse_a089d91549eb1eb389c4a660bb3e8a6c0}
+
+
+Definition at line 12549 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Run\+Parser(), and sqlite3\+Table\+Lock().
+
+\hypertarget{struct_parse_a41f182977278836caadbc1a77ee4a7fc}{}\index{Parse@{Parse}!n\+Temp\+Reg@{n\+Temp\+Reg}}
+\index{n\+Temp\+Reg@{n\+Temp\+Reg}!Parse@{Parse}}
+\subsubsection[{n\+Temp\+Reg}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} n\+Temp\+Reg}\label{struct_parse_a41f182977278836caadbc1a77ee4a7fc}
+
+
+Definition at line 12507 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Clear\+Temp\+Reg\+Cache(), sqlite3\+Get\+Temp\+Reg(), and sqlite3\+Release\+Temp\+Reg().
+
+\hypertarget{struct_parse_a4daa0b7f57ad0254db068b40eaa0d8b9}{}\index{Parse@{Parse}!n\+Var@{n\+Var}}
+\index{n\+Var@{n\+Var}!Parse@{Parse}}
+\subsubsection[{n\+Var}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Var}\label{struct_parse_a4daa0b7f57ad0254db068b40eaa0d8b9}
+
+
+Definition at line 12573 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+blob\+\_\+open(), sqlite3\+Begin\+Parse(), sqlite3\+Create\+View(), sqlite3\+Expr\+Assign\+Var\+Number(), sqlite3\+Finish\+Coding(), sqlite3\+Nested\+Parse(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_parse_ac2e869640141f1ea530ea807d40a0a8f}{}\index{Parse@{Parse}!n\+Vtab\+Lock@{n\+Vtab\+Lock}}
+\index{n\+Vtab\+Lock@{n\+Vtab\+Lock}!Parse@{Parse}}
+\subsubsection[{n\+Vtab\+Lock}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Vtab\+Lock}\label{struct_parse_ac2e869640141f1ea530ea807d40a0a8f}
+
+
+Definition at line 12580 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Finish\+Coding(), and sqlite3\+Vtab\+Make\+Writable().
+
+\hypertarget{struct_parse_aeb9c5f4bed2bb8dfd350896fe67e9312}{}\index{Parse@{Parse}!nz\+Var@{nz\+Var}}
+\index{nz\+Var@{nz\+Var}!Parse@{Parse}}
+\subsubsection[{nz\+Var}]{\setlength{\rightskip}{0pt plus 5cm}int nz\+Var}\label{struct_parse_aeb9c5f4bed2bb8dfd350896fe67e9312}
+
+
+Definition at line 12574 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Expr\+Assign\+Var\+Number(), sqlite3\+Run\+Parser(), and sqlite3\+Vdbe\+Make\+Ready().
+
+\hypertarget{struct_parse_ac2d1b74cf6f7d0a3b0036997b6cb1051}{}\index{Parse@{Parse}!ok\+Const\+Factor@{ok\+Const\+Factor}}
+\index{ok\+Const\+Factor@{ok\+Const\+Factor}!Parse@{Parse}}
+\subsubsection[{ok\+Const\+Factor}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} ok\+Const\+Factor}\label{struct_parse_ac2d1b74cf6f7d0a3b0036997b6cb1051}
+
+
+Definition at line 12511 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Expr\+Code\+Factorable(), sqlite3\+Finish\+Coding(), and sqlite3\+Get\+Vdbe().
+
+\hypertarget{struct_parse_a5570817d80b8691fbc101651329665c2}{}\index{Parse@{Parse}!oldmask@{oldmask}}
+\index{oldmask@{oldmask}!Parse@{Parse}}
+\subsubsection[{oldmask}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} oldmask}\label{struct_parse_a5570817d80b8691fbc101651329665c2}
+
+
+Definition at line 12560 of file sqlite3.\+c.
+
+\hypertarget{struct_parse_af29cefdbafae7365c8fc16b81766a646}{}\index{Parse@{Parse}!p\+Ainc@{p\+Ainc}}
+\index{p\+Ainc@{p\+Ainc}!Parse@{Parse}}
+\subsubsection[{p\+Ainc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Autoinc\+Info}$\ast$ p\+Ainc}\label{struct_parse_af29cefdbafae7365c8fc16b81766a646}
+
+
+Definition at line 12552 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Autoincrement\+Begin(), sqlite3\+Autoincrement\+End(), sqlite3\+Finish\+Coding(), and sqlite3\+Run\+Parser().
+
+\hypertarget{struct_parse_a15a4706ea881fbe875ab67f3ebd5f952}{}\index{Parse@{Parse}!p\+Const\+Expr@{p\+Const\+Expr}}
+\index{p\+Const\+Expr@{p\+Const\+Expr}!Parse@{Parse}}
+\subsubsection[{p\+Const\+Expr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expr\+List}$\ast$ p\+Const\+Expr}\label{struct_parse_a15a4706ea881fbe875ab67f3ebd5f952}
+
+
+Definition at line 12536 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Expr\+Code\+At\+Init(), sqlite3\+Expr\+Code\+Temp(), sqlite3\+Finish\+Coding(), and sqlite3\+Parser\+Reset().
+
+\hypertarget{struct_parse_ae0a32c951e7d0c8ae0f96529a5dba80f}{}\index{Parse@{Parse}!p\+New\+Table@{p\+New\+Table}}
+\index{p\+New\+Table@{p\+New\+Table}!Parse@{Parse}}
+\subsubsection[{p\+New\+Table}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Table}$\ast$ p\+New\+Table}\label{struct_parse_ae0a32c951e7d0c8ae0f96529a5dba80f}
+
+
+Definition at line 12591 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+declare\+\_\+vtab(), sqlite3\+Add\+Check\+Constraint(), sqlite3\+Add\+Collate\+Type(), sqlite3\+Add\+Column(), sqlite3\+Add\+Column\+Type(), sqlite3\+Add\+Default\+Value(), sqlite3\+Add\+Not\+Null(), sqlite3\+Add\+Primary\+Key(), sqlite3\+Alter\+Begin\+Add\+Column(), sqlite3\+Alter\+Finish\+Add\+Column(), sqlite3\+Create\+Foreign\+Key(), sqlite3\+Create\+Index(), sqlite3\+Create\+View(), sqlite3\+Defer\+Foreign\+Key(), sqlite3\+End\+Table(), sqlite3\+Run\+Parser(), sqlite3\+Start\+Table(), sqlite3\+Vtab\+Begin\+Parse(), and sqlite3\+Vtab\+Finish\+Parse().
+
+\hypertarget{struct_parse_a5c343988d894c6f7b44b19d76cdd72d4}{}\index{Parse@{Parse}!p\+New\+Trigger@{p\+New\+Trigger}}
+\index{p\+New\+Trigger@{p\+New\+Trigger}!Parse@{Parse}}
+\subsubsection[{p\+New\+Trigger}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Trigger}$\ast$ p\+New\+Trigger}\label{struct_parse_a5c343988d894c6f7b44b19d76cdd72d4}
+
+
+Definition at line 12592 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Begin\+Trigger(), sqlite3\+Finish\+Trigger(), and sqlite3\+Run\+Parser().
+
+\hypertarget{struct_parse_a0eb9386bc6675b699f91ebe6ba1ee13e}{}\index{Parse@{Parse}!p\+Reprepare@{p\+Reprepare}}
+\index{p\+Reprepare@{p\+Reprepare}!Parse@{Parse}}
+\subsubsection[{p\+Reprepare}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vdbe}$\ast$ p\+Reprepare}\label{struct_parse_a0eb9386bc6675b699f91ebe6ba1ee13e}
+
+
+Definition at line 12589 of file sqlite3.\+c.
+
+\hypertarget{struct_parse_adb730f8e7fa964ef4dd94d64eaed12b6}{}\index{Parse@{Parse}!p\+Toplevel@{p\+Toplevel}}
+\index{p\+Toplevel@{p\+Toplevel}!Parse@{Parse}}
+\subsubsection[{p\+Toplevel}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Parse}$\ast$ p\+Toplevel}\label{struct_parse_adb730f8e7fa964ef4dd94d64eaed12b6}
+
+
+Definition at line 12555 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Fk\+Check(), and sqlite3\+Get\+Vdbe().
+
+\hypertarget{struct_parse_ae2902e8934695ce83b045eb613e58ea6}{}\index{Parse@{Parse}!p\+Trigger\+Prg@{p\+Trigger\+Prg}}
+\index{p\+Trigger\+Prg@{p\+Trigger\+Prg}!Parse@{Parse}}
+\subsubsection[{p\+Trigger\+Prg}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Trigger\+Prg}$\ast$ p\+Trigger\+Prg}\label{struct_parse_ae2902e8934695ce83b045eb613e58ea6}
+
+
+Definition at line 12601 of file sqlite3.\+c.
+
+\hypertarget{struct_parse_aef9d50c97b68250054207a21b19c6543}{}\index{Parse@{Parse}!p\+Trigger\+Tab@{p\+Trigger\+Tab}}
+\index{p\+Trigger\+Tab@{p\+Trigger\+Tab}!Parse@{Parse}}
+\subsubsection[{p\+Trigger\+Tab}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Table}$\ast$ p\+Trigger\+Tab}\label{struct_parse_aef9d50c97b68250054207a21b19c6543}
+
+
+Definition at line 12556 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Auth\+Read(), sqlite3\+Delete\+From(), sqlite3\+Expr\+Code\+Target(), sqlite3\+Insert(), and sqlite3\+Update().
+
+\hypertarget{struct_parse_ac73302f0c912cb7b3c9b1cea509e6077}{}\index{Parse@{Parse}!p\+Vdbe@{p\+Vdbe}}
+\index{p\+Vdbe@{p\+Vdbe}!Parse@{Parse}}
+\subsubsection[{p\+Vdbe}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vdbe}$\ast$ p\+Vdbe}\label{struct_parse_ac73302f0c912cb7b3c9b1cea509e6077}
+
+
+Definition at line 12502 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+declare\+\_\+vtab(), sqlite3\+Add\+Primary\+Key(), sqlite3\+Autoincrement\+Begin(), sqlite3\+Autoincrement\+End(), sqlite3\+Change\+Cookie(), sqlite3\+Expr\+Code(), sqlite3\+Expr\+Code\+And\+Cache(), sqlite3\+Expr\+Code\+Expr\+List(), sqlite3\+Expr\+Code\+Get\+Column(), sqlite3\+Expr\+Code\+Move(), sqlite3\+Expr\+Code\+Target(), sqlite3\+Expr\+If\+False(), sqlite3\+Expr\+If\+True(), sqlite3\+Generate\+Index\+Key(), sqlite3\+Generate\+Row\+Delete(), sqlite3\+Generate\+Row\+Index\+Delete(), sqlite3\+Get\+Vdbe(), sqlite3\+Resolve\+Part\+Idx\+Label(), sqlite3\+Run\+Parser(), sqlite3\+Vdbe\+Set\+P4\+Key\+Info(), sqlite3\+Where\+Begin(), and sqlite3\+Where\+End().
+
+\hypertarget{struct_parse_a49014e0850234bf861fd5de6ea610b7e}{}\index{Parse@{Parse}!p\+With@{p\+With}}
+\index{p\+With@{p\+With}!Parse@{Parse}}
+\subsubsection[{p\+With}]{\setlength{\rightskip}{0pt plus 5cm}{\bf With}$\ast$ p\+With}\label{struct_parse_a49014e0850234bf861fd5de6ea610b7e}
+
+
+Definition at line 12602 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Run\+Parser(), and sqlite3\+With\+Push().
+
+\hypertarget{struct_parse_a47daa61bd1c950512bbd9d55da0dc59b}{}\index{Parse@{Parse}!p\+Zombie\+Tab@{p\+Zombie\+Tab}}
+\index{p\+Zombie\+Tab@{p\+Zombie\+Tab}!Parse@{Parse}}
+\subsubsection[{p\+Zombie\+Tab}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Table}$\ast$ p\+Zombie\+Tab}\label{struct_parse_a47daa61bd1c950512bbd9d55da0dc59b}
+
+
+Definition at line 12600 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Run\+Parser().
+
+\hypertarget{struct_parse_ac6509c6fe4cbf7bde170597172f8a288}{}\index{Parse@{Parse}!rc@{rc}}
+\index{rc@{rc}!Parse@{Parse}}
+\subsubsection[{rc}]{\setlength{\rightskip}{0pt plus 5cm}int rc}\label{struct_parse_ac6509c6fe4cbf7bde170597172f8a288}
+
+
+Definition at line 12503 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Auth\+Check(), sqlite3\+Auth\+Read\+Col(), sqlite3\+Error\+Msg(), sqlite3\+Finish\+Coding(), sqlite3\+Open\+Temp\+Database(), sqlite3\+Pragma(), sqlite3\+Read\+Schema(), sqlite3\+Run\+Parser(), and sqlite3\+Start\+Table().
+
+\hypertarget{struct_parse_a4c486443f1dec8ebc5ed3d7bebd5ab3f}{}\index{Parse@{Parse}!reg\+Root@{reg\+Root}}
+\index{reg\+Root@{reg\+Root}!Parse@{Parse}}
+\subsubsection[{reg\+Root}]{\setlength{\rightskip}{0pt plus 5cm}int reg\+Root}\label{struct_parse_a4c486443f1dec8ebc5ed3d7bebd5ab3f}
+
+
+Definition at line 12542 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+End\+Table(), and sqlite3\+Start\+Table().
+
+\hypertarget{struct_parse_afcd981375c0bf35857b02dd8b6eb404c}{}\index{Parse@{Parse}!reg\+Rowid@{reg\+Rowid}}
+\index{reg\+Rowid@{reg\+Rowid}!Parse@{Parse}}
+\subsubsection[{reg\+Rowid}]{\setlength{\rightskip}{0pt plus 5cm}int reg\+Rowid}\label{struct_parse_afcd981375c0bf35857b02dd8b6eb404c}
+
+
+Definition at line 12541 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+End\+Table(), sqlite3\+Start\+Table(), and sqlite3\+Vtab\+Finish\+Parse().
+
+\hypertarget{struct_parse_a34c336844414b2c1bedbd11eac1f3567}{}\index{Parse@{Parse}!s\+Arg@{s\+Arg}}
+\index{s\+Arg@{s\+Arg}!Parse@{Parse}}
+\subsubsection[{s\+Arg}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Token} s\+Arg}\label{struct_parse_a34c336844414b2c1bedbd11eac1f3567}
+
+
+Definition at line 12597 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vtab\+Arg\+Extend(), sqlite3\+Vtab\+Arg\+Init(), and sqlite3\+Vtab\+Finish\+Parse().
+
+\hypertarget{struct_parse_ad72a7eb7cdb0855411e66aac2daddee6}{}\index{Parse@{Parse}!s\+Last\+Token@{s\+Last\+Token}}
+\index{s\+Last\+Token@{s\+Last\+Token}!Parse@{Parse}}
+\subsubsection[{s\+Last\+Token}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Token} s\+Last\+Token}\label{struct_parse_ad72a7eb7cdb0855411e66aac2daddee6}
+
+
+Definition at line 12595 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Create\+Index(), sqlite3\+Create\+View(), sqlite3\+End\+Table(), and sqlite3\+Run\+Parser().
+
+\hypertarget{struct_parse_ad1e8faf5ff45a16dd39d4b93503e1186}{}\index{Parse@{Parse}!s\+Name\+Token@{s\+Name\+Token}}
+\index{s\+Name\+Token@{s\+Name\+Token}!Parse@{Parse}}
+\subsubsection[{s\+Name\+Token}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Token} s\+Name\+Token}\label{struct_parse_ad1e8faf5ff45a16dd39d4b93503e1186}
+
+
+Definition at line 12594 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+End\+Table(), sqlite3\+Start\+Table(), sqlite3\+Vtab\+Begin\+Parse(), and sqlite3\+Vtab\+Finish\+Parse().
+
+\hypertarget{struct_parse_a034fad25a08bebdfcb10fd5ef97010a9}{}\index{Parse@{Parse}!write\+Mask@{write\+Mask}}
+\index{write\+Mask@{write\+Mask}!Parse@{Parse}}
+\subsubsection[{write\+Mask}]{\setlength{\rightskip}{0pt plus 5cm}{\bf y\+Db\+Mask} write\+Mask}\label{struct_parse_a034fad25a08bebdfcb10fd5ef97010a9}
+
+
+Definition at line 12538 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Begin\+Write\+Operation(), and sqlite3\+Finish\+Coding().
+
+\hypertarget{struct_parse_a7daea745aae6a12901c52fd4f28608dc}{}\index{Parse@{Parse}!z\+Auth\+Context@{z\+Auth\+Context}}
+\index{z\+Auth\+Context@{z\+Auth\+Context}!Parse@{Parse}}
+\subsubsection[{z\+Auth\+Context}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ z\+Auth\+Context}\label{struct_parse_a7daea745aae6a12901c52fd4f28608dc}
+
+
+Definition at line 12593 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Auth\+Check(), sqlite3\+Auth\+Context\+Pop(), sqlite3\+Auth\+Context\+Push(), and sqlite3\+Auth\+Read\+Col().
+
+\hypertarget{struct_parse_a6fcf95fd4e53f09793171bd5b704ac9a}{}\index{Parse@{Parse}!z\+Err\+Msg@{z\+Err\+Msg}}
+\index{z\+Err\+Msg@{z\+Err\+Msg}!Parse@{Parse}}
+\subsubsection[{z\+Err\+Msg}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ z\+Err\+Msg}\label{struct_parse_a6fcf95fd4e53f09793171bd5b704ac9a}
+
+
+Definition at line 12501 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+\_\+blob\+\_\+open(), sqlite3\+Error\+Msg(), sqlite3\+Read\+Schema(), and sqlite3\+Run\+Parser().
+
+\hypertarget{struct_parse_a348e455e10b33438eb61659f0364d546}{}\index{Parse@{Parse}!z\+Tail@{z\+Tail}}
+\index{z\+Tail@{z\+Tail}!Parse@{Parse}}
+\subsubsection[{z\+Tail}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ z\+Tail}\label{struct_parse_a348e455e10b33438eb61659f0364d546}
+
+
+Definition at line 12590 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Run\+Parser().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

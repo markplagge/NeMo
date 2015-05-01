@@ -1,0 +1,237 @@
+\hypertarget{struct_where_loop}{}\section{Where\+Loop Struct Reference}
+\label{struct_where_loop}\index{Where\+Loop@{Where\+Loop}}
+
+
+Collaboration diagram for Where\+Loop\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{sqlite3_8c_afa77b629897c4457bfdc47d364ba5c3f}{Bitmask} \hyperlink{struct_where_loop_aae7565677c852f3ea5f63a3d5fae63a7}{prereq}
+\item 
+\hyperlink{sqlite3_8c_afa77b629897c4457bfdc47d364ba5c3f}{Bitmask} \hyperlink{struct_where_loop_a64568f8369d027c1d3988c5bcf827126}{mask\+Self}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_where_loop_a41a4c5b9a04bd1b37b6509a0be68fb8c}{i\+Tab}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_where_loop_a97de1d9f0de4b544e2eb6cd2b01dd026}{i\+Sort\+Idx}
+\item 
+\hyperlink{sqlite3_8c_aa0f9b3b63ad120ac15b96785b05ce733}{Log\+Est} \hyperlink{struct_where_loop_a9141f9ef602baa41618d3dd9f85af0f3}{r\+Setup}
+\item 
+\hyperlink{sqlite3_8c_aa0f9b3b63ad120ac15b96785b05ce733}{Log\+Est} \hyperlink{struct_where_loop_a19a591aa81312e9d7f3e26df94f10abe}{r\+Run}
+\item 
+\hyperlink{sqlite3_8c_aa0f9b3b63ad120ac15b96785b05ce733}{Log\+Est} \hyperlink{struct_where_loop_a0aa5ee9015b877549b7fceef6a0e81c5}{n\+Out}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_where_loop_ab51e96dea9598ce3eeded5cbe74fecf4}{nEq}\\
+\>\>\hyperlink{struct_index}{Index} $\ast$ \hyperlink{struct_where_loop_a2bf7196ac1f39bd4b9dc95c3a9e9a68e}{pIndex}\\
+\>\} \hyperlink{struct_where_loop_aabcedf1144f01ab1953a0a330f5f2851}{btree}\\
+\>struct \{\\
+\>\>int \hyperlink{struct_where_loop_afaf2ebd5db0e0ccaccbcf4e3a7391f58}{idxNum}\\
+\>\>\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_where_loop_abfb567fa5c6bb71af5013374caef49f7}{needFree}\\
+\>\>\hyperlink{sqlite3_8c_ad11a1324ecade336dc6ce17a20cf6617}{i8} \hyperlink{struct_where_loop_af9174dc8e7056e94c539611eeb036d8d}{isOrdered}\\
+\>\>\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_where_loop_a9d044d3e695a6ffad60ed9479a7215be}{omitMask}\\
+\>\>char $\ast$ \hyperlink{struct_where_loop_ad3aa8f088bcb7185aecac4ee06eae981}{idxStr}\\
+\>\} \hyperlink{struct_where_loop_a28837ab871613ee4238d75c29ba0fb73}{vtab}\\
+\} \hyperlink{struct_where_loop_a4b7109c9afc6317a714fc4748de1b95a}{u}\\
+
+\end{tabbing}\item 
+\hyperlink{sqlite3_8c_a03ad5adfaeb9b7640dde78a0cc390319}{u32} \hyperlink{struct_where_loop_a105a3ce7af3fa19f43535221c8514754}{ws\+Flags}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_where_loop_a7acee2f8f328bc00604d8e56ee00c676}{n\+L\+Term}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_where_loop_a1e39909a6ad648d48569605ae0d1700a}{n\+Skip}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_where_loop_aab25f364e6db92315e55905530d1024d}{n\+L\+Slot}
+\item 
+\hyperlink{struct_where_term}{Where\+Term} $\ast$$\ast$ \hyperlink{struct_where_loop_aa04716e525cd822b2a4c83d77f0010ad}{a\+L\+Term}
+\item 
+\hyperlink{struct_where_loop}{Where\+Loop} $\ast$ \hyperlink{struct_where_loop_a5dbc670d4951c6bbab7470ab07fd2d3c}{p\+Next\+Loop}
+\item 
+\hyperlink{struct_where_term}{Where\+Term} $\ast$ \hyperlink{struct_where_loop_abaf434cde5deb06833550415691f5444}{a\+L\+Term\+Space} \mbox{[}3\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 115840 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_where_loop_aa04716e525cd822b2a4c83d77f0010ad}{}\index{Where\+Loop@{Where\+Loop}!a\+L\+Term@{a\+L\+Term}}
+\index{a\+L\+Term@{a\+L\+Term}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{a\+L\+Term}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Where\+Term}$\ast$$\ast$ a\+L\+Term}\label{struct_where_loop_aa04716e525cd822b2a4c83d77f0010ad}
+
+
+Definition at line 115870 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_abaf434cde5deb06833550415691f5444}{}\index{Where\+Loop@{Where\+Loop}!a\+L\+Term\+Space@{a\+L\+Term\+Space}}
+\index{a\+L\+Term\+Space@{a\+L\+Term\+Space}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{a\+L\+Term\+Space}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Where\+Term}$\ast$ a\+L\+Term\+Space\mbox{[}3\mbox{]}}\label{struct_where_loop_abaf434cde5deb06833550415691f5444}
+
+
+Definition at line 115872 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_aabcedf1144f01ab1953a0a330f5f2851}{}\index{Where\+Loop@{Where\+Loop}!btree@{btree}}
+\index{btree@{btree}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{btree}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}   btree}\label{struct_where_loop_aabcedf1144f01ab1953a0a330f5f2851}
+\hypertarget{struct_where_loop_afaf2ebd5db0e0ccaccbcf4e3a7391f58}{}\index{Where\+Loop@{Where\+Loop}!idx\+Num@{idx\+Num}}
+\index{idx\+Num@{idx\+Num}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{idx\+Num}]{\setlength{\rightskip}{0pt plus 5cm}int idx\+Num}\label{struct_where_loop_afaf2ebd5db0e0ccaccbcf4e3a7391f58}
+
+
+Definition at line 115857 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_ad3aa8f088bcb7185aecac4ee06eae981}{}\index{Where\+Loop@{Where\+Loop}!idx\+Str@{idx\+Str}}
+\index{idx\+Str@{idx\+Str}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{idx\+Str}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ idx\+Str}\label{struct_where_loop_ad3aa8f088bcb7185aecac4ee06eae981}
+
+
+Definition at line 115861 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_af9174dc8e7056e94c539611eeb036d8d}{}\index{Where\+Loop@{Where\+Loop}!is\+Ordered@{is\+Ordered}}
+\index{is\+Ordered@{is\+Ordered}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{is\+Ordered}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i8} is\+Ordered}\label{struct_where_loop_af9174dc8e7056e94c539611eeb036d8d}
+
+
+Definition at line 115859 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_a97de1d9f0de4b544e2eb6cd2b01dd026}{}\index{Where\+Loop@{Where\+Loop}!i\+Sort\+Idx@{i\+Sort\+Idx}}
+\index{i\+Sort\+Idx@{i\+Sort\+Idx}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{i\+Sort\+Idx}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} i\+Sort\+Idx}\label{struct_where_loop_a97de1d9f0de4b544e2eb6cd2b01dd026}
+
+
+Definition at line 115847 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_a41a4c5b9a04bd1b37b6509a0be68fb8c}{}\index{Where\+Loop@{Where\+Loop}!i\+Tab@{i\+Tab}}
+\index{i\+Tab@{i\+Tab}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{i\+Tab}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} i\+Tab}\label{struct_where_loop_a41a4c5b9a04bd1b37b6509a0be68fb8c}
+
+
+Definition at line 115846 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+Begin().
+
+\hypertarget{struct_where_loop_a64568f8369d027c1d3988c5bcf827126}{}\index{Where\+Loop@{Where\+Loop}!mask\+Self@{mask\+Self}}
+\index{mask\+Self@{mask\+Self}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{mask\+Self}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bitmask} mask\+Self}\label{struct_where_loop_a64568f8369d027c1d3988c5bcf827126}
+
+
+Definition at line 115842 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+Begin().
+
+\hypertarget{struct_where_loop_abfb567fa5c6bb71af5013374caef49f7}{}\index{Where\+Loop@{Where\+Loop}!need\+Free@{need\+Free}}
+\index{need\+Free@{need\+Free}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{need\+Free}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} need\+Free}\label{struct_where_loop_abfb567fa5c6bb71af5013374caef49f7}
+
+
+Definition at line 115858 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_ab51e96dea9598ce3eeded5cbe74fecf4}{}\index{Where\+Loop@{Where\+Loop}!n\+Eq@{n\+Eq}}
+\index{n\+Eq@{n\+Eq}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{n\+Eq}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} n\+Eq}\label{struct_where_loop_ab51e96dea9598ce3eeded5cbe74fecf4}
+
+
+Definition at line 115853 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_aab25f364e6db92315e55905530d1024d}{}\index{Where\+Loop@{Where\+Loop}!n\+L\+Slot@{n\+L\+Slot}}
+\index{n\+L\+Slot@{n\+L\+Slot}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{n\+L\+Slot}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} n\+L\+Slot}\label{struct_where_loop_aab25f364e6db92315e55905530d1024d}
+
+
+Definition at line 115869 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_a7acee2f8f328bc00604d8e56ee00c676}{}\index{Where\+Loop@{Where\+Loop}!n\+L\+Term@{n\+L\+Term}}
+\index{n\+L\+Term@{n\+L\+Term}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{n\+L\+Term}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} n\+L\+Term}\label{struct_where_loop_a7acee2f8f328bc00604d8e56ee00c676}
+
+
+Definition at line 115865 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_a0aa5ee9015b877549b7fceef6a0e81c5}{}\index{Where\+Loop@{Where\+Loop}!n\+Out@{n\+Out}}
+\index{n\+Out@{n\+Out}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{n\+Out}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Log\+Est} n\+Out}\label{struct_where_loop_a0aa5ee9015b877549b7fceef6a0e81c5}
+
+
+Definition at line 115850 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_a1e39909a6ad648d48569605ae0d1700a}{}\index{Where\+Loop@{Where\+Loop}!n\+Skip@{n\+Skip}}
+\index{n\+Skip@{n\+Skip}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{n\+Skip}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} n\+Skip}\label{struct_where_loop_a1e39909a6ad648d48569605ae0d1700a}
+
+
+Definition at line 115866 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_a9d044d3e695a6ffad60ed9479a7215be}{}\index{Where\+Loop@{Where\+Loop}!omit\+Mask@{omit\+Mask}}
+\index{omit\+Mask@{omit\+Mask}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{omit\+Mask}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} omit\+Mask}\label{struct_where_loop_a9d044d3e695a6ffad60ed9479a7215be}
+
+
+Definition at line 115860 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_a2bf7196ac1f39bd4b9dc95c3a9e9a68e}{}\index{Where\+Loop@{Where\+Loop}!p\+Index@{p\+Index}}
+\index{p\+Index@{p\+Index}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{p\+Index}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Index}$\ast$ p\+Index}\label{struct_where_loop_a2bf7196ac1f39bd4b9dc95c3a9e9a68e}
+
+
+Definition at line 115854 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_a5dbc670d4951c6bbab7470ab07fd2d3c}{}\index{Where\+Loop@{Where\+Loop}!p\+Next\+Loop@{p\+Next\+Loop}}
+\index{p\+Next\+Loop@{p\+Next\+Loop}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{p\+Next\+Loop}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Where\+Loop}$\ast$ p\+Next\+Loop}\label{struct_where_loop_a5dbc670d4951c6bbab7470ab07fd2d3c}
+
+
+Definition at line 115871 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_aae7565677c852f3ea5f63a3d5fae63a7}{}\index{Where\+Loop@{Where\+Loop}!prereq@{prereq}}
+\index{prereq@{prereq}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{prereq}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bitmask} prereq}\label{struct_where_loop_aae7565677c852f3ea5f63a3d5fae63a7}
+
+
+Definition at line 115841 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_a19a591aa81312e9d7f3e26df94f10abe}{}\index{Where\+Loop@{Where\+Loop}!r\+Run@{r\+Run}}
+\index{r\+Run@{r\+Run}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{r\+Run}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Log\+Est} r\+Run}\label{struct_where_loop_a19a591aa81312e9d7f3e26df94f10abe}
+
+
+Definition at line 115849 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_a9141f9ef602baa41618d3dd9f85af0f3}{}\index{Where\+Loop@{Where\+Loop}!r\+Setup@{r\+Setup}}
+\index{r\+Setup@{r\+Setup}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{r\+Setup}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Log\+Est} r\+Setup}\label{struct_where_loop_a9141f9ef602baa41618d3dd9f85af0f3}
+
+
+Definition at line 115848 of file sqlite3.\+c.
+
+\hypertarget{struct_where_loop_a4b7109c9afc6317a714fc4748de1b95a}{}\index{Where\+Loop@{Where\+Loop}!u@{u}}
+\index{u@{u}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{u}]{\setlength{\rightskip}{0pt plus 5cm}union \{ ... \}   u}\label{struct_where_loop_a4b7109c9afc6317a714fc4748de1b95a}
+\hypertarget{struct_where_loop_a28837ab871613ee4238d75c29ba0fb73}{}\index{Where\+Loop@{Where\+Loop}!vtab@{vtab}}
+\index{vtab@{vtab}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{vtab}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}   vtab}\label{struct_where_loop_a28837ab871613ee4238d75c29ba0fb73}
+\hypertarget{struct_where_loop_a105a3ce7af3fa19f43535221c8514754}{}\index{Where\+Loop@{Where\+Loop}!ws\+Flags@{ws\+Flags}}
+\index{ws\+Flags@{ws\+Flags}!Where\+Loop@{Where\+Loop}}
+\subsubsection[{ws\+Flags}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u32} ws\+Flags}\label{struct_where_loop_a105a3ce7af3fa19f43535221c8514754}
+
+
+Definition at line 115864 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Where\+Begin(), and sqlite3\+Where\+End().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

@@ -1,0 +1,250 @@
+\hypertarget{struct_bt_cursor}{}\section{Bt\+Cursor Struct Reference}
+\label{struct_bt_cursor}\index{Bt\+Cursor@{Bt\+Cursor}}
+
+
+Collaboration diagram for Bt\+Cursor\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_btree}{Btree} $\ast$ \hyperlink{struct_bt_cursor_a8bc098d3190d7b0458b0f00fc3e9841b}{p\+Btree}
+\item 
+\hyperlink{struct_bt_shared}{Bt\+Shared} $\ast$ \hyperlink{struct_bt_cursor_a2bc66d19c064bb25ff335241f8c621df}{p\+Bt}
+\item 
+\hyperlink{struct_bt_cursor}{Bt\+Cursor} $\ast$ \hyperlink{struct_bt_cursor_a1dac2396746176f48a6d2eebfc765c17}{p\+Next}
+\item 
+\hyperlink{struct_bt_cursor}{Bt\+Cursor} $\ast$ \hyperlink{struct_bt_cursor_a28e43147b02ff3745de0afb619d64c25}{p\+Prev}
+\item 
+struct \hyperlink{struct_key_info}{Key\+Info} $\ast$ \hyperlink{struct_bt_cursor_a0c73f46f09fcecfd9c8d29cd3cc7744d}{p\+Key\+Info}
+\item 
+\hyperlink{sqlite3_8c_aec0c653e8dd16e4639caf2f8ea54f55c}{Pgno} $\ast$ \hyperlink{struct_bt_cursor_a7deae3222686e7a2ef3247ee13dc5323}{a\+Overflow}
+\item 
+\hyperlink{struct_cell_info}{Cell\+Info} \hyperlink{struct_bt_cursor_ab84854bed31add78eccfc236e2d3895e}{info}
+\item 
+\hyperlink{sqlite3_8c_a2a0f0f4ae7001eb54351f77ea1cdbcfd}{i64} \hyperlink{struct_bt_cursor_a528c39e09f68386edd6e2fbb64784561}{n\+Key}
+\item 
+void $\ast$ \hyperlink{struct_bt_cursor_af4e0ec7c9494e9d87e0042ab054ac58b}{p\+Key}
+\item 
+\hyperlink{sqlite3_8c_aec0c653e8dd16e4639caf2f8ea54f55c}{Pgno} \hyperlink{struct_bt_cursor_a30f00f9ff785feab4d71f2cf58faab84}{pgno\+Root}
+\item 
+int \hyperlink{struct_bt_cursor_acf0ab682d2f00d7bfea7e4e35dba7fc9}{n\+Ovfl\+Alloc}
+\item 
+int \hyperlink{struct_bt_cursor_ad37941f0529357971cb490f54966185b}{skip\+Next}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_bt_cursor_a3bae5f0b147a8a42b815f3512dc3b46e}{cur\+Flags}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_bt_cursor_ae5babd54e329060ed9f926ca6df3ab4d}{e\+State}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_bt_cursor_a6d76178ed694d71107fbae62d6fa9c38}{hints}
+\item 
+\hyperlink{sqlite3_8c_a7b32340f65cd15f029caad258fb3355c}{i16} \hyperlink{struct_bt_cursor_a37e2c5de2a48868560612bced0c093aa}{i\+Page}
+\item 
+\hyperlink{sqlite3_8c_a20f2299e322dcbde37cb07b16910b843}{u16} \hyperlink{struct_bt_cursor_aa7bcf3a5085daf9736d8665a21f6f70e}{ai\+Idx} \mbox{[}\hyperlink{sqlite3_8c_af0a8a704218e75e8258f2e33c3505473}{B\+T\+C\+U\+R\+S\+O\+R\+\_\+\+M\+A\+X\+\_\+\+D\+E\+P\+T\+H}\mbox{]}
+\item 
+\hyperlink{struct_mem_page}{Mem\+Page} $\ast$ \hyperlink{struct_bt_cursor_a48324efc61de2768ab83887316925682}{ap\+Page} \mbox{[}\hyperlink{sqlite3_8c_af0a8a704218e75e8258f2e33c3505473}{B\+T\+C\+U\+R\+S\+O\+R\+\_\+\+M\+A\+X\+\_\+\+D\+E\+P\+T\+H}\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 52615 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_bt_cursor_aa7bcf3a5085daf9736d8665a21f6f70e}{}\index{Bt\+Cursor@{Bt\+Cursor}!ai\+Idx@{ai\+Idx}}
+\index{ai\+Idx@{ai\+Idx}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{ai\+Idx}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u16} ai\+Idx\mbox{[}{\bf B\+T\+C\+U\+R\+S\+O\+R\+\_\+\+M\+A\+X\+\_\+\+D\+E\+P\+T\+H}\mbox{]}}\label{struct_bt_cursor_aa7bcf3a5085daf9736d8665a21f6f70e}
+
+
+Definition at line 52632 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Count(), sqlite3\+Btree\+Delete(), sqlite3\+Btree\+Insert(), sqlite3\+Btree\+Moveto\+Unpacked(), sqlite3\+Btree\+Next(), and sqlite3\+Btree\+Previous().
+
+\hypertarget{struct_bt_cursor_a7deae3222686e7a2ef3247ee13dc5323}{}\index{Bt\+Cursor@{Bt\+Cursor}!a\+Overflow@{a\+Overflow}}
+\index{a\+Overflow@{a\+Overflow}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{a\+Overflow}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pgno}$\ast$ a\+Overflow}\label{struct_bt_cursor_a7deae3222686e7a2ef3247ee13dc5323}
+
+
+Definition at line 52620 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Close\+Cursor().
+
+\hypertarget{struct_bt_cursor_a48324efc61de2768ab83887316925682}{}\index{Bt\+Cursor@{Bt\+Cursor}!ap\+Page@{ap\+Page}}
+\index{ap\+Page@{ap\+Page}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{ap\+Page}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Mem\+Page}$\ast$ ap\+Page\mbox{[}{\bf B\+T\+C\+U\+R\+S\+O\+R\+\_\+\+M\+A\+X\+\_\+\+D\+E\+P\+T\+H}\mbox{]}}\label{struct_bt_cursor_a48324efc61de2768ab83887316925682}
+
+
+Definition at line 52633 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Close\+Cursor(), sqlite3\+Btree\+Count(), sqlite3\+Btree\+Delete(), sqlite3\+Btree\+Insert(), sqlite3\+Btree\+Moveto\+Unpacked(), sqlite3\+Btree\+Next(), sqlite3\+Btree\+Previous(), and sqlite3\+Btree\+Trip\+All\+Cursors().
+
+\hypertarget{struct_bt_cursor_a3bae5f0b147a8a42b815f3512dc3b46e}{}\index{Bt\+Cursor@{Bt\+Cursor}!cur\+Flags@{cur\+Flags}}
+\index{cur\+Flags@{cur\+Flags}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{cur\+Flags}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} cur\+Flags}\label{struct_bt_cursor_a3bae5f0b147a8a42b815f3512dc3b46e}
+
+
+Definition at line 52628 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Incrblob\+Cursor(), sqlite3\+Btree\+Insert(), sqlite3\+Btree\+Last(), sqlite3\+Btree\+Moveto\+Unpacked(), sqlite3\+Btree\+Next(), sqlite3\+Btree\+Previous(), sqlite3\+Btree\+Put\+Data(), and sqlite3\+Btree\+Trip\+All\+Cursors().
+
+\hypertarget{struct_bt_cursor_ae5babd54e329060ed9f926ca6df3ab4d}{}\index{Bt\+Cursor@{Bt\+Cursor}!e\+State@{e\+State}}
+\index{e\+State@{e\+State}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{e\+State}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} e\+State}\label{struct_bt_cursor_ae5babd54e329060ed9f926ca6df3ab4d}
+
+
+Definition at line 52629 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Clear\+Cursor(), sqlite3\+Btree\+Cursor\+Has\+Moved(), sqlite3\+Btree\+Cursor\+Restore(), sqlite3\+Btree\+Data(), sqlite3\+Btree\+Delete(), sqlite3\+Btree\+Eof(), sqlite3\+Btree\+First(), sqlite3\+Btree\+Insert(), sqlite3\+Btree\+Last(), sqlite3\+Btree\+Moveto\+Unpacked(), sqlite3\+Btree\+Next(), sqlite3\+Btree\+Previous(), sqlite3\+Btree\+Put\+Data(), and sqlite3\+Btree\+Trip\+All\+Cursors().
+
+\hypertarget{struct_bt_cursor_a6d76178ed694d71107fbae62d6fa9c38}{}\index{Bt\+Cursor@{Bt\+Cursor}!hints@{hints}}
+\index{hints@{hints}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{hints}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} hints}\label{struct_bt_cursor_a6d76178ed694d71107fbae62d6fa9c38}
+
+
+Definition at line 52630 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Cursor\+Hints().
+
+\hypertarget{struct_bt_cursor_ab84854bed31add78eccfc236e2d3895e}{}\index{Bt\+Cursor@{Bt\+Cursor}!info@{info}}
+\index{info@{info}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{info}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Cell\+Info} info}\label{struct_bt_cursor_ab84854bed31add78eccfc236e2d3895e}
+
+
+Definition at line 52621 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Data\+Size(), sqlite3\+Btree\+Delete(), sqlite3\+Btree\+Insert(), sqlite3\+Btree\+Key\+Size(), sqlite3\+Btree\+Moveto\+Unpacked(), sqlite3\+Btree\+Next(), and sqlite3\+Btree\+Previous().
+
+\hypertarget{struct_bt_cursor_a37e2c5de2a48868560612bced0c093aa}{}\index{Bt\+Cursor@{Bt\+Cursor}!i\+Page@{i\+Page}}
+\index{i\+Page@{i\+Page}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{i\+Page}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i16} i\+Page}\label{struct_bt_cursor_a37e2c5de2a48868560612bced0c093aa}
+
+
+Definition at line 52631 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Close\+Cursor(), sqlite3\+Btree\+Count(), sqlite3\+Btree\+Cursor\+Zero(), sqlite3\+Btree\+Delete(), sqlite3\+Btree\+Insert(), sqlite3\+Btree\+Moveto\+Unpacked(), sqlite3\+Btree\+Next(), sqlite3\+Btree\+Previous(), and sqlite3\+Btree\+Trip\+All\+Cursors().
+
+\hypertarget{struct_bt_cursor_a528c39e09f68386edd6e2fbb64784561}{}\index{Bt\+Cursor@{Bt\+Cursor}!n\+Key@{n\+Key}}
+\index{n\+Key@{n\+Key}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{n\+Key}]{\setlength{\rightskip}{0pt plus 5cm}{\bf i64} n\+Key}\label{struct_bt_cursor_a528c39e09f68386edd6e2fbb64784561}
+
+
+Definition at line 52622 of file sqlite3.\+c.
+
+\hypertarget{struct_bt_cursor_acf0ab682d2f00d7bfea7e4e35dba7fc9}{}\index{Bt\+Cursor@{Bt\+Cursor}!n\+Ovfl\+Alloc@{n\+Ovfl\+Alloc}}
+\index{n\+Ovfl\+Alloc@{n\+Ovfl\+Alloc}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{n\+Ovfl\+Alloc}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Ovfl\+Alloc}\label{struct_bt_cursor_acf0ab682d2f00d7bfea7e4e35dba7fc9}
+
+
+Definition at line 52625 of file sqlite3.\+c.
+
+\hypertarget{struct_bt_cursor_a2bc66d19c064bb25ff335241f8c621df}{}\index{Bt\+Cursor@{Bt\+Cursor}!p\+Bt@{p\+Bt}}
+\index{p\+Bt@{p\+Bt}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{p\+Bt}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bt\+Shared}$\ast$ p\+Bt}\label{struct_bt_cursor_a2bc66d19c064bb25ff335241f8c621df}
+
+
+Definition at line 52617 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Close\+Cursor(), and sqlite3\+Btree\+Put\+Data().
+
+\hypertarget{struct_bt_cursor_a8bc098d3190d7b0458b0f00fc3e9841b}{}\index{Bt\+Cursor@{Bt\+Cursor}!p\+Btree@{p\+Btree}}
+\index{p\+Btree@{p\+Btree}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{p\+Btree}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Btree}$\ast$ p\+Btree}\label{struct_bt_cursor_a8bc098d3190d7b0458b0f00fc3e9841b}
+
+
+Definition at line 52616 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Clear\+Table\+Of\+Cursor(), sqlite3\+Btree\+Close(), sqlite3\+Btree\+Close\+Cursor(), sqlite3\+Btree\+Delete(), sqlite3\+Btree\+Enter\+Cursor(), sqlite3\+Btree\+Insert(), and sqlite3\+Btree\+Leave\+Cursor().
+
+\hypertarget{struct_bt_cursor_a30f00f9ff785feab4d71f2cf58faab84}{}\index{Bt\+Cursor@{Bt\+Cursor}!pgno\+Root@{pgno\+Root}}
+\index{pgno\+Root@{pgno\+Root}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{pgno\+Root}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pgno} pgno\+Root}\label{struct_bt_cursor_a30f00f9ff785feab4d71f2cf58faab84}
+
+
+Definition at line 52624 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Clear\+Table\+Of\+Cursor(), sqlite3\+Btree\+Count(), sqlite3\+Btree\+Delete(), sqlite3\+Btree\+Insert(), and sqlite3\+Btree\+Put\+Data().
+
+\hypertarget{struct_bt_cursor_af4e0ec7c9494e9d87e0042ab054ac58b}{}\index{Bt\+Cursor@{Bt\+Cursor}!p\+Key@{p\+Key}}
+\index{p\+Key@{p\+Key}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{p\+Key}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ p\+Key}\label{struct_bt_cursor_af4e0ec7c9494e9d87e0042ab054ac58b}
+
+
+Definition at line 52623 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Clear\+Cursor().
+
+\hypertarget{struct_bt_cursor_a0c73f46f09fcecfd9c8d29cd3cc7744d}{}\index{Bt\+Cursor@{Bt\+Cursor}!p\+Key\+Info@{p\+Key\+Info}}
+\index{p\+Key\+Info@{p\+Key\+Info}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{p\+Key\+Info}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Key\+Info}$\ast$ p\+Key\+Info}\label{struct_bt_cursor_a0c73f46f09fcecfd9c8d29cd3cc7744d}
+
+
+Definition at line 52619 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Delete(), and sqlite3\+Btree\+Insert().
+
+\hypertarget{struct_bt_cursor_a1dac2396746176f48a6d2eebfc765c17}{}\index{Bt\+Cursor@{Bt\+Cursor}!p\+Next@{p\+Next}}
+\index{p\+Next@{p\+Next}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{p\+Next}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bt\+Cursor}$\ast$ p\+Next}\label{struct_bt_cursor_a1dac2396746176f48a6d2eebfc765c17}
+
+
+Definition at line 52618 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Close(), sqlite3\+Btree\+Close\+Cursor(), and sqlite3\+Btree\+Trip\+All\+Cursors().
+
+\hypertarget{struct_bt_cursor_a28e43147b02ff3745de0afb619d64c25}{}\index{Bt\+Cursor@{Bt\+Cursor}!p\+Prev@{p\+Prev}}
+\index{p\+Prev@{p\+Prev}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{p\+Prev}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bt\+Cursor} $\ast$ p\+Prev}\label{struct_bt_cursor_a28e43147b02ff3745de0afb619d64c25}
+
+
+Definition at line 52618 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Close\+Cursor().
+
+\hypertarget{struct_bt_cursor_ad37941f0529357971cb490f54966185b}{}\index{Bt\+Cursor@{Bt\+Cursor}!skip\+Next@{skip\+Next}}
+\index{skip\+Next@{skip\+Next}!Bt\+Cursor@{Bt\+Cursor}}
+\subsubsection[{skip\+Next}]{\setlength{\rightskip}{0pt plus 5cm}int skip\+Next}\label{struct_bt_cursor_ad37941f0529357971cb490f54966185b}
+
+
+Definition at line 52626 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Btree\+Insert(), and sqlite3\+Btree\+Trip\+All\+Cursors().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}

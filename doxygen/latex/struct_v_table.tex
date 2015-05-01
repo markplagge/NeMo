@@ -1,0 +1,115 @@
+\hypertarget{struct_v_table}{}\section{V\+Table Struct Reference}
+\label{struct_v_table}\index{V\+Table@{V\+Table}}
+
+
+Collaboration diagram for V\+Table\+:
+% FIG 0
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structsqlite3}{sqlite3} $\ast$ \hyperlink{struct_v_table_ad6e663497d2c934364b3bcf07496b30b}{db}
+\item 
+\hyperlink{struct_module}{Module} $\ast$ \hyperlink{struct_v_table_af1b94c576b400ad171ed0e14e42a3908}{p\+Mod}
+\item 
+\hyperlink{structsqlite3__vtab}{sqlite3\+\_\+vtab} $\ast$ \hyperlink{struct_v_table_abfe9b838cea369f3646c0bdff58a069e}{p\+Vtab}
+\item 
+int \hyperlink{struct_v_table_a3c459f9ae278c22b72583c55ca01acb7}{n\+Ref}
+\item 
+\hyperlink{sqlite3_8c_a74a0f6424ae628af25f23f0a35f6ead3}{u8} \hyperlink{struct_v_table_ab3dcf5546128dfbf22f0a16a83d0729a}{b\+Constraint}
+\item 
+int \hyperlink{struct_v_table_a174369225809cd2e8afe034fa8926f60}{i\+Savepoint}
+\item 
+\hyperlink{struct_v_table}{V\+Table} $\ast$ \hyperlink{struct_v_table_a6d0df91e0570a86dd8b2ab2c4ebe9c30}{p\+Next}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 11465 of file sqlite3.\+c.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{struct_v_table_ab3dcf5546128dfbf22f0a16a83d0729a}{}\index{V\+Table@{V\+Table}!b\+Constraint@{b\+Constraint}}
+\index{b\+Constraint@{b\+Constraint}!V\+Table@{V\+Table}}
+\subsubsection[{b\+Constraint}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u8} b\+Constraint}\label{struct_v_table_ab3dcf5546128dfbf22f0a16a83d0729a}
+
+
+Definition at line 11470 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vdbe\+Exec().
+
+\hypertarget{struct_v_table_ad6e663497d2c934364b3bcf07496b30b}{}\index{V\+Table@{V\+Table}!db@{db}}
+\index{db@{db}!V\+Table@{V\+Table}}
+\subsubsection[{db}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3}$\ast$ db}\label{struct_v_table_ad6e663497d2c934364b3bcf07496b30b}
+
+
+Definition at line 11466 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Get\+V\+Table(), sqlite3\+Vtab\+Disconnect(), and sqlite3\+Vtab\+Unlock().
+
+\hypertarget{struct_v_table_a174369225809cd2e8afe034fa8926f60}{}\index{V\+Table@{V\+Table}!i\+Savepoint@{i\+Savepoint}}
+\index{i\+Savepoint@{i\+Savepoint}!V\+Table@{V\+Table}}
+\subsubsection[{i\+Savepoint}]{\setlength{\rightskip}{0pt plus 5cm}int i\+Savepoint}\label{struct_v_table_a174369225809cd2e8afe034fa8926f60}
+
+
+Definition at line 11471 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vtab\+Savepoint().
+
+\hypertarget{struct_v_table_a3c459f9ae278c22b72583c55ca01acb7}{}\index{V\+Table@{V\+Table}!n\+Ref@{n\+Ref}}
+\index{n\+Ref@{n\+Ref}!V\+Table@{V\+Table}}
+\subsubsection[{n\+Ref}]{\setlength{\rightskip}{0pt plus 5cm}int n\+Ref}\label{struct_v_table_a3c459f9ae278c22b72583c55ca01acb7}
+
+
+Definition at line 11469 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Vtab\+Lock(), and sqlite3\+Vtab\+Unlock().
+
+\hypertarget{struct_v_table_af1b94c576b400ad171ed0e14e42a3908}{}\index{V\+Table@{V\+Table}!p\+Mod@{p\+Mod}}
+\index{p\+Mod@{p\+Mod}!V\+Table@{V\+Table}}
+\subsubsection[{p\+Mod}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Module}$\ast$ p\+Mod}\label{struct_v_table_af1b94c576b400ad171ed0e14e42a3908}
+
+
+Definition at line 11467 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Drop\+Table(), sqlite3\+Is\+Read\+Only(), sqlite3\+Vtab\+Call\+Destroy(), and sqlite3\+Vtab\+Savepoint().
+
+\hypertarget{struct_v_table_a6d0df91e0570a86dd8b2ab2c4ebe9c30}{}\index{V\+Table@{V\+Table}!p\+Next@{p\+Next}}
+\index{p\+Next@{p\+Next}!V\+Table@{V\+Table}}
+\subsubsection[{p\+Next}]{\setlength{\rightskip}{0pt plus 5cm}{\bf V\+Table}$\ast$ p\+Next}\label{struct_v_table_a6d0df91e0570a86dd8b2ab2c4ebe9c30}
+
+
+Definition at line 11472 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Get\+V\+Table(), sqlite3\+Vtab\+Call\+Destroy(), sqlite3\+Vtab\+Disconnect(), and sqlite3\+Vtab\+Unlock\+List().
+
+\hypertarget{struct_v_table_abfe9b838cea369f3646c0bdff58a069e}{}\index{V\+Table@{V\+Table}!p\+Vtab@{p\+Vtab}}
+\index{p\+Vtab@{p\+Vtab}!V\+Table@{V\+Table}}
+\subsubsection[{p\+Vtab}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sqlite3\+\_\+vtab}$\ast$ p\+Vtab}\label{struct_v_table_abfe9b838cea369f3646c0bdff58a069e}
+
+
+Definition at line 11468 of file sqlite3.\+c.
+
+
+
+Referenced by sqlite3\+Alter\+Rename\+Table(), sqlite3\+Vdbe\+Exec(), sqlite3\+Vtab\+Begin(), sqlite3\+Vtab\+Call\+Destroy(), sqlite3\+Vtab\+Overload\+Function(), sqlite3\+Vtab\+Savepoint(), sqlite3\+Vtab\+Sync(), and sqlite3\+Vtab\+Unlock().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/\hyperlink{sqlite3_8c}{sqlite3.\+c}\end{DoxyCompactItemize}
