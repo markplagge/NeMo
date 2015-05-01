@@ -1,171 +1,103 @@
-#include <stdio.h>
-#include<inttypes.h>
-#include<assert.h>
-#include<unistd.h>
-#include <pthread.h>
-#include<sys/types.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#define _idType int_fast16_t //  unsigned int
-//neuron specific type redefs - for potentially integrating weird bit length variable sizes or what not:
-#define _neVoltType uint_fast32_t
-#define _neStatType int_fast32_t
-#define regid_t uint32_t
+/*
+ * mappings.c -- LP mapping functions were abstracted out of main in order to allow for easier testing.
+ */
+#include "mappings.h"
+
+
+/* shadowed variables from the main code. Imp;emented this way to allow for testing and model sanity checking
+ * inital values are used for tests. Init() function sets up the values from the main simulation.
+ * */
+int coresPerPe  = 4;
+int synapsesInCore= 256;
+int neuronsInCore = 128;
+extern tw_lptype model_lps[];
 
 
 
-#define LOC(a) ((regid_t)a)
-#define CORE(a) ((regid_t)(((tw_lpid)(a) >> 32) & 0xFFFFFFFF))
+void initMapVars(int nInCore,int sInCore,int cpe) {
+	coresPerPe = cpe;
+	synapsesInCore = sInCore;
+	neuronsInCore = nInCore;
 
-
-
-void getLocalIDs(tw_lpid global, regid_t * core, regid_t *local ){
-	(*core) = CORE(global);
-	(*local)= LOC(global);
 }
-tw_lpid globalID(regid_t core, regid_t local){
-	tw_lpid returnVal = 0;
-	returnVal = ((uint64_t)core << 32) | local;
+
+//******************Mapping functions***********************//
+void getLocalIDs(tw_lpid global, regid_t* core, regid_t* local) {
+	(*core) = CORE(global);
+	(*local) = LOC(global);
+}
+tw_lpid globalID(regid_t core, regid_t local) {
+	tw_lpid returnVal = 0; //(tw_lpid)calloc(sizeof(tw_lpid) ,1);
+
+	//returnVal = (tw_lpid)core << 32 | (tw_lpid) local;
+	((int32_t *) &returnVal)[0] = local;
+	((int32_t *) &returnVal)[1] = core;
 	return returnVal;
 }
-int numth = 256;
-int cur = 0;
-int max = 16777215;
-int perTh;
-
-void * testVal(void * str){
-	long starti =(*(long *)  str ) * max;
-	long startj = startj;
-	long endj= starti + max;
-	long endi = endj;
-	//printf("Thread checking in with start at %i and end at %i.\n", starti, endi);
-	for(long i = starti; i < endi; i ++)
-	{
-		for(long j = startj; j <endj; j++){
-			regid_t core = i;
-			regid_t local = j;
-			tw_lpid global = globalID(core,local);
-
-			core = CORE(global);
-			local = LOC(local);
-			if(core != i)
-			{
-				//ec 1:
-				printf("\n*******************************Manual Dump CORE **************************\n "
-						       "Core was %u, should have been %li - first check fail, line 57 -- \n"
-						       "Local was %u should have been %li\n"
-						       "\t-------*****************---\t", core, i,local,j);
-			}
-			if(local != j)
-			{
-				//ec 2:
-				printf("\n*******************************Manual Dump LOCAL**************************\n "
-						       "Core was %u, should have been %li - first check fail, line 63. -- \n"
-						       "Local was %u, should have been %li\n"
-						       "\t-------*****************---\t", core, i,local,j);
-			}
-			//assert(core == i);
-			//assert(local == j);
-
-			getLocalIDs(global, &core, &local);
-			if(core != i)
-			{
-				//ec 1:
-				printf("\n*******************************Manual Dump CORE**************************\n "
-						       "Core was %u, should have been %li - second check fail, line 73 -- \n"
-						       "Local was %u, should have been %li\n"
-						       "\t-------*****************---\t", core, i,local,j);
-			}
-			if(local != j)
-			{
-				//ec 2:
-				printf("\n*******************************Manual Dump LOCAL**************************\n "
-						       "Core was %u, should have been %li - first check fail, line 63. -- \n"
-						       "Local was %u, should have been %li\n"
-						       "\t-------*****************---\t", core, i,local,j);
-
-			}
-			assert(core == i);
-			assert(local ==j);
-
-		}
-	}
-
-	return NULL;
+tw_lp* mapping_to_local(tw_lpid global) {
+	regid_t core;
+	regid_t local;
+	getLocalIDs(global, &core, &local);
+	tw_lpid id = (core * CORE_SIZE) + local;
+	return tw_getlp(id);
 }
 
-int main() {
-	printf("Enter.");
-	printf("running tests.\n");
+tw_peid mapping(tw_lpid gid) {
+	regid_t core, local;
+	//getLocalIDs(gid, &core, &local);
+	core = CORE(gid);
+	//local = LOC(gid);
+	//the core is == to kp here.
+	int rank = g_tw_mynode;
+	tw_peid ccd = core / CORES_PER_PE;
+	return ccd;
+}
 
 
+void initial_mapping(void) {
+	tw_pe* pe;
+	// Check that we don't want more KP per LP.
+	int j = 0;
+	for (tw_lpid kpid = 0; kpid < coresPerPe; kpid++) {
 
-	tw_lpid global;
-	regid_t core = 72000;
+		tw_kp_onpe(kpid, g_tw_pe[0]);  // kp on this pe - each core is a KP.
+		// Now define the neurons/synapses running on this core/kp
 
-	regid_t local = 0;
-	global = globalID(core,local);
-	tw_lpid g2 = global;
-	printf("Core is :%u\n\n\n",CORE(global));
+		for (int i = 0; i < neuronsInCore; i++) {  // create the neurons first
 
+			// Right now, we are only allowing one pe per process.
+			// pe = tw_getpe(kpid % g_tw_npe);
+			pe = tw_getpe(0);
+			tw_clock_setup();
+			regid_t myCore = kpid + g_tw_mynode;
+			regid_t myLocal = j;
+			tw_lpid id = globalID(myCore, myLocal);
+			// Create a new LP with the bit-twiddled gid
+			tw_lp_onpe(j, pe, id);
+			tw_lp_onkp(tw_getlp(j), g_tw_kp[kpid]);
+			tw_lp_settype(j, &model_lps[0]);
 
-
-
-
-
-
-	dup2(STDOUT_FILENO, STDERR_FILENO);
-	int status;
-	//pid_t p = fork();
-
-	perTh = max/numth;
-	pthread_t threads[numth];
-	long * thread_args[numth];
-	int result_code;
-	int currentSearchVal = 0;
-	for(int i = 0; i  < numth; i ++){
-
-		thread_args[i] = (long *) malloc (sizeof(long));
-		*thread_args[i] = i;
-		  printf("main - creating thread %i with max search index of %i\n",i,*thread_args[i]);
-		result_code = pthread_create(&threads[i], NULL, testVal, (void*) thread_args[i]);
-	}
-
-
-	/*
-	for(int i = 0; i < 100000; i++)
-	{
-		for(int j = 0; j < 100000; j++)
-		{
-			regid_t core = i;
-			regid_t local = j;
-			tw_lpid global = globalID(core,local);
-			assert(i == core);
-			assert(j == local);
-
-			core = CORE(global);
-			local = LOC(local);
-			assert(core == i);
-			assert(local == j);
-
-			getLocalIDs(global, &core, &local);
-			assert(core == i);
-			assert(local ==j);
-
+			if (DEBUG_MODE)
+				printf("Neuron created on LP %lu, core:local %lu:%lu, kp is %lu",
+				       pe->id, myCore, myLocal, kpid);
+			j++;
 		}
-	}*/
-	for (int index = 0; index < numth; ++index) {
-		// block until thread 'index' completes
-		result_code = pthread_join(threads[index], NULL);
-		printf("In main: thread %d has completed\n", index);
-		assert(0 == result_code);
+		// create synapses
+		for (int i = 0; i < synapsesInCore; i++) {
+			pe = tw_getpe(0); //todo - add support for more PEs
+			regid_t myCore = kpid + g_tw_mynode;
+			regid_t myLocal = j;
+			tw_lpid id = globalID(myCore, myLocal);
+			// Create a new LP with the bit-twiddled gid
+			tw_lp_onpe(j, pe, id);
+			tw_lp_onkp(tw_getlp(j), g_tw_kp[kpid]);
+			tw_lp_settype(j, &model_lps[1]);
+			if (DEBUG_MODE)
+				printf("Neuron created on LP %lu, core:local %u:%lu, kp is %lu", pe->id,
+				       myCore, myLocal, kpid);
+			j++;
+		}
 	}
+}
 
-	dup2(STDERR_FILENO,STDOUT_FILENO);
-	int w;
-	//if(p != 0 )
-	//	w = waitpid(p, &status, WUNTRACED | WCONTINUED);
-	printf("Testing complete.\n");
-
-	}
 

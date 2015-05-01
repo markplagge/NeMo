@@ -14,6 +14,7 @@
 #include "ross.h"
 #include "spike_generator.h"
 #include "libs/sqlite3.h"
+#include "mappings.h"
 #include <stdio.h>
 
 
@@ -160,14 +161,7 @@ void gen_event(spikeGenState *gen_state,tw_lp *lp);
 void gen_reverse(spikeGenState *gen_state,tw_lp *lp);
 void gen_final(spikeGenState *gen_state,tw_lp *lp);
 
-//Mapping funtions
 
-void initial_mapping(void);
-/** Given a global ID, return the core number */
-void getLocalIDs(tw_lpid global, regid_t * core, regid_t *local );
-tw_lpid globalID(regid_t core, regid_t local);
-tw_lp * mapping_to_local(tw_lpid global);
-tw_peid mapping(tw_lpid gid);
 /** neuron init helper functions: */
 void initRandomWts(neuronState *s, tw_lp *lp);
 void initRandomRecurrance(neuronState *s);

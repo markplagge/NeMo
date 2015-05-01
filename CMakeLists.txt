@@ -13,6 +13,7 @@ SET(model_srcs
 	models/synapse.h
 	spike_generator.c
 	spike_generator.h
+	mappings.c
 	model_main.h
 	model_main.c
 	
@@ -21,7 +22,7 @@ SET(model_srcs
 
 # Main function (in this case) is found in model_main.c
 
-ADD_EXECUTABLE(tnt_benchmark model_main.c ${model_srcs})
+ADD_EXECUTABLE(tnt_benchmark model_main.c ${model_srcs} mappings.h)
 
 
 TARGET_LINK_LIBRARIES(tnt_benchmark ROSS m)

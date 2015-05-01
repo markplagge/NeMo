@@ -98,10 +98,6 @@ extern int DEBUG_MODE;
 #define IABS(a) (((a) < 0) ? (-a) : (a))
 #define REMZ(a) (((a) < 0) ? (0) : (a))
 #define TIME_CEIL (0)
-/** LOC(a) -- bitwise local id getter from a tw_lpid. */
-#define LOC(a) ((regid_t)a) & 0xFFFFFFFF
-/** CORE(a) -- a bitwise core id getter from a tw_lpid */
-#define CORE(a) ((regid_t)(((tw_lpid)(a) >> 32) & 0xFFFFFFFF))
 
 long getTotalNeurons();
 long getTotalSynapses();
