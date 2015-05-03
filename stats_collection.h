@@ -13,7 +13,8 @@
 #include <stdio.h>
 #include "assist.h"
 
-#include "libs/sqlite3.h"
+	//#include "libs/sqlite3.h"
+#include <sqlite3.h>
 /* tables */
 
 
