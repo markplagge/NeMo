@@ -249,15 +249,14 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   // plan.
   else {
 
-    if (DEBUG_MODE == 1) {
+		  // if (DEBUG_MODE == 1) {
 		startRecord();
-      if (M->type == NEURON)
-			  //printf("Synapse %i firing. Recvd Msg from Neuron %i\n", s->synID,
-               M->senderLocalID);
+			//if (M->type == NEURON)
+			  //printf("Synapse %i firing. Recvd Msg from Neuron %i\n", s->synID,M->senderLocalID);
       //}
-      if (M->type == INIT)
+	  //if (M->type == INIT)
 			  //printf("Synapse %i init msg received.\n", s->synID);
-    }
+			  //}
 
     for (int i = 0; i < NEURONS_IN_CORE; i++) {
       // ts = tw_rand_exponential(lp->rng,4);
