@@ -77,7 +77,7 @@ void neuron_init(neuronState* s, tw_lp* lp) {
     // todo: Is +1 and -1 the right offset here? I can't think about it right
     // now.
     s->dendriteLocalDest =
-        tw_rand_integer(lp->rng, NEURONS_IN_CORE + 1, SYNAPSES_IN_CORE - 1);
+        tw_rand_integer(lp->rng, NEURONS_IN_CORE, SYNAPSES_IN_CORE);
     s->dendriteDest = globalID(s->dendriteCore, s->dendriteLocalDest);
 
   }
