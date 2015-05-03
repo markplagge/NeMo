@@ -150,7 +150,7 @@ void setNeuronThreshold(neuronState* s, tw_lp* lp) {
 void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
   tw_lpid self = lp->gid;
 
-  if (DEBUG_MODE == 1)
+  //if (DEBUG_MODE == 1)
 		  // printf("Neuron %i recvd synapse spike from %i.\n", s->neuronID,m->senderLocalID);
   bool didFire = neuronReceiveMessage(s, tw_now(lp), m, lp);
   // create message if didFire happened:
