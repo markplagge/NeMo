@@ -67,7 +67,7 @@ char *ALT_LEAK;
 char *ALT_RESET;
 int MIN_RESET          = 0;
 int MAX_RESET          = 10;
-int DEBUG_MODE         = 1;
+int DEBUG_MODE         = 0;
 ///// Ugly - maybe there's a better way to declare these?
 //ROSS OPTIONS:
 char* configFilePath;
