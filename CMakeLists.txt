@@ -3,6 +3,9 @@ INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR})
 
 ## If you will be using the ROSSIO library add this
 #INCLUDE_DIRECTORIES(${ROSSIO_SOURCE_DIR})
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11")
+
 
 # Files you have included in your model
 SET(model_srcs

@@ -387,7 +387,8 @@ tw_lpid typeMapping(tw_lpid gid){
 	regid_t coreID;
 	getLocalIDs(gid, &coreID, &localID);
 		//if the localID is > than the number of neurons, this is a synapse.
-	return localID > NEURONS_IN_CORE ? 0:1; //TODO: Switch this to an enum
+	int id = localID < NEURONS_IN_CORE ? 0:1;
+	return id; //TODO: Switch this to an enum
 }
 ///////////////MAIN///////////////////////
 int model_main(int argc, char* argv[]) {
