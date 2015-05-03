@@ -196,9 +196,7 @@ void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
 }
 void neuron_final(neuronState* s, tw_lp* lp) {
   if (s->fireCount != 0)
-    if (DEBUG_MODE == 1)
-			printf("Neuron %i:%i has fired %u times. \n", s->coreID, s->neuronID,
-             s->fireCount);
+
   neuronSent += s->fireCount;
 }
 
