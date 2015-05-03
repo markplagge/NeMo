@@ -60,8 +60,10 @@ regid_t getNeuronID(tw_lpid gid) {
 void getTypeLocalIDs(tw_lpid global, regid_t* core, regid_t* local){
 	getLocalIDs(global, core, local);
 		//determine type:
-	if(local - SYNAPSES_IN_CORE > 0)
-		local = local-SYNAPSES_IN_CORE;
+	regid_t ttl = CORE_SIZE * *core;
+		if(*local - ttl > 0)
+			*local =*local - ttl;
+
 }
 
 tw_peid mapping(tw_lpid gid) {

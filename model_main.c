@@ -381,9 +381,16 @@ void gen_final(spikeGenState* gen_state, tw_lp* lp) {
 tw_lpid typeMapping(tw_lpid gid){
 	regid_t localID;
 	regid_t coreID;
-	getLocalIDs(gid, &coreID, &localID);
+//	getLocalIDs(gid, &coreID, &localID);
 		//if the localID is > than the number of neurons, this is a synapse.
-	int id = localID < NEURONS_IN_CORE ? 0:1;
+	int id;
+	getTypeLocalIDs(gid, &coreID, &localID);
+	id = localID < NEURONS_IN_CORE ? 0 :1;
+//	if(coreID == 0){
+//		id = localID < NEURONS_IN_CORE  ? 0:1;
+//	}
+//	else
+//		id = localID - (SYNAPSES_IN_CORE + (NEURONS_IN_CORE * coreID))  ? 0 : 1;
 	return id; //TODO: Switch this to an enum
 }
 ///////////////MAIN///////////////////////
