@@ -106,7 +106,7 @@ void initRandomWts(neuronState* s, tw_lp* lp) {
   // randomized wts:
   for (int j = 0; j < SYNAPSES_IN_CORE; j++) {
     s->perSynapseDet[j] = true;
-    s->perSynapseWeight[j] = tw_rand_integer(lp->rng, 0, SYNAPSE_WEIGHT_MAX);
+    s->perSynapseWeight[j] = tw_rand_integer(lp->rng, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
   }
 }
 /** initNeuronWithMap -- Initializes this particular neuron based on the sqllite
@@ -151,12 +151,11 @@ void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
   tw_lpid self = lp->gid;
 
   if (DEBUG_MODE == 1)
-    printf("Neuron %i recvd synapse spike from %i.\n", s->neuronID,
-           m->senderLocalID);
+		  // printf("Neuron %i recvd synapse spike from %i.\n", s->neuronID,m->senderLocalID);
   bool didFire = neuronReceiveMessage(s, tw_now(lp), m, lp);
   // create message if didFire happened:
   if (DEBUG_MODE == 1 && didFire == true)
-    printf("Neuron %u has fired. \n", s->neuronID);
+		  // printf("Neuron %u has fired. \n", s->neuronID);
   if (didFire == true) {
     tw_event* neuronEvent;
     Msg_Data* data;
@@ -198,7 +197,7 @@ void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
 void neuron_final(neuronState* s, tw_lp* lp) {
   if (s->fireCount != 0)
     if (DEBUG_MODE == 1)
-      printf("Neuron %i:%i has fired %u times. \n", s->coreID, s->neuronID,
+			printf("Neuron %i:%i has fired %u times. \n", s->coreID, s->neuronID,
              s->fireCount);
   neuronSent += s->fireCount;
 }
@@ -253,11 +252,11 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
     if (DEBUG_MODE == 1) {
 		startRecord();
       if (M->type == NEURON)
-        printf("Synapse %i firing. Recvd Msg from Neuron %i\n", s->synID,
+			  //printf("Synapse %i firing. Recvd Msg from Neuron %i\n", s->synID,
                M->senderLocalID);
       //}
       if (M->type == INIT)
-        printf("Synapse %i init msg received.\n", s->synID);
+			  //printf("Synapse %i init msg received.\n", s->synID);
     }
 
     for (int i = 0; i < NEURONS_IN_CORE; i++) {

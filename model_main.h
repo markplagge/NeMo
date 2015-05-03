@@ -26,15 +26,15 @@
 /**
  *  Number of neurons per core.
  */
-int NEURONS_IN_CORE    = 1;
+int NEURONS_IN_CORE    = 12;
 /**
  *  Number of synapses per core.
  */
-int SYNAPSES_IN_CORE   = 1;
+int SYNAPSES_IN_CORE   = 24;
 /**
  *  Each PE can have one or more virtual cores running during the simulation. Default is 2.
  */
-int CORES_PER_PE       = 1;
+int CORES_PER_PE       = 2;
 /**
  *  Determines the maximum and minimum thresholds for a neuron to fire.
  */
@@ -48,7 +48,7 @@ int THRESHOLD_MIN      = 30;
  *	These parameters adjust the input weight given to each synapse. */
 int SYNAPSE_WEIGHT_MAX = 10;
 /** Minimum synapse weight. @see SYNAPSE_WEIGHT_MAX */
-int SYNAPSE_WEIGHT_MIN = 5;
+int SYNAPSE_WEIGHT_MIN = 1;
 
 	//int DENDRITE_MIN= 1;
 	//int DENDRITE_MAX= 1;
