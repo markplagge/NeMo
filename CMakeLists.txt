@@ -10,13 +10,17 @@ SET(model_srcs
 	assist.h
 	models/neuron_model.c
 	models/neuron_model.h
+	libs/sqlite3.h
+	libs/sqlite3.c
 	models/synapse.h
 	spike_generator.c
 	spike_generator.h
+	mappings.h
 	mappings.c
 	model_main.h
 	model_main.c
-	
+	stats_collection.h
+	stats_collection.c
 )
 
 

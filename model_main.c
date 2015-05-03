@@ -49,7 +49,9 @@ void neuron_init(neuronState* s, tw_lp* lp) {
 	regid_t core, local;
 	getLocalIDs(self, &core, &local);
   s->coreID = core;
-  s->neuronID = local;
+
+	s->neuronID = getNeuronID(self);// local;
+
   // initial membrane potential values
   s->prVoltage = 0;
   s->fireCount = 0;
@@ -63,13 +65,12 @@ void neuron_init(neuronState* s, tw_lp* lp) {
   s->lastLeakTime = 0;
   s->reverseLeak = &revNoLeak;
 	s->doReset = &resetZero;
-  if (isFile ==
-      false) {  // no file map, so we use random values. For benchmark,
+  if (isFile == false) {  // no file map, so we use random values. For benchmark,
                 // we have to create
     // a recurrance network.
     initRandomWts(s, lp);
     s->dendriteCore =
-        tw_rand_integer(lp->rng, 0, g_tw_nkp);  // the dest core can be
+        tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);  // the dest core can be
     // anywhere from 0 to the number of cores
     // in the simulation, or nkp.
 
@@ -84,6 +85,12 @@ void neuron_init(neuronState* s, tw_lp* lp) {
   else {
     // initNeruonWithMap(s, lp, lp->pe);
   }
+	if(DEBUG_MODE == true){
+		startRecord();
+		mapRecord(typeMapping(lp->gid), "Neuron", s->neuronID, s->coreID, lp->id);
+		endRecord();
+
+	}
 }
 
 /** initRdmWts - initializes random weights for synapses. Essentially creates a
@@ -167,7 +174,11 @@ void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
     data->senderLocalID = s->neuronID;
     data->sourceCore = s->coreID;
     data->type = NEURON;
-
+	  if(DEBUG_MODE == 1){
+		  startRecord();
+		  neuronEventRecord(s->coreID, s->neuronID, getSynapseID(m->sender),tw_now(lp), s->prVoltage);
+		  endRecord();
+	  }
     tw_event_send(neuronEvent);
   }
 }
@@ -204,11 +215,12 @@ void synapse_init(synapseState* s, tw_lp* lp) {
 	regid_t core, loc;
 	getLocalIDs(lp->gid, &core, &loc);
   s->coreID =  core;  // TODO: check multi-core function
-  s->synID = NEURONS_IN_CORE - loc;
+	s->synID = getSynapseID(self);
 
   // set up destination GIDs
   for (regid_t i = 0; i < NEURONS_IN_CORE; i++) {
-    s->dests[i] = globalID(s->coreID, i);
+
+	  s->dests[i] = globalID(s->coreID, i);
   }
 
   // Spike Generator init setup.
@@ -216,6 +228,12 @@ void synapse_init(synapseState* s, tw_lp* lp) {
     s->spikeGen = tw_calloc(TW_LOC, "Synapse_Init", sizeof(spikeGenState), 1);
     gen_init(s->spikeGen, lp);
   }
+	if(DEBUG_MODE == true){
+		startRecord();
+		mapRecord(typeMapping(lp->gid), "Synapse", s->synID, s->coreID, lp->id);
+		endRecord();
+
+	}
 }
 void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   // call synapse helper functions and send messages to all of the neurons in
@@ -231,7 +249,9 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   // If this is not a spike generator message, then we will proceed according to
   // plan.
   else {
+
     if (DEBUG_MODE == 1) {
+		startRecord();
       if (M->type == NEURON)
         printf("Synapse %i firing. Recvd Msg from Neuron %i\n", s->synID,
                M->senderLocalID);
@@ -253,13 +273,16 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
       // event:
 
       if (DEBUG_MODE == 1) {
-        printf("Sending message to GID %lu, at time: %f.\n", s->dests[i], ts);
+			  //printf("Sending message to GID %lu, at time: %f.\n", s->dests[i], ts);
+		  synapseEventRecord(s->coreID, s->synID, tw_now(lp), s->dests[i]);
       }
       tw_event_send(newEvent);
 
       // tw_event *e = tw_event_new(s->dests[i], nextTime, lp);
       // tw_event_send(e);
     }
+	  if(DEBUG_MODE == true)
+		  endRecord();
   }
 }
 void synapse_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
@@ -278,7 +301,10 @@ void gen_init(spikeGenState* gen_state, tw_lp* lp) {
   // probability settings. Could move within if statement, but nah.
   gen_state->rndSpikes.randomRate = GEN_PROB / 100;
   gen_state->rndSpikes.rndFctVal = GEN_FCT / 100;
-  if (GEN_RND == true) {
+		//RANDOM GENERATOR MAP SETUP
+
+	 gen_state->connectedSynapses = tw_calloc(TW_LOC, "Synapse", sizeof(tw_lpid*), GEN_OUTBOUND);
+	if (GEN_RND == true) {
     gen_state->rndSpikes.randomRate = GEN_PROB;
     gen_state->rndSpikes.rndFctVal = GEN_FCT;
     gen_state->rndSpikes.randMethod = RND_MODE;
@@ -287,19 +313,23 @@ void gen_init(spikeGenState* gen_state, tw_lp* lp) {
     // rand_uniform function tw_rand_unif(lp->rng)
     gen_state->rndSpikes.randMethod = UNF;
     gen_state->spikeGen = uniformGen;
-  }
-  // set up the outbound connections.
-  gen_state->connectedSynapses =
-      tw_calloc(TW_LOC, "Synapse", sizeof(tw_lpid*), GEN_OUTBOUND);
+		  // set up the outbound connections.
 
-  long totalSyns = getTotalSynapses();
-  printf("Synapses in total sim: %ld\n", totalSyns);
-  for (int i = 0; i < GEN_OUTBOUND; i++) {
-    regid_t core, local;
-    core = tw_rand_integer(lp->rng, 0, g_tw_nkp);
-    local = NEURONS_IN_CORE + ( tw_rand_integer(lp->rng, 0, getTotalSynapses()) % NEURONS_IN_CORE);
-    gen_state->connectedSynapses[i] = globalID(core, local);
-  }
+
+
+	  long totalSyns = getTotalSynapses();
+	  printf("Synapses in total sim: %ld\n", totalSyns);
+
+		for (int i = 0; i < GEN_OUTBOUND; i++) {
+			regid_t core, local;
+			core = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
+			local = NEURONS_IN_CORE + ( tw_rand_integer(lp->rng, 0, getTotalSynapses()) % NEURONS_IN_CORE);
+			gen_state->connectedSynapses[i] = globalID(core, local);
+		}
+	}
+		//Here we read the generator setup map
+		//TODO: Implement this!
+
   // Initial event seeding:
   tw_stime ts = getNextEventTime(lp) + GEN_LAG;  // function calls.
   tw_event* newEvent = tw_event_new(lp->gid, ts + GEN_LAG, lp);
@@ -324,7 +354,7 @@ void gen_event(spikeGenState* gen_state, tw_lp* lp) {
     switch (gen_state->genMode) {
       case UNF:
         dest = gen_state->connectedSynapses[tw_rand_integer(
-            lp->rng, 0, gen_state->outboud)];
+            lp->rng, 0, gen_state->outboud - 1)];
         break;
 
       default:
@@ -332,8 +362,8 @@ void gen_event(spikeGenState* gen_state, tw_lp* lp) {
         break;
     }
     // set up DEST here - items are stored as the absolute value of the synapse,
-    // need to convert to GID.
-    dest = ((NEURONS_IN_CORE * ((dest / CORE_SIZE) + 1)) + dest) - 1;
+
+
     tw_event* newEvent = tw_event_new(dest, ts, lp);
     Msg_Data* data = (Msg_Data*)tw_event_data(newEvent);
     data->type = SYNAPSE;
@@ -351,27 +381,38 @@ void gen_reverse(spikeGenState* gen_state, tw_lp* lp) {
 void gen_final(spikeGenState* gen_state, tw_lp* lp) {
 }
 
-
+	////////////////////TypeMapping///////////
+tw_lpid typeMapping(tw_lpid gid){
+	regid_t localID;
+	regid_t coreID;
+	getLocalIDs(gid, &coreID, &localID);
+		//if the localID is > than the number of neurons, this is a synapse.
+	return localID > NEURONS_IN_CORE ? 0:1; //TODO: Switch this to an enum
+}
 ///////////////MAIN///////////////////////
 int model_main(int argc, char* argv[]) {
   int i;
-  int num_lps_per_pe;
-  CORE_SIZE = NEURONS_IN_CORE + SYNAPSES_IN_CORE;
-  // tw_opt_add(app_opt);
-  g_tw_nkp = CORES_PER_PE;
-  tw_init(&argc, &argv);
-  initMapVars(NEURONS_IN_CORE,SYNAPSES_IN_CORE,CORES_PER_PE);
-  g_tw_events_per_pe = 2048 * CORE_SIZE * CORES_PER_PE;
+	CORE_SIZE = NEURONS_IN_CORE + SYNAPSES_IN_CORE;
 
-  // Trying linear mapping first - it basically is linear.
+  int num_lps_per_pe= (CORE_SIZE * (CORES_PER_PE));;
+
+  // tw_opt_add(app_opt);
+	tw_init(&argc, &argv); //toto
+
+   g_tw_events_per_pe =  EVENT_BASE * CORE_SIZE * CORES_PER_PE;
+
+  // Trying linear mapping first  - it basically is linear.
   // g_tw_mapping = LINEAR;
 
   // initial_mapping();
   g_tw_mapping = CUSTOM;
   g_tw_custom_initial_mapping = &initial_mapping;
   g_tw_custom_lp_global_to_local_map = &mapping_to_local;
-  tw_define_lps(CORE_SIZE * CORES_PER_PE, sizeof(Msg_Data), 0);
-
+	g_tw_lp_typemap = &typeMapping;
+	g_tw_lp_types = model_lps;
+	tw_define_lps(num_lps_per_pe, sizeof(Msg_Data), 0);
+		//set the types:
+	tw_lp_setup_types();
 
   // Useful ROSS variables and functions
   // tw_nnodes() : number of nodes/processors defined
@@ -403,6 +444,9 @@ int model_main(int argc, char* argv[]) {
 
   // Do some file I/O here? on a per-node (not per-LP) basis
   // load mapping here.
+	int world_size;
+	MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+	CORES_IN_SIM = CORES_PER_PE * world_size;
   tw_run();
 
   tw_end();
@@ -410,6 +454,13 @@ int model_main(int argc, char* argv[]) {
   return 0;
 }
 int main(int argc, char* argv[]) {
+	g_tw_ts_end = 100;
+	g_tw_clock_rate = 1.00;
+
+	if(DEBUG_MODE == true){
+		initDB();
+		printf("Init db call \n");
+	}
   tw_opt_add(app_opt);
   int rv = model_main(argc, argv);
   if (g_tw_mynode == 0) {  // && DEBUG_MODE == true){

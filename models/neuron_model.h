@@ -80,6 +80,7 @@ void resetLinear(void *neuronState);
 typedef struct NeuronModel {
    regid_t coreID; // local coreID
    regid_t neuronID; //local neuron ID (each core has some number of neurons)
+	
    _neVoltType cVoltage; //current "voltage" contained in the neuron.
    _neVoltType prVoltage; //previous neuron voltage.
    _neVoltType threshold; //neuron's threshold voltage

@@ -13,8 +13,9 @@
 #include "assist.h"
 #include "ross.h"
 #include "spike_generator.h"
-#include "libs/sqlite3.h"
+
 #include "mappings.h"
+#include "stats_collection.h"
 #include <stdio.h>
 
 
@@ -25,23 +26,23 @@
 /**
  *  Number of neurons per core.
  */
-int NEURONS_IN_CORE    = 4;
+int NEURONS_IN_CORE    = 1;
 /**
  *  Number of synapses per core.
  */
-int SYNAPSES_IN_CORE   = 4;
+int SYNAPSES_IN_CORE   = 1;
 /**
  *  Each PE can have one or more virtual cores running during the simulation. Default is 2.
  */
-int CORES_PER_PE       = 2;
+int CORES_PER_PE       = 1;
 /**
  *  Determines the maximum and minimum thresholds for a neuron to fire.
  */
-int THRESHOLD_MAX      = 11;
+int THRESHOLD_MAX      = 100;
 /**
  *  Minimum threshold. @see THRESHOLD_MAX
  */
-int THRESHOLD_MIN      = 5;
+int THRESHOLD_MIN      = 30;
 /**
  *	Each neuron is connected to the synapses (inputs) within the core it is running in.
  *	These parameters adjust the input weight given to each synapse. */
@@ -54,6 +55,7 @@ int SYNAPSE_WEIGHT_MIN = 5;
 	//int DENDRITE_W_MIN=1;
 	//int DENDRITE_W_MAX=2;
 int CORE_SIZE;
+int CORES_IN_SIM;
 float CLOCK_SPEED      = 1;
 //gen lag timer:
 tw_stime GEN_LAG            = .5;
@@ -71,9 +73,13 @@ int DEBUG_MODE         = 1;
 char* configFilePath;
 bool isFile;
 tw_stime lookahead     = .00000000001;
-int events_per_pe      = 0;
+
 int EXEC_MEMORY        = 100000000;
-int CLOCK_RATE         = 10;
+
+
+/** EVENT_BASE - tweakable parameter for memory */
+int EVENT_BASE			= 60000;
+
 //Synapses and neuron max values (for off-by-one errors):
 int tt_neurons         = 0;
 int tt_synapses        = 0;
@@ -112,10 +118,9 @@ const tw_optdef app_opt[] = {
         TWOPT_ULONG("ftr", GEN_FCT, "Probability or Lambda for geometric or binomial option."),
         TWOPT_ULONG("genout", GEN_OUTBOUND,
                     "Number of outbound connections for generator (Set <= number of synapses per core."),
-		TWOPT_STIME("genlag", GEN_LAG, "Inital lag time for the generator"),
+		TWOPT_STIME("genlag", GEN_LAG, "Lag time for the generator"),
         TWOPT_GROUP("Misc. Settings"),
         TWOPT_FLAG("debug", DEBUG_MODE, "Enable debug output"),
-        TWOPT_ULONG("events", events_per_pe, "Events per PE"),
         TWOPT_STIME("lh", lookahead, "Lookahead Setting"),
         {TWOPT_END()}
 };
@@ -169,6 +174,15 @@ void setNeuronThreshold(neuronState *s, tw_lp * lp);
 
 void initNeruonWithMap(neuronState *s,tw_lp *lp, tw_pe *pe);
 void initSynapseWithMap(neuronState *s,tw_lp *lp, tw_pe *pe);
-	//shotgun troubleshooting
+/**
+ *  typeMapping - custom type mapping function. Uses the mapping functions
+ *	defined in mapping.h.
+ *
+ *
+ *  @param gid The global ID of the lp
+ *
+ *  @return returns the typeID
+ */
+tw_lpid typeMapping(tw_lpid gid);
 
 #endif //ROSS_TOP_MODEL_MAIN_H
