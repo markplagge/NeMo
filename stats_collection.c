@@ -9,7 +9,7 @@
 #include "stats_collection.h"
 static int callback(void *data, int argc, char **argv, char **azColName){
 	int i;
-	fprintf(stderr, "%s: ", (const char*)data);
+	printf("%s: ", (const char*)data);
 	for(i=0; i<argc; i++){
 		printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
 	}
@@ -17,6 +17,7 @@ static int callback(void *data, int argc, char **argv, char **azColName){
 	printf("SQL Created \n");
 	return 0;
 }
+char* path = "./newstats.db";
 const char* data = "Callback function called";
 sqlite3 *db;
 void initDB(){
@@ -40,7 +41,7 @@ void initDB(){
 	" receivedSynapse INTEGER,"
 	" postFirePotential INTEGER,"
 	" PRIMARY KEY (eventID))";
-	rc = sqlite3_open("./livestats.db", &db);
+	rc = sqlite3_open(path, &db);
 
 	char* mapSQL = "CREATE TABLE mappings"
 	" (ID INTEGER NOT NULL,"
@@ -76,13 +77,13 @@ void neuronEventRecord(regid_t core, regid_t local, regid_t
 
 
 	int rc;
-	rc = sqlite3_open("./livestats.db", &db);
+
 
 	 rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
 
 }
 void startRecord(){
-	sqlite3_open("./livestats.db", &db);
+	sqlite3_open(path, &db);
 }
 void endRecord(){
 	sqlite3_close(db);

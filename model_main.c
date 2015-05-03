@@ -395,8 +395,10 @@ int model_main(int argc, char* argv[]) {
 
   // tw_opt_add(app_opt);
 	tw_init(&argc, &argv); //toto
-
-   g_tw_events_per_pe =  EVENT_BASE * CORE_SIZE * CORES_PER_PE;
+	if(DEBUG_MODE == true){
+		initDB();
+		printf("Init db call \n");
+	}   g_tw_events_per_pe =  EVENT_BASE * CORE_SIZE * CORES_PER_PE;
 
   // Trying linear mapping first  - it basically is linear.
   // g_tw_mapping = LINEAR;
@@ -454,10 +456,7 @@ int main(int argc, char* argv[]) {
 	g_tw_ts_end = 100;
 	g_tw_clock_rate = 1.00;
 
-	if(DEBUG_MODE == true){
-		initDB();
-		printf("Init db call \n");
-	}
+
   tw_opt_add(app_opt);
   int rv = model_main(argc, argv);
   if (g_tw_mynode == 0) {  // && DEBUG_MODE == true){
