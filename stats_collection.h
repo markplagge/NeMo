@@ -14,7 +14,7 @@
 #include "assist.h"
 #include "models/neuron_model.h"
 	//#include "libs/sqlite3.h"
-#include <sqlite3.h>
+#include "libs/sqlite3.h"
 /* tables */
 
 

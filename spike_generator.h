@@ -52,8 +52,14 @@ typedef struct SpikeGenerator {
 	tw_lpid *connectedSynapses; /**< An array of synapses that this is RandomSpikes is attached to. */
 	spikeGenDel spikeGen;
 
-		selectedSpikes  selSpikes;
-		randomSpikes  rndSpikes;
+		//selectedSpikes  selSpikes;
+		//randomSpikes  rndSpikes;
+	int * outputMesh; /**< Array that represents the output levels per tick.*/
+	int outputMeshLengh; /**< Size of the output mesh. */
+	float randomRate; /**< If the random value is over this, spike.*/
+	randomSelect randMethod; /**< Selected random generator. */
+	float rndFctVal; /**<For functions that need a second parameter (eg, binomial etc.), this is the second parameter. */
+
 	randomSelect genMode;
 }spikeGenState;
 

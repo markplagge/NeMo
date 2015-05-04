@@ -13,7 +13,7 @@ bool uniformGen(void *spikeGen, tw_lp *lp) {
 	
 	spikeGenState * st = (spikeGenState * ) spikeGen;
 	tw_rng_stream *str = (tw_rng_stream *) lp->rng;
-		if(tw_rand_unif(str) < st->rndSpikes.randomRate / 100 )
+		if(tw_rand_unif(str) < st->randomRate / 100 )
 		willFire = true;
 	return willFire;
 }

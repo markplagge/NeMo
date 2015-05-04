@@ -18,11 +18,12 @@ static int callback(void *data, int argc, char **argv, char **azColName){
 	printf("SQL Created \n");
 	return 0;
 }
-char* path = "./newstats.db";
+
 const char* data = "Callback function called";
 sqlite3 *db;
+char* path;
 void initDB(){
-
+	path = sqlite3_mprintf("./tnt_bench_stats%s.db", g_tw_mynode);
 	char *zErrMsg = 0;
 	int rc;
 	char* synSQL = "CREATE TABLE SynapseEvents"

@@ -3,7 +3,7 @@
  * allow for easier testing.
  */
 #include "mappings.h"
-#define VERIFY_MAPPING 1
+
 
 /* shadowed variables from the main code. Imp;emented this way to allow for
  * testing and model sanity checking

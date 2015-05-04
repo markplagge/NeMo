@@ -151,7 +151,7 @@ void setNeuronThreshold(neuronState* s, tw_lp* lp) {
 //******************Neuron Functions***********************//
 void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
   tw_lpid self = lp->gid;
-	tw_lpid d;
+	tw_lpid d = s->dendriteDest;
   //if (DEBUG_MODE == 1)
 		  //tw_lpid d;
 		  // printf("Neuron %i recvd synapse spike from %i.\n", s->neuronID,m->senderLocalID);
@@ -177,10 +177,10 @@ void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
     data->sourceCore = s->coreID;
     data->type = NEURON;
 	     tw_event_send(neuronEvent);
-	  if(DEBUG_MODE == 1)
+	  if(DEBUG_MODE == true)
 		  d = dest;
   }
-	if(DEBUG_MODE == 1){
+	if(DEBUG_MODE == true){
 		startRecord();
 
 		char* evt = sqlite3_mprintf("Send? %i --- Neuron States-  FireCount: %i, Last Active: %f, Last Leak: %i -- from synapse GID: %llu", didFire, s->fireCount, s->lastActiveTime, s->lastLeakTime, m->sender);
@@ -253,6 +253,7 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
                                                   // data
     gen_event(s->spikeGen, lp);
   }
+	
   // If this is not a spike generator message, then we will proceed according to
   // plan.
   else {
@@ -308,19 +309,19 @@ void gen_init(spikeGenState* gen_state, tw_lp* lp) {
   // synapse now holds the generator/IO system.
   gen_state->outboud = GEN_OUTBOUND;
   // probability settings. Could move within if statement, but nah.
-  gen_state->rndSpikes.randomRate = GEN_PROB / 100;
-  gen_state->rndSpikes.rndFctVal = GEN_FCT / 100;
+  gen_state->randomRate = GEN_PROB / 100;
+  gen_state->rndFctVal = GEN_FCT / 100;
 		//RANDOM GENERATOR MAP SETUP
 
 	 gen_state->connectedSynapses = tw_calloc(TW_LOC, "Synapse", sizeof(tw_lpid*), GEN_OUTBOUND);
 	if (GEN_RND == true) {
-    gen_state->rndSpikes.randomRate = GEN_PROB;
-    gen_state->rndSpikes.rndFctVal = GEN_FCT;
-    gen_state->rndSpikes.randMethod = RND_MODE;
+    gen_state->randomRate = GEN_PROB;
+    gen_state->rndFctVal = GEN_FCT;
+    gen_state->randMethod = RND_MODE;
     // randomized values for hooking this machine up to the various neurons.
 
     // rand_uniform function tw_rand_unif(lp->rng)
-    gen_state->rndSpikes.randMethod = UNF;
+    gen_state->randMethod = UNF;
     gen_state->spikeGen = uniformGen;
 		  // set up the outbound connections.
 
@@ -328,13 +329,16 @@ void gen_init(spikeGenState* gen_state, tw_lp* lp) {
 
 	  long totalSyns = getTotalSynapses();
 	  printf("Synapses in total sim: %ld\n", totalSyns);
-
+		printf("Generator\nCore\tLocal\tGlobal\n");
 		for (int i = 0; i < GEN_OUTBOUND; i++) {
 			regid_t core, local;
 			core = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
 			local = NEURONS_IN_CORE + ( tw_rand_integer(lp->rng, 0, getTotalSynapses()) % NEURONS_IN_CORE);
+			tw_lpid gid = globalID(core, local);
+			printf("%lu\t%lu\t%llu\n",core,local,gid);
 			gen_state->connectedSynapses[i] = globalID(core, local);
 		}
+		printf("\n");
 	}
 		//Here we read the generator setup map
 		//TODO: Implement this!
