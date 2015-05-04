@@ -12,7 +12,7 @@
 #define __ROSS_TOP__stats_collection__
 #include <stdio.h>
 #include "assist.h"
-
+#include "models/neuron_model.h"
 	//#include "libs/sqlite3.h"
 #include <sqlite3.h>
 /* tables */
@@ -37,3 +37,4 @@ void neuronEventRecord(regid_t core, regid_t local, regid_t fromSynapse, tw_stim
 void synapseEventRecord(regid_t core, regid_t local, tw_stime timestamp, int dest);
 void mapRecord( int type, char* typet, int localID, int coreID, int lpid);
 #endif /* defined(__ROSS_TOP__stats_collection__) */
+void recordNeuron(neuronState *n);

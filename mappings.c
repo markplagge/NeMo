@@ -9,7 +9,7 @@
  * */
 
 
-
+	//TODO : Neurons are firing at other neurons.
 
 //******************Mapping functions***********************//
 void getLocalIDs(tw_lpid global, regid_t* core, regid_t* local) {

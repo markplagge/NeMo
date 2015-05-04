@@ -8,6 +8,7 @@
 
 #include "stats_collection.h"
 static int callback(void *data, int argc, char **argv, char **azColName){
+	printf("Debug Database Call \n");
 	int i;
 	printf("%s: ", (const char*)data);
 	for(i=0; i<argc; i++){
@@ -34,13 +35,13 @@ void initDB(){
 
 	char* neuSQL = ""
 	" CREATE TABLE neuronEvent"
-	" (eventID INTEGER NOT NULL,"
+	" (eventID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
 	" coreID INTEGER,"
 	" localID INTEGER,"
 	" eventTime DOUBLE,"
 	" receivedSynapse INTEGER,"
-	" postFirePotential INTEGER,"
-	" PRIMARY KEY (eventID))";
+	" postFirePotential INTEGER"
+	" )";
 	rc = sqlite3_open(path, &db);
 
 	char* mapSQL = "CREATE TABLE mappings"
@@ -51,10 +52,22 @@ void initDB(){
 	" local INTEGER,"
 	" LPID INTEGER,"
 	"PRIMARY KEY (ID))";
+	char* nmapSQL = "CREATE TABLE \"neurons\" ("
+	" \"neuronID\" integer NOT NULL,"
+	" \"dendCore\" integer,"
+	" "
+	" \"dendGID\" INTEGER,"
+	" \"dendLocal\" integer,"
+	" \"thresh\" integer,"
+	" \"other\" integer,"
+	" \"ID\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT\n"
+	") ";
 
 	rc = sqlite3_exec(db, synSQL, callback, (void*)data, &zErrMsg);
 	rc = sqlite3_exec(db, neuSQL, callback, (void*)data, &zErrMsg);
 		rc = sqlite3_exec(db, mapSQL, callback, (void*)data, &zErrMsg);
+	rc = sqlite3_exec(db, nmapSQL, callback, (void*)data, &zErrMsg);
+
 	printf("Created database. \n");
 	sqlite3_close(db);
 }
@@ -73,7 +86,7 @@ void neuronEventRecord(regid_t core, regid_t local, regid_t
 	char *zErrMsg=0;
 
 
-	char* sql = sqlite3_mprintf("INSERT INTO neuronEvent (rowid, eventID, coreID, localID, eventTime, receivedSynapse, postFirePotential) VALUES (%i, %i, %i, %i, %f, %i, %i); ",row,row,core,local,timestamp,fromSynapse,postPot);
+	char* sql = sqlite3_mprintf("INSERT INTO neuronEvent ( coreID, localID, eventTime, receivedSynapse, postFirePotential) VALUES (%i, %i, %f, %i, %i); ",core,local,timestamp,fromSynapse,postPot);
 
 
 	int rc;
@@ -83,7 +96,8 @@ void neuronEventRecord(regid_t core, regid_t local, regid_t
 
 }
 void startRecord(){
-	sqlite3_open(path, &db);
+	int x = sqlite3_open_v2(path, &db,SQLITE_OPEN_READWRITE|SQLITE_OPEN_FULLMUTEX,NULL);
+	
 }
 void endRecord(){
 	sqlite3_close(db);
@@ -91,7 +105,7 @@ void endRecord(){
 void synapseEventRecord(regid_t core, regid_t local, tw_stime timestamp, int dest){
 	static int row = 0;
 	char *zErrMsg=0;
-	char *sql = sqlite3_mprintf("insert into SynapseEvents ( \"localID\", \"coreID\", \"eventTime\", \"eventID\", \"sent\") values (%i,%i,%f,%i,%i);", local, core, timestamp, row, dest);
+	char *sql = sqlite3_mprintf("insert into SynapseEvents ( \"localID\", \"coreID\", \"eventTime\", \"eventID\", \"sent\") values (%lu,%lu,%f,%i,%i);", local, core, timestamp, row, dest);
 	int rc;
 
 
@@ -99,4 +113,13 @@ void synapseEventRecord(regid_t core, regid_t local, tw_stime timestamp, int des
 	row ++;
 
 
+}
+
+void recordNeuron(neuronState *n){
+	static int row = 0;
+	char *zErrMsg=0;
+	char *sql = sqlite3_mprintf("insert into neurons (rowID, neuronID, dendCore,   dendGID, dendLocal, thresh, other) values (%i, %i, %i, %llu, %i, %i, %i)", row, n->neuronID, n->dendriteCore,  n->dendriteDest,n->dendriteLocalDest, n->threshold, n->threshold);
+	int rc;
+	rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
+	row ++;
 }

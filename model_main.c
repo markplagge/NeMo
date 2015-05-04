@@ -79,6 +79,7 @@ void neuron_init(neuronState* s, tw_lp* lp) {
     s->dendriteLocalDest =
         tw_rand_integer(lp->rng, NEURONS_IN_CORE, SYNAPSES_IN_CORE);
     s->dendriteDest = globalID(s->dendriteCore, s->dendriteLocalDest);
+	  setNeuronThreshold(s, lp);
 
   }
   // using a sqlite mapping
@@ -88,6 +89,7 @@ void neuron_init(neuronState* s, tw_lp* lp) {
 	if(DEBUG_MODE == true){
 		startRecord();
 		mapRecord(typeMapping(lp->gid), "Neuron", s->neuronID, s->coreID, lp->id);
+		recordNeuron(s);
 		endRecord();
 
 	}
@@ -154,7 +156,7 @@ void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
 		  // printf("Neuron %i recvd synapse spike from %i.\n", s->neuronID,m->senderLocalID);
   bool didFire = neuronReceiveMessage(s, tw_now(lp), m, lp);
   // create message if didFire happened:
-  if (DEBUG_MODE == 1 && didFire == true)
+  //if (DEBUG_MODE == 1 && didFire == true)
 		  // printf("Neuron %u has fired. \n", s->neuronID);
   if (didFire == true) {
     tw_event* neuronEvent;
@@ -175,7 +177,7 @@ void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
     data->type = NEURON;
 	  if(DEBUG_MODE == 1){
 		  startRecord();
-		  neuronEventRecord(s->coreID, s->neuronID, getSynapseID(m->sender),tw_now(lp), s->prVoltage);
+		  neuronEventRecord(s->coreID, s->neuronID, getSynapseID(dest),tw_now(lp), s->prVoltage);
 		  endRecord();
 	  }
     tw_event_send(neuronEvent);
@@ -183,6 +185,7 @@ void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
 }
 
 void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
+	printf("Inside REVERSE NEURON function");
   // reverse neuron state function
   // do functions in reverse order:
   // 1. Reset State reverse
@@ -218,6 +221,7 @@ void synapse_init(synapseState* s, tw_lp* lp) {
   for (regid_t i = 0; i < NEURONS_IN_CORE; i++) {
 
 	  s->dests[i] = globalID(s->coreID, i);
+
   }
 
   // Spike Generator init setup.
@@ -247,8 +251,9 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   // plan.
   else {
 
-		  // if (DEBUG_MODE == 1) {
+		if (DEBUG_MODE == 1) {
 		startRecord();
+		}
 			//if (M->type == NEURON)
 			  //printf("Synapse %i firing. Recvd Msg from Neuron %i\n", s->synID,M->senderLocalID);
       //}
@@ -280,6 +285,8 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
 	  if(DEBUG_MODE == true)
 		  endRecord();
   }
+		//DEBUG CODE _ REMOVE WHEN DONE:
+
 }
 void synapse_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   // synapse event reverse function goes here -  please ensure that the code
@@ -363,7 +370,15 @@ void gen_event(spikeGenState* gen_state, tw_lp* lp) {
     tw_event* newEvent = tw_event_new(dest, ts, lp);
     Msg_Data* data = (Msg_Data*)tw_event_data(newEvent);
     data->type = SYNAPSE;
-    tw_event_send(newEvent);
+	  data->sender = 0;
+	  data->destCore = 0;
+	  data->destLocalID = 0;
+	  data->sourceCore = 0;
+	  data->prevVoltage = 0;
+	  data->senderLocalID = 0;
+
+	  tw_printf("SENDING SEED EVENT - CAUSING ISSUES Dest GID %llu -- Dest LP (reported) %llu \n", dest, newEvent->dest_lp->gid );
+	tw_event_send(newEvent);
   }
   // Reprime the generator:
   //}
@@ -402,7 +417,7 @@ int model_main(int argc, char* argv[]) {
 
   // tw_opt_add(app_opt);
 	tw_init(&argc, &argv); //toto
-	if(DEBUG_MODE == true){
+	if(DEBUG_MODE == true && g_tw_mynode == 0){
 		initDB();
 		printf("Init db call \n");
 	}   g_tw_events_per_pe =  EVENT_BASE * CORE_SIZE * CORES_PER_PE;
@@ -420,37 +435,7 @@ int model_main(int argc, char* argv[]) {
 		//set the types:
 	tw_lp_setup_types();
 
-  // Useful ROSS variables and functions
-  // tw_nnodes() : number of nodes/processors defined
-  // g_tw_mynode : my node/processor id (mpi rank)
-
-  // Useful ROSS variables (set from command line)
-  // g_tw_events_per_pe
-  // g_tw_lookahead
-  // g_tw_nlp
-  // g_tw_nkp
-  // g_tw_synchronization_protocol
-
-  // set up LPs within ROSS
-
-  // g_tw_nlp gets set by tw_define_lps
-  /*
-    for (i = 0; i < g_tw_nlp; i++) {
-      tw_lp_settype(i, &model_lps[0]);
-      // calculate my core and my local value:
-      regid_t core, local;
-      // so, n cores per pe, with x items on them.
-      // g_tw_lp[i]->gid;
-      core = (g_tw_lp[i]->gid) / CORE_SIZE;
-      local = (g_tw_lp[i]->gid % CORE_SIZE);
-      printf("Core calculated at %ul \n Local calculated at %ul ", core, local);
-  */
-
-  //}
-
-  // Do some file I/O here? on a per-node (not per-LP) basis
-  // load mapping here.
-	int world_size;
+  	int world_size;
 	MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 	CORES_IN_SIM = CORES_PER_PE * world_size;
   tw_run();
