@@ -2,7 +2,7 @@
  * mappings.c -- LP mapping functions were abstracted out of main in order to allow for easier testing.
  */
 #include "mappings.h"
-
+#define VERIFY_MAPPING 1
 
 /* shadowed variables from the main code. Imp;emented this way to allow for testing and model sanity checking
  * inital values are used for tests. Init() function sets up the values from the main simulation.
@@ -116,7 +116,7 @@ void initial_mapping(void ) {    tw_pe   *pe;
 
 			for(j = 0; j < nlp_per_kp && lpid < g_tw_nlp; j++, lpid++) {
 					//calculate core:
-				regid_t core =  lpid / CORE_SIZE;
+				regid_t core =  (lpid / CORE_SIZE) + (CORES_PER_PE * g_tw_mynode);
 				tw_lp_onpe(lpid, pe, globalID(core,lpid));//g_tw_lp_offset+lpid);
 				tw_lp_onkp(g_tw_lp[lpid], g_tw_kp[kpid]);
 

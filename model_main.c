@@ -151,8 +151,9 @@ void setNeuronThreshold(neuronState* s, tw_lp* lp) {
 //******************Neuron Functions***********************//
 void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
   tw_lpid self = lp->gid;
-
+	tw_lpid d;
   //if (DEBUG_MODE == 1)
+		  //tw_lpid d;
 		  // printf("Neuron %i recvd synapse spike from %i.\n", s->neuronID,m->senderLocalID);
   bool didFire = neuronReceiveMessage(s, tw_now(lp), m, lp);
   // create message if didFire happened:
@@ -175,13 +176,18 @@ void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
     data->senderLocalID = s->neuronID;
     data->sourceCore = s->coreID;
     data->type = NEURON;
-	  if(DEBUG_MODE == 1){
-		  startRecord();
-		  neuronEventRecord(s->coreID, s->neuronID, getSynapseID(dest),tw_now(lp), s->prVoltage);
-		  endRecord();
-	  }
-    tw_event_send(neuronEvent);
+	     tw_event_send(neuronEvent);
+	  if(DEBUG_MODE == 1)
+		  d = dest;
   }
+	if(DEBUG_MODE == 1){
+		startRecord();
+
+		char* evt = sqlite3_mprintf("Send? %i --- Neuron States-  FireCount: %i, Last Active: %f, Last Leak: %i -- from synapse GID: %llu", didFire, s->fireCount, s->lastActiveTime, s->lastLeakTime, m->sender);
+		neuronEventRecord(s->coreID, s->neuronID, getSynapseID(d),tw_now(lp), s->prVoltage, evt);
+		endRecord();
+	}
+
 }
 
 void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
@@ -216,7 +222,7 @@ void synapse_init(synapseState* s, tw_lp* lp) {
 	getLocalIDs(lp->gid, &core, &loc);
   s->coreID =  core;  // TODO: check multi-core function
 	s->synID = getSynapseID(self);
-
+	tw_lpid arrrgs = lp->gid;
   // set up destination GIDs
   for (regid_t i = 0; i < NEURONS_IN_CORE; i++) {
 
@@ -377,7 +383,7 @@ void gen_event(spikeGenState* gen_state, tw_lp* lp) {
 	  data->prevVoltage = 0;
 	  data->senderLocalID = 0;
 
-	  tw_printf("SENDING SEED EVENT - CAUSING ISSUES Dest GID %llu -- Dest LP (reported) %llu \n", dest, newEvent->dest_lp->gid );
+		  //tw_printf("SENDING SEED EVENT - CAUSING ISSUES Dest GID %llu -- Dest LP (reported) %llu \n", dest, newEvent->dest_lp->gid );
 	tw_event_send(newEvent);
   }
   // Reprime the generator:
@@ -441,6 +447,8 @@ int model_main(int argc, char* argv[]) {
   tw_run();
 
   tw_end();
+	if(DEBUG_MODE == 1)
+		finalClose();
 
   return 0;
 }

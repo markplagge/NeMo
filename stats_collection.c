@@ -40,7 +40,8 @@ void initDB(){
 	" localID INTEGER,"
 	" eventTime DOUBLE,"
 	" receivedSynapse INTEGER,"
-	" postFirePotential INTEGER"
+	" postFirePotential INTEGER,"
+	" eventType TEXT"
 	" )";
 	rc = sqlite3_open(path, &db);
 
@@ -80,13 +81,12 @@ void mapRecord( int type, char* typet, int localID, int coreID, int lpid){
 	int rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
 	val ++;
 }
-void neuronEventRecord(regid_t core, regid_t local, regid_t
-	fromSynapse, tw_stime timestamp, long postPot){
+void neuronEventRecord(regid_t core, regid_t local, regid_t fromSynapse, tw_stime timestamp, long postPot, char *send){
 	static int row = 0;
 	char *zErrMsg=0;
 
 
-	char* sql = sqlite3_mprintf("INSERT INTO neuronEvent ( coreID, localID, eventTime, receivedSynapse, postFirePotential) VALUES (%i, %i, %f, %i, %i); ",core,local,timestamp,fromSynapse,postPot);
+	char* sql = sqlite3_mprintf("INSERT INTO neuronEvent ( coreID, localID, eventTime, receivedSynapse, postFirePotential, eventType) VALUES (%i, %i, %f, %i, %i, %Q); ",core,local,timestamp,fromSynapse,postPot, send);
 
 
 	int rc;
@@ -97,10 +97,17 @@ void neuronEventRecord(regid_t core, regid_t local, regid_t
 }
 void startRecord(){
 	int x = sqlite3_open_v2(path, &db,SQLITE_OPEN_READWRITE|SQLITE_OPEN_FULLMUTEX,NULL);
+
+	char* error = 0;
+		sqlite3_exec(db, "PRAGMA synchronous = OFF", NULL, NULL, &error);
+	sqlite3_exec(db, "BEGIN TRANSACTION", NULL, NULL, &error);
 	
 }
 void endRecord(){
-	sqlite3_close(db);
+		//sqlite3_close(db);
+	char* sErrMsg;
+	sqlite3_exec(db, "END TRANSACTION", NULL, NULL, &sErrMsg);
+
 }
 void synapseEventRecord(regid_t core, regid_t local, tw_stime timestamp, int dest){
 	static int row = 0;
@@ -122,4 +129,7 @@ void recordNeuron(neuronState *n){
 	int rc;
 	rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
 	row ++;
+}
+void finalClose() {
+	sqlite3_close_v2(db);
 }
