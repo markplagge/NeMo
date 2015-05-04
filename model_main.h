@@ -34,7 +34,7 @@ int SYNAPSES_IN_CORE   = 24;
 /**
  *  Each PE can have one or more virtual cores running during the simulation. Default is 2.
  */
-int CORES_PER_PE       = 1;
+int CORES_PER_PE       = 4;
 /**
  *  Determines the maximum and minimum thresholds for a neuron to fire.
  */

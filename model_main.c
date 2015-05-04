@@ -330,16 +330,23 @@ void gen_init(spikeGenState* gen_state, tw_lp* lp) {
 	  long totalSyns = getTotalSynapses();
 	  printf("Synapses in total sim: %ld\n", totalSyns);
 		printf("Generator\nCore\tLocal\tGlobal\n");
-		for (int i = 0; i < GEN_OUTBOUND; i++) {
+
+      for (int i = 0; i < GEN_OUTBOUND ; i++) {
+        tw_lpid gid = 0;
+        do{
+
 			regid_t core, local;
 			core = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
 			local = NEURONS_IN_CORE + ( tw_rand_integer(lp->rng, 0, getTotalSynapses()) % NEURONS_IN_CORE);
-			tw_lpid gid = globalID(core, local);
+			 gid = globalID(core, local);
 			printf("%lu\t%lu\t%llu\n",core,local,gid);
+
 			gen_state->connectedSynapses[i] = globalID(core, local);
-		}
+
 		printf("\n");
-	}
+        }while(gid > g_tw_nlp * g_tw_avl_node_count);
+	  }
+    }
 		//Here we read the generator setup map
 		//TODO: Implement this!
 
