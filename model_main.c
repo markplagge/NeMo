@@ -432,12 +432,13 @@ tw_lpid typeMapping(tw_lpid gid){
 ///////////////MAIN///////////////////////
 int model_main(int argc, char* argv[]) {
   int i;
+	tw_init(&argc, &argv); //toto
 	CORE_SIZE = NEURONS_IN_CORE + SYNAPSES_IN_CORE;
 
   int num_lps_per_pe= (CORE_SIZE * (CORES_PER_PE));;
 
   // tw_opt_add(app_opt);
-	tw_init(&argc, &argv); //toto
+
 	if(DEBUG_MODE == true){
 		initDB();
 		printf("Init db call \n");
