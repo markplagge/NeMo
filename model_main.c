@@ -194,7 +194,7 @@ void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
 
 void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
 
-	printf("Inside REVERSE NEURON function");
+	
   // reverse neuron state function
   // do functions in reverse order:
   // 1. Reset State reverse
