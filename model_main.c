@@ -203,7 +203,7 @@ void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   s->reverseLeak(s, tw_now(lp));
   // 3. Leak Reverse:
 
-  
+
 }
 void neuron_final(neuronState* s, tw_lp* lp) {
   if (s->fireCount != 0)
@@ -419,6 +419,7 @@ tw_lpid typeMapping(tw_lpid gid){
 		//if the localID is > than the number of neurons, this is a synapse.
 	int id;
 	getLocalIDs(gid, &coreID, &localID);
+	localID = localID - (coreID * CORE_SIZE);
 	id = localID < NEURONS_IN_CORE ? 0 :1;
 //	if(coreID == 0){
 //		id = localID < NEURONS_IN_CORE  ? 0:1;
