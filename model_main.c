@@ -194,7 +194,7 @@ void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
 
 void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
 
-	
+
   // reverse neuron state function
   // do functions in reverse order:
   // 1. Reset State reverse
@@ -438,7 +438,7 @@ int model_main(int argc, char* argv[]) {
 
   // tw_opt_add(app_opt);
 	tw_init(&argc, &argv); //toto
-	if(DEBUG_MODE == true && g_tw_mynode == 0){
+	if(DEBUG_MODE == true){
 		initDB();
 		printf("Init db call \n");
 	}   g_tw_events_per_pe =  EVENT_BASE * CORE_SIZE * CORES_PER_PE;
