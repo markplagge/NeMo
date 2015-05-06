@@ -118,7 +118,7 @@ void initial_mapping(void) {
       for (j = 0; j < nlp_per_kp && lpid < g_tw_nlp; j++) {
         // calculate core:
         regid_t core = (lpid / CORE_SIZE) + (CORES_PER_PE * g_tw_mynode);
-        tw_lp_onpe(lpid, pe, globalID(core, lpid));  // g_tw_lp_offset+lpid);
+        tw_lp_onpe(lpid, pe, globalID(core, lpid % CORE_SIZE));  // g_tw_lp_offset+lpid);
         tw_lp_onkp(g_tw_lp[lpid], g_tw_kp[kpid]);
 
 #if VERIFY_MAPPING

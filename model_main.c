@@ -416,7 +416,7 @@ tw_lpid typeMapping(tw_lpid gid){
 //	getLocalIDs(gid, &coreID, &localID);
 		//if the localID is > than the number of neurons, this is a synapse.
 	int id;
-	getTypeLocalIDs(gid, &coreID, &localID);
+	getLocalIDs(gid, &coreID, &localID);
 	id = localID < NEURONS_IN_CORE ? 0 :1;
 //	if(coreID == 0){
 //		id = localID < NEURONS_IN_CORE  ? 0:1;

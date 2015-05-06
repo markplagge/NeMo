@@ -23,7 +23,7 @@ const char* data = "Callback function called";
 sqlite3 *db;
 char* path;
 void initDB(){
-	path = sqlite3_mprintf("./tnt_bench_stats%s.db", g_tw_mynode);
+	path = sqlite3_mprintf("./tnt_bench_stat-%i.db", g_tw_mynode);
 	char *zErrMsg = 0;
 	int rc;
 	char* synSQL = "CREATE TABLE SynapseEvents"
