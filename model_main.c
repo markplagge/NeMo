@@ -63,8 +63,9 @@ void neuron_init(neuronState* s, tw_lp* lp) {
   s->leakRate = 0;
   s->leak = &noLeak;
   s->lastLeakTime = 0;
-  s->reverseLeak = &revNoLeak;
 	s->doReset = &resetZero;
+  s->reverseLeak = &revNoLeak;
+	s->reverseReset = &resetZero;
   if (isFile == false) {  // no file map, so we use random values. For benchmark,
                 // we have to create
     // a recurrance network.
@@ -150,6 +151,7 @@ void setNeuronThreshold(neuronState* s, tw_lp* lp) {
 
 //******************Neuron Functions***********************//
 void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
+
   tw_lpid self = lp->gid;
 	tw_lpid d = s->dendriteDest;
   //if (DEBUG_MODE == 1)
@@ -187,10 +189,11 @@ void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
 		neuronEventRecord(s->coreID, s->neuronID, getSynapseID(d),tw_now(lp), s->prVoltage, evt);
 		endRecord();
 	}
-
+	
 }
 
 void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
+
 	printf("Inside REVERSE NEURON function");
   // reverse neuron state function
   // do functions in reverse order:
@@ -202,6 +205,7 @@ void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
 
   if (DEBUG_MODE == true)
     printf("Neuron Reverse Event Run \n");
+
 }
 void neuron_final(neuronState* s, tw_lp* lp) {
   if (s->fireCount != 0)
