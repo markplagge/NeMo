@@ -203,9 +203,7 @@ void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   s->reverseLeak(s, tw_now(lp));
   // 3. Leak Reverse:
 
-  if (DEBUG_MODE == true)
-    printf("Neuron Reverse Event Run \n");
-
+  
 }
 void neuron_final(neuronState* s, tw_lp* lp) {
   if (s->fireCount != 0)
