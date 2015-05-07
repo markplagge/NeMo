@@ -420,7 +420,7 @@ tw_lpid typeMapping(tw_lpid gid){
 	int id;
 	getLocalIDs(gid, &coreID, &localID);
 	id = localID % CORE_SIZE;
-	if(g_tw_mynode > 0)
+	if(g_tw_mynode > 0 && DEBUG_MODE == true)
 		printf("Mapping -- local id is %u, id calculated to be %u\n", localID, id);
 	id = id < NEURONS_IN_CORE ? 0 : 1;
 //	getLocalIDs(gid, &coreID, &localID);
