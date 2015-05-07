@@ -72,13 +72,13 @@ int DEBUG_MODE         = 0;
 //ROSS OPTIONS:
 char* configFilePath;
 bool isFile;
-tw_stime lookahead     = .00000000001;
+tw_stime lookahead     = .1;
 
-int EXEC_MEMORY        = 100000000;
+int EXEC_MEMORY        = 10000000;
 
 
 /** EVENT_BASE - tweakable parameter for memory */
-int EVENT_BASE			= 60000;
+int EVENT_BASE			= 256000;
 
 //Synapses and neuron max values (for off-by-one errors):
 int tt_neurons         = 0;

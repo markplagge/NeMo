@@ -314,7 +314,8 @@ void synapse_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
 }
 tw_lpid localFire =0;
 void synapse_final(synapseState* s, tw_lp* lp) {
-		//MPI_Reduce(&s->fireCount, &synapseSent, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+//TODO: add an MPI_reduce function here to collect synapse stats.
+//	MPI_Reduce(&s->fireCount, &synapseSent, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
 	synapseSent += s->fireCount;
 }
 
@@ -328,10 +329,10 @@ void gen_init(spikeGenState* gen_state, tw_lp* lp) {
   gen_state->rndFctVal = GEN_FCT / 100;
 		//RANDOM GENERATOR MAP SETUP
 
-	 gen_state->connectedSynapses = tw_calloc(TW_LOC, "Synapse", sizeof(tw_lpid*), GEN_OUTBOUND);
+	
 	if (GEN_RND == true && GEN_OUTBOUND == 0) {
 		gen_state->randomRate = GEN_PROB;
-		
+				
 	    gen_state->rndFctVal = GEN_FCT;
    	 gen_state->randMethod = RND_MODE;
     // randomized values for hooking this machine up to the various neurons.
@@ -339,18 +340,19 @@ void gen_init(spikeGenState* gen_state, tw_lp* lp) {
    	 gen_state->randMethod = UNF;
    	 gen_state->spikeGen = uniformGen;
 		  // set up the outbound connections.
-	  long totalSyns = SYNAPSES_PER_CORE * CORES_PER_PE;
+	  long totalSyns = SYNAPSES_IN_CORE * CORES_PER_PE;
 	  //printf("Synapses in total sim: %ld\n", totalSyns);
-	gen_state->outbound = totalSyns;
+	gen_state->outboud = totalSyns;
 	  //printf("Generator\nCore\tLocal\tGlobal\n");
 	
+	 gen_state->connectedSynapses = tw_calloc(TW_LOC, "Synapse", sizeof(tw_lpid*), gen_state->outboud);
 
-      for (int i = NEURONS_IN_CORE - 1; i < totalSyns; i++) {
+      for (int i = NEURONS_IN_CORE - 1,  j = 0; i < totalSyns; i++, j++) {
         tw_lpid gid = 0;
 			regid_t core, local;
-			int coreOffset = tw_myNode;
+			int coreOffset =(g_tw_mynode * CORES_PER_PE);
 			//TODO: Monitor this function to ensure it is showing proper values.
-			core = i % CORE_SIZE + coreOffset; 
+			core = i / CORE_SIZE + coreOffset; 
 			local = i;
 			gid = globalID(core, local);
 			gen_state->connectedSynapses[i] = globalID(core, local);
@@ -368,16 +370,13 @@ void gen_init(spikeGenState* gen_state, tw_lp* lp) {
     gen_state->randMethod = UNF;
     gen_state->spikeGen = uniformGen;
 		  // set up the outbound connections.
-
-
-
 	  long totalSyns = getTotalSynapses();
-	  //printf("Synapses in total sim: %ld\n", totalSyns);
-	  //printf("Generator\nCore\tLocal\tGlobal\n");
-
-      for (int i = 0; i < GEN_OUTBOUND ; i++) {
-        tw_lpid gid = 0;
-        do{
+	  gen_state->outboud = totalSyns;
+	gen_state->connectedSynapses = tw_calloc(TW_LOC, "Synapse", sizeof(tw_lpid*), gen_state->outboud);
+      
+	for (int i = 0; i < GEN_OUTBOUND ; i++) {
+        	tw_lpid gid = 0;
+        	do{
 
 			regid_t core, local;
 			core = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
@@ -389,7 +388,7 @@ void gen_init(spikeGenState* gen_state, tw_lp* lp) {
 			gen_state->connectedSynapses[i] = globalID(core, local);
 
 				//printf("\n");
-        }while(gid > g_tw_nlp * g_tw_avl_node_count);
+        	}while(gid > g_tw_nlp * g_tw_avl_node_count);
 	  }
     }
 		//Here we read the generator setup map
