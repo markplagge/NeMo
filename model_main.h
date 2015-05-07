@@ -89,7 +89,7 @@ bool GEN_RND           = 1;
 int RND_MODE           = 0;
 unsigned int GEN_PROB  = 50;
 unsigned int GEN_FCT   = 5;
-int GEN_OUTBOUND       = 127;
+int GEN_OUTBOUND       = 0;
 
 /** Stats variable - number of neruon messages sent. */
 stat_t neuronSent		= 0;
@@ -117,7 +117,7 @@ const tw_optdef app_opt[] = {
         TWOPT_ULONG("prob", GEN_PROB, "Probability setting"),
         TWOPT_ULONG("ftr", GEN_FCT, "Probability or Lambda for geometric or binomial option."),
         TWOPT_ULONG("genout", GEN_OUTBOUND,
-                    "Number of outbound connections for generator (Set <= number of synapses per core."),
+                    "Number of outbound connections for generator (Set <= number of synapses per core.) If set to 0, the generator will attach to all syapses in it's core."),
 		TWOPT_STIME("genlag", GEN_LAG, "Lag time for the generator"),
         TWOPT_GROUP("Misc. Settings"),
         TWOPT_FLAG("debug", DEBUG_MODE, "Enable debug output"),

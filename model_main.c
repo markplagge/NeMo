@@ -329,7 +329,36 @@ void gen_init(spikeGenState* gen_state, tw_lp* lp) {
 		//RANDOM GENERATOR MAP SETUP
 
 	 gen_state->connectedSynapses = tw_calloc(TW_LOC, "Synapse", sizeof(tw_lpid*), GEN_OUTBOUND);
-	if (GEN_RND == true) {
+	if (GEN_RND == true && GEN_OUTBOUND == 0) {
+		gen_state->randomRate = GEN_PROB;
+		
+	    gen_state->rndFctVal = GEN_FCT;
+   	 gen_state->randMethod = RND_MODE;
+    // randomized values for hooking this machine up to the various neurons.
+    // rand_uniform function tw_rand_unif(lp->rng)
+   	 gen_state->randMethod = UNF;
+   	 gen_state->spikeGen = uniformGen;
+		  // set up the outbound connections.
+	  long totalSyns = SYNAPSES_PER_CORE * CORES_PER_PE;
+	  //printf("Synapses in total sim: %ld\n", totalSyns);
+	gen_state->outbound = totalSyns;
+	  //printf("Generator\nCore\tLocal\tGlobal\n");
+	
+
+      for (int i = NEURONS_IN_CORE - 1; i < totalSyns; i++) {
+        tw_lpid gid = 0;
+			regid_t core, local;
+			int coreOffset = tw_myNode;
+			//TODO: Monitor this function to ensure it is showing proper values.
+			core = i % CORE_SIZE + coreOffset; 
+			local = i;
+			gid = globalID(core, local);
+			gen_state->connectedSynapses[i] = globalID(core, local);
+	  }
+    }
+
+		 
+	else if (GEN_RND == true) {
     gen_state->randomRate = GEN_PROB;
     gen_state->rndFctVal = GEN_FCT;
     gen_state->randMethod = RND_MODE;
