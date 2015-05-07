@@ -447,7 +447,9 @@ int model_main(int argc, char* argv[]) {
   int i;
 	tw_init(&argc, &argv); //toto
 	CORE_SIZE = NEURONS_IN_CORE + SYNAPSES_IN_CORE;
-
+	int world_size;
+	MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+	CORES_IN_SIM = CORES_PER_PE * world_size;
   int num_lps_per_pe= (CORE_SIZE * (CORES_PER_PE));;
 
   // tw_opt_add(app_opt);
@@ -470,8 +472,7 @@ int model_main(int argc, char* argv[]) {
 		//set the types:
 	tw_lp_setup_types();
 
-  	int world_size;
-	MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+
 
   tw_run();
 
