@@ -35,7 +35,7 @@ void startRecord();
 void endRecord();
 void neuronEventRecord(regid_t core, regid_t local, regid_t fromSynapse, tw_stime timestamp, long postPot, char *send);
 void synapseEventRecord(regid_t core, regid_t local, tw_stime timestamp, int dest);
-void mapRecord( int type, char* typet, int localID, int coreID, int lpid);
+void mapRecord( int type, char* typet, int localID, int coreID, int lpid, int gid);
 #endif /* defined(__ROSS_TOP__stats_collection__) */
 void recordNeuron(neuronState *n);
 void finalClose();

@@ -89,7 +89,7 @@ void neuron_init(neuronState* s, tw_lp* lp) {
   }
 	if(DEBUG_MODE == true){
 		startRecord();
-		mapRecord(typeMapping(lp->gid), "Neuron", s->neuronID, s->coreID, lp->id);
+		mapRecord(typeMapping(lp->gid), "Neuron", s->neuronID, s->coreID, lp->id, lp->gid);
 		recordNeuron(s);
 		endRecord();
 
@@ -239,7 +239,7 @@ void synapse_init(synapseState* s, tw_lp* lp) {
   }
 	if(DEBUG_MODE == true){
 		startRecord();
-		mapRecord(typeMapping(lp->gid), "Synapse", s->synID, s->coreID, lp->id);
+		mapRecord(typeMapping(lp->gid), "Synapse", s->synID, s->coreID, lp->id, lp->gid);
 		endRecord();
 
 	}
@@ -330,8 +330,8 @@ void gen_init(spikeGenState* gen_state, tw_lp* lp) {
 
 
 	  long totalSyns = getTotalSynapses();
-	  printf("Synapses in total sim: %ld\n", totalSyns);
-		printf("Generator\nCore\tLocal\tGlobal\n");
+	  //printf("Synapses in total sim: %ld\n", totalSyns);
+	  //printf("Generator\nCore\tLocal\tGlobal\n");
 
       for (int i = 0; i < GEN_OUTBOUND ; i++) {
         tw_lpid gid = 0;
@@ -341,11 +341,11 @@ void gen_init(spikeGenState* gen_state, tw_lp* lp) {
 			core = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
 			local = NEURONS_IN_CORE + ( tw_rand_integer(lp->rng, 0, getTotalSynapses()) % NEURONS_IN_CORE);
 			 gid = globalID(core, local);
-			printf("%lu\t%lu\t%llu\n",core,local,gid);
+				//printf("%lu\t%lu\t%llu\n",core,local,gid);
 
 			gen_state->connectedSynapses[i] = globalID(core, local);
 
-		printf("\n");
+				//printf("\n");
         }while(gid > g_tw_nlp * g_tw_avl_node_count);
 	  }
     }

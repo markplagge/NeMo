@@ -53,6 +53,7 @@ void initDB(){
 	" core INTEGER,"
 	" local INTEGER,"
 	" LPID INTEGER,"
+	" gID Integer,"
 	"PRIMARY KEY (ID))";
 	char* nmapSQL = "CREATE TABLE \"neurons\" ("
 	" \"neuronID\" integer NOT NULL,"
@@ -74,10 +75,10 @@ void initDB(){
 	sqlite3_close(db);
 }
 
-void mapRecord( int type, char* typet, int localID, int coreID, int lpid){
+void mapRecord( int type, char* typet, int localID, int coreID, int lpid, int gid){
 	static int val = 0;
 	char* tpt = type == 0? "Neuron":"Synapse";
-	char* sql = sqlite3_mprintf("INSERT INTO mappings (ID, type, typeImp, core, local, LPID) VALUES (%i, %Q, %Q, %i, %i, %i);", val, tpt, typet, coreID, localID, lpid);
+	char* sql = sqlite3_mprintf("INSERT INTO mappings (ID, type, typeImp, core, local, LPID, gID) VALUES (%i, %Q, %Q, %i, %i, %i, %llu);", val, tpt, typet, coreID, localID, lpid, gid);
 	char* zErrMsg = 0;
 	int rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
 	val ++;
