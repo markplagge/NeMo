@@ -242,7 +242,7 @@ void synapse_init(synapseState* s, tw_lp* lp) {
 //Added to make sure generators are being created properly. NOt really needed, but nice to know.
 	if(DEBUG_MODE == true) {
 		startRecord();
-		mapRecord(typeMapping(lp->gid), "Synapse Generator", s->synID, s-coreID, lp->id, lp->gid);
+		mapRecord(typeMapping(lp->gid), "Synapse Generator", s->synID, s->coreID, lp->id, lp->gid);
 		endRecord();
 	}
   }
