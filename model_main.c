@@ -153,6 +153,7 @@ void setNeuronThreshold(neuronState* s, tw_lp* lp) {
 void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
 
   tw_lpid self = lp->gid;
+	neuronSent ++;
 	tw_lpid d = s->dendriteDest;
   //if (DEBUG_MODE == 1)
 		  //tw_lpid d;
@@ -206,9 +207,9 @@ void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
 
 }
 void neuron_final(neuronState* s, tw_lp* lp) {
-  if (s->fireCount != 0)
 
-  neuronSent += s->fireCount;
+
+
 }
 
 //******************Synapse Functions***********************//
@@ -250,7 +251,6 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   // call synapse helper functions and send messages to all of the neurons in
   // the core here.
 
-	s->fireCount ++;
   tw_stime ts;
   tw_event* newEvent;
   Msg_Data* data;
@@ -262,6 +262,7 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   // If this is not a spike generator message, then we will proceed according to
   // plan.
   else {
+			s->fireCount ++;
 
 		if (DEBUG_MODE == 1) {
 		startRecord();
@@ -307,7 +308,8 @@ void synapse_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
 }
 tw_lpid localFire =0;
 void synapse_final(synapseState* s, tw_lp* lp) {
-	MPI_Reduce(&s->fireCount, &synapseSent, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+		//MPI_Reduce(&s->fireCount, &synapseSent, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+	synapseSent += s->fireCount;
 }
 
 /* Spike Generator Functions */
@@ -489,7 +491,7 @@ int main(int argc, char* argv[]) {
   tw_opt_add(app_opt);
   int rv = model_main(argc, argv);
   if (g_tw_mynode == 0) {  // && DEBUG_MODE == true){
-    printf("Neurons fired %lu messages, and synapses fired %lu messages.",
+    printf("Neurons integrated %lu times, and synapses fired %lu messages.",
            neuronSent, synapseSent);
   }
   return rv;

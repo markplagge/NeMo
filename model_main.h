@@ -30,7 +30,7 @@ int NEURONS_IN_CORE    = 4;
 /**
  *  Number of synapses per core.
  */
-int SYNAPSES_IN_CORE   = 8;
+int SYNAPSES_IN_CORE   = 128;
 /**
  *  Each PE can have one or more virtual cores running during the simulation. Default is 2.
  */
@@ -89,7 +89,7 @@ bool GEN_RND           = 1;
 int RND_MODE           = 0;
 unsigned int GEN_PROB  = 50;
 unsigned int GEN_FCT   = 5;
-int GEN_OUTBOUND       = 4;
+int GEN_OUTBOUND       = 127;
 
 /** Stats variable - number of neruon messages sent. */
 stat_t neuronSent		= 0;
