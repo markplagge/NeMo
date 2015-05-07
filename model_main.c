@@ -239,6 +239,12 @@ void synapse_init(synapseState* s, tw_lp* lp) {
   if (s->synID - NEURONS_IN_CORE == 0 ) {
     s->spikeGen = tw_calloc(TW_LOC, "Synapse_Init", sizeof(spikeGenState), 1);
     gen_init(s->spikeGen, lp);
+//Added to make sure generators are being created properly. NOt really needed, but nice to know.
+	if(DEBUG_MODE == true) {
+		startRecord();
+		mapRecord(typeMapping(lp->gid), "Synapse Generator", s->synID, s-coreID, lp->id, lp->gid);
+		endRecord();
+	}
   }
 	if(DEBUG_MODE == true){
 		startRecord();
