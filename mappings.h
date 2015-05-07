@@ -89,4 +89,5 @@ void initial_mapping(void) ;
 
 void initMapVars(int nInCore,int sInCore,int cpe);
 
+tw_lpid getRandomSynapse();
 #endif //ROSS_TOP_MAPPINGS_H

@@ -26,11 +26,11 @@
 /**
  *  Number of neurons per core.
  */
-int NEURONS_IN_CORE    = 12;
+int NEURONS_IN_CORE    = 4;
 /**
  *  Number of synapses per core.
  */
-int SYNAPSES_IN_CORE   = 24;
+int SYNAPSES_IN_CORE   = 8;
 /**
  *  Each PE can have one or more virtual cores running during the simulation. Default is 2.
  */

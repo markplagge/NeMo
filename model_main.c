@@ -214,26 +214,28 @@ void neuron_final(neuronState* s, tw_lp* lp) {
 //******************Synapse Functions***********************//
 void synapse_init(synapseState* s, tw_lp* lp) {
   tw_lpid self = lp->gid;
-
+	s->fireCount = 0;
   s->dests = tw_calloc(TW_LOC, "Synapse", sizeof(tw_lpid), NEURONS_IN_CORE);
-  synapseSent++;
+
   /**A synapse location/ID consists of a core number and a synapse number. See
    Mapping Hints for more info,
    accuracy check. */
 	regid_t core, loc;
 	getLocalIDs(lp->gid, &core, &loc);
   s->coreID =  core;  // TODO: check multi-core function
-	s->synID = getSynapseID(self);
+	s->synID = loc;
 	tw_lpid arrrgs = lp->gid;
   // set up destination GIDs
   for (regid_t i = 0; i < NEURONS_IN_CORE; i++) {
 
 	  s->dests[i] = globalID(s->coreID, i);
+	  tw_lpid x = s->dests[i];
+	  x = x;
 
   }
 
   // Spike Generator init setup.
-  if (s->synID == 0 && s->coreID == 0) {
+  if (s->synID - NEURONS_IN_CORE == 0 ) {
     s->spikeGen = tw_calloc(TW_LOC, "Synapse_Init", sizeof(spikeGenState), 1);
     gen_init(s->spikeGen, lp);
   }
@@ -248,6 +250,7 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   // call synapse helper functions and send messages to all of the neurons in
   // the core here.
 
+	s->fireCount ++;
   tw_stime ts;
   tw_event* newEvent;
   Msg_Data* data;
@@ -302,7 +305,9 @@ void synapse_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   // does not reverse into neurons?
   // TODO: double check that thyis is hwo we would handle synaptic reversal
 }
+tw_lpid localFire =0;
 void synapse_final(synapseState* s, tw_lp* lp) {
+	MPI_Reduce(&s->fireCount, &synapseSent, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
 }
 
 /* Spike Generator Functions */
@@ -339,8 +344,9 @@ void gen_init(spikeGenState* gen_state, tw_lp* lp) {
 
 			regid_t core, local;
 			core = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
-			local = NEURONS_IN_CORE + ( tw_rand_integer(lp->rng, 0, getTotalSynapses()) % NEURONS_IN_CORE);
-			 gid = globalID(core, local);
+				//TODO - double check the +1 and -1 here.
+			local = tw_rand_integer(lp->rng, NEURONS_IN_CORE + 1, SYNAPSES_IN_CORE  -1);
+			gid = globalID(core, local);
 				//printf("%lu\t%lu\t%llu\n",core,local,gid);
 
 			gen_state->connectedSynapses[i] = globalID(core, local);
@@ -434,6 +440,7 @@ tw_lpid typeMapping(tw_lpid gid){
 	return id; //TODO: Switch this to an enum
 }
 ///////////////MAIN///////////////////////
+
 int model_main(int argc, char* argv[]) {
   int i;
 	tw_init(&argc, &argv); //toto
@@ -463,13 +470,15 @@ int model_main(int argc, char* argv[]) {
 
   	int world_size;
 	MPI_Comm_size(MPI_COMM_WORLD, &world_size);
-	CORES_IN_SIM = CORES_PER_PE * world_size;
+
   tw_run();
+
 
   tw_end();
 	if(DEBUG_MODE == 1)
 		finalClose();
-
+		//trying all reduce here:
+	tw_lpid totalSyn;
   return 0;
 }
 int main(int argc, char* argv[]) {

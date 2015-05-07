@@ -12,7 +12,8 @@
  * */
 
 // TODO : Neurons are firing at other neurons.
-
+#define lc 0
+#define co 1
 //******************Mapping functions***********************//
 void getLocalIDs(tw_lpid global, regid_t* core, regid_t* local) {
   (*core) = 0;
@@ -20,8 +21,8 @@ void getLocalIDs(tw_lpid global, regid_t* core, regid_t* local) {
   // TODO: Check bit-shifting logic AGAIN
   //(*core) = CORE(global);
   //(*local) = LOC(global);
-  (*core) = ((regid_t*)&global)[1];
-  (*local) = ((regid_t*)&global)[0];
+  (*core) = ((regid_t*)&global)[co];
+  (*local) = ((regid_t*)&global)[lc];
   if (*local > CORE_SIZE * CORES_PER_PE) {
     printf("ERROR\n\n\n\n");
     exit(-1);
@@ -31,13 +32,9 @@ tw_lpid globalID(regid_t core, regid_t local) {
   tw_lpid returnVal = 0;  //(tw_lpid)calloc(sizeof(tw_lpid) ,1);
 
   // returnVal = (tw_lpid)core << 32 | (tw_lpid) local;
-  ((int32_t*)&returnVal)[0] = local;
-  ((int32_t*)&returnVal)[1] = core;
-  if (returnVal == 6442450954) {
-    printf("ERROR2 \n");
-    exit(-1);
-  }
-  return returnVal;
+  ((int32_t*)&returnVal)[lc] = local;
+  ((int32_t*)&returnVal)[co] = core;
+    return returnVal;
 }
 
 tw_lp* mapping_to_local(tw_lpid global) {
@@ -49,12 +46,12 @@ tw_lp* mapping_to_local(tw_lpid global) {
 }
 // TODO: Enance the speed of these by switching to macro!
 regid_t getSynapseID(tw_lpid gid) {
-  regid_t local = ((regid_t*)&gid)[0];  // LOC(gid);
+  regid_t local = ((regid_t*)&gid)[lc];  // LOC(gid);
   return local - NEURONS_IN_CORE;
 }
 
 regid_t getNeuronID(tw_lpid gid) {
-  regid_t local = ((regid_t*)&gid)[0];
+  regid_t local = ((regid_t*)&gid)[lc];
   // regid_t local = LOC(gid);
   return local;
 }
@@ -73,11 +70,13 @@ tw_peid mapping(tw_lpid gid) {
   // core = CORE(gid);
   // local = LOC(gid);
   // the core is == to kp here.
-  int rank = g_tw_mynode;
+  //int rank = g_tw_mynode;
   tw_peid ccd = core / CORES_PER_PE;
   return ccd;
 }
-
+void stats (tw_pe * x){
+	printf("final function");
+}
 void initial_mapping(void) {
   tw_pe* pe;
   int nlp_per_kp;
@@ -107,6 +106,7 @@ void initial_mapping(void) {
 #if VERIFY_MAPPING
     printf("\tPE %d\n", pe->id);
 #endif
+	  
 
 	  for (i = 0; i < nkp_per_pe; i++, kpid++) {
       tw_kp_onpe(kpid, pe);
@@ -161,6 +161,11 @@ void initial_mapping(void) {
   if (!g_tw_lp[g_tw_nlp - 1]) {
     tw_error(TW_LOC, "Not all LPs defined! (g_tw_nlp=%d)", g_tw_nlp);
   }
+}
+tw_lpid getRandomSynapse(){
+	printf("Function stub\n\n");
+	exit(-1);
+	return 1;
 }
 /*
 void initial_mapping_old(void) {

@@ -17,9 +17,10 @@ extern "C" {
 typedef struct SynapseState {
    regid_t synID;
    regid_t coreID;
-   gid_t *dests;
+   tw_lpid *dests;
    //unsigned int coreDest;
 	spikeGenState *spikeGen;
+	tw_lpid fireCount;
 } synapseState;
 
 
