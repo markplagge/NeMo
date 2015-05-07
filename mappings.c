@@ -96,7 +96,7 @@ void initial_mapping(void) {
     tw_error(TW_LOC, "Not enough KPs defined: %d", g_tw_nkp);
   }
 
-  g_tw_lp_offset = globalID((CORES_PER_PE * g_tw_mynode), 0);
+  g_tw_lp_offset = CORES_PER_PE * g_tw_mynode;
 
 #if VERIFY_MAPPING
   printf("NODE %d: nlp %lld, offset %lld\n", g_tw_mynode, g_tw_nlp,
@@ -118,7 +118,20 @@ void initial_mapping(void) {
       for (j = 0; j < nlp_per_kp && lpid < g_tw_nlp; j++) {
         // calculate core:
 		//regid_t core = (lpid / CORE_SIZE) + (CORES_PER_PE * g_tw_mynode);
-		  regid_t core = ((lpid + (CORES_PER_PE * g_tw_mynode)) / CORE_SIZE) ;
+
+			  //12+24 * 1
+			  //regid_t core = ((lpid + (regid_t)(CORES_PER_PE * g_tw_mynode)) / (regid_t)CORE_SIZE) ;
+			  //TODO: The error in the simulation is here:
+			  //		  regid_t core = (lpid + g_tw_lp_offset) / CORE_SIZE + (CORES_PER_PE * g_tw_mynode);
+		  regid_t core = 0;
+		  core = lpid / CORE_SIZE;
+		  if(g_tw_mynode > 0)
+			  {
+			  core = core + CORES_PER_PE * (regid_t)g_tw_mynode;
+			  }
+		  if(DEBUG_MODE == true && g_tw_mynode > 0){
+			  printf("Created element with GID  %llu from core %u \n", globalID(core, lpid), core);
+		  }
         tw_lp_onpe(lpid, pe, globalID(core, lpid));  // g_tw_lp_offset+lpid);
         tw_lp_onkp(g_tw_lp[lpid], g_tw_kp[kpid]);
 

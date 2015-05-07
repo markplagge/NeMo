@@ -75,7 +75,7 @@ void initDB(){
 	sqlite3_close(db);
 }
 
-void mapRecord( int type, char* typet, int localID, int coreID, int lpid, int gid){
+void mapRecord( int type, char* typet, int localID, int coreID, int lpid, tw_lpid gid){
 	static int val = 0;
 	char* tpt = type == 0? "Neuron":"Synapse";
 	char* sql = sqlite3_mprintf("INSERT INTO mappings (ID, type, typeImp, core, local, LPID, gID) VALUES (%i, %Q, %Q, %i, %i, %i, %llu);", val, tpt, typet, coreID, localID, lpid, gid);
