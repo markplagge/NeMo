@@ -121,6 +121,7 @@ typedef struct {
   _idType destCore;
   _idType destLocalID;
   _idType sourceCore;
+   uint_fast8_t partial;
   enum events type;
   /** This saves the old state of the neuron, before firing, so that roll back
    * functions will occur. */

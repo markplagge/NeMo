@@ -6,6 +6,8 @@
 // includes
 
 #include "model_main.h"
+#include "assist.h"
+
 
 // add your command line opts
 
@@ -280,7 +282,8 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
 			  //printf("Synapse %i init msg received.\n", s->synID);
 			  //}
 
-    for (int i = 0; i < NEURONS_IN_CORE; i++) {
+    /* trying an optimization code here.
+	 for (int i = 0; i < NEURONS_IN_CORE; i++) {
       // ts = tw_rand_exponential(lp->rng,4);
       ts = getNextEventTime(lp);  // function calls.
       newEvent = tw_event_new(s->dests[i], ts, lp);
@@ -291,12 +294,61 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
       data->sourceCore = s->coreID;
       data->type = SYNAPSE;
       // event:
+	*/
+	 int_fast8_t part = 0;
+	 if (M->partial > 0){
+		part = M->partial - 1;
+		ts = getNextEventTime(lp);
+		newEvent = tw_event_new(s->dests[part], ts,lp);
+		data = (Msg_Data*) tw_event_data(newEvent);
+		data->senderLocalID = s->synID;
+		data->sourceCore = s-> coreID;
+		data->partial = part;
+		data->type = SYNAPSE;
+		tw_event_send(newEvent);
+		if(part > 0) {
+		   //seed synapse with remaining partial data.
+		   ts = getNextEventTime(lp);
+		   newEvent = tw_event_new(lp->id, ts, lp);
+		   data = (Msg_Data *) tw_event_data(newEvent);
+		   data->senderLocalID = s->synID;
+		   data->partial = part;
+		   data->destCore = s->coreID;
+		   data->type = SYNAPSE;
+		   tw_event_send(newEvent);
+		}
+		if(part == 0){
+		   //here, we have reduced our message to zero. //do nothing.
+		}
+	 }
+	  else //partial is zero - so
+	 {
+		int_fast8_t part = 0;
+		part = NEURONS_IN_CORE - 1;
+		ts = getNextEventTime(lp);
+		newEvent = tw_event_new(s->dests[part], ts, lp);
+		data = (Msg_Data*) tw_event_data(newEvent);
+		data->senderLocalID = s->synID;
+		data->partial =  part;
+		data->type = SYNAPSE;
+		tw_event_send(newEvent);
+		 //self prime
+		part --;
+		ts = getNextEventTime(lp);
+		newEvent = tw_event_new(s->dests[part], ts, lp);
+		data  = (Msg_Data*) tw_event_data(newEvent);
+		data->senderLocalID = s->synID;
+		data->sourceCore = s-> coreID;
+		data->partial = part;
+		data->type = SYNAPSE;
+		tw_event_send(newEvent);
+	 }
 
       if (DEBUG_MODE == 1) {
 			  //printf("Sending message to GID %lu, at time: %f.\n", s->dests[i], ts);
-		  synapseEventRecord(s->coreID, s->synID, tw_now(lp), s->dests[i]);
+		  synapseEventRecord(s->coreID, s->synID, tw_now(lp), s->dests[part]);
       }
-      tw_event_send(newEvent);
+      //tw_event_send(newEvent);
 
       // tw_event *e = tw_event_new(s->dests[i], nextTime, lp);
       // tw_event_send(e);
@@ -306,7 +358,7 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   }
 		//DEBUG CODE _ REMOVE WHEN DONE:
 
-}
+
 void synapse_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   // synapse event reverse function goes here -  please ensure that the code
   // does not reverse into neurons?
@@ -476,7 +528,7 @@ tw_lpid typeMapping(tw_lpid gid){
 	return id; //TODO: Switch this to an enum
 }
 ///////////////MAIN///////////////////////
-
+//TODO: Check memory allocation scheme - ensure it makes sense!!
 int model_main(int argc, char* argv[]) {
   int i;
 	tw_init(&argc, &argv); //toto
@@ -485,6 +537,7 @@ int model_main(int argc, char* argv[]) {
 	MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 	CORES_IN_SIM = CORES_PER_PE * world_size;
   int num_lps_per_pe= (CORE_SIZE * (CORES_PER_PE));;
+
 
   // tw_opt_add(app_opt);
 
@@ -502,9 +555,11 @@ int model_main(int argc, char* argv[]) {
   g_tw_custom_lp_global_to_local_map = &mapping_to_local;
 	g_tw_lp_typemap = &typeMapping;
 	g_tw_lp_types = model_lps;
+    g_tw_lookahead = lookahead;
 	tw_define_lps(num_lps_per_pe, sizeof(Msg_Data), 0);
 		//set the types:
 	tw_lp_setup_types();
+
 
 
 
@@ -519,8 +574,7 @@ int model_main(int argc, char* argv[]) {
   return 0;
 }
 int main(int argc, char* argv[]) {
-	g_tw_ts_end = 100;
-	g_tw_clock_rate = 1.00;
+
 
 
   tw_opt_add(app_opt);
