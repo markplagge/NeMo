@@ -128,7 +128,7 @@ finalStr = sqlite3_mprintf("curl %s%s%s\"final\":\"complete\",\"eventType\":\"%s
 }
 
 void writeToCouch(char* eventType, int numTextParams, char* txtParamNames[] ,char*txtParams[], int numValParams, char* numParamNames[], uint64_t* numParams){
-
+	signal(SIGCHLD, SIG_IGN);
 	//assemble the couch string
 	char* finalStr;
 	char* cla = sqlite3_mprintf("%s%s%s",sCu,couchName,midCu);
@@ -178,6 +178,7 @@ void writeToCouch(char* eventType, int numTextParams, char* txtParamNames[] ,cha
 	sqlite3_free(finalStr);
 }
 void mapRecord( int type, char* typet, int localID, int coreID, int lpid, tw_lpid gid){
+	signal(SIGCHLD, SIG_IGN);
 	static int val = 0;
 	char* tpt = type == 0? "Neuron":"Synapse";
 	char* sql = sqlite3_mprintf("INSERT INTO mappings (ID, type, typeImp, core, local, LPID, gID) VALUES (%i, %Q, %Q, %i, %i, %i, %llu);", val, tpt, typet, coreID, localID, lpid, gid);
