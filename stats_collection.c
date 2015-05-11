@@ -21,7 +21,12 @@ static int callback(void *data, int argc, char **argv, char **azColName){
 
 const char* data = "Callback function called";
 sqlite3 *db;
-char* path;
+const char* couchName = "tnt_bstat";  
+ char* sCu = "--silent -X POST http://127.0.0.1:5984/";
+ char* midCu =  "  -H \"Content-Type: application/json\" -d '{";
+ char* endCu = "}' >nul";
+ char* path;
+int buffSize = 16078;
 void initDB(){
 	path = sqlite3_mprintf("./tnt_bench_stat-%i.db", g_tw_mynode);
 	char *zErrMsg = 0;
@@ -74,13 +79,115 @@ void initDB(){
 	printf("Created database. \n");
 	sqlite3_close(db);
 }
+void writeToCouchTS(char* eventType, int numTextParams, char* txtParamNames[] ,char*txtParams[], int numValParams, char* numParamNames[], uint64_t* numParams,double ts){
+	//assemble the couch string
+	char* finalStr;
+	char* cla = sqlite3_mprintf("%s%s%s",sCu,couchName,midCu);
+	char* data = calloc(buffSize,sizeof(char));
+	while(numTextParams > 0){
+		numTextParams--;
+		strcat(data,"\"");
+		strcat(data,txtParamNames[numTextParams]);
+		strcat(data,"\":\"");
+		strcat(strcat(data,txtParams[numTextParams]),"\",");
 
+	}
+	char* datav = calloc(buffSize,sizeof(char));
+	while(numValParams > 0){
+		numValParams --;
+		strcat(datav,"\"");
+		strcat(datav,numParamNames[numValParams]);
+		strcat(datav,"\":");
+		char* val = sqlite3_mprintf("%llu",numParams[numValParams]);
+		strcat(datav,val);
+		strcat(datav,",");
+
+	}
+
+//	finalStr = sqlite3_mprintf("curl %s%s%s\"final\":\"complete\",\"simTimeStamp\":%d,\"eventType\":\"%s\"%s",cla,data,datav,ts,eventType,endCu);
+//
+finalStr = sqlite3_mprintf("curl %s%s%s\"final\":\"complete\",\"eventType\":\"%s\",\"eventTS\":%f%s",cla,data,datav,eventType,ts,endCu);
+	//now use curl to write to the configured couchdb.
+	int status;	
+	pid_t pID = fork();
+	if(pID == 0){
+		
+
+		//execlp("curl", "curl", finalStr, NULL);
+	
+		exit(system(finalStr));
+		}
+	else{ 
+		//wait(&status);
+}
+
+	free(data);
+	sqlite3_free(cla);
+	sqlite3_free(finalStr);
+	free(datav);
+}
+
+void writeToCouch(char* eventType, int numTextParams, char* txtParamNames[] ,char*txtParams[], int numValParams, char* numParamNames[], uint64_t* numParams){
+
+	//assemble the couch string
+	char* finalStr;
+	char* cla = sqlite3_mprintf("%s%s%s",sCu,couchName,midCu);
+	char* data = calloc(buffSize,sizeof(char));
+	while(numTextParams > 0){
+		numTextParams--;
+		strcat(data,"\"");
+		strcat(data,txtParamNames[numTextParams]);
+		strcat(data,"\":\"");
+		strcat(strcat(data,txtParams[numTextParams]),"\",");
+
+	}
+	char* datav = calloc(buffSize,sizeof(char));
+	while(numValParams > 0){
+		numValParams --;
+		strcat(datav,"\"");
+		strcat(datav,numParamNames[numValParams]);
+		strcat(datav,"\":");
+		char* val = sqlite3_mprintf("%llu",numParams[numValParams]);
+		strcat(datav,val);
+		strcat(datav,",");
+
+	}
+
+	finalStr = sqlite3_mprintf("curl %s%s%s\"final\":\"complete\",\"eventType\":\"%s\"%s",cla,data,datav,eventType,endCu);
+	//test string command:
+//	printf("CURL command would be :  %s\n",finalStr);
+
+
+
+	//now use curl to write to the configured couchdb.
+	int status;	
+	pid_t pID = fork();
+	if(pID == 0){
+		
+
+		//execlp("curl", "curl", finalStr, NULL);
+		exit(system(finalStr));
+		}
+	else{ 
+		//wait(&status);
+}
+
+	free(data);
+	free(datav);
+	sqlite3_free(cla);
+	sqlite3_free(finalStr);
+}
 void mapRecord( int type, char* typet, int localID, int coreID, int lpid, tw_lpid gid){
 	static int val = 0;
 	char* tpt = type == 0? "Neuron":"Synapse";
 	char* sql = sqlite3_mprintf("INSERT INTO mappings (ID, type, typeImp, core, local, LPID, gID) VALUES (%i, %Q, %Q, %i, %i, %i, %llu);", val, tpt, typet, coreID, localID, lpid, gid);
 	char* zErrMsg = 0;
 	int rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
+	char* names[2] = {"typeImp","type"};
+	char* vals[2] = {typet,tpt};
+	char* nnames[5] = {"ID","core","local","LPID","gid"};
+	uint64_t hvals[5] = {val,coreID,localID,lpid,gid};
+	writeToCouch("mapping",2,names,vals,5,nnames,hvals);
 	val ++;
 }
 void neuronEventRecord(regid_t core, regid_t local, regid_t fromSynapse, tw_stime timestamp, long postPot, char *send){
@@ -95,6 +202,17 @@ void neuronEventRecord(regid_t core, regid_t local, regid_t fromSynapse, tw_stim
 
 
 	 rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
+
+	int tp = 1;
+	int np = 4;
+	char* tps[1] = {"evt"};
+	char* tpsv[1] = {send};
+	char* nps[4]={"coreID","localID","recvFromSyn","postFirePot"};
+	uint64_t npsv[4]={core,	local,	fromSynapse, postPot};
+	
+	//exec curl
+	writeToCouchTS("neuronEvent",tp,tps,tpsv,np,nps,npsv,timestamp);	
+	sqlite3_free(sql);
 
 }
 void startRecord(){
@@ -120,10 +238,11 @@ void synapseEventRecord(regid_t core, regid_t local, tw_stime timestamp, int des
 
 	rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
 	row ++;
-
-
-}
-
+	sqlite3_free(sql);
+char* tps[4]={"localID","coreID","eventID","sentTo"};
+uint64_t tpsv[4]={local,core,row,dest};
+	writeToCouchTS("synapseEvent",0,NULL,NULL,4,tps,tpsv,timestamp);
+} 
 void recordNeuron(neuronState *n){
 	static int row = 0;
 	char *zErrMsg=0;
@@ -131,6 +250,10 @@ void recordNeuron(neuronState *n){
 	int rc;
 	rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
 	row ++;
+	sqlite3_free(sql);
+	char* nhds[6] = {"rowID", "neuronID", "dendCore","dendGID","dendLocal","thresh"};
+	uint64_t tpsv[6] = {row,n->neuronID,n->dendriteCore, n->dendriteDest, n->dendriteLocalDest, n->threshold};
+	writeToCouch("neuronStateRecord",0,NULL,NULL,6,nhds,tpsv);
 }
 void finalClose() {
 	sqlite3_close_v2(db);

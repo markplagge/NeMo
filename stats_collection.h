@@ -15,6 +15,8 @@
 #include "models/neuron_model.h"
 	//#include "libs/sqlite3.h"
 #include "libs/sqlite3.h"
+#include <unistd.h>
+#include <sys/wait.h>
 /* tables */
 
 
