@@ -23,10 +23,10 @@ void getLocalIDs(tw_lpid global, regid_t* core, regid_t* local) {
   //(*local) = LOC(global);
   (*core) = ((regid_t*)&global)[co];
   (*local) = ((regid_t*)&global)[lc];
-  if (*local > CORE_SIZE * CORES_PER_PE) {
-    printf("ERROR\n\n\n\n");
-    exit(-1);
-  }
+//  if (*local > CORE_SIZE * CORES_PER_PE) {
+//  printf("ERROR\n\n\n\n");
+  //  exit(-1);
+  //}
 }
 tw_lpid globalID(regid_t core, regid_t local) {
   tw_lpid returnVal = 0;  //(tw_lpid)calloc(sizeof(tw_lpid) ,1);
