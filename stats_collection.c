@@ -80,6 +80,10 @@ void initDB(){
 	sqlite3_close(db);
 }
 void writeToCouchTS(char* eventType, int numTextParams, char* txtParamNames[] ,char*txtParams[], int numValParams, char* numParamNames[], uint64_t* numParams,double ts){
+int status;	
+	pid_t pID = fork();
+	if(pID == 0){
+		
 	//assemble the couch string
 	char* finalStr;
 	char* cla = sqlite3_mprintf("%s%s%s",sCu,couchName,midCu);
@@ -108,29 +112,28 @@ void writeToCouchTS(char* eventType, int numTextParams, char* txtParamNames[] ,c
 //
 finalStr = sqlite3_mprintf("curl %s%s%s\"final\":\"complete\",\"eventType\":\"%s\",\"eventTS\":%f%s",cla,data,datav,eventType,ts,endCu);
 	//now use curl to write to the configured couchdb.
-	int status;	
-	pid_t pID = fork();
-	if(pID == 0){
-		
+	
 
 		//execlp("curl", "curl", finalStr, NULL);
-	
+		free(data);
+		sqlite3_free(cla);
+		sqlite3_free(finalStr);
+		free(datav);
 		exit(system(finalStr));
 		}
 	else{ 
 		//wait(&status);
-}
+}}
 
-	free(data);
-	sqlite3_free(cla);
-	sqlite3_free(finalStr);
-	free(datav);
-}
+
 
 void writeToCouch(char* eventType, int numTextParams, char* txtParamNames[] ,char*txtParams[], int numValParams, char* numParamNames[], uint64_t* numParams){
 	signal(SIGCHLD, SIG_IGN);
-	//assemble the couch string
+	pid_t pID = fork();
+//assemble the couch string
+if(pID == 0){
 	char* finalStr;
+
 	char* cla = sqlite3_mprintf("%s%s%s",sCu,couchName,midCu);
 	char* data = calloc(buffSize,sizeof(char));
 	while(numTextParams > 0){
@@ -161,21 +164,21 @@ void writeToCouch(char* eventType, int numTextParams, char* txtParamNames[] ,cha
 
 	//now use curl to write to the configured couchdb.
 	int status;	
-	pid_t pID = fork();
-	if(pID == 0){
+		
 		
 
 		//execlp("curl", "curl", finalStr, NULL);
+
+		free(data);
+		free(datav);
+		sqlite3_free(cla);
+		sqlite3_free(finalStr);
+
 		exit(system(finalStr));
 		}
 	else{ 
 		//wait(&status);
 }
-
-	free(data);
-	free(datav);
-	sqlite3_free(cla);
-	sqlite3_free(finalStr);
 }
 void mapRecord( int type, char* typet, int localID, int coreID, int lpid, tw_lpid gid){
 	signal(SIGCHLD, SIG_IGN);
