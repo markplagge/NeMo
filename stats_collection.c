@@ -81,9 +81,9 @@ void initDB(){
 }
 void writeToCouchTS(char* eventType, int numTextParams, char* txtParamNames[] ,char*txtParams[], int numValParams, char* numParamNames[], uint64_t* numParams,double ts){
 int status;	
+	signal(SIGCHLD,SIG_IGN);
 	pid_t pID = fork();
-	if(pID == 0){
-		
+	if(pID == 0){	
 	//assemble the couch string
 	char* finalStr;
 	char* cla = sqlite3_mprintf("%s%s%s",sCu,couchName,midCu);
@@ -112,14 +112,14 @@ int status;
 //
 finalStr = sqlite3_mprintf("curl %s%s%s\"final\":\"complete\",\"eventType\":\"%s\",\"eventTS\":%f%s",cla,data,datav,eventType,ts,endCu);
 	//now use curl to write to the configured couchdb.
-	
+		int rv = system(finalStr);
 
 		//execlp("curl", "curl", finalStr, NULL);
 		free(data);
 		sqlite3_free(cla);
 		sqlite3_free(finalStr);
 		free(datav);
-		exit(system(finalStr));
+		exit(rv);
 		}
 	else{ 
 		//wait(&status);
@@ -163,19 +163,16 @@ if(pID == 0){
 
 
 	//now use curl to write to the configured couchdb.
-	int status;	
-		
-		
+		int rv = system(finalStr);
 
 		//execlp("curl", "curl", finalStr, NULL);
-
 		free(data);
-		free(datav);
 		sqlite3_free(cla);
 		sqlite3_free(finalStr);
-
-		exit(system(finalStr));
+		free(datav);
+		exit(rv);
 		}
+		
 	else{ 
 		//wait(&status);
 }
