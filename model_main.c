@@ -181,6 +181,7 @@ void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
     data->senderLocalID = s->neuronID;
     data->sourceCore = s->coreID;
     data->type = NEURON;
+	  data->partial = -1;
 	     tw_event_send(neuronEvent);
 	  if(DEBUG_MODE == true)
 		  d = dest;
@@ -317,11 +318,9 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
 		   data->type = SYNAPSE;
 		   tw_event_send(newEvent);
 		}
-		if(part == 0){
-		   //here, we have reduced our message to zero. //do nothing.
-		}
+
 	 }
-	  else //partial is zero - so
+	  else if (part == 0) //partial is zero - so
 	 {
 		int_fast8_t part = 0;
 		part = NEURONS_IN_CORE - 1;
@@ -329,7 +328,7 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
 		newEvent = tw_event_new(s->dests[part], ts, lp);
 		data = (Msg_Data*) tw_event_data(newEvent);
 		data->senderLocalID = s->synID;
-		data->partial =  part;
+		data->partial =  part - 1;
 		data->type = SYNAPSE;
 		tw_event_send(newEvent);
 		 //self prime
@@ -343,6 +342,7 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
 		data->type = SYNAPSE;
 		tw_event_send(newEvent);
 	 }
+	  else if(M->type == NEURON) // neuron event
 
       if (DEBUG_MODE == 1) {
 			  //printf("Sending message to GID %lu, at time: %f.\n", s->dests[i], ts);
@@ -489,6 +489,9 @@ void gen_event(spikeGenState* gen_state, tw_lp* lp) {
 	  data->sourceCore = 0;
 	  data->prevVoltage = 0;
 	  data->senderLocalID = 0;
+		  //This is set to number of neurons in the core, since the default behavior is to
+		  //hava a synapse send a message to the n-1th neuron upon receipt of a synapse message.
+	  data->partial = NEURONS_IN_CORE;
 
 		  //tw_printf("SENDING SEED EVENT - CAUSING ISSUES Dest GID %llu -- Dest LP (reported) %llu \n", dest, newEvent->dest_lp->gid );
 	tw_event_send(newEvent);

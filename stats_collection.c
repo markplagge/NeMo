@@ -36,7 +36,7 @@ void initDB(){
 
 	char* neuSQL = ""
 	" CREATE TABLE neuronEvent"
-	" (eventID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+	" (eventID INTEGER NOT NULL PRIMARY KEY,"
 	" coreID INTEGER,"
 	" localID INTEGER,"
 	" eventTime DOUBLE,"
