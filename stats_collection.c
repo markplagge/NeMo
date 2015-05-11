@@ -22,7 +22,7 @@ static int callback(void *data, int argc, char **argv, char **azColName){
 const char* data = "Callback function called";
 sqlite3 *db;
 const char* couchName = "tnt_bstat";  
- char* sCu = "--silent -X POST http://127.0.0.1:5984/";
+ char* sCu = "--silent -X POST http://128.213.23.52:5984/";
  char* midCu =  "  -H \"Content-Type: application/json\" -d '{";
  char* endCu = "}' >nul";
  char* path;
