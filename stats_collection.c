@@ -138,7 +138,7 @@ int status;
 //
 		//InfluxDB tester:
 finalStr = sqlite3_mprintf("curl %s%s%s\"final\":\"complete\",\"eventType\":\"%s\",\"eventTS\":%f%s",cla,data,datav,eventType,ts,endCu);
-		char* fs2 = sqlite3_mprintf("curl -X POST -d '[{"
+		char* fs2 = sqlite3_mprintf("curl --silent -X POST -d '[{"
 			                            "\"name\":\"%s\",\"columns\":[\"time\",%s\"fin\"],"
 			                            "\"points\":[[%f,%s 1]]"
 			                            " }]' "
