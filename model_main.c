@@ -188,10 +188,12 @@ void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
   }
 	if(DEBUG_MODE == true){
 		startRecord();
+        //todo: This is a potential memory leak - need to somehow free this but only after it is done being used.
 
 		char* evt = sqlite3_mprintf("Send? %i --- Neuron States-  FireCount: %i, Last Active: %f, Last Leak: %i -- from synapse GID: %llu", didFire, s->fireCount, s->lastActiveTime, s->lastLeakTime, m->sender);
-		neuronEventRecord(s->coreID, s->neuronID, getSynapseID(d),tw_now(lp), s->prVoltage, evt);
+		neuronEventRecord(lp->gid, s->coreID, s->neuronID, getSynapseID(d),tw_now(lp), s->prVoltage, evt);
 		endRecord();
+
 	}
 	
 }
@@ -206,6 +208,10 @@ void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   // 2. Fire reverse
   s->reverseLeak(s, tw_now(lp));
   // 3. Leak Reverse:
+
+  //Log the reverse event if debug mode is on.
+  //TODO: Switch the string literal with a dynamically allocated string, so that whenever the memory leak is fixed from the other event, this won't cause a segfault.
+  neuronEventRecord(lp->gid, s->coreID, s->neuronID, M->senderLocalID, tw_now(lp), s->cVoltage, "NeuronReverse");
 
 
 }
@@ -344,9 +350,9 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
 	 }
 	  else if(M->type == NEURON) // neuron event
 
-      if (DEBUG_MODE == 1) {
+      if (DEBUG_MODE == true) {
 			  //printf("Sending message to GID %lu, at time: %f.\n", s->dests[i], ts);
-		  synapseEventRecord(s->coreID, s->synID, tw_now(lp), s->dests[part]);
+		  synapseEventRecord(lp->gid, s->coreID, s->synID, tw_now(lp), s->dests[part]);
       }
       //tw_event_send(newEvent);
 
