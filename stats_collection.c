@@ -92,8 +92,8 @@ void initDB(){
 void writeToCouchTS(char* eventType, int numTextParams, char* txtParamNames[] ,char*txtParams[], int numValParams, char* numParamNames[], uint64_t* numParams,double ts){
 int status;	
 	signal(SIGCHLD,SIG_IGN);
-	pid_t pID = fork();
-	if(pID == 0){	
+//	pid_t pID = fork();
+//	if(pID == 0){	
 	//assemble the couch string
 	char* finalStr;
 	char* cla = sqlite3_mprintf("%s%s%s",sCu,couchName,midCu);
@@ -142,7 +142,7 @@ finalStr = sqlite3_mprintf("curl %s%s%s\"final\":\"complete\",\"eventType\":\"%s
 			                            "\"name\":\"%s\",\"columns\":[\"time\",%s\"fin\"],"
 			                            "\"points\":[[%f,%s 1]]"
 			                            " }]' "
-			                            " 'http://128.213.23.52:8086/db/tnt_bench_events/series?u=root&p=root' >nul", eventType, outs,ts, outs_vals);
+			                            " 'http://128.213.23.52:8086/db/tnt_bench_events/series?u=root&p=root' ", eventType, outs,ts, outs_vals);
 	//now use curl to write to the configured couchdb.
 		//int rv = 0;//system(finalStr);
 		//int rv = 0;
@@ -157,11 +157,11 @@ finalStr = sqlite3_mprintf("curl %s%s%s\"final\":\"complete\",\"eventType\":\"%s
 		free(datav);
 		sqlite3_free(fs2);
 		free(outs_vals);
-		exit(rv);
-		}
-	else{ 
+	//exit(rv);
+		
+	//else{ 
 		//wait(&status);
-}}
+}
 
 
 void writeToCouch(char* eventType, int numTextParams, char* txtParamNames[] ,char*txtParams[], int numValParams, char* numParamNames[], uint64_t* numParams){
