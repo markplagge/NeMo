@@ -270,10 +270,9 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   tw_event* newEvent;
   Msg_Data* data;
   if (M->type == SPKGN && s->spikeGen != NULL) {  // spike generator message
-                                                  // data
+    // data
     gen_event(s->spikeGen, lp);
   }
-	
   // If this is not a spike generator message, then we will proceed according to
   // plan.
   else {
@@ -282,12 +281,6 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
 		if (DEBUG_MODE == 1) {
 		startRecord();
 		}
-			//if (M->type == NEURON)
-			  //printf("Synapse %i firing. Recvd Msg from Neuron %i\n", s->synID,M->senderLocalID);
-      //}
-	  //if (M->type == INIT)
-			  //printf("Synapse %i init msg received.\n", s->synID);
-			  //}
 
     /* trying an optimization code here.
 	 for (int i = 0; i < NEURONS_IN_CORE; i++) {
@@ -302,66 +295,62 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
       data->type = SYNAPSE;
       // event:
 	*/
-	 int_fast8_t part = 0;
-	 if (M->partial > 0){
-		part = M->partial - 1;
-		ts = getNextEventTime(lp);
-		newEvent = tw_event_new(s->dests[part], ts,lp);
-		data = (Msg_Data*) tw_event_data(newEvent);
-		data->senderLocalID = s->synID;
-		data->sourceCore = s-> coreID;
-		data->partial = part;
-		data->type = SYNAPSE;
-		tw_event_send(newEvent);
-		if(part > 0) {
+	 int_fast32_t part = 0;
+	 if (M->partial >= 0) {
+       for (unsigned int fired = 0; fired < BURST_RATE &&  part >= 0; fired++) {
+         part = M->partial - 1; //synapse is sending at least one message
+         ts = getNextEventTime(lp);
+         newEvent = tw_event_new(s->dests[part], ts, lp);
+         data = (Msg_Data *) tw_event_data(newEvent);
+         data->senderLocalID = s->synID;
+         data->sourceCore = s->coreID;
+         data->partial = part;
+         data->type = SYNAPSE;
+         tw_event_send(newEvent);
+         if(DEBUG_MODE == true) {
+          synapseEventRecord(lp->gid, s->coreID, s->synID, tw_now(lp), s->dests[part]);
+         }
+       }
+       //after running the burst, check to see if there are any remaning neurons to send messages to.
+		if(part >= 0) {
 		   //seed synapse with remaining partial data.
 		   ts = getNextEventTime(lp);
-		   newEvent = tw_event_new(lp->id, ts, lp);
+		   newEvent = tw_event_new(lp->gid, ts, lp);
 		   data = (Msg_Data *) tw_event_data(newEvent);
 		   data->senderLocalID = s->synID;
 		   data->partial = part;
 		   data->destCore = s->coreID;
-		   data->type = SYNAPSE;
+		   data->type = SYNAPSE; // When sending messages from synapse to self, synapse message type is used.
 		   tw_event_send(newEvent);
 		}
 
 	 }
-	  else if (part == 0) //partial is zero - so
+	  else if (M->type == NEURON) //partial is  . This is a neuron or generator message.
 	 {
-		int_fast8_t part = 0;
-		part = NEURONS_IN_CORE - 1;
-		ts = getNextEventTime(lp);
-		newEvent = tw_event_new(s->dests[part], ts, lp);
-		data = (Msg_Data*) tw_event_data(newEvent);
-		data->senderLocalID = s->synID;
-		data->partial =  part - 1;
-		data->type = SYNAPSE;
-		tw_event_send(newEvent);
-		 //self prime
-		part --;
-		ts = getNextEventTime(lp);
-		newEvent = tw_event_new(s->dests[part], ts, lp);
-		data  = (Msg_Data*) tw_event_data(newEvent);
-		data->senderLocalID = s->synID;
-		data->sourceCore = s-> coreID;
-		data->partial = part;
-		data->type = SYNAPSE;
-		tw_event_send(newEvent);
-	 }
-	  else if(M->type == NEURON) // neuron event
+       ts = getNextEventTime(lp);
+       newEvent = tw_event_new(lp->gid, ts, lp);
+       data = (Msg_Data *) tw_event_data(newEvent);
+       data->senderLocalID = s->synID;
+       data->partial = NEURONS_IN_CORE;
+       data->type=SYNAPSE;
+       tw_event_send(newEvent);
 
-      if (DEBUG_MODE == true) {
-			  //printf("Sending message to GID %lu, at time: %f.\n", s->dests[i], ts);
-		  synapseEventRecord(lp->gid, s->coreID, s->synID, tw_now(lp), s->dests[part]);
-      }
+       if(DEBUG_MODE == true){
+         synapseEventRecord(lp->gid, s->coreID, s->synID, tw_now(lp), lp->gid);
+       }
+
+	 }
+
+
       //tw_event_send(newEvent);
 
       // tw_event *e = tw_event_new(s->dests[i], nextTime, lp);
       // tw_event_send(e);
-    }
-	  if(DEBUG_MODE == true)
-		  endRecord();
-  }
+    if(DEBUG_MODE == true)
+      endRecord();
+}
+}
+
 		//DEBUG CODE _ REMOVE WHEN DONE:
 
 
@@ -488,7 +477,7 @@ void gen_event(spikeGenState* gen_state, tw_lp* lp) {
 
     tw_event* newEvent = tw_event_new(dest, ts, lp);
     Msg_Data* data = (Msg_Data*)tw_event_data(newEvent);
-    data->type = SYNAPSE;
+    data->type = NEURON;
 	  data->sender = 0;
 	  data->destCore = 0;
 	  data->destLocalID = 0;
@@ -496,7 +485,7 @@ void gen_event(spikeGenState* gen_state, tw_lp* lp) {
 	  data->prevVoltage = 0;
 	  data->senderLocalID = 0;
 		  //This is set to number of neurons in the core, since the default behavior is to
-		  //hava a synapse send a message to the n-1th neuron upon receipt of a synapse message.
+		  //have a synapse send a message to the n-1th neuron upon receipt of a synapse message.
 	  data->partial = NEURONS_IN_CORE;
 
 		  //tw_printf("SENDING SEED EVENT - CAUSING ISSUES Dest GID %llu -- Dest LP (reported) %llu \n", dest, newEvent->dest_lp->gid );

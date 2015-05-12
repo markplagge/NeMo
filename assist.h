@@ -76,7 +76,7 @@ extern int DEBUG_MODE;
 
 // Variable Size defs (for tweakability)
 
-#define _idType int_fast16_t  //  unsigned int
+#define _idType int_fast32_t  //  unsigned int
 // neuron specific type redefs - for potentially integrating weird bit length
 // variable sizes or what not:
 #define _neVoltType uint_fast32_t
@@ -121,7 +121,7 @@ typedef struct {
   _idType destCore;
   _idType destLocalID;
   _idType sourceCore;
-   uint_fast8_t partial;
+    _idType partial;
   enum events type;
   /** This saves the old state of the neuron, before firing, so that roll back
    * functions will occur. */

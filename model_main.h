@@ -14,7 +14,6 @@
 #include "assist.h"
 #include "ross.h"
 #include "spike_generator.h"
-
 #include "mappings.h"
 #include "stats_collection.h"
 #include <stdio.h>
@@ -29,11 +28,11 @@
 /**
  *  Number of neurons per core.
  */
-int NEURONS_IN_CORE = 4;
+int NEURONS_IN_CORE = 128;
 /**
  *  Number of synapses per core.
  */
-int SYNAPSES_IN_CORE = 128;
+int SYNAPSES_IN_CORE = 256;
 /**
  *  Each PE can have one or more virtual cores running during the simulation. Default is 2.
  */
@@ -94,6 +93,9 @@ unsigned int GEN_PROB = 50;
 unsigned int GEN_FCT = 5;
 int GEN_OUTBOUND = 0;
 
+uint BURST_RATE = 4;
+
+
 /** Stats variable - number of neruon messages sent. */
 stat_t neuronSent = 0;
 /** Stats Variable - number of synapse messages sent. */
@@ -123,6 +125,7 @@ const tw_optdef app_opt[] = {
 			  "Number of outbound connections for generator (Set <= number of synapses per core.) If set to 0, the generator will attach to all syapses in it's core."),
   TWOPT_STIME("genlag", GEN_LAG, "Lag time for the generator"),
   TWOPT_GROUP("Misc. Settings"),
+  TWOPT_UINT("burst", BURST_RATE, "Burst rate of synapses (messages per tick sent during synapse activation)"),
   TWOPT_FLAG("debug", DEBUG_MODE, "Enable debug output"),
   TWOPT_STIME("lh", lookahead, "Lookahead Setting"),
   {TWOPT_END()}
