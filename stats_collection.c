@@ -163,7 +163,6 @@ finalStr = sqlite3_mprintf("curl %s%s%s\"final\":\"complete\",\"eventType\":\"%s
 }}
 
 
-
 void writeToCouch(char* eventType, int numTextParams, char* txtParamNames[] ,char*txtParams[], int numValParams, char* numParamNames[], uint64_t* numParams){
 	signal(SIGCHLD, SIG_IGN);
 	pid_t pID = fork();
@@ -215,7 +214,6 @@ if(pID == 0){
 }
 }
 void mapRecord( int type, char* typet, int localID, int coreID, int lpid, tw_lpid gid){
-	signal(SIGCHLD, SIG_IGN);
 	static int val = 0;
 	char* tpt = type == 0? "Neuron":"Synapse";
 	char* sql = sqlite3_mprintf("INSERT INTO mappings (ID, type, typeImp, core, local, LPID, gID) VALUES (%i, %Q, %Q, %i, %i, %i, %llu);", val, tpt, typet, coreID, localID, lpid, gid);
@@ -231,16 +229,9 @@ void mapRecord( int type, char* typet, int localID, int coreID, int lpid, tw_lpi
 void neuronEventRecord(tw_lpid neuronGlobal, regid_t core, regid_t local, regid_t fromSynapse, tw_stime timestamp, long postPot, char *send){
 	static int row = 0;
 	char *zErrMsg=0;
-
-
 	char* sql = sqlite3_mprintf("INSERT INTO neuronEvent ( coreID, localID, eventTime, receivedSynapse, postFirePotential, eventType) VALUES (%i, %i, %f, %i, %i, %Q); ",core,local,timestamp,fromSynapse,postPot, send);
-
-
 	int rc;
-
-
-	 rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
-
+	// rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg); //removed, now using couch / influx
 	int tp = 1;
 	int np = 4;
 	char* tps[1] = {"evt_text_desc"};
@@ -272,7 +263,7 @@ void synapseEventRecord(tw_lpid gid, regid_t core, regid_t local, tw_stime times
 	char *zErrMsg=0;
 	char *sql = sqlite3_mprintf("insert into SynapseEvents ( \"localID\", \"coreID\", \"eventTime\", \"eventID\", \"sent\") values (%lu,%lu,%f,%i,%i);", local, core, timestamp, row, dest);
 	int rc;
-	rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
+	//rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg); //removed, now using couch / influx.
 	row ++;
 	sqlite3_free(sql);
 char* tps[5]={"gid","localID","coreID","eventID","sentTo"};
@@ -284,7 +275,7 @@ void recordNeuron(neuronState *n){
 	char *zErrMsg=0;
 	char *sql = sqlite3_mprintf("insert into neurons (rowID, neuronID, dendCore,   dendGID, dendLocal, thresh, other) values (%i, %i, %i, %llu, %i, %i, %i)", row, n->neuronID, n->dendriteCore,  n->dendriteDest,n->dendriteLocalDest, n->threshold, n->threshold);
 	int rc;
-	rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
+	//rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg); removed, now using couch /influx
 	row ++;
 	sqlite3_free(sql);
 	char* nhds[6] = {"rowID", "neuronID", "dendCore","dendGID","dendLocal","thresh"};
