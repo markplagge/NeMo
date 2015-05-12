@@ -146,10 +146,10 @@ finalStr = sqlite3_mprintf("curl %s%s%s\"final\":\"complete\",\"eventType\":\"%s
 	//now use curl to write to the configured couchdb.
 		//int rv = 0;//system(finalStr);
 		//int rv = 0;
-		//int rv = system(finalStr); // write to couchdb
-		int rv = system(fs2); // write event data to influxdb.
+		int rv = system(finalStr); // write to couchdb
+		//int rv = system(fs2); // write event data to influxdb.
 		//printf("\n\nWould output to crashdb - \n %s \n", fs2);
-		rv = system(finalStr); //events to influx, full log to couch.
+		//rv = system(finalStr); //events to influx, full log to couch.
 		//execlp("curl", "curl", finalStr, NULL);
 		free(data);
 		sqlite3_free(cla);
