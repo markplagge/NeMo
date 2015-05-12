@@ -142,7 +142,7 @@ finalStr = sqlite3_mprintf("curl %s%s%s\"final\":\"complete\",\"eventType\":\"%s
 			                            "\"name\":\"%s\",\"columns\":[\"time\",%s\"fin\"],"
 			                            "\"points\":[[%f,%s 1]]"
 			                            " }]' "
-			                            " 'http://128.213.23.52:8086/db/tnt_bench_events/series?u=root&p=root'", eventType, outs,ts, outs_vals);
+			                            " 'http://128.213.23.52:8086/db/tnt_bench_events/series?u=root&p=root' >nul", eventType, outs,ts, outs_vals);
 	//now use curl to write to the configured couchdb.
 		//int rv = 0;//system(finalStr);
 		//int rv = 0;
