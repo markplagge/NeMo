@@ -148,7 +148,7 @@ finalStr = sqlite3_mprintf("curl %s%s%s\"final\":\"complete\",\"eventType\":\"%s
 		//int rv = 0;
 		//int rv = system(finalStr); // write to couchdb
 		int rv = system(fs2); // write event data to influxdb.
-		printf("\n\nWould output to crashdb - \n %s \n", fs2);
+		//printf("\n\nWould output to crashdb - \n %s \n", fs2);
 		//execlp("curl", "curl", finalStr, NULL);
 		free(data);
 		sqlite3_free(cla);
