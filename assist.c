@@ -35,5 +35,11 @@ long getTotalNeurons() {
  */
 tw_stime getNextEventTime(tw_lp *lp){
 
-    return tw_rand_unif(lp->rng) / 10;
+    tw_stime r =tw_rand_unif(lp->rng) / 10;
+
+    return r;
+
 }
+
+
+

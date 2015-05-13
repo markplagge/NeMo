@@ -91,7 +91,8 @@ bool GEN_RND = 1;
 int RND_MODE = 0;
 unsigned int GEN_PROB = 50;
 unsigned int GEN_FCT = 5;
-int GEN_OUTBOUND = 0;
+unsigned int GEN_OUTBOUND = 0;
+unsigned int GEN_SEL_MODE = 0;
 
 uint BURST_RATE = 4;
 
@@ -123,7 +124,8 @@ const tw_optdef app_opt[] = {
   TWOPT_ULONG("ftr", GEN_FCT, "Probability or Lambda for geometric or binomial option."),
   TWOPT_ULONG("genout", GEN_OUTBOUND,
 			  "Number of outbound connections for generator (Set <= number of synapses per core.) If set to 0, the generator will attach to all syapses in it's core."),
-  TWOPT_STIME("genlag", GEN_LAG, "Lag time for the generator"),
+  TWOPT_STIME("genlag", GEN_LAG, "Lag time for the generator (generator sends a spike once per N"),
+    TWOPT_UINT("genSmd", GEN_SEL_MODE, "Generator output selection mode. 0 = sequental, 1 = random."),
   TWOPT_GROUP("Misc. Settings"),
   TWOPT_UINT("burst", BURST_RATE, "Burst rate of synapses (messages per tick sent during synapse activation)"),
   TWOPT_FLAG("debug", DEBUG_MODE, "Enable debug output"),
@@ -152,7 +154,7 @@ void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID);
 //reverse functions:
 void neuron_reverse(neuronState *, tw_bf *, Msg_Data *, tw_lp *);
 
-void synapse_reverse(neuronState *, tw_bf *, Msg_Data *, tw_lp *);
+void synapse_reverse(synapseState *, tw_bf *, Msg_Data *, tw_lp *);
 
 
 //neuron management functions
@@ -172,9 +174,9 @@ void gen_init(spikeGenState *gen_state, tw_lp *lp);
 
 void gen_pre(spikeGenState *gen_state, tw_lp *lp);
 
-void gen_event(spikeGenState *gen_state, tw_lp *lp);
+void gen_event(spikeGenState *gen_state, tw_lp *lp, Msg_Data *m);
 
-void gen_reverse(spikeGenState *gen_state, tw_lp *lp);
+void gen_reverse(spikeGenState *gen_state, tw_lp *lp,Msg_Data *m);
 
 void gen_final(spikeGenState *gen_state, tw_lp *lp);
 

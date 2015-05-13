@@ -48,6 +48,10 @@
 extern "C" {
 #endif
 
+#ifndef uint
+#define uint unsigned int
+#endif
+
 extern int NEURONS_IN_CORE;
 extern int SYNAPSES_IN_CORE;
 extern int CORES_PER_PE;
@@ -79,8 +83,8 @@ extern int DEBUG_MODE;
 #define _idType int_fast32_t  //  unsigned int
 // neuron specific type redefs - for potentially integrating weird bit length
 // variable sizes or what not:
-#define _neVoltType uint_fast32_t
-#define _neStatType int_fast32_t
+#define _neVoltType int_fast32_t
+#define _neStatType int_fast64_t
 /** stat_t is a type for storing statistics from the running sim. */
 #define stat_t uint_fast64_t
 /** regid_t is a "regional id" type. This variable type is for storing
@@ -126,11 +130,16 @@ typedef struct {
   /** This saves the old state of the neuron, before firing, so that roll back
    * functions will occur. */
   _neVoltType prevVoltage;
+  bool genDidFireLast;
+  uint rndCallCount;
+
 
 } Msg_Data;
 
 // ts function for events - just so I can see what works best.
 tw_stime getNextEventTime(tw_lp* lp);
+
+
 #ifdef __cplusplus
 }
 #endif

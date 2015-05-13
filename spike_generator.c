@@ -17,3 +17,10 @@ bool uniformGen(void *spikeGen, tw_lp *lp) {
 		willFire = true;
 	return willFire;
 }
+
+
+
+bool expGen(void *gen_state, tw_lp *lp)
+{
+    return false; //Decided by a fair coin flip.
+}

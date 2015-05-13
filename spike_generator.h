@@ -28,8 +28,9 @@ typedef bool (*spikeGenDel)(void *spikeGen, tw_lp *lp);
 bool randomGen(void *gen_state, tw_lp *lp);
 bool uniformGen(void *gen_state, tw_lp *lp);
 bool geometricGen(void *gen_state, tw_lp *lp);
+bool expGen(void *gen_state, tw_lp *lp);
 bool binGen(void *gen_state, tw_lp *lp);
-float randVal; /**< Selected random generator. */
+
 bool selectedGen(void *spikeGen, tw_lp *lp);
 
 
@@ -48,7 +49,7 @@ typedef struct SelectedSpikes {
 /** Struct that manages the spike generator. Generally, there should be one of these
  *	per simulation! */
 typedef struct SpikeGenerator {
-	int outboud; /**< Represents how many conenctions the input system is attached to in spike_generator_model#outbound. */
+    int outbound; /**< Represents how many conenctions the input system is attached to in spike_generator_model#outbound. */
 	tw_lpid *connectedSynapses; /**< An array of synapses that this is RandomSpikes is attached to. */
 	spikeGenDel spikeGen;
 
@@ -59,8 +60,14 @@ typedef struct SpikeGenerator {
 	float randomRate; /**< If the random value is over this, spike.*/
 	randomSelect randMethod; /**< Selected random generator. */
 	float rndFctVal; /**<For functions that need a second parameter (eg, binomial etc.), this is the second parameter. */
+    int currentOut; /**< currentOut is the currently selected output synapse. Used in sequential mode */
 
+    /**
+     * @brief genMode selected spike generation mode.
+     */
 	randomSelect genMode;
+    randomSelect selectMode;
+
 }spikeGenState;
 
 
