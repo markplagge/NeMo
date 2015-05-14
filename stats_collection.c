@@ -306,4 +306,13 @@ void recordNeuron(neuronState *n) {
                       n->dendriteDest, n->dendriteLocalDest, n->threshold};
   writeToCouch("neuronStateRecord", 0, NULL, NULL, 6, nhds, tpsv);
 }
+void recordOutOfBounds(char * type, unsigned long DlocalID, unsigned long DcoreID, unsigned long long Dglobal, unsigned long sCore, unsigned long sLocal, unsigned long long gID){
+		char* txtNames[1] = { "type" };
+		char* values[1] = {"type"};
+		char* numNames[6] = {"destLocalID", "destCoreID", "destGlobalID", "sourceCore", "sourceLocal", "gid"};
+		uint64_t numV[6] = {DlocalID, DcoreID, Dglobal, sCore, sLocal, gID};
+		writeToCouch("outOfBounds",1, txtNames, values, 6, numNames, numV);
+	}
+
+
 void finalClose() { sqlite3_close_v2(db); }

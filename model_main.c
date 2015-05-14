@@ -193,6 +193,11 @@ void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
         didFire, s->fireCount, s->lastActiveTime, s->lastLeakTime, m->sender);
     neuronEventRecord(lp->gid, s->coreID, s->neuronID, getSynapseID(d),
                       tw_now(lp), s->prVoltage, evt);
+    //TODO: Remove this for actual testing. Only works for one core per pe. 
+    if(s->dendriteLocalDest < NEURONS_IN_CORE && CORES_PER_PE == 1) { 
+      recordOutOfBounds("neuronOut", s->dendriteLocalDest,s->dendriteCore,s->dendriteDest,s->coreID, s->neuronID, lp->gid);
+
+    }
     endRecord();
   }
 
@@ -320,9 +325,12 @@ void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
         // synapse do not use this val.
         data->type = SYNAPSE;  // msg from synapse to neuron are of type SYNAPSE
         tw_event_send(newEvent);
-        if (DEBUG_MODE == true)
+        if (DEBUG_MODE == true){
           synapseEventRecord(lp->gid, s->coreID, s->synID, tw_now(lp),
                              s->dests[part]);
+     
+        }
+
       }
       // after running the burst, check to see if there are any remaning neurons
       // to send messages to.
