@@ -147,6 +147,7 @@ void setNeuronThreshold(neuronState* s, tw_lp* lp) {
 }
 
 //****************Neuron Event Functions ************************//
+//TODO: Add a time wait for sending.
 void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
   if(m->type == NEURON) {
     if(DEBUG_MODE == true)
