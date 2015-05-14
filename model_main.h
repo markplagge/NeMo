@@ -52,6 +52,8 @@ int SYNAPSE_WEIGHT_MAX = 10;
 /** Minimum synapse weight. @see SYNAPSE_WEIGHT_MAX */
 int SYNAPSE_WEIGHT_MIN = 1;
 
+tw_stime PER_SYNAPSE_DET_P = .50;
+
 //int DENDRITE_MIN= 1;
 //int DENDRITE_MAX= 1;
 //int DENDRITE_W_MIN=1;

@@ -51,6 +51,8 @@ extern "C" {
 #ifndef uint
 #define uint unsigned int
 #endif
+//Helper macros:
+#define round(x) ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
 
 extern int NEURONS_IN_CORE;
 extern int SYNAPSES_IN_CORE;

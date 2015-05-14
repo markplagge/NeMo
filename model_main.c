@@ -103,9 +103,11 @@ void initRandomWts(neuronState* s, tw_lp* lp) {
                                   sizeof(_neVoltType), SYNAPSES_IN_CORE);
   // randomized wts:
   for (int j = 0; j < SYNAPSES_IN_CORE; j++) {
-    s->perSynapseDet[j] = true;
-    s->perSynapseWeight[j] =
-        tw_rand_integer(lp->rng, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
+      //I really want to use some fancier random here. TODO: add one
+    s->perSynapseDet[j] = tw_rand_unif(lp->rng) <= PER_SYNAPSE_DET_P;
+    s->perSynapseWeight[j] = tw_rand_integer(lp->rng, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
+    s->sgnLambda = tw_rand_integer(lp->rng,1,10) > 5 ? -1 : 1;
+
   }
 }
 /** initNeuronWithMap -- Initializes this particular neuron based on the sqllite
@@ -144,7 +146,7 @@ void setNeuronThreshold(neuronState* s, tw_lp* lp) {
     s->threshold = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
 }
 
-//******************Neuron Functions***********************//
+//****************Neuron Event Functions ************************//
 void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
   long startCount = lp->rng->count;
   tw_lpid self = lp->gid;
