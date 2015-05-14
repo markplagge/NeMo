@@ -148,60 +148,66 @@ void setNeuronThreshold(neuronState* s, tw_lp* lp) {
 
 //****************Neuron Event Functions ************************//
 void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
-  long startCount = lp->rng->count;
-  tw_lpid self = lp->gid;
+  if(m->type == NEURON) {
+    if(DEBUG_MODE == true)
+         recordOutOfBounds("neuronOut", s->dendriteLocalDest,s->dendriteCore,s->dendriteDest,s->coreID, s->neuronID, lp->gid);
 
-  neuronSent++;
-  tw_lpid d = s->dendriteDest;
-  // if (DEBUG_MODE == 1)
-  // tw_lpid d;
-  // printf("Neuron %i recvd synapse spike from %i.\n",
-  // s->neuronID,m->senderLocalID);
-  bool didFire = neuronReceiveMessage(s, tw_now(lp), m, lp);
-  // create message if didFire happened:
-  // if (DEBUG_MODE == 1 && didFire == true)
-  // printf("Neuron %u has fired. \n", s->neuronID);
-  if (didFire == true) {
-    tw_event* neuronEvent;
-    Msg_Data* data;
-    // added these separately to make it easier to change
-    tw_lpid dest = s->dendriteDest;
+  }  else{
+      long startCount = lp->rng->count;
+      tw_lpid self = lp->gid;
 
-    tw_stime ts = getNextEventTime(lp);  // tw_rand_exponential(lp->rng, 4) /
-    // 10;
-    neuronEvent = tw_event_new(dest, ts, lp);
+      neuronSent++;
+      tw_lpid d = s->dendriteDest;
+      // if (DEBUG_MODE == 1)
+      // tw_lpid d;
+      // printf("Neuron %i recvd synapse spike from %i.\n",
+      // s->neuronID,m->senderLocalID);
+      bool didFire = neuronReceiveMessage(s, tw_now(lp), m, lp);
+      // create message if didFire happened:
+      // if (DEBUG_MODE == 1 && didFire == true)
+      // printf("Neuron %u has fired. \n", s->neuronID);
+      if (didFire == true) {
+        tw_event* neuronEvent;
+        Msg_Data* data;
+        // added these separately to make it easier to change
+        tw_lpid dest = s->dendriteDest;
 
-    data = (Msg_Data*)tw_event_data(neuronEvent);
-    data->destCore = s->dendriteCore;
-    data->destLocalID = s->dendriteLocalDest;
-    data->sender = self;
-    data->senderLocalID = s->neuronID;
-    data->sourceCore = s->coreID;
-    data->type = NEURON;
-    data->partial = -1;
-    tw_event_send(neuronEvent);
-    if (DEBUG_MODE == true) d = dest;
-  }
-  if (DEBUG_MODE == true) {
-    startRecord();
-    // todo: This is a potential memory leak - need to somehow free this but
-    // only after it is done being used.
+        tw_stime ts = getNextEventTime(lp);  // tw_rand_exponential(lp->rng, 4) /
+        // 10;
+        neuronEvent = tw_event_new(dest, ts, lp);
 
-    char* evt = sqlite3_mprintf(
-        "Send? %i --- Neuron States-  FireCount: %i, Last Active: %f, Last "
-        "Leak: %i -- from synapse GID: %llu",
-        didFire, s->fireCount, s->lastActiveTime, s->lastLeakTime, m->sender);
-    neuronEventRecord(lp->gid, s->coreID, s->neuronID, getSynapseID(d),
-                      tw_now(lp), s->prVoltage, evt);
-    //TODO: Remove this for actual testing. Only works for one core per pe. 
-    if(s->dendriteLocalDest < NEURONS_IN_CORE && CORES_PER_PE == 1) { 
-      recordOutOfBounds("neuronOut", s->dendriteLocalDest,s->dendriteCore,s->dendriteDest,s->coreID, s->neuronID, lp->gid);
+        data = (Msg_Data*)tw_event_data(neuronEvent);
+        data->destCore = s->dendriteCore;
+        data->destLocalID = s->dendriteLocalDest;
+        data->sender = self;
+        data->senderLocalID = s->neuronID;
+        data->sourceCore = s->coreID;
+        data->type = NEURON;
+        data->partial = -1;
+        tw_event_send(neuronEvent);
+        if (DEBUG_MODE == true) d = dest;
+      }
+      if (DEBUG_MODE == true) {
+        startRecord();
+        // todo: This is a potential memory leak - need to somehow free this but
+        // only after it is done being used.
 
+        char* evt = sqlite3_mprintf(
+            "Send? %i --- Neuron States-  FireCount: %i, Last Active: %f, Last "
+            "Leak: %i -- from synapse GID: %llu",
+            didFire, s->fireCount, s->lastActiveTime, s->lastLeakTime, m->sender);
+        neuronEventRecord(lp->gid, s->coreID, s->neuronID, getSynapseID(d),
+                          tw_now(lp), s->prVoltage, evt);
+        //TODO: Remove this for actual testing. Only works for one core per pe. 
+        if(s->dendriteLocalDest < NEURONS_IN_CORE && CORES_PER_PE == 1) { 
+          recordOutOfBounds("neuronOut", s->dendriteLocalDest,s->dendriteCore,s->dendriteDest,s->coreID, s->neuronID, lp->gid);
+
+        }
+        endRecord();
+      }
+
+      m->rndCallCount = lp->rng->count - startCount;
     }
-    endRecord();
-  }
-
-  m->rndCallCount = lp->rng->count - startCount;
 }
 
 void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {

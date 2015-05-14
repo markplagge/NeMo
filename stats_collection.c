@@ -314,5 +314,12 @@ void recordOutOfBounds(char * type, unsigned long DlocalID, unsigned long DcoreI
 		writeToCouch("outOfBounds",1, txtNames, values, 6, numNames, numV);
 	}
 
+void recordError(char * type, char* structName, tw_lpid sourceGID, tw_stime time){
+  char* txtNames[2] = {"type", "structName"};
+  char* txtVals[2] = {type, structName};
+  char* nvaln[1] = {"gid"};
+  uint64_t nval[1] = {sourceGID};
+  writeToCouchTS("error", 2, txtNames, txtVals, 1, nvaln, nval, time);
+}
 
 void finalClose() { sqlite3_close_v2(db); }

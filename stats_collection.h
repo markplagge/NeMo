@@ -42,4 +42,5 @@ void mapRecord( int type, char* typet, int localID, int coreID, int lpid, tw_lpi
 #endif /* defined(__ROSS_TOP__stats_collection__) */
 void recordNeuron(neuronState *n);
 void recordOutOfBounds(char * type, unsigned long DlocalID, unsigned long DcoreID, unsigned long long Dglobal, unsigned long sCore, unsigned long sLocal, unsigned long long GID);
+void recordError(char * type, char* structName, tw_lpid sourceGID,tw_stime time);
 void finalClose();
