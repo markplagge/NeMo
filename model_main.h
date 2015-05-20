@@ -103,7 +103,15 @@ uint BURST_RATE = 4;
 stat_t neuronSent = 0;
 /** Stats Variable - number of synapse messages sent. */
 stat_t synapseSent = 0;
+/**Stats counter struct */
+	//Neuron Integration Counter Struct
+typedef struct LocalStat{
+	int integrationCount;
+	int neuronFireCount;
+}localStat;
 
+
+localStat *stats;
 
 //for benchmark, using simplified options.8
 const tw_optdef app_opt[] = {
