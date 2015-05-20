@@ -9,6 +9,13 @@
 #include "assist.h"
 
 // add your command line opts
+//Neuron Integration Counter Struct
+struct Stat{
+	int integrationCount;
+	int neuronFireCount;
+};
+
+struct Stat statistics = {1,2};
 
 tw_lptype model_lps[] = {
 
@@ -233,8 +240,8 @@ void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
                       tw_now(lp), s->cVoltage, "NeuronReverse");
 }
 void neuron_final(neuronState* s, tw_lp* lp) {
-	stats->integrationCount += s->integrationCount;
-	stats->neuronFireCount += s->fireCount;
+		statistics.integrationCount += s->integrationCount;
+		statistics.neuronFireCount += s->fireCount;
 }
 
 //******************Synapse Functions***********************//
@@ -612,15 +619,12 @@ int model_main(int argc, char* argv[]) {
 }
 
 int main(int argc, char* argv[]) {
-	stats = malloc(sizeof(localStat*));
-	stats->integrationCount = 0;
-	stats->neuronFireCount = 0;
 
   tw_opt_add(app_opt);
   int rv = model_main(argc, argv);
   if (g_tw_mynode == 0)  // && DEBUG_MODE == true){
     printf("Neurons integrated %lu times, and synapses fired %lu messages.\n",
            neuronSent, synapseSent);
-	printf("***Official Stats - Neurons integrated %lu times and fired %lu times. \n", stats->integrationCount, stats->neuronFireCount);
+		printf("***Official Stats - Neurons integrated %lu times and fired %lu times. \n", statistics.integrationCount, statistics.neuronFireCount);
   return rv;
 }
