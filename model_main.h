@@ -37,6 +37,12 @@ int SYNAPSES_IN_CORE = 256;
  *  Each PE can have one or more virtual cores running during the simulation. Default is 2.
  */
 int CORES_PER_PE = 1;
+
+/** In order to reduce the size of the memory footprint, we're doing < 1 core per PE. This value determines the number of PEs that 
+*   are needed to simulate a single core. 
+*/ 
+
+int PE_PER_CORE = 2;
 /**
  *  Determines the maximum and minimum thresholds for a neuron to fire.
  */
@@ -113,7 +119,8 @@ const tw_optdef app_opt[] = {
   TWOPT_GROUP("Non-File Configuration"),
   TWOPT_UINT("neurons", NEURONS_IN_CORE, "Neurons per core"),
   TWOPT_UINT("synapses", SYNAPSES_IN_CORE, "Synapses per core"),
-  TWOPT_UINT("cores", CORES_PER_PE, "Cores per PE - IS NOW SET BY G_TW_NKP"),
+  TWOPT_UINT("cores", CORES_PER_PE, "Cores per PE"),
+  TWOPT_UINT("cpe", PES_PER_CORE, "Split core simulation amongst this number of PEs"),
   TWOPT_UINT("th_min", THRESHOLD_MIN, "minimum threshold for neurons"),
   TWOPT_UINT("th_max", THRESHOLD_MAX, "maximum threshold for neurons"),
   TWOPT_UINT("wt_min", SYNAPSE_WEIGHT_MIN, "minimum synapse weight"),
