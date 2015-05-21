@@ -267,7 +267,7 @@ void synapse_init(synapseState* s, tw_lp* lp) {
   }
 
   // Spike Generator init setup.
-  if (s->synID - NEURONS_IN_CORE == 0) {
+  if (s->synID - NEURONS_IN_CORE == 0 && GEN_ON == 1) {
     s->spikeGen = tw_calloc(TW_LOC, "Synapse_Init", sizeof(spikeGenState), 1);
     gen_init(s->spikeGen, lp);
     // Added to make sure generators are being created properly. NOt really
@@ -278,6 +278,15 @@ void synapse_init(synapseState* s, tw_lp* lp) {
                 lp->id, lp->gid);
       endRecord();
     }
+  }
+  else { //traditional synapse init
+      tw_stime ts =  getNextEventTime(lp);
+      tw_event *newEvent = tw_event_new(lp->gid,ts,lp);
+      Msg_Data *data = (Msg_Data*) tw_event_data(newEvent);
+      data->rndCallCount = lp->rng->count;
+        data->type = NEURON;
+        tw_event_send(newEvent);
+
   }
   if (DEBUG_MODE == true) {
     startRecord();
@@ -387,6 +396,7 @@ void synapse_reverse(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   // reverse the randomized values:
   long count = M->rndCallCount;
   while (count--) tw_rand_reverse_unif(lp->rng);
+
 }
 tw_lpid localFire = 0;
 void synapse_final(synapseState* s, tw_lp* lp) {
