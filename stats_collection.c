@@ -86,7 +86,7 @@ void initDB() {
     exit(system(cmd));
   } else {
     int status;
-    wait(&status);
+    //wait(status);
     sqlite3_free(cmd);
   }
 }
