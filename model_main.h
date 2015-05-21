@@ -43,7 +43,7 @@ int CORES_PER_PE = 1;
 */ 
 
 int PE_PER_CORE = 2;
-/**
+/**PES_PER_CORE.PES_PER_COPES_PER_CORE.RE.
  *  Determines the maximum and minimum thresholds for a neuron to fire.
  */
 int THRESHOLD_MAX = 100;
@@ -121,7 +121,7 @@ const tw_optdef app_opt[] = {
   TWOPT_UINT("neurons", NEURONS_IN_CORE, "Neurons per core"),
   TWOPT_UINT("synapses", SYNAPSES_IN_CORE, "Synapses per core"),
   TWOPT_UINT("cores", CORES_PER_PE, "Cores per PE"),
-  TWOPT_UINT("cpe", PES_PER_CORE, "Split core simulation amongst this number of PEs"),
+  TWOPT_UINT("cpe", PE_PER_CORE, "Split core simulation amongst this number of PEs"),
   TWOPT_UINT("th_min", THRESHOLD_MIN, "minimum threshold for neurons"),
   TWOPT_UINT("th_max", THRESHOLD_MAX, "maximum threshold for neurons"),
   TWOPT_UINT("wt_min", SYNAPSE_WEIGHT_MIN, "minimum synapse weight"),
