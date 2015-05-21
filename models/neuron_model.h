@@ -94,7 +94,7 @@ typedef struct NeuronModel {
 
   /** neuron fire parameters */
   _neStatType fireCount;
-
+	_neStatType integrationCount;
   neuronFireMode fireMode;
   /**Reset Function */
   resetFunDel doReset;
@@ -123,6 +123,9 @@ typedef struct NeuronModel {
   regid_t dendriteCore;
   tw_lpid dendriteDest;
 
+		//FIRE RATE KEEPER.
+	_neVoltType burstRate;
+	_neVoltType neuronsInCore;
   // Parameters from the paper:
 
 } neuronState;

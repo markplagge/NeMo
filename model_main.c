@@ -9,6 +9,13 @@
 #include "assist.h"
 
 // add your command line opts
+//Neuron Integration Counter Struct
+struct Stat{
+	int integrationCount;
+	int neuronFireCount;
+};
+
+struct Stat statistics = {1,2};
 
 tw_lptype model_lps[] = {
 
@@ -28,7 +35,9 @@ tw_lptype model_lps[] = {
 
 };
 
-void pre_run() {}  // prerun function.
+void pre_run() {
+
+}  // prerun function.
                    // TODO: Add pre-run stuff - not sure if we need anything.
 
 /*********************************************************************************************'
@@ -60,6 +69,9 @@ void neuron_init(neuronState* s, tw_lp* lp) {
   s->doReset = &resetZero;
   s->reverseLeak = &revNoLeak;
   s->reverseReset = &resetZero;
+	s->integrationCount = 0;
+	s->burstRate = BURST_RATE;
+	s->neuronsInCore = NEURONS_IN_CORE;
   if (isFile ==
       false) {  // no file map, so we use random values. For benchmark,
     // we have to create
@@ -147,6 +159,7 @@ void setNeuronThreshold(neuronState* s, tw_lp* lp) {
 }
 
 //****************Neuron Event Functions ************************//
+//TODO: Add a time wait for sending.
 void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
   if(m->type == NEURON) {
     if(DEBUG_MODE == true)
@@ -162,10 +175,15 @@ void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
       // tw_lpid d;
       // printf("Neuron %i recvd synapse spike from %i.\n",
       // s->neuronID,m->senderLocalID);
-      bool didFire = neuronReceiveMessage(s, tw_now(lp), m, lp);
+
+	  bool didFire = false;
+	  didFire = neuronReceiveMessage(s, tw_now(lp), m, lp);
       // create message if didFire happened:
       // if (DEBUG_MODE == 1 && didFire == true)
       // printf("Neuron %u has fired. \n", s->neuronID);
+
+
+
       if (didFire == true) {
         tw_event* neuronEvent;
         Msg_Data* data;
@@ -221,7 +239,10 @@ void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
     neuronEventRecord(lp->gid, s->coreID, s->neuronID, M->senderLocalID,
                       tw_now(lp), s->cVoltage, "NeuronReverse");
 }
-void neuron_final(neuronState* s, tw_lp* lp) {}
+void neuron_final(neuronState* s, tw_lp* lp) {
+		statistics.integrationCount += s->integrationCount;
+		statistics.neuronFireCount += s->fireCount;
+}
 
 //******************Synapse Functions***********************//
 void synapse_init(synapseState* s, tw_lp* lp) {
@@ -411,7 +432,7 @@ void gen_init(spikeGenState* gen_state, tw_lp* lp) {
       // WARNING: Monitor this function to ensure it is showing proper values.
       core = i / CORE_SIZE + coreOffset;
       local = i;
-      gid = globalID(core, local);
+			//gid = globalID(core, local);
       gen_state->connectedSynapses[i] = globalID(core, local);
     }
   } else if (GEN_RND == true) {
@@ -554,7 +575,8 @@ tw_lpid typeMapping(tw_lpid gid) {
 ///////////////MAIN///////////////////////
 // TODO: Check memory allocation scheme - ensure it makes sense!!
 int model_main(int argc, char* argv[]) {
-  int i;
+
+
 
   tw_init(&argc, &argv);  // toto
   CORE_SIZE = NEURONS_IN_CORE + SYNAPSES_IN_CORE;
@@ -592,13 +614,17 @@ int model_main(int argc, char* argv[]) {
   if (DEBUG_MODE == 1) finalClose();
   // trying all reduce here:
   tw_lpid totalSyn;
+
   return 0;
 }
+
 int main(int argc, char* argv[]) {
+
   tw_opt_add(app_opt);
   int rv = model_main(argc, argv);
   if (g_tw_mynode == 0)  // && DEBUG_MODE == true){
-    printf("Neurons integrated %lu times, and synapses fired %lu messages.",
+    printf("Neurons integrated %lu times, and synapses fired %lu messages.\n",
            neuronSent, synapseSent);
+		printf("***Official Stats - Neurons integrated %lu times and fired %lu times. \n", statistics.integrationCount, statistics.neuronFireCount);
   return rv;
 }

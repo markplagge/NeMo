@@ -85,9 +85,7 @@ bool neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,
   // TODO: Move previous voltage to message.
   st->prVoltage = st->cVoltage;
   m->prevVoltage = st->cVoltage;
-  // prep complete. Now leaking based on time lapse:
 
-  st->leak(st, time);  // leak function call - do leak based on time passed
                        // since last communication.
 
   // apply weights & adjust our voltage:
@@ -132,6 +130,19 @@ bool neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,
   }
   //   neuronFire(st, time, m); // call to fire function, however, not needed
   //   ATM.
+
+		//Ensure that a "whole" time element has passed:
+	tw_stime chgVal = tw_now(lp) * (st->burstRate / st->neuronsInCore);
+	if ((fabs(roundf(chgVal) - chgVal) <= 0.00001f)) {
+			// we can do the fire.
+			// prep complete. Now leaking based on time lapse:
+		st->leak(st, time);  // leak function call - do leak based on time passed
+		st->integrationCount ++;
+		
+	} else {
+		didFire = false;
+
+	}
 
   if (didFire) {
     neuronPostFire(st, time, m);
