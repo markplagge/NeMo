@@ -28,7 +28,7 @@ char *endCu = "}' >nul";
 char *path;
 int buffSize = 16078;
 void initDB() {
-   #ifdef DEB
+
 
   path = sqlite3_mprintf("./tnt_bench_stat-%i.db", g_tw_mynode);
 
@@ -91,7 +91,7 @@ void initDB() {
     //wait(status);
     sqlite3_free(cmd);
   }
-#endif
+
 }
 void writeToCouchTS(char *eventType, int numTextParams, char *txtParamNames[],
                     char *txtParams[], int numValParams, char *numParamNames[],
