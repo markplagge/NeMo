@@ -88,7 +88,7 @@ tw_stime lookahead = 0;
 
 
 /** EVENT_BASE - tweakable parameter for memory */
-int EVENT_BASE = 100000;
+int EVENT_BASE = 100;
 
 //Synapses and neuron max values (for off-by-one errors):
 int tt_neurons = 0;
