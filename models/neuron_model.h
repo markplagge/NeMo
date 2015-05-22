@@ -13,6 +13,8 @@ extern "C" {
 
 #include "../assist.h"
 
+#include "../mappings.h"
+
 #include "ross.h"  //trying to minimize calls to ross from here, but certian defs are really needed.
 
 /** typedef NeuronFireMode
@@ -147,7 +149,7 @@ bool neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,
                           tw_lp *lp);
 void neuronFire(neuronState *st, tw_stime time, Msg_Data *m);
 void neuronPostFire(neuronState *st, tw_stime time, Msg_Data *m);
-
+void generateWaitEvent(neuronState *st, tw_lp *lp);
 #ifdef __cplusplus
 }
 #endif

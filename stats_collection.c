@@ -324,5 +324,15 @@ void recordError(char * type, char* structName, tw_lpid sourceGID, tw_stime time
   uint64_t nval[1] = {sourceGID};
   writeToCouchTS("error", 2, txtNames, txtVals, 1, nvaln, nval, time);
 }
+void recordNeuronPS(neuronState *n, tw_lp *lp, Msg_Data *m,char* prePost){
+  char *txtn[1] = {"Pre/Post integrate"};
+  char *txtv[1] = {prePost};
+  char *tpn[7] = {"gid", "nVolt", "nThresh", "inSyn", "synDet?", "synWt", "synReportedGID"};
+  uint64_t *ttls = {lp->gid, n->cVoltage, n->threshold, m->senderLocalID, n->perSynapseDet[m->senderLocalID],
+                    n->perSynapseWeight[m->senderLocalID], m->sender};
+  writeToCouchTS("NeuronIntegrateState", 1,txtn, txtv,7,tpn,ttls,tw_now(lp));
+
+  .
+}
 
 void finalClose() { sqlite3_close_v2(db); }

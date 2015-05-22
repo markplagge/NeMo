@@ -29,7 +29,7 @@
 /* CREATE neuronEvent */
 /* INSERT INTO neuronEvent (rowid, eventID, coreID, localID, eventTime, receivedSynapse, postFirePotential) VALUES (1234567890, 1234567890, 1, 123, 4560, 456, 4); */
 
-
+int ndb = 1;
 
 void initDB();
 
@@ -45,4 +45,5 @@ void mapRecord( int type, char* typet, int localID, int coreID, int lpid, tw_lpi
 void recordNeuron(neuronState *n);
 void recordOutOfBounds(char * type, unsigned long DlocalID, unsigned long DcoreID, unsigned long long Dglobal, unsigned long sCore, unsigned long sLocal, unsigned long long GID);
 void recordError(char * type, char* structName, tw_lpid sourceGID,tw_stime time);
+void recordNeuronPS(neuronState *n, tw_lp *lp, Msg_Data *m,char* prePost);
 void finalClose();

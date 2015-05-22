@@ -94,14 +94,14 @@ int EVENT_BASE = 100;
 int tt_neurons = 0;
 int tt_synapses = 0;
 /** Generator Options */
-bool GEN_ON = 1;
+unsigned int GEN_ON = 1;
 bool GEN_RND = 1;
 int RND_MODE = 0;
 unsigned int GEN_PROB = 50;
 unsigned int GEN_FCT = 5;
 unsigned int GEN_OUTBOUND = 0;
 unsigned int GEN_SEL_MODE = 0;
-
+unsigned int SP_DBG = 0;
 uint BURST_RATE = 4;
 
 
@@ -127,7 +127,8 @@ const tw_optdef app_opt[] = {
   TWOPT_UINT("wt_min", SYNAPSE_WEIGHT_MIN, "minimum synapse weight"),
   TWOPT_UINT("wt_max", SYNAPSE_WEIGHT_MAX, "maximum synapse wweight"),
   TWOPT_GROUP("Input Sim Generator Options"),
-  TWOPT_FLAG("genon", GEN_ON, "Input Generator On"),
+    //TODO: Why does this report "default off"?TWOPT_FLAG("genon", GEN_ON, "Input Generator On"),
+  TWOPT_UINT("genon", GEN_ON, "Input Generator On/Off"),
   TWOPT_FLAG("genrd", GEN_RND, "Use Random Input"),
   TWOPT_UINT("rndMd", RND_MODE, "Random gen mode. 0 is GE uniform. 1 is geometric. 2 is binomial. "),
   TWOPT_ULONG("prob", GEN_PROB, "Probability setting"),
@@ -139,6 +140,7 @@ const tw_optdef app_opt[] = {
   TWOPT_GROUP("Misc. Settings"),
   TWOPT_UINT("burst", BURST_RATE, "Burst rate of synapses (messages per tick sent during synapse activation)"),
   TWOPT_FLAG("debug", DEBUG_MODE, "Enable debug output"),
+  TWOPT_FLAG("spd", SP_DBG, "SpecialDebug"),
   TWOPT_STIME("lh", lookahead, "Lookahead Setting"),
   {TWOPT_END()}
 };

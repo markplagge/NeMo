@@ -9,42 +9,42 @@
 #include "assist.h"
 
 // add your command line opts
-//Neuron Integration Counter Struct
-struct Stat{
-	int integrationCount;
-	int neuronFireCount;
+// Neuron Integration Counter Struct
+struct Stat {
+  int integrationCount;
+  int neuronFireCount;
 };
 
-struct Stat statistics = {1,2};
+struct Stat statistics = { 0, 0 };
 
 tw_lptype model_lps[] = {
 
-    {
+  {
 
-     (init_f)neuron_init, (pre_run_f)pre_run, (event_f)neuron_event,
-     (revent_f)neuron_reverse, (final_f)neuron_final,
-     (map_f)mapping,  // TODO: Check with Elsa about setting this to null for
-     // linear mapping.
-     sizeof(neuronState)},
-    {
+    (init_f)neuron_init, (pre_run_f)pre_run, (event_f)neuron_event,
+    (revent_f)neuron_reverse, (final_f)neuron_final,
+    (map_f)mapping, // TODO: Check with Elsa about setting this to null for
+    // linear mapping.
+    sizeof(neuronState)
+  },
+  {
 
-     (init_f)synapse_init, (pre_run_f)pre_run, (event_f)synapse_event,
-     (revent_f)synapse_reverse, (final_f)synapse_final, (map_f)mapping,
-     sizeof(synapseState)},
-    {0}
+    (init_f)synapse_init, (pre_run_f)pre_run, (event_f)synapse_event,
+    (revent_f)synapse_reverse, (final_f)synapse_final, (map_f)mapping,
+    sizeof(synapseState)
+  },
+  { 0 }
 
 };
 
-void pre_run() {
-
-}  // prerun function.
-                   // TODO: Add pre-run stuff - not sure if we need anything.
+void pre_run() {} // prerun function.
+                  // TODO: Add pre-run stuff - not sure if we need anything.
 
 /*********************************************************************************************'
  * Main function definitions. Based on the prototype tnt_main
  * this model implements the neuromorphic baseline benchmark.
  * */
-void neuron_init(neuronState* s, tw_lp* lp) {
+void neuron_init(neuronState *s, tw_lp *lp) {
   tw_lpid self = lp->gid;
 
   // set neuron local id
@@ -53,7 +53,7 @@ void neuron_init(neuronState* s, tw_lp* lp) {
   getLocalIDs(self, &core, &local);
   s->coreID = core;
 
-  s->neuronID = getNeuronID(self);  // local;
+  s->neuronID = getNeuronID(self); // local;
 
   // initial membrane potential values
   s->prVoltage = 0;
@@ -69,16 +69,15 @@ void neuron_init(neuronState* s, tw_lp* lp) {
   s->doReset = &resetZero;
   s->reverseLeak = &revNoLeak;
   s->reverseReset = &resetZero;
-	s->integrationCount = 0;
-	s->burstRate = BURST_RATE;
-	s->neuronsInCore = NEURONS_IN_CORE;
-  if (isFile ==
-      false) {  // no file map, so we use random values. For benchmark,
+  s->integrationCount = 0;
+  s->burstRate = BURST_RATE;
+  s->neuronsInCore = NEURONS_IN_CORE;
+  if (isFile == false) { // no file map, so we use random values. For benchmark,
     // we have to create
     // a recurrance network.
     initRandomWts(s, lp);
     s->dendriteCore =
-        tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);  // the dest core can be
+        tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1); // the dest core can be
     // anywhere from 0 to the number of cores
     // in the simulation, or nkp.
 
@@ -108,18 +107,18 @@ void neuron_init(neuronState* s, tw_lp* lp) {
  * called on all new neurons.
  * @param *s The new neuron, created by ROSS indirectly.
  * */
-void initRandomWts(neuronState* s, tw_lp* lp) {
+void initRandomWts(neuronState *s, tw_lp *lp) {
   s->perSynapseDet = tw_calloc("Error-SynapseWeightInit", 81, "Neurons",
                                sizeof(bool), SYNAPSES_IN_CORE);
   s->perSynapseWeight = tw_calloc("Error-SynapseWeightInit", 81, "Neurons",
                                   sizeof(_neVoltType), SYNAPSES_IN_CORE);
   // randomized wts:
   for (int j = 0; j < SYNAPSES_IN_CORE; j++) {
-      //I really want to use some fancier random here. TODO: add one
+    // I really want to use some fancier random here. TODO: add one
     s->perSynapseDet[j] = tw_rand_unif(lp->rng) <= PER_SYNAPSE_DET_P;
-    s->perSynapseWeight[j] = tw_rand_integer(lp->rng, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
-    s->sgnLambda = tw_rand_integer(lp->rng,1,10) > 5 ? -1 : 1;
-
+    s->perSynapseWeight[j] =
+        tw_rand_integer(lp->rng, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
+    s->sgnLambda = tw_rand_integer(lp->rng, 1, 10) > 5 ? -1 : 1;
   }
 }
 /** initNeuronWithMap -- Initializes this particular neuron based on the sqllite
@@ -130,17 +129,17 @@ void initRandomWts(neuronState* s, tw_lp* lp) {
  * on the
  *  number of cores simulated per PE,  and the number of neurons and synapses in
  *	each core, as defined in #CORES_PER_PE NEURONS_IN_CORE  and
- ***#SYNAPSES_IN_CORE.
+ *****#SYNAPSES_IN_CORE.
  *	The specifics for the file
  *  and DB specs are/will be defined in  mapping_specifications.rtf. @see
  * mapping_specifications.rtf */
-void initNeuronWithMap(neuronState* s, tw_lp* lp, tw_pe* pe) {
+void initNeuronWithMap(neuronState *s, tw_lp *lp, tw_pe *pe) {
   // nothing yet
   printf("Not implemented yet");
 }
 /** initSynapseWithMap -- Initializes this particular synapse based on the
  * sqllite map. See #initNeuronWithMap() for more information. */
-void initSynapseWithMap(neuronState* s, tw_lp* lp, tw_pe* pe) {
+void initSynapseWithMap(neuronState *s, tw_lp *lp, tw_pe *pe) {
   printf("not implemented yet");
 }
 
@@ -151,7 +150,7 @@ void initSynapseWithMap(neuronState* s, tw_lp* lp, tw_pe* pe) {
  *	map, then this will use the map's values. Otherwise, it sets it to a
  * random
  *	value based on the parameters #THRESHOLD_MIN and #THRESHOLD_MAX. */
-void setNeuronThreshold(neuronState* s, tw_lp* lp) {
+void setNeuronThreshold(neuronState *s, tw_lp *lp) {
   if (isFile) {
     // todo: implement this sql/json/whatever file system
   } else
@@ -159,76 +158,82 @@ void setNeuronThreshold(neuronState* s, tw_lp* lp) {
 }
 
 //****************Neuron Event Functions ************************//
-//TODO: Add a time wait for sending.
-void neuron_event(neuronState* s, tw_bf* CV, Msg_Data* m, tw_lp* lp) {
-  if(m->type == NEURON) {
-    if(DEBUG_MODE == true)
-         recordOutOfBounds("neuronOut", s->dendriteLocalDest,s->dendriteCore,s->dendriteDest,s->coreID, s->neuronID, lp->gid);
+// TODO: Add a time wait for sending.
+void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp) {
+  if (m->type ==  NEURON) {
+    if (DEBUG_MODE == true)
+      recordOutOfBounds("neuronOut", s->dendriteLocalDest, s->dendriteCore,
+                        s->dendriteDest, s->coreID, s->neuronID, lp->gid);
 
-  }  else{
-      long startCount = lp->rng->count;
-      tw_lpid self = lp->gid;
+  } else {
+    long startCount = lp->rng->count;
+    tw_lpid self = lp->gid;
 
-      neuronSent++;
-      tw_lpid d = s->dendriteDest;
-      // if (DEBUG_MODE == 1)
-      // tw_lpid d;
-      // printf("Neuron %i recvd synapse spike from %i.\n",
-      // s->neuronID,m->senderLocalID);
+    neuronSent++;
+    tw_lpid d = s->dendriteDest;
+    // if (DEBUG_MODE == 1)
+    // tw_lpid d;
+    // printf("Neuron %i recvd synapse spike from %i.\n",
+    // s->neuronID,m->senderLocalID);
 
-	  bool didFire = false;
-	  didFire = neuronReceiveMessage(s, tw_now(lp), m, lp);
-      // create message if didFire happened:
-      // if (DEBUG_MODE == 1 && didFire == true)
-      // printf("Neuron %u has fired. \n", s->neuronID);
+    bool didFire = false;
+    didFire = neuronReceiveMessage(s, tw_now(lp), m, lp);
 
+    // create message if didFire happened:
+    // if (DEBUG_MODE == 1 && didFire == true)
+    // printf("Neuron %u has fired. \n", s->neuronID);
 
+    if (didFire == true) {
+        printf("n fire \n");
+        statistics.neuronFireCount += s->fireCount;
+      tw_event *neuronEvent;
+      Msg_Data *data;
+      // added these separately to make it easier to change
+      tw_lpid dest = s->dendriteDest;
 
-      if (didFire == true) {
-        tw_event* neuronEvent;
-        Msg_Data* data;
-        // added these separately to make it easier to change
-        tw_lpid dest = s->dendriteDest;
+      tw_stime ts = getNextEventTime(lp); // tw_rand_exponential(lp->rng, 4) /
+      // 10;
+      neuronEvent = tw_event_new(dest, ts, lp);
 
-        tw_stime ts = getNextEventTime(lp);  // tw_rand_exponential(lp->rng, 4) /
-        // 10;
-        neuronEvent = tw_event_new(dest, ts, lp);
-
-        data = (Msg_Data*)tw_event_data(neuronEvent);
-        data->destCore = s->dendriteCore;
-        data->destLocalID = s->dendriteLocalDest;
-        data->sender = self;
-        data->senderLocalID = s->neuronID;
-        data->sourceCore = s->coreID;
-        data->type = NEURON;
-        data->partial = -1;
-        tw_event_send(neuronEvent);
-        if (DEBUG_MODE == true) d = dest;
-      }
-      if (DEBUG_MODE == true) {
-        startRecord();
-        // todo: This is a potential memory leak - need to somehow free this but
-        // only after it is done being used.
-
-        char* evt = sqlite3_mprintf(
-            "Send? %i --- Neuron States-  FireCount: %i, Last Active: %f, Last "
-            "Leak: %i -- from synapse GID: %llu",
-            didFire, s->fireCount, s->lastActiveTime, s->lastLeakTime, m->sender);
-        neuronEventRecord(lp->gid, s->coreID, s->neuronID, getSynapseID(d),
-                          tw_now(lp), s->prVoltage, evt);
-        //TODO: Remove this for actual testing. Only works for one core per pe. 
-        if(s->dendriteLocalDest < NEURONS_IN_CORE && CORES_PER_PE == 1) { 
-          recordOutOfBounds("neuronOut", s->dendriteLocalDest,s->dendriteCore,s->dendriteDest,s->coreID, s->neuronID, lp->gid);
-
-        }
-        endRecord();
-      }
-
-      m->rndCallCount = lp->rng->count - startCount;
+      data = (Msg_Data *)tw_event_data(neuronEvent);
+      data->destCore = s->dendriteCore;
+      data->destLocalID = s->dendriteLocalDest;
+      data->sender = self;
+      data->senderLocalID = s->neuronID;
+      data->sourceCore = s->coreID;
+      data->type = NEURON;
+      data->partial = -1;
+      tw_event_send(neuronEvent);
+      if (DEBUG_MODE == true)
+        d = dest;
     }
+    if (DEBUG_MODE == true) {
+      startRecord();
+      // todo: This is a potential memory leak - need to somehow free this but
+      // only after it is done being used.
+
+      char *evt = sqlite3_mprintf(
+          "Send? %i --- Neuron States-  FireCount: %i, Last Active: %f, Last "
+          "Leak: %i -- from synapse GID: %llu",
+          didFire, s->fireCount, s->lastActiveTime, s->lastLeakTime, m->sender);
+      neuronEventRecord(lp->gid, s->coreID, s->neuronID, getSynapseID(d),
+                        tw_now(lp), s->prVoltage, evt);
+      // TODO: Remove this for actual testing. Only works for one core per pe.
+      if (s->dendriteLocalDest < NEURONS_IN_CORE && CORES_PER_PE == 1)
+        recordOutOfBounds("neuronOut", s->dendriteLocalDest, s->dendriteCore,
+                          s->dendriteDest, s->coreID, s->neuronID, lp->gid);
+
+      endRecord();
+    }
+    //Sequential Neuron Firing Mode.
+    //Will add proper support for burst mode later.
+
+
+    m->rndCallCount = lp->rng->count - startCount;
+  }
 }
 
-void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
+void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
   neuronReverseFinal(s, CV, M, lp);
 
   // Log the reverse event if debug mode is on.
@@ -238,14 +243,17 @@ void neuron_reverse(neuronState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
   if (DEBUG_MODE == true)
     neuronEventRecord(lp->gid, s->coreID, s->neuronID, M->senderLocalID,
                       tw_now(lp), s->cVoltage, "NeuronReverse");
+
+
+
 }
-void neuron_final(neuronState* s, tw_lp* lp) {
-		statistics.integrationCount += s->integrationCount;
-		statistics.neuronFireCount += s->fireCount;
+void neuron_final(neuronState *s, tw_lp *lp) {
+  statistics.integrationCount += s->integrationCount;
+  //statistics.neuronFireCount += s->fireCount;
 }
 
 //******************Synapse Functions***********************//
-void synapse_init(synapseState* s, tw_lp* lp) {
+void synapse_init(synapseState *s, tw_lp *lp) {
   tw_lpid self = lp->gid;
 
   s->fireCount = 0;
@@ -256,7 +264,7 @@ void synapse_init(synapseState* s, tw_lp* lp) {
      accuracy check. */
   regid_t core, loc;
   getLocalIDs(lp->gid, &core, &loc);
-  s->coreID = core;  // TODO: check multi-core function
+  s->coreID = core; // TODO: check multi-core function
   s->synID = loc;
   tw_lpid arrrgs = lp->gid;
   // set up destination GIDs
@@ -266,7 +274,7 @@ void synapse_init(synapseState* s, tw_lp* lp) {
     x = x;
   }
 
-  // Spike Generator init setup.
+  // Spike Generator init setup. Only used if GEN_ON is true.
   if (s->synID - NEURONS_IN_CORE == 0 && GEN_ON == 1) {
     s->spikeGen = tw_calloc(TW_LOC, "Synapse_Init", sizeof(spikeGenState), 1);
     gen_init(s->spikeGen, lp);
@@ -278,15 +286,13 @@ void synapse_init(synapseState* s, tw_lp* lp) {
                 lp->id, lp->gid);
       endRecord();
     }
-  }
-  else { //traditional synapse init
-      tw_stime ts =  getNextEventTime(lp);
-      tw_event *newEvent = tw_event_new(lp->gid,ts,lp);
-      Msg_Data *data = (Msg_Data*) tw_event_data(newEvent);
-      data->rndCallCount = lp->rng->count;
-        data->type = NEURON;
-        tw_event_send(newEvent);
-
+  } else { // traditional synapse init
+    tw_stime ts = getNextEventTime(lp);
+    tw_event *newEvent = tw_event_new(lp->gid, ts, lp);
+    Msg_Data *data = (Msg_Data *)tw_event_data(newEvent);
+    data->rndCallCount = lp->rng->count;
+    data->type = INIT;
+    tw_event_send(newEvent);
   }
   if (DEBUG_MODE == true) {
     startRecord();
@@ -295,111 +301,119 @@ void synapse_init(synapseState* s, tw_lp* lp) {
     endRecord();
   }
 }
-void synapse_event(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
+void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
   // call synapse helper functions and send messages to all of the neurons in
   // the core here.
+
   long startCount = lp->rng->count;
   tw_stime ts;
-  tw_event* newEvent;
-  Msg_Data* data;
+  tw_event *newEvent;
+  Msg_Data *data;
 
-  if (M->type == SPKGN && s->spikeGen != NULL){  // spike generator message
+  if (M->type == SPKGN && s->spikeGen != NULL) // spike generator message
     gen_event(s->spikeGen, lp, M);
-  }
   else {
     s->fireCount++;
-    if (DEBUG_MODE == 1) {
+    if (DEBUG_MODE == 1)
       startRecord();
+  }
+
+  /* trying an optimization code here.
+     for (int i = 0; i < NEURONS_IN_CORE; i++) {
+     // ts = tw_rand_exponential(lp->rng,4);
+     ts = getNextEventTime(lp);  // function calls.
+     newEvent = tw_event_new(s->dests[i], ts, lp);
+     data = (Msg_Data*)tw_event_data(newEvent);
+     data->senderLocalID = s->synID;
+     // data->destCore = coreID(s->dests[i]); //TODO: Add support for more
+     than
+     // one core.
+     data->sourceCore = s->coreID;
+     data->type = SYNAPSE;
+     // event:
+   */
+  int_fast32_t part;
+
+  // Synapse->neuyron event sending loop. sends messages to all of the neurons
+  // attvched to the synapses core. There is a send limit in order to prevent
+  // runaway event generation, BURST_RATE. If a synapse sends BURST_RATE
+  // number of messages
+  // but has not sent messages to all of the neruons in its core, it will send
+  // a synapse message to itself letting it know where to resume. (part &
+  // partial)
+  // messages from neurons are handled first
+
+  if (M->type == NEURON) { // mesage from neuron.
+    ts = getNextEventTime(lp);
+    newEvent = tw_event_new(lp->gid, ts, lp);
+    data = (Msg_Data *)tw_event_data(newEvent);
+    data->senderLocalID = s->synID;
+    data->partial = NEURONS_IN_CORE;
+    data->type = SYNAPSE;
+    tw_event_send(newEvent);
+
+    if (DEBUG_MODE == true)
+      synapseEventRecord(lp->gid, s->coreID, s->synID, tw_now(lp), lp->gid);
+  } else if (M->type == INIT) {
+    ts = getNextEventTime(lp);
+    newEvent = tw_event_new(lp->gid, ts, lp);
+    data = (Msg_Data *)tw_event_data(newEvent);
+    data->senderLocalID = s->synID;
+    data->partial = NEURONS_IN_CORE;
+    data->type = SYNAPSE;
+    tw_event_send(newEvent);
+
+  } else if(M->type == SYNAPSE){
+    part = M->partial - 1;
+    for (unsigned int fired = 0; fired < BURST_RATE && part >= 0;
+         fired++, part--) {
+      ts = getNextEventTime(lp);
+      newEvent = tw_event_new(s->dests[part], ts, lp);
+      data = (Msg_Data *)tw_event_data(newEvent);
+      data->senderLocalID = s->synID;
+      data->sourceCore = s->coreID;
+      data->partial = part;
+      data->type = SYNAPSE; // msg from synapse to neuron are of type SYNAPSE
+      tw_event_send(newEvent);
+      if (DEBUG_MODE == true)
+        synapseEventRecord(lp->gid, s->coreID, s->synID, tw_now(lp),
+                           s->dests[part]);
     }
-
-    /* trying an optimization code here.
-       for (int i = 0; i < NEURONS_IN_CORE; i++) {
-       // ts = tw_rand_exponential(lp->rng,4);
-       ts = getNextEventTime(lp);  // function calls.
-       newEvent = tw_event_new(s->dests[i], ts, lp);
-       data = (Msg_Data*)tw_event_data(newEvent);
-       data->senderLocalID = s->synID;
-       // data->destCore = coreID(s->dests[i]); //TODO: Add support for more
-       than
-       // one core.
-       data->sourceCore = s->coreID;
-       data->type = SYNAPSE;
-       // event:
-     */
-    int_fast32_t part;
-
-    // Synapse->neuyron event sending loop. sends messages to all of the neurons
-    // attvched to the synapses core. There is a send limit in order to prevent
-    // runaway event generation, BURST_RATE. If a synapse sends BURST_RATE
-    // number of messages
-    // but has not sent messages to all of the neruons in its core, it will send
-    // a synapse message to itself letting it know where to resume. (part &
-    // partial)
-    // messages from neurons are handled first
-
-    if (M->type == NEURON) {  // mesage from neuron.
+    // after running the burst, check to see if there are any remaning neurons
+    // to send messages to.
+    if (part >= 0) {
+      // seed synapse with remaining partial data.
       ts = getNextEventTime(lp);
       newEvent = tw_event_new(lp->gid, ts, lp);
-      data = (Msg_Data*)tw_event_data(newEvent);
+      data = (Msg_Data *)tw_event_data(newEvent);
       data->senderLocalID = s->synID;
-      data->partial = NEURONS_IN_CORE;
-      data->type = SYNAPSE;
+      data->partial = part;
+      data->destCore = s->coreID;
+      data->type = SYNAPSE; // When sending messages from synapse to self,
+      // synapse message type is used.
       tw_event_send(newEvent);
-
-      if (DEBUG_MODE == true)
-        synapseEventRecord(lp->gid, s->coreID, s->synID, tw_now(lp), lp->gid);
-    } else {
-      part = M->partial - 1;
-      for (unsigned int fired = 0; fired < BURST_RATE && part >= 0;
-           fired++, part--) {
-        ts = getNextEventTime(lp);
-        newEvent = tw_event_new(s->dests[part], ts, lp);
-        data = (Msg_Data*)tw_event_data(newEvent);
-        data->senderLocalID = s->synID;
-        data->sourceCore = s->coreID;
-        data->partial = -1;  // messages from synapse to neuron and neuron to
-        // synapse do not use this val.
-        data->type = SYNAPSE;  // msg from synapse to neuron are of type SYNAPSE
-        tw_event_send(newEvent);
-        if (DEBUG_MODE == true){
-          synapseEventRecord(lp->gid, s->coreID, s->synID, tw_now(lp),
-                             s->dests[part]);
-     
-        }
-
-      }
-      // after running the burst, check to see if there are any remaning neurons
-      // to send messages to.
-      if (part >= 0) {
-        // seed synapse with remaining partial data.
-        ts = getNextEventTime(lp);
-        newEvent = tw_event_new(lp->gid, ts, lp);
-        data = (Msg_Data*)tw_event_data(newEvent);
-        data->senderLocalID = s->synID;
-        data->partial = part;
-        data->destCore = s->coreID;
-        data->type = SYNAPSE;  // When sending messages from synapse to self,
-        // synapse message type is used.
-        tw_event_send(newEvent);
-      }
     }
-    if (DEBUG_MODE == true) endRecord();
   }
+  if (DEBUG_MODE == true)
+    endRecord();
+
   M->rndCallCount = lp->rng->count - startCount;
 }
 
-void synapse_reverse(synapseState* s, tw_bf* CV, Msg_Data* M, tw_lp* lp) {
+void synapse_reverse(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
   // Grand Central Dispacth pattern - reversal function calling here though.
   // TODO: currently, SPIKE init (system init) functions are not handled. Add
   // handlers
-  if (M->type == SPKGN && s->spikeGen != NULL) gen_reverse(s->spikeGen, lp, M);
+  if (GEN_ON == 1)
+    if (M->type == SPKGN && s->spikeGen != NULL)
+      gen_reverse(s->spikeGen, lp, M);
   // reverse the randomized values:
   long count = M->rndCallCount;
-  while (count--) tw_rand_reverse_unif(lp->rng);
-
+  while (count--)
+    tw_rand_reverse_unif(lp->rng);
 }
 tw_lpid localFire = 0;
-void synapse_final(synapseState* s, tw_lp* lp) {
+void synapse_final(synapseState *s, tw_lp *lp) {
   // TODO: add an MPI_reduce function here to collect synapse stats.
   //	MPI_Reduce(&s->fireCount, &synapseSent, 1, MPI_UNSIGNED_LONG_LONG,
   // MPI_SUM, 0, MPI_COMM_WORLD);
@@ -407,155 +421,162 @@ void synapse_final(synapseState* s, tw_lp* lp) {
 }
 
 /* Spike Generator Functions */
-void gen_init(spikeGenState* gen_state, tw_lp* lp) {
-  // This is a spike generator init - it was used as a unique LP, but a single
-  // synapse now holds the generator/IO system.
+void gen_init(spikeGenState *gen_state, tw_lp *lp) {
+  if (GEN_ON) {
+    // This is a spike generator init - it was used as a unique LP, but a single
+    // synapse now holds the generator/IO system.
 
-  gen_state->currentOut = 0;
-  gen_state->outbound = GEN_OUTBOUND;
-  // probability settings. Could move within if statement, but nah.
-  gen_state->randomRate = GEN_PROB / 100;
-  gen_state->rndFctVal = GEN_FCT / 100;
-  // RANDOM GENERATOR MAP SETUP
-
-  if (GEN_RND == true && GEN_OUTBOUND == 0) {
-    gen_state->randomRate = GEN_PROB;
-    gen_state->rndFctVal = GEN_FCT;
-    gen_state->randMethod = RND_MODE;
-    // randomized values for hooking this machine up to the various neurons.
-    // rand_uniform function tw_rand_unif(lp->rng)
-    gen_state->randMethod = UNF;
-    gen_state->spikeGen = uniformGen;
-    // set up the outbound connections.
-    long totalSyns = SYNAPSES_IN_CORE * CORES_PER_PE;
-    // printf("Synapses in total sim: %ld\n", totalSyns);
-    gen_state->outbound = totalSyns;
-    // printf("Generator\nCore\tLocal\tGlobal\n");
-
-    gen_state->connectedSynapses =
-        tw_calloc(TW_LOC, "Synapse", sizeof(tw_lpid*), gen_state->outbound);
-
-    for (int i = NEURONS_IN_CORE - 1, j = 0; i < totalSyns; i++, j++) {
-      tw_lpid gid = 0;
-      regid_t core, local;
-      int coreOffset = (g_tw_mynode * CORES_PER_PE);
-      // WARNING: Monitor this function to ensure it is showing proper values.
-      core = i / CORE_SIZE + coreOffset;
-      local = i;
-			//gid = globalID(core, local);
-      gen_state->connectedSynapses[i] = globalID(core, local);
-    }
-  } else if (GEN_RND == true) {
-    gen_state->randomRate = GEN_PROB;
-    gen_state->rndFctVal = GEN_FCT;
-    gen_state->randMethod = RND_MODE;
-    // randomized values for hooking this machine up to the various neurons.
-
-    // rand_uniform function tw_rand_unif(lp->rng)
-    switch (RND_MODE) {
-      case UNF:
-        gen_state->spikeGen = uniformGen;
-        break;
-      case EXP:
-      default:
-        gen_state->spikeGen = expGen;
-        break;
-    }
-
-    // set up the outbound connections.
-
+    gen_state->currentOut = 0;
     gen_state->outbound = GEN_OUTBOUND;
-    gen_state->connectedSynapses =
-        tw_calloc(TW_LOC, "Synapse", sizeof(tw_lpid*), gen_state->outbound);
+    // probability settings. Could move within if statement, but nah.
+    gen_state->randomRate = GEN_PROB / 100;
+    gen_state->rndFctVal = GEN_FCT / 100;
+    // RANDOM GENERATOR MAP SETUP
 
-    for (int i = 0; i < GEN_OUTBOUND; i++) {
-      tw_lpid gid = 0;
-      do {
+    if (GEN_RND == true && GEN_OUTBOUND == 0) {
+      gen_state->randomRate = GEN_PROB;
+      gen_state->rndFctVal = GEN_FCT;
+      gen_state->randMethod = RND_MODE;
+      // randomized values for hooking this machine up to the various neurons.
+      // rand_uniform function tw_rand_unif(lp->rng)
+      gen_state->randMethod = UNF;
+      gen_state->spikeGen = uniformGen;
+      // set up the outbound connections.
+      long totalSyns = SYNAPSES_IN_CORE * CORES_PER_PE;
+      // printf("Synapses in total sim: %ld\n", totalSyns);
+      gen_state->outbound = totalSyns;
+      // printf("Generator\nCore\tLocal\tGlobal\n");
+
+      gen_state->connectedSynapses =
+          tw_calloc(TW_LOC, "Synapse", sizeof(tw_lpid *), gen_state->outbound);
+
+      for (int i = NEURONS_IN_CORE - 1, j = 0; i < totalSyns; i++, j++) {
+        tw_lpid gid = 0;
         regid_t core, local;
-        core = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
-        // TODO - double check the +1 and -1 here.
-        local =
-            tw_rand_integer(lp->rng, NEURONS_IN_CORE + 1, SYNAPSES_IN_CORE - 1);
-        gid = globalID(core, local);
-        // printf("%lu\t%lu\t%llu\n",core,local,gid);
-
+        int coreOffset = (g_tw_mynode * CORES_PER_PE);
+        // WARNING: Monitor this function to ensure it is showing proper values.
+        core = i / CORE_SIZE + coreOffset;
+        local = i;
+        // gid = globalID(core, local);
         gen_state->connectedSynapses[i] = globalID(core, local);
+      }
+    } else if (GEN_RND == true) {
+      gen_state->randomRate = GEN_PROB;
+      gen_state->rndFctVal = GEN_FCT;
+      gen_state->randMethod = RND_MODE;
+      // randomized values for hooking this machine up to the various neurons.
 
-        // printf("\n");
-      } while (gid > g_tw_nlp * g_tw_avl_node_count);
+      // rand_uniform function tw_rand_unif(lp->rng)
+      switch (RND_MODE) {
+        case UNF:
+          gen_state->spikeGen = uniformGen;
+          break;
+        case EXP:
+        default:
+          gen_state->spikeGen = expGen;
+          break;
+      }
+
+      // set up the outbound connections.
+
+      gen_state->outbound = GEN_OUTBOUND;
+      gen_state->connectedSynapses =
+          tw_calloc(TW_LOC, "Synapse", sizeof(tw_lpid *), gen_state->outbound);
+
+      for (int i = 0; i < GEN_OUTBOUND; i++) {
+        tw_lpid gid = 0;
+        do {
+          regid_t core, local;
+          core = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
+          // TODO - double check the +1 and -1 here.
+          local = tw_rand_integer(lp->rng, NEURONS_IN_CORE + 1,
+                                  SYNAPSES_IN_CORE - 1);
+          gid = globalID(core, local);
+          // printf("%lu\t%lu\t%llu\n",core,local,gid);
+
+          gen_state->connectedSynapses[i] = globalID(core, local);
+
+          // printf("\n");
+        } while (gid > g_tw_nlp * g_tw_avl_node_count);
+      }
     }
-  }
-  // Here we read the generator setup map
-  // TODO: Implement this!
+    // Here we read the generator setup map
+    // TODO: Implement this!
 
-  // Initial event seeding:
-  tw_stime ts = getNextEventTime(lp) + GEN_LAG;  // function calls.
-  tw_event* newEvent = tw_event_new(lp->gid, ts + GEN_LAG, lp);
-  Msg_Data* data = (Msg_Data*)tw_event_data(newEvent);
-  data->type = SPKGN;
-  tw_event_send(newEvent);
-}
-void gen_pre(spikeGenState* gen_state, tw_lp* lp) {}
-void gen_event(spikeGenState* gen_state, tw_lp* lp, Msg_Data* m) {
-  // reverse fn worker
-
-  // We have event - Check if we should send a spike to the next synapse:
-
-  // while (gen_state->spikeGen(gen_state,lp))
-  //{
-  bool willFire = gen_state->spikeGen(gen_state, lp);
-
-  tw_lpid dest;
-  tw_stime ts;
-
-  if (willFire) {
-    ts = getNextEventTime(lp);
-    switch (gen_state->genMode) {
-      case UNF:  // Unified random selection for next element.
-        dest = gen_state->connectedSynapses[tw_rand_integer(
-            lp->rng, 0, gen_state->outbound - 1)];
-        break;
-      case SELECT:
-        dest = gen_state->connectedSynapses[gen_state->currentOut];
-        gen_state->currentOut++;  // mmm distributed loops
-        gen_state->currentOut = gen_state->currentOut % gen_state->outbound;
-        break;
-      default:
-        dest = 0;
-        break;
-    }
-    // set up DEST here - items are stored as the absolute value of the synapse,
-
-    tw_event* newEvent = tw_event_new(dest, ts, lp);
-    Msg_Data* data = (Msg_Data*)tw_event_data(newEvent);
-    data->type = NEURON;
-    data->sender = 0;
-    data->destCore = 0;
-    data->destLocalID = 0;
-    data->sourceCore = 0;
-    data->prevVoltage = 0;
-    data->senderLocalID = 0;
-    // This is set to number of neurons in the core, since the default behavior
-    // is to
-    // have a synapse send a message to the n-1th neuron upon receipt of a
-    // synapse message.
-    data->partial = NEURONS_IN_CORE;
-
-    // tw_printf("SENDING SEED EVENT - CAUSING ISSUES Dest GID %llu -- Dest LP
-    // (reported) %llu \n", dest, newEvent->dest_lp->gid );
+    // Initial event seeding:
+    tw_stime ts = getNextEventTime(lp) + GEN_LAG; // function calls.
+    tw_event *newEvent = tw_event_new(lp->gid, ts + GEN_LAG, lp);
+    Msg_Data *data = (Msg_Data *)tw_event_data(newEvent);
+    data->type = SPKGN;
     tw_event_send(newEvent);
   }
-  // Reprime the generator:
-  //}
-  tw_event* prime = tw_event_new(lp->gid, getNextEventTime(lp), lp);
-  Msg_Data* newData = (Msg_Data*)tw_event_data(prime);
-  newData->type = SPKGN;
-  tw_event_send(prime);
 }
-void gen_reverse(spikeGenState* gen_state, tw_lp* lp, Msg_Data* m) {
-  if (gen_state->selectMode == SELECT) gen_state->currentOut--;
+void gen_pre(spikeGenState *gen_state, tw_lp *lp) {}
+void gen_event(spikeGenState *gen_state, tw_lp *lp, Msg_Data *m) {
+  if (GEN_ON) {
+    // reverse fn worker
+
+    // We have event - Check if we should send a spike to the next synapse:
+
+    // while (gen_state->spikeGen(gen_state,lp))
+    //{
+    bool willFire = gen_state->spikeGen(gen_state, lp);
+
+    tw_lpid dest;
+    tw_stime ts;
+
+    if (willFire) {
+      ts = getNextEventTime(lp);
+      switch (gen_state->genMode) {
+        case UNF: // Unified random selection for next element.
+          dest = gen_state->connectedSynapses[tw_rand_integer(
+              lp->rng, 0, gen_state->outbound - 1)];
+          break;
+        case SELECT:
+          dest = gen_state->connectedSynapses[gen_state->currentOut];
+          gen_state->currentOut++; // mmm distributed loops
+          gen_state->currentOut = gen_state->currentOut % gen_state->outbound;
+          break;
+        default:
+          dest = 0;
+          break;
+      }
+      // set up DEST here - items are stored as the absolute value of the
+      // synapse,
+
+      tw_event *newEvent = tw_event_new(dest, ts, lp);
+      Msg_Data *data = (Msg_Data *)tw_event_data(newEvent);
+      data->type = NEURON;
+      data->sender = 0;
+      data->destCore = 0;
+      data->destLocalID = 0;
+      data->sourceCore = 0;
+      data->prevVoltage = 0;
+      data->senderLocalID = 0;
+      // This is set to number of neurons in the core, since the default
+      // behavior
+      // is to
+      // have a synapse send a message to the n-1th neuron upon receipt of a
+      // synapse message.
+      data->partial = NEURONS_IN_CORE;
+
+      // tw_printf("SENDING SEED EVENT - CAUSING ISSUES Dest GID %llu -- Dest LP
+      // (reported) %llu \n", dest, newEvent->dest_lp->gid );
+      tw_event_send(newEvent);
+    }
+    // Reprime the generator:
+    //}
+    tw_event *prime = tw_event_new(lp->gid, getNextEventTime(lp), lp);
+    Msg_Data *newData = (Msg_Data *)tw_event_data(prime);
+    newData->type = SPKGN;
+    tw_event_send(prime);
+  }
 }
-void gen_final(spikeGenState* gen_state, tw_lp* lp) {}
+void gen_reverse(spikeGenState *gen_state, tw_lp *lp, Msg_Data *m) {
+  if (gen_state->selectMode == SELECT)
+    gen_state->currentOut--;
+}
+void gen_final(spikeGenState *gen_state, tw_lp *lp) {}
 
 ////////////////////TypeMapping///////////
 tw_lpid typeMapping(tw_lpid gid) {
@@ -580,15 +601,12 @@ tw_lpid typeMapping(tw_lpid gid) {
   //		id = localID - (SYNAPSES_IN_CORE + (NEURONS_IN_CORE * coreID)) ?
   // 0
   //: 1;
-  return id;  // TODO: Switch this to an enum
+  return id; // TODO: Switch this to an enum
 }
 ///////////////MAIN///////////////////////
 // TODO: Check memory allocation scheme - ensure it makes sense!!
-int model_main(int argc, char* argv[]) {
-
-
-
-  tw_init(&argc, &argv);  // toto
+int model_main(int argc, char *argv[]) {
+  tw_init(&argc, &argv); // toto
   CORE_SIZE = NEURONS_IN_CORE + SYNAPSES_IN_CORE;
   int world_size;
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
@@ -598,7 +616,7 @@ int model_main(int argc, char* argv[]) {
 
   // tw_opt_add(app_opt);
 
-  if (DEBUG_MODE == true) {
+  if (DEBUG_MODE == true || SP_DBG == true) {
     initDB();
     printf("Init db call \n");
   }
@@ -621,20 +639,21 @@ int model_main(int argc, char* argv[]) {
   tw_run();
 
   tw_end();
-  if (DEBUG_MODE == 1) finalClose();
+  if (DEBUG_MODE == 1)
+    finalClose();
   // trying all reduce here:
   tw_lpid totalSyn;
 
   return 0;
 }
 
-int main(int argc, char* argv[]) {
-
+int main(int argc, char *argv[]) {
   tw_opt_add(app_opt);
   int rv = model_main(argc, argv);
-  if (g_tw_mynode == 0)  // && DEBUG_MODE == true){
-    printf("Neurons integrated %lu times, and synapses fired %lu messages.\n",
-           neuronSent, synapseSent);
-		printf("***Official Stats - Neurons integrated %lu times and fired %lu times. \n", statistics.integrationCount, statistics.neuronFireCount);
+  // if (g_tw_mynode == 0) // && DEBUG_MODE == true){
+  printf(
+      "***Official Stats - Neurons integrated %lu times and fired %lu times. "
+      "\n",
+      statistics.integrationCount, statistics.neuronFireCount);
   return rv;
 }

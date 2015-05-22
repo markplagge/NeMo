@@ -111,7 +111,7 @@ long getTotalSynapses();
 /// Message information:
 /** State items */
 
-enum events { NEURON = 1, SYNAPSE = 2, INIT = 3, SPKGN = 4 };
+enum events { NEURON = 1, SYNAPSE = 2, INIT = 3, SPKGN = 4, NEU_WAIT = 5 };
 
 // synapse message - message from a synapse to a neuron
 typedef struct {
