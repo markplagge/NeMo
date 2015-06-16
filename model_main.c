@@ -6,7 +6,7 @@
 // includes
 
 #include "model_main.h"
-#include "assist.h"
+
 
 // add your command line opts
 // Neuron Integration Counter Struct
@@ -184,7 +184,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp) {
     // printf("Neuron %u has fired. \n", s->neuronID);
 
     if (didFire == true) {
-        printf("n fire \n");
+        //printf("n fire \n");
         statistics.neuronFireCount += s->fireCount;
       tw_event *neuronEvent;
       Msg_Data *data;

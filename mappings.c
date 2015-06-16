@@ -4,7 +4,6 @@
  */
 #include "mappings.h"
 
-
 /* shadowed variables from the main code. Imp;emented this way to allow for
  * testing and model sanity checking
  * inital values are used for tests. Init() function sets up the values from the
@@ -23,30 +22,28 @@ void getLocalIDs(tw_lpid global, regid_t* core, regid_t* local) {
   //(*local) = LOC(global);
   (*core) = ((regid_t*)&global)[co];
   (*local) = ((regid_t*)&global)[lc];
-//  if (*local > CORE_SIZE * CORES_PER_PE) {
-//  printf("ERROR\n\n\n\n");
+  //  if (*local > CORE_SIZE * CORES_PER_PE) {
+  //  printf("ERROR\n\n\n\n");
   //  exit(-1);
   //}
 }
 tw_lpid globalID(regid_t core, regid_t local) {
-  tw_lpid returnVal = 0;  //(tw_lpid)calloc(sizeof(tw_lpid) ,1);
-
+  tw_lpid returnVal = 0; //(tw_lpid)calloc(sizeof(tw_lpid) ,1);
   // returnVal = (tw_lpid)core << 32 | (tw_lpid) local;
   ((int32_t*)&returnVal)[lc] = local;
   ((int32_t*)&returnVal)[co] = core;
-    return returnVal;
+  return returnVal;
 }
-
 tw_lp* mapping_to_local(tw_lpid global) {
   regid_t core = 0;
   regid_t local = 0;
   getLocalIDs(global, &core, &local);
-  //tw_lpid id = local + (core * CORE_SIZE);
+  // tw_lpid id = local + (core * CORE_SIZE);
   return tw_getlp(local);
 }
 // TODO: Enance the speed of these by switching to macro!
 regid_t getSynapseID(tw_lpid gid) {
-  regid_t local = ((regid_t*)&gid)[lc];  // LOC(gid);
+  regid_t local = ((regid_t*)&gid)[lc]; // LOC(gid);
   return local - NEURONS_IN_CORE;
 }
 
@@ -70,14 +67,14 @@ tw_peid mapping(tw_lpid gid) {
   // core = CORE(gid);
   // local = LOC(gid);
   // the core is == to kp here.
-  //int rank = g_tw_mynode;
+  // int rank = g_tw_mynode;
   tw_peid ccd = core / CORES_PER_PE;
   return ccd;
 }
-void stats (tw_pe * x){
-	printf("final function");
-}
+void stats(tw_pe* x) { printf("final function"); }
+
 void initial_mapping(void) {
+//  CORE_LP_OFFSET =
   tw_pe* pe;
   int nlp_per_kp;
   int lpid;
@@ -106,9 +103,8 @@ void initial_mapping(void) {
 #if VERIFY_MAPPING
     printf("\tPE %d\n", pe->id);
 #endif
-	  
 
-	  for (i = 0; i < nkp_per_pe; i++, kpid++) {
+    for (i = 0; i < nkp_per_pe; i++, kpid++) {
       tw_kp_onpe(kpid, pe);
 
 #if VERIFY_MAPPING
@@ -117,32 +113,33 @@ void initial_mapping(void) {
 
       for (j = 0; j < nlp_per_kp && lpid < g_tw_nlp; j++) {
         // calculate core:
-		//regid_t core = (lpid / CORE_SIZE) + (CORES_PER_PE * g_tw_mynode);
+        // regid_t core = (lpid / CORE_SIZE) + (CORES_PER_PE * g_tw_mynode);
 
-			  //12+24 * 1
-			  //regid_t core = ((lpid + (regid_t)(CORES_PER_PE * g_tw_mynode)) / (regid_t)CORE_SIZE) ;
-			  //TODO: The error in the simulation is here:
-			  //		  regid_t core = (lpid + g_tw_lp_offset) / CORE_SIZE + (CORES_PER_PE * g_tw_mynode);
-		  regid_t core = 0;
-		  core = lpid / CORE_SIZE;
-		  if(g_tw_mynode > 0)
-			  {
-			  core = core + CORES_PER_PE * (regid_t)g_tw_mynode;
-			  }
-		  if(DEBUG_MODE == true && g_tw_mynode > 0){
-			  printf("Created element with GID  %llu from core %u \n", globalID(core, lpid), core);
-		  }
-        tw_lp_onpe(lpid, pe, globalID(core, lpid));  // g_tw_lp_offset+lpid);
+        // 12+24 * 1
+        // regid_t core = ((lpid + (regid_t)(CORES_PER_PE * g_tw_mynode)) /
+        // (regid_t)CORE_SIZE) ;
+        // TODO: The error in the simulation is here:
+        //		  regid_t core = (lpid + g_tw_lp_offset) / CORE_SIZE +
+        //(CORES_PER_PE * g_tw_mynode);
+        regid_t core = 0;
+        core = lpid / CORE_SIZE;
+        if (g_tw_mynode > 0) {
+          core = core + CORES_PER_PE * (regid_t)g_tw_mynode;
+        }
+        if (DEBUG_MODE == true && g_tw_mynode > 0) {
+          printf("Created element with GID  %llu from core %u \n",
+                 globalID(core, lpid), core);
+        }
+        tw_lp_onpe(lpid, pe, globalID(core, lpid)); // g_tw_lp_offset+lpid);
         tw_lp_onkp(g_tw_lp[lpid], g_tw_kp[kpid]);
 
 #if VERIFY_MAPPING
         if (0 == j % 20) {
           printf("\n\t\t\t");
         }
-        printf("%lld-%lld ", lpid + g_tw_lp_offset , g_tw_lp[lpid]->gid);
+        printf("%lld-%lld ", lpid + g_tw_lp_offset, g_tw_lp[lpid]->gid);
 #endif
-		  lpid++;
-
+        lpid++;
       }
 
 #if VERIFY_MAPPING
@@ -162,10 +159,10 @@ void initial_mapping(void) {
     tw_error(TW_LOC, "Not all LPs defined! (g_tw_nlp=%d)", g_tw_nlp);
   }
 }
-tw_lpid getRandomSynapse(){
-	printf("Function stub\n\n");
-	exit(-1);
-	return 1;
+tw_lpid getRandomSynapse() {
+  printf("Function stub\n\n");
+  exit(-1);
+  return 1;
 }
 /*
 void initial_mapping_old(void) {

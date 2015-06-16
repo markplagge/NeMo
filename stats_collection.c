@@ -332,7 +332,7 @@ void recordNeuronPS(neuronState *n, tw_lp *lp, Msg_Data *m,char* prePost){
                     n->perSynapseWeight[m->senderLocalID], m->sender};
   writeToCouchTS("NeuronIntegrateState", 1,txtn, txtv,7,tpn,ttls,tw_now(lp));
 
-  .
+
 }
 
 void finalClose() { sqlite3_close_v2(db); }

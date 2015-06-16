@@ -13,10 +13,7 @@
 #include <stdio.h>
 #include "assist.h"
 #include "models/neuron_model.h"
-	//#include "libs/sqlite3.h"
-
 #include "libs/sqlite3.h"
-
 #include <unistd.h>
 #include <sys/wait.h>
 /* tables */
@@ -29,7 +26,7 @@
 /* CREATE neuronEvent */
 /* INSERT INTO neuronEvent (rowid, eventID, coreID, localID, eventTime, receivedSynapse, postFirePotential) VALUES (1234567890, 1234567890, 1, 123, 4560, 456, 4); */
 
-int ndb = 1;
+//int ndb = 1;
 
 void initDB();
 

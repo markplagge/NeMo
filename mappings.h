@@ -29,6 +29,17 @@ extern int CORES_PER_PE;
 
 extern int nlp_per_kp;
 extern int nkp_per_pe;
+
+
+/**
+ * @brief CORE_LP_OFFSET - Manages the offset. Calculated based on the size of a core,
+ * and the CPE vale, the number of PEs required to simulate a single core.
+ * For example, if core size is 128, and CPE is 2, then each PE will get 64 LPs.
+ * TODO: Add a synapse and neuron balancing function.
+ */
+int CORE_LP_OFFSET;
+extern int CPE;
+
 /** LOC(a) -- bitwise local id getter from a tw_lpid. */
 	//#define LOC(a) ((regid_t)a) & 0xFFFFFFFF
 /** CORE(a) -- a bitwise core id getter from a tw_lpid */
