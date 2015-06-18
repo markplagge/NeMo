@@ -1,28 +1,12 @@
-/** Assist.C
-*  Contains helper functions, used in the model.
-*  Functions here should be too generic to include
-*  in neuron/synapse
-* Contains all of the global defs as well.
-*/
-
+//
+//  assist.c
+//  ROSS_TOP
+//
+//  Created by Mark Plagge on 6/17/15.
+//
+//
 
 #include "assist.h"
-/**
- *  getTotalSynapses - simple function that gets the total synapses globally
- *
- *  @return The number of synapses in in the sim
- */
-long getTotalSynapses() {
-   return SYNAPSES_IN_CORE * (CORES_PER_PE * g_tw_npe);
-}
-/**
- *  getTotalNeurons - simple function that gets the total synapses globally
- *
- *  @return The number of neurons in the system.
- */
-long getTotalNeurons() {
-	return NEURONS_IN_CORE * CORES_PER_PE * g_tw_npe;
-}
 /**
  *  Gets the next event time, based on a random function. Moved here to allow for
  *	easier abstraciton, and random function replacement.
@@ -35,11 +19,8 @@ long getTotalNeurons() {
  */
 tw_stime getNextEventTime(tw_lp *lp){
 
-    tw_stime r =tw_rand_unif(lp->rng) / 10;
+	tw_stime r =tw_rand_unif(lp->rng) / 10;
 
-    return r;
+	return r;
 
 }
-
-
-
