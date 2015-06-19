@@ -1,0 +1,30 @@
+\hypertarget{assist_8c_source}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/assist.c}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{//}
+00002 \textcolor{comment}{//  assist.c}
+00003 \textcolor{comment}{//  ROSS\_TOP}
+00004 \textcolor{comment}{//}
+00005 \textcolor{comment}{//  Created by Mark Plagge on 6/17/15.}
+00006 \textcolor{comment}{//}
+00007 \textcolor{comment}{//}
+00008 
+00009 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \hyperlink{assist_8h}{"assist.h"}
+00010 \textcolor{comment}{/**}
+00011 \textcolor{comment}{ *  Gets the next event time, based on a random function. Moved here to allow for}
+00012 \textcolor{comment}{ *  easier abstraciton, and random function replacement.}
+00013 \textcolor{comment}{ *}
+00014 \textcolor{comment}{ *}
+00015 \textcolor{comment}{ *  @param lp Reference to the current LP so that the function can see the RNG}
+00016 \textcolor{comment}{ *}
+00017 \textcolor{comment}{ *  @return a tw\_stime value, such that \(\backslash\)f$ 0 < t < 1 \(\backslash\)f$. A delta for the next}
+00018 \textcolor{comment}{ *  time slice.}
+00019 \textcolor{comment}{ */}
+\hypertarget{assist_8c_source_l00020}{}\hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{00020} \hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{tw\_stime} \hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{getNextEventTime}(\hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{tw\_lp} *\hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{lp})\{
+00021 
+00022     tw\_stime r =tw\_rand\_unif(lp->rng) / 10;
+00023 
+00024     \textcolor{keywordflow}{return} r;
+00025 
+00026 \}
+\end{DoxyCode}

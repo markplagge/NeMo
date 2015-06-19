@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['neuron_5fmodel_2ec',['neuron_model.c',['../neuron__model_8c.html',1,'']]],
-  ['neuron_5fmodel_2eh',['neuron_model.h',['../neuron__model_8h.html',1,'']]]
+  ['mapping_2ec',['mapping.c',['../mapping_8c.html',1,'']]],
+  ['mapping_2eh',['mapping.h',['../mapping_8h.html',1,'']]],
+  ['mapping_5fspecifications_2ertf',['mapping_specifications.rtf',['../mapping__specifications_8rtf.html',1,'']]],
+  ['model_5fmain_2ec',['model_main.c',['../model__main_8c.html',1,'']]],
+  ['model_5fmain_2eh',['model_main.h',['../model__main_8h.html',1,'']]]
 ];

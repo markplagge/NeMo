@@ -1,0 +1,81 @@
+\hypertarget{assist_8h_source}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/assist.h}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{//}
+00002 \textcolor{comment}{//  assist.h}
+00003 \textcolor{comment}{//  ROSS\_TOP}
+00004 \textcolor{comment}{//}
+00005 \textcolor{comment}{//  Created by Mark Plagge on 6/17/15.}
+00006 \textcolor{comment}{//}
+00007 \textcolor{comment}{//}
+00008 
+00009 \textcolor{preprocessor}{#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{\_\_ROSS\_TOP\_\_assist\_\_}
+00010 \textcolor{preprocessor}{#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{\_\_ROSS\_TOP\_\_assist\_\_}
+00011 
+00012 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{stdio}\textcolor{preprocessor}{.}\textcolor{preprocessor}{h}\textcolor{preprocessor}{>}
+00013 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{inttypes}\textcolor{preprocessor}{.}\textcolor{preprocessor}{h}\textcolor{preprocessor}{>}
+00014 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{stdbool}\textcolor{preprocessor}{.}\textcolor{preprocessor}{h}\textcolor{preprocessor}{>}
+00015 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{"ross.h"}
+00016 \textcolor{comment}{/***Type definitions for the nuron simulation */}
+00017 
+\hypertarget{assist_8h_source_l00018}{}\hyperlink{assist_8h_a3f7a6e6a1210b6d9d7a42177dcb9634b}{00018} \textcolor{preprocessor}{#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{\_idT} \textcolor{preprocessor}{uint\_fast32\_t} \textcolor{comment}{//ID type - local id type for bit shifts and ID cases.}
+\hypertarget{assist_8h_source_l00019}{}\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{00019} \textcolor{preprocessor}{#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{\_voltT} \textcolor{preprocessor}{int\_fast32\_t} \textcolor{comment}{///Voltage data type}
+\hypertarget{assist_8h_source_l00020}{}\hyperlink{assist_8h_ad77e6fc5a9b03d46e7c97b7c4b92e89f}{00020} \textcolor{preprocessor}{#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{\_statT} \textcolor{preprocessor}{int\_fast64\_t} \textcolor{comment}{///Counter data type for stats}
+00021 \textcolor{comment}{/** \_regIDT is a "regional id" type. This variable type is for storing}
+00022 \textcolor{comment}{ *  coreIDs and localIDs. It must be half the bit size of tw\_lpid. @todo: add}
+00023 \textcolor{comment}{ *  macro to adjust the bit width. */}
+\hypertarget{assist_8h_source_l00024}{}\hyperlink{assist_8h_abd3130ec511af0cc7768768554bd36a0}{00024} \textcolor{preprocessor}{#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{\_regIDT} \textcolor{preprocessor}{uint32\_t}
+00025 
+00026 \textcolor{comment}{/* Global Macros */}
+00027 
+00028 \textcolor{comment}{/** IABS is an integer absolute value function */}
+\hypertarget{assist_8h_source_l00029}{}\hyperlink{assist_8h_aaf4b596256d346dd40bc6f14c3eb9371}{00029} \textcolor{preprocessor}{#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{IABS}\textcolor{preprocessor}{(}\textcolor{preprocessor}{a}\textcolor{preprocessor}{)} \textcolor{preprocessor}{(}\textcolor{preprocessor}{(}\textcolor{preprocessor}{(}\textcolor{preprocessor}{a}\textcolor{preprocessor}{)} \textcolor{preprocessor}{<} 0\textcolor{preprocessor}{)} \textcolor{preprocessor}{?} \textcolor{preprocessor}{(}\textcolor{preprocessor}{-}\textcolor{preprocessor}{a}\textcolor{preprocessor}{)} \textcolor{preprocessor}{:} \textcolor{preprocessor}{(}\textcolor{preprocessor}{a}\textcolor{preprocessor}{)}\textcolor{preprocessor}{)}
+00030     \textcolor{comment}{/** RZER is a floor function - values below zero round up to zero */}
+\hypertarget{assist_8h_source_l00031}{}\hyperlink{assist_8h_ad383c153e77508e2556003da0e4ac3eb}{00031} \textcolor{preprocessor}{#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{RZER}\textcolor{preprocessor}{(}\textcolor{preprocessor}{a}\textcolor{preprocessor}{)} \textcolor{preprocessor}{(}\textcolor{preprocessor}{(}\textcolor{preprocessor}{(}\textcolor{preprocessor}{a}\textcolor{preprocessor}{)} \textcolor{preprocessor}{<} 0\textcolor{preprocessor}{)} \textcolor{preprocessor}{?} \textcolor{preprocessor}{(}0\textcolor{preprocessor}{)} \textcolor{preprocessor}{:} \textcolor{preprocessor}{(}\textcolor{preprocessor}{a}\textcolor{preprocessor}{)}\textcolor{preprocessor}{)}
+00032 
+00033 \textcolor{comment}{/* simulation structs. TODO: Maybe move these into main? */}
+00034 \textcolor{comment}{/** evtType is a message/event identifier flag */}
+\hypertarget{assist_8h_source_l00035}{}\hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450}{00035} \textcolor{keyword}{enum} \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450}{evtType} \{
+\hypertarget{assist_8h_source_l00036}{}\hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee}{00036}     \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee}{AXON\_OUT}, \textcolor{comment}{///Message originates from an axon}
+\hypertarget{assist_8h_source_l00037}{}\hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a9afa7ee7839cdd980f348a3a70b0054f}{00037}     \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a9afa7ee7839cdd980f348a3a70b0054f}{AXON\_HEARTBEAT}, \textcolor{comment}{///Axon heartbeat message - big clock synchronization.}
+\hypertarget{assist_8h_source_l00038}{}\hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb}{00038}     \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb}{SYNAPSE\_OUT}, \textcolor{comment}{///Message originates from a synapse}
+\hypertarget{assist_8h_source_l00039}{}\hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0}{00039}     \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0}{NEURON\_OUT}, \textcolor{comment}{///Message originates from a neuron, and is going to an axion.}
+\hypertarget{assist_8h_source_l00040}{}\hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e}{00040}     \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e}{NEURON\_HEARTBEAT}, \textcolor{comment}{///Neuron heartbeat messages - for big clock
+       syncronization.}
+\hypertarget{assist_8h_source_l00041}{}\hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450add78176054e14835c454b5f2d1827d42}{00041}     \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450add78176054e14835c454b5f2d1827d42}{GEN\_HEARTBEAT} \textcolor{comment}{///Signal generator messages -- used to simulate input for
+       benchmarking.}
+00042 \};
+00043 \textcolor{comment}{/* Message structures */}
+00044 \textcolor{comment}{/** Main message struct */}
+\hypertarget{assist_8h_source_l00045}{}\hyperlink{struct_msg___data}{00045} \textcolor{keyword}{typedef} \textcolor{keyword}{struct} \{
+\hypertarget{assist_8h_source_l00046}{}\hyperlink{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}{00046}     \textcolor{keyword}{enum} \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450}{evtType} \hyperlink{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}{eventType};
+\hypertarget{assist_8h_source_l00047}{}\hyperlink{struct_msg___data_ab4d75bc6367f5cfbfabc69690fdc1efc}{00047}     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{struct_msg___data_ab4d75bc6367f5cfbfabc69690fdc1efc}{rndCallCount};
+00048 \}Msg\_Data;
+00049 
+00050 \textcolor{comment}{/* ***** Global variable defs */}
+00051 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a67e8e45768f76b984a60fcff2b7c51aa}{NEURONS\_IN\_CORE};
+00052 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a142b2655c5a899956164ef4e1c394fea}{CORES\_IN\_SIM};
+00053 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a519a06367b2b3f793c56d3ab78f5b2ef}{AXONS\_IN\_CORE};
+00054 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{assist_8h_a076b99099b46431255982b2bb8ce06fb}{SYNAPSES\_IN\_CORE};
+00055 \textcolor{keyword}{extern} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a74019486208bb1d640927710d5344a94}{GEN\_ON};
+00056 \textcolor{keyword}{extern} \textcolor{keywordtype}{bool} \hyperlink{model__main_8h_ab42fd7d6d043114d1147acc77bd7e867}{GEN\_RND};
+00057 \textcolor{keyword}{extern} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a516f1496efbe86dedb0e2883bb7e7834}{RND\_MODE};
+00058 \textcolor{keyword}{extern} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a4875b976acd12ff43cc03898be994253}{GEN\_PROB};
+00059 \textcolor{keyword}{extern} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a3ba8de640782035ea9e91ab791d9f14f}{GEN\_FCT};
+00060 \textcolor{keyword}{extern} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a6f8efb1b6d497ba57f27acadae57dc4b}{GEN\_OUTBOUND};
+00061 \textcolor{keyword}{extern} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_ab161ae8a99d41559eba4ab3dd8d69218}{GEN\_SEL\_MODE};
+00062 \textcolor{keyword}{extern} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a0a9f8592bd29be6c5c7433c3c0bf42dd}{SP\_DBG};
+00063 
+00064 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a433873baf41da436ba9c1734c8c5ddd2}{THRESHOLD\_MAX};
+00065 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a55f4484944f4174b5e677c0a71b30e4a}{THRESHOLD\_MIN};
+00066 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a20ef6d41d2f384358522fb59fb6226cb}{SYNAPSE\_WEIGHT\_MAX};
+00067 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_af38a0e2e2483ef81f7ea5175c366ce82}{SYNAPSE\_WEIGHT\_MIN};
+00068 ;
+00069 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_ad39b86a0b748731175572436f6672264}{CORE\_SIZE};
+00070 
+00071     \textcolor{comment}{//helper functions:}
+00072 \hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{tw\_stime} \hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{getNextEventTime}(\hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{tw\_lp} *\hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{lp});
+00073 
+00074 
+00075 \textcolor{preprocessor}{#}\textcolor{preprocessor}{endif} \textcolor{comment}{/* defined(\_\_ROSS\_TOP\_\_assist\_\_) */}
+\end{DoxyCode}

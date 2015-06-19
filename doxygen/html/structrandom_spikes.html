@@ -22,6 +22,12 @@
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/SVG"],
+});
+</script><script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -46,6 +52,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -113,16 +120,16 @@ $(document).ready(function(){initNavTree('structrandom_spikes.html','');});
 <p>Struct that genreates spikes randomly.  
  <a href="structrandom_spikes.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="spike__generator_8h_source.html">spike_generator.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="input__simulator_8h_source.html">input_simulator.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr class="memitem:a1333eb5695ae83d1ffccf24b08bc6288"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrandom_spikes.html#a1333eb5695ae83d1ffccf24b08bc6288">randomRate</a></td></tr>
 <tr class="memdesc:a1333eb5695ae83d1ffccf24b08bc6288"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the random value is over this, spike.  <a href="#a1333eb5695ae83d1ffccf24b08bc6288">More...</a><br /></td></tr>
 <tr class="separator:a1333eb5695ae83d1ffccf24b08bc6288"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39c666ed4c7b487b1586c2c01b5afcdc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="spike__generator_8h.html#ad05574e5624d82eeb7acf436ba8802f6">randomSelect</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrandom_spikes.html#a39c666ed4c7b487b1586c2c01b5afcdc">randMethod</a></td></tr>
-<tr class="memdesc:a39c666ed4c7b487b1586c2c01b5afcdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selected random generator.  <a href="#a39c666ed4c7b487b1586c2c01b5afcdc">More...</a><br /></td></tr>
-<tr class="separator:a39c666ed4c7b487b1586c2c01b5afcdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18766f12fc4212349fb61b221f83b779"><td class="memItemLeft" align="right" valign="top"><a class="el" href="input__simulator_8h.html#aa0d25534cd73156287b1136dd89c0215">selectedRandom</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrandom_spikes.html#a18766f12fc4212349fb61b221f83b779">randMethod</a></td></tr>
+<tr class="memdesc:a18766f12fc4212349fb61b221f83b779"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selected random generator.  <a href="#a18766f12fc4212349fb61b221f83b779">More...</a><br /></td></tr>
+<tr class="separator:a18766f12fc4212349fb61b221f83b779"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0eb8199754a403ccc8eac256f9193a02"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrandom_spikes.html#a0eb8199754a403ccc8eac256f9193a02">rndFctVal</a></td></tr>
 <tr class="memdesc:a0eb8199754a403ccc8eac256f9193a02"><td class="mdescLeft">&#160;</td><td class="mdescRight">For functions that need a second parameter (eg, binomial etc.), this is the second parameter.  <a href="#a0eb8199754a403ccc8eac256f9193a02">More...</a><br /></td></tr>
 <tr class="separator:a0eb8199754a403ccc8eac256f9193a02"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,21 +137,21 @@ Data Fields</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Struct that genreates spikes randomly. </p>
 
-<p>Definition at line <a class="el" href="spike__generator_8h_source.html#l00037">37</a> of file <a class="el" href="spike__generator_8h_source.html">spike_generator.h</a>.</p>
+<p>Definition at line <a class="el" href="input__simulator_8h_source.html#l00029">29</a> of file <a class="el" href="input__simulator_8h_source.html">input_simulator.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a39c666ed4c7b487b1586c2c01b5afcdc"></a>
+<a class="anchor" id="a18766f12fc4212349fb61b221f83b779"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="spike__generator_8h.html#ad05574e5624d82eeb7acf436ba8802f6">randomSelect</a> randMethod</td>
+          <td class="memname"><a class="el" href="input__simulator_8h.html#aa0d25534cd73156287b1136dd89c0215">selectedRandom</a> randMethod</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Selected random generator. </p>
 
-<p>Definition at line <a class="el" href="spike__generator_8h_source.html#l00039">39</a> of file <a class="el" href="spike__generator_8h_source.html">spike_generator.h</a>.</p>
+<p>Definition at line <a class="el" href="input__simulator_8h_source.html#l00031">31</a> of file <a class="el" href="input__simulator_8h_source.html">input_simulator.h</a>.</p>
 
 </div>
 </div>
@@ -160,7 +167,7 @@ Data Fields</h2></td></tr>
 
 <p>If the random value is over this, spike. </p>
 
-<p>Definition at line <a class="el" href="spike__generator_8h_source.html#l00038">38</a> of file <a class="el" href="spike__generator_8h_source.html">spike_generator.h</a>.</p>
+<p>Definition at line <a class="el" href="input__simulator_8h_source.html#l00030">30</a> of file <a class="el" href="input__simulator_8h_source.html">input_simulator.h</a>.</p>
 
 </div>
 </div>
@@ -176,12 +183,12 @@ Data Fields</h2></td></tr>
 
 <p>For functions that need a second parameter (eg, binomial etc.), this is the second parameter. </p>
 
-<p>Definition at line <a class="el" href="spike__generator_8h_source.html#l00040">40</a> of file <a class="el" href="spike__generator_8h_source.html">spike_generator.h</a>.</p>
+<p>Definition at line <a class="el" href="input__simulator_8h_source.html#l00032">32</a> of file <a class="el" href="input__simulator_8h_source.html">input_simulator.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>/Users/Mark/Development/TrueNorth/tnt_benchmark/<a class="el" href="spike__generator_8h_source.html">spike_generator.h</a></li>
+<li>/Users/Mark/Development/TrueNorth/tnt_benchmark/<a class="el" href="input__simulator_8h_source.html">input_simulator.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -189,7 +196,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structrandom_spikes.html">randomSpikes</a></li>
-    <li class="footer">Generated on Thu Apr 30 2015 15:32:21 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Fri Jun 19 2015 13:47:05 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

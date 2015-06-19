@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['end',['END',['../assist_8h.html#a29fd18bed01c4d836c7ebfe73a125c3f',1,'assist.h']]]
+  ['rzer',['RZER',['../assist_8h.html#ad383c153e77508e2556003da0e4ac3eb',1,'assist.h']]]
 ];

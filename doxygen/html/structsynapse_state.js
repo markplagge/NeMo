@@ -1,7 +1,8 @@
 var structsynapse_state =
 [
-    [ "coreID", "structsynapse_state.html#a2063050696509e31bdd72dbb0607c6ee", null ],
-    [ "dests", "structsynapse_state.html#a6d6a80692ca06baa6c9a11a624129763", null ],
-    [ "spikeGen", "structsynapse_state.html#a11fd4dc41f715eb6f04a68bc5fc9e292", null ],
-    [ "synID", "structsynapse_state.html#aef661be02823d13d471c66bf0cd478db", null ]
+    [ "destNeuron", "structsynapse_state.html#a0710dca002b4b3a3f7ae72633bef3691", null ],
+    [ "destSynapse", "structsynapse_state.html#a665999819b255f36d756f17b85bc9a03", null ],
+    [ "mySynapseNum", "structsynapse_state.html#ab73db495221608d3eae73d51670d29f0", null ],
+    [ "neuronMsgSent", "structsynapse_state.html#a9e389b0b50f9ec5e3f5b7b0f5383d6d5", null ],
+    [ "synapseMsgSent", "structsynapse_state.html#a3fd766946f24d2fd6a2021ec24939284", null ]
 ];

@@ -77,25 +77,25 @@ function SearchBox(name, resultsPath, inFrame, label)
   // ----------- DOM Elements
 
   this.DOMSearchField = function()
-  {  return document.getElementById("MSearchField");  };
+  {  return document.getElementById("MSearchField");  }
 
   this.DOMSearchSelect = function()
-  {  return document.getElementById("MSearchSelect");  };
+  {  return document.getElementById("MSearchSelect");  }
 
   this.DOMSearchSelectWindow = function()
-  {  return document.getElementById("MSearchSelectWindow");  };
+  {  return document.getElementById("MSearchSelectWindow");  }
 
   this.DOMPopupSearchResults = function()
-  {  return document.getElementById("MSearchResults");  };
+  {  return document.getElementById("MSearchResults");  }
 
   this.DOMPopupSearchResultsWindow = function()
-  {  return document.getElementById("MSearchResultsWindow");  };
+  {  return document.getElementById("MSearchResultsWindow");  }
 
   this.DOMSearchClose = function()
-  {  return document.getElementById("MSearchClose"); };
+  {  return document.getElementById("MSearchClose"); }
 
   this.DOMSearchBox = function()
-  {  return document.getElementById("MSearchBox");  };
+  {  return document.getElementById("MSearchBox");  }
 
   // ------------ Event Handlers
 
@@ -103,7 +103,7 @@ function SearchBox(name, resultsPath, inFrame, label)
   this.OnSearchFieldFocus = function(isActive)
   {
     this.Activate(isActive);
-  };
+  }
 
   this.OnSearchSelectShow = function()
   {
@@ -142,13 +142,13 @@ function SearchBox(name, resultsPath, inFrame, label)
       this.hideTimeout=0;
     }
     return false; // to avoid "image drag" default event
-  };
+  }
 
   this.OnSearchSelectHide = function()
   {
     this.hideTimeout = setTimeout(this.name +".CloseSelectionWindow()",
                                   this.closeSelectionTimeout);
-  };
+  }
 
   // Called when the content of the search field is changed.
   this.OnSearchFieldChange = function(evt)
@@ -211,7 +211,7 @@ function SearchBox(name, resultsPath, inFrame, label)
         this.lastSearchValue = '';
       }
     }
-  };
+  }
 
   this.SelectItemCount = function(id)
   {
@@ -226,7 +226,7 @@ function SearchBox(name, resultsPath, inFrame, label)
       }
     }
     return count;
-  };
+  }
 
   this.SelectItemSet = function(id)
   {
@@ -249,7 +249,7 @@ function SearchBox(name, resultsPath, inFrame, label)
         j++;
       }
     }
-  };
+  }
 
   // Called when an search filter selection is made.
   // set item with index id as the active item
@@ -262,7 +262,7 @@ function SearchBox(name, resultsPath, inFrame, label)
     {
       this.Search();
     }
-  };
+  }
 
   this.OnSearchSelectKey = function(evt)
   {
@@ -284,7 +284,7 @@ function SearchBox(name, resultsPath, inFrame, label)
       this.DOMSearchField().focus();
     }
     return false;
-  };
+  }
 
   // --------- Actions
 
@@ -294,12 +294,12 @@ function SearchBox(name, resultsPath, inFrame, label)
     this.DOMPopupSearchResultsWindow().style.display = 'none';
     this.DOMSearchClose().style.display = 'none';
     this.Activate(false);
-  };
+  }
 
   this.CloseSelectionWindow = function()
   {
     this.DOMSearchSelectWindow().style.display = 'none';
-  };
+  }
 
   // Performs a search.
   this.Search = function()
@@ -365,7 +365,7 @@ function SearchBox(name, resultsPath, inFrame, label)
 
     this.lastSearchValue = searchValue;
     this.lastResultsPage = resultsPage;
-  };
+  }
 
   // -------- Activation Functions
 
@@ -392,7 +392,7 @@ function SearchBox(name, resultsPath, inFrame, label)
       this.DOMSearchBox().className = 'MSearchBoxInactive';
       this.DOMSearchField().value   = this.searchLabel;
       this.searchActive             = false;
-      this.lastSearchValue          = '';
+      this.lastSearchValue          = ''
       this.lastResultsPage          = '';
     }
   }
@@ -443,7 +443,7 @@ function SearchResults(name)
           }
         }
       }
-    };
+    }
 
     this.Toggle = function(id)
     {
@@ -459,7 +459,7 @@ function SearchResults(name)
           element.style.display = 'block';
         }
       }
-    };
+    }
 
     // Searches for the passed string.  If there is no parameter,
     // it takes it from the URL query.
@@ -516,7 +516,7 @@ function SearchResults(name)
       }
       this.lastMatchCount = matches;
       return true;
-    };
+    }
 
     // return the first item with index index or higher that is visible
     this.NavNext = function(index)
@@ -538,7 +538,7 @@ function SearchResults(name)
         index++;
       }
       return focusItem;
-    };
+    }
 
     this.NavPrev = function(index)
     {
@@ -559,7 +559,7 @@ function SearchResults(name)
         index--;
       }
       return focusItem;
-    };
+    }
 
     this.ProcessKeys = function(e)
     {
@@ -582,7 +582,7 @@ function SearchResults(name)
         this.repeatOn = false;
       }
       return this.lastKey!=0;
-    };
+    }
 
     this.Nav = function(evt,itemIndex)
     {
@@ -660,7 +660,7 @@ function SearchResults(name)
         return true;
       }
       return false;
-    };
+    }
 
     this.NavChild = function(evt,itemIndex,childIndex)
     {

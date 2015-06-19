@@ -22,6 +22,12 @@
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/SVG"],
+});
+</script><script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -46,6 +52,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -108,20 +115,22 @@ $(document).ready(function(){initNavTree('synapse_8h.html','');});
 <div class="title">synapse.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="spike__generator_8h_source.html">../spike_generator.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="assist_8h_source.html">../assist.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="input__simulator_8h_source.html">../input_simulator.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for synapse.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="synapse_8h__incl.png" border="0" usemap="#_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2models_2synapse_8h" alt=""/></div>
 <map name="_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2models_2synapse_8h" id="_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2models_2synapse_8h">
-<area shape="rect" id="node2" href="spike__generator_8h.html" title="spike_generate defines a LP state and functions that generate output at a tuneable rate..." alt="" coords="64,105,202,131"/><area shape="rect" id="node4" href="assist_8h.html" title="assist.h" alt="" coords="144,179,210,204"/></map>
+<area shape="rect" id="node3" href="assist_8h.html" title="../assist.h" alt="" coords="151,179,228,204"/><area shape="rect" id="node7" href="input__simulator_8h.html" title="../input_simulator.h" alt="" coords="131,105,264,131"/></map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="synapse_8h__dep__incl.png" border="0" usemap="#_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2models_2synapse_8hdep" alt=""/></div>
 <map name="_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2models_2synapse_8hdep" id="_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2models_2synapse_8hdep">
-<area shape="rect" id="node2" href="model__main_8h.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/model_main.h" alt="" coords="5,105,182,157"/><area shape="rect" id="node3" href="model__main_8c.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/model_main.c" alt="" coords="5,205,182,257"/></map>
+<area shape="rect" id="node2" href="synapse_8c.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/models/synapse.c" alt="" coords="5,105,182,157"/></map>
 </div>
 </div>
 <p><a href="synapse_8h_source.html">Go to the source code of this file.</a></p>
@@ -129,6 +138,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsynapse_state.html">synapseState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synapse state structure.  <a href="structsynapse_state.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
@@ -137,7 +147,7 @@ Data Structures</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_1ae4179d5e953611aae20c997279e02c.html">models</a></li><li class="navelem"><a class="el" href="synapse_8h.html">synapse.h</a></li>
-    <li class="footer">Generated on Thu Apr 30 2015 15:32:21 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Fri Jun 19 2015 13:47:05 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

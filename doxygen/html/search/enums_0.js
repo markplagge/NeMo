@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['events',['events',['../assist_8h.html#ad29858f6d8ab73f2970f41cb21a76b84',1,'assist.h']]]
+  ['evttype',['evtType',['../assist_8h.html#a7c1688de451e0dea1e11617bce3ec450',1,'assist.h']]]
 ];

@@ -1,0 +1,279 @@
+\hypertarget{neuron_8h}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/neuron.h File Reference}
+\label{neuron_8h}\index{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/neuron.\+h@{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/neuron.\+h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}../assist.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../mapping.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}ross.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+Include dependency graph for neuron.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=338pt]{neuron_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=212pt]{neuron_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+union \hyperlink{union_reset_rate}{Reset\+Rate}
+\begin{DoxyCompactList}\small\item\em This is a support union for neuron reset rates. \end{DoxyCompactList}\item 
+struct \hyperlink{structneuron_state}{neuron\+State}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void($\ast$ \hyperlink{neuron_8h_a6eab2da39fb76cba9c4c54b5fb7625a6}{leak\+Fun\+Del}) (void $\ast$\hyperlink{structneuron_state}{neuron\+State}, tw\+\_\+stime end)
+\item 
+typedef void($\ast$ \hyperlink{neuron_8h_a960bf554f8c5333d901a15c49066f5b6}{reverse\+Leak\+Del}) (void $\ast$\hyperlink{structneuron_state}{neuron\+State}, tw\+\_\+stime now)
+\item 
+typedef void($\ast$ \hyperlink{neuron_8h_ae7e5990745cd949246894bfb633ca4a2}{reset\+Fun\+Del}) (void $\ast$\hyperlink{structneuron_state}{neuron\+State})
+\begin{DoxyCompactList}\small\item\em Reset\+Fun\+Del -\/ This is a function that handles different reset rate calculations. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{neuron_8h_aa939c0acc5b3367975f2f0cb7bc36d17}{reverse\+Reset\+Del}) (void $\ast$\hyperlink{structneuron_state}{neuron\+State})
+\begin{DoxyCompactList}\small\item\em This is a function that reverses the reset command. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{neuron_8h_a48885ea6be5b55a2e24de9f97552d4ee}{neuron\+Fire\+Mode} \{ \hyperlink{neuron_8h_a48885ea6be5b55a2e24de9f97552d4eea520c6b216334b8c2d914cf9fab8cd460}{N\+F\+M} = 0
+ \}
+\begin{DoxyCompactList}\small\item\em typedef Neuron\+Fire\+Mode Just in case there are multiple fire modes, this enum exists to differentiate them. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{neuron_8h_a6d548f86a3f6618241b7ffc5dd3ad374}{no\+Leak} (void $\ast$\hyperlink{structneuron_state}{neuron\+State}, tw\+\_\+stime end)
+\item 
+void \hyperlink{neuron_8h_a23e8b1105b7db3282e2b362edbb98f5a}{rev\+No\+Leak} (void $\ast$\hyperlink{structneuron_state}{neuron\+State}, tw\+\_\+stime now)
+\item 
+void \hyperlink{neuron_8h_a7f8eaa35f03747c795a2b727b364537b}{reset\+Zero} (void $\ast$\hyperlink{structneuron_state}{neuron\+State})
+\item 
+void \hyperlink{neuron_8h_a2e78d7d2b70bf7349c3854b3727dcc25}{reset\+Linear} (void $\ast$\hyperlink{structneuron_state}{neuron\+State})
+\item 
+void \hyperlink{neuron_8h_aabae9811b1573f5c38f4d32446c9c80a}{reverse\+Linear} (void $\ast$\hyperlink{structneuron_state}{neuron\+State})
+\item 
+void \hyperlink{neuron_8h_a286a9f9e22acec028acf23b62e13646b}{reverse\+Zero} (void $\ast$\hyperlink{structneuron_state}{neuron\+State})
+\item 
+void \hyperlink{neuron_8h_a01dcc8e3f0132786bd59ecb847013284}{neuron\+Reverse\+Final} (\hyperlink{structneuron_state}{neuron\+State} $\ast$s, tw\+\_\+bf $\ast$C\+V, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$m, tw\+\_\+lp $\ast$lp)
+\begin{DoxyCompactList}\small\item\em neuron\+Reverse\+Final final neuron reversal function. \end{DoxyCompactList}\item 
+void \hyperlink{neuron_8h_aa6819d7492f0173f2234ba0b8b0bb674}{neuron\+Receive\+Message} (\hyperlink{structneuron_state}{neuron\+State} $\ast$st, tw\+\_\+stime time, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$m, tw\+\_\+lp $\ast$lp)
+\begin{DoxyCompactList}\small\item\em neuron\+Receive\+Message handles incomming synapse messages. \end{DoxyCompactList}\item 
+void \hyperlink{neuron_8h_ae071ef984b7e0dd4ec38fca91e0abe39}{neuron\+Fire} (\hyperlink{structneuron_state}{neuron\+State} $\ast$st, tw\+\_\+stime time, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$m)
+\begin{DoxyCompactList}\small\item\em neuron\+Fire manages a firing event. \end{DoxyCompactList}\item 
+void \hyperlink{neuron_8h_ab1f4997e4bfe11e78faa6d37748aee67}{neuron\+Post\+Fire} (\hyperlink{structneuron_state}{neuron\+State} $\ast$st, tw\+\_\+stime time, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$m)
+\begin{DoxyCompactList}\small\item\em neuron\+Post\+Fire manages post-\/firing events, including reset functions \end{DoxyCompactList}\item 
+void \hyperlink{neuron_8h_a06ee765bfae45fe9b7f0619bf4abe63d}{generate\+Wait\+Event} (\hyperlink{structneuron_state}{neuron\+State} $\ast$st, tw\+\_\+stime time, tw\+\_\+lp $\ast$lp)
+\begin{DoxyCompactList}\small\item\em generate\+Wait\+Event creates a new wait event to this neuron for big-\/tick synchronization \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+union \hyperlink{union_reset_rate}{Reset\+Rate} \hyperlink{neuron_8h_a00045e810e1e717e3a0973b383822104}{reset\+Rate}
+\end{DoxyCompactItemize}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{neuron_8h_a6eab2da39fb76cba9c4c54b5fb7625a6}{}\index{neuron.\+h@{neuron.\+h}!leak\+Fun\+Del@{leak\+Fun\+Del}}
+\index{leak\+Fun\+Del@{leak\+Fun\+Del}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{leak\+Fun\+Del}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ {\bf leak\+Fun\+Del}) (void $\ast${\bf neuron\+State}, tw\+\_\+stime end)}\label{neuron_8h_a6eab2da39fb76cba9c4c54b5fb7625a6}
+
+
+Definition at line \hyperlink{neuron_8h_source_l00033}{33} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
+
+\hypertarget{neuron_8h_ae7e5990745cd949246894bfb633ca4a2}{}\index{neuron.\+h@{neuron.\+h}!reset\+Fun\+Del@{reset\+Fun\+Del}}
+\index{reset\+Fun\+Del@{reset\+Fun\+Del}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{reset\+Fun\+Del}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ reset\+Fun\+Del) (void $\ast${\bf neuron\+State})}\label{neuron_8h_ae7e5990745cd949246894bfb633ca4a2}
+
+
+Reset\+Fun\+Del -\/ This is a function that handles different reset rate calculations. 
+
+It takes the state of the neuron, and applies various reset functions to the neuron\textquotesingle{}s voltage. Some reset functions described by true north include a zeroing function (standard integrate and fire), a linear drop function, and a non-\/reduction function. Also functions for leaks below. 
+
+Definition at line \hyperlink{neuron_8h_source_l00058}{58} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
+
+\hypertarget{neuron_8h_a960bf554f8c5333d901a15c49066f5b6}{}\index{neuron.\+h@{neuron.\+h}!reverse\+Leak\+Del@{reverse\+Leak\+Del}}
+\index{reverse\+Leak\+Del@{reverse\+Leak\+Del}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{reverse\+Leak\+Del}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ {\bf reverse\+Leak\+Del}) (void $\ast${\bf neuron\+State}, tw\+\_\+stime now)}\label{neuron_8h_a960bf554f8c5333d901a15c49066f5b6}
+
+
+Definition at line \hyperlink{neuron_8h_source_l00040}{40} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
+
+\hypertarget{neuron_8h_aa939c0acc5b3367975f2f0cb7bc36d17}{}\index{neuron.\+h@{neuron.\+h}!reverse\+Reset\+Del@{reverse\+Reset\+Del}}
+\index{reverse\+Reset\+Del@{reverse\+Reset\+Del}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{reverse\+Reset\+Del}]{\setlength{\rightskip}{0pt plus 5cm}reverse\+Reset\+Del}\label{neuron_8h_aa939c0acc5b3367975f2f0cb7bc36d17}
+
+
+This is a function that reverses the reset command. 
+
+Run first, since the reset function is run last. 
+
+Definition at line \hyperlink{neuron_8h_source_l00069}{69} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
+
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{neuron_8h_a48885ea6be5b55a2e24de9f97552d4ee}{}\index{neuron.\+h@{neuron.\+h}!neuron\+Fire\+Mode@{neuron\+Fire\+Mode}}
+\index{neuron\+Fire\+Mode@{neuron\+Fire\+Mode}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{neuron\+Fire\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf neuron\+Fire\+Mode}}\label{neuron_8h_a48885ea6be5b55a2e24de9f97552d4ee}
+
+
+typedef Neuron\+Fire\+Mode Just in case there are multiple fire modes, this enum exists to differentiate them. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{N\+F\+M@{N\+F\+M}!neuron.\+h@{neuron.\+h}}\index{neuron.\+h@{neuron.\+h}!N\+F\+M@{N\+F\+M}}\item[{\em 
+\hypertarget{neuron_8h_a48885ea6be5b55a2e24de9f97552d4eea520c6b216334b8c2d914cf9fab8cd460}{}N\+F\+M\label{neuron_8h_a48885ea6be5b55a2e24de9f97552d4eea520c6b216334b8c2d914cf9fab8cd460}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line \hyperlink{neuron_8h_source_l00023}{23} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
+
+
+\begin{DoxyCode}
+00023                                 \{
+00024   \hyperlink{neuron_8h_a48885ea6be5b55a2e24de9f97552d4eea520c6b216334b8c2d914cf9fab8cd460}{NFM} = 0  \textcolor{comment}{// normal fire mode (if voltage > threshold, fire);}
+00025     \} \hyperlink{neuron_8h_a48885ea6be5b55a2e24de9f97552d4ee}{neuronFireMode};
+\end{DoxyCode}
+
+
+\subsection{Function Documentation}
+\hypertarget{neuron_8h_a06ee765bfae45fe9b7f0619bf4abe63d}{}\index{neuron.\+h@{neuron.\+h}!generate\+Wait\+Event@{generate\+Wait\+Event}}
+\index{generate\+Wait\+Event@{generate\+Wait\+Event}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{generate\+Wait\+Event}]{\setlength{\rightskip}{0pt plus 5cm}void generate\+Wait\+Event (
+\begin{DoxyParamCaption}
+\item[{{\bf neuron\+State} $\ast$}]{st, }
+\item[{tw\+\_\+stime}]{time, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{neuron_8h_a06ee765bfae45fe9b7f0619bf4abe63d}
+
+
+generate\+Wait\+Event creates a new wait event to this neuron for big-\/tick synchronization 
+
+\hypertarget{neuron_8h_ae071ef984b7e0dd4ec38fca91e0abe39}{}\index{neuron.\+h@{neuron.\+h}!neuron\+Fire@{neuron\+Fire}}
+\index{neuron\+Fire@{neuron\+Fire}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{neuron\+Fire}]{\setlength{\rightskip}{0pt plus 5cm}void neuron\+Fire (
+\begin{DoxyParamCaption}
+\item[{{\bf neuron\+State} $\ast$}]{st, }
+\item[{tw\+\_\+stime}]{time, }
+\item[{{\bf Msg\+\_\+\+Data} $\ast$}]{m}
+\end{DoxyParamCaption}
+)}\label{neuron_8h_ae071ef984b7e0dd4ec38fca91e0abe39}
+
+
+neuron\+Fire manages a firing event. 
+
+Firing events occur when a synchro message is received, so these calculations are done on big-\/ticks only. \hypertarget{neuron_8h_ab1f4997e4bfe11e78faa6d37748aee67}{}\index{neuron.\+h@{neuron.\+h}!neuron\+Post\+Fire@{neuron\+Post\+Fire}}
+\index{neuron\+Post\+Fire@{neuron\+Post\+Fire}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{neuron\+Post\+Fire}]{\setlength{\rightskip}{0pt plus 5cm}void neuron\+Post\+Fire (
+\begin{DoxyParamCaption}
+\item[{{\bf neuron\+State} $\ast$}]{st, }
+\item[{tw\+\_\+stime}]{time, }
+\item[{{\bf Msg\+\_\+\+Data} $\ast$}]{m}
+\end{DoxyParamCaption}
+)}\label{neuron_8h_ab1f4997e4bfe11e78faa6d37748aee67}
+
+
+neuron\+Post\+Fire manages post-\/firing events, including reset functions 
+
+\hypertarget{neuron_8h_aa6819d7492f0173f2234ba0b8b0bb674}{}\index{neuron.\+h@{neuron.\+h}!neuron\+Receive\+Message@{neuron\+Receive\+Message}}
+\index{neuron\+Receive\+Message@{neuron\+Receive\+Message}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{neuron\+Receive\+Message}]{\setlength{\rightskip}{0pt plus 5cm}void neuron\+Receive\+Message (
+\begin{DoxyParamCaption}
+\item[{{\bf neuron\+State} $\ast$}]{st, }
+\item[{tw\+\_\+stime}]{time, }
+\item[{{\bf Msg\+\_\+\+Data} $\ast$}]{m, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{neuron_8h_aa6819d7492f0173f2234ba0b8b0bb674}
+
+
+neuron\+Receive\+Message handles incomming synapse messages. 
+
+In this model, the neurons send messages to axons during \char`\"{}big tick\char`\"{} intervals. This is done through an event sent upon receipt of the first synapse message of the current big-\/tick. \hypertarget{neuron_8h_a01dcc8e3f0132786bd59ecb847013284}{}\index{neuron.\+h@{neuron.\+h}!neuron\+Reverse\+Final@{neuron\+Reverse\+Final}}
+\index{neuron\+Reverse\+Final@{neuron\+Reverse\+Final}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{neuron\+Reverse\+Final}]{\setlength{\rightskip}{0pt plus 5cm}void neuron\+Reverse\+Final (
+\begin{DoxyParamCaption}
+\item[{{\bf neuron\+State} $\ast$}]{s, }
+\item[{tw\+\_\+bf $\ast$}]{C\+V, }
+\item[{{\bf Msg\+\_\+\+Data} $\ast$}]{m, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{neuron_8h_a01dcc8e3f0132786bd59ecb847013284}
+
+
+neuron\+Reverse\+Final final neuron reversal function. 
+
+Used to roll back any calls made by the neuron. Decrements received\+Synapse\+Msgs Reset funs have already been run at this point \begin{DoxySeeAlso}{See also}
+\hyperlink{neuron_8h_a960bf554f8c5333d901a15c49066f5b6}{reverse\+Leak\+Del()} and 
+
+\hyperlink{neuron_8h_aa939c0acc5b3367975f2f0cb7bc36d17}{reverse\+Reset\+Del()} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em s} & the neuron state \\
+\hline
+{\em C\+V} & transported bitfield \\
+\hline
+{\em m} & the rollback message \\
+\hline
+{\em lp} & the lp \\
+\hline
+\end{DoxyParams}
+\hypertarget{neuron_8h_a6d548f86a3f6618241b7ffc5dd3ad374}{}\index{neuron.\+h@{neuron.\+h}!no\+Leak@{no\+Leak}}
+\index{no\+Leak@{no\+Leak}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{no\+Leak}]{\setlength{\rightskip}{0pt plus 5cm}void no\+Leak (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{neuron\+State, }
+\item[{tw\+\_\+stime}]{end}
+\end{DoxyParamCaption}
+)}\label{neuron_8h_a6d548f86a3f6618241b7ffc5dd3ad374}
+\hypertarget{neuron_8h_a2e78d7d2b70bf7349c3854b3727dcc25}{}\index{neuron.\+h@{neuron.\+h}!reset\+Linear@{reset\+Linear}}
+\index{reset\+Linear@{reset\+Linear}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{reset\+Linear}]{\setlength{\rightskip}{0pt plus 5cm}void reset\+Linear (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{neuron\+State}
+\end{DoxyParamCaption}
+)}\label{neuron_8h_a2e78d7d2b70bf7349c3854b3727dcc25}
+\hypertarget{neuron_8h_a7f8eaa35f03747c795a2b727b364537b}{}\index{neuron.\+h@{neuron.\+h}!reset\+Zero@{reset\+Zero}}
+\index{reset\+Zero@{reset\+Zero}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{reset\+Zero}]{\setlength{\rightskip}{0pt plus 5cm}void reset\+Zero (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{neuron\+State}
+\end{DoxyParamCaption}
+)}\label{neuron_8h_a7f8eaa35f03747c795a2b727b364537b}
+\hypertarget{neuron_8h_aabae9811b1573f5c38f4d32446c9c80a}{}\index{neuron.\+h@{neuron.\+h}!reverse\+Linear@{reverse\+Linear}}
+\index{reverse\+Linear@{reverse\+Linear}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{reverse\+Linear}]{\setlength{\rightskip}{0pt plus 5cm}void reverse\+Linear (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{neuron\+State}
+\end{DoxyParamCaption}
+)}\label{neuron_8h_aabae9811b1573f5c38f4d32446c9c80a}
+\hypertarget{neuron_8h_a286a9f9e22acec028acf23b62e13646b}{}\index{neuron.\+h@{neuron.\+h}!reverse\+Zero@{reverse\+Zero}}
+\index{reverse\+Zero@{reverse\+Zero}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{reverse\+Zero}]{\setlength{\rightskip}{0pt plus 5cm}void reverse\+Zero (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{neuron\+State}
+\end{DoxyParamCaption}
+)}\label{neuron_8h_a286a9f9e22acec028acf23b62e13646b}
+\hypertarget{neuron_8h_a23e8b1105b7db3282e2b362edbb98f5a}{}\index{neuron.\+h@{neuron.\+h}!rev\+No\+Leak@{rev\+No\+Leak}}
+\index{rev\+No\+Leak@{rev\+No\+Leak}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{rev\+No\+Leak}]{\setlength{\rightskip}{0pt plus 5cm}void rev\+No\+Leak (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{neuron\+State, }
+\item[{tw\+\_\+stime}]{now}
+\end{DoxyParamCaption}
+)}\label{neuron_8h_a23e8b1105b7db3282e2b362edbb98f5a}
+
+
+\subsection{Variable Documentation}
+\hypertarget{neuron_8h_a00045e810e1e717e3a0973b383822104}{}\index{neuron.\+h@{neuron.\+h}!reset\+Rate@{reset\+Rate}}
+\index{reset\+Rate@{reset\+Rate}!neuron.\+h@{neuron.\+h}}
+\subsubsection[{reset\+Rate}]{\setlength{\rightskip}{0pt plus 5cm}union {\bf Reset\+Rate}  reset\+Rate}\label{neuron_8h_a00045e810e1e717e3a0973b383822104}

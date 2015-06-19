@@ -1,9 +1,6 @@
 var searchData=
 [
-  ['max',['max',['../mappings_8c.html#ae1e1dde676c120fa6d10f3bb2c14059e',1,'mappings.c']]],
-  ['max_5fleak',['MAX_LEAK',['../model__main_8h.html#a83c9373146a1150aa913c244e69abcaa',1,'model_main.h']]],
-  ['max_5freset',['MAX_RESET',['../model__main_8h.html#ad6e4d5bfe16dc8db2633d5687661cfc8',1,'model_main.h']]],
-  ['min_5fleak',['MIN_LEAK',['../model__main_8h.html#abf39b7bc925f61737112787c578b06d3',1,'model_main.h']]],
-  ['min_5freset',['MIN_RESET',['../model__main_8h.html#a789de05c7ed7a8cfadbd6b2e0c75516c',1,'model_main.h']]],
-  ['model_5flps',['model_lps',['../model__main_8c.html#a6acf8f296294224aa8201bdea5aba47e',1,'model_lps():&#160;model_main.c'],['../model__main_8h.html#a6acf8f296294224aa8201bdea5aba47e',1,'model_lps():&#160;model_main.c']]]
+  ['neuronmsgsent',['neuronMsgSent',['../structsynapse_state.html#a9e389b0b50f9ec5e3f5b7b0f5383d6d5',1,'synapseState']]],
+  ['neurons_5fin_5fcore',['NEURONS_IN_CORE',['../assist_8h.html#a67e8e45768f76b984a60fcff2b7c51aa',1,'NEURONS_IN_CORE():&#160;model_main.h'],['../model__main_8h.html#a67e8e45768f76b984a60fcff2b7c51aa',1,'NEURONS_IN_CORE():&#160;model_main.h']]],
+  ['nonlinearrate',['nonLinearRate',['../union_reset_rate.html#a54aaba14ce85fd9c5d7b385d98727e36',1,'ResetRate']]]
 ];

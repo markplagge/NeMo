@@ -1,9 +1,24 @@
 var searchData=
 [
-  ['persynapsedet',['perSynapseDet',['../structneuron_state.html#a95688135a244a3ce3b35698a49d0da18',1,'neuronState']]],
-  ['persynapseweight',['perSynapseWeight',['../structneuron_state.html#ac21457aec3f29f9f28b58dd95e3d6fb2',1,'neuronState']]],
-  ['perth',['perTh',['../mappings_8c.html#a44dd54637529327772a8ba08ab8e49b1',1,'mappings.c']]],
-  ['pre_5frun',['pre_run',['../model__main_8c.html#a7a8df3f99e1d582c6c136b16d6e34d13',1,'pre_run():&#160;model_main.c'],['../model__main_8h.html#a7a8df3f99e1d582c6c136b16d6e34d13',1,'pre_run():&#160;model_main.c']]],
-  ['prevvoltage',['prevVoltage',['../struct_msg___data.html#a20818fc301603eac9d3685ba53424699',1,'Msg_Data']]],
-  ['prvoltage',['prVoltage',['../structneuron_state.html#ac20c9ef5b5825eb38f91c1f1dacfb21d',1,'neuronState']]]
+  ['randmethod',['randMethod',['../structrandom_spikes.html#a18766f12fc4212349fb61b221f83b779',1,'randomSpikes::randMethod()'],['../structinput_simulator_state.html#a18766f12fc4212349fb61b221f83b779',1,'inputSimulatorState::randMethod()']]],
+  ['randomrate',['randomRate',['../structrandom_spikes.html#a1333eb5695ae83d1ffccf24b08bc6288',1,'randomSpikes::randomRate()'],['../structinput_simulator_state.html#a1333eb5695ae83d1ffccf24b08bc6288',1,'inputSimulatorState::randomRate()']]],
+  ['randomspikes',['randomSpikes',['../structrandom_spikes.html',1,'']]],
+  ['rcvdmsgcount',['rcvdMsgCount',['../structneuron_state.html#ab8f63a1dfdb2992657530ff8a63fdc01',1,'neuronState']]],
+  ['receivedsynapsemsgs',['receivedSynapseMsgs',['../structneuron_state.html#af8935bcba177f2f3dfb9119c39ef7dc5',1,'neuronState']]],
+  ['recvmsgcount',['recvMsgCount',['../structaxon_state.html#a7fc444364b1559859bccdf91f1e95475',1,'axonState']]],
+  ['resetfundel',['resetFunDel',['../neuron_8h.html#ae7e5990745cd949246894bfb633ca4a2',1,'neuron.h']]],
+  ['resetlinear',['resetLinear',['../neuron_8h.html#a2e78d7d2b70bf7349c3854b3727dcc25',1,'neuron.h']]],
+  ['resetrate',['ResetRate',['../union_reset_rate.html',1,'ResetRate'],['../neuron_8h.html#a00045e810e1e717e3a0973b383822104',1,'resetRate():&#160;neuron.h']]],
+  ['resetvoltparam',['resetVoltParam',['../structneuron_state.html#add87cc0b2bc3426f0fd870f7df6decd5',1,'neuronState']]],
+  ['resetzero',['resetZero',['../neuron_8h.html#a7f8eaa35f03747c795a2b727b364537b',1,'neuron.h']]],
+  ['reverseleakdel',['reverseLeakDel',['../structreverse_leak_del.html',1,'reverseLeakDel'],['../neuron_8h.html#a960bf554f8c5333d901a15c49066f5b6',1,'reverseLeakDel():&#160;neuron.h']]],
+  ['reverselinear',['reverseLinear',['../neuron_8h.html#aabae9811b1573f5c38f4d32446c9c80a',1,'neuron.h']]],
+  ['reversereset',['reverseReset',['../structneuron_state.html#abf6970098695585c81e101b2a741b9a5',1,'neuronState']]],
+  ['reverseresetdel',['reverseResetDel',['../neuron_8h.html#aa939c0acc5b3367975f2f0cb7bc36d17',1,'neuron.h']]],
+  ['reversezero',['reverseZero',['../neuron_8h.html#a286a9f9e22acec028acf23b62e13646b',1,'neuron.h']]],
+  ['revnoleak',['revNoLeak',['../neuron_8h.html#a23e8b1105b7db3282e2b362edbb98f5a',1,'neuron.h']]],
+  ['rnd_5fmode',['RND_MODE',['../assist_8h.html#a516f1496efbe86dedb0e2883bb7e7834',1,'RND_MODE():&#160;model_main.h'],['../model__main_8h.html#a516f1496efbe86dedb0e2883bb7e7834',1,'RND_MODE():&#160;model_main.h']]],
+  ['rndcallcount',['rndCallCount',['../struct_msg___data.html#ab4d75bc6367f5cfbfabc69690fdc1efc',1,'Msg_Data']]],
+  ['rndfctval',['rndFctVal',['../structrandom_spikes.html#a0eb8199754a403ccc8eac256f9193a02',1,'randomSpikes::rndFctVal()'],['../structinput_simulator_state.html#a0eb8199754a403ccc8eac256f9193a02',1,'inputSimulatorState::rndFctVal()']]],
+  ['rzer',['RZER',['../assist_8h.html#ad383c153e77508e2556003da0e4ac3eb',1,'assist.h']]]
 ];

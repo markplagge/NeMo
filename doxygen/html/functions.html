@@ -22,6 +22,12 @@
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/SVG"],
+});
+</script><script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -46,6 +52,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -83,9 +90,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="#index_c"><span>c</span></a></li>
       <li><a href="#index_d"><span>d</span></a></li>
+      <li><a href="#index_e"><span>e</span></a></li>
       <li><a href="#index_f"><span>f</span></a></li>
-      <li><a href="#index_g"><span>g</span></a></li>
       <li><a href="#index_l"><span>l</span></a></li>
+      <li><a href="#index_m"><span>m</span></a></li>
       <li><a href="#index_n"><span>n</span></a></li>
       <li><a href="#index_o"><span>o</span></a></li>
       <li><a href="#index_p"><span>p</span></a></li>
@@ -128,36 +136,36 @@ $(document).ready(function(){initNavTree('functions.html','');});
 
 <h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
 <li>connectedSynapses
-: <a class="el" href="structspike_gen_state.html#a569dc67b8984bb0a3616bf17f9763ebb">spikeGenState</a>
+: <a class="el" href="structinput_simulator_state.html#a569dc67b8984bb0a3616bf17f9763ebb">inputSimulatorState</a>
 </li>
-<li>coreID
-: <a class="el" href="structneuron_state.html#acc19e6f856ad128cc1f90527d066700b">neuronState</a>
-, <a class="el" href="structsynapse_state.html#a2063050696509e31bdd72dbb0607c6ee">synapseState</a>
-</li>
-<li>cVoltage
-: <a class="el" href="structneuron_state.html#a83c2516a958f81caedbaf4dd3c431d1b">neuronState</a>
+<li>currentOut
+: <a class="el" href="structinput_simulator_state.html#accc0c3f890194cda401a16f5f54e43cb">inputSimulatorState</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
 <li>dendriteCore
-: <a class="el" href="structneuron_state.html#ab49277e7f9460fbd698aefa5a44b1b0b">neuronState</a>
+: <a class="el" href="structneuron_state.html#a62463fa4d33c39297aa5ce3a145d474f">neuronState</a>
 </li>
-<li>dendriteDest
-: <a class="el" href="structneuron_state.html#a081d21dd7333cf48eaec21f5eaef8847">neuronState</a>
+<li>dendriteGlobalDest
+: <a class="el" href="structneuron_state.html#a4199c14c5aabfd52f441e01623bdc84c">neuronState</a>
 </li>
-<li>dendriteLocalDest
-: <a class="el" href="structneuron_state.html#af66b578d3c4aac7db55b573b880db0eb">neuronState</a>
+<li>dendriteLocal
+: <a class="el" href="structneuron_state.html#a73e5b16411af572181411b8fd8d5117d">neuronState</a>
 </li>
-<li>destCore
-: <a class="el" href="struct_msg___data.html#a0ce9b87ee4780bfc676814cf8d485a97">Msg_Data</a>
+<li>destNeuron
+: <a class="el" href="structsynapse_state.html#a0710dca002b4b3a3f7ae72633bef3691">synapseState</a>
 </li>
-<li>destLocalID
-: <a class="el" href="struct_msg___data.html#aa0359599db6f5e6c68ac2b7123b4147a">Msg_Data</a>
+<li>destSynapse
+: <a class="el" href="structaxon_state.html#a665999819b255f36d756f17b85bc9a03">axonState</a>
+, <a class="el" href="structsynapse_state.html#a665999819b255f36d756f17b85bc9a03">synapseState</a>
 </li>
-<li>dests
-: <a class="el" href="structsynapse_state.html#a6d6a80692ca06baa6c9a11a624129763">synapseState</a>
+<li>doLeak
+: <a class="el" href="structneuron_state.html#aa430f424f34dc59dc27736e27ec61320">neuronState</a>
+</li>
+<li>doLeakReverse
+: <a class="el" href="structneuron_state.html#af4ded7f575b64ada6c0a6664f638307c">neuronState</a>
 </li>
 <li>doReset
 : <a class="el" href="structneuron_state.html#afcf9d931e4fda519c43b4efeab687463">neuronState</a>
@@ -165,19 +173,19 @@ $(document).ready(function(){initNavTree('functions.html','');});
 </ul>
 
 
-<h3><a class="anchor" id="index_f"></a>- f -</h3><ul>
-<li>fireCount
-: <a class="el" href="structneuron_state.html#afc17c439bc3ffa469b045a7ceff7a25a">neuronState</a>
-</li>
-<li>fireMode
-: <a class="el" href="structneuron_state.html#a55890f9e021064df30e9d18a9df98845">neuronState</a>
+<h3><a class="anchor" id="index_e"></a>- e -</h3><ul>
+<li>eventType
+: <a class="el" href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">Msg_Data</a>
 </li>
 </ul>
 
 
-<h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
-<li>genMode
-: <a class="el" href="structspike_gen_state.html#a79f1111d8527d3ef966593c8d389f34d">spikeGenState</a>
+<h3><a class="anchor" id="index_f"></a>- f -</h3><ul>
+<li>fireCount
+: <a class="el" href="structneuron_state.html#afe8825076c4cf3863c677307fec63c61">neuronState</a>
+</li>
+<li>fireMode
+: <a class="el" href="structneuron_state.html#a55890f9e021064df30e9d18a9df98845">neuronState</a>
 </li>
 </ul>
 
@@ -186,14 +194,8 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>lastActiveTime
 : <a class="el" href="structneuron_state.html#a0658ad1f8b57a00589c6ea84f9a4ab13">neuronState</a>
 </li>
-<li>lastLeakTime
-: <a class="el" href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">neuronState</a>
-</li>
-<li>leak
-: <a class="el" href="structneuron_state.html#ad0271f69fc01192f4f85b74d9bee06de">neuronState</a>
-</li>
 <li>leakRate
-: <a class="el" href="structneuron_state.html#afe8da12a0fe0aef0987e785a64619706">neuronState</a>
+: <a class="el" href="structneuron_state.html#a7138aaa7e2988e5ad0d32cc9846dcbbb">neuronState</a>
 </li>
 <li>linearRate
 : <a class="el" href="union_reset_rate.html#a4bf8a23e4a9874ff73208c681eae1ced">ResetRate</a>
@@ -201,9 +203,25 @@ $(document).ready(function(){initNavTree('functions.html','');});
 </ul>
 
 
+<h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
+<li>membranePot
+: <a class="el" href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">neuronState</a>
+</li>
+<li>myCoreID
+: <a class="el" href="structneuron_state.html#a76ef99e5766b6e36c3f41a2920e8c56c">neuronState</a>
+</li>
+<li>myLocalID
+: <a class="el" href="structneuron_state.html#ac24762c24aede292a2ce5df78114881c">neuronState</a>
+</li>
+<li>mySynapseNum
+: <a class="el" href="structsynapse_state.html#ab73db495221608d3eae73d51670d29f0">synapseState</a>
+</li>
+</ul>
+
+
 <h3><a class="anchor" id="index_n"></a>- n -</h3><ul>
-<li>neuronID
-: <a class="el" href="structneuron_state.html#ab668c4d903557a2ac39f2a5141df3976">neuronState</a>
+<li>neuronMsgSent
+: <a class="el" href="structsynapse_state.html#a9e389b0b50f9ec5e3f5b7b0f5383d6d5">synapseState</a>
 </li>
 <li>nonLinearRate
 : <a class="el" href="union_reset_rate.html#a54aaba14ce85fd9c5d7b385d98727e36">ResetRate</a>
@@ -212,14 +230,16 @@ $(document).ready(function(){initNavTree('functions.html','');});
 
 
 <h3><a class="anchor" id="index_o"></a>- o -</h3><ul>
-<li>outboud
-: <a class="el" href="structspike_gen_state.html#aec7144375204d70824626d74677d71ce">spikeGenState</a>
+<li>outbound
+: <a class="el" href="structinput_simulator_state.html#af892db49cef1c5e5d95010561e549678">inputSimulatorState</a>
 </li>
 <li>outputMesh
-: <a class="el" href="structselected_spikes.html#a666eb9ad96121cf3e4ce134e1a4c12c0">selectedSpikes</a>
+: <a class="el" href="structinput_simulator_state.html#a666eb9ad96121cf3e4ce134e1a4c12c0">inputSimulatorState</a>
+, <a class="el" href="structselected_spikes.html#a666eb9ad96121cf3e4ce134e1a4c12c0">selectedSpikes</a>
 </li>
 <li>outputMeshLengh
-: <a class="el" href="structselected_spikes.html#a97727a3be0dbd5813f860c99733048a8">selectedSpikes</a>
+: <a class="el" href="structinput_simulator_state.html#a97727a3be0dbd5813f860c99733048a8">inputSimulatorState</a>
+, <a class="el" href="structselected_spikes.html#a97727a3be0dbd5813f860c99733048a8">selectedSpikes</a>
 </li>
 </ul>
 
@@ -229,74 +249,70 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="structneuron_state.html#a95688135a244a3ce3b35698a49d0da18">neuronState</a>
 </li>
 <li>perSynapseWeight
-: <a class="el" href="structneuron_state.html#ac21457aec3f29f9f28b58dd95e3d6fb2">neuronState</a>
+: <a class="el" href="structneuron_state.html#ab39656a1580505adcabc4c7a1f4d8100">neuronState</a>
 </li>
-<li>prevVoltage
-: <a class="el" href="struct_msg___data.html#a20818fc301603eac9d3685ba53424699">Msg_Data</a>
-</li>
-<li>prVoltage
-: <a class="el" href="structneuron_state.html#ac20c9ef5b5825eb38f91c1f1dacfb21d">neuronState</a>
+<li>prevMembranePot
+: <a class="el" href="structneuron_state.html#ad17e1ac0b4bca75d10da8b0ab56edd6e">neuronState</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
 <li>randMethod
-: <a class="el" href="structrandom_spikes.html#a39c666ed4c7b487b1586c2c01b5afcdc">randomSpikes</a>
+: <a class="el" href="structinput_simulator_state.html#a18766f12fc4212349fb61b221f83b779">inputSimulatorState</a>
+, <a class="el" href="structrandom_spikes.html#a18766f12fc4212349fb61b221f83b779">randomSpikes</a>
 </li>
 <li>randomRate
-: <a class="el" href="structrandom_spikes.html#a1333eb5695ae83d1ffccf24b08bc6288">randomSpikes</a>
+: <a class="el" href="structinput_simulator_state.html#a1333eb5695ae83d1ffccf24b08bc6288">inputSimulatorState</a>
+, <a class="el" href="structrandom_spikes.html#a1333eb5695ae83d1ffccf24b08bc6288">randomSpikes</a>
+</li>
+<li>rcvdMsgCount
+: <a class="el" href="structneuron_state.html#ab8f63a1dfdb2992657530ff8a63fdc01">neuronState</a>
+</li>
+<li>receivedSynapseMsgs
+: <a class="el" href="structneuron_state.html#af8935bcba177f2f3dfb9119c39ef7dc5">neuronState</a>
+</li>
+<li>recvMsgCount
+: <a class="el" href="structaxon_state.html#a7fc444364b1559859bccdf91f1e95475">axonState</a>
 </li>
 <li>resetVoltParam
-: <a class="el" href="structneuron_state.html#a1c0cef684666b681d30112c72e18bead">neuronState</a>
-</li>
-<li>reverseLeak
-: <a class="el" href="structneuron_state.html#a0f71d6ac3efc9d397adfcc72c7fe40c1">neuronState</a>
+: <a class="el" href="structneuron_state.html#add87cc0b2bc3426f0fd870f7df6decd5">neuronState</a>
 </li>
 <li>reverseReset
 : <a class="el" href="structneuron_state.html#abf6970098695585c81e101b2a741b9a5">neuronState</a>
 </li>
-<li>rndFctVal
-: <a class="el" href="structrandom_spikes.html#a0eb8199754a403ccc8eac256f9193a02">randomSpikes</a>
+<li>rndCallCount
+: <a class="el" href="struct_msg___data.html#ab4d75bc6367f5cfbfabc69690fdc1efc">Msg_Data</a>
 </li>
-<li>rndSpikes
-: <a class="el" href="structspike_gen_state.html#a57768e1ceaa4dd88752232ad89b4e8b7">spikeGenState</a>
+<li>rndFctVal
+: <a class="el" href="structinput_simulator_state.html#a0eb8199754a403ccc8eac256f9193a02">inputSimulatorState</a>
+, <a class="el" href="structrandom_spikes.html#a0eb8199754a403ccc8eac256f9193a02">randomSpikes</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
-<li>selSpikes
-: <a class="el" href="structspike_gen_state.html#a2da60d116861755bbeeb531a01124cb0">spikeGenState</a>
-</li>
-<li>sender
-: <a class="el" href="struct_msg___data.html#ac94c7cb1b3f009936733d0f0cec9f72a">Msg_Data</a>
-</li>
-<li>senderLocalID
-: <a class="el" href="struct_msg___data.html#af4e0329991e30bd3958b93c3bbb3038d">Msg_Data</a>
+<li>sendMsgCount
+: <a class="el" href="structaxon_state.html#a217ba44fb923dc4dc62bb73b14e61517">axonState</a>
 </li>
 <li>sgnLambda
-: <a class="el" href="structneuron_state.html#a15348eb48eb71000bf4309a776d39cfe">neuronState</a>
+: <a class="el" href="structneuron_state.html#a46a71f61511b5311e14643084109d90f">neuronState</a>
 </li>
-<li>sourceCore
-: <a class="el" href="struct_msg___data.html#a13b05c6b2a199a7bdf79a18b9e7c22e9">Msg_Data</a>
+<li>SOPSCount
+: <a class="el" href="structneuron_state.html#a71fbb9a79e8048b473b6e09d29a64bbe">neuronState</a>
 </li>
 <li>spikeGen
-: <a class="el" href="structspike_gen_state.html#ae40f21a48f3157bcad074f424046ed2c">spikeGenState</a>
-, <a class="el" href="structsynapse_state.html#a11fd4dc41f715eb6f04a68bc5fc9e292">synapseState</a>
+: <a class="el" href="structinput_simulator_state.html#ae40f21a48f3157bcad074f424046ed2c">inputSimulatorState</a>
 </li>
-<li>synID
-: <a class="el" href="structsynapse_state.html#aef661be02823d13d471c66bf0cd478db">synapseState</a>
+<li>synapseMsgSent
+: <a class="el" href="structsynapse_state.html#a3fd766946f24d2fd6a2021ec24939284">synapseState</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
 <li>threshold
-: <a class="el" href="structneuron_state.html#ac3d7ce178528ec72b94fc0698be8213a">neuronState</a>
-</li>
-<li>type
-: <a class="el" href="struct_msg___data.html#ab8720847cee557678e9bfc7da95d46bf">Msg_Data</a>
+: <a class="el" href="structneuron_state.html#af321d0fa58028b78986160845189077e">neuronState</a>
 </li>
 </ul>
 </div><!-- contents -->
@@ -304,7 +320,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Apr 30 2015 15:32:21 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Fri Jun 19 2015 13:47:06 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

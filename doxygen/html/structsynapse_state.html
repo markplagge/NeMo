@@ -22,6 +22,12 @@
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/SVG"],
+});
+</script><script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -46,6 +52,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -110,50 +117,36 @@ $(document).ready(function(){initNavTree('structsynapse_state.html','');});
 </div><!--header-->
 <div class="contents">
 
+<p>Synapse state structure.  
+ <a href="structsynapse_state.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="synapse_8h_source.html">synapse.h</a>&gt;</code></p>
-<div class="dynheader">
-Collaboration diagram for synapseState:</div>
-<div class="dyncontent">
-<div class="center"><img src="structsynapse_state__coll__graph.png" border="0" usemap="#synapse_state_coll__map" alt="Collaboration graph"/></div>
-<map name="synapse_state_coll__map" id="synapse_state_coll__map">
-<area shape="rect" id="node2" href="structspike_gen_state.html" title="Struct that manages the spike generator. " alt="" coords="73,92,182,117"/><area shape="rect" id="node3" href="structselected_spikes.html" title="selectedSpikes" alt="" coords="5,5,116,31"/><area shape="rect" id="node4" href="structrandom_spikes.html" title="Struct that genreates spikes randomly. " alt="" coords="141,5,247,31"/></map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aef661be02823d13d471c66bf0cd478db"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsynapse_state.html#aef661be02823d13d471c66bf0cd478db">synID</a></td></tr>
-<tr class="separator:aef661be02823d13d471c66bf0cd478db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2063050696509e31bdd72dbb0607c6ee"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsynapse_state.html#a2063050696509e31bdd72dbb0607c6ee">coreID</a></td></tr>
-<tr class="separator:a2063050696509e31bdd72dbb0607c6ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d6a80692ca06baa6c9a11a624129763"><td class="memItemLeft" align="right" valign="top">tw_lpid *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsynapse_state.html#a6d6a80692ca06baa6c9a11a624129763">dests</a></td></tr>
-<tr class="separator:a6d6a80692ca06baa6c9a11a624129763"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11fd4dc41f715eb6f04a68bc5fc9e292"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structspike_gen_state.html">spikeGenState</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsynapse_state.html#a11fd4dc41f715eb6f04a68bc5fc9e292">spikeGen</a></td></tr>
-<tr class="separator:a11fd4dc41f715eb6f04a68bc5fc9e292"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a665999819b255f36d756f17b85bc9a03"><td class="memItemLeft" align="right" valign="top">tw_lpid&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsynapse_state.html#a665999819b255f36d756f17b85bc9a03">destSynapse</a></td></tr>
+<tr class="separator:a665999819b255f36d756f17b85bc9a03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0710dca002b4b3a3f7ae72633bef3691"><td class="memItemLeft" align="right" valign="top">tw_lpid&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsynapse_state.html#a0710dca002b4b3a3f7ae72633bef3691">destNeuron</a></td></tr>
+<tr class="separator:a0710dca002b4b3a3f7ae72633bef3691"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab73db495221608d3eae73d51670d29f0"><td class="memItemLeft" align="right" valign="top">id_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsynapse_state.html#ab73db495221608d3eae73d51670d29f0">mySynapseNum</a></td></tr>
+<tr class="separator:ab73db495221608d3eae73d51670d29f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e389b0b50f9ec5e3f5b7b0f5383d6d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#ad77e6fc5a9b03d46e7c97b7c4b92e89f">_statT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsynapse_state.html#a9e389b0b50f9ec5e3f5b7b0f5383d6d5">neuronMsgSent</a></td></tr>
+<tr class="separator:a9e389b0b50f9ec5e3f5b7b0f5383d6d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fd766946f24d2fd6a2021ec24939284"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#ad77e6fc5a9b03d46e7c97b7c4b92e89f">_statT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsynapse_state.html#a3fd766946f24d2fd6a2021ec24939284">synapseMsgSent</a></td></tr>
+<tr class="separator:a3fd766946f24d2fd6a2021ec24939284"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="synapse_8h_source.html#l00017">17</a> of file <a class="el" href="synapse_8h_source.html">synapse.h</a>.</p>
+<div class="textblock"><p>Synapse state structure. </p>
+<p>Synapses have a destination GID, calculated on creation from the current core and the mapping table. Each synapse talks to its connected neuron, sending messages to the neuron at a TS of ε, generated by the function in <a class="el" href="assist_8h.html">assist.h</a> getNextEventTS. </p><dl class="section see"><dt>See also</dt><dd>getNextEventTS(tw_lp* lp). Synapses within the core, I.E., neuron nums &lt; j-1, send a message at ε to the next synapse in the core. This simulates the "synaptic crossbar" found in the TrueNorth architecture. Synapses also have stats on sent neuron messages, and sent synapse messages. </dd></dl>
+
+<p>Definition at line <a class="el" href="synapse_8h_source.html#l00018">18</a> of file <a class="el" href="synapse_8h_source.html">synapse.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a2063050696509e31bdd72dbb0607c6ee"></a>
+<a class="anchor" id="a0710dca002b4b3a3f7ae72633bef3691"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int coreID</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="synapse_8h_source.html#l00019">19</a> of file <a class="el" href="synapse_8h_source.html">synapse.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a6d6a80692ca06baa6c9a11a624129763"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">tw_lpid* dests</td>
+          <td class="memname">tw_lpid destNeuron</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -162,12 +155,40 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a11fd4dc41f715eb6f04a68bc5fc9e292"></a>
+<a class="anchor" id="a665999819b255f36d756f17b85bc9a03"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structspike_gen_state.html">spikeGenState</a>* spikeGen</td>
+          <td class="memname">tw_lpid destSynapse</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="synapse_8h_source.html#l00019">19</a> of file <a class="el" href="synapse_8h_source.html">synapse.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab73db495221608d3eae73d51670d29f0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">id_t mySynapseNum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="synapse_8h_source.html#l00021">21</a> of file <a class="el" href="synapse_8h_source.html">synapse.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9e389b0b50f9ec5e3f5b7b0f5383d6d5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="assist_8h.html#ad77e6fc5a9b03d46e7c97b7c4b92e89f">_statT</a> neuronMsgSent</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -176,17 +197,17 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aef661be02823d13d471c66bf0cd478db"></a>
+<a class="anchor" id="a3fd766946f24d2fd6a2021ec24939284"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int synID</td>
+          <td class="memname"><a class="el" href="assist_8h.html#ad77e6fc5a9b03d46e7c97b7c4b92e89f">_statT</a> synapseMsgSent</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="synapse_8h_source.html#l00018">18</a> of file <a class="el" href="synapse_8h_source.html">synapse.h</a>.</p>
+<p>Definition at line <a class="el" href="synapse_8h_source.html#l00023">23</a> of file <a class="el" href="synapse_8h_source.html">synapse.h</a>.</p>
 
 </div>
 </div>
@@ -199,7 +220,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structsynapse_state.html">synapseState</a></li>
-    <li class="footer">Generated on Thu Apr 30 2015 15:32:21 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Fri Jun 19 2015 13:47:05 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

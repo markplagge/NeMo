@@ -22,6 +22,12 @@
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/SVG"],
+});
+</script><script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -46,6 +52,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -107,19 +114,23 @@ $(document).ready(function(){initNavTree('files.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock">Here is a list of all files with brief descriptions:</div><div class="directory">
-<div class="levels">[detail level <span onclick="toggleLevel(1);">1</span><span onclick="toggleLevel(2);">2</span>]</div><table class="directory">
+<div class="levels">[detail level <span onclick="javascript:toggleLevel(1);">1</span><span onclick="javascript:toggleLevel(2);">2</span>]</div><table class="directory">
 <tr id="row_0_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_0_" class="arrow" onclick="toggleFolder('0_')">&#9660;</span><span id="img_0_" class="iconfopen" onclick="toggleFolder('0_')">&#160;</span><a class="el" href="dir_1ae4179d5e953611aae20c997279e02c.html" target="_self">models</a></td><td class="desc"></td></tr>
-<tr id="row_0_0_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a href="neuron__model_8c_source.html"><span class="icondoc"></span></a><a class="el" href="neuron__model_8c.html" target="_self">neuron_model.c</a></td><td class="desc"></td></tr>
-<tr id="row_0_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a href="neuron__model_8h_source.html"><span class="icondoc"></span></a><a class="el" href="neuron__model_8h.html" target="_self">neuron_model.h</a></td><td class="desc"></td></tr>
-<tr id="row_0_2_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a href="synapse_8h_source.html"><span class="icondoc"></span></a><a class="el" href="synapse_8h.html" target="_self">synapse.h</a></td><td class="desc"></td></tr>
-<tr id="row_1_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="assist_8c_source.html"><span class="icondoc"></span></a><a class="el" href="assist_8c.html" target="_self">assist.c</a></td><td class="desc"></td></tr>
-<tr id="row_2_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="assist_8h_source.html"><span class="icondoc"></span></a><a class="el" href="assist_8h.html" target="_self">assist.h</a></td><td class="desc"></td></tr>
-<tr id="row_3_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="mapping__specifications_8rtf_source.html"><span class="icondoc"></span></a><a class="el" href="mapping__specifications_8rtf.html" target="_self">mapping_specifications.rtf</a></td><td class="desc"></td></tr>
-<tr id="row_4_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="mappings_8c_source.html"><span class="icondoc"></span></a><a class="el" href="mappings_8c.html" target="_self">mappings.c</a></td><td class="desc"></td></tr>
-<tr id="row_5_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="model__main_8c_source.html"><span class="icondoc"></span></a><a class="el" href="model__main_8c.html" target="_self">model_main.c</a></td><td class="desc"></td></tr>
-<tr id="row_6_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="model__main_8h_source.html"><span class="icondoc"></span></a><a class="el" href="model__main_8h.html" target="_self">model_main.h</a></td><td class="desc"></td></tr>
-<tr id="row_7_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="spike__generator_8c_source.html"><span class="icondoc"></span></a><a class="el" href="spike__generator_8c.html" target="_self">spike_generator.c</a></td><td class="desc"></td></tr>
-<tr id="row_8_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="spike__generator_8h_source.html"><span class="icondoc"></span></a><a class="el" href="spike__generator_8h.html" target="_self">spike_generator.h</a></td><td class="desc">Spike_generate defines a LP state and functions that generate output at a tuneable rate </td></tr>
+<tr id="row_0_0_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a href="axon_8c_source.html"><span class="icondoc"></span></a><a class="el" href="axon_8c.html" target="_self">axon.c</a></td><td class="desc"></td></tr>
+<tr id="row_0_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a href="axon_8h_source.html"><span class="icondoc"></span></a><a class="el" href="axon_8h.html" target="_self">axon.h</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a href="neuron_8c_source.html"><span class="icondoc"></span></a><a class="el" href="neuron_8c.html" target="_self">neuron.c</a></td><td class="desc"></td></tr>
+<tr id="row_0_3_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a href="neuron_8h_source.html"><span class="icondoc"></span></a><a class="el" href="neuron_8h.html" target="_self">neuron.h</a></td><td class="desc"></td></tr>
+<tr id="row_0_4_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a href="synapse_8c_source.html"><span class="icondoc"></span></a><a class="el" href="synapse_8c.html" target="_self">synapse.c</a></td><td class="desc"></td></tr>
+<tr id="row_0_5_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a href="synapse_8h_source.html"><span class="icondoc"></span></a><a class="el" href="synapse_8h.html" target="_self">synapse.h</a></td><td class="desc"></td></tr>
+<tr id="row_1_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="assist_8c_source.html"><span class="icondoc"></span></a><a class="el" href="assist_8c.html" target="_self">assist.c</a></td><td class="desc"></td></tr>
+<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="assist_8h_source.html"><span class="icondoc"></span></a><a class="el" href="assist_8h.html" target="_self">assist.h</a></td><td class="desc"></td></tr>
+<tr id="row_3_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="mapping__specifications_8rtf_source.html"><span class="icondoc"></span></a><a class="el" href="mapping__specifications_8rtf.html" target="_self">mapping_specifications.rtf</a></td><td class="desc"></td></tr>
+<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="input__simulator_8c_source.html"><span class="icondoc"></span></a><a class="el" href="input__simulator_8c.html" target="_self">input_simulator.c</a></td><td class="desc"></td></tr>
+<tr id="row_5_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="input__simulator_8h_source.html"><span class="icondoc"></span></a><a class="el" href="input__simulator_8h.html" target="_self">input_simulator.h</a></td><td class="desc"></td></tr>
+<tr id="row_6_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="mapping_8c_source.html"><span class="icondoc"></span></a><a class="el" href="mapping_8c.html" target="_self">mapping.c</a></td><td class="desc"></td></tr>
+<tr id="row_7_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="mapping_8h_source.html"><span class="icondoc"></span></a><a class="el" href="mapping_8h.html" target="_self">mapping.h</a></td><td class="desc"></td></tr>
+<tr id="row_8_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="model__main_8c_source.html"><span class="icondoc"></span></a><a class="el" href="model__main_8c.html" target="_self">model_main.c</a></td><td class="desc"></td></tr>
+<tr id="row_9_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a href="model__main_8h_source.html"><span class="icondoc"></span></a><a class="el" href="model__main_8h.html" target="_self">model_main.h</a></td><td class="desc"></td></tr>
 </table>
 </div><!-- directory -->
 </div><!-- contents -->
@@ -127,7 +138,7 @@ $(document).ready(function(){initNavTree('files.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Apr 30 2015 15:32:21 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Fri Jun 19 2015 13:47:06 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

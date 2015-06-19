@@ -1,10 +1,15 @@
 <map id="/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h" name="/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h">
-<area shape="rect" id="node2" href="$assist_8c.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/assist.c" alt="" coords="5,105,182,157"/>
-<area shape="rect" id="node3" href="$neuron__model_8h.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/models/neuron_model.h" alt="" coords="205,105,382,157"/>
-<area shape="rect" id="node4" href="$model__main_8h.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/model_main.h" alt="" coords="407,305,583,357"/>
-<area shape="rect" id="node6" href="$neuron__model_8c.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/models/neuron_model.c" alt="" coords="256,205,432,257"/>
-<area shape="rect" id="node7" href="$spike__generator_8h.html" title="spike_generate defines a LP state and functions that generate output at a tuneable rate..." alt="" coords="532,105,708,157"/>
-<area shape="rect" id="node5" href="$model__main_8c.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/model_main.c" alt="" coords="407,405,583,457"/>
-<area shape="rect" id="node8" href="$synapse_8h.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/models/synapse.h" alt="" coords="557,205,734,257"/>
-<area shape="rect" id="node9" href="$spike__generator_8c.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/spike_generator.c" alt="" coords="757,205,934,257"/>
+<area shape="rect" id="node2" href="$assist_8c.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/assist.c" alt="" coords="7,105,183,157"/>
+<area shape="rect" id="node3" href="$input__simulator_8h.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/input_simulator.h" alt="" coords="207,105,383,157"/>
+<area shape="rect" id="node5" href="$synapse_8h.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/models/synapse.h" alt="" coords="205,205,382,257"/>
+<area shape="rect" id="node7" href="$mapping_8h.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/mapping.h" alt="" coords="465,105,642,157"/>
+<area shape="rect" id="node9" href="$neuron_8h.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/models/neuron.h" alt="" coords="605,205,782,257"/>
+<area shape="rect" id="node11" href="$model__main_8h.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/model_main.h" alt="" coords="752,105,928,157"/>
+<area shape="rect" id="node13" href="$axon_8h.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/models/axon.h" alt="" coords="1001,105,1178,157"/>
+<area shape="rect" id="node4" href="$input__simulator_8c.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/input_simulator.c" alt="" coords="5,205,182,257"/>
+<area shape="rect" id="node6" href="$synapse_8c.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/models/synapse.c" alt="" coords="205,305,382,357"/>
+<area shape="rect" id="node8" href="$mapping_8c.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/mapping.c" alt="" coords="405,205,582,257"/>
+<area shape="rect" id="node10" href="$neuron_8c.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/models/neuron.c" alt="" coords="605,305,782,357"/>
+<area shape="rect" id="node12" href="$model__main_8c.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/model_main.c" alt="" coords="805,205,982,257"/>
+<area shape="rect" id="node14" href="$axon_8c.html" title="/Users/Mark/Development\l/TrueNorth/tnt_benchmark\l/models/axon.c" alt="" coords="1005,205,1182,257"/>
 </map>

@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['selectedspikes',['selectedSpikes',['../structselected_spikes.html',1,'']]],
-  ['spikegenstate',['spikeGenState',['../structspike_gen_state.html',1,'']]],
-  ['synapsemessage',['SynapseMessage',['../struct_synapse_message.html',1,'']]],
-  ['synapsestate',['synapseState',['../structsynapse_state.html',1,'']]]
+  ['neuronmodel',['NeuronModel',['../struct_neuron_model.html',1,'']]],
+  ['neuronstate',['neuronState',['../structneuron_state.html',1,'']]]
 ];

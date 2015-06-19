@@ -1,0 +1,42 @@
+\hypertarget{input__simulator_8c}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/input\+\_\+simulator.c File Reference}
+\label{input__simulator_8c}\index{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/input\+\_\+simulator.\+c@{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/input\+\_\+simulator.\+c}}
+{\ttfamily \#include \char`\"{}input\+\_\+simulator.\+h\char`\"{}}\\*
+Include dependency graph for input\+\_\+simulator.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=338pt]{input__simulator_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{input__simulator_8c_a7ffa6df128d9c249ace6677ae62d1723}{uniform\+Gen} (void $\ast$spike\+Gen, tw\+\_\+lp $\ast$lp)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{input__simulator_8c_a7ffa6df128d9c249ace6677ae62d1723}{}\index{input\+\_\+simulator.\+c@{input\+\_\+simulator.\+c}!uniform\+Gen@{uniform\+Gen}}
+\index{uniform\+Gen@{uniform\+Gen}!input\+\_\+simulator.\+c@{input\+\_\+simulator.\+c}}
+\subsubsection[{uniform\+Gen}]{\setlength{\rightskip}{0pt plus 5cm}bool uniform\+Gen (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{spike\+Gen, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{input__simulator_8c_a7ffa6df128d9c249ace6677ae62d1723}
+
+
+Definition at line \hyperlink{input__simulator_8c_source_l00010}{10} of file \hyperlink{input__simulator_8c_source}{input\+\_\+simulator.\+c}.
+
+
+\begin{DoxyCode}
+00010                                            \{
+00011     \textcolor{keywordtype}{bool} willFire = \textcolor{keyword}{false};
+00012 
+00013     \hyperlink{structinput_simulator_state}{inputSimulatorState} * st = (\hyperlink{structinput_simulator_state}{inputSimulatorState} * ) spikeGen;
+00014     tw\_rng\_stream *str = (tw\_rng\_stream *) lp->rng;
+00015     \textcolor{keywordflow}{if}(tw\_rand\_unif(str) < st->\hyperlink{structinput_simulator_state_a1333eb5695ae83d1ffccf24b08bc6288}{randomRate})
+00016         willFire = \textcolor{keyword}{true};
+00017     \textcolor{keywordflow}{return} willFire;
+00018 \}\end{DoxyCode}

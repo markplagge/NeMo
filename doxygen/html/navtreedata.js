@@ -1,7 +1,7 @@
 var NAVTREE =
 [
   [ "TrueNorth TimeWarp Benchmark", "index.html", [
-    [ "True North Timewarp Benchmark Simulation", "index.html", null ],
+    [ "Todo List", "todo.html", null ],
     [ "Data Structures", null, [
       [ "Data Structures", "annotated.html", "annotated" ],
       [ "Data Structure Index", "classes.html", null ],
@@ -27,8 +27,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"structspike_gen_state.html#a569dc67b8984bb0a3616bf17f9763ebb"
+"annotated.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

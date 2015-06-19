@@ -1,0 +1,137 @@
+\hypertarget{input__simulator_8h}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/input\+\_\+simulator.h File Reference}
+\label{input__simulator_8h}\index{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/input\+\_\+simulator.\+h@{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/input\+\_\+simulator.\+h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}assist.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}ross.\+h\char`\"{}}\\*
+Include dependency graph for input\+\_\+simulator.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=338pt]{input__simulator_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{input__simulator_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structrandom_spikes}{random\+Spikes}
+\begin{DoxyCompactList}\small\item\em Struct that genreates spikes randomly. \end{DoxyCompactList}\item 
+struct \hyperlink{structselected_spikes}{selected\+Spikes}
+\item 
+struct \hyperlink{structinput_simulator_state}{input\+Simulator\+State}
+\begin{DoxyCompactList}\small\item\em Struct that manages the spike generator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef bool($\ast$ \hyperlink{input__simulator_8h_aa47e87d309aab7727810011578bae86e}{spike\+Gen\+Del}) (void $\ast$spike\+Gen, tw\+\_\+lp $\ast$lp)
+\begin{DoxyCompactList}\small\item\em Spike\+Generator Function Pointer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215}{selected\+Random} \{ \hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215a4b3574e75cec43aa4dd3a0fd7940c632}{U\+N\+F}, 
+\hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215ae003ec1158e3a4e295616ced12af154e}{N\+O\+R\+M}, 
+\hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215a1697a91b22c2369eb2ba427c2d193329}{S\+E\+L\+E\+C\+T}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{input__simulator_8h_ad6244e86a3542f8d3c64766e7e7c6746}{uniform\+Gen} (void $\ast$gen\+\_\+state, tw\+\_\+lp $\ast$lp)
+\item 
+bool \hyperlink{input__simulator_8h_a7a9db804782d8a0c810fa90ae9c2dd05}{norm\+Gen} (void $\ast$gen\+\_\+state, tw\+\_\+lp $\ast$lp)
+\item 
+bool \hyperlink{input__simulator_8h_a7859f15c9115868c5c0ed88c43756482}{selected\+Gen} (void $\ast$spike\+Gen, tw\+\_\+lp $\ast$lp)
+\end{DoxyCompactItemize}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{input__simulator_8h_aa47e87d309aab7727810011578bae86e}{}\index{input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}!spike\+Gen\+Del@{spike\+Gen\+Del}}
+\index{spike\+Gen\+Del@{spike\+Gen\+Del}!input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}}
+\subsubsection[{spike\+Gen\+Del}]{\setlength{\rightskip}{0pt plus 5cm}typedef bool($\ast$ spike\+Gen\+Del) (void $\ast$spike\+Gen, tw\+\_\+lp $\ast$lp)}\label{input__simulator_8h_aa47e87d309aab7727810011578bae86e}
+
+
+Spike\+Generator Function Pointer. 
+
+Chooses the spike method function. 
+
+Definition at line \hyperlink{input__simulator_8h_source_l00022}{22} of file \hyperlink{input__simulator_8h_source}{input\+\_\+simulator.\+h}.
+
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215}{}\index{input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}!selected\+Random@{selected\+Random}}
+\index{selected\+Random@{selected\+Random}!input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}}
+\subsubsection[{selected\+Random}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf selected\+Random}}\label{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{U\+N\+F@{U\+N\+F}!input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}}\index{input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}!U\+N\+F@{U\+N\+F}}\item[{\em 
+\hypertarget{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215a4b3574e75cec43aa4dd3a0fd7940c632}{}U\+N\+F\label{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215a4b3574e75cec43aa4dd3a0fd7940c632}
+}]\index{N\+O\+R\+M@{N\+O\+R\+M}!input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}}\index{input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}!N\+O\+R\+M@{N\+O\+R\+M}}\item[{\em 
+\hypertarget{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215ae003ec1158e3a4e295616ced12af154e}{}N\+O\+R\+M\label{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215ae003ec1158e3a4e295616ced12af154e}
+}]\index{S\+E\+L\+E\+C\+T@{S\+E\+L\+E\+C\+T}!input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}}\index{input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}!S\+E\+L\+E\+C\+T@{S\+E\+L\+E\+C\+T}}\item[{\em 
+\hypertarget{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215a1697a91b22c2369eb2ba427c2d193329}{}S\+E\+L\+E\+C\+T\label{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215a1697a91b22c2369eb2ba427c2d193329}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line \hyperlink{input__simulator_8h_source_l00016}{16} of file \hyperlink{input__simulator_8h_source}{input\+\_\+simulator.\+h}.
+
+
+\begin{DoxyCode}
+00016                             \{
+00017     \hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215a4b3574e75cec43aa4dd3a0fd7940c632}{UNF},
+00018     \hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215ae003ec1158e3a4e295616ced12af154e}{NORM},
+00019     \hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215a1697a91b22c2369eb2ba427c2d193329}{SELECT}
+00020 \}\hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215}{selectedRandom};
+\end{DoxyCode}
+
+
+\subsection{Function Documentation}
+\hypertarget{input__simulator_8h_a7a9db804782d8a0c810fa90ae9c2dd05}{}\index{input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}!norm\+Gen@{norm\+Gen}}
+\index{norm\+Gen@{norm\+Gen}!input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}}
+\subsubsection[{norm\+Gen}]{\setlength{\rightskip}{0pt plus 5cm}bool norm\+Gen (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{gen\+\_\+state, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{input__simulator_8h_a7a9db804782d8a0c810fa90ae9c2dd05}
+\hypertarget{input__simulator_8h_a7859f15c9115868c5c0ed88c43756482}{}\index{input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}!selected\+Gen@{selected\+Gen}}
+\index{selected\+Gen@{selected\+Gen}!input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}}
+\subsubsection[{selected\+Gen}]{\setlength{\rightskip}{0pt plus 5cm}bool selected\+Gen (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{spike\+Gen, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{input__simulator_8h_a7859f15c9115868c5c0ed88c43756482}
+\hypertarget{input__simulator_8h_ad6244e86a3542f8d3c64766e7e7c6746}{}\index{input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}!uniform\+Gen@{uniform\+Gen}}
+\index{uniform\+Gen@{uniform\+Gen}!input\+\_\+simulator.\+h@{input\+\_\+simulator.\+h}}
+\subsubsection[{uniform\+Gen}]{\setlength{\rightskip}{0pt plus 5cm}bool uniform\+Gen (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{gen\+\_\+state, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{input__simulator_8h_ad6244e86a3542f8d3c64766e7e7c6746}
+
+
+Definition at line \hyperlink{input__simulator_8c_source_l00010}{10} of file \hyperlink{input__simulator_8c_source}{input\+\_\+simulator.\+c}.
+
+
+\begin{DoxyCode}
+00010                                            \{
+00011     \textcolor{keywordtype}{bool} willFire = \textcolor{keyword}{false};
+00012 
+00013     \hyperlink{structinput_simulator_state}{inputSimulatorState} * st = (\hyperlink{structinput_simulator_state}{inputSimulatorState} * ) spikeGen;
+00014     tw\_rng\_stream *str = (tw\_rng\_stream *) lp->rng;
+00015     \textcolor{keywordflow}{if}(tw\_rand\_unif(str) < st->\hyperlink{structinput_simulator_state_a1333eb5695ae83d1ffccf24b08bc6288}{randomRate})
+00016         willFire = \textcolor{keyword}{true};
+00017     \textcolor{keywordflow}{return} willFire;
+00018 \}\end{DoxyCode}

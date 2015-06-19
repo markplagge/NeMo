@@ -10,6 +10,5 @@
 
 int main() {
 	return 0;
-	tw_rand_unif(<#G#>)
 }
 

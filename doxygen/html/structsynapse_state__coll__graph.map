@@ -1,5 +1,0 @@
-<map id="synapseState" name="synapseState">
-<area shape="rect" id="node2" href="$structspike_gen_state.html" title="Struct that manages the spike generator. " alt="" coords="73,92,182,117"/>
-<area shape="rect" id="node3" href="$structselected_spikes.html" title="selectedSpikes" alt="" coords="5,5,116,31"/>
-<area shape="rect" id="node4" href="$structrandom_spikes.html" title="Struct that genreates spikes randomly. " alt="" coords="141,5,247,31"/>
-</map>

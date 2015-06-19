@@ -1,0 +1,183 @@
+\hypertarget{neuron_8h_source}{}\section{neuron.\+h}
+\label{neuron_8h_source}\index{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/neuron.\+h@{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/neuron.\+h}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{//}
+00002 \textcolor{comment}{//  neuron.h}
+00003 \textcolor{comment}{//  ROSS\_TOP}
+00004 \textcolor{comment}{//}
+00005 \textcolor{comment}{//  Created by Mark Plagge on 6/18/15.}
+00006 \textcolor{comment}{//}
+00007 \textcolor{comment}{//}
+00008 
+00009 \textcolor{preprocessor}{#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{\_\_ROSS\_TOP\_\_neuron\_\_}
+00010 \textcolor{preprocessor}{#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{\_\_ROSS\_TOP\_\_neuron\_\_}
+00011 
+00012 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{stdio}\textcolor{preprocessor}{.}\textcolor{preprocessor}{h}\textcolor{preprocessor}{>}
+00013 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{"../assist.h"}
+00014 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{"../mapping.h"}
+00015 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{"ross.h"}
+00016 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{stdbool}\textcolor{preprocessor}{.}\textcolor{preprocessor}{h}\textcolor{preprocessor}{>}
+00017 
+00018 \textcolor{comment}{/** typedef NeuronFireMode}
+00019 \textcolor{comment}{ * Just in case there are multiple fire modes, this enum exists to differentiate}
+00020 \textcolor{comment}{ *them.}
+00021 \textcolor{comment}{ *}
+00022 \textcolor{comment}{ * */}
+\hypertarget{neuron_8h_source_l00023}{}\hyperlink{neuron_8h_a48885ea6be5b55a2e24de9f97552d4ee}{00023}     \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \hyperlink{neuron_8h_a48885ea6be5b55a2e24de9f97552d4ee}{NeuronFireMode} \{
+\hypertarget{neuron_8h_source_l00024}{}\hyperlink{neuron_8h_a48885ea6be5b55a2e24de9f97552d4eea520c6b216334b8c2d914cf9fab8cd460}{00024}   \hyperlink{neuron_8h_a48885ea6be5b55a2e24de9f97552d4eea520c6b216334b8c2d914cf9fab8cd460}{NFM} = 0  \textcolor{comment}{// normal fire mode (if voltage > threshold, fire);}
+00025     \} neuronFireMode;
+00026 
+00027 \textcolor{comment}{/** \(\backslash\)struct leakFunDel}
+00028 \textcolor{comment}{ *  This is a dec. of a function that allows for neurons to have different}
+00029 \textcolor{comment}{ *leak functions. At this point,}
+00030 \textcolor{comment}{ *  the only function is a dummy one.}
+00031 \textcolor{comment}{ *  The functions alter the neuron's current voltage.}
+00032 \textcolor{comment}{ */}
+\hypertarget{neuron_8h_source_l00033}{}\hyperlink{neuron_8h_a6eab2da39fb76cba9c4c54b5fb7625a6}{00033} \textcolor{keyword}{typedef} \textcolor{keywordtype}{void} (*\hyperlink{neuron_8h_a6eab2da39fb76cba9c4c54b5fb7625a6}{leakFunDel})(\textcolor{keywordtype}{void} *neuronState, tw\_stime end);
+00034 \textcolor{keywordtype}{void} \hyperlink{neuron_8h_a6d548f86a3f6618241b7ffc5dd3ad374}{noLeak}(\textcolor{keywordtype}{void} *neuronState, tw\_stime end);
+00035 
+00036 \textcolor{comment}{/** \(\backslash\)struct reverseLeakDel}
+00037 \textcolor{comment}{ This fun. pointer manages reverse leak functions}
+00038 \textcolor{comment}{ */}
+00039 
+\hypertarget{neuron_8h_source_l00040}{}\hyperlink{neuron_8h_a960bf554f8c5333d901a15c49066f5b6}{00040} \textcolor{keyword}{typedef} \textcolor{keywordtype}{void} (*\hyperlink{neuron_8h_a960bf554f8c5333d901a15c49066f5b6}{reverseLeakDel})(\textcolor{keywordtype}{void} *neuronState, tw\_stime now);
+00041 \textcolor{keywordtype}{void} \hyperlink{neuron_8h_a23e8b1105b7db3282e2b362edbb98f5a}{revNoLeak}(\textcolor{keywordtype}{void} *neuronState, tw\_stime now);
+00042 \textcolor{comment}{/** \(\backslash\)union ResetRate}
+00043 \textcolor{comment}{ *  This is a support union for neuron reset rates. */}
+00044 
+\hypertarget{neuron_8h_source_l00045}{}\hyperlink{union_reset_rate}{00045} \textcolor{keyword}{union} \hyperlink{union_reset_rate}{ResetRate} \{
+\hypertarget{neuron_8h_source_l00046}{}\hyperlink{union_reset_rate_a4bf8a23e4a9874ff73208c681eae1ced}{00046}     \textcolor{keywordtype}{int} \hyperlink{union_reset_rate_a4bf8a23e4a9874ff73208c681eae1ced}{linearRate};
+\hypertarget{neuron_8h_source_l00047}{}\hyperlink{union_reset_rate_a54aaba14ce85fd9c5d7b385d98727e36}{00047}     \textcolor{keywordtype}{float} \hyperlink{union_reset_rate_a54aaba14ce85fd9c5d7b385d98727e36}{nonLinearRate};
+00048 \} resetRate;
+00049 
+00050 \textcolor{comment}{/** ResetFunDel - This is a function that handles different reset rate}
+00051 \textcolor{comment}{ * calculations. It takes the state of the neuron, and applies}
+00052 \textcolor{comment}{ *  various reset functions to the neuron's voltage. Some reset functions}
+00053 \textcolor{comment}{ * described by true north include a zeroing}
+00054 \textcolor{comment}{ *  function (standard integrate and fire), a linear drop function, and a}
+00055 \textcolor{comment}{ * non-reduction function.}
+00056 \textcolor{comment}{ *  Also functions for leaks below. */}
+00057 
+\hypertarget{neuron_8h_source_l00058}{}\hyperlink{neuron_8h_ae7e5990745cd949246894bfb633ca4a2}{00058} \textcolor{keyword}{typedef} \textcolor{keywordtype}{void} (*\hyperlink{neuron_8h_ae7e5990745cd949246894bfb633ca4a2}{resetFunDel})(\textcolor{keywordtype}{void} *neuronState);
+00059     \textcolor{comment}{// zero function (includes implementation due to size;}
+00060 \textcolor{keywordtype}{void} \hyperlink{neuron_8h_a7f8eaa35f03747c795a2b727b364537b}{resetZero}(\textcolor{keywordtype}{void} *neuronState);
+00061     \textcolor{comment}{// linear function}
+00062 \textcolor{keywordtype}{void} \hyperlink{neuron_8h_a2e78d7d2b70bf7349c3854b3727dcc25}{resetLinear}(\textcolor{keywordtype}{void} *neuronState);
+00063 
+00064 \textcolor{comment}{/** \(\backslash\)typedef reverseResetDel}
+00065 \textcolor{comment}{ This is a function that reverses the reset command.}
+00066 \textcolor{comment}{ Run first, since the reset function is run last.}
+00067 \textcolor{comment}{ */}
+00068 
+\hypertarget{neuron_8h_source_l00069}{}\hyperlink{neuron_8h_aa939c0acc5b3367975f2f0cb7bc36d17}{00069} \textcolor{keyword}{typedef} \textcolor{keywordtype}{void} (*\hyperlink{neuron_8h_aa939c0acc5b3367975f2f0cb7bc36d17}{reverseResetDel})(\textcolor{keywordtype}{void} *neuronState);
+00070 \textcolor{keywordtype}{void} \hyperlink{neuron_8h_aabae9811b1573f5c38f4d32446c9c80a}{reverseLinear}(\textcolor{keywordtype}{void} *neuronState);
+00071 \textcolor{keywordtype}{void} \hyperlink{neuron_8h_a286a9f9e22acec028acf23b62e13646b}{reverseZero}(\textcolor{keywordtype}{void} *neuronState);
+00072 
+00073 
+00074 \textcolor{comment}{/** \(\backslash\)struct NeuronModel}
+00075 \textcolor{comment}{* This struct maintains the state of an individual neuron.The neuron struct}
+00076 \textcolor{comment}{*contains the parameters needed to maintain}
+00077 \textcolor{comment}{* state in the neuron, along with references to output commands (dendrites).}
+00078 \textcolor{comment}{*}
+00079 \textcolor{comment}{* Each parameter contained within \(\backslash\)cite Cassidy2013 , \(\backslash\)cite Preissl2012 , \(\backslash\)cite}
+00080 \textcolor{comment}{*Amir2013's models of Neuromporphic design}
+00081 \textcolor{comment}{* that operate with the neuron are contained within this struct.}
+00082 \textcolor{comment}{* Consider this struct a proto-object, just sans functions.}
+00083 \textcolor{comment}{*}
+00084 \textcolor{comment}{*/}
+\hypertarget{neuron_8h_source_l00085}{}\hyperlink{structneuron_state}{00085} \textcolor{keyword}{typedef} \textcolor{keyword}{struct} \hyperlink{structneuron_state}{NeuronModel} \{
+00086         \textcolor{comment}{//IDs and Lookup info}
+\hypertarget{neuron_8h_source_l00087}{}\hyperlink{structneuron_state_a76ef99e5766b6e36c3f41a2920e8c56c}{00087}     \hyperlink{assist_8h_a3f7a6e6a1210b6d9d7a42177dcb9634b}{\_idT} \hyperlink{structneuron_state_a76ef99e5766b6e36c3f41a2920e8c56c}{myCoreID}; \textcolor{comment}{///Neuron's coreID}
+\hypertarget{neuron_8h_source_l00088}{}\hyperlink{structneuron_state_ac24762c24aede292a2ce5df78114881c}{00088}     \hyperlink{assist_8h_a3f7a6e6a1210b6d9d7a42177dcb9634b}{\_idT} \hyperlink{structneuron_state_ac24762c24aede292a2ce5df78114881c}{myLocalID}; \textcolor{comment}{///Neuron's local ID (from 0 - j-1);}
+00089 
+00090         \textcolor{comment}{//Proper state information}
+\hypertarget{neuron_8h_source_l00091}{}\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{00091}     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} \hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot}; \textcolor{comment}{///current "voltage" of neuron}
+\hypertarget{neuron_8h_source_l00092}{}\hyperlink{structneuron_state_ad17e1ac0b4bca75d10da8b0ab56edd6e}{00092}     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} \hyperlink{structneuron_state_ad17e1ac0b4bca75d10da8b0ab56edd6e}{prevMembranePot}; \textcolor{comment}{///previous state membrane potential}
+\hypertarget{neuron_8h_source_l00093}{}\hyperlink{structneuron_state_af321d0fa58028b78986160845189077e}{00093}     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} \hyperlink{structneuron_state_af321d0fa58028b78986160845189077e}{threshold}; \textcolor{comment}{///neuron's threshold value}
+\hypertarget{neuron_8h_source_l00094}{}\hyperlink{structneuron_state_a0658ad1f8b57a00589c6ea84f9a4ab13}{00094}     \hyperlink{structneuron_state_a0658ad1f8b57a00589c6ea84f9a4ab13}{tw\_stime} \hyperlink{structneuron_state_a0658ad1f8b57a00589c6ea84f9a4ab13}{lastActiveTime}; \textcolor{comment}{///last time the neuron fired - used for
+       calculating leak and reverse functions.}
+\hypertarget{neuron_8h_source_l00095}{}\hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{00095}     uint\_fast16\_t \hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{receivedSynapseMsgs}; \textcolor{comment}{/**< Used for big-tick synchronization.
+       }
+00096 \textcolor{comment}{        If this neuron has received a synapse message during this big-tick cycle, this will be set to
+       > 0. Every synapse received until the big tick occurs will increment this value. Reverse events decrement
+       this value.}
+00097 \textcolor{comment}{        If the value is == 0 when a synapse message is received, the neuron will send a fire schedule
+       message to itself at the next big-tick time. */}
+00098 
+00099 
+00100     \textcolor{comment}{/** neuron firing parameters */}
+\hypertarget{neuron_8h_source_l00101}{}\hyperlink{structneuron_state_a55890f9e021064df30e9d18a9df98845}{00101}     neuronFireMode \hyperlink{structneuron_state_a55890f9e021064df30e9d18a9df98845}{fireMode}; \textcolor{comment}{///neuron's firing mode}
+00102 
+00103         \textcolor{comment}{/** neuron reset params */}
+\hypertarget{neuron_8h_source_l00104}{}\hyperlink{structneuron_state_afcf9d931e4fda519c43b4efeab687463}{00104}     \hyperlink{neuron_8h_ae7e5990745cd949246894bfb633ca4a2}{resetFunDel} \hyperlink{structneuron_state_afcf9d931e4fda519c43b4efeab687463}{doReset}; \textcolor{comment}{/// neuron reset function}
+\hypertarget{neuron_8h_source_l00105}{}\hyperlink{structneuron_state_add87cc0b2bc3426f0fd870f7df6decd5}{00105}     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} \hyperlink{structneuron_state_add87cc0b2bc3426f0fd870f7df6decd5}{resetVoltParam}; \textcolor{comment}{///Optional parameter for reset voltage functions}
+00106 
+\hypertarget{neuron_8h_source_l00107}{}\hyperlink{structneuron_state_abf6970098695585c81e101b2a741b9a5}{00107}     \hyperlink{neuron_8h_aa939c0acc5b3367975f2f0cb7bc36d17}{reverseResetDel} \hyperlink{structneuron_state_abf6970098695585c81e101b2a741b9a5}{reverseReset}; \textcolor{comment}{///Neuron reverse reset function.}
+00108 
+00109         \textcolor{comment}{//Weight parameters}
+\hypertarget{neuron_8h_source_l00110}{}\hyperlink{structneuron_state_ab39656a1580505adcabc4c7a1f4d8100}{00110}     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} *\hyperlink{structneuron_state_ab39656a1580505adcabc4c7a1f4d8100}{perSynapseWeight}; \textcolor{comment}{/**< In this simulation, each synappse can
+       have a unique weight. In the paper, there is a limit of four different "types" of synapse behavior per neruon.
+       For an accurate sim, there can only be four different values in this array.}
+00111 \textcolor{comment}{}
+00112 \textcolor{comment}{        Since this is an array, this simulator has the potential to have more power than the actual
+       TrueNorth hardware architecture. */}
+\hypertarget{neuron_8h_source_l00113}{}\hyperlink{structneuron_state_a95688135a244a3ce3b35698a49d0da18}{00113}     \textcolor{keywordtype}{bool} *\hyperlink{structneuron_state_a95688135a244a3ce3b35698a49d0da18}{perSynapseDet}; \textcolor{comment}{/**< An array determining if each synapse is handled
+       stochastically or deterministically. Since the actual hardware has 4 synapse types, this setup has more power than
+       the actual TrueNorth architecture.}
+00114 \textcolor{comment}{}
+00115 \textcolor{comment}{        To ensure model <-> hardware accuracy, at most four different modes should be used per neuron,
+       so that synapses are handled as one of four possible types. */}
+00116 
+00117         \textcolor{comment}{//Output locations:}
+\hypertarget{neuron_8h_source_l00118}{}\hyperlink{structneuron_state_a62463fa4d33c39297aa5ce3a145d474f}{00118}     \hyperlink{assist_8h_a3f7a6e6a1210b6d9d7a42177dcb9634b}{\_idT} \hyperlink{structneuron_state_a62463fa4d33c39297aa5ce3a145d474f}{dendriteCore}; \textcolor{comment}{///Local core of the remote dendrite}
+\hypertarget{neuron_8h_source_l00119}{}\hyperlink{structneuron_state_a73e5b16411af572181411b8fd8d5117d}{00119}     \hyperlink{assist_8h_a3f7a6e6a1210b6d9d7a42177dcb9634b}{\_idT} \hyperlink{structneuron_state_a73e5b16411af572181411b8fd8d5117d}{dendriteLocal}; \textcolor{comment}{///Local ID of the remote dendrite -- not LPID, but a
+       local axon value (0-i)}
+\hypertarget{neuron_8h_source_l00120}{}\hyperlink{structneuron_state_a4199c14c5aabfd52f441e01623bdc84c}{00120}     \hyperlink{structneuron_state_a4199c14c5aabfd52f441e01623bdc84c}{tw\_lpid} \hyperlink{structneuron_state_a4199c14c5aabfd52f441e01623bdc84c}{dendriteGlobalDest}; \textcolor{comment}{///GID of the axon this neuron talks to.
+       TODO: The dendriteCore and dendriteLocal values might not be needed anymroe.}
+00121 
+00122         \textcolor{comment}{//Leak functionality}
+\hypertarget{neuron_8h_source_l00123}{}\hyperlink{structneuron_state_aa430f424f34dc59dc27736e27ec61320}{00123}     \hyperlink{neuron_8h_a6eab2da39fb76cba9c4c54b5fb7625a6}{leakFunDel} \hyperlink{structneuron_state_aa430f424f34dc59dc27736e27ec61320}{doLeak}; \textcolor{comment}{///Function pointer to the neuron's current leak function.}
+\hypertarget{neuron_8h_source_l00124}{}\hyperlink{structneuron_state_af4ded7f575b64ada6c0a6664f638307c}{00124}     \hyperlink{neuron_8h_a960bf554f8c5333d901a15c49066f5b6}{reverseLeakDel} \hyperlink{structneuron_state_af4ded7f575b64ada6c0a6664f638307c}{doLeakReverse}; \textcolor{comment}{//Function pointer to the leak
+       reverse function}
+00125 
+\hypertarget{neuron_8h_source_l00126}{}\hyperlink{structneuron_state_a7138aaa7e2988e5ad0d32cc9846dcbbb}{00126}     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} \hyperlink{structneuron_state_a7138aaa7e2988e5ad0d32cc9846dcbbb}{leakRate}; \textcolor{comment}{//Leak tuning parameter - the leak rate applied to the current
+       leak function.}
+\hypertarget{neuron_8h_source_l00127}{}\hyperlink{structneuron_state_a46a71f61511b5311e14643084109d90f}{00127}     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} \hyperlink{structneuron_state_a46a71f61511b5311e14643084109d90f}{sgnLambda}; \textcolor{comment}{//sgnLambda tuning parameter from the paper - used for
+       specific leak functions.}
+00128 
+00129         \textcolor{comment}{//Stats}
+\hypertarget{neuron_8h_source_l00130}{}\hyperlink{structneuron_state_afe8825076c4cf3863c677307fec63c61}{00130}     \hyperlink{assist_8h_ad77e6fc5a9b03d46e7c97b7c4b92e89f}{\_statT} \hyperlink{structneuron_state_afe8825076c4cf3863c677307fec63c61}{fireCount}; \textcolor{comment}{///count of this neuron's output}
+\hypertarget{neuron_8h_source_l00131}{}\hyperlink{structneuron_state_ab8f63a1dfdb2992657530ff8a63fdc01}{00131}     \hyperlink{assist_8h_ad77e6fc5a9b03d46e7c97b7c4b92e89f}{\_statT} \hyperlink{structneuron_state_ab8f63a1dfdb2992657530ff8a63fdc01}{rcvdMsgCount}; \textcolor{comment}{/// The number of synaptic messages received.}
+\hypertarget{neuron_8h_source_l00132}{}\hyperlink{structneuron_state_a71fbb9a79e8048b473b6e09d29a64bbe}{00132}     \hyperlink{assist_8h_ad77e6fc5a9b03d46e7c97b7c4b92e89f}{\_statT} \hyperlink{structneuron_state_a71fbb9a79e8048b473b6e09d29a64bbe}{SOPSCount}; \textcolor{comment}{/// A count for SOPS calculation}
+00133 
+00134 
+00135 \}neuronState;
+00136 \textcolor{comment}{/* ***Neuron functions */}
+00137 \textcolor{comment}{/**}
+00138 \textcolor{comment}{ * @brief neuronReverseFinal final neuron reversal function.}
+00139 \textcolor{comment}{ * Used to roll back any calls made by the neuron. Decrements receivedSynapseMsgs Reset funs have
+       already}
+00140 \textcolor{comment}{ * been run at this point @see reverseLeakDel() and @see reverseResetDel()}
+00141 \textcolor{comment}{ * @param s the neuron state}
+00142 \textcolor{comment}{ * @param CV transported bitfield}
+00143 \textcolor{comment}{ * @param m the rollback message}
+00144 \textcolor{comment}{ * @param lp the lp}
+00145 \textcolor{comment}{ */}
+00146 \textcolor{keywordtype}{void} \hyperlink{neuron_8h_a01dcc8e3f0132786bd59ecb847013284}{neuronReverseFinal}(neuronState *s, tw\_bf *CV,Msg\_Data *m,tw\_lp *lp);
+00147     \textcolor{comment}{/** neuronReceiveMessage handles incomming synapse messages. In this model, the neurons send
+       messages to axons during "big tick" intervals. }
+00148 \textcolor{comment}{     This is done through an event sent upon receipt of the first synapse message of the current
+       big-tick. */}
+00149 \textcolor{keywordtype}{void} \hyperlink{neuron_8h_aa6819d7492f0173f2234ba0b8b0bb674}{neuronReceiveMessage}(neuronState *st, tw\_stime time, Msg\_Data *m,
+00150                           tw\_lp *lp);
+00151 \textcolor{comment}{/** neuronFire manages a firing event. Firing events occur when a synchro message is received, so
+       these calculations are done on big-ticks only. */}
+00152 \textcolor{keywordtype}{void} \hyperlink{neuron_8h_ae071ef984b7e0dd4ec38fca91e0abe39}{neuronFire}(neuronState *st, tw\_stime time, Msg\_Data *m);
+00153 \textcolor{comment}{/** neuronPostFire manages post-firing events, including reset functions */}
+00154 \textcolor{keywordtype}{void} \hyperlink{neuron_8h_ab1f4997e4bfe11e78faa6d37748aee67}{neuronPostFire}(neuronState *st, tw\_stime time, Msg\_Data *m);
+00155 \textcolor{comment}{/**generateWaitEvent creates a new wait event to this neuron for big-tick synchronization */}
+00156 \textcolor{keywordtype}{void} \hyperlink{neuron_8h_a06ee765bfae45fe9b7f0619bf4abe63d}{generateWaitEvent}(neuronState *st, tw\_stime time, tw\_lp *lp);
+00157 
+00158 \textcolor{preprocessor}{#}\textcolor{preprocessor}{endif} \textcolor{comment}{/* defined(\_\_ROSS\_TOP\_\_neuron\_\_) */}
+\end{DoxyCode}

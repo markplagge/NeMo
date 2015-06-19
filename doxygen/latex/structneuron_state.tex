@@ -2,289 +2,316 @@
 \label{structneuron_state}\index{neuron\+State@{neuron\+State}}
 
 
-{\ttfamily \#include $<$neuron\+\_\+model.\+h$>$}
+{\ttfamily \#include $<$neuron.\+h$>$}
 
 
 
-Collaboration diagram for neuron\+State\+:\nopagebreak
+Collaboration diagram for neuron\+State\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=228pt]{structneuron_state__coll__graph}
+\includegraphics[width=239pt]{structneuron_state__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Data Fields}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{mappings_8c_adc0d1d400308f82e4d42245c2fd946b9}{\+\_\+id\+Type} \hyperlink{structneuron_state_acc19e6f856ad128cc1f90527d066700b}{core\+I\+D}
+\hyperlink{assist_8h_a3f7a6e6a1210b6d9d7a42177dcb9634b}{\+\_\+id\+T} \hyperlink{structneuron_state_a76ef99e5766b6e36c3f41a2920e8c56c}{my\+Core\+I\+D}
 \item 
-\hyperlink{mappings_8c_adc0d1d400308f82e4d42245c2fd946b9}{\+\_\+id\+Type} \hyperlink{structneuron_state_ab668c4d903557a2ac39f2a5141df3976}{neuron\+I\+D}
-\item 
-\hyperlink{mappings_8c_a368ddcd71f7b61cb0f918f22d07ce999}{\+\_\+ne\+Volt\+Type} \hyperlink{structneuron_state_a83c2516a958f81caedbaf4dd3c431d1b}{c\+Voltage}
-\item 
-\hyperlink{mappings_8c_a368ddcd71f7b61cb0f918f22d07ce999}{\+\_\+ne\+Volt\+Type} \hyperlink{structneuron_state_ac20c9ef5b5825eb38f91c1f1dacfb21d}{pr\+Voltage}
-\item 
-\hyperlink{mappings_8c_a368ddcd71f7b61cb0f918f22d07ce999}{\+\_\+ne\+Volt\+Type} \hyperlink{structneuron_state_ac3d7ce178528ec72b94fc0698be8213a}{threshold}
-\item 
+\hyperlink{assist_8h_a3f7a6e6a1210b6d9d7a42177dcb9634b}{\+\_\+id\+T} \hyperlink{structneuron_state_ac24762c24aede292a2ce5df78114881c}{my\+Local\+I\+D}
+\begin{DoxyCompactList}\small\item\em Neuron\textquotesingle{}s core\+I\+D. \end{DoxyCompactList}\item 
+\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\+\_\+volt\+T} \hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membrane\+Pot}
+\begin{DoxyCompactList}\small\item\em Neuron\textquotesingle{}s local I\+D (from 0 -\/ j-\/1);. \end{DoxyCompactList}\item 
+\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\+\_\+volt\+T} \hyperlink{structneuron_state_ad17e1ac0b4bca75d10da8b0ab56edd6e}{prev\+Membrane\+Pot}
+\begin{DoxyCompactList}\small\item\em current \char`\"{}voltage\char`\"{} of neuron \end{DoxyCompactList}\item 
+\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\+\_\+volt\+T} \hyperlink{structneuron_state_af321d0fa58028b78986160845189077e}{threshold}
+\begin{DoxyCompactList}\small\item\em previous state membrane potential \end{DoxyCompactList}\item 
 tw\+\_\+stime \hyperlink{structneuron_state_a0658ad1f8b57a00589c6ea84f9a4ab13}{last\+Active\+Time}
-\item 
-\hyperlink{mappings_8c_a7dd2b02e8e5ddb7f5b243002830d964f}{\+\_\+ne\+Stat\+Type} \hyperlink{structneuron_state_afc17c439bc3ffa469b045a7ceff7a25a}{fire\+Count}
-\begin{DoxyCompactList}\small\item\em neuron fire parameters \end{DoxyCompactList}\item 
-\hyperlink{neuron__model_8h_a48885ea6be5b55a2e24de9f97552d4ee}{neuron\+Fire\+Mode} \hyperlink{structneuron_state_a55890f9e021064df30e9d18a9df98845}{fire\+Mode}
-\item 
-\hyperlink{neuron__model_8h_ae7e5990745cd949246894bfb633ca4a2}{reset\+Fun\+Del} \hyperlink{structneuron_state_afcf9d931e4fda519c43b4efeab687463}{do\+Reset}
-\begin{DoxyCompactList}\small\item\em Reset Function. \end{DoxyCompactList}\item 
-\hyperlink{mappings_8c_a368ddcd71f7b61cb0f918f22d07ce999}{\+\_\+ne\+Volt\+Type} \hyperlink{structneuron_state_a1c0cef684666b681d30112c72e18bead}{reset\+Volt\+Param}
-\begin{DoxyCompactList}\small\item\em Optional parameter for reset voltage function. \end{DoxyCompactList}\item 
-\hyperlink{neuron__model_8h_aa939c0acc5b3367975f2f0cb7bc36d17}{reverse\+Reset\+Del} \hyperlink{structneuron_state_abf6970098695585c81e101b2a741b9a5}{reverse\+Reset}
-\begin{DoxyCompactList}\small\item\em Reverse reset function. \end{DoxyCompactList}\item 
-\hyperlink{mappings_8c_a368ddcd71f7b61cb0f918f22d07ce999}{\+\_\+ne\+Volt\+Type} $\ast$ \hyperlink{structneuron_state_ac21457aec3f29f9f28b58dd95e3d6fb2}{per\+Synapse\+Weight}
-\begin{DoxyCompactList}\small\item\em synapse input weights \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em neuron\textquotesingle{}s threshold value \end{DoxyCompactList}\item 
+uint\+\_\+fast16\+\_\+t \hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{received\+Synapse\+Msgs}
+\begin{DoxyCompactList}\small\item\em last time the neuron fired -\/ used for calculating leak and reverse functions. \end{DoxyCompactList}\item 
+\hyperlink{neuron_8h_a48885ea6be5b55a2e24de9f97552d4ee}{neuron\+Fire\+Mode} \hyperlink{structneuron_state_a55890f9e021064df30e9d18a9df98845}{fire\+Mode}
+\begin{DoxyCompactList}\small\item\em neuron firing parameters \end{DoxyCompactList}\item 
+\hyperlink{neuron_8h_ae7e5990745cd949246894bfb633ca4a2}{reset\+Fun\+Del} \hyperlink{structneuron_state_afcf9d931e4fda519c43b4efeab687463}{do\+Reset}
+\begin{DoxyCompactList}\small\item\em neuron\textquotesingle{}s firing mode \end{DoxyCompactList}\item 
+\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\+\_\+volt\+T} \hyperlink{structneuron_state_add87cc0b2bc3426f0fd870f7df6decd5}{reset\+Volt\+Param}
+\begin{DoxyCompactList}\small\item\em neuron reset function \end{DoxyCompactList}\item 
+\hyperlink{neuron_8h_aa939c0acc5b3367975f2f0cb7bc36d17}{reverse\+Reset\+Del} \hyperlink{structneuron_state_abf6970098695585c81e101b2a741b9a5}{reverse\+Reset}
+\begin{DoxyCompactList}\small\item\em Optional parameter for reset voltage functions. \end{DoxyCompactList}\item 
+\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\+\_\+volt\+T} $\ast$ \hyperlink{structneuron_state_ab39656a1580505adcabc4c7a1f4d8100}{per\+Synapse\+Weight}
+\begin{DoxyCompactList}\small\item\em Neuron reverse reset function. \end{DoxyCompactList}\item 
 bool $\ast$ \hyperlink{structneuron_state_a95688135a244a3ce3b35698a49d0da18}{per\+Synapse\+Det}
+\begin{DoxyCompactList}\small\item\em An array determining if each synapse is handled stochastically or deterministically. \end{DoxyCompactList}\item 
+\hyperlink{assist_8h_a3f7a6e6a1210b6d9d7a42177dcb9634b}{\+\_\+id\+T} \hyperlink{structneuron_state_a62463fa4d33c39297aa5ce3a145d474f}{dendrite\+Core}
 \item 
-tw\+\_\+stime \hyperlink{structneuron_state_a6f4e4d8fc1cf0257b486e01f628d2656}{last\+Leak\+Time}
-\begin{DoxyCompactList}\small\item\em neuron leak parameters \end{DoxyCompactList}\item 
-\hyperlink{mappings_8c_a368ddcd71f7b61cb0f918f22d07ce999}{\+\_\+ne\+Volt\+Type} \hyperlink{structneuron_state_afe8da12a0fe0aef0987e785a64619706}{leak\+Rate}
+\hyperlink{assist_8h_a3f7a6e6a1210b6d9d7a42177dcb9634b}{\+\_\+id\+T} \hyperlink{structneuron_state_a73e5b16411af572181411b8fd8d5117d}{dendrite\+Local}
+\begin{DoxyCompactList}\small\item\em Local core of the remote dendrite. \end{DoxyCompactList}\item 
+tw\+\_\+lpid \hyperlink{structneuron_state_a4199c14c5aabfd52f441e01623bdc84c}{dendrite\+Global\+Dest}
+\begin{DoxyCompactList}\small\item\em Local I\+D of the remote dendrite -- not L\+P\+I\+D, but a local axon value (0-\/i) \end{DoxyCompactList}\item 
+\hyperlink{structleak_fun_del}{leak\+Fun\+Del} \hyperlink{structneuron_state_aa430f424f34dc59dc27736e27ec61320}{do\+Leak}
+\begin{DoxyCompactList}\small\item\em G\+I\+D of the axon this neuron talks to. T\+O\+D\+O\+: The dendrite\+Core and dendrite\+Local values might not be needed anymroe. \end{DoxyCompactList}\item 
+\hyperlink{structreverse_leak_del}{reverse\+Leak\+Del} \hyperlink{structneuron_state_af4ded7f575b64ada6c0a6664f638307c}{do\+Leak\+Reverse}
+\begin{DoxyCompactList}\small\item\em Function pointer to the neuron\textquotesingle{}s current leak function. \end{DoxyCompactList}\item 
+\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\+\_\+volt\+T} \hyperlink{structneuron_state_a7138aaa7e2988e5ad0d32cc9846dcbbb}{leak\+Rate}
 \item 
-\hyperlink{mappings_8c_a368ddcd71f7b61cb0f918f22d07ce999}{\+\_\+ne\+Volt\+Type} \hyperlink{structneuron_state_a15348eb48eb71000bf4309a776d39cfe}{sgn\+Lambda}
+\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\+\_\+volt\+T} \hyperlink{structneuron_state_a46a71f61511b5311e14643084109d90f}{sgn\+Lambda}
 \item 
-\hyperlink{structleak_fun_del}{leak\+Fun\+Del} \hyperlink{structneuron_state_ad0271f69fc01192f4f85b74d9bee06de}{leak}
+\hyperlink{assist_8h_ad77e6fc5a9b03d46e7c97b7c4b92e89f}{\+\_\+stat\+T} \hyperlink{structneuron_state_afe8825076c4cf3863c677307fec63c61}{fire\+Count}
 \item 
-\hyperlink{structreverse_leak_del}{reverse\+Leak\+Del} \hyperlink{structneuron_state_a0f71d6ac3efc9d397adfcc72c7fe40c1}{reverse\+Leak}
-\begin{DoxyCompactList}\small\item\em Reverse Leak Functuon. \end{DoxyCompactList}\item 
-\hyperlink{mappings_8c_adc0d1d400308f82e4d42245c2fd946b9}{\+\_\+id\+Type} \hyperlink{structneuron_state_af66b578d3c4aac7db55b573b880db0eb}{dendrite\+Local\+Dest}
-\item 
-\hyperlink{mappings_8c_adc0d1d400308f82e4d42245c2fd946b9}{\+\_\+id\+Type} \hyperlink{structneuron_state_ab49277e7f9460fbd698aefa5a44b1b0b}{dendrite\+Core}
-\item 
-tw\+\_\+lpid \hyperlink{structneuron_state_a081d21dd7333cf48eaec21f5eaef8847}{dendrite\+Dest}
-\end{DoxyCompactItemize}
+\hyperlink{assist_8h_ad77e6fc5a9b03d46e7c97b7c4b92e89f}{\+\_\+stat\+T} \hyperlink{structneuron_state_ab8f63a1dfdb2992657530ff8a63fdc01}{rcvd\+Msg\+Count}
+\begin{DoxyCompactList}\small\item\em count of this neuron\textquotesingle{}s output \end{DoxyCompactList}\item 
+\hyperlink{assist_8h_ad77e6fc5a9b03d46e7c97b7c4b92e89f}{\+\_\+stat\+T} \hyperlink{structneuron_state_a71fbb9a79e8048b473b6e09d29a64bbe}{S\+O\+P\+S\+Count}
+\begin{DoxyCompactList}\small\item\em The number of synaptic messages received. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 
 
-Definition at line 80 of file neuron\+\_\+model.\+h.
+Definition at line \hyperlink{neuron_8h_source_l00085}{85} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
 
 
 
 \subsection{Field Documentation}
-\hypertarget{structneuron_state_acc19e6f856ad128cc1f90527d066700b}{}\index{neuron\+State@{neuron\+State}!core\+I\+D@{core\+I\+D}}
-\index{core\+I\+D@{core\+I\+D}!neuron\+State@{neuron\+State}}
-\subsubsection[{core\+I\+D}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+id\+Type} core\+I\+D}\label{structneuron_state_acc19e6f856ad128cc1f90527d066700b}
-
-
-Definition at line 81 of file neuron\+\_\+model.\+h.
-
-\hypertarget{structneuron_state_a83c2516a958f81caedbaf4dd3c431d1b}{}\index{neuron\+State@{neuron\+State}!c\+Voltage@{c\+Voltage}}
-\index{c\+Voltage@{c\+Voltage}!neuron\+State@{neuron\+State}}
-\subsubsection[{c\+Voltage}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+ne\+Volt\+Type} c\+Voltage}\label{structneuron_state_a83c2516a958f81caedbaf4dd3c431d1b}
-
-
-Definition at line 83 of file neuron\+\_\+model.\+h.
-
-
-
-Referenced by neuron\+Receive\+Message(), reset\+Zero(), reverse\+Linear(), and reverse\+Zero().
-
-\hypertarget{structneuron_state_ab49277e7f9460fbd698aefa5a44b1b0b}{}\index{neuron\+State@{neuron\+State}!dendrite\+Core@{dendrite\+Core}}
+\hypertarget{structneuron_state_a62463fa4d33c39297aa5ce3a145d474f}{}\index{neuron\+State@{neuron\+State}!dendrite\+Core@{dendrite\+Core}}
 \index{dendrite\+Core@{dendrite\+Core}!neuron\+State@{neuron\+State}}
-\subsubsection[{dendrite\+Core}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+id\+Type} dendrite\+Core}\label{structneuron_state_ab49277e7f9460fbd698aefa5a44b1b0b}
+\subsubsection[{dendrite\+Core}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+id\+T} dendrite\+Core}\label{structneuron_state_a62463fa4d33c39297aa5ce3a145d474f}
 
 
-Definition at line 116 of file neuron\+\_\+model.\+h.
+Definition at line \hyperlink{neuron_8h_source_l00118}{118} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
 
-\hypertarget{structneuron_state_a081d21dd7333cf48eaec21f5eaef8847}{}\index{neuron\+State@{neuron\+State}!dendrite\+Dest@{dendrite\+Dest}}
-\index{dendrite\+Dest@{dendrite\+Dest}!neuron\+State@{neuron\+State}}
-\subsubsection[{dendrite\+Dest}]{\setlength{\rightskip}{0pt plus 5cm}tw\+\_\+lpid dendrite\+Dest}\label{structneuron_state_a081d21dd7333cf48eaec21f5eaef8847}
-
-
-Definition at line 117 of file neuron\+\_\+model.\+h.
-
-\hypertarget{structneuron_state_af66b578d3c4aac7db55b573b880db0eb}{}\index{neuron\+State@{neuron\+State}!dendrite\+Local\+Dest@{dendrite\+Local\+Dest}}
-\index{dendrite\+Local\+Dest@{dendrite\+Local\+Dest}!neuron\+State@{neuron\+State}}
-\subsubsection[{dendrite\+Local\+Dest}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+id\+Type} dendrite\+Local\+Dest}\label{structneuron_state_af66b578d3c4aac7db55b573b880db0eb}
+\hypertarget{structneuron_state_a4199c14c5aabfd52f441e01623bdc84c}{}\index{neuron\+State@{neuron\+State}!dendrite\+Global\+Dest@{dendrite\+Global\+Dest}}
+\index{dendrite\+Global\+Dest@{dendrite\+Global\+Dest}!neuron\+State@{neuron\+State}}
+\subsubsection[{dendrite\+Global\+Dest}]{\setlength{\rightskip}{0pt plus 5cm}tw\+\_\+lpid dendrite\+Global\+Dest}\label{structneuron_state_a4199c14c5aabfd52f441e01623bdc84c}
 
 
-Definition at line 115 of file neuron\+\_\+model.\+h.
+Local I\+D of the remote dendrite -- not L\+P\+I\+D, but a local axon value (0-\/i) 
+
+
+
+Definition at line \hyperlink{neuron_8h_source_l00120}{120} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
+
+\hypertarget{structneuron_state_a73e5b16411af572181411b8fd8d5117d}{}\index{neuron\+State@{neuron\+State}!dendrite\+Local@{dendrite\+Local}}
+\index{dendrite\+Local@{dendrite\+Local}!neuron\+State@{neuron\+State}}
+\subsubsection[{dendrite\+Local}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+id\+T} dendrite\+Local}\label{structneuron_state_a73e5b16411af572181411b8fd8d5117d}
+
+
+Local core of the remote dendrite. 
+
+
+
+Definition at line \hyperlink{neuron_8h_source_l00119}{119} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
+
+\hypertarget{structneuron_state_aa430f424f34dc59dc27736e27ec61320}{}\index{neuron\+State@{neuron\+State}!do\+Leak@{do\+Leak}}
+\index{do\+Leak@{do\+Leak}!neuron\+State@{neuron\+State}}
+\subsubsection[{do\+Leak}]{\setlength{\rightskip}{0pt plus 5cm}{\bf leak\+Fun\+Del} do\+Leak}\label{structneuron_state_aa430f424f34dc59dc27736e27ec61320}
+
+
+G\+I\+D of the axon this neuron talks to. T\+O\+D\+O\+: The dendrite\+Core and dendrite\+Local values might not be needed anymroe. 
+
+
+
+Definition at line \hyperlink{neuron_8h_source_l00123}{123} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
+
+\hypertarget{structneuron_state_af4ded7f575b64ada6c0a6664f638307c}{}\index{neuron\+State@{neuron\+State}!do\+Leak\+Reverse@{do\+Leak\+Reverse}}
+\index{do\+Leak\+Reverse@{do\+Leak\+Reverse}!neuron\+State@{neuron\+State}}
+\subsubsection[{do\+Leak\+Reverse}]{\setlength{\rightskip}{0pt plus 5cm}{\bf reverse\+Leak\+Del} do\+Leak\+Reverse}\label{structneuron_state_af4ded7f575b64ada6c0a6664f638307c}
+
+
+Function pointer to the neuron\textquotesingle{}s current leak function. 
+
+
+
+Definition at line \hyperlink{neuron_8h_source_l00124}{124} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
 
 \hypertarget{structneuron_state_afcf9d931e4fda519c43b4efeab687463}{}\index{neuron\+State@{neuron\+State}!do\+Reset@{do\+Reset}}
 \index{do\+Reset@{do\+Reset}!neuron\+State@{neuron\+State}}
 \subsubsection[{do\+Reset}]{\setlength{\rightskip}{0pt plus 5cm}{\bf reset\+Fun\+Del} do\+Reset}\label{structneuron_state_afcf9d931e4fda519c43b4efeab687463}
 
 
-Reset Function. 
+neuron\textquotesingle{}s firing mode 
 
+neuron reset params 
 
+Definition at line \hyperlink{neuron_8h_source_l00104}{104} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
 
-Definition at line 94 of file neuron\+\_\+model.\+h.
-
-
-
-Referenced by neuron\+Post\+Fire().
-
-\hypertarget{structneuron_state_afc17c439bc3ffa469b045a7ceff7a25a}{}\index{neuron\+State@{neuron\+State}!fire\+Count@{fire\+Count}}
+\hypertarget{structneuron_state_afe8825076c4cf3863c677307fec63c61}{}\index{neuron\+State@{neuron\+State}!fire\+Count@{fire\+Count}}
 \index{fire\+Count@{fire\+Count}!neuron\+State@{neuron\+State}}
-\subsubsection[{fire\+Count}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+ne\+Stat\+Type} fire\+Count}\label{structneuron_state_afc17c439bc3ffa469b045a7ceff7a25a}
+\subsubsection[{fire\+Count}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+stat\+T} fire\+Count}\label{structneuron_state_afe8825076c4cf3863c677307fec63c61}
 
 
-neuron fire parameters 
-
-
-
-Definition at line 90 of file neuron\+\_\+model.\+h.
-
-
-
-Referenced by neuron\+\_\+init(), and neuron\+Fire().
+Definition at line \hyperlink{neuron_8h_source_l00130}{130} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
 
 \hypertarget{structneuron_state_a55890f9e021064df30e9d18a9df98845}{}\index{neuron\+State@{neuron\+State}!fire\+Mode@{fire\+Mode}}
 \index{fire\+Mode@{fire\+Mode}!neuron\+State@{neuron\+State}}
 \subsubsection[{fire\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf neuron\+Fire\+Mode} fire\+Mode}\label{structneuron_state_a55890f9e021064df30e9d18a9df98845}
 
 
-Definition at line 92 of file neuron\+\_\+model.\+h.
+neuron firing parameters 
 
 
 
-Referenced by neuron\+Receive\+Message().
+Definition at line \hyperlink{neuron_8h_source_l00101}{101} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
 
 \hypertarget{structneuron_state_a0658ad1f8b57a00589c6ea84f9a4ab13}{}\index{neuron\+State@{neuron\+State}!last\+Active\+Time@{last\+Active\+Time}}
 \index{last\+Active\+Time@{last\+Active\+Time}!neuron\+State@{neuron\+State}}
 \subsubsection[{last\+Active\+Time}]{\setlength{\rightskip}{0pt plus 5cm}tw\+\_\+stime last\+Active\+Time}\label{structneuron_state_a0658ad1f8b57a00589c6ea84f9a4ab13}
 
 
-Definition at line 87 of file neuron\+\_\+model.\+h.
-
-\hypertarget{structneuron_state_a6f4e4d8fc1cf0257b486e01f628d2656}{}\index{neuron\+State@{neuron\+State}!last\+Leak\+Time@{last\+Leak\+Time}}
-\index{last\+Leak\+Time@{last\+Leak\+Time}!neuron\+State@{neuron\+State}}
-\subsubsection[{last\+Leak\+Time}]{\setlength{\rightskip}{0pt plus 5cm}tw\+\_\+stime last\+Leak\+Time}\label{structneuron_state_a6f4e4d8fc1cf0257b486e01f628d2656}
-
-
-neuron leak parameters 
+neuron\textquotesingle{}s threshold value 
 
 
 
-Definition at line 106 of file neuron\+\_\+model.\+h.
+Definition at line \hyperlink{neuron_8h_source_l00094}{94} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
 
-\hypertarget{structneuron_state_ad0271f69fc01192f4f85b74d9bee06de}{}\index{neuron\+State@{neuron\+State}!leak@{leak}}
-\index{leak@{leak}!neuron\+State@{neuron\+State}}
-\subsubsection[{leak}]{\setlength{\rightskip}{0pt plus 5cm}{\bf leak\+Fun\+Del} leak}\label{structneuron_state_ad0271f69fc01192f4f85b74d9bee06de}
-
-
-Definition at line 110 of file neuron\+\_\+model.\+h.
-
-\hypertarget{structneuron_state_afe8da12a0fe0aef0987e785a64619706}{}\index{neuron\+State@{neuron\+State}!leak\+Rate@{leak\+Rate}}
+\hypertarget{structneuron_state_a7138aaa7e2988e5ad0d32cc9846dcbbb}{}\index{neuron\+State@{neuron\+State}!leak\+Rate@{leak\+Rate}}
 \index{leak\+Rate@{leak\+Rate}!neuron\+State@{neuron\+State}}
-\subsubsection[{leak\+Rate}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+ne\+Volt\+Type} leak\+Rate}\label{structneuron_state_afe8da12a0fe0aef0987e785a64619706}
+\subsubsection[{leak\+Rate}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+volt\+T} leak\+Rate}\label{structneuron_state_a7138aaa7e2988e5ad0d32cc9846dcbbb}
 
 
-Definition at line 107 of file neuron\+\_\+model.\+h.
+Definition at line \hyperlink{neuron_8h_source_l00126}{126} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
+
+\hypertarget{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{}\index{neuron\+State@{neuron\+State}!membrane\+Pot@{membrane\+Pot}}
+\index{membrane\+Pot@{membrane\+Pot}!neuron\+State@{neuron\+State}}
+\subsubsection[{membrane\+Pot}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+volt\+T} membrane\+Pot}\label{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}
+
+
+Neuron\textquotesingle{}s local I\+D (from 0 -\/ j-\/1);. 
 
 
 
-Referenced by neuron\+\_\+init().
+Definition at line \hyperlink{neuron_8h_source_l00091}{91} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
 
-\hypertarget{structneuron_state_ab668c4d903557a2ac39f2a5141df3976}{}\index{neuron\+State@{neuron\+State}!neuron\+I\+D@{neuron\+I\+D}}
-\index{neuron\+I\+D@{neuron\+I\+D}!neuron\+State@{neuron\+State}}
-\subsubsection[{neuron\+I\+D}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+id\+Type} neuron\+I\+D}\label{structneuron_state_ab668c4d903557a2ac39f2a5141df3976}
+\hypertarget{structneuron_state_a76ef99e5766b6e36c3f41a2920e8c56c}{}\index{neuron\+State@{neuron\+State}!my\+Core\+I\+D@{my\+Core\+I\+D}}
+\index{my\+Core\+I\+D@{my\+Core\+I\+D}!neuron\+State@{neuron\+State}}
+\subsubsection[{my\+Core\+I\+D}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+id\+T} my\+Core\+I\+D}\label{structneuron_state_a76ef99e5766b6e36c3f41a2920e8c56c}
 
 
-Definition at line 82 of file neuron\+\_\+model.\+h.
+Definition at line \hyperlink{neuron_8h_source_l00087}{87} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
+
+\hypertarget{structneuron_state_ac24762c24aede292a2ce5df78114881c}{}\index{neuron\+State@{neuron\+State}!my\+Local\+I\+D@{my\+Local\+I\+D}}
+\index{my\+Local\+I\+D@{my\+Local\+I\+D}!neuron\+State@{neuron\+State}}
+\subsubsection[{my\+Local\+I\+D}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+id\+T} my\+Local\+I\+D}\label{structneuron_state_ac24762c24aede292a2ce5df78114881c}
+
+
+Neuron\textquotesingle{}s core\+I\+D. 
+
+
+
+Definition at line \hyperlink{neuron_8h_source_l00088}{88} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
 
 \hypertarget{structneuron_state_a95688135a244a3ce3b35698a49d0da18}{}\index{neuron\+State@{neuron\+State}!per\+Synapse\+Det@{per\+Synapse\+Det}}
 \index{per\+Synapse\+Det@{per\+Synapse\+Det}!neuron\+State@{neuron\+State}}
 \subsubsection[{per\+Synapse\+Det}]{\setlength{\rightskip}{0pt plus 5cm}bool$\ast$ per\+Synapse\+Det}\label{structneuron_state_a95688135a244a3ce3b35698a49d0da18}
 
 
-Definition at line 104 of file neuron\+\_\+model.\+h.
+An array determining if each synapse is handled stochastically or deterministically. 
 
+Since the actual hardware has 4 synapse types, this setup has more power than the actual True\+North architecture.
 
+To ensure model $<$-\/$>$ hardware accuracy, at most four different modes should be used per neuron, so that synapses are handled as one of four possible types. 
 
-Referenced by init\+Random\+Wts(), and neuron\+Receive\+Message().
+Definition at line \hyperlink{neuron_8h_source_l00113}{113} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
 
-\hypertarget{structneuron_state_ac21457aec3f29f9f28b58dd95e3d6fb2}{}\index{neuron\+State@{neuron\+State}!per\+Synapse\+Weight@{per\+Synapse\+Weight}}
+\hypertarget{structneuron_state_ab39656a1580505adcabc4c7a1f4d8100}{}\index{neuron\+State@{neuron\+State}!per\+Synapse\+Weight@{per\+Synapse\+Weight}}
 \index{per\+Synapse\+Weight@{per\+Synapse\+Weight}!neuron\+State@{neuron\+State}}
-\subsubsection[{per\+Synapse\+Weight}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+ne\+Volt\+Type}$\ast$ per\+Synapse\+Weight}\label{structneuron_state_ac21457aec3f29f9f28b58dd95e3d6fb2}
+\subsubsection[{per\+Synapse\+Weight}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+volt\+T}$\ast$ per\+Synapse\+Weight}\label{structneuron_state_ab39656a1580505adcabc4c7a1f4d8100}
 
 
-synapse input weights 
+Neuron reverse reset function. 
+
+In this simulation, each synappse can have a unique weight. In the paper, there is a limit of four different \char`\"{}types\char`\"{} of synapse behavior per neruon. For an accurate sim, there can only be four different values in this array.
+
+Since this is an array, this simulator has the potential to have more power than the actual True\+North hardware architecture. 
+
+Definition at line \hyperlink{neuron_8h_source_l00110}{110} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
+
+\hypertarget{structneuron_state_ad17e1ac0b4bca75d10da8b0ab56edd6e}{}\index{neuron\+State@{neuron\+State}!prev\+Membrane\+Pot@{prev\+Membrane\+Pot}}
+\index{prev\+Membrane\+Pot@{prev\+Membrane\+Pot}!neuron\+State@{neuron\+State}}
+\subsubsection[{prev\+Membrane\+Pot}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+volt\+T} prev\+Membrane\+Pot}\label{structneuron_state_ad17e1ac0b4bca75d10da8b0ab56edd6e}
 
 
-
-Definition at line 103 of file neuron\+\_\+model.\+h.
-
-
-
-Referenced by neuron\+Receive\+Message().
-
-\hypertarget{structneuron_state_ac20c9ef5b5825eb38f91c1f1dacfb21d}{}\index{neuron\+State@{neuron\+State}!pr\+Voltage@{pr\+Voltage}}
-\index{pr\+Voltage@{pr\+Voltage}!neuron\+State@{neuron\+State}}
-\subsubsection[{pr\+Voltage}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+ne\+Volt\+Type} pr\+Voltage}\label{structneuron_state_ac20c9ef5b5825eb38f91c1f1dacfb21d}
-
-
-Definition at line 84 of file neuron\+\_\+model.\+h.
+current \char`\"{}voltage\char`\"{} of neuron 
 
 
 
-Referenced by neuron\+\_\+init(), neuron\+Receive\+Message(), reset\+Zero(), and reverse\+Zero().
+Definition at line \hyperlink{neuron_8h_source_l00092}{92} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
 
-\hypertarget{structneuron_state_a1c0cef684666b681d30112c72e18bead}{}\index{neuron\+State@{neuron\+State}!reset\+Volt\+Param@{reset\+Volt\+Param}}
+\hypertarget{structneuron_state_ab8f63a1dfdb2992657530ff8a63fdc01}{}\index{neuron\+State@{neuron\+State}!rcvd\+Msg\+Count@{rcvd\+Msg\+Count}}
+\index{rcvd\+Msg\+Count@{rcvd\+Msg\+Count}!neuron\+State@{neuron\+State}}
+\subsubsection[{rcvd\+Msg\+Count}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+stat\+T} rcvd\+Msg\+Count}\label{structneuron_state_ab8f63a1dfdb2992657530ff8a63fdc01}
+
+
+count of this neuron\textquotesingle{}s output 
+
+
+
+Definition at line \hyperlink{neuron_8h_source_l00131}{131} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
+
+\hypertarget{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{}\index{neuron\+State@{neuron\+State}!received\+Synapse\+Msgs@{received\+Synapse\+Msgs}}
+\index{received\+Synapse\+Msgs@{received\+Synapse\+Msgs}!neuron\+State@{neuron\+State}}
+\subsubsection[{received\+Synapse\+Msgs}]{\setlength{\rightskip}{0pt plus 5cm}uint\+\_\+fast16\+\_\+t received\+Synapse\+Msgs}\label{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}
+
+
+last time the neuron fired -\/ used for calculating leak and reverse functions. 
+
+Used for big-\/tick synchronization. If this neuron has received a synapse message during this big-\/tick cycle, this will be set to $>$ 0. Every synapse received until the big tick occurs will increment this value. Reverse events decrement this value. If the value is == 0 when a synapse message is received, the neuron will send a fire schedule message to itself at the next big-\/tick time. 
+
+Definition at line \hyperlink{neuron_8h_source_l00095}{95} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
+
+\hypertarget{structneuron_state_add87cc0b2bc3426f0fd870f7df6decd5}{}\index{neuron\+State@{neuron\+State}!reset\+Volt\+Param@{reset\+Volt\+Param}}
 \index{reset\+Volt\+Param@{reset\+Volt\+Param}!neuron\+State@{neuron\+State}}
-\subsubsection[{reset\+Volt\+Param}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+ne\+Volt\+Type} reset\+Volt\+Param}\label{structneuron_state_a1c0cef684666b681d30112c72e18bead}
+\subsubsection[{reset\+Volt\+Param}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+volt\+T} reset\+Volt\+Param}\label{structneuron_state_add87cc0b2bc3426f0fd870f7df6decd5}
 
 
-Optional parameter for reset voltage function. 
-
-
-
-Definition at line 95 of file neuron\+\_\+model.\+h.
+neuron reset function 
 
 
 
-Referenced by reverse\+Linear().
-
-\hypertarget{structneuron_state_a0f71d6ac3efc9d397adfcc72c7fe40c1}{}\index{neuron\+State@{neuron\+State}!reverse\+Leak@{reverse\+Leak}}
-\index{reverse\+Leak@{reverse\+Leak}!neuron\+State@{neuron\+State}}
-\subsubsection[{reverse\+Leak}]{\setlength{\rightskip}{0pt plus 5cm}{\bf reverse\+Leak\+Del} reverse\+Leak}\label{structneuron_state_a0f71d6ac3efc9d397adfcc72c7fe40c1}
-
-
-Reverse Leak Functuon. 
-
-
-
-Definition at line 113 of file neuron\+\_\+model.\+h.
+Definition at line \hyperlink{neuron_8h_source_l00105}{105} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
 
 \hypertarget{structneuron_state_abf6970098695585c81e101b2a741b9a5}{}\index{neuron\+State@{neuron\+State}!reverse\+Reset@{reverse\+Reset}}
 \index{reverse\+Reset@{reverse\+Reset}!neuron\+State@{neuron\+State}}
 \subsubsection[{reverse\+Reset}]{\setlength{\rightskip}{0pt plus 5cm}{\bf reverse\+Reset\+Del} reverse\+Reset}\label{structneuron_state_abf6970098695585c81e101b2a741b9a5}
 
 
-Reverse reset function. 
+Optional parameter for reset voltage functions. 
 
 
 
-Definition at line 99 of file neuron\+\_\+model.\+h.
+Definition at line \hyperlink{neuron_8h_source_l00107}{107} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
 
-\hypertarget{structneuron_state_a15348eb48eb71000bf4309a776d39cfe}{}\index{neuron\+State@{neuron\+State}!sgn\+Lambda@{sgn\+Lambda}}
+\hypertarget{structneuron_state_a46a71f61511b5311e14643084109d90f}{}\index{neuron\+State@{neuron\+State}!sgn\+Lambda@{sgn\+Lambda}}
 \index{sgn\+Lambda@{sgn\+Lambda}!neuron\+State@{neuron\+State}}
-\subsubsection[{sgn\+Lambda}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+ne\+Volt\+Type} sgn\+Lambda}\label{structneuron_state_a15348eb48eb71000bf4309a776d39cfe}
+\subsubsection[{sgn\+Lambda}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+volt\+T} sgn\+Lambda}\label{structneuron_state_a46a71f61511b5311e14643084109d90f}
 
 
-Definition at line 108 of file neuron\+\_\+model.\+h.
+Definition at line \hyperlink{neuron_8h_source_l00127}{127} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
 
-\hypertarget{structneuron_state_ac3d7ce178528ec72b94fc0698be8213a}{}\index{neuron\+State@{neuron\+State}!threshold@{threshold}}
+\hypertarget{structneuron_state_a71fbb9a79e8048b473b6e09d29a64bbe}{}\index{neuron\+State@{neuron\+State}!S\+O\+P\+S\+Count@{S\+O\+P\+S\+Count}}
+\index{S\+O\+P\+S\+Count@{S\+O\+P\+S\+Count}!neuron\+State@{neuron\+State}}
+\subsubsection[{S\+O\+P\+S\+Count}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+stat\+T} S\+O\+P\+S\+Count}\label{structneuron_state_a71fbb9a79e8048b473b6e09d29a64bbe}
+
+
+The number of synaptic messages received. 
+
+
+
+Definition at line \hyperlink{neuron_8h_source_l00132}{132} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
+
+\hypertarget{structneuron_state_af321d0fa58028b78986160845189077e}{}\index{neuron\+State@{neuron\+State}!threshold@{threshold}}
 \index{threshold@{threshold}!neuron\+State@{neuron\+State}}
-\subsubsection[{threshold}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+ne\+Volt\+Type} threshold}\label{structneuron_state_ac3d7ce178528ec72b94fc0698be8213a}
+\subsubsection[{threshold}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+volt\+T} threshold}\label{structneuron_state_af321d0fa58028b78986160845189077e}
 
 
-Definition at line 85 of file neuron\+\_\+model.\+h.
+previous state membrane potential 
 
 
 
-Referenced by neuron\+Receive\+Message().
+Definition at line \hyperlink{neuron_8h_source_l00093}{93} of file \hyperlink{neuron_8h_source}{neuron.\+h}.
 
 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/\hyperlink{neuron__model_8h}{neuron\+\_\+model.\+h}\end{DoxyCompactItemize}
+/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/\hyperlink{neuron_8h}{neuron.\+h}\end{DoxyCompactItemize}

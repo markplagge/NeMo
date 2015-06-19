@@ -22,6 +22,12 @@
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/SVG"],
+});
+</script><script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -46,6 +52,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -114,14 +121,14 @@ $(document).ready(function(){initNavTree('globals_enum.html','');});
 
 <div class="contents">
 &#160;<ul>
-<li>events
-: <a class="el" href="assist_8h.html#ad29858f6d8ab73f2970f41cb21a76b84">assist.h</a>
+<li>evtType
+: <a class="el" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450">assist.h</a>
 </li>
 <li>neuronFireMode
-: <a class="el" href="neuron__model_8h.html#a48885ea6be5b55a2e24de9f97552d4ee">neuron_model.h</a>
+: <a class="el" href="neuron_8h.html#a48885ea6be5b55a2e24de9f97552d4ee">neuron.h</a>
 </li>
-<li>randomSelect
-: <a class="el" href="spike__generator_8h.html#ad05574e5624d82eeb7acf436ba8802f6">spike_generator.h</a>
+<li>selectedRandom
+: <a class="el" href="input__simulator_8h.html#aa0d25534cd73156287b1136dd89c0215">input_simulator.h</a>
 </li>
 </ul>
 </div><!-- contents -->
@@ -129,7 +136,7 @@ $(document).ready(function(){initNavTree('globals_enum.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Apr 30 2015 15:32:21 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Fri Jun 19 2015 13:47:06 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

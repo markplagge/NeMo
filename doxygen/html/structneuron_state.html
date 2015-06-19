@@ -22,6 +22,12 @@
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/SVG"],
+});
+</script><script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -46,6 +52,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -110,138 +117,161 @@ $(document).ready(function(){initNavTree('structneuron_state.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="neuron_8h_source.html">neuron.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for neuronState:</div>
 <div class="dyncontent">
 <div class="center"><img src="structneuron_state__coll__graph.png" border="0" usemap="#neuron_state_coll__map" alt="Collaboration graph"/></div>
+<map name="neuron_state_coll__map" id="neuron_state_coll__map">
+</map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:acc19e6f856ad128cc1f90527d066700b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#acc19e6f856ad128cc1f90527d066700b">coreID</a></td></tr>
-<tr class="separator:acc19e6f856ad128cc1f90527d066700b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab668c4d903557a2ac39f2a5141df3976"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#ab668c4d903557a2ac39f2a5141df3976">neuronID</a></td></tr>
-<tr class="separator:ab668c4d903557a2ac39f2a5141df3976"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83c2516a958f81caedbaf4dd3c431d1b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a83c2516a958f81caedbaf4dd3c431d1b">cVoltage</a></td></tr>
-<tr class="separator:a83c2516a958f81caedbaf4dd3c431d1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac20c9ef5b5825eb38f91c1f1dacfb21d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#ac20c9ef5b5825eb38f91c1f1dacfb21d">prVoltage</a></td></tr>
-<tr class="separator:ac20c9ef5b5825eb38f91c1f1dacfb21d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3d7ce178528ec72b94fc0698be8213a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#ac3d7ce178528ec72b94fc0698be8213a">threshold</a></td></tr>
-<tr class="separator:ac3d7ce178528ec72b94fc0698be8213a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76ef99e5766b6e36c3f41a2920e8c56c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#a3f7a6e6a1210b6d9d7a42177dcb9634b">_idT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a76ef99e5766b6e36c3f41a2920e8c56c">myCoreID</a></td></tr>
+<tr class="separator:a76ef99e5766b6e36c3f41a2920e8c56c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac24762c24aede292a2ce5df78114881c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#a3f7a6e6a1210b6d9d7a42177dcb9634b">_idT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#ac24762c24aede292a2ce5df78114881c">myLocalID</a></td></tr>
+<tr class="memdesc:ac24762c24aede292a2ce5df78114881c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Neuron's coreID.  <a href="#ac24762c24aede292a2ce5df78114881c">More...</a><br /></td></tr>
+<tr class="separator:ac24762c24aede292a2ce5df78114881c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fdd8f44c4105a94e17c4c58a51db486"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">membranePot</a></td></tr>
+<tr class="memdesc:a0fdd8f44c4105a94e17c4c58a51db486"><td class="mdescLeft">&#160;</td><td class="mdescRight">Neuron's local ID (from 0 - j-1);.  <a href="#a0fdd8f44c4105a94e17c4c58a51db486">More...</a><br /></td></tr>
+<tr class="separator:a0fdd8f44c4105a94e17c4c58a51db486"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad17e1ac0b4bca75d10da8b0ab56edd6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#ad17e1ac0b4bca75d10da8b0ab56edd6e">prevMembranePot</a></td></tr>
+<tr class="memdesc:ad17e1ac0b4bca75d10da8b0ab56edd6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">current "voltage" of neuron  <a href="#ad17e1ac0b4bca75d10da8b0ab56edd6e">More...</a><br /></td></tr>
+<tr class="separator:ad17e1ac0b4bca75d10da8b0ab56edd6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af321d0fa58028b78986160845189077e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#af321d0fa58028b78986160845189077e">threshold</a></td></tr>
+<tr class="memdesc:af321d0fa58028b78986160845189077e"><td class="mdescLeft">&#160;</td><td class="mdescRight">previous state membrane potential  <a href="#af321d0fa58028b78986160845189077e">More...</a><br /></td></tr>
+<tr class="separator:af321d0fa58028b78986160845189077e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0658ad1f8b57a00589c6ea84f9a4ab13"><td class="memItemLeft" align="right" valign="top">tw_stime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a0658ad1f8b57a00589c6ea84f9a4ab13">lastActiveTime</a></td></tr>
+<tr class="memdesc:a0658ad1f8b57a00589c6ea84f9a4ab13"><td class="mdescLeft">&#160;</td><td class="mdescRight">neuron's threshold value  <a href="#a0658ad1f8b57a00589c6ea84f9a4ab13">More...</a><br /></td></tr>
 <tr class="separator:a0658ad1f8b57a00589c6ea84f9a4ab13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc17c439bc3ffa469b045a7ceff7a25a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#a7dd2b02e8e5ddb7f5b243002830d964f">_neStatType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#afc17c439bc3ffa469b045a7ceff7a25a">fireCount</a></td></tr>
-<tr class="memdesc:afc17c439bc3ffa469b045a7ceff7a25a"><td class="mdescLeft">&#160;</td><td class="mdescRight">neuron fire parameters  <a href="#afc17c439bc3ffa469b045a7ceff7a25a">More...</a><br /></td></tr>
-<tr class="separator:afc17c439bc3ffa469b045a7ceff7a25a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55890f9e021064df30e9d18a9df98845"><td class="memItemLeft" align="right" valign="top"><a class="el" href="neuron__model_8h.html#a48885ea6be5b55a2e24de9f97552d4ee">neuronFireMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a55890f9e021064df30e9d18a9df98845">fireMode</a></td></tr>
+<tr class="memitem:af8935bcba177f2f3dfb9119c39ef7dc5"><td class="memItemLeft" align="right" valign="top">uint_fast16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#af8935bcba177f2f3dfb9119c39ef7dc5">receivedSynapseMsgs</a></td></tr>
+<tr class="memdesc:af8935bcba177f2f3dfb9119c39ef7dc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">last time the neuron fired - used for calculating leak and reverse functions.  <a href="#af8935bcba177f2f3dfb9119c39ef7dc5">More...</a><br /></td></tr>
+<tr class="separator:af8935bcba177f2f3dfb9119c39ef7dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55890f9e021064df30e9d18a9df98845"><td class="memItemLeft" align="right" valign="top"><a class="el" href="neuron_8h.html#a48885ea6be5b55a2e24de9f97552d4ee">neuronFireMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a55890f9e021064df30e9d18a9df98845">fireMode</a></td></tr>
+<tr class="memdesc:a55890f9e021064df30e9d18a9df98845"><td class="mdescLeft">&#160;</td><td class="mdescRight">neuron firing parameters  <a href="#a55890f9e021064df30e9d18a9df98845">More...</a><br /></td></tr>
 <tr class="separator:a55890f9e021064df30e9d18a9df98845"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcf9d931e4fda519c43b4efeab687463"><td class="memItemLeft" align="right" valign="top"><a class="el" href="neuron__model_8h.html#ae7e5990745cd949246894bfb633ca4a2">resetFunDel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#afcf9d931e4fda519c43b4efeab687463">doReset</a></td></tr>
-<tr class="memdesc:afcf9d931e4fda519c43b4efeab687463"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset Function.  <a href="#afcf9d931e4fda519c43b4efeab687463">More...</a><br /></td></tr>
+<tr class="memitem:afcf9d931e4fda519c43b4efeab687463"><td class="memItemLeft" align="right" valign="top"><a class="el" href="neuron_8h.html#ae7e5990745cd949246894bfb633ca4a2">resetFunDel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#afcf9d931e4fda519c43b4efeab687463">doReset</a></td></tr>
+<tr class="memdesc:afcf9d931e4fda519c43b4efeab687463"><td class="mdescLeft">&#160;</td><td class="mdescRight">neuron's firing mode  <a href="#afcf9d931e4fda519c43b4efeab687463">More...</a><br /></td></tr>
 <tr class="separator:afcf9d931e4fda519c43b4efeab687463"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c0cef684666b681d30112c72e18bead"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a1c0cef684666b681d30112c72e18bead">resetVoltParam</a></td></tr>
-<tr class="memdesc:a1c0cef684666b681d30112c72e18bead"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional parameter for reset voltage function.  <a href="#a1c0cef684666b681d30112c72e18bead">More...</a><br /></td></tr>
-<tr class="separator:a1c0cef684666b681d30112c72e18bead"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf6970098695585c81e101b2a741b9a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="neuron__model_8h.html#aa939c0acc5b3367975f2f0cb7bc36d17">reverseResetDel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#abf6970098695585c81e101b2a741b9a5">reverseReset</a></td></tr>
-<tr class="memdesc:abf6970098695585c81e101b2a741b9a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverse reset function.  <a href="#abf6970098695585c81e101b2a741b9a5">More...</a><br /></td></tr>
+<tr class="memitem:add87cc0b2bc3426f0fd870f7df6decd5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#add87cc0b2bc3426f0fd870f7df6decd5">resetVoltParam</a></td></tr>
+<tr class="memdesc:add87cc0b2bc3426f0fd870f7df6decd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">neuron reset function  <a href="#add87cc0b2bc3426f0fd870f7df6decd5">More...</a><br /></td></tr>
+<tr class="separator:add87cc0b2bc3426f0fd870f7df6decd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf6970098695585c81e101b2a741b9a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="neuron_8h.html#aa939c0acc5b3367975f2f0cb7bc36d17">reverseResetDel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#abf6970098695585c81e101b2a741b9a5">reverseReset</a></td></tr>
+<tr class="memdesc:abf6970098695585c81e101b2a741b9a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional parameter for reset voltage functions.  <a href="#abf6970098695585c81e101b2a741b9a5">More...</a><br /></td></tr>
 <tr class="separator:abf6970098695585c81e101b2a741b9a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac21457aec3f29f9f28b58dd95e3d6fb2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#ac21457aec3f29f9f28b58dd95e3d6fb2">perSynapseWeight</a></td></tr>
-<tr class="memdesc:ac21457aec3f29f9f28b58dd95e3d6fb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">synapse input weights  <a href="#ac21457aec3f29f9f28b58dd95e3d6fb2">More...</a><br /></td></tr>
-<tr class="separator:ac21457aec3f29f9f28b58dd95e3d6fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab39656a1580505adcabc4c7a1f4d8100"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#ab39656a1580505adcabc4c7a1f4d8100">perSynapseWeight</a></td></tr>
+<tr class="memdesc:ab39656a1580505adcabc4c7a1f4d8100"><td class="mdescLeft">&#160;</td><td class="mdescRight">Neuron reverse reset function.  <a href="#ab39656a1580505adcabc4c7a1f4d8100">More...</a><br /></td></tr>
+<tr class="separator:ab39656a1580505adcabc4c7a1f4d8100"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95688135a244a3ce3b35698a49d0da18"><td class="memItemLeft" align="right" valign="top">bool *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a95688135a244a3ce3b35698a49d0da18">perSynapseDet</a></td></tr>
+<tr class="memdesc:a95688135a244a3ce3b35698a49d0da18"><td class="mdescLeft">&#160;</td><td class="mdescRight">An array determining if each synapse is handled stochastically or deterministically.  <a href="#a95688135a244a3ce3b35698a49d0da18">More...</a><br /></td></tr>
 <tr class="separator:a95688135a244a3ce3b35698a49d0da18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f4e4d8fc1cf0257b486e01f628d2656"><td class="memItemLeft" align="right" valign="top">tw_stime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">lastLeakTime</a></td></tr>
-<tr class="memdesc:a6f4e4d8fc1cf0257b486e01f628d2656"><td class="mdescLeft">&#160;</td><td class="mdescRight">neuron leak parameters  <a href="#a6f4e4d8fc1cf0257b486e01f628d2656">More...</a><br /></td></tr>
-<tr class="separator:a6f4e4d8fc1cf0257b486e01f628d2656"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe8da12a0fe0aef0987e785a64619706"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#afe8da12a0fe0aef0987e785a64619706">leakRate</a></td></tr>
-<tr class="separator:afe8da12a0fe0aef0987e785a64619706"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15348eb48eb71000bf4309a776d39cfe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a15348eb48eb71000bf4309a776d39cfe">sgnLambda</a></td></tr>
-<tr class="separator:a15348eb48eb71000bf4309a776d39cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0271f69fc01192f4f85b74d9bee06de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structleak_fun_del.html">leakFunDel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#ad0271f69fc01192f4f85b74d9bee06de">leak</a></td></tr>
-<tr class="separator:ad0271f69fc01192f4f85b74d9bee06de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f71d6ac3efc9d397adfcc72c7fe40c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structreverse_leak_del.html">reverseLeakDel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a0f71d6ac3efc9d397adfcc72c7fe40c1">reverseLeak</a></td></tr>
-<tr class="memdesc:a0f71d6ac3efc9d397adfcc72c7fe40c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverse Leak Functuon.  <a href="#a0f71d6ac3efc9d397adfcc72c7fe40c1">More...</a><br /></td></tr>
-<tr class="separator:a0f71d6ac3efc9d397adfcc72c7fe40c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af66b578d3c4aac7db55b573b880db0eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#af66b578d3c4aac7db55b573b880db0eb">dendriteLocalDest</a></td></tr>
-<tr class="separator:af66b578d3c4aac7db55b573b880db0eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab49277e7f9460fbd698aefa5a44b1b0b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#ab49277e7f9460fbd698aefa5a44b1b0b">dendriteCore</a></td></tr>
-<tr class="separator:ab49277e7f9460fbd698aefa5a44b1b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a081d21dd7333cf48eaec21f5eaef8847"><td class="memItemLeft" align="right" valign="top">tw_lpid&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a081d21dd7333cf48eaec21f5eaef8847">dendriteDest</a></td></tr>
-<tr class="separator:a081d21dd7333cf48eaec21f5eaef8847"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62463fa4d33c39297aa5ce3a145d474f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#a3f7a6e6a1210b6d9d7a42177dcb9634b">_idT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a62463fa4d33c39297aa5ce3a145d474f">dendriteCore</a></td></tr>
+<tr class="separator:a62463fa4d33c39297aa5ce3a145d474f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73e5b16411af572181411b8fd8d5117d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#a3f7a6e6a1210b6d9d7a42177dcb9634b">_idT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a73e5b16411af572181411b8fd8d5117d">dendriteLocal</a></td></tr>
+<tr class="memdesc:a73e5b16411af572181411b8fd8d5117d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Local core of the remote dendrite.  <a href="#a73e5b16411af572181411b8fd8d5117d">More...</a><br /></td></tr>
+<tr class="separator:a73e5b16411af572181411b8fd8d5117d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4199c14c5aabfd52f441e01623bdc84c"><td class="memItemLeft" align="right" valign="top">tw_lpid&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a4199c14c5aabfd52f441e01623bdc84c">dendriteGlobalDest</a></td></tr>
+<tr class="memdesc:a4199c14c5aabfd52f441e01623bdc84c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Local ID of the remote dendrite &ndash; not LPID, but a local axon value (0-i)  <a href="#a4199c14c5aabfd52f441e01623bdc84c">More...</a><br /></td></tr>
+<tr class="separator:a4199c14c5aabfd52f441e01623bdc84c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa430f424f34dc59dc27736e27ec61320"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structleak_fun_del.html">leakFunDel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#aa430f424f34dc59dc27736e27ec61320">doLeak</a></td></tr>
+<tr class="memdesc:aa430f424f34dc59dc27736e27ec61320"><td class="mdescLeft">&#160;</td><td class="mdescRight">GID of the axon this neuron talks to. TODO: The dendriteCore and dendriteLocal values might not be needed anymroe.  <a href="#aa430f424f34dc59dc27736e27ec61320">More...</a><br /></td></tr>
+<tr class="separator:aa430f424f34dc59dc27736e27ec61320"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4ded7f575b64ada6c0a6664f638307c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structreverse_leak_del.html">reverseLeakDel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#af4ded7f575b64ada6c0a6664f638307c">doLeakReverse</a></td></tr>
+<tr class="memdesc:af4ded7f575b64ada6c0a6664f638307c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function pointer to the neuron's current leak function.  <a href="#af4ded7f575b64ada6c0a6664f638307c">More...</a><br /></td></tr>
+<tr class="separator:af4ded7f575b64ada6c0a6664f638307c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7138aaa7e2988e5ad0d32cc9846dcbbb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a7138aaa7e2988e5ad0d32cc9846dcbbb">leakRate</a></td></tr>
+<tr class="separator:a7138aaa7e2988e5ad0d32cc9846dcbbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46a71f61511b5311e14643084109d90f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a46a71f61511b5311e14643084109d90f">sgnLambda</a></td></tr>
+<tr class="separator:a46a71f61511b5311e14643084109d90f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe8825076c4cf3863c677307fec63c61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#ad77e6fc5a9b03d46e7c97b7c4b92e89f">_statT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#afe8825076c4cf3863c677307fec63c61">fireCount</a></td></tr>
+<tr class="separator:afe8825076c4cf3863c677307fec63c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8f63a1dfdb2992657530ff8a63fdc01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#ad77e6fc5a9b03d46e7c97b7c4b92e89f">_statT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#ab8f63a1dfdb2992657530ff8a63fdc01">rcvdMsgCount</a></td></tr>
+<tr class="memdesc:ab8f63a1dfdb2992657530ff8a63fdc01"><td class="mdescLeft">&#160;</td><td class="mdescRight">count of this neuron's output  <a href="#ab8f63a1dfdb2992657530ff8a63fdc01">More...</a><br /></td></tr>
+<tr class="separator:ab8f63a1dfdb2992657530ff8a63fdc01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71fbb9a79e8048b473b6e09d29a64bbe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="assist_8h.html#ad77e6fc5a9b03d46e7c97b7c4b92e89f">_statT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structneuron_state.html#a71fbb9a79e8048b473b6e09d29a64bbe">SOPSCount</a></td></tr>
+<tr class="memdesc:a71fbb9a79e8048b473b6e09d29a64bbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of synaptic messages received.  <a href="#a71fbb9a79e8048b473b6e09d29a64bbe">More...</a><br /></td></tr>
+<tr class="separator:a71fbb9a79e8048b473b6e09d29a64bbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00080">80</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00085">85</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="acc19e6f856ad128cc1f90527d066700b"></a>
+<a class="anchor" id="a62463fa4d33c39297aa5ce3a145d474f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a> coreID</td>
+          <td class="memname"><a class="el" href="assist_8h.html#a3f7a6e6a1210b6d9d7a42177dcb9634b">_idT</a> dendriteCore</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00081">81</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00118">118</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a83c2516a958f81caedbaf4dd3c431d1b"></a>
+<a class="anchor" id="a4199c14c5aabfd52f441e01623bdc84c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a> cVoltage</td>
+          <td class="memname">tw_lpid dendriteGlobalDest</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00083">83</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>Local ID of the remote dendrite &ndash; not LPID, but a local axon value (0-i) </p>
 
-<p>Referenced by <a class="el" href="neuron__model_8c_source.html#l00080">neuronReceiveMessage()</a>, <a class="el" href="neuron__model_8c_source.html#l00039">resetZero()</a>, <a class="el" href="neuron__model_8c_source.html#l00061">reverseLinear()</a>, and <a class="el" href="neuron__model_8c_source.html#l00067">reverseZero()</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00120">120</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab49277e7f9460fbd698aefa5a44b1b0b"></a>
+<a class="anchor" id="a73e5b16411af572181411b8fd8d5117d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a> dendriteCore</td>
+          <td class="memname"><a class="el" href="assist_8h.html#a3f7a6e6a1210b6d9d7a42177dcb9634b">_idT</a> dendriteLocal</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00116">116</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>Local core of the remote dendrite. </p>
+
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00119">119</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a081d21dd7333cf48eaec21f5eaef8847"></a>
+<a class="anchor" id="aa430f424f34dc59dc27736e27ec61320"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">tw_lpid dendriteDest</td>
+          <td class="memname"><a class="el" href="structleak_fun_del.html">leakFunDel</a> doLeak</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00117">117</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>GID of the axon this neuron talks to. TODO: The dendriteCore and dendriteLocal values might not be needed anymroe. </p>
+
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00123">123</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af66b578d3c4aac7db55b573b880db0eb"></a>
+<a class="anchor" id="af4ded7f575b64ada6c0a6664f638307c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a> dendriteLocalDest</td>
+          <td class="memname"><a class="el" href="structreverse_leak_del.html">reverseLeakDel</a> doLeakReverse</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00115">115</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>Function pointer to the neuron's current leak function. </p>
+
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00124">124</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
@@ -250,34 +280,29 @@ Data Fields</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="neuron__model_8h.html#ae7e5990745cd949246894bfb633ca4a2">resetFunDel</a> doReset</td>
+          <td class="memname"><a class="el" href="neuron_8h.html#ae7e5990745cd949246894bfb633ca4a2">resetFunDel</a> doReset</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reset Function. </p>
+<p>neuron's firing mode </p>
+<p>neuron reset params </p>
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00094">94</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
-
-<p>Referenced by <a class="el" href="neuron__model_8c_source.html#l00132">neuronPostFire()</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00104">104</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afc17c439bc3ffa469b045a7ceff7a25a"></a>
+<a class="anchor" id="afe8825076c4cf3863c677307fec63c61"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#a7dd2b02e8e5ddb7f5b243002830d964f">_neStatType</a> fireCount</td>
+          <td class="memname"><a class="el" href="assist_8h.html#ad77e6fc5a9b03d46e7c97b7c4b92e89f">_statT</a> fireCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>neuron fire parameters </p>
-
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00090">90</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
-
-<p>Referenced by <a class="el" href="model__main_8c_source.html#l00044">neuron_init()</a>, and <a class="el" href="neuron__model_8c_source.html#l00143">neuronFire()</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00130">130</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
@@ -286,14 +311,14 @@ Data Fields</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="neuron__model_8h.html#a48885ea6be5b55a2e24de9f97552d4ee">neuronFireMode</a> fireMode</td>
+          <td class="memname"><a class="el" href="neuron_8h.html#a48885ea6be5b55a2e24de9f97552d4ee">neuronFireMode</a> fireMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00092">92</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>neuron firing parameters </p>
 
-<p>Referenced by <a class="el" href="neuron__model_8c_source.html#l00080">neuronReceiveMessage()</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00101">101</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
@@ -307,67 +332,69 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00087">87</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>neuron's threshold value </p>
+
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00094">94</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6f4e4d8fc1cf0257b486e01f628d2656"></a>
+<a class="anchor" id="a7138aaa7e2988e5ad0d32cc9846dcbbb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">tw_stime lastLeakTime</td>
+          <td class="memname"><a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a> leakRate</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>neuron leak parameters </p>
-
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00106">106</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00126">126</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad0271f69fc01192f4f85b74d9bee06de"></a>
+<a class="anchor" id="a0fdd8f44c4105a94e17c4c58a51db486"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structleak_fun_del.html">leakFunDel</a> leak</td>
+          <td class="memname"><a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a> membranePot</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00110">110</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>Neuron's local ID (from 0 - j-1);. </p>
+
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00091">91</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afe8da12a0fe0aef0987e785a64619706"></a>
+<a class="anchor" id="a76ef99e5766b6e36c3f41a2920e8c56c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a> leakRate</td>
+          <td class="memname"><a class="el" href="assist_8h.html#a3f7a6e6a1210b6d9d7a42177dcb9634b">_idT</a> myCoreID</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00107">107</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
-
-<p>Referenced by <a class="el" href="model__main_8c_source.html#l00044">neuron_init()</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00087">87</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab668c4d903557a2ac39f2a5141df3976"></a>
+<a class="anchor" id="ac24762c24aede292a2ce5df78114881c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a> neuronID</td>
+          <td class="memname"><a class="el" href="assist_8h.html#a3f7a6e6a1210b6d9d7a42177dcb9634b">_idT</a> myLocalID</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00082">82</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>Neuron's coreID. </p>
+
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00088">88</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
@@ -381,77 +408,94 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00104">104</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>An array determining if each synapse is handled stochastically or deterministically. </p>
+<p>Since the actual hardware has 4 synapse types, this setup has more power than the actual TrueNorth architecture.</p>
+<p>To ensure model &lt;-&gt; hardware accuracy, at most four different modes should be used per neuron, so that synapses are handled as one of four possible types. </p>
 
-<p>Referenced by <a class="el" href="model__main_8c_source.html#l00098">initRandomWts()</a>, and <a class="el" href="neuron__model_8c_source.html#l00080">neuronReceiveMessage()</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00113">113</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac21457aec3f29f9f28b58dd95e3d6fb2"></a>
+<a class="anchor" id="ab39656a1580505adcabc4c7a1f4d8100"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a>* perSynapseWeight</td>
+          <td class="memname"><a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a>* perSynapseWeight</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>synapse input weights </p>
+<p>Neuron reverse reset function. </p>
+<p>In this simulation, each synappse can have a unique weight. In the paper, there is a limit of four different "types" of synapse behavior per neruon. For an accurate sim, there can only be four different values in this array.</p>
+<p>Since this is an array, this simulator has the potential to have more power than the actual TrueNorth hardware architecture. </p>
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00103">103</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
-
-<p>Referenced by <a class="el" href="neuron__model_8c_source.html#l00080">neuronReceiveMessage()</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00110">110</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac20c9ef5b5825eb38f91c1f1dacfb21d"></a>
+<a class="anchor" id="ad17e1ac0b4bca75d10da8b0ab56edd6e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a> prVoltage</td>
+          <td class="memname"><a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a> prevMembranePot</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00084">84</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>current "voltage" of neuron </p>
 
-<p>Referenced by <a class="el" href="model__main_8c_source.html#l00044">neuron_init()</a>, <a class="el" href="neuron__model_8c_source.html#l00080">neuronReceiveMessage()</a>, <a class="el" href="neuron__model_8c_source.html#l00039">resetZero()</a>, and <a class="el" href="neuron__model_8c_source.html#l00067">reverseZero()</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00092">92</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a1c0cef684666b681d30112c72e18bead"></a>
+<a class="anchor" id="ab8f63a1dfdb2992657530ff8a63fdc01"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a> resetVoltParam</td>
+          <td class="memname"><a class="el" href="assist_8h.html#ad77e6fc5a9b03d46e7c97b7c4b92e89f">_statT</a> rcvdMsgCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Optional parameter for reset voltage function. </p>
+<p>count of this neuron's output </p>
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00095">95</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
-
-<p>Referenced by <a class="el" href="neuron__model_8c_source.html#l00061">reverseLinear()</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00131">131</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0f71d6ac3efc9d397adfcc72c7fe40c1"></a>
+<a class="anchor" id="af8935bcba177f2f3dfb9119c39ef7dc5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structreverse_leak_del.html">reverseLeakDel</a> reverseLeak</td>
+          <td class="memname">uint_fast16_t receivedSynapseMsgs</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reverse Leak Functuon. </p>
+<p>last time the neuron fired - used for calculating leak and reverse functions. </p>
+<p>Used for big-tick synchronization. If this neuron has received a synapse message during this big-tick cycle, this will be set to &gt; 0. Every synapse received until the big tick occurs will increment this value. Reverse events decrement this value. If the value is == 0 when a synapse message is received, the neuron will send a fire schedule message to itself at the next big-tick time. </p>
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00113">113</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00095">95</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="add87cc0b2bc3426f0fd870f7df6decd5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a> resetVoltParam</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>neuron reset function </p>
+
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00105">105</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
@@ -460,49 +504,65 @@ Data Fields</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="neuron__model_8h.html#aa939c0acc5b3367975f2f0cb7bc36d17">reverseResetDel</a> reverseReset</td>
+          <td class="memname"><a class="el" href="neuron_8h.html#aa939c0acc5b3367975f2f0cb7bc36d17">reverseResetDel</a> reverseReset</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reverse reset function. </p>
+<p>Optional parameter for reset voltage functions. </p>
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00099">99</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00107">107</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a15348eb48eb71000bf4309a776d39cfe"></a>
+<a class="anchor" id="a46a71f61511b5311e14643084109d90f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a> sgnLambda</td>
+          <td class="memname"><a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a> sgnLambda</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00108">108</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00127">127</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac3d7ce178528ec72b94fc0698be8213a"></a>
+<a class="anchor" id="a71fbb9a79e8048b473b6e09d29a64bbe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a> threshold</td>
+          <td class="memname"><a class="el" href="assist_8h.html#ad77e6fc5a9b03d46e7c97b7c4b92e89f">_statT</a> SOPSCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="neuron__model_8h_source.html#l00085">85</a> of file <a class="el" href="neuron__model_8h_source.html">neuron_model.h</a>.</p>
+<p>The number of synaptic messages received. </p>
 
-<p>Referenced by <a class="el" href="neuron__model_8c_source.html#l00080">neuronReceiveMessage()</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00132">132</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af321d0fa58028b78986160845189077e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a> threshold</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>previous state membrane potential </p>
+
+<p>Definition at line <a class="el" href="neuron_8h_source.html#l00093">93</a> of file <a class="el" href="neuron_8h_source.html">neuron.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>/Users/Mark/Development/TrueNorth/tnt_benchmark/models/<a class="el" href="neuron__model_8h_source.html">neuron_model.h</a></li>
+<li>/Users/Mark/Development/TrueNorth/tnt_benchmark/models/<a class="el" href="neuron_8h_source.html">neuron.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -510,7 +570,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structneuron_state.html">neuronState</a></li>
-    <li class="footer">Generated on Thu Apr 30 2015 15:32:21 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Fri Jun 19 2015 13:47:05 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

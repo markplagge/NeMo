@@ -19,8 +19,8 @@
 #define _voltT int_fast32_t ///Voltage data type
 #define _statT int_fast64_t ///Counter data type for stats
 /** _regIDT is a "regional id" type. This variable type is for storing
- *	coreIDs and localIDs. It must be half the bit size of tw_lpid. @todo: add
- *	macro to adjust the bit width. */
+ *	coreIDs and localIDs. It must be half the bit size of tw_lpid. 
+ */
 #define _regIDT uint32_t
 
 /* Global Macros */
@@ -30,7 +30,7 @@
 	/** RZER is a floor function - values below zero round up to zero */
 #define RZER(a) (((a) < 0) ? (0) : (a))
 
-/* simulation structs. TODO: Maybe move these into main? */
+/* simulation structs. @todo: Maybe move these into main? */
 /** evtType is a message/event identifier flag */
 enum evtType {
 	AXON_OUT, ///Message originates from an axon

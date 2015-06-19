@@ -1,20 +1,17 @@
 \hypertarget{assist_8c}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/assist.c File Reference}
 \label{assist_8c}\index{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/assist.\+c@{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/assist.\+c}}
 {\ttfamily \#include \char`\"{}assist.\+h\char`\"{}}\\*
-Include dependency graph for assist.\+c\+:\nopagebreak
+Include dependency graph for assist.\+c\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=350pt]{assist_8c__incl}
+\includegraphics[width=338pt]{assist_8c__incl}
 \end{center}
 \end{figure}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-long \hyperlink{assist_8c_aef81233c3f867780a8df11b7b8657936}{get\+Total\+Synapses} ()
-\begin{DoxyCompactList}\small\item\em \hyperlink{assist_8c}{Assist.\+C} Contains helper functions, used in the model. \end{DoxyCompactList}\item 
-long \hyperlink{assist_8c_a49beab5908df591d0cdd535f04dcd855}{get\+Total\+Neurons} ()
-\begin{DoxyCompactList}\small\item\em get\+Total\+Neurons -\/ simple function that gets the total synapses globally \end{DoxyCompactList}\item 
 tw\+\_\+stime \hyperlink{assist_8c_a30602b11dbfa6bcb90dc00e7942cfb02}{get\+Next\+Event\+Time} (tw\+\_\+lp $\ast$lp)
 \begin{DoxyCompactList}\small\item\em Gets the next event time, based on a random function. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -43,69 +40,14 @@ a tw\+\_\+stime value, such that $ 0 < t < 1 $. A delta for the next time slice.
 \end{DoxyReturn}
 
 
-Definition at line 36 of file assist.\+c.
+Definition at line \hyperlink{assist_8c_source_l00020}{20} of file \hyperlink{assist_8c_source}{assist.\+c}.
 
 
 \begin{DoxyCode}
-36                                     \{
-37 
-38     \textcolor{keywordflow}{return} tw\_rand\_unif(lp->rng) / 10;
-39 \}\end{DoxyCode}
-\hypertarget{assist_8c_a49beab5908df591d0cdd535f04dcd855}{}\index{assist.\+c@{assist.\+c}!get\+Total\+Neurons@{get\+Total\+Neurons}}
-\index{get\+Total\+Neurons@{get\+Total\+Neurons}!assist.\+c@{assist.\+c}}
-\subsubsection[{get\+Total\+Neurons}]{\setlength{\rightskip}{0pt plus 5cm}long get\+Total\+Neurons (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\label{assist_8c_a49beab5908df591d0cdd535f04dcd855}
-
-
-get\+Total\+Neurons -\/ simple function that gets the total synapses globally 
-
-\begin{DoxyReturn}{Returns}
-The number of neurons in the system. 
-\end{DoxyReturn}
-
-
-Definition at line 23 of file assist.\+c.
-
-
-
-References C\+O\+R\+E\+S\+\_\+\+P\+E\+R\+\_\+\+P\+E, and N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E.
-
-
-\begin{DoxyCode}
-23                        \{
-24     \textcolor{keywordflow}{return} \hyperlink{assist_8h_a67e8e45768f76b984a60fcff2b7c51aa}{NEURONS\_IN\_CORE} * \hyperlink{assist_8h_a851557110b7442a40078d6ef85c2de76}{CORES\_PER\_PE};
-25 \}
-\end{DoxyCode}
-\hypertarget{assist_8c_aef81233c3f867780a8df11b7b8657936}{}\index{assist.\+c@{assist.\+c}!get\+Total\+Synapses@{get\+Total\+Synapses}}
-\index{get\+Total\+Synapses@{get\+Total\+Synapses}!assist.\+c@{assist.\+c}}
-\subsubsection[{get\+Total\+Synapses}]{\setlength{\rightskip}{0pt plus 5cm}long get\+Total\+Synapses (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\label{assist_8c_aef81233c3f867780a8df11b7b8657936}
-
-
-\hyperlink{assist_8c}{Assist.\+C} Contains helper functions, used in the model. 
-
-Functions here should be too generic to include in neuron/synapse Contains all of the global defs as well. get\+Total\+Synapses -\/ simple function that gets the total synapses globally
-
-\begin{DoxyReturn}{Returns}
-The number of synapses in in the sim 
-\end{DoxyReturn}
-
-
-Definition at line 15 of file assist.\+c.
-
-
-
-References C\+O\+R\+E\+S\+\_\+\+P\+E\+R\+\_\+\+P\+E, and S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E.
-
-
-\begin{DoxyCode}
-15                         \{
-16    \textcolor{keywordflow}{return} \hyperlink{assist_8h_a076b99099b46431255982b2bb8ce06fb}{SYNAPSES\_IN\_CORE} * \hyperlink{assist_8h_a851557110b7442a40078d6ef85c2de76}{CORES\_PER\_PE};
-17 \}
-\end{DoxyCode}
+00020                                     \{
+00021 
+00022     tw\_stime r =tw\_rand\_unif(lp->rng) / 10;
+00023 
+00024     \textcolor{keywordflow}{return} r;
+00025 
+00026 \}\end{DoxyCode}

@@ -22,6 +22,12 @@
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/SVG"],
+});
+</script><script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -46,6 +52,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -114,35 +121,35 @@ $(document).ready(function(){initNavTree('globals_eval.html','');});
 
 <div class="contents">
 &#160;<ul>
-<li>BINOM
-: <a class="el" href="spike__generator_8h.html#ad05574e5624d82eeb7acf436ba8802f6a0a5faa91345ab363e44d91656fbe435a">spike_generator.h</a>
+<li>AXON_HEARTBEAT
+: <a class="el" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a9afa7ee7839cdd980f348a3a70b0054f">assist.h</a>
 </li>
-<li>EXP
-: <a class="el" href="spike__generator_8h.html#ad05574e5624d82eeb7acf436ba8802f6a25f966031f3630b7ea2a347fa376b757">spike_generator.h</a>
+<li>AXON_OUT
+: <a class="el" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee">assist.h</a>
 </li>
-<li>GEOM
-: <a class="el" href="spike__generator_8h.html#ad05574e5624d82eeb7acf436ba8802f6aa0e01bf1936fac473412454a1cf09569">spike_generator.h</a>
+<li>GEN_HEARTBEAT
+: <a class="el" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450add78176054e14835c454b5f2d1827d42">assist.h</a>
 </li>
-<li>INIT
-: <a class="el" href="assist_8h.html#ad29858f6d8ab73f2970f41cb21a76b84a0cb1b2c6a7db1f1084886c98909a3f36">assist.h</a>
+<li>NEURON_HEARTBEAT
+: <a class="el" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e">assist.h</a>
 </li>
-<li>NEURON
-: <a class="el" href="assist_8h.html#ad29858f6d8ab73f2970f41cb21a76b84aa6d4039a2c1978081f4a5dc297684e3b">assist.h</a>
+<li>NEURON_OUT
+: <a class="el" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0">assist.h</a>
 </li>
 <li>NFM
-: <a class="el" href="neuron__model_8h.html#a48885ea6be5b55a2e24de9f97552d4eea520c6b216334b8c2d914cf9fab8cd460">neuron_model.h</a>
+: <a class="el" href="neuron_8h.html#a48885ea6be5b55a2e24de9f97552d4eea520c6b216334b8c2d914cf9fab8cd460">neuron.h</a>
+</li>
+<li>NORM
+: <a class="el" href="input__simulator_8h.html#aa0d25534cd73156287b1136dd89c0215ae003ec1158e3a4e295616ced12af154e">input_simulator.h</a>
 </li>
 <li>SELECT
-: <a class="el" href="spike__generator_8h.html#ad05574e5624d82eeb7acf436ba8802f6a1697a91b22c2369eb2ba427c2d193329">spike_generator.h</a>
+: <a class="el" href="input__simulator_8h.html#aa0d25534cd73156287b1136dd89c0215a1697a91b22c2369eb2ba427c2d193329">input_simulator.h</a>
 </li>
-<li>SPKGN
-: <a class="el" href="assist_8h.html#ad29858f6d8ab73f2970f41cb21a76b84a90cb05c22c7f003374a28a7cc13c2efa">assist.h</a>
-</li>
-<li>SYNAPSE
-: <a class="el" href="assist_8h.html#ad29858f6d8ab73f2970f41cb21a76b84a0fc4921596903c454139a4c6814fc839">assist.h</a>
+<li>SYNAPSE_OUT
+: <a class="el" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb">assist.h</a>
 </li>
 <li>UNF
-: <a class="el" href="spike__generator_8h.html#ad05574e5624d82eeb7acf436ba8802f6a4b3574e75cec43aa4dd3a0fd7940c632">spike_generator.h</a>
+: <a class="el" href="input__simulator_8h.html#aa0d25534cd73156287b1136dd89c0215a4b3574e75cec43aa4dd3a0fd7940c632">input_simulator.h</a>
 </li>
 </ul>
 </div><!-- contents -->
@@ -150,7 +157,7 @@ $(document).ready(function(){initNavTree('globals_eval.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Apr 30 2015 15:32:21 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Fri Jun 19 2015 13:47:06 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

@@ -22,6 +22,12 @@
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/SVG"],
+});
+</script><script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -46,6 +52,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -110,131 +117,48 @@ $(document).ready(function(){initNavTree('struct_msg___data.html','');});
 </div><!--header-->
 <div class="contents">
 
+<p>Main message struct.  
+ <a href="struct_msg___data.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="assist_8h_source.html">assist.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac94c7cb1b3f009936733d0f0cec9f72a"><td class="memItemLeft" align="right" valign="top">tw_lpid&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_msg___data.html#ac94c7cb1b3f009936733d0f0cec9f72a">sender</a></td></tr>
-<tr class="separator:ac94c7cb1b3f009936733d0f0cec9f72a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4e0329991e30bd3958b93c3bbb3038d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_msg___data.html#af4e0329991e30bd3958b93c3bbb3038d">senderLocalID</a></td></tr>
-<tr class="separator:af4e0329991e30bd3958b93c3bbb3038d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ce9b87ee4780bfc676814cf8d485a97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_msg___data.html#a0ce9b87ee4780bfc676814cf8d485a97">destCore</a></td></tr>
-<tr class="separator:a0ce9b87ee4780bfc676814cf8d485a97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0359599db6f5e6c68ac2b7123b4147a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_msg___data.html#aa0359599db6f5e6c68ac2b7123b4147a">destLocalID</a></td></tr>
-<tr class="separator:aa0359599db6f5e6c68ac2b7123b4147a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13b05c6b2a199a7bdf79a18b9e7c22e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_msg___data.html#a13b05c6b2a199a7bdf79a18b9e7c22e9">sourceCore</a></td></tr>
-<tr class="separator:a13b05c6b2a199a7bdf79a18b9e7c22e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8720847cee557678e9bfc7da95d46bf"><td class="memItemLeft" align="right" valign="top">enum <a class="el" href="assist_8h.html#ad29858f6d8ab73f2970f41cb21a76b84">events</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_msg___data.html#ab8720847cee557678e9bfc7da95d46bf">type</a></td></tr>
-<tr class="separator:ab8720847cee557678e9bfc7da95d46bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20818fc301603eac9d3685ba53424699"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_msg___data.html#a20818fc301603eac9d3685ba53424699">prevVoltage</a></td></tr>
-<tr class="memdesc:a20818fc301603eac9d3685ba53424699"><td class="mdescLeft">&#160;</td><td class="mdescRight">This saves the old state of the neuron, before firing, so that roll back functions will occur.  <a href="#a20818fc301603eac9d3685ba53424699">More...</a><br /></td></tr>
-<tr class="separator:a20818fc301603eac9d3685ba53424699"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a015b6eb45982e1842ee8fc389a099ced"><td class="memItemLeft" align="right" valign="top">enum <a class="el" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450">evtType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">eventType</a></td></tr>
+<tr class="separator:a015b6eb45982e1842ee8fc389a099ced"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4d75bc6367f5cfbfabc69690fdc1efc"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_msg___data.html#ab4d75bc6367f5cfbfabc69690fdc1efc">rndCallCount</a></td></tr>
+<tr class="separator:ab4d75bc6367f5cfbfabc69690fdc1efc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="assist_8h_source.html#l00137">137</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
+<div class="textblock"><p>Main message struct. </p>
+
+<p>Definition at line <a class="el" href="assist_8h_source.html#l00045">45</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a0ce9b87ee4780bfc676814cf8d485a97"></a>
+<a class="anchor" id="a015b6eb45982e1842ee8fc389a099ced"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a> destCore</td>
+          <td class="memname">enum <a class="el" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450">evtType</a> eventType</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="assist_8h_source.html#l00140">140</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
+<p>Definition at line <a class="el" href="assist_8h_source.html#l00046">46</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa0359599db6f5e6c68ac2b7123b4147a"></a>
+<a class="anchor" id="ab4d75bc6367f5cfbfabc69690fdc1efc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a> destLocalID</td>
+          <td class="memname">unsigned int rndCallCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="assist_8h_source.html#l00141">141</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a20818fc301603eac9d3685ba53424699"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#a368ddcd71f7b61cb0f918f22d07ce999">_neVoltType</a> prevVoltage</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>This saves the old state of the neuron, before firing, so that roll back functions will occur. </p>
-
-<p>Definition at line <a class="el" href="assist_8h_source.html#l00145">145</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
-
-<p>Referenced by <a class="el" href="neuron__model_8c_source.html#l00080">neuronReceiveMessage()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ac94c7cb1b3f009936733d0f0cec9f72a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">tw_lpid sender</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="assist_8h_source.html#l00138">138</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="af4e0329991e30bd3958b93c3bbb3038d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a> senderLocalID</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="assist_8h_source.html#l00139">139</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
-
-<p>Referenced by <a class="el" href="neuron__model_8c_source.html#l00080">neuronReceiveMessage()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a13b05c6b2a199a7bdf79a18b9e7c22e9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="mappings_8c.html#adc0d1d400308f82e4d42245c2fd946b9">_idType</a> sourceCore</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="assist_8h_source.html#l00142">142</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab8720847cee557678e9bfc7da95d46bf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="assist_8h.html#ad29858f6d8ab73f2970f41cb21a76b84">events</a> type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="assist_8h_source.html#l00143">143</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
+<p>Definition at line <a class="el" href="assist_8h_source.html#l00047">47</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
 
 </div>
 </div>
@@ -247,7 +171,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="struct_msg___data.html">Msg_Data</a></li>
-    <li class="footer">Generated on Thu Apr 30 2015 15:32:21 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Fri Jun 19 2015 13:47:05 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

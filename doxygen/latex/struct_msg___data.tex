@@ -2,95 +2,43 @@
 \label{struct_msg___data}\index{Msg\+\_\+\+Data@{Msg\+\_\+\+Data}}
 
 
+Main message struct.  
+
+
+
+
 {\ttfamily \#include $<$assist.\+h$>$}
 
 \subsection*{Data Fields}
 \begin{DoxyCompactItemize}
 \item 
-tw\+\_\+lpid \hyperlink{struct_msg___data_ac94c7cb1b3f009936733d0f0cec9f72a}{sender}
+enum \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450}{evt\+Type} \hyperlink{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}{event\+Type}
 \item 
-\hyperlink{mappings_8c_adc0d1d400308f82e4d42245c2fd946b9}{\+\_\+id\+Type} \hyperlink{struct_msg___data_af4e0329991e30bd3958b93c3bbb3038d}{sender\+Local\+I\+D}
-\item 
-\hyperlink{mappings_8c_adc0d1d400308f82e4d42245c2fd946b9}{\+\_\+id\+Type} \hyperlink{struct_msg___data_a0ce9b87ee4780bfc676814cf8d485a97}{dest\+Core}
-\item 
-\hyperlink{mappings_8c_adc0d1d400308f82e4d42245c2fd946b9}{\+\_\+id\+Type} \hyperlink{struct_msg___data_aa0359599db6f5e6c68ac2b7123b4147a}{dest\+Local\+I\+D}
-\item 
-\hyperlink{mappings_8c_adc0d1d400308f82e4d42245c2fd946b9}{\+\_\+id\+Type} \hyperlink{struct_msg___data_a13b05c6b2a199a7bdf79a18b9e7c22e9}{source\+Core}
-\item 
-enum \hyperlink{assist_8h_ad29858f6d8ab73f2970f41cb21a76b84}{events} \hyperlink{struct_msg___data_ab8720847cee557678e9bfc7da95d46bf}{type}
-\item 
-\hyperlink{mappings_8c_a368ddcd71f7b61cb0f918f22d07ce999}{\+\_\+ne\+Volt\+Type} \hyperlink{struct_msg___data_a20818fc301603eac9d3685ba53424699}{prev\+Voltage}
-\begin{DoxyCompactList}\small\item\em This saves the old state of the neuron, before firing, so that roll back functions will occur. \end{DoxyCompactList}\end{DoxyCompactItemize}
+unsigned int \hyperlink{struct_msg___data_ab4d75bc6367f5cfbfabc69690fdc1efc}{rnd\+Call\+Count}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
+Main message struct. 
 
-
-Definition at line 137 of file assist.\+h.
+Definition at line \hyperlink{assist_8h_source_l00045}{45} of file \hyperlink{assist_8h_source}{assist.\+h}.
 
 
 
 \subsection{Field Documentation}
-\hypertarget{struct_msg___data_a0ce9b87ee4780bfc676814cf8d485a97}{}\index{Msg\+\_\+\+Data@{Msg\+\_\+\+Data}!dest\+Core@{dest\+Core}}
-\index{dest\+Core@{dest\+Core}!Msg\+\_\+\+Data@{Msg\+\_\+\+Data}}
-\subsubsection[{dest\+Core}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+id\+Type} dest\+Core}\label{struct_msg___data_a0ce9b87ee4780bfc676814cf8d485a97}
+\hypertarget{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}{}\index{Msg\+\_\+\+Data@{Msg\+\_\+\+Data}!event\+Type@{event\+Type}}
+\index{event\+Type@{event\+Type}!Msg\+\_\+\+Data@{Msg\+\_\+\+Data}}
+\subsubsection[{event\+Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf evt\+Type} event\+Type}\label{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}
 
 
-Definition at line 140 of file assist.\+h.
+Definition at line \hyperlink{assist_8h_source_l00046}{46} of file \hyperlink{assist_8h_source}{assist.\+h}.
 
-\hypertarget{struct_msg___data_aa0359599db6f5e6c68ac2b7123b4147a}{}\index{Msg\+\_\+\+Data@{Msg\+\_\+\+Data}!dest\+Local\+I\+D@{dest\+Local\+I\+D}}
-\index{dest\+Local\+I\+D@{dest\+Local\+I\+D}!Msg\+\_\+\+Data@{Msg\+\_\+\+Data}}
-\subsubsection[{dest\+Local\+I\+D}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+id\+Type} dest\+Local\+I\+D}\label{struct_msg___data_aa0359599db6f5e6c68ac2b7123b4147a}
-
-
-Definition at line 141 of file assist.\+h.
-
-\hypertarget{struct_msg___data_a20818fc301603eac9d3685ba53424699}{}\index{Msg\+\_\+\+Data@{Msg\+\_\+\+Data}!prev\+Voltage@{prev\+Voltage}}
-\index{prev\+Voltage@{prev\+Voltage}!Msg\+\_\+\+Data@{Msg\+\_\+\+Data}}
-\subsubsection[{prev\+Voltage}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+ne\+Volt\+Type} prev\+Voltage}\label{struct_msg___data_a20818fc301603eac9d3685ba53424699}
+\hypertarget{struct_msg___data_ab4d75bc6367f5cfbfabc69690fdc1efc}{}\index{Msg\+\_\+\+Data@{Msg\+\_\+\+Data}!rnd\+Call\+Count@{rnd\+Call\+Count}}
+\index{rnd\+Call\+Count@{rnd\+Call\+Count}!Msg\+\_\+\+Data@{Msg\+\_\+\+Data}}
+\subsubsection[{rnd\+Call\+Count}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int rnd\+Call\+Count}\label{struct_msg___data_ab4d75bc6367f5cfbfabc69690fdc1efc}
 
 
-This saves the old state of the neuron, before firing, so that roll back functions will occur. 
-
-
-
-Definition at line 145 of file assist.\+h.
-
-
-
-Referenced by neuron\+Receive\+Message().
-
-\hypertarget{struct_msg___data_ac94c7cb1b3f009936733d0f0cec9f72a}{}\index{Msg\+\_\+\+Data@{Msg\+\_\+\+Data}!sender@{sender}}
-\index{sender@{sender}!Msg\+\_\+\+Data@{Msg\+\_\+\+Data}}
-\subsubsection[{sender}]{\setlength{\rightskip}{0pt plus 5cm}tw\+\_\+lpid sender}\label{struct_msg___data_ac94c7cb1b3f009936733d0f0cec9f72a}
-
-
-Definition at line 138 of file assist.\+h.
-
-\hypertarget{struct_msg___data_af4e0329991e30bd3958b93c3bbb3038d}{}\index{Msg\+\_\+\+Data@{Msg\+\_\+\+Data}!sender\+Local\+I\+D@{sender\+Local\+I\+D}}
-\index{sender\+Local\+I\+D@{sender\+Local\+I\+D}!Msg\+\_\+\+Data@{Msg\+\_\+\+Data}}
-\subsubsection[{sender\+Local\+I\+D}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+id\+Type} sender\+Local\+I\+D}\label{struct_msg___data_af4e0329991e30bd3958b93c3bbb3038d}
-
-
-Definition at line 139 of file assist.\+h.
-
-
-
-Referenced by neuron\+Receive\+Message().
-
-\hypertarget{struct_msg___data_a13b05c6b2a199a7bdf79a18b9e7c22e9}{}\index{Msg\+\_\+\+Data@{Msg\+\_\+\+Data}!source\+Core@{source\+Core}}
-\index{source\+Core@{source\+Core}!Msg\+\_\+\+Data@{Msg\+\_\+\+Data}}
-\subsubsection[{source\+Core}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \+\_\+id\+Type} source\+Core}\label{struct_msg___data_a13b05c6b2a199a7bdf79a18b9e7c22e9}
-
-
-Definition at line 142 of file assist.\+h.
-
-\hypertarget{struct_msg___data_ab8720847cee557678e9bfc7da95d46bf}{}\index{Msg\+\_\+\+Data@{Msg\+\_\+\+Data}!type@{type}}
-\index{type@{type}!Msg\+\_\+\+Data@{Msg\+\_\+\+Data}}
-\subsubsection[{type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf events} type}\label{struct_msg___data_ab8720847cee557678e9bfc7da95d46bf}
-
-
-Definition at line 143 of file assist.\+h.
+Definition at line \hyperlink{assist_8h_source_l00047}{47} of file \hyperlink{assist_8h_source}{assist.\+h}.
 
 
 
