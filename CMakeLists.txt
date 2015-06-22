@@ -4,32 +4,29 @@ INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR})
 ## If you will be using the ROSSIO library add this
 #INCLUDE_DIRECTORIES(${ROSSIO_SOURCE_DIR})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -DSQLITE_THREADSAFE=0 -DSQLITE_OMIT_LOAD_EXTENSION ")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11  ")
 
 
 # Files you have included in your model
 SET(model_srcs
 	assist.c
 	assist.h
-	models/neuron_model.c
-	models/neuron_model.h
-	libs/sqlite3.h
-	libs/sqlite3.c
+	models/neuron.c
+	models/neuron.h
 	models/synapse.h
-	spike_generator.c
-	spike_generator.h
-	mappings.h
-	mappings.c
+	input_simulator.c
+	input_simulator.h
+	mapping.h
+	mapping.c
 	model_main.h
 	model_main.c
-	stats_collection.h
-	stats_collection.c
+
 )
 
 
 # Main function (in this case) is found in model_main.c
 
-ADD_EXECUTABLE(tnt_benchmark model_main.c ${model_srcs} mappings.h)
+ADD_EXECUTABLE(tnt_benchmark model_main.c ${model_srcs})
 
 
 TARGET_LINK_LIBRARIES(tnt_benchmark ROSS m)

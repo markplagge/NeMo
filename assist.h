@@ -63,19 +63,32 @@ enum evtType {
 	GEN_HEARTBEAT //!< Signal generator messages -- used to simulate input for benchmarking.
 };
 /* Message structures */
-/** Main message struct */
-typedef struct {
+
+/**
+  Msg_Data is the main message struct.
+  */
+typedef struct Ms{
 	enum evtType eventType;
 	unsigned long rndCallCount;
 	_idT localID; //!< Sender's local (within a core) id - used for weight lookups.
 }Msg_Data;
 
 /* ***** Global variable defs */
+/** @{
+ * /name SimParams */
 extern int NEURONS_IN_CORE;
 extern int CORES_IN_SIM;
 extern int AXONS_IN_CORE;
 extern int SYNAPSES_IN_CORE;
 
+extern int CORE_SIZE;
+extern tw_stime BIG_TICK_ERR; //!< Tick error - tw_stime can be this much under the next big tick and register as a big-tick.
+
+
+/**  @} */
+
+/** @{
+ * /name inputSimParams */
 extern unsigned int GEN_ON;
 extern bool GEN_RND;
 extern unsigned int RND_MODE;
@@ -85,15 +98,15 @@ extern unsigned int GEN_OUTBOUND;
 extern unsigned int GEN_SEL_MODE;
 extern unsigned int SP_DBG;
 
+
+/**  @} */
+/** @{
+ * /name neuronParams */
 extern int THRESHOLD_MAX;
 extern int THRESHOLD_MIN;
 extern int SYNAPSE_WEIGHT_MAX;
 extern int SYNAPSE_WEIGHT_MIN;
-;
-extern int CORE_SIZE;
-extern tw_stime BIG_TICK_ERR; //!< Tick error - tw_stime can be this much under the next big tick and register as a big-tick.
-
-
+/**  @} */
 
 /**
  *  Gets the next event time, based on a random function. Moved here to allow for

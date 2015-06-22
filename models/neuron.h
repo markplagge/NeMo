@@ -113,7 +113,7 @@ void resetLinear(void *neuronState);
  *
  *  @param neuronState current neuron state.
  */
-void resetNone(void *neuronState){}
+void resetNone(void *neuronState);
 
 
 
@@ -128,11 +128,11 @@ void reverseResetLinear(void *neuronState);
 
 void reverseResetZero(void *neuronState);
 
-void reverseResetNone(void *neuronState){}
+void reverseResetNone(void *neuronState);
 
 
 
-/** \struct NeuronModel
+/**
 * This struct maintains the state of an individual neuron.The neuron struct
 *contains the parameters needed to maintain
 * state in the neuron, along with references to output commands (dendrites).
@@ -150,10 +150,10 @@ typedef struct NeuronModel {
 	/**@}*/
 	/**@{*/
 		//Proper state information
-	_voltT membranePot; //!< current "voltage" of neuron, 𝒱
+	_voltT membranePot; //!< current "voltage" of neuron, \f$V_j(t)\f$. Since this is PDES, \a t is implicit
 	_voltT savedMembranePot; //!< previous state membrane potential
-	_threshT threshold; //!< neuron's threshold value 𝛂
-	_threshT negativeThreshold; //!< neuron's negative threshold, β
+	_threshT threshold; //!< neuron's threshold value 𝛼
+	_threshT negativeThreshold; //!< neuron's negative threshold, 𝛽
 	_threshT thresholdPRNMask; //!< The neuron's random threshold mask - used for randomized thresholds ( \f$M_j\f$ )
 	_randT drawnRandomNumber; //!<When activated, neurons draw a new random number. Reset after every big-tick as needed.
 
@@ -179,7 +179,7 @@ typedef struct NeuronModel {
 		//** as a test, this is the 𝛾 value - trying out mathematical reset style */
 	short int resetMode;
 
-	bool negThresReset; //!< From the paper's ,\f$𝒦_j\f$, negative threshold setting to reset or saturate
+	bool negThresReset; //!< From the paper's ,\f$𝜅_j\f$, negative threshold setting to reset or saturate
 
 	reverseResetDel reverseReset; //!< Neuron reverse reset function.
 	/**@}*/
