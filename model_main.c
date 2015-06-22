@@ -39,12 +39,34 @@ tw_lptype model_lps[] = {{
 
 };
 
+
 void createLPs() {
   tw_define_lps(g_tw_nlp, sizeof(Msg_Data), 0);
+	int neurons = 0;
+	int synapses = 0;
+	int axons = 0;
+
   for (int i = 0; i < g_tw_nlp; i++) {
+	  if(i < AXONS_IN_CORE){
+			  //tw_lp_settype(i, &model_lps[2]);
+		  axons++;
+	  }
+	  else if (i < SYNAPSES_IN_CORE) {
+			  //tw_lp_settype(i, &model_lps[1]);
+		  synapses++;
+
+
+	  }
+	  else if (i < NEURONS_IN_CORE) {
+			  //tw_lp_settype(i, &model_lps[0]);
+		  neurons ++;
+
+	  }
   }
+	printf("A %i, S %i, N %i", axons, synapses, neurons);
 }
 
 int main() {
+	createLPs();
   return 0;
 }
