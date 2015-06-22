@@ -19,7 +19,9 @@
 #define _idT uint_fast32_t //!<ID type - local id type for bit shifts and ID cases.
 #define _voltT int_fast32_t //!<Voltage data type (membrane potential)
 #define _weightT int_fast32_t //!<Weight/probability type
-#define _threshT uint_fast32_t //!<threshold data type - In the paper, this is two unsigned values and a reversal flag. Here, this is a signed integer.
+#define _threshT uint_fast32_t //!<threshold data type - In the paper, this is two unsigned values and a reversal flag.
+#define _threshT_MAX UINT_FAST32_MAX
+
 #define _randT int_fast32_t //!< Random value storage for neurons.
 
 #define _statT int_fast64_t //!<Counter data type for stats
@@ -102,10 +104,10 @@ extern unsigned int SP_DBG;
 /**  @} */
 /** @{
  * /name neuronParams */
-extern int THRESHOLD_MAX;
-extern int THRESHOLD_MIN;
-extern int SYNAPSE_WEIGHT_MAX;
-extern int SYNAPSE_WEIGHT_MIN;
+extern _threshT THRESHOLD_MAX;
+extern _threshT THRESHOLD_MIN;
+extern int32_t SYNAPSE_WEIGHT_MAX;
+extern int32_t SYNAPSE_WEIGHT_MIN;
 /**  @} */
 
 /**

@@ -44,7 +44,7 @@ tw_lptype model_lps[] = {{
 /// @todo need to create better mapping.
 ///
 void createLPs() {
-  tw_define_lps(CORE_SIZE, sizeof(Msg_Data), 0);
+   tw_define_lps(CORE_SIZE, sizeof(Msg_Data), 0);
 	int neurons = 0;
 	int synapses = 0;
 	int axons = 0;
@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
   g_tw_events_per_pe = CORE_SIZE * eventAlloc;
   ///@todo enable custom mapping with these smaller LPs.
 
-  g_tw_mapping = ROUND_ROBIN;
+  g_tw_mapping = LINEAR;
   g_tw_lp_types = model_lps;
 
   ///@todo do we need a custom lookahedad parameter?
@@ -96,11 +96,72 @@ int main(int argc, char *argv[]) {
 }
 
 
+//neuron gen function helpers
 
 
 //neuron functions
 void neuron_init(neuronState *s, tw_lp *lp)
 {
+  memset(s,0,sizeof(neuronState));
+  s->myCoreID = getCoreFromGID(lp->id);
+  s->myLocalID = getCoreLocalFromGID(lp->id);
+
+  if(GEN_ON){ //probabilistic generated mapping
+       s->threshold = tw_rand_integer(lp->rng,THRESHOLD_MIN, THRESHOLD_MAX);
+       s->negativeThreshold = tw_rand_integer(lp->rng, NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX );
+       s->resetVoltage = tw_rand_integer(lp->rng, RESET_VOLTAGE_MIN, RESET_VOLTAGE_MAX);
+       //Randomized selection - calls to various random functions.
+       long resetSel = tw_rand_integer(lp->rng, 0,2);
+       bool stochasticThreshold = tw_rand_poisson(lp->rng,1) > 3;
+       s->synapticWeightProb = tw_calloc(TW_LOC, "Neuron", sizeof(_weightT), SYNAPSES_IN_CORE);
+       s->synapticWeightProbSelect = tw_calloc(TW_LOC, "Neuron", sizeof(bool), SYNAPSES_IN_CORE);
+       //select a reset & stochastic reset mode:
+       switch (resetSel) {
+         case 0:
+           s->doReset =  resetNormal;
+           s->reverseReset = reverseResetNormal;
+           break;
+         case 1:
+           s->doReset = resetLinear;
+           s->reverseReset = reverseResetLinear;
+         default:
+           stochasticThreshold = true;
+           s->doReset = resetNone;
+           s->reverseReset = reverseResetNone;
+           break;
+         }
+       if(stochasticThreshold == true) {
+           //random here as well:
+           int sizeInBits = sizeof(s->thresholdPRNMask) * 8; //  assuming 8 bits per byte;
+           ///@todo add a variable size to the number of bytes in the range.
+           _threshT param = tw_rand_ulong(lp->rng, RAND_RANGE_MIN, RAND_RANGE_MAX);
+           s->thresholdPRNMask = (param >= sizeInBits ? -1 : (1 <<  param) - 1);
+           if(s->thresholdPRNMask == -1)
+             abort();
+
+         }
+
+       for(int i = 0; i < SYNAPSES_IN_CORE; i ++) {
+           s->synapticWeightProbSelect[i] = stochasticThreshold;
+           s->synapticWeightProb[i] = tw_rand_integer(lp->rng, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
+
+         }
+       ///@todo add more leak functions
+       s->doLeak = linearLeak;
+       s->doLeakReverse = revLinearLeak;
+       //destinations. again using
+       int calls;
+       s->leakRateProb = tw_rand_normal_sd(lp->rng,0,10,&calls);
+       s->leakWeightProbSelect =  false;
+       s->leakReversalFlag = tw_rand_integer(lp->rng, 0,1);
+
+       //randomized output dendrites:
+       s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM);
+       s->dendriteLocal = tw_rand_integer(lp->rng, 0, AXONS_IN_CORE);
+
+       s->dendriteGlobalDest = globalID(s->dendriteCore, s->dendriteLocal);
+
+    }
 
 }
 
@@ -112,6 +173,7 @@ void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID)
 
 void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
+  neuronReceiveMessage(s,tw_now(lp),M,lp);
 
 }
 
@@ -119,7 +181,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 
 void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp)
 {
-
+  neuornReverseState(s,CV, MCV, lp);
 }
 
 
@@ -129,21 +191,68 @@ void neuron_final(neuronState *s, tw_lp *lp)
 }
 
 //synapse function
+long curSyn = 0;
 void synapse_init(synapseState *s, tw_lp *lp)
 {
+  s->destNeuron = getNeuronFromSynapse(getCoreFromGID(lp->gid),curSyn);
+  s->destSynapse = 0;
+   s->mySynapseNum= curSyn;
+  curSyn++;
+  //@todo make this a matrix map - still have linear style of mapping!!!!!
+  if(curSyn == SYNAPSES_IN_CORE) {
+    s->destSynapse = getSyapseFromSynapse(getCoreFromGID(lp->gid), curSyn + 1);
+    curSyn++;
+    }
+  s->msgSent = 0;
+
+
 
 }
 
 
 void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
+  long rc = lp->rng->count;
+
+  if(curSyn < SYNAPSES_IN_CORE){
+      //generate event to send to next synapse
+      s->msgSent ++;
+      CV->c0  = 1;
+      long rc = lp->rng->count;
+      tw_event *axe = tw_event_new(s->destSynapse,getNextEventTime(lp),lp);
+      Msg_Data *data = (Msg_Data *) tw_event_data(axe);
+      data->eventType = SYNAPSE_OUT;
+
+      tw_event_send(axe);
+      M->rndCallCount = lp->rng->count - rc;
+
+    }
+
+  //generate event to send to neuron.
+  rc = lp->rng->count;
+  s->msgSent ++;
+  CV->c1 = 1;
+   rc = lp->rng->count;
+  tw_event *axe = tw_event_new(s->destNeuron,getNextEventTime(lp),lp);
+  Msg_Data *data = (Msg_Data *) tw_event_data(axe);
+  data->eventType = SYNAPSE_OUT;
+
+  tw_event_send(axe);
+  M->rndCallCount = lp->rng->count - rc;
 
 }
 
 
 void synapse_reverse(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
-
+  long count = M->rndCallCount;
+  while (count--) {
+      tw_rand_reverse_unif(lp->rng);
+  }
+  if(CV->c0)
+    s->msgSent --;
+  if(CV->c1)
+    s->msgSent --;
 }
 
 
@@ -153,19 +262,36 @@ void synapse_final(synapseState *s, tw_lp *lp)
 }
 
 // Axon function.
+_idT curAxon =0;
 void axon_init(axonState *s, tw_lp *lp)
 {
-
+  s->sendMsgCount = 0;
+  _idT core = getCoreFromGID(lp->gid);
+  s->destSynapse = getSynapse(core,curAxon,0);
+  curAxon ++;
 }
 
 void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
+  //send a message to the attached synapse
+  long rc = lp->rng->count;
+  tw_event *axe = tw_event_new(s->destSynapse,getNextEventTime(lp),lp);
+  Msg_Data *data = (Msg_Data *) tw_event_data(axe);
+  data->eventType = AXON_OUT;
 
+
+  tw_event_send(axe);
+    M->rndCallCount = lp->rng->count - rc;
 }
 
 
 void axon_reverse(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
+  s->sendMsgCount --;
+  long count = M->rndCallCount;
+  while (count--) {
+      tw_rand_reverse_unif(lp->rng);
+  }
 
 }
 

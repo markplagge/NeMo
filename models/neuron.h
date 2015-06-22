@@ -21,7 +21,7 @@
  *
  * */
 	typedef enum NeuronFireMode {
-  NFM = 0  // normal fire mode (if voltage > threshold, fire);
+  NFM = 0  // normal fire mode
 	} neuronFireMode;
 
 /** \struct leakFunDel
@@ -126,7 +126,7 @@ typedef void (*reverseResetDel)(void *neuronState);
 
 void reverseResetLinear(void *neuronState);
 
-void reverseResetZero(void *neuronState);
+void reverseResetNormal(void *neuronState);
 
 void reverseResetNone(void *neuronState);
 
@@ -154,7 +154,11 @@ typedef struct NeuronModel {
 	_voltT savedMembranePot; //!< previous state membrane potential
 	_threshT threshold; //!< neuron's threshold value 𝛼
 	_threshT negativeThreshold; //!< neuron's negative threshold, 𝛽
-	_threshT thresholdPRNMask; //!< The neuron's random threshold mask - used for randomized thresholds ( \f$M_j\f$ )
+	_threshT thresholdPRNMask; /**!< The neuron's random threshold mask - used for randomized thresholds ( \f$M_j\f$ ).
+				     *	In the TN hardware this is defined as a ones maks of configurable width, starting at the
+				     * least significant bit. The mask scales the range of the random drawn number (PRN) of the model,
+				     * here defined as @link drawnRandomNumber @endlink. used as a scale for the random values. */
+
 	_randT drawnRandomNumber; //!<When activated, neurons draw a new random number. Reset after every big-tick as needed.
 
 	_voltT resetVoltage; //!< Reset voltage for reset params, \f$R\f$.
@@ -171,32 +175,29 @@ typedef struct NeuronModel {
 	/**@{*/
 
 	/* neuron firing parameters */
+	///@todo may not be needed for model simulation.
 	neuronFireMode fireMode; ///neuron's firing mode
 
-		/** neuron reset params */
-	resetFunDel doReset; //!< neuron reset function - has three possible values: normal, linear, non-reset: 𝛾
 
+	resetFunDel doReset; //!< neuron reset function - has three possible values: normal, linear, non-reset: 𝛾
 		//** as a test, this is the 𝛾 value - trying out mathematical reset style */
 	short int resetMode;
-
 	bool negThresReset; //!< From the paper's ,\f$𝜅_j\f$, negative threshold setting to reset or saturate
-
 	reverseResetDel reverseReset; //!< Neuron reverse reset function.
 	/**@}*/
 		//Weight parameters
 	_weightT *synapticWeightProb; /**< In this simulation, each synappse can have a unique weight. In the paper, there is a limit of four different "types" of synapse behavior per neruon. For an accurate sim, there can only be four different values in this array.
-
 		Since this is an array, this simulator has the potential to have more power than the actual TrueNorth hardware architecture.
-		The paper defines this as \f$S_j^{G_i}\f$
-								 */
-	bool *synapticWeightProbSelect; /**< An array determining if each synapse is handled stochastically or deterministically. Since the actual hardware has 4 synapse types, this setup has more power than the actual TrueNorth architecture.
+		The paper defines this as \f$S_j^{G_i}\f$ */
 
-		To ensure model <-> hardware accuracy, at most four different modes should be used per neuron, so that synapses are handled as one of four possible types. 
-		
+	bool *synapticWeightProbSelect; /**< An array determining if each synapse is handled stochastically or deterministically.
+	 * Since the actual hardware has 4 synapse types, this setup has more power than the actual
+	 *  TrueNorth architecture.
+	 * To ensure model <-> hardware accuracy, at most four different modes should be used per neuron,
+	 *  so that synapses are handled as one of four possible types.
 		The paper defines this as \f$b_j^{G_i}\f$
-									 */
-
-		//Output locations:
+*/
+	    //Output locations:
 	_idT dendriteCore; //!< Local core of the remote dendrite
 	_idT dendriteLocal; //!< Local ID of the remote dendrite -- not LPID, but a local axon value (0-i)
 	tw_lpid dendriteGlobalDest; //!< GID of the axon this neuron talks to. @todo: The dendriteCore and dendriteLocal values might not be needed anymroe.
@@ -214,6 +215,7 @@ typedef struct NeuronModel {
 	_statT fireCount; //!< count of this neuron's output
 	_statT rcvdMsgCount; //!<  The number of synaptic messages received.
 	_statT SOPSCount; //!<  A count for SOPS calculation
+
 /**@}*/
 	bool firedLast; //!< Did the neuron fire during the last message?
 
@@ -221,7 +223,7 @@ typedef struct NeuronModel {
 
 /* ***Neuron functions */
 /**
- * @brief neuronReverseFinal final neuron reversal function.
+ * @brief neuron reversal function.
  * Used to roll back any calls made by the neuron. Decrements receivedSynapseMsgs Reset funs have already
  * been run at this point @see reverseLeakDel() and @see reverseResetDel()
  * @param s the neuron state
@@ -229,7 +231,7 @@ typedef struct NeuronModel {
  * @param m the rollback message
  * @param lp the lp
  */
-void neuronReverseFinal(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp);
+void neuornReverseState(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp);
 
 /**
  *  @brief  handles incomming synapse messages. In this model, the neurons send messages to axons during "big tick" intervals.
@@ -243,7 +245,7 @@ void neuronReverseFinal(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp);
 void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,
 						  tw_lp *lp);
 /** neuronFire manages a firing event. Firing events occur when a synchro message is received, so these calculations are done on big-ticks only. */
-void neuronFire(neuronState *st, tw_stime time, tw_lp *lp);
+void nSpike(neuronState *st, tw_stime time, tw_lp *lp);
 
 
 /**
@@ -289,6 +291,5 @@ void neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFir
 void stochasticIntegrate(_weightT weight, neuronState *st, tw_lp *lp);
 
 
-void neronReverseSate(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp);
 
 #endif /* defined(__ROSS_TOP__neuron__) */

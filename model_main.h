@@ -45,19 +45,32 @@ unsigned int GEN_SEL_MODE = 0;
 unsigned int SP_DBG = 0;
 
 
-/**  Determines the maximum and minimum thresholds for a neuron to fire.
+/**  Determines the maximum thresholds for a neuron to fire.
  */
-int THRESHOLD_MAX = 100;
+_threshT THRESHOLD_MAX = 100;
+
+ _threshT NEG_THRESHOLD_MAX = 100;
 /**
  *  Minimum threshold. @see THRESHOLD_MAX
  */
-int THRESHOLD_MIN = 30;
+_threshT THRESHOLD_MIN = 10;
+
+_threshT NEG_THRESHOLD_MIN = 1;
+
+
+_voltT RESET_VOLTAGE_MAX = 100;
+_voltT RESET_VOLTAGE_MIN = -100;
+
+_threshT RAND_RANGE_MIN = 1;
+_threshT RAND_RANGE_MAX = _threshT_MAX;
+
+
 /**
  *	Each neuron is connected to the synapses (inputs) within the core it is running in.
  *	These parameters adjust the input weight given to each synapse. */
-int SYNAPSE_WEIGHT_MAX = 10;
+int32_t SYNAPSE_WEIGHT_MAX = 10;
 /** Minimum synapse weight. @see SYNAPSE_WEIGHT_MAX */
-int SYNAPSE_WEIGHT_MIN = -10;
+int32_t SYNAPSE_WEIGHT_MIN = -10;
 tw_stime PER_SYNAPSE_DET_P = .50;
 
 

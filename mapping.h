@@ -1,4 +1,4 @@
-//
+﻿//
 //  mapping.h
 //  ROSS_TOP
 //
@@ -12,6 +12,10 @@
 #include <stdio.h>
 #include "ross.h"
 #include "assist.h"
+
+#define lc 0
+#define co 1
+
 
 extern int NEURONS_IN_CORE ;
 /**
@@ -57,7 +61,35 @@ void mappingSetup();
  */
 tw_lp * globalToLocal(tw_lpid gid);
 
+/**
+ * @brief getCoreFromGID returns the coreID when given an LP's globalID.
+ * @param gid
+ * @return the core that the lp at \a gid is running on.
+ */
+long getCoreFromGID(tw_lpid gid);
 
+/**
+ * @brief getCoreFromPE returns the coreID assigned to a PE.
+ * @param gid
+ * @return
+ */
+long getCoreFromPE(tw_peid gid);
 
+/**
+ * @brief getCoreLocalFromGID calculates the localID (neuron model) of the LP based on the global ID.
+ * This is not the ROSS local, this is the neuron model local ID.
+ * @param gid
+ * @return
+ */
+long getCoreLocalFromGID(tw_lpid gid);
+
+tw_lpid globalID(_idT core, _idT local);
+
+tw_lpid getNeuronID(_idT core, _idT neuron);
+
+tw_lpid getSynapse(_idT core, _idT i, _idT j);
+
+tw_lpid getSyapseFromSynapse(_idT core, _idT synapse);
+tw_lpid getNeuronFromSynapse(_idT core, _idT synapse);
 
 #endif /* defined(__ROSS_TOP__mapping__) */
