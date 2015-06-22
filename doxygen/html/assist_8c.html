@@ -129,10 +129,40 @@ Include dependency graph for assist.c:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a30602b11dbfa6bcb90dc00e7942cfb02"><td class="memItemLeft" align="right" valign="top">tw_stime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assist_8c.html#a30602b11dbfa6bcb90dc00e7942cfb02">getNextEventTime</a> (tw_lp *lp)</td></tr>
-<tr class="memdesc:a30602b11dbfa6bcb90dc00e7942cfb02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the next event time, based on a random function.  <a href="#a30602b11dbfa6bcb90dc00e7942cfb02">More...</a><br /></td></tr>
+<tr class="memdesc:a30602b11dbfa6bcb90dc00e7942cfb02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the next small-tick event time.  <a href="#a30602b11dbfa6bcb90dc00e7942cfb02">More...</a><br /></td></tr>
 <tr class="separator:a30602b11dbfa6bcb90dc00e7942cfb02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d378196b7fceed090d64ec8820b4065"><td class="memItemLeft" align="right" valign="top">tw_stime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assist_8c.html#a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</a> (tw_stime now)</td></tr>
+<tr class="memdesc:a4d378196b7fceed090d64ec8820b4065"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a tw_stime, returns the current big tick.  <a href="#a4d378196b7fceed090d64ec8820b4065">More...</a><br /></td></tr>
+<tr class="separator:a4d378196b7fceed090d64ec8820b4065"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a4d378196b7fceed090d64ec8820b4065"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tw_stime getCurrentBigTick </td>
+          <td>(</td>
+          <td class="paramtype">tw_stime&#160;</td>
+          <td class="paramname"><em>now</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Given a tw_stime, returns the current big tick. </p>
+<p>If the time is in-between big ticks, this rounds down to the last big tick. There is a bit of a fuzz for times close to the next big tick so if the current time is within <a class="el" href="assist_8h.html#a69434dbcf2196fc2fd1ab7cb57fc9491">BIG_TICK_ERR</a> of the next big tick, that will be returned instead. Sane parameters would probably be around .000001.</p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>: Implement &amp; determin if ε needs to be added to the return value.</dd></dl>
+
+<p>Definition at line <a class="el" href="assist_8c_source.html#l00029">29</a> of file <a class="el" href="assist_8c_source.html">assist.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                                        {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a class="anchor" id="a30602b11dbfa6bcb90dc00e7942cfb02"></a>
 <div class="memitem">
 <div class="memproto">
@@ -147,24 +177,18 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Gets the next small-tick event time. </p>
 <p>Gets the next event time, based on a random function. </p>
-<p>Moved here to allow for easier abstraciton, and random function replacement.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">lp</td><td>Reference to the current LP so that the function can see the RNG</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>a tw_stime value, such that \( 0 &lt; t &lt; 1 \). A delta for the next time slice. </dd></dl>
 
-<p>Definition at line <a class="el" href="assist_8c_source.html#l00020">20</a> of file <a class="el" href="assist_8c_source.html">assist.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                                    {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    tw_stime r =tw_rand_unif(lp-&gt;rng) / 10;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordflow">return</span> r;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div><!-- fragment -->
+<p>Definition at line <a class="el" href="assist_8c_source.html#l00013">13</a> of file <a class="el" href="assist_8c_source.html">assist.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;                                    {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    tw_stime r =tw_rand_unif(lp-&gt;rng) / 10;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;}</div>
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
@@ -173,7 +197,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="assist_8c.html">assist.c</a></li>
-    <li class="footer">Generated on Fri Jun 19 2015 13:47:05 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Sun Jun 21 2015 16:46:03 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

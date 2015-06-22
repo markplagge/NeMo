@@ -180,6 +180,11 @@ _EnD_oF_dEf_TeXt_;
       sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
  
 _EnD_oF_dEf_TeXt_;
+      sec-mem-referenceby = {
+        sec-mem-ref-id = 'input__simulator_8c_1ad6244e86a3542f8d3c64766e7e7c6746';
+        sec-mem-ref-line = '10';
+        sec-mem-ref-name = 'uniformGen';
+    };
     }; /* sec-member */
     sec-member = {
       sec-mem-kind = 'variable';
@@ -276,35 +281,68 @@ enum evtType
 _EnD_oF_dEf_TeXt_;
       sec-mem-name = 'eventType';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      sec-mem-desc-line = '72';
+      sec-mem-desc-line = '96';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
       sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
+      sec-mem-referenceby = {
+        sec-mem-ref-id = 'neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674';
+        sec-mem-ref-line = '104';
+        sec-mem-ref-name = 'neuronReceiveMessage';
+    };
     }; /* sec-member */
     sec-member = {
       sec-mem-kind = 'variable';
-      sec-mem-id   = 'struct_msg___data_1ab4d75bc6367f5cfbfabc69690fdc1efc';
+      sec-mem-id   = 'struct_msg___data_1a2e49a6bcc6c45ade722f746b1ea707f2';
       sec-mem-virt = normal;
       sec-mem-prot = public;
       sec-mem-type = <<_EnD_oF_dEf_TeXt_
-unsigned int
+unsigned long
 _EnD_oF_dEf_TeXt_;
       sec-mem-name = 'rndCallCount';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      sec-mem-desc-line = '47';
+      sec-mem-desc-line = '50';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
       sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
+      sec-mem-referenceby = {
+        sec-mem-ref-id = 'neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674';
+        sec-mem-ref-line = '104';
+        sec-mem-ref-name = 'neuronReceiveMessage';
+    };
+    }; /* sec-member */
+    sec-member = {
+      sec-mem-kind = 'variable';
+      sec-mem-id   = 'struct_msg___data_1aefc820e92a74047ec7ed74c1c45f818f';
+      sec-mem-virt = normal;
+      sec-mem-prot = public;
+      sec-mem-type = <<_EnD_oF_dEf_TeXt_
+_idT
+_EnD_oF_dEf_TeXt_;
+      sec-mem-name = 'localID';
+      sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
+      sec-mem-desc-line = '51';
+      sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Sender's local (within a core) id - used for weight lookups.
+_EnD_oF_dEf_TeXt_;
+      sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      sec-mem-referenceby = {
+        sec-mem-ref-id = 'neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674';
+        sec-mem-ref-line = '104';
+        sec-mem-ref-name = 'neuronReceiveMessage';
+    };
     }; /* sec-member */
   }; /* cp-section */
   cp-filename  = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-  cp-fileline  = '45';
+  cp-fileline  = '48';
   cp-briefdesc = <<_EnD_oF_dEf_TeXt_
 Main message struct.
 _EnD_oF_dEf_TeXt_;
@@ -316,16 +354,14 @@ struct = {
   cp-id     = 'struct_neuron_model';
   cp-name   = 'NeuronModel';
   cp-filename  = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-  cp-fileline  = '74';
+  cp-fileline  = '128';
   cp-briefdesc = <<_EnD_oF_dEf_TeXt_
 This struct maintains the state of an individual neuron.The neuron struct
 contains the parameters needed to maintain
  state in the neuron, along with references to output commands (dendrites).
 _EnD_oF_dEf_TeXt_;
   cp-documentation = <<_EnD_oF_dEf_TeXt_
- Each parameter contained within @cite Cassidy2013 , @cite Preissl2012 , @cite 
-Amir2013's models of Neuromporphic design
- that operate with the neuron are contained within this struct.
+ Each parameter contained within @cite Cassidy2013}@cite Preissl2012}@cite Amir2013}'s models of Neuromporphic design that operate with the neuron are contained within this struct.
  Consider this struct a proto-object, just sans functions.
 _EnD_oF_dEf_TeXt_;
 }; /* struct */
@@ -336,235 +372,36 @@ struct = {
     sec-kind = 'public-attrib';
     sec-member = {
       sec-mem-kind = 'variable';
-      sec-mem-id   = 'structneuron_state_1a76ef99e5766b6e36c3f41a2920e8c56c';
-      sec-mem-virt = normal;
-      sec-mem-prot = public;
-      sec-mem-type = <<_EnD_oF_dEf_TeXt_
-_idT
-_EnD_oF_dEf_TeXt_;
-      sec-mem-name = 'myCoreID';
-      sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '87';
-      sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-
-_EnD_oF_dEf_TeXt_;
-      sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
-
-_EnD_oF_dEf_TeXt_;
-    }; /* sec-member */
-    sec-member = {
-      sec-mem-kind = 'variable';
-      sec-mem-id   = 'structneuron_state_1ac24762c24aede292a2ce5df78114881c';
-      sec-mem-virt = normal;
-      sec-mem-prot = public;
-      sec-mem-type = <<_EnD_oF_dEf_TeXt_
-_idT
-_EnD_oF_dEf_TeXt_;
-      sec-mem-name = 'myLocalID';
-      sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '88';
-      sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-Neuron's coreID.
-_EnD_oF_dEf_TeXt_;
-      sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
-
-_EnD_oF_dEf_TeXt_;
-    }; /* sec-member */
-    sec-member = {
-      sec-mem-kind = 'variable';
-      sec-mem-id   = 'structneuron_state_1a0fdd8f44c4105a94e17c4c58a51db486';
-      sec-mem-virt = normal;
-      sec-mem-prot = public;
-      sec-mem-type = <<_EnD_oF_dEf_TeXt_
-_voltT
-_EnD_oF_dEf_TeXt_;
-      sec-mem-name = 'membranePot';
-      sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '91';
-      sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-Neuron's local ID (from 0 - j-1);.
-_EnD_oF_dEf_TeXt_;
-      sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
-
-_EnD_oF_dEf_TeXt_;
-    }; /* sec-member */
-    sec-member = {
-      sec-mem-kind = 'variable';
-      sec-mem-id   = 'structneuron_state_1ad17e1ac0b4bca75d10da8b0ab56edd6e';
-      sec-mem-virt = normal;
-      sec-mem-prot = public;
-      sec-mem-type = <<_EnD_oF_dEf_TeXt_
-_voltT
-_EnD_oF_dEf_TeXt_;
-      sec-mem-name = 'prevMembranePot';
-      sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '92';
-      sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-current "voltage" of neuron
-_EnD_oF_dEf_TeXt_;
-      sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
-
-_EnD_oF_dEf_TeXt_;
-    }; /* sec-member */
-    sec-member = {
-      sec-mem-kind = 'variable';
-      sec-mem-id   = 'structneuron_state_1af321d0fa58028b78986160845189077e';
-      sec-mem-virt = normal;
-      sec-mem-prot = public;
-      sec-mem-type = <<_EnD_oF_dEf_TeXt_
-_voltT
-_EnD_oF_dEf_TeXt_;
-      sec-mem-name = 'threshold';
-      sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '93';
-      sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-previous state membrane potential
-_EnD_oF_dEf_TeXt_;
-      sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
-
-_EnD_oF_dEf_TeXt_;
-    }; /* sec-member */
-    sec-member = {
-      sec-mem-kind = 'variable';
-      sec-mem-id   = 'structneuron_state_1a0658ad1f8b57a00589c6ea84f9a4ab13';
-      sec-mem-virt = normal;
-      sec-mem-prot = public;
-      sec-mem-type = <<_EnD_oF_dEf_TeXt_
-tw_stime
-_EnD_oF_dEf_TeXt_;
-      sec-mem-name = 'lastActiveTime';
-      sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '94';
-      sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-neuron's threshold value
-_EnD_oF_dEf_TeXt_;
-      sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
-
-_EnD_oF_dEf_TeXt_;
-    }; /* sec-member */
-    sec-member = {
-      sec-mem-kind = 'variable';
-      sec-mem-id   = 'structneuron_state_1af8935bcba177f2f3dfb9119c39ef7dc5';
-      sec-mem-virt = normal;
-      sec-mem-prot = public;
-      sec-mem-type = <<_EnD_oF_dEf_TeXt_
-uint_fast16_t
-_EnD_oF_dEf_TeXt_;
-      sec-mem-name = 'receivedSynapseMsgs';
-      sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '95';
-      sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-last time the neuron fired - used for calculating leak and reverse functions.
-_EnD_oF_dEf_TeXt_;
-      sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
-                                    Used for big-tick synchronization. 
-If this neuron has received a synapse message during this big-tick cycle, this will be set to > 0. Every synapse received until the big tick occurs will increment this value. Reverse events decrement this value.
-If the value is == 0 when a synapse message is received, the neuron will send a fire schedule message to itself at the next big-tick time.  
-_EnD_oF_dEf_TeXt_;
-    }; /* sec-member */
-    sec-member = {
-      sec-mem-kind = 'variable';
-      sec-mem-id   = 'structneuron_state_1a55890f9e021064df30e9d18a9df98845';
-      sec-mem-virt = normal;
-      sec-mem-prot = public;
-      sec-mem-type = <<_EnD_oF_dEf_TeXt_
-neuronFireMode
-_EnD_oF_dEf_TeXt_;
-      sec-mem-name = 'fireMode';
-      sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '101';
-      sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-neuron firing parameters
-_EnD_oF_dEf_TeXt_;
-      sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
-
-_EnD_oF_dEf_TeXt_;
-    }; /* sec-member */
-    sec-member = {
-      sec-mem-kind = 'variable';
-      sec-mem-id   = 'structneuron_state_1afcf9d931e4fda519c43b4efeab687463';
-      sec-mem-virt = normal;
-      sec-mem-prot = public;
-      sec-mem-type = <<_EnD_oF_dEf_TeXt_
-resetFunDel
-_EnD_oF_dEf_TeXt_;
-      sec-mem-name = 'doReset';
-      sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '104';
-      sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-neuron's firing mode
-_EnD_oF_dEf_TeXt_;
-      sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
-neuron reset params  
-_EnD_oF_dEf_TeXt_;
-    }; /* sec-member */
-    sec-member = {
-      sec-mem-kind = 'variable';
-      sec-mem-id   = 'structneuron_state_1add87cc0b2bc3426f0fd870f7df6decd5';
-      sec-mem-virt = normal;
-      sec-mem-prot = public;
-      sec-mem-type = <<_EnD_oF_dEf_TeXt_
-_voltT
-_EnD_oF_dEf_TeXt_;
-      sec-mem-name = 'resetVoltParam';
-      sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '105';
-      sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-neuron reset function
-_EnD_oF_dEf_TeXt_;
-      sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
-
-_EnD_oF_dEf_TeXt_;
-    }; /* sec-member */
-    sec-member = {
-      sec-mem-kind = 'variable';
-      sec-mem-id   = 'structneuron_state_1abf6970098695585c81e101b2a741b9a5';
-      sec-mem-virt = normal;
-      sec-mem-prot = public;
-      sec-mem-type = <<_EnD_oF_dEf_TeXt_
-reverseResetDel
-_EnD_oF_dEf_TeXt_;
-      sec-mem-name = 'reverseReset';
-      sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '107';
-      sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-Optional parameter for reset voltage functions.
-_EnD_oF_dEf_TeXt_;
-      sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
-
-_EnD_oF_dEf_TeXt_;
-    }; /* sec-member */
-    sec-member = {
-      sec-mem-kind = 'variable';
-      sec-mem-id   = 'structneuron_state_1ab39656a1580505adcabc4c7a1f4d8100';
+      sec-mem-id   = 'structneuron_state_1af499000d57eeeaeeb6ee0928e1eee4f7';
       sec-mem-virt = normal;
       sec-mem-prot = public;
       sec-mem-type = <<_EnD_oF_dEf_TeXt_
 _voltT *
 _EnD_oF_dEf_TeXt_;
-      sec-mem-name = 'perSynapseWeight';
+      sec-mem-name = 'synapticWeightProb';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '110';
+      sec-mem-desc-line = '175';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-Neuron reverse reset function.
+In this simulation, each synappse can have a unique weight.
 _EnD_oF_dEf_TeXt_;
       sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
-                          In this simulation, each synappse can have a unique weight. In the paper, there is a limit of four different "types" of synapse behavior per neruon. For an accurate sim, there can only be four different values in this array.
+ In the paper, there is a limit of four different "types" of synapse behavior per neruon. For an accurate sim, there can only be four different values in this array.
 
-Since this is an array, this simulator has the potential to have more power than the actual TrueNorth hardware architecture.  
+Since this is an array, this simulator has the potential to have more power than the actual TrueNorth hardware architecture.
+The paper defines this as \form#3
 _EnD_oF_dEf_TeXt_;
     }; /* sec-member */
     sec-member = {
       sec-mem-kind = 'variable';
-      sec-mem-id   = 'structneuron_state_1a95688135a244a3ce3b35698a49d0da18';
+      sec-mem-id   = 'structneuron_state_1a4568f103808a436a62d7c7c47dc90e9b';
       sec-mem-virt = normal;
       sec-mem-prot = public;
       sec-mem-type = <<_EnD_oF_dEf_TeXt_
 bool *
 _EnD_oF_dEf_TeXt_;
-      sec-mem-name = 'perSynapseDet';
+      sec-mem-name = 'synapticWeightProbSelect';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '113';
+      sec-mem-desc-line = '180';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 An array determining if each synapse is handled stochastically or deterministically.
 _EnD_oF_dEf_TeXt_;
@@ -584,9 +421,9 @@ _idT
 _EnD_oF_dEf_TeXt_;
       sec-mem-name = 'dendriteCore';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '118';
+      sec-mem-desc-line = '185';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-
+Local core of the remote dendrite.
 _EnD_oF_dEf_TeXt_;
       sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
@@ -602,9 +439,9 @@ _idT
 _EnD_oF_dEf_TeXt_;
       sec-mem-name = 'dendriteLocal';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '119';
+      sec-mem-desc-line = '186';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-Local core of the remote dendrite.
+Local ID of the remote dendrite &ndash; not LPID, but a local axon value (0-i)
 _EnD_oF_dEf_TeXt_;
       sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
@@ -620,12 +457,12 @@ tw_lpid
 _EnD_oF_dEf_TeXt_;
       sec-mem-name = 'dendriteGlobalDest';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '120';
+      sec-mem-desc-line = '187';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-Local ID of the remote dendrite &ndash; not LPID, but a local axon value (0-i)
+GID of the axon this neuron talks to.
 _EnD_oF_dEf_TeXt_;
       sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
-
+\xrefitem todo 6.
 _EnD_oF_dEf_TeXt_;
     }; /* sec-member */
     sec-member = {
@@ -638,13 +475,18 @@ leakFunDel
 _EnD_oF_dEf_TeXt_;
       sec-mem-name = 'doLeak';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '123';
+      sec-mem-desc-line = '190';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-GID of the axon this neuron talks to. TODO: The dendriteCore and dendriteLocal values might not be needed anymroe.
+Function pointer to the neuron's current leak function.
 _EnD_oF_dEf_TeXt_;
       sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
+      sec-mem-referenceby = {
+        sec-mem-ref-id = 'neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674';
+        sec-mem-ref-line = '104';
+        sec-mem-ref-name = 'neuronReceiveMessage';
+    };
     }; /* sec-member */
     sec-member = {
       sec-mem-kind = 'variable';
@@ -656,9 +498,9 @@ reverseLeakDel
 _EnD_oF_dEf_TeXt_;
       sec-mem-name = 'doLeakReverse';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '124';
+      sec-mem-desc-line = '191';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-Function pointer to the neuron's current leak function.
+Function pointer to the leak reverse function.
 _EnD_oF_dEf_TeXt_;
       sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
@@ -666,17 +508,35 @@ _EnD_oF_dEf_TeXt_;
     }; /* sec-member */
     sec-member = {
       sec-mem-kind = 'variable';
-      sec-mem-id   = 'structneuron_state_1a7138aaa7e2988e5ad0d32cc9846dcbbb';
+      sec-mem-id   = 'structneuron_state_1a9fd530a4dd6f7acd6f744ebd51d9c762';
       sec-mem-virt = normal;
       sec-mem-prot = public;
       sec-mem-type = <<_EnD_oF_dEf_TeXt_
 _voltT
 _EnD_oF_dEf_TeXt_;
-      sec-mem-name = 'leakRate';
+      sec-mem-name = 'leakRateProb';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '126';
+      sec-mem-desc-line = '193';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Leak tuning parameter - the leak rate applied to the current leak function.
+_EnD_oF_dEf_TeXt_;
+      sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
+_EnD_oF_dEf_TeXt_;
+    }; /* sec-member */
+    sec-member = {
+      sec-mem-kind = 'variable';
+      sec-mem-id   = 'structneuron_state_1a20889d9b55895bcc719d6aad2766b8f8';
+      sec-mem-virt = normal;
+      sec-mem-prot = public;
+      sec-mem-type = <<_EnD_oF_dEf_TeXt_
+bool
+_EnD_oF_dEf_TeXt_;
+      sec-mem-name = 'leakWeightProbSelect';
+      sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
+      sec-mem-desc-line = '194';
+      sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+If true, this is a stochastic leak function and the \a leakRateProb value is a probability, otherwise it is a leak rate.
 _EnD_oF_dEf_TeXt_;
       sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
@@ -692,9 +552,9 @@ _voltT
 _EnD_oF_dEf_TeXt_;
       sec-mem-name = 'sgnLambda';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '127';
+      sec-mem-desc-line = '195';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-
+sgnLambda tuning parameter from the paper - used for specific leak functions.
 _EnD_oF_dEf_TeXt_;
       sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
@@ -710,13 +570,18 @@ _statT
 _EnD_oF_dEf_TeXt_;
       sec-mem-name = 'fireCount';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '130';
+      sec-mem-desc-line = '198';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-
+count of this neuron's output
 _EnD_oF_dEf_TeXt_;
       sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
+      sec-mem-referenceby = {
+        sec-mem-ref-id = 'neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674';
+        sec-mem-ref-line = '104';
+        sec-mem-ref-name = 'neuronReceiveMessage';
+    };
     }; /* sec-member */
     sec-member = {
       sec-mem-kind = 'variable';
@@ -728,13 +593,18 @@ _statT
 _EnD_oF_dEf_TeXt_;
       sec-mem-name = 'rcvdMsgCount';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '131';
+      sec-mem-desc-line = '199';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-count of this neuron's output
+The number of synaptic messages received.
 _EnD_oF_dEf_TeXt_;
       sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
+      sec-mem-referenceby = {
+        sec-mem-ref-id = 'neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674';
+        sec-mem-ref-line = '104';
+        sec-mem-ref-name = 'neuronReceiveMessage';
+    };
     }; /* sec-member */
     sec-member = {
       sec-mem-kind = 'variable';
@@ -746,17 +616,22 @@ _statT
 _EnD_oF_dEf_TeXt_;
       sec-mem-name = 'SOPSCount';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '132';
+      sec-mem-desc-line = '200';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-The number of synaptic messages received.
+A count for SOPS calculation.
 _EnD_oF_dEf_TeXt_;
       sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
+      sec-mem-referenceby = {
+        sec-mem-ref-id = 'neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674';
+        sec-mem-ref-line = '104';
+        sec-mem-ref-name = 'neuronReceiveMessage';
+    };
     }; /* sec-member */
   }; /* cp-section */
   cp-filename  = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-  cp-fileline  = '85';
+  cp-fileline  = '137';
   cp-briefdesc = <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
@@ -765,18 +640,17 @@ _EnD_oF_dEf_TeXt_;
 _EnD_oF_dEf_TeXt_;
   cp-collaborationgraph = <<_EnD_oF_dEf_TeXt_
       node = {
-        node-id    = 33;
+        node-id    = 55;
         node-label = 'neuronState';
         node-link = {
           node-link-id = 'structneuron_state';
         };
         node-child = {
-          child-id = '33';
+          child-id = '55';
           relation = usage;
           edgelabel = <<_EnD_oF_dEf_TeXt_
 reverseReset
 doReset
-doLeakReverse
 doLeak
 _EnD_oF_dEf_TeXt_;
         }; /* node-child */
@@ -854,13 +728,13 @@ _EnD_oF_dEf_TeXt_;
 _EnD_oF_dEf_TeXt_;
 }; /* struct */
 union = {
-  cp-id     = 'union_reset_rate';
-  cp-name   = 'ResetRate';
+  cp-id     = 'unionreset_rate';
+  cp-name   = 'resetRate';
   cp-section = {
     sec-kind = 'public-attrib';
     sec-member = {
       sec-mem-kind = 'variable';
-      sec-mem-id   = 'union_reset_rate_1a4bf8a23e4a9874ff73208c681eae1ced';
+      sec-mem-id   = 'unionreset_rate_1a4bf8a23e4a9874ff73208c681eae1ced';
       sec-mem-virt = normal;
       sec-mem-prot = public;
       sec-mem-type = <<_EnD_oF_dEf_TeXt_
@@ -868,7 +742,7 @@ int
 _EnD_oF_dEf_TeXt_;
       sec-mem-name = 'linearRate';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '46';
+      sec-mem-desc-line = '75';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
@@ -878,7 +752,7 @@ _EnD_oF_dEf_TeXt_;
     }; /* sec-member */
     sec-member = {
       sec-mem-kind = 'variable';
-      sec-mem-id   = 'union_reset_rate_1a54aaba14ce85fd9c5d7b385d98727e36';
+      sec-mem-id   = 'unionreset_rate_1a54aaba14ce85fd9c5d7b385d98727e36';
       sec-mem-virt = normal;
       sec-mem-prot = public;
       sec-mem-type = <<_EnD_oF_dEf_TeXt_
@@ -886,7 +760,25 @@ float
 _EnD_oF_dEf_TeXt_;
       sec-mem-name = 'nonLinearRate';
       sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      sec-mem-desc-line = '47';
+      sec-mem-desc-line = '76';
+      sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      sec-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+    }; /* sec-member */
+    sec-member = {
+      sec-mem-kind = 'variable';
+      sec-mem-id   = 'unionreset_rate_1a5a9af6c017d8b70e4db9283f2f7e726b';
+      sec-mem-virt = normal;
+      sec-mem-prot = public;
+      sec-mem-type = <<_EnD_oF_dEf_TeXt_
+_voltT
+_EnD_oF_dEf_TeXt_;
+      sec-mem-name = 'voltRate';
+      sec-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
+      sec-mem-desc-line = '77';
       sec-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
@@ -896,8 +788,9 @@ _EnD_oF_dEf_TeXt_;
     }; /* sec-member */
   }; /* cp-section */
   cp-filename  = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-  cp-fileline  = '45';
+  cp-fileline  = '74';
   cp-briefdesc = <<_EnD_oF_dEf_TeXt_
+ResetRate
 This is a support union for neuron reset rates.
 _EnD_oF_dEf_TeXt_;
   cp-documentation = <<_EnD_oF_dEf_TeXt_
@@ -908,7 +801,7 @@ struct = {
   cp-id     = 'structreverse_leak_del';
   cp-name   = 'reverseLeakDel';
   cp-filename  = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-  cp-fileline  = '36';
+  cp-fileline  = '50';
   cp-briefdesc = <<_EnD_oF_dEf_TeXt_
 This fun.
 _EnD_oF_dEf_TeXt_;
@@ -1093,20 +986,46 @@ _EnD_oF_dEf_TeXt_;
         func-mem-param-declname = 'lp';
       }; /*        func-mem-param--param */
       func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.c';
-      func-mem-desc-line = '20';
+      func-mem-desc-line = '13';
       func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-Gets the next event time, based on a random function.
+Gets the next small-tick event time.
 _EnD_oF_dEf_TeXt_;
       func-mem-documentation = <<_EnD_oF_dEf_TeXt_
- Moved here to allow for
-easier abstraciton, and random function replacement.
-
-
-@param lp Reference to the current LP so that the function can see the RNG
-
-@return a tw_stime value, such that \form#0. A delta for the next
-time slice.
+Gets the next event time, based on a random function.
 _EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'assist_8c_1a4d378196b7fceed090d64ec8820b4065';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+tw_stime
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'getCurrentBigTick';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+tw_stime
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'now';
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.c';
+      func-mem-desc-line = '29';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Given a tw_stime, returns the current big tick.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+If the time is in-between
+big ticks, this rounds down to the last big tick. There is a bit of a fuzz for
+times close to the next big tick so if the current time is within  ::BIG_TICK_ERR
+of the next big tick, that will be returned instead. Sane parameters would
+probably be around .000001.\xrefitem todo 1.
+_EnD_oF_dEf_TeXt_;
+      func-mem-referenceby = {
+        func-mem-ref-id = 'neuron_8c_1a64dc379b459a2b07b40bce35381210e8';
+        func-mem-ref-line = '28';
+        func-mem-ref-name = 'linearLeak';
+    };
     }; /* func-member */
     };
   file-full-name  = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.c';
@@ -1134,7 +1053,7 @@ _EnD_oF_dEf_TeXt_;
       define-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
       define-mem-desc-line = '18';
       define-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-
+ID type - local id type for bit shifts and ID cases.
 _EnD_oF_dEf_TeXt_;
       define-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
@@ -1152,7 +1071,58 @@ _EnD_oF_dEf_TeXt_;
       define-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
       define-mem-desc-line = '19';
       define-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Voltage data type (membrane potential)
+_EnD_oF_dEf_TeXt_;
+      define-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
+_EnD_oF_dEf_TeXt_;
+      define-mem-referenceby = {
+        define-mem-ref-id = 'neuron_8c_1a2e78d7d2b70bf7349c3854b3727dcc25';
+        define-mem-ref-line = '67';
+        define-mem-ref-name = 'resetLinear';
+    };
+      define-mem-referenceby = {
+        define-mem-ref-id = 'neuron_8c_1a09e54832158e2f6abe898437979aae00';
+        define-mem-ref-line = '75';
+        define-mem-ref-name = 'reverseResetLinear';
+    };
+      define-mem-referenceby = {
+        define-mem-ref-id = 'neuron_8c_1ae630bdf5dd3744870968f07a6971659c';
+        define-mem-ref-line = '175';
+        define-mem-ref-name = 'integrateSynapse';
+    };
+    }; /* define-member */
+    define-member = {
+      define-mem-kind = 'define';
+      define-mem-id   = 'assist_8h_1aa73c5ea0fe4ba938c96e6771b38dcb2a';
+      define-mem-virt = normal;
+      define-mem-prot = public;
+      define-mem-name = '_weightT';
+      define-mem-initializer = <<_EnD_oF_dEf_TeXt_
+uint_fast32_t
+_EnD_oF_dEf_TeXt_;
+      define-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
+      define-mem-desc-line = '20';
+      define-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Weight/probability type.
+_EnD_oF_dEf_TeXt_;
+      define-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+    }; /* define-member */
+    define-member = {
+      define-mem-kind = 'define';
+      define-mem-id   = 'assist_8h_1a5537d30256d443ce07efd3d879a4a720';
+      define-mem-virt = normal;
+      define-mem-prot = public;
+      define-mem-name = '_threshT';
+      define-mem-initializer = <<_EnD_oF_dEf_TeXt_
+int_fast32_t
+_EnD_oF_dEf_TeXt_;
+      define-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
+      define-mem-desc-line = '21';
+      define-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+threshold data type - In the paper, this is two unsigned values and a reversal flag. Here, this is a signed integer.
 _EnD_oF_dEf_TeXt_;
       define-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
@@ -1168,9 +1138,9 @@ _EnD_oF_dEf_TeXt_;
 int_fast64_t
 _EnD_oF_dEf_TeXt_;
       define-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      define-mem-desc-line = '20';
+      define-mem-desc-line = '23';
       define-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-
+Counter data type for stats.
 _EnD_oF_dEf_TeXt_;
       define-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
@@ -1186,13 +1156,13 @@ _EnD_oF_dEf_TeXt_;
 uint32_t
 _EnD_oF_dEf_TeXt_;
       define-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      define-mem-desc-line = '24';
+      define-mem-desc-line = '27';
       define-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 _regIDT is a "regional id" type.
 _EnD_oF_dEf_TeXt_;
       define-mem-documentation = <<_EnD_oF_dEf_TeXt_
  This variable type is for storing
-coreIDs and localIDs. It must be half the bit size of tw_lpid.\xrefitem todo 1.
+coreIDs and localIDs. It must be half the bit size of tw_lpid. 
 _EnD_oF_dEf_TeXt_;
     }; /* define-member */
     define-member = {
@@ -1208,7 +1178,7 @@ _EnD_oF_dEf_TeXt_;
 (((a) < 0) ? (-a) : (a))
 _EnD_oF_dEf_TeXt_;
       define-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      define-mem-desc-line = '29';
+      define-mem-desc-line = '32';
       define-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 IABS is an integer absolute value function.
 _EnD_oF_dEf_TeXt_;
@@ -1229,7 +1199,7 @@ _EnD_oF_dEf_TeXt_;
 (((a) < 0) ? (0) : (a))
 _EnD_oF_dEf_TeXt_;
       define-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      define-mem-desc-line = '31';
+      define-mem-desc-line = '34';
       define-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 RZER is a floor function - values below zero round up to zero.
 _EnD_oF_dEf_TeXt_;
@@ -1252,7 +1222,7 @@ _EnD_oF_dEf_TeXt_;
       enum-mem-enum = { enum-name = NEURON_HEARTBEAT; };
       enum-mem-enum = { enum-name = GEN_HEARTBEAT; };
       enum-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      enum-mem-desc-line = '35';
+      enum-mem-desc-line = '38';
       enum-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 evtType is a message/event identifier flag
 _EnD_oF_dEf_TeXt_;
@@ -1278,7 +1248,7 @@ _EnD_oF_dEf_TeXt_;
         func-mem-param-declname = 'lp';
       }; /*        func-mem-param--param */
       func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      func-mem-desc-line = '72';
+      func-mem-desc-line = '88';
       func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 Gets the next event time, based on a random function.
 _EnD_oF_dEf_TeXt_;
@@ -1291,7 +1261,46 @@ easier abstraciton, and random function replacement.
 
 @return a tw_stime value, such that \form#0. A delta for the next
 time slice.
+
+Gets the next event time, based on a random function.
 _EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'assist_8h_1a4d378196b7fceed090d64ec8820b4065';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+tw_stime
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'getCurrentBigTick';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+tw_stime
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'now';
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
+      func-mem-desc-line = '96';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Given a tw_stime, returns the current big tick.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+@param now current time
+
+@return the current big tick time.
+
+If the time is in-between
+big ticks, this rounds down to the last big tick. There is a bit of a fuzz for
+times close to the next big tick so if the current time is within  ::BIG_TICK_ERR
+of the next big tick, that will be returned instead. Sane parameters would
+probably be around .000001.\xrefitem todo 1.
+_EnD_oF_dEf_TeXt_;
+      func-mem-referenceby = {
+        func-mem-ref-id = 'neuron_8c_1a64dc379b459a2b07b40bce35381210e8';
+        func-mem-ref-line = '28';
+        func-mem-ref-name = 'linearLeak';
+    };
     }; /* func-member */
     };
     var = {
@@ -1305,7 +1314,7 @@ int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'NEURONS_IN_CORE';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '51';
+      var-mem-desc-line = '55';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 Number of neurons per core.
 _EnD_oF_dEf_TeXt_;
@@ -1323,7 +1332,7 @@ int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'CORES_IN_SIM';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '52';
+      var-mem-desc-line = '56';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
@@ -1341,7 +1350,7 @@ int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'AXONS_IN_CORE';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '53';
+      var-mem-desc-line = '57';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 Number of axions per core.
 _EnD_oF_dEf_TeXt_;
@@ -1359,7 +1368,7 @@ int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'SYNAPSES_IN_CORE';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '54';
+      var-mem-desc-line = '58';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
@@ -1377,7 +1386,7 @@ unsigned int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'GEN_ON';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '55';
+      var-mem-desc-line = '59';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 Simulation tuning variables.
 _EnD_oF_dEf_TeXt_;
@@ -1395,7 +1404,7 @@ bool
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'GEN_RND';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '56';
+      var-mem-desc-line = '60';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
@@ -1413,7 +1422,7 @@ unsigned int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'RND_MODE';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '57';
+      var-mem-desc-line = '61';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
@@ -1431,7 +1440,7 @@ unsigned int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'GEN_PROB';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '58';
+      var-mem-desc-line = '62';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
@@ -1449,7 +1458,7 @@ unsigned int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'GEN_FCT';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '59';
+      var-mem-desc-line = '63';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
@@ -1467,7 +1476,7 @@ unsigned int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'GEN_OUTBOUND';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '60';
+      var-mem-desc-line = '64';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
@@ -1485,7 +1494,7 @@ unsigned int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'GEN_SEL_MODE';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '61';
+      var-mem-desc-line = '65';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
@@ -1503,7 +1512,7 @@ unsigned int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'SP_DBG';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '62';
+      var-mem-desc-line = '66';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
@@ -1521,7 +1530,7 @@ int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'THRESHOLD_MAX';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '64';
+      var-mem-desc-line = '68';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 Determines the maximum and minimum thresholds for a neuron to fire.
 _EnD_oF_dEf_TeXt_;
@@ -1539,7 +1548,7 @@ int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'THRESHOLD_MIN';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '65';
+      var-mem-desc-line = '69';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 Minimum threshold.
 _EnD_oF_dEf_TeXt_;
@@ -1557,7 +1566,7 @@ int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'SYNAPSE_WEIGHT_MAX';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '66';
+      var-mem-desc-line = '70';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 Each neuron is connected to the synapses (inputs) within the core it is running in.
 _EnD_oF_dEf_TeXt_;
@@ -1575,7 +1584,7 @@ int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'SYNAPSE_WEIGHT_MIN';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '67';
+      var-mem-desc-line = '71';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 Minimum synapse weight.
 _EnD_oF_dEf_TeXt_;
@@ -1593,9 +1602,27 @@ int
 _EnD_oF_dEf_TeXt_;
       var-mem-name = 'CORE_SIZE';
       var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
-      var-mem-desc-line = '69';
+      var-mem-desc-line = '73';
       var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 CORE_SIZE is equal to the number of axions * number of aneurons + num neurons + num axions.
+_EnD_oF_dEf_TeXt_;
+      var-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+    }; /* var-member */
+    var-member = {
+      var-mem-kind = 'variable';
+      var-mem-id   = 'assist_8h_1a69434dbcf2196fc2fd1ab7cb57fc9491';
+      var-mem-virt = normal;
+      var-mem-prot = public;
+      var-mem-type = <<_EnD_oF_dEf_TeXt_
+tw_stime
+_EnD_oF_dEf_TeXt_;
+      var-mem-name = 'BIG_TICK_ERR';
+      var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.h';
+      var-mem-desc-line = '74';
+      var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+
 _EnD_oF_dEf_TeXt_;
       var-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
@@ -1656,6 +1683,11 @@ _EnD_oF_dEf_TeXt_;
       func-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
+      func-mem-referenceto = {
+        func-mem-ref-id = 'input__simulator_8h_1a1333eb5695ae83d1ffccf24b08bc6288';
+        func-mem-ref-line = '50';
+        func-mem-ref-name = 'inputSimulatorState::randomRate';
+    };
     }; /* func-member */
     };
   file-full-name  = '/Users/Mark/Development/TrueNorth/tnt_benchmark/input_simulator.c';
@@ -1740,6 +1772,11 @@ _EnD_oF_dEf_TeXt_;
       func-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
+      func-mem-referenceto = {
+        func-mem-ref-id = 'input__simulator_8h_1a1333eb5695ae83d1ffccf24b08bc6288';
+        func-mem-ref-line = '50';
+        func-mem-ref-name = 'inputSimulatorState::randomRate';
+    };
     }; /* func-member */
     func-member = {
       func-mem-kind = 'function';
@@ -2277,6 +2314,59 @@ _EnD_oF_dEf_TeXt_;
 file = {
   file-id   = 'neuron_8c';
   file-name = 'neuron.c';
+    func = {
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'neuron_8c_1ae630bdf5dd3744870968f07a6971659c';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'integrateSynapse';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+_idT
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'synapseID';
+      }; /*        func-mem-param--param */
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+neuronState *
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'st';
+      }; /*        func-mem-param--param */
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+tw_lp *
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'lp';
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.c';
+      func-mem-desc-line = '175';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+function that adds a synapse's value to the current neuron's membrane potential.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+@param synapseID localID of the synapse sending the message.
+_EnD_oF_dEf_TeXt_;
+      func-mem-referenceto = {
+        func-mem-ref-id = 'assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815';
+        func-mem-ref-line = '19';
+        func-mem-ref-name = '_voltT';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a0fdd8f44c4105a94e17c4c58a51db486';
+        func-mem-ref-line = '146';
+        func-mem-ref-name = 'neuronState::membranePot';
+    };
+      func-mem-referenceby = {
+        func-mem-ref-id = 'neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674';
+        func-mem-ref-line = '104';
+        func-mem-ref-name = 'neuronReceiveMessage';
+    };
+    }; /* func-member */
+    };
   file-full-name  = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.c';
   file-first-line = '1';
   file-briefdesc  = <<_EnD_oF_dEf_TeXt_
@@ -2292,7 +2382,7 @@ file = {
     typedef = {
     typedef-member = {
       typedef-mem-kind = 'typedef';
-      typedef-mem-id   = 'neuron_8h_1a6eab2da39fb76cba9c4c54b5fb7625a6';
+      typedef-mem-id   = 'neuron_8h_1a7362d32c8d9b6dc323f5d1b05af9855b';
       typedef-mem-virt = normal;
       typedef-mem-prot = public;
       typedef-mem-type = <<_EnD_oF_dEf_TeXt_
@@ -2310,7 +2400,7 @@ _EnD_oF_dEf_TeXt_;
     }; /* typedef-member */
     typedef-member = {
       typedef-mem-kind = 'typedef';
-      typedef-mem-id   = 'neuron_8h_1a960bf554f8c5333d901a15c49066f5b6';
+      typedef-mem-id   = 'neuron_8h_1abf61b10b4b6116161a9e5c9d7ac54be1';
       typedef-mem-virt = normal;
       typedef-mem-prot = public;
       typedef-mem-type = <<_EnD_oF_dEf_TeXt_
@@ -2318,7 +2408,7 @@ void(*
 _EnD_oF_dEf_TeXt_;
       typedef-mem-name = 'reverseLeakDel';
       typedef-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      typedef-mem-desc-line = '40';
+      typedef-mem-desc-line = '53';
       typedef-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
@@ -2336,7 +2426,7 @@ void(*
 _EnD_oF_dEf_TeXt_;
       typedef-mem-name = 'resetFunDel';
       typedef-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      typedef-mem-desc-line = '58';
+      typedef-mem-desc-line = '88';
       typedef-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 ResetFunDel - This is a function that handles different reset rate
 calculations.
@@ -2360,7 +2450,7 @@ void(*
 _EnD_oF_dEf_TeXt_;
       typedef-mem-name = 'reverseResetDel';
       typedef-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      typedef-mem-desc-line = '69';
+      typedef-mem-desc-line = '118';
       typedef-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 This is a function that reverses the reset command.
 _EnD_oF_dEf_TeXt_;
@@ -2392,7 +2482,7 @@ _EnD_oF_dEf_TeXt_;
     func = {
     func-member = {
       func-mem-kind = 'function';
-      func-mem-id   = 'neuron_8h_1a6d548f86a3f6618241b7ffc5dd3ad374';
+      func-mem-id   = 'neuron_8h_1a8e52befc10f975c6be39cc93af573d7e';
       func-mem-virt = normal;
       func-mem-prot = public;
       func-mem-type = <<_EnD_oF_dEf_TeXt_
@@ -2403,37 +2493,7 @@ _EnD_oF_dEf_TeXt_;
         func-mem-param-type = <<_EnD_oF_dEf_TeXt_
 void *
 _EnD_oF_dEf_TeXt_;
-        func-mem-param-declname = 'neuronState';
-      }; /*        func-mem-param--param */
-      func-mem-param = {
-        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
-tw_stime
-_EnD_oF_dEf_TeXt_;
-        func-mem-param-declname = 'end';
-      }; /*        func-mem-param--param */
-      func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      func-mem-desc-line = '34';
-      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-
-_EnD_oF_dEf_TeXt_;
-      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
-
-_EnD_oF_dEf_TeXt_;
-    }; /* func-member */
-    func-member = {
-      func-mem-kind = 'function';
-      func-mem-id   = 'neuron_8h_1a23e8b1105b7db3282e2b362edbb98f5a';
-      func-mem-virt = normal;
-      func-mem-prot = public;
-      func-mem-type = <<_EnD_oF_dEf_TeXt_
-void
-_EnD_oF_dEf_TeXt_;
-      func-mem-name = 'revNoLeak';
-      func-mem-param = {
-        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
-void *
-_EnD_oF_dEf_TeXt_;
-        func-mem-param-declname = 'neuronState';
+        func-mem-param-declname = 'neuron';
       }; /*        func-mem-param--param */
       func-mem-param = {
         func-mem-param-type = <<_EnD_oF_dEf_TeXt_
@@ -2444,11 +2504,135 @@ _EnD_oF_dEf_TeXt_;
       func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
       func-mem-desc-line = '41';
       func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-
+noLeak - A non leaking neuron function.
 _EnD_oF_dEf_TeXt_;
       func-mem-documentation = <<_EnD_oF_dEf_TeXt_
-
+@param neuron The current neuron state.
+@param now The current simulation time.
 _EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'neuron_8h_1a64dc379b459a2b07b40bce35381210e8';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'linearLeak';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+void *
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'neuron';
+      }; /*        func-mem-param--param */
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+tw_stime
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'now';
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
+      func-mem-desc-line = '48';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+A linear leak function.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+@param neuron The current neuron state.
+@param now The current simulation time.
+
+LinearLeak is the standard linear leak function from the paper. Using the leakRate parameter inside \link NeuronModel the neuron state \endlink, this follows a simple linear function, reducing the membrane potential by a fixed rate per tick.
+
+
+@see NeuronModel
+_EnD_oF_dEf_TeXt_;
+      func-mem-referenceto = {
+        func-mem-ref-id = 'assist_8c_1a4d378196b7fceed090d64ec8820b4065';
+        func-mem-ref-line = '29';
+        func-mem-ref-name = 'getCurrentBigTick';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a6f4e4d8fc1cf0257b486e01f628d2656';
+        func-mem-ref-line = '153';
+        func-mem-ref-name = 'neuronState::lastLeakTime';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a0fdd8f44c4105a94e17c4c58a51db486';
+        func-mem-ref-line = '146';
+        func-mem-ref-name = 'neuronState::membranePot';
+    };
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'neuron_8h_1ac5bebec77c5216533ec5f6acd086532e';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'revNoLeak';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+void *
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'neuron';
+      }; /*        func-mem-param--param */
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+tw_stime
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'now';
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
+      func-mem-desc-line = '61';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Reverse leak function for use when neurons have no defined leak function.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+@param neuron current neuron state
+@param now         tw_stime representing current time of simulation.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'neuron_8h_1a26ced40d7ad7a0b448a136d8724fe18b';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'revLinearLeak';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+void *
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'neuron';
+      }; /*        func-mem-param--param */
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+tw_stime
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'now';
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
+      func-mem-desc-line = '69';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Reverse leak function neurons that have a linear leak function assigned.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+@param neuron current neuron state
+@param now         tw_stime representing current time of simulation.
+_EnD_oF_dEf_TeXt_;
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a6f4e4d8fc1cf0257b486e01f628d2656';
+        func-mem-ref-line = '153';
+        func-mem-ref-name = 'neuronState::lastLeakTime';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a0fdd8f44c4105a94e17c4c58a51db486';
+        func-mem-ref-line = '146';
+        func-mem-ref-name = 'neuronState::membranePot';
+    };
     }; /* func-member */
     func-member = {
       func-mem-kind = 'function';
@@ -2466,13 +2650,18 @@ _EnD_oF_dEf_TeXt_;
         func-mem-param-declname = 'neuronState';
       }; /*        func-mem-param--param */
       func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      func-mem-desc-line = '60';
+      func-mem-desc-line = '96';
       func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-
+Resets neuron voltage to 0 after firing.
 _EnD_oF_dEf_TeXt_;
       func-mem-documentation = <<_EnD_oF_dEf_TeXt_
-
+@param neuronState current neuron state
 _EnD_oF_dEf_TeXt_;
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a0fdd8f44c4105a94e17c4c58a51db486';
+        func-mem-ref-line = '146';
+        func-mem-ref-name = 'neuronState::membranePot';
+    };
     }; /* func-member */
     func-member = {
       func-mem-kind = 'function';
@@ -2490,23 +2679,37 @@ _EnD_oF_dEf_TeXt_;
         func-mem-param-declname = 'neuronState';
       }; /*        func-mem-param--param */
       func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      func-mem-desc-line = '62';
+      func-mem-desc-line = '103';
       func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-
+Resets neuron voltage based on linear function.
 _EnD_oF_dEf_TeXt_;
       func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+@param neuronState neuronState
 
+Note: Linear functions use the \link _voltT voltT \endlink data type.
+   If a neuron uses a linear reset, this parameter must be set upon neuron creation. 
+\xrefitem todo 3.
 _EnD_oF_dEf_TeXt_;
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a0fdd8f44c4105a94e17c4c58a51db486';
+        func-mem-ref-line = '146';
+        func-mem-ref-name = 'neuronState::membranePot';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815';
+        func-mem-ref-line = '19';
+        func-mem-ref-name = '_voltT';
+    };
     }; /* func-member */
     func-member = {
       func-mem-kind = 'function';
-      func-mem-id   = 'neuron_8h_1aabae9811b1573f5c38f4d32446c9c80a';
+      func-mem-id   = 'neuron_8h_1a6e11be912b4860cd1978b2d8c49b9703';
       func-mem-virt = normal;
       func-mem-prot = public;
       func-mem-type = <<_EnD_oF_dEf_TeXt_
 void
 _EnD_oF_dEf_TeXt_;
-      func-mem-name = 'reverseLinear';
+      func-mem-name = 'resetNone';
       func-mem-param = {
         func-mem-param-type = <<_EnD_oF_dEf_TeXt_
 void *
@@ -2514,23 +2717,23 @@ _EnD_oF_dEf_TeXt_;
         func-mem-param-declname = 'neuronState';
       }; /*        func-mem-param--param */
       func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      func-mem-desc-line = '70';
+      func-mem-desc-line = '109';
       func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-
+No reset function - does not reset membrane potential after firing.
 _EnD_oF_dEf_TeXt_;
       func-mem-documentation = <<_EnD_oF_dEf_TeXt_
-
+@param neuronState current neuron state.
 _EnD_oF_dEf_TeXt_;
     }; /* func-member */
     func-member = {
       func-mem-kind = 'function';
-      func-mem-id   = 'neuron_8h_1a286a9f9e22acec028acf23b62e13646b';
+      func-mem-id   = 'neuron_8h_1a09e54832158e2f6abe898437979aae00';
       func-mem-virt = normal;
       func-mem-prot = public;
       func-mem-type = <<_EnD_oF_dEf_TeXt_
 void
 _EnD_oF_dEf_TeXt_;
-      func-mem-name = 'reverseZero';
+      func-mem-name = 'reverseResetLinear';
       func-mem-param = {
         func-mem-param-type = <<_EnD_oF_dEf_TeXt_
 void *
@@ -2538,7 +2741,65 @@ _EnD_oF_dEf_TeXt_;
         func-mem-param-declname = 'neuronState';
       }; /*        func-mem-param--param */
       func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      func-mem-desc-line = '71';
+      func-mem-desc-line = '120';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a0fdd8f44c4105a94e17c4c58a51db486';
+        func-mem-ref-line = '146';
+        func-mem-ref-name = 'neuronState::membranePot';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815';
+        func-mem-ref-line = '19';
+        func-mem-ref-name = '_voltT';
+    };
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'neuron_8h_1ae53276ccdb759ba1ea09806cbf9fc940';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'reverseResetZero';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+void *
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'neuronState';
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
+      func-mem-desc-line = '122';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+\xrefitem todo 4.
+_EnD_oF_dEf_TeXt_;
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'neuron_8h_1a50b2475c0a8d745eb8f144b72d7eabdf';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'reverseResetNone';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+void *
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'neuronState';
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
+      func-mem-desc-line = '124';
       func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
@@ -2580,7 +2841,7 @@ _EnD_oF_dEf_TeXt_;
         func-mem-param-declname = 'lp';
       }; /*        func-mem-param--param */
       func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      func-mem-desc-line = '146';
+      func-mem-desc-line = '215';
       func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 neuronReverseFinal final neuron reversal function.
 _EnD_oF_dEf_TeXt_;
@@ -2627,14 +2888,128 @@ _EnD_oF_dEf_TeXt_;
         func-mem-param-declname = 'lp';
       }; /*        func-mem-param--param */
       func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      func-mem-desc-line = '149';
+      func-mem-desc-line = '226';
       func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
-neuronReceiveMessage handles incomming synapse messages.
+handles incomming synapse messages.
 _EnD_oF_dEf_TeXt_;
       func-mem-documentation = <<_EnD_oF_dEf_TeXt_
- In this model, the neurons send messages to axons during "big tick" intervals. 
-This is done through an event sent upon receipt of the first synapse message of the current big-tick.  
+ In this model, the neurons send messages to axons during "big tick" intervals.
+This is done through an event sent upon receipt of the first synapse message of the current big-tick.
+
+   @param st   current neuron state
+   @param time time event was received
+   @param m    event message data
+   @param lp   lp.
+
+neruonReceiveMessage runs when an event is received by a neuron.
+The events are handled in the following fashion:
+- If the event is a synapse, the neuron integrates the weight of the synapse into its membrane potential.
+  - The count of big-tick synapse messages recived is incremented.
+  - If the count changes from zero to one, the function creates and queues a heartbeat event for the next big-tick.
+- If the event is a heartbeat, the neuron will leak, potentially fire, and reset.
+
+Big-Tick events are sent at time \form#1, so that the the event will arrive at the next bit-tick time.
 _EnD_oF_dEf_TeXt_;
+      func-mem-referenceto = {
+        func-mem-ref-id = 'assist_8h_1a015b6eb45982e1842ee8fc389a099ced';
+        func-mem-ref-line = '49';
+        func-mem-ref-name = 'Msg_Data::eventType';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1afe8825076c4cf3863c677307fec63c61';
+        func-mem-ref-line = '198';
+        func-mem-ref-name = 'neuronState::fireCount';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a0fdd8f44c4105a94e17c4c58a51db486';
+        func-mem-ref-line = '146';
+        func-mem-ref-name = 'neuronState::membranePot';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'assist_8h_1a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e';
+        func-mem-ref-line = '43';
+        func-mem-ref-name = 'NEURON_HEARTBEAT';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8c_1a92d5882a15e11e2a6733483d51428e46';
+        func-mem-ref-line = '157';
+        func-mem-ref-name = 'neuronShouldFire';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1ab8f63a1dfdb2992657530ff8a63fdc01';
+        func-mem-ref-line = '199';
+        func-mem-ref-name = 'neuronState::rcvdMsgCount';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1af8935bcba177f2f3dfb9119c39ef7dc5';
+        func-mem-ref-line = '157';
+        func-mem-ref-name = 'neuronState::receivedSynapseMsgs';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a5efe5de0478ea513ed5d90d89a49fcca';
+        func-mem-ref-line = '147';
+        func-mem-ref-name = 'neuronState::savedMembranePot';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a71fbb9a79e8048b473b6e09d29a64bbe';
+        func-mem-ref-line = '200';
+        func-mem-ref-name = 'neuronState::SOPSCount';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a50734a9ba605a083a90814b63d039a03';
+        func-mem-ref-line = '156';
+        func-mem-ref-name = 'neuronState::savedLastLeakTime';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a6f4e4d8fc1cf0257b486e01f628d2656';
+        func-mem-ref-line = '153';
+        func-mem-ref-name = 'neuronState::lastLeakTime';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a6922b3f3041346eb83cfc6352a22277b';
+        func-mem-ref-line = '155';
+        func-mem-ref-name = 'neuronState::savedLastActiveTime';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a0658ad1f8b57a00589c6ea84f9a4ab13';
+        func-mem-ref-line = '152';
+        func-mem-ref-name = 'neuronState::lastActiveTime';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'assist_8h_1a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb';
+        func-mem-ref-line = '41';
+        func-mem-ref-name = 'SYNAPSE_OUT';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8c_1ae630bdf5dd3744870968f07a6971659c';
+        func-mem-ref-line = '175';
+        func-mem-ref-name = 'integrateSynapse';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'assist_8h_1aefc820e92a74047ec7ed74c1c45f818f';
+        func-mem-ref-line = '51';
+        func-mem-ref-name = 'Msg_Data::localID';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1aa430f424f34dc59dc27736e27ec61320';
+        func-mem-ref-line = '190';
+        func-mem-ref-name = 'neuronState::doLeak';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8c_1ae071ef984b7e0dd4ec38fca91e0abe39';
+        func-mem-ref-line = '166';
+        func-mem-ref-name = 'neuronFire';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8c_1ab1f4997e4bfe11e78faa6d37748aee67';
+        func-mem-ref-line = '169';
+        func-mem-ref-name = 'neuronPostFire';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'assist_8h_1a2e49a6bcc6c45ade722f746b1ea707f2';
+        func-mem-ref-line = '50';
+        func-mem-ref-name = 'Msg_Data::rndCallCount';
+    };
     }; /* func-member */
     func-member = {
       func-mem-kind = 'function';
@@ -2664,13 +3039,18 @@ _EnD_oF_dEf_TeXt_;
         func-mem-param-declname = 'm';
       }; /*        func-mem-param--param */
       func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      func-mem-desc-line = '152';
+      func-mem-desc-line = '229';
       func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 neuronFire manages a firing event.
 _EnD_oF_dEf_TeXt_;
       func-mem-documentation = <<_EnD_oF_dEf_TeXt_
  Firing events occur when a synchro message is received, so these calculations are done on big-ticks only.  
 _EnD_oF_dEf_TeXt_;
+      func-mem-referenceby = {
+        func-mem-ref-id = 'neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674';
+        func-mem-ref-line = '104';
+        func-mem-ref-name = 'neuronReceiveMessage';
+    };
     }; /* func-member */
     func-member = {
       func-mem-kind = 'function';
@@ -2700,13 +3080,18 @@ _EnD_oF_dEf_TeXt_;
         func-mem-param-declname = 'm';
       }; /*        func-mem-param--param */
       func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      func-mem-desc-line = '154';
+      func-mem-desc-line = '231';
       func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 neuronPostFire manages post-firing events, including reset functions
 _EnD_oF_dEf_TeXt_;
       func-mem-documentation = <<_EnD_oF_dEf_TeXt_
 
 _EnD_oF_dEf_TeXt_;
+      func-mem-referenceby = {
+        func-mem-ref-id = 'neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674';
+        func-mem-ref-line = '104';
+        func-mem-ref-name = 'neuronReceiveMessage';
+    };
     }; /* func-member */
     func-member = {
       func-mem-kind = 'function';
@@ -2736,7 +3121,7 @@ _EnD_oF_dEf_TeXt_;
         func-mem-param-declname = 'lp';
       }; /*        func-mem-param--param */
       func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      func-mem-desc-line = '156';
+      func-mem-desc-line = '233';
       func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
 generateWaitEvent creates a new wait event to this neuron for big-tick synchronization
 _EnD_oF_dEf_TeXt_;
@@ -2744,26 +3129,202 @@ _EnD_oF_dEf_TeXt_;
 
 _EnD_oF_dEf_TeXt_;
     }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'neuron_8h_1ae630bdf5dd3744870968f07a6971659c';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'integrateSynapse';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+_idT
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'synapseID';
+      }; /*        func-mem-param--param */
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+neuronState *
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'st';
+      }; /*        func-mem-param--param */
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+tw_lp *
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'lp';
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
+      func-mem-desc-line = '240';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+function that adds a synapse's value to the current neuron's membrane potential.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+@param synapseID localID of the synapse sending the message.
+_EnD_oF_dEf_TeXt_;
+      func-mem-referenceto = {
+        func-mem-ref-id = 'assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815';
+        func-mem-ref-line = '19';
+        func-mem-ref-name = '_voltT';
     };
-    var = {
-    var-member = {
-      var-mem-kind = 'variable';
-      var-mem-id   = 'neuron_8h_1a00045e810e1e717e3a0973b383822104';
-      var-mem-virt = normal;
-      var-mem-prot = public;
-      var-mem-type = <<_EnD_oF_dEf_TeXt_
-union ResetRate
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a0fdd8f44c4105a94e17c4c58a51db486';
+        func-mem-ref-line = '146';
+        func-mem-ref-name = 'neuronState::membranePot';
+    };
+      func-mem-referenceby = {
+        func-mem-ref-id = 'neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674';
+        func-mem-ref-line = '104';
+        func-mem-ref-name = 'neuronReceiveMessage';
+    };
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'neuron_8h_1a766dff9e530486b055e97ebe392268b8';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
 _EnD_oF_dEf_TeXt_;
-      var-mem-name = 'resetRate';
-      var-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
-      var-mem-desc-line = '48';
-      var-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+      func-mem-name = 'sendHeartbeat';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+neuronState *
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'st';
+      }; /*        func-mem-param--param */
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+tw_lp *
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'lp';
+      }; /*        func-mem-param--param */
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+tw_stime
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'time';
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
+      func-mem-desc-line = '248';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Function that sends a heartbeat message to this neuron.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+@param lp   <#lp description#>
+@param time <#time description#>
+_EnD_oF_dEf_TeXt_;
+      func-mem-referenceby = {
+        func-mem-ref-id = 'neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674';
+        func-mem-ref-line = '104';
+        func-mem-ref-name = 'neuronReceiveMessage';
+    };
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'neuron_8h_1a92d5882a15e11e2a6733483d51428e46';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+bool
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'neuronShouldFire';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+neuronState *
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'st';
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
+      func-mem-desc-line = '257';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Checks to see if a neuron should fire.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+\xrefitem todo 5.
 
-_EnD_oF_dEf_TeXt_;
-      var-mem-documentation = <<_EnD_oF_dEf_TeXt_
+@param st neuron state
 
+@return true if the neuron is ready to fire.
 _EnD_oF_dEf_TeXt_;
-    }; /* var-member */
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a0fdd8f44c4105a94e17c4c58a51db486';
+        func-mem-ref-line = '146';
+        func-mem-ref-name = 'neuronState::membranePot';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a132470c4c17828c209e3403ccf7ee680';
+        func-mem-ref-line = '148';
+        func-mem-ref-name = 'neuronState::threshold';
+    };
+      func-mem-referenceto = {
+        func-mem-ref-id = 'neuron_8h_1a3ec480684e7a2cfc67a8ef7ac1bf57b9';
+        func-mem-ref-line = '170';
+        func-mem-ref-name = 'neuronState::negThresReset';
+    };
+      func-mem-referenceby = {
+        func-mem-ref-id = 'neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674';
+        func-mem-ref-line = '104';
+        func-mem-ref-name = 'neuronReceiveMessage';
+    };
+    }; /* func-member */
+    func-member = {
+      func-mem-kind = 'function';
+      func-mem-id   = 'neuron_8h_1adadd3095c39786607629697406f3d1eb';
+      func-mem-virt = normal;
+      func-mem-prot = public;
+      func-mem-type = <<_EnD_oF_dEf_TeXt_
+void
+_EnD_oF_dEf_TeXt_;
+      func-mem-name = 'neuronPostIntegrate';
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+neuronState *
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'st';
+      }; /*        func-mem-param--param */
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+tw_stime
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'time';
+      }; /*        func-mem-param--param */
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+tw_lp *
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'lp';
+      }; /*        func-mem-param--param */
+      func-mem-param = {
+        func-mem-param-type = <<_EnD_oF_dEf_TeXt_
+bool
+_EnD_oF_dEf_TeXt_;
+        func-mem-param-declname = 'didFire';
+      }; /*        func-mem-param--param */
+      func-mem-desc-file = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
+      func-mem-desc-line = '267';
+      func-mem-briefdesc =    <<_EnD_oF_dEf_TeXt_
+Function that runs after integration & firing, for reset function calls.
+_EnD_oF_dEf_TeXt_;
+      func-mem-documentation = <<_EnD_oF_dEf_TeXt_
+@param st      state
+@param time    event time
+@param lp      lp
+@param didFire did the neuron fire during this big tick?
+_EnD_oF_dEf_TeXt_;
+      func-mem-referenceby = {
+        func-mem-ref-id = 'neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674';
+        func-mem-ref-line = '104';
+        func-mem-ref-name = 'neuronReceiveMessage';
+    };
+      func-mem-referenceby = {
+        func-mem-ref-id = 'neuron_8c_1ae630bdf5dd3744870968f07a6971659c';
+        func-mem-ref-line = '175';
+        func-mem-ref-name = 'integrateSynapse';
+    };
+    }; /* func-member */
     };
   file-full-name  = '/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.h';
   file-first-line = '1';

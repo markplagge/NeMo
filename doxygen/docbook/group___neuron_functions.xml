@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="group___neuron_functions">
+    <title>Main neuron functions and behaviors @{</title>
+<para>Collaboration diagram for Main neuron functions and behaviors @{</para>
+<para>
+    <figure>
+        <title>Group Collaboration diagram</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="group___neuron_functions.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+        <section>
+            <title>Detailed Description</title>
+        </section>
+</section>

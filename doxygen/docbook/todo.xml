@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Todo List</title>
+
+<para><variablelist>
+<varlistentry><term><anchor id="todo_1_todo000001"/>globalScope&gt; Global <link linkend="assist_8h_1a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</link>  (tw_stime now)</term>
+<listitem>
+<para>: Implement &amp; determin if ε needs to be added to the return value. </para>
+</listitem></varlistentry>
+<varlistentry><term><anchor id="todo_1_todo000005"/>globalScope&gt; Global <link linkend="neuron_8h_1a92d5882a15e11e2a6733483d51428e46">neuronShouldFire</link>  (<link linkend="structneuron_state">neuronState</link> *st)</term>
+<listitem>
+<para>check to see if this is needed, since it looks like just a simple if statement is in order. </para>
+</listitem></varlistentry>
+<varlistentry><term><anchor id="todo_1_todo000006"/>Global <link linkend="structneuron_state_1a4199c14c5aabfd52f441e01623bdc84c">neuronState::dendriteGlobalDest</link>  </term>
+<listitem>
+<para>: The dendriteCore and dendriteLocal values might not be needed anymroe.  </para>
+</listitem></varlistentry>
+<varlistentry><term><anchor id="todo_1_todo000002"/>Module <link linkend="neuron_8c_1amgrpb71b6f136d39fa6c989fa9f8bce28fa9">ResetFunctions</link>  </term>
+<listitem>
+<para>: Check that reverse reset functions are needed, since previous voltage is stored in the neuron.  </para>
+</listitem></varlistentry>
+<varlistentry><term><anchor id="todo_1_todo000003"/>globalScope&gt; Global <link linkend="neuron_8h_1a2e78d7d2b70bf7349c3854b3727dcc25">resetLinear</link>  (void *neuronState)</term>
+<listitem>
+<para>: Check implementation against paper. </para>
+</listitem></varlistentry>
+<varlistentry><term><anchor id="todo_1_todo000004"/>globalScope&gt; Global <link linkend="neuron_8h_1ae53276ccdb759ba1ea09806cbf9fc940">reverseResetZero</link>  (void *neuronState)</term>
+<listitem>
+<para>: Check that this is the proper way to handle reset zero function </para>
+</listitem></varlistentry>
+</variablelist>
+</para>
+
+</chapter>

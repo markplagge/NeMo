@@ -96,10 +96,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_m"><span>m</span></a></li>
       <li><a href="#index_n"><span>n</span></a></li>
       <li><a href="#index_o"><span>o</span></a></li>
-      <li><a href="#index_p"><span>p</span></a></li>
       <li><a href="#index_r"><span>r</span></a></li>
       <li><a href="#index_s"><span>s</span></a></li>
-      <li class="current"><a href="#index_t"><span>t</span></a></li>
+      <li><a href="#index_t"><span>t</span></a></li>
+      <li class="current"><a href="#index_v"><span>v</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -194,11 +194,20 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>lastActiveTime
 : <a class="el" href="structneuron_state.html#a0658ad1f8b57a00589c6ea84f9a4ab13">neuronState</a>
 </li>
-<li>leakRate
-: <a class="el" href="structneuron_state.html#a7138aaa7e2988e5ad0d32cc9846dcbbb">neuronState</a>
+<li>lastLeakTime
+: <a class="el" href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">neuronState</a>
+</li>
+<li>leakRateProb
+: <a class="el" href="structneuron_state.html#a9fd530a4dd6f7acd6f744ebd51d9c762">neuronState</a>
+</li>
+<li>leakWeightProbSelect
+: <a class="el" href="structneuron_state.html#a20889d9b55895bcc719d6aad2766b8f8">neuronState</a>
 </li>
 <li>linearRate
-: <a class="el" href="union_reset_rate.html#a4bf8a23e4a9874ff73208c681eae1ced">ResetRate</a>
+: <a class="el" href="unionreset_rate.html#a4bf8a23e4a9874ff73208c681eae1ced">resetRate</a>
+</li>
+<li>localID
+: <a class="el" href="struct_msg___data.html#aefc820e92a74047ec7ed74c1c45f818f">Msg_Data</a>
 </li>
 </ul>
 
@@ -220,11 +229,17 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 
 
 <h3><a class="anchor" id="index_n"></a>- n -</h3><ul>
+<li>negativeThreshold
+: <a class="el" href="structneuron_state.html#a678bcd9f031e290178cd5d2855e74279">neuronState</a>
+</li>
+<li>negThresReset
+: <a class="el" href="structneuron_state.html#a3ec480684e7a2cfc67a8ef7ac1bf57b9">neuronState</a>
+</li>
 <li>neuronMsgSent
 : <a class="el" href="structsynapse_state.html#a9e389b0b50f9ec5e3f5b7b0f5383d6d5">synapseState</a>
 </li>
 <li>nonLinearRate
-: <a class="el" href="union_reset_rate.html#a54aaba14ce85fd9c5d7b385d98727e36">ResetRate</a>
+: <a class="el" href="unionreset_rate.html#a54aaba14ce85fd9c5d7b385d98727e36">resetRate</a>
 </li>
 </ul>
 
@@ -240,19 +255,6 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>outputMeshLengh
 : <a class="el" href="structinput_simulator_state.html#a97727a3be0dbd5813f860c99733048a8">inputSimulatorState</a>
 , <a class="el" href="structselected_spikes.html#a97727a3be0dbd5813f860c99733048a8">selectedSpikes</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
-<li>perSynapseDet
-: <a class="el" href="structneuron_state.html#a95688135a244a3ce3b35698a49d0da18">neuronState</a>
-</li>
-<li>perSynapseWeight
-: <a class="el" href="structneuron_state.html#ab39656a1580505adcabc4c7a1f4d8100">neuronState</a>
-</li>
-<li>prevMembranePot
-: <a class="el" href="structneuron_state.html#ad17e1ac0b4bca75d10da8b0ab56edd6e">neuronState</a>
 </li>
 </ul>
 
@@ -275,14 +277,14 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>recvMsgCount
 : <a class="el" href="structaxon_state.html#a7fc444364b1559859bccdf91f1e95475">axonState</a>
 </li>
-<li>resetVoltParam
-: <a class="el" href="structneuron_state.html#add87cc0b2bc3426f0fd870f7df6decd5">neuronState</a>
+<li>resetVoltage
+: <a class="el" href="structneuron_state.html#af69a2c108fe9e7154fa047ea5acc5d80">neuronState</a>
 </li>
 <li>reverseReset
 : <a class="el" href="structneuron_state.html#abf6970098695585c81e101b2a741b9a5">neuronState</a>
 </li>
 <li>rndCallCount
-: <a class="el" href="struct_msg___data.html#ab4d75bc6367f5cfbfabc69690fdc1efc">Msg_Data</a>
+: <a class="el" href="struct_msg___data.html#a2e49a6bcc6c45ade722f746b1ea707f2">Msg_Data</a>
 </li>
 <li>rndFctVal
 : <a class="el" href="structinput_simulator_state.html#a0eb8199754a403ccc8eac256f9193a02">inputSimulatorState</a>
@@ -292,6 +294,15 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
+<li>savedLastActiveTime
+: <a class="el" href="structneuron_state.html#a6922b3f3041346eb83cfc6352a22277b">neuronState</a>
+</li>
+<li>savedLastLeakTime
+: <a class="el" href="structneuron_state.html#a50734a9ba605a083a90814b63d039a03">neuronState</a>
+</li>
+<li>savedMembranePot
+: <a class="el" href="structneuron_state.html#a5efe5de0478ea513ed5d90d89a49fcca">neuronState</a>
+</li>
 <li>sendMsgCount
 : <a class="el" href="structaxon_state.html#a217ba44fb923dc4dc62bb73b14e61517">axonState</a>
 </li>
@@ -307,12 +318,25 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>synapseMsgSent
 : <a class="el" href="structsynapse_state.html#a3fd766946f24d2fd6a2021ec24939284">synapseState</a>
 </li>
+<li>synapticWeightProb
+: <a class="el" href="structneuron_state.html#af499000d57eeeaeeb6ee0928e1eee4f7">neuronState</a>
+</li>
+<li>synapticWeightProbSelect
+: <a class="el" href="structneuron_state.html#a4568f103808a436a62d7c7c47dc90e9b">neuronState</a>
+</li>
 </ul>
 
 
 <h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
 <li>threshold
-: <a class="el" href="structneuron_state.html#af321d0fa58028b78986160845189077e">neuronState</a>
+: <a class="el" href="structneuron_state.html#a132470c4c17828c209e3403ccf7ee680">neuronState</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_v"></a>- v -</h3><ul>
+<li>voltRate
+: <a class="el" href="unionreset_rate.html#a5a9af6c017d8b70e4db9283f2f7e726b">resetRate</a>
 </li>
 </ul>
 </div><!-- contents -->
@@ -320,7 +344,7 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Jun 19 2015 13:47:06 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Sun Jun 21 2015 16:46:03 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

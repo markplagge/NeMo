@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="input__simulator_8h">
+    <title>input_simulator.h File Reference</title>
+    <programlisting>#include &lt;stdio.h&gt;</programlisting>
+    <programlisting>#include &quot;assist.h&quot;</programlisting>
+    <programlisting>#include &quot;ross.h&quot;</programlisting>
+<para>Include dependency diagram for input_simulator.h</para>
+<para>
+    <figure>
+        <title>Dependency diagram</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="input__simulator_8h__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+<para>Included by dependency diagram for input_simulator.h</para>
+<para>
+    <figure>
+        <title>Dependency diagram</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="input__simulator_8h__dep__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+        <section>
+            <title> Data Structures </title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>struct <link linkend="structrandom_spikes">randomSpikes</link></para>
+<para><emphasis>Struct that genreates spikes randomly.</emphasis></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>struct <link linkend="structselected_spikes">selectedSpikes</link></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>struct <link linkend="structinput_simulator_state">inputSimulatorState</link></para>
+<para><emphasis>Struct that manages the spike generator.</emphasis></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+        <section>
+            <title>Enumerations</title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                            <para><literallayout>enum <link linkend="input__simulator_8h_1aa0d25534cd73156287b1136dd89c0215">selectedRandom</link> {
+<link linkend="input__simulator_8h_1aa0d25534cd73156287b1136dd89c0215a4b3574e75cec43aa4dd3a0fd7940c632">UNF</link>,
+<link linkend="input__simulator_8h_1aa0d25534cd73156287b1136dd89c0215ae003ec1158e3a4e295616ced12af154e">NORM</link>,
+<link linkend="input__simulator_8h_1aa0d25534cd73156287b1136dd89c0215a1697a91b22c2369eb2ba427c2d193329">SELECT</link>
+}</literallayout>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+        <section>
+            <title>Typedefs</title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                            <para>typedef bool(*  <link linkend="input__simulator_8h_1aa47e87d309aab7727810011578bae86e">spikeGenDel</link><para><emphasis>SpikeGenerator Function Pointer.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+        <section>
+            <title>Functions</title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>bool <link linkend="input__simulator_8h_1ad6244e86a3542f8d3c64766e7e7c6746">uniformGen</link> (
+void * gen_state, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>bool <link linkend="input__simulator_8h_1a7a9db804782d8a0c810fa90ae9c2dd05">normGen</link> (
+void * gen_state, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>bool <link linkend="input__simulator_8h_1a7859f15c9115868c5c0ed88c43756482">selectedGen</link> (
+void * spikeGen, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+    <simplesect>
+        <title>Detailed Description</title>
+    <para>Definition in file /Users/Mark/Development/TrueNorth/tnt_benchmark/input_simulator.h</para>
+    </simplesect>
+    <literallayout><computeroutput>
+1 <emphasis class="comment">//</emphasis>
+2 <emphasis class="comment">//&#32;&#32;input_simulator.h</emphasis>
+3 <emphasis class="comment">//&#32;&#32;ROSS_TOP</emphasis>
+4 <emphasis class="comment">//</emphasis>
+5 <emphasis class="comment">//&#32;&#32;Created&#32;by&#32;Mark&#32;Plagge&#32;on&#32;6/18/15.</emphasis>
+6 <emphasis class="comment">//</emphasis>
+7 <emphasis class="comment">//</emphasis>
+8 
+9 <emphasis class="preprocessor">#ifndef&#32;__ROSS_TOP__input_simulator__</emphasis>
+10 <emphasis class="preprocessor">#define&#32;__ROSS_TOP__input_simulator__</emphasis>
+11 
+12 <emphasis class="preprocessor">#include&#32;&lt;stdio.h&gt;</emphasis>
+13 <emphasis class="preprocessor">#include&#32;&quot;<link linkend="assist_8h">assist.h</link>&quot;</emphasis>
+14 <emphasis class="preprocessor">#include&#32;&quot;ross.h&quot;</emphasis>
+15 
+<link linkend="input__simulator_8h_1aa0d25534cd73156287b1136dd89c0215">16 </link><emphasis class="keyword">typedef</emphasis>&#32;<emphasis class="keyword">enum</emphasis>&#32;SelectedRandom&#32;{
+<link linkend="input__simulator_8h_1aa0d25534cd73156287b1136dd89c0215a4b3574e75cec43aa4dd3a0fd7940c632">17 </link>&#32;&#32;&#32;&#32;<link linkend="input__simulator_8h_1aa0d25534cd73156287b1136dd89c0215a4b3574e75cec43aa4dd3a0fd7940c632">UNF</link>,
+<link linkend="input__simulator_8h_1aa0d25534cd73156287b1136dd89c0215ae003ec1158e3a4e295616ced12af154e">18 </link>&#32;&#32;&#32;&#32;<link linkend="input__simulator_8h_1aa0d25534cd73156287b1136dd89c0215ae003ec1158e3a4e295616ced12af154e">NORM</link>,
+<link linkend="input__simulator_8h_1aa0d25534cd73156287b1136dd89c0215a1697a91b22c2369eb2ba427c2d193329">19 </link>&#32;&#32;&#32;&#32;<link linkend="input__simulator_8h_1aa0d25534cd73156287b1136dd89c0215a1697a91b22c2369eb2ba427c2d193329">SELECT</link>
+20 }<link linkend="input__simulator_8h_1aa0d25534cd73156287b1136dd89c0215">selectedRandom</link>;
+<link linkend="input__simulator_8h_1aa47e87d309aab7727810011578bae86e">22 </link><emphasis class="keyword">typedef</emphasis>&#32;bool&#32;(*<link linkend="input__simulator_8h_1aa47e87d309aab7727810011578bae86e">spikeGenDel</link>)(<emphasis class="keywordtype">void</emphasis>&#32;*spikeGen,&#32;tw_lp&#32;*lp);
+23 <emphasis class="keywordtype">bool</emphasis>&#32;<link linkend="input__simulator_8h_1ad6244e86a3542f8d3c64766e7e7c6746">uniformGen</link>(<emphasis class="keywordtype">void</emphasis>&#32;*gen_state,&#32;tw_lp&#32;*lp);
+24 <emphasis class="keywordtype">bool</emphasis>&#32;<link linkend="input__simulator_8h_1a7a9db804782d8a0c810fa90ae9c2dd05">normGen</link>(<emphasis class="keywordtype">void</emphasis>&#32;*gen_state,&#32;tw_lp&#32;*lp);
+25 <emphasis class="keywordtype">bool</emphasis>&#32;<link linkend="input__simulator_8h_1a7859f15c9115868c5c0ed88c43756482">selectedGen</link>(<emphasis class="keywordtype">void</emphasis>&#32;*spikeGen,&#32;tw_lp&#32;*lp);
+26 
+27 
+<link linkend="structrandom_spikes">29 </link><emphasis class="keyword">typedef</emphasis>&#32;<emphasis class="keyword">struct&#32;</emphasis>RandomSpikes&#32;{
+<link linkend="structrandom_spikes_1a1333eb5695ae83d1ffccf24b08bc6288">30 </link>&#32;&#32;&#32;&#32;<emphasis class="keywordtype">float</emphasis>&#32;<link linkend="structrandom_spikes_1a1333eb5695ae83d1ffccf24b08bc6288">randomRate</link>;&#32;
+<link linkend="structrandom_spikes_1a18766f12fc4212349fb61b221f83b779">31 </link>&#32;&#32;&#32;&#32;<link linkend="input__simulator_8h_1aa0d25534cd73156287b1136dd89c0215">selectedRandom</link>&#32;<link linkend="structrandom_spikes_1a18766f12fc4212349fb61b221f83b779">randMethod</link>;&#32;
+<link linkend="structrandom_spikes_1a0eb8199754a403ccc8eac256f9193a02">32 </link>&#32;&#32;&#32;&#32;<emphasis class="keywordtype">float</emphasis>&#32;<link linkend="structrandom_spikes_1a0eb8199754a403ccc8eac256f9193a02">rndFctVal</link>;&#32;
+33 }<link linkend="structrandom_spikes">randomSpikes</link>;
+34 
+<link linkend="structselected_spikes">35 </link><emphasis class="keyword">typedef</emphasis>&#32;<emphasis class="keyword">struct&#32;</emphasis>SelectedSpikes&#32;{
+<link linkend="structselected_spikes_1a666eb9ad96121cf3e4ce134e1a4c12c0">36 </link>&#32;&#32;&#32;&#32;<emphasis class="keywordtype">int</emphasis>&#32;*&#32;<link linkend="structselected_spikes_1a666eb9ad96121cf3e4ce134e1a4c12c0">outputMesh</link>;&#32;
+<link linkend="structselected_spikes_1a97727a3be0dbd5813f860c99733048a8">37 </link>&#32;&#32;&#32;&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="structselected_spikes_1a97727a3be0dbd5813f860c99733048a8">outputMeshLengh</link>;&#32;
+38 }<link linkend="structselected_spikes">selectedSpikes</link>;
+39 
+<link linkend="structinput_simulator_state">42 </link><emphasis class="keyword">typedef</emphasis>&#32;<emphasis class="keyword">struct&#32;</emphasis>InputSimulator&#32;{
+<link linkend="structinput_simulator_state_1af892db49cef1c5e5d95010561e549678">43 </link>&#32;&#32;&#32;&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="structinput_simulator_state_1af892db49cef1c5e5d95010561e549678">outbound</link>;&#32;
+<link linkend="structinput_simulator_state_1a569dc67b8984bb0a3616bf17f9763ebb">44 </link>&#32;&#32;&#32;&#32;tw_lpid&#32;*<link linkend="structinput_simulator_state_1a569dc67b8984bb0a3616bf17f9763ebb">connectedSynapses</link>;&#32;
+<link linkend="structinput_simulator_state_1ae40f21a48f3157bcad074f424046ed2c">45 </link>&#32;&#32;&#32;&#32;<link linkend="input__simulator_8h_1aa47e87d309aab7727810011578bae86e">spikeGenDel</link>&#32;<link linkend="structinput_simulator_state_1ae40f21a48f3157bcad074f424046ed2c">spikeGen</link>;
+46 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//selectedSpikes&#32;&#32;selSpikes;</emphasis>
+47 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//randomSpikes&#32;&#32;rndSpikes;</emphasis>
+<link linkend="structinput_simulator_state_1a666eb9ad96121cf3e4ce134e1a4c12c0">48 </link>&#32;&#32;&#32;&#32;<emphasis class="keywordtype">int</emphasis>&#32;*&#32;<link linkend="structinput_simulator_state_1a666eb9ad96121cf3e4ce134e1a4c12c0">outputMesh</link>;&#32;
+<link linkend="structinput_simulator_state_1a97727a3be0dbd5813f860c99733048a8">49 </link>&#32;&#32;&#32;&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="structinput_simulator_state_1a97727a3be0dbd5813f860c99733048a8">outputMeshLengh</link>;&#32;
+<link linkend="structinput_simulator_state_1a1333eb5695ae83d1ffccf24b08bc6288">50 </link>&#32;&#32;&#32;&#32;<emphasis class="keywordtype">float</emphasis>&#32;<link linkend="structinput_simulator_state_1a1333eb5695ae83d1ffccf24b08bc6288">randomRate</link>;&#32;
+<link linkend="structinput_simulator_state_1a18766f12fc4212349fb61b221f83b779">51 </link>&#32;&#32;&#32;&#32;<link linkend="input__simulator_8h_1aa0d25534cd73156287b1136dd89c0215">selectedRandom</link>&#32;<link linkend="structinput_simulator_state_1a18766f12fc4212349fb61b221f83b779">randMethod</link>;&#32;
+<link linkend="structinput_simulator_state_1a0eb8199754a403ccc8eac256f9193a02">52 </link>&#32;&#32;&#32;&#32;<emphasis class="keywordtype">float</emphasis>&#32;<link linkend="structinput_simulator_state_1a0eb8199754a403ccc8eac256f9193a02">rndFctVal</link>;&#32;
+<link linkend="structinput_simulator_state_1accc0c3f890194cda401a16f5f54e43cb">53 </link>&#32;&#32;&#32;&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="structinput_simulator_state_1accc0c3f890194cda401a16f5f54e43cb">currentOut</link>;&#32;
+55 }<link linkend="structinput_simulator_state">inputSimulatorState</link>;
+56 <emphasis class="preprocessor">#endif&#32;</emphasis><emphasis class="comment">/*&#32;defined(__ROSS_TOP__input_simulator__)&#32;*/</emphasis><emphasis class="preprocessor"></emphasis>
+    </computeroutput></literallayout>
+</section>

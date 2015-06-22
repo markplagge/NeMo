@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['firecount',['fireCount',['../structneuron_state.html#afe8825076c4cf3863c677307fec63c61',1,'neuronState']]],
-  ['firemode',['fireMode',['../structneuron_state.html#a55890f9e021064df30e9d18a9df98845',1,'neuronState']]]
+  ['eventtype',['eventType',['../struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced',1,'Msg_Data']]],
+  ['evttype',['evtType',['../assist_8h.html#a7c1688de451e0dea1e11617bce3ec450',1,'assist.h']]]
 ];

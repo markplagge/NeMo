@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="synapse_8c">
+    <title>synapse.c File Reference</title>
+    <programlisting>#include &quot;synapse.h&quot;</programlisting>
+<para>Include dependency diagram for synapse.c</para>
+<para>
+    <figure>
+        <title>Dependency diagram</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="synapse_8c__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+<para>Included by dependency diagram for synapse.c</para>
+<para>
+    <figure>
+        <title>Dependency diagram</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="synapse_8c__dep__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+    <simplesect>
+        <title>Detailed Description</title>
+    <para>Definition in file /Users/Mark/Development/TrueNorth/tnt_benchmark/models/synapse.c</para>
+    </simplesect>
+    <literallayout><computeroutput>
+1 <emphasis class="comment">//</emphasis>
+2 <emphasis class="comment">//&#32;&#32;synapse.c</emphasis>
+3 <emphasis class="comment">//&#32;&#32;ROSS_TOP</emphasis>
+4 <emphasis class="comment">//</emphasis>
+5 <emphasis class="comment">//&#32;&#32;Created&#32;by&#32;Mark&#32;Plagge&#32;on&#32;6/18/15.</emphasis>
+6 <emphasis class="comment">//</emphasis>
+7 <emphasis class="comment">//</emphasis>
+8 
+9 <emphasis class="preprocessor">#include&#32;&quot;<link linkend="synapse_8h">synapse.h</link>&quot;</emphasis>
+    </computeroutput></literallayout>
+</section>

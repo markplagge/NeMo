@@ -4,7 +4,9 @@ var assist_8h =
     [ "_idT", "assist_8h.html#a3f7a6e6a1210b6d9d7a42177dcb9634b", null ],
     [ "_regIDT", "assist_8h.html#abd3130ec511af0cc7768768554bd36a0", null ],
     [ "_statT", "assist_8h.html#ad77e6fc5a9b03d46e7c97b7c4b92e89f", null ],
+    [ "_threshT", "assist_8h.html#a5537d30256d443ce07efd3d879a4a720", null ],
     [ "_voltT", "assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815", null ],
+    [ "_weightT", "assist_8h.html#aa73c5ea0fe4ba938c96e6771b38dcb2a", null ],
     [ "IABS", "assist_8h.html#aaf4b596256d346dd40bc6f14c3eb9371", null ],
     [ "RZER", "assist_8h.html#ad383c153e77508e2556003da0e4ac3eb", null ],
     [ "evtType", "assist_8h.html#a7c1688de451e0dea1e11617bce3ec450", [
@@ -15,8 +17,10 @@ var assist_8h =
       [ "NEURON_HEARTBEAT", "assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e", null ],
       [ "GEN_HEARTBEAT", "assist_8h.html#a7c1688de451e0dea1e11617bce3ec450add78176054e14835c454b5f2d1827d42", null ]
     ] ],
+    [ "getCurrentBigTick", "assist_8h.html#a4d378196b7fceed090d64ec8820b4065", null ],
     [ "getNextEventTime", "assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02", null ],
     [ "AXONS_IN_CORE", "assist_8h.html#a519a06367b2b3f793c56d3ab78f5b2ef", null ],
+    [ "BIG_TICK_ERR", "assist_8h.html#a69434dbcf2196fc2fd1ab7cb57fc9491", null ],
     [ "CORE_SIZE", "assist_8h.html#ad39b86a0b748731175572436f6672264", null ],
     [ "CORES_IN_SIM", "assist_8h.html#a142b2655c5a899956164ef4e1c394fea", null ],
     [ "GEN_FCT", "assist_8h.html#a3ba8de640782035ea9e91ab791d9f14f", null ],

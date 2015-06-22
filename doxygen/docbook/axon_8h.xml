@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="axon_8h">
+    <title>axon.h File Reference</title>
+    <programlisting>#include &lt;stdio.h&gt;</programlisting>
+    <programlisting>#include &quot;../assist.h&quot;</programlisting>
+<para>Include dependency diagram for axon.h</para>
+<para>
+    <figure>
+        <title>Dependency diagram</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="axon_8h__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+<para>Included by dependency diagram for axon.h</para>
+<para>
+    <figure>
+        <title>Dependency diagram</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="axon_8h__dep__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+        <section>
+            <title> Data Structures </title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>struct <link linkend="structaxon_state">axonState</link></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+    <simplesect>
+        <title>Detailed Description</title>
+    <para>Definition in file /Users/Mark/Development/TrueNorth/tnt_benchmark/models/axon.h</para>
+    </simplesect>
+    <literallayout><computeroutput>
+1 <emphasis class="comment">//</emphasis>
+2 <emphasis class="comment">//&#32;&#32;axon.h</emphasis>
+3 <emphasis class="comment">//&#32;&#32;ROSS_TOP</emphasis>
+4 <emphasis class="comment">//</emphasis>
+5 <emphasis class="comment">//&#32;&#32;Created&#32;by&#32;Mark&#32;Plagge&#32;on&#32;6/18/15.</emphasis>
+6 <emphasis class="comment">//</emphasis>
+7 <emphasis class="comment">//</emphasis>
+8 
+9 <emphasis class="preprocessor">#ifndef&#32;__ROSS_TOP__axon__</emphasis>
+10 <emphasis class="preprocessor">#define&#32;__ROSS_TOP__axon__</emphasis>
+11 
+12 <emphasis class="preprocessor">#include&#32;&lt;stdio.h&gt;</emphasis>
+13 <emphasis class="preprocessor">#include&#32;&quot;../assist.h&quot;</emphasis>
+<link linkend="structaxon_state">14 </link><emphasis class="keyword">typedef</emphasis>&#32;<emphasis class="keyword">struct&#32;</emphasis>AxonState&#32;{
+<link linkend="structaxon_state_1a7fc444364b1559859bccdf91f1e95475">15 </link>&#32;&#32;&#32;&#32;<link linkend="assist_8h_1ad77e6fc5a9b03d46e7c97b7c4b92e89f">_statT</link>&#32;<link linkend="structaxon_state_1a7fc444364b1559859bccdf91f1e95475">recvMsgCount</link>;
+<link linkend="structaxon_state_1a217ba44fb923dc4dc62bb73b14e61517">16 </link>&#32;&#32;&#32;&#32;<link linkend="assist_8h_1ad77e6fc5a9b03d46e7c97b7c4b92e89f">_statT</link>&#32;<link linkend="structaxon_state_1a217ba44fb923dc4dc62bb73b14e61517">sendMsgCount</link>;
+<link linkend="structaxon_state_1a665999819b255f36d756f17b85bc9a03">17 </link>&#32;&#32;&#32;&#32;tw_lpid&#32;<link linkend="structaxon_state_1a665999819b255f36d756f17b85bc9a03">destSynapse</link>;
+18 }<link linkend="structaxon_state">axonState</link>;
+19 
+20 <emphasis class="preprocessor">#endif&#32;</emphasis><emphasis class="comment">/*&#32;defined(__ROSS_TOP__axon__)&#32;*/</emphasis><emphasis class="preprocessor"></emphasis>
+    </computeroutput></literallayout>
+</section>

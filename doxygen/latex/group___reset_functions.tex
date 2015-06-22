@@ -1,0 +1,133 @@
+\hypertarget{group___reset_functions}{}\section{Reset function defs. Neuron reset functions will}
+\label{group___reset_functions}\index{Reset function defs. Neuron reset functions will@{Reset function defs. Neuron reset functions will}}
+
+
+change the neuron state without saving the previous state.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group___reset_functions_ga7f8eaa35f03747c795a2b727b364537b}{reset\+Zero} (void $\ast$\hyperlink{structneuron_state}{neuron\+State})
+\begin{DoxyCompactList}\small\item\em Resets neuron voltage to 0 after firing. \end{DoxyCompactList}\item 
+void \hyperlink{group___reset_functions_ga2e78d7d2b70bf7349c3854b3727dcc25}{reset\+Linear} (void $\ast$\hyperlink{structneuron_state}{neuron\+State})
+\begin{DoxyCompactList}\small\item\em Resets neuron voltage based on linear function. \end{DoxyCompactList}\item 
+void \hyperlink{group___reset_functions_ga09e54832158e2f6abe898437979aae00}{reverse\+Reset\+Linear} (void $\ast$\hyperlink{structneuron_state}{neuron\+State})
+\item 
+void \hyperlink{group___reset_functions_gae53276ccdb759ba1ea09806cbf9fc940}{reverse\+Reset\+Zero} (void $\ast$\hyperlink{structneuron_state}{neuron\+State})
+\begin{DoxyCompactList}\small\item\em \+: Checkk that this is the proper way to handle reset zero function \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+change the neuron state without saving the previous state. 
+
+All voltage state saving must be handled in the neuron event function \hyperlink{neuron_8c_aa6819d7492f0173f2234ba0b8b0bb674}{neuron\+Receive\+Message()}. \+: Check that reverse reset functions are needed, since previous voltage is stored in the neuron. 
+
+\subsection{Function Documentation}
+\hypertarget{group___reset_functions_ga2e78d7d2b70bf7349c3854b3727dcc25}{}\index{Reset function defs. Neuron reset functions will@{Reset function defs. Neuron reset functions will}!reset\+Linear@{reset\+Linear}}
+\index{reset\+Linear@{reset\+Linear}!Reset function defs. Neuron reset functions will@{Reset function defs. Neuron reset functions will}}
+\subsubsection[{reset\+Linear}]{\setlength{\rightskip}{0pt plus 5cm}void reset\+Linear (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{neuron\+State}
+\end{DoxyParamCaption}
+)}\label{group___reset_functions_ga2e78d7d2b70bf7349c3854b3727dcc25}
+
+
+Resets neuron voltage based on linear function. 
+
+Note\+: Linear functions use the \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{volt\+T } data type. If a neuron uses a linear reset, this parameter must be set upon neuron creation. \+: Check implementation against paper. 
+
+Definition at line \hyperlink{neuron_8c_source_l00063}{63} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+
+
+
+References \hyperlink{neuron_8h_source_l00148}{neuron\+State\+::membrane\+Pot}.
+
+
+\begin{DoxyCode}
+00063                                     \{
+00064     \textcolor{keyword}{struct }\hyperlink{struct_neuron_model}{NeuronModel} *s = (\textcolor{keyword}{struct }\hyperlink{struct_neuron_model}{NeuronModel} *)
+      \hyperlink{structneuron_state}{neuronState};
+00065   \textcolor{comment}{// reduce the value of the neuron based on the linear reduction function}
+00066   \textcolor{comment}{// in the paper}
+00067     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} resetParam = (\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT}) &resetParam;
+00068   s->membranePot = s->membranePot - resetParam;
+00069 \}
+\end{DoxyCode}
+\hypertarget{group___reset_functions_ga7f8eaa35f03747c795a2b727b364537b}{}\index{Reset function defs. Neuron reset functions will@{Reset function defs. Neuron reset functions will}!reset\+Zero@{reset\+Zero}}
+\index{reset\+Zero@{reset\+Zero}!Reset function defs. Neuron reset functions will@{Reset function defs. Neuron reset functions will}}
+\subsubsection[{reset\+Zero}]{\setlength{\rightskip}{0pt plus 5cm}void reset\+Zero (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{neuron\+State}
+\end{DoxyParamCaption}
+)}\label{group___reset_functions_ga7f8eaa35f03747c795a2b727b364537b}
+
+
+Resets neuron voltage to 0 after firing. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \hyperlink{structneuron_state}{neuron\+State}} & current neuron state \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{neuron_8c_source_l00053}{53} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+
+
+
+References \hyperlink{neuron_8h_source_l00148}{neuron\+State\+::membrane\+Pot}.
+
+
+\begin{DoxyCode}
+00053                                   \{
+00054     \textcolor{keyword}{struct }\hyperlink{struct_neuron_model}{NeuronModel} *s = (\textcolor{keyword}{struct }\hyperlink{struct_neuron_model}{NeuronModel} *)
+      \hyperlink{structneuron_state}{neuronState};
+00055     s->membranePot = 0; \textcolor{comment}{// set current voltage to 0.}
+00056 \}
+\end{DoxyCode}
+\hypertarget{group___reset_functions_ga09e54832158e2f6abe898437979aae00}{}\index{Reset function defs. Neuron reset functions will@{Reset function defs. Neuron reset functions will}!reverse\+Reset\+Linear@{reverse\+Reset\+Linear}}
+\index{reverse\+Reset\+Linear@{reverse\+Reset\+Linear}!Reset function defs. Neuron reset functions will@{Reset function defs. Neuron reset functions will}}
+\subsubsection[{reverse\+Reset\+Linear}]{\setlength{\rightskip}{0pt plus 5cm}void reverse\+Reset\+Linear (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{neuron\+State}
+\end{DoxyParamCaption}
+)}\label{group___reset_functions_ga09e54832158e2f6abe898437979aae00}
+
+
+Definition at line \hyperlink{neuron_8c_source_l00071}{71} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+
+
+
+References \hyperlink{neuron_8h_source_l00148}{neuron\+State\+::membrane\+Pot}.
+
+
+\begin{DoxyCode}
+00071                                           \{
+00072     \textcolor{keyword}{struct }\hyperlink{struct_neuron_model}{NeuronModel} *s = (\textcolor{keyword}{struct }\hyperlink{struct_neuron_model}{NeuronModel} *)
+      \hyperlink{structneuron_state}{neuronState};
+00073     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} resetParam = (\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT}) &resetParam;
+00074     s->membranePot = s->membranePot + resetParam;
+00075 \}
+\end{DoxyCode}
+\hypertarget{group___reset_functions_gae53276ccdb759ba1ea09806cbf9fc940}{}\index{Reset function defs. Neuron reset functions will@{Reset function defs. Neuron reset functions will}!reverse\+Reset\+Zero@{reverse\+Reset\+Zero}}
+\index{reverse\+Reset\+Zero@{reverse\+Reset\+Zero}!Reset function defs. Neuron reset functions will@{Reset function defs. Neuron reset functions will}}
+\subsubsection[{reverse\+Reset\+Zero}]{\setlength{\rightskip}{0pt plus 5cm}void reverse\+Reset\+Zero (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{neuron\+State}
+\end{DoxyParamCaption}
+)}\label{group___reset_functions_gae53276ccdb759ba1ea09806cbf9fc940}
+
+
+\+: Checkk that this is the proper way to handle reset zero function 
+
+
+
+Definition at line \hyperlink{neuron_8c_source_l00077}{77} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+
+
+\begin{DoxyCode}
+00077                                         \{
+00078 
+00079 \}
+\end{DoxyCode}

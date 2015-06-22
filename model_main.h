@@ -12,6 +12,9 @@
 #include <stdio.h>
 #include "assist.h"
 #include "ross.h"
+#include "models/axon.h"
+#include "models/neuron.h"
+#include "models/synapse.h"
 #include <stdbool.h>
 
 	// Variable holders for command lne params & external variables */
@@ -62,6 +65,27 @@ tw_stime PER_SYNAPSE_DET_P = .50;
 /**CORE_SIZE is equal to the number of axions * number of aneurons + num neurons + num axions */
 int CORE_SIZE;
 
+/* **** Model Main Function */
+
+void createLPs();
+void pre_run();
+void neuron_init(neuronState *s, tw_lp *lp);
+void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID);
+void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp);
+void neuron_reverse(neuronState *, tw_bf *, Msg_Data *, tw_lp *);
+void neuron_final(neuronState *s, tw_lp *lp);
+
+void synapse_init(synapseState *s, tw_lp *lp);
+void synapse_event(synapseState *s, tw_bf *, Msg_Data *M, tw_lp *lp);
+void synapse_reverse(synapseState *, tw_bf *, Msg_Data *M, tw_lp *);
+void synapse_final(synapseState *s, tw_lp *lp);
+
+void axon_init(axonState *s, tw_lp *lp);
+void axon_event(axonState *s, tw_bf *, Msg_Data *M, tw_lp *lp);
+void axon_reverse(axonState *, tw_bf *, Msg_Data *M, tw_lp *);
+void axon_final(axonState *s, tw_lp *lp);
+
+void mapping(tw_lp gid);
 
 
 #endif /* defined(__ROSS_TOP__model_main__) */

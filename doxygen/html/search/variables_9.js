@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['outbound',['outbound',['../structinput_simulator_state.html#af892db49cef1c5e5d95010561e549678',1,'inputSimulatorState']]],
-  ['outputmesh',['outputMesh',['../structselected_spikes.html#a666eb9ad96121cf3e4ce134e1a4c12c0',1,'selectedSpikes::outputMesh()'],['../structinput_simulator_state.html#a666eb9ad96121cf3e4ce134e1a4c12c0',1,'inputSimulatorState::outputMesh()']]],
-  ['outputmeshlengh',['outputMeshLengh',['../structselected_spikes.html#a97727a3be0dbd5813f860c99733048a8',1,'selectedSpikes::outputMeshLengh()'],['../structinput_simulator_state.html#a97727a3be0dbd5813f860c99733048a8',1,'inputSimulatorState::outputMeshLengh()']]]
+  ['negativethreshold',['negativeThreshold',['../structneuron_state.html#a678bcd9f031e290178cd5d2855e74279',1,'neuronState']]],
+  ['negthresreset',['negThresReset',['../structneuron_state.html#a3ec480684e7a2cfc67a8ef7ac1bf57b9',1,'neuronState']]],
+  ['neuronmsgsent',['neuronMsgSent',['../structsynapse_state.html#a9e389b0b50f9ec5e3f5b7b0f5383d6d5',1,'synapseState']]],
+  ['neurons_5fin_5fcore',['NEURONS_IN_CORE',['../assist_8h.html#a67e8e45768f76b984a60fcff2b7c51aa',1,'NEURONS_IN_CORE():&#160;model_main.h'],['../model__main_8h.html#a67e8e45768f76b984a60fcff2b7c51aa',1,'NEURONS_IN_CORE():&#160;model_main.h']]],
+  ['nonlinearrate',['nonLinearRate',['../unionreset_rate.html#a54aaba14ce85fd9c5d7b385d98727e36',1,'resetRate']]]
 ];

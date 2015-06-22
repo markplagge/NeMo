@@ -1,0 +1,277 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="structneuron_state">
+<title>neuronState struct Reference</title>
+<para>
+    <programlisting>#include <link linkend="neuron_8h">&lt;neuron.h&gt;</link></programlisting>
+</para>
+<para>Inheritance diagram for neuronState</para>
+<para>
+    <figure>
+        <title>Inheritance graph</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="structneuron_state__inherit__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+<para>Collaboration diagram for neuronState</para>
+<para>
+    <figure>
+        <title>Collaboration graph</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="structneuron_state__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+        <section>
+            <title></title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>_idT myCoreID<para><emphasis>Neuron&apos;s coreID.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>_idT myLocalID<para><emphasis>Neuron&apos;s local ID (from 0 - j-1);.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+        <section>
+            <title></title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>_voltT membranePot<para><emphasis>current &quot;voltage&quot; of neuron, 𝒱</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>_voltT savedMembranePot<para><emphasis>previous state membrane potential</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>_threshT threshold<para><emphasis>neuron&apos;s threshold value 𝛂</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>_threshT negativeThreshold<para><emphasis>neuron&apos;s negative threshold, β</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>_voltT resetVoltage<para><emphasis>for reset param, the reset voltage, 𝓡.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>tw_stime lastActiveTime<para><emphasis>last time the neuron fired - used for calculating leak and reverse functions.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>tw_stime lastLeakTime<para><emphasis>Timestamp for leak functions.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>tw_stime savedLastActiveTime<para><emphasis>For state rollback - this the last time the neuron integrated and fired, before the new big-tick.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>tw_stime savedLastLeakTime<para><emphasis>For state rollback - saved last time neuron used leak function.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>uint_fast16_t receivedSynapseMsgs<para><emphasis>Used for big-tick synchronization.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+        <section>
+            <title></title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>neuronFireMode fireMode</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>resetFunDel doReset<para><emphasis>neuron&apos;s firing mode</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>bool negThresReset<para><emphasis>From the paper&apos;s , \form#2, negative threshold setting to reset or saturate.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>reverseResetDel reverseReset<para><emphasis>Neuron reverse reset function.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+        <section>
+            <title>Data Fields</title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>_voltT * synapticWeightProb<para><emphasis>In this simulation, each synappse can have a unique weight.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>bool * synapticWeightProbSelect<para><emphasis>An array determining if each synapse is handled stochastically or deterministically.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>_idT dendriteCore<para><emphasis>Local core of the remote dendrite.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>_idT dendriteLocal<para><emphasis>Local ID of the remote dendrite &amp;ndash; not LPID, but a local axon value (0-i)</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>tw_lpid dendriteGlobalDest<para><emphasis>GID of the axon this neuron talks to.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>leakFunDel doLeak<para><emphasis>Function pointer to the neuron&apos;s current leak function.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>reverseLeakDel doLeakReverse<para><emphasis>Function pointer to the leak reverse function.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>_voltT leakRateProb<para><emphasis>Leak tuning parameter - the leak rate applied to the current leak function.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>bool leakWeightProbSelect<para><emphasis>If true, this is a stochastic leak function and the \a leakRateProb value is a probability, otherwise it is a leak rate.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>_voltT sgnLambda<para><emphasis>sgnLambda tuning parameter from the paper - used for specific leak functions.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>_statT fireCount<para><emphasis>count of this neuron&apos;s output</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>_statT rcvdMsgCount<para><emphasis>The number of synaptic messages received.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>_statT SOPSCount<para><emphasis>A count for SOPS calculation.</emphasis></para></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+        <section>
+            <title>Field Documentation</title>
+            <simplesect>
+                <title>_voltT* synapticWeightProb</title>                
+<para>In the paper, there is a limit of four different &quot;types&quot; of synapse behavior per neruon. For an accurate sim, there can only be four different values in this array.</para>
+
+<para>Since this is an array, this simulator has the potential to have more power than the actual TrueNorth hardware architecture. The paper defines this as <equation><title>form_3</title>$S_j^{G_i}$</equation> </para>
+
+                <para>Definition at line 175 of file neuron.h</para>
+                <para>The Documentation for this struct was generated from the following file: </para>
+                <para><itemizedlist><listitem><para>neuron.h</para></listitem></itemizedlist></para>
+            </simplesect>
+            <simplesect>
+                <title>bool* synapticWeightProbSelect</title>                
+<para>Since the actual hardware has 4 synapse types, this setup has more power than the actual TrueNorth architecture.</para>
+
+<para>To ensure model &lt;-&gt; hardware accuracy, at most four different modes should be used per neuron, so that synapses are handled as one of four possible types. </para>
+
+                <para>Definition at line 180 of file neuron.h</para>
+                <para>The Documentation for this struct was generated from the following file: </para>
+                <para><itemizedlist><listitem><para>neuron.h</para></listitem></itemizedlist></para>
+            </simplesect>
+            <simplesect>
+                <title>tw_lpid dendriteGlobalDest</title>                
+<para><para><link linkend="todo_1_todo000006">Todo</link> 
+<para>: The dendriteCore and dendriteLocal values might not be needed anymroe. </para>
+</para></para>
+
+                <para>Definition at line 187 of file neuron.h</para>
+                <para>The Documentation for this struct was generated from the following file: </para>
+                <para><itemizedlist><listitem><para>neuron.h</para></listitem></itemizedlist></para>
+            </simplesect>
+        </section>
+</section>

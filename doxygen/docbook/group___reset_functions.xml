@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="group___reset_functions">
+    <title>Reset function defs. Neuron reset functions will</title>
+<para>Collaboration diagram for Reset function defs. Neuron reset functions will</para>
+<para>
+    <figure>
+        <title>Group Collaboration diagram</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="group___reset_functions.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+
+<para>change the neuron state without saving the previous state. </para>
+        <section>
+            <title>Detailed Description</title>
+
+<para>All voltage state saving must be handled in the neuron event function <link linkend="neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674">neuronReceiveMessage()</link>. : Check that reverse reset functions are needed, since previous voltage is stored in the neuron. </para>
+        </section>
+        <section>
+            <title>Functions</title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="group___reset_functions_1ga7f8eaa35f03747c795a2b727b364537b">resetZero</link> (
+void * neuronState)<para><emphasis>Resets neuron voltage to 0 after firing.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="group___reset_functions_1ga2e78d7d2b70bf7349c3854b3727dcc25">resetLinear</link> (
+void * neuronState)<para><emphasis>Resets neuron voltage based on linear function.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="group___reset_functions_1ga09e54832158e2f6abe898437979aae00">reverseResetLinear</link> (
+void * neuronState)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="group___reset_functions_1gae53276ccdb759ba1ea09806cbf9fc940">reverseResetZero</link> (
+void * neuronState)<para><emphasis>@TODO: Checkk that this is the proper way to handle reset zero function</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+        <section>
+            <title>Function Documentation</title>
+            <section xml:id="group___reset_functions_1ga7f8eaa35f03747c795a2b727b364537b">
+                <title>void resetZero (void *neuronState)</title> <emphasis>Resets neuron voltage to 0 after firing.</emphasis>
+                
+<para>
+                <formalpara>
+                    <title/>
+                    <table frame="all">
+                        <title>Parameters                        </title>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry><link linkend="structneuron_state">neuronState</link></entry>
+                                <entry>
+<para>current neuron state </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                </formalpara>
+                </para>
+
+            </section>
+            <section xml:id="group___reset_functions_1ga2e78d7d2b70bf7349c3854b3727dcc25">
+                <title>void resetLinear (void *neuronState)</title> <emphasis>Resets neuron voltage based on linear function.</emphasis>
+                
+<para>Note: Linear functions use the <link linkend="assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815">voltT </link> data type. If a neuron uses a linear reset, this parameter must be set upon neuron creation. : Check implementation against paper. </para>
+
+            </section>
+            <section xml:id="group___reset_functions_1ga09e54832158e2f6abe898437979aae00">
+                <title>void reverseResetLinear (void *neuronState)</title> <emphasis></emphasis>
+                
+            </section>
+            <section xml:id="group___reset_functions_1gae53276ccdb759ba1ea09806cbf9fc940">
+                <title>void reverseResetZero (void *neuronState)</title> <emphasis>@TODO: Checkk that this is the proper way to handle reset zero function</emphasis>
+                
+            </section>
+        </section>
+</section>

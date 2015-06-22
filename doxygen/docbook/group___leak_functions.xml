@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="group___leak_functions">
+    <title>- Neuron functions that manage leaks. All voltage state saving</title>
+<para>Collaboration diagram for - Neuron functions that manage leaks. All voltage state saving</para>
+<para>
+    <figure>
+        <title>Group Collaboration diagram</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="group___leak_functions.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+
+<para>must be handled in the neuron event function <link linkend="neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674">neuronReceiveMessage()</link>. </para>
+        <section>
+            <title>Detailed Description</title>
+        </section>
+        <section>
+            <title>Functions</title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="group___leak_functions_1ga8e52befc10f975c6be39cc93af573d7e">noLeak</link> (
+void * neuron, tw_stime now)<para><emphasis>noLeak - A non leaking neuron function.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="group___leak_functions_1gac5bebec77c5216533ec5f6acd086532e">revNoLeak</link> (
+void * neuron, tw_stime now)<para><emphasis>Reverse leak function for use when neurons have no defined leak function.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="group___leak_functions_1ga64dc379b459a2b07b40bce35381210e8">linearLeak</link> (
+void * neuron, tw_stime now)<para><emphasis>A linear leak function.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="group___leak_functions_1ga26ced40d7ad7a0b448a136d8724fe18b">revLinearLeak</link> (
+void * neuron, tw_stime now)<para><emphasis>Reverse leak function neurons that have a linear leak function assigned.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+        <section>
+            <title>Function Documentation</title>
+            <section xml:id="group___leak_functions_1ga8e52befc10f975c6be39cc93af573d7e">
+                <title>void noLeak (void *neuron, tw_stime now)</title> <emphasis>noLeak - A non leaking neuron function.</emphasis>
+                
+<para>
+                <formalpara>
+                    <title/>
+                    <table frame="all">
+                        <title>Parameters                        </title>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>neuron</entry>
+                                <entry>
+<para>The current neuron state. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>now</entry>
+                                <entry>
+<para>The current simulation time. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                </formalpara>
+                </para>
+
+            </section>
+            <section xml:id="group___leak_functions_1gac5bebec77c5216533ec5f6acd086532e">
+                <title>void revNoLeak (void *neuron, tw_stime now)</title> <emphasis>Reverse leak function for use when neurons have no defined leak function.</emphasis>
+                
+<para>
+                <formalpara>
+                    <title/>
+                    <table frame="all">
+                        <title>Parameters                        </title>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>neuron</entry>
+                                <entry>
+<para>current neuron state </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>now</entry>
+                                <entry>
+<para>tw_stime representing current time of simulation. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                </formalpara>
+                </para>
+
+            </section>
+            <section xml:id="group___leak_functions_1ga64dc379b459a2b07b40bce35381210e8">
+                <title>void linearLeak (void *neuron, tw_stime now)</title> <emphasis>A linear leak function.</emphasis>
+                
+<para>LinearLeak is the standard linear leak function from the paper. Using the leakRate parameter inside <link linkend="struct_neuron_model">the neuron state </link>, this follows a simple linear function, reducing the membrane potential by a fixed rate per tick.</para>
+
+<para><formalpara><title>See also: </title>
+
+<para><link linkend="struct_neuron_model">NeuronModel</link> </para>
+</formalpara>
+</para>
+
+            </section>
+            <section xml:id="group___leak_functions_1ga26ced40d7ad7a0b448a136d8724fe18b">
+                <title>void revLinearLeak (void *neuron, tw_stime now)</title> <emphasis>Reverse leak function neurons that have a linear leak function assigned.</emphasis>
+                
+<para>
+                <formalpara>
+                    <title/>
+                    <table frame="all">
+                        <title>Parameters                        </title>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>neuron</entry>
+                                <entry>
+<para>current neuron state </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>now</entry>
+                                <entry>
+<para>tw_stime representing current time of simulation. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                </formalpara>
+                </para>
+
+            </section>
+        </section>
+</section>

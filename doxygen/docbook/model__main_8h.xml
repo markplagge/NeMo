@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="model__main_8h">
+    <title>model_main.h File Reference</title>
+    <programlisting>#include &lt;stdio.h&gt;</programlisting>
+    <programlisting>#include &quot;assist.h&quot;</programlisting>
+    <programlisting>#include &quot;ross.h&quot;</programlisting>
+    <programlisting>#include &lt;stdbool.h&gt;</programlisting>
+<para>Include dependency diagram for model_main.h</para>
+<para>
+    <figure>
+        <title>Dependency diagram</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="model__main_8h__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+<para>Included by dependency diagram for model_main.h</para>
+<para>
+    <figure>
+        <title>Dependency diagram</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="model__main_8h__dep__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+        <section>
+            <title>Variables</title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="model__main_8h_1a67e8e45768f76b984a60fcff2b7c51aa">NEURONS_IN_CORE</link><para><emphasis>Number of neurons per core.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="model__main_8h_1adc924fa4a60574e27538b63daed224d2">SYNSAPES_IN_CORE</link><para><emphasis>number of synapses per core.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="model__main_8h_1a142b2655c5a899956164ef4e1c394fea">CORES_IN_SIM</link></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="model__main_8h_1a519a06367b2b3f793c56d3ab78f5b2ef">AXONS_IN_CORE</link><para><emphasis>Number of axions per core.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>unsigned int <link linkend="model__main_8h_1a74019486208bb1d640927710d5344a94">GEN_ON</link><para><emphasis>Simulation tuning variables.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>bool <link linkend="model__main_8h_1ab42fd7d6d043114d1147acc77bd7e867">GEN_RND</link></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>unsigned int <link linkend="model__main_8h_1a516f1496efbe86dedb0e2883bb7e7834">RND_MODE</link></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>unsigned int <link linkend="model__main_8h_1a4875b976acd12ff43cc03898be994253">GEN_PROB</link></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>unsigned int <link linkend="model__main_8h_1a3ba8de640782035ea9e91ab791d9f14f">GEN_FCT</link></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>unsigned int <link linkend="model__main_8h_1a6f8efb1b6d497ba57f27acadae57dc4b">GEN_OUTBOUND</link></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>unsigned int <link linkend="model__main_8h_1ab161ae8a99d41559eba4ab3dd8d69218">GEN_SEL_MODE</link></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>unsigned int <link linkend="model__main_8h_1a0a9f8592bd29be6c5c7433c3c0bf42dd">SP_DBG</link></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="model__main_8h_1a433873baf41da436ba9c1734c8c5ddd2">THRESHOLD_MAX</link><para><emphasis>Determines the maximum and minimum thresholds for a neuron to fire.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="model__main_8h_1a55f4484944f4174b5e677c0a71b30e4a">THRESHOLD_MIN</link><para><emphasis>Minimum threshold.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="model__main_8h_1a20ef6d41d2f384358522fb59fb6226cb">SYNAPSE_WEIGHT_MAX</link><para><emphasis>Each neuron is connected to the synapses (inputs) within the core it is running in.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="model__main_8h_1af38a0e2e2483ef81f7ea5175c366ce82">SYNAPSE_WEIGHT_MIN</link><para><emphasis>Minimum synapse weight.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>tw_stime <link linkend="model__main_8h_1a776ede5752cb807ce8cc1a9c82182bdd">PER_SYNAPSE_DET_P</link></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="model__main_8h_1ad39b86a0b748731175572436f6672264">CORE_SIZE</link><para><emphasis>CORE_SIZE is equal to the number of axions * number of aneurons + num neurons + num axions.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+    <simplesect>
+        <title>Detailed Description</title>
+    <para>Definition in file /Users/Mark/Development/TrueNorth/tnt_benchmark/model_main.h</para>
+    </simplesect>
+    <literallayout><computeroutput>
+1 <emphasis class="comment">//</emphasis>
+2 <emphasis class="comment">//&#32;&#32;model_main.h</emphasis>
+3 <emphasis class="comment">//&#32;&#32;ROSS_TOP</emphasis>
+4 <emphasis class="comment">//</emphasis>
+5 <emphasis class="comment">//&#32;&#32;Created&#32;by&#32;Mark&#32;Plagge&#32;on&#32;6/17/15.</emphasis>
+6 <emphasis class="comment">//</emphasis>
+7 <emphasis class="comment">//</emphasis>
+8 
+9 <emphasis class="preprocessor">#ifndef&#32;__ROSS_TOP__model_main__</emphasis>
+10 <emphasis class="preprocessor">#define&#32;__ROSS_TOP__model_main__</emphasis>
+11 
+12 <emphasis class="preprocessor">#include&#32;&lt;stdio.h&gt;</emphasis>
+13 <emphasis class="preprocessor">#include&#32;&quot;<link linkend="assist_8h">assist.h</link>&quot;</emphasis>
+14 <emphasis class="preprocessor">#include&#32;&quot;ross.h&quot;</emphasis>
+15 <emphasis class="preprocessor">#include&#32;&lt;stdbool.h&gt;</emphasis>
+16 
+17 &#32;&#32;&#32;&#32;<emphasis class="comment">//&#32;Variable&#32;holders&#32;for&#32;command&#32;lne&#32;params&#32;&amp;&#32;external&#32;variables&#32;*/</emphasis>
+<link linkend="model__main_8h_1a67e8e45768f76b984a60fcff2b7c51aa">21 </link><emphasis class="comment"></emphasis><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a67e8e45768f76b984a60fcff2b7c51aa">NEURONS_IN_CORE</link>&#32;=&#32;128;
+22 
+<link linkend="model__main_8h_1adc924fa4a60574e27538b63daed224d2">24 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1adc924fa4a60574e27538b63daed224d2">SYNSAPES_IN_CORE</link>;
+25 <emphasis class="comment">/*&#32;Calculated&#32;number&#32;of&#32;cores&#32;in&#32;simulation&#32;*/</emphasis>
+<link linkend="model__main_8h_1a142b2655c5a899956164ef4e1c394fea">26 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a142b2655c5a899956164ef4e1c394fea">CORES_IN_SIM</link>;
+27 
+<link linkend="model__main_8h_1a519a06367b2b3f793c56d3ab78f5b2ef">29 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a519a06367b2b3f793c56d3ab78f5b2ef">AXONS_IN_CORE</link>&#32;=&#32;128;
+30 
+<link linkend="model__main_8h_1a74019486208bb1d640927710d5344a94">34 </link><emphasis class="keywordtype">unsigned</emphasis>&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a74019486208bb1d640927710d5344a94">GEN_ON</link>&#32;=&#32;1;
+<link linkend="model__main_8h_1ab42fd7d6d043114d1147acc77bd7e867">35 </link><emphasis class="keywordtype">bool</emphasis>&#32;<link linkend="model__main_8h_1ab42fd7d6d043114d1147acc77bd7e867">GEN_RND</link>&#32;=&#32;1;
+<link linkend="model__main_8h_1a516f1496efbe86dedb0e2883bb7e7834">36 </link><emphasis class="keywordtype">unsigned</emphasis>&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a516f1496efbe86dedb0e2883bb7e7834">RND_MODE</link>&#32;=&#32;0;
+<link linkend="model__main_8h_1a4875b976acd12ff43cc03898be994253">37 </link><emphasis class="keywordtype">unsigned</emphasis>&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a4875b976acd12ff43cc03898be994253">GEN_PROB</link>&#32;=&#32;50;
+<link linkend="model__main_8h_1a3ba8de640782035ea9e91ab791d9f14f">38 </link><emphasis class="keywordtype">unsigned</emphasis>&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a3ba8de640782035ea9e91ab791d9f14f">GEN_FCT</link>&#32;=&#32;5;
+<link linkend="model__main_8h_1a6f8efb1b6d497ba57f27acadae57dc4b">39 </link><emphasis class="keywordtype">unsigned</emphasis>&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a6f8efb1b6d497ba57f27acadae57dc4b">GEN_OUTBOUND</link>&#32;=&#32;0;
+<link linkend="model__main_8h_1ab161ae8a99d41559eba4ab3dd8d69218">40 </link><emphasis class="keywordtype">unsigned</emphasis>&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1ab161ae8a99d41559eba4ab3dd8d69218">GEN_SEL_MODE</link>&#32;=&#32;0;
+<link linkend="model__main_8h_1a0a9f8592bd29be6c5c7433c3c0bf42dd">41 </link><emphasis class="keywordtype">unsigned</emphasis>&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a0a9f8592bd29be6c5c7433c3c0bf42dd">SP_DBG</link>&#32;=&#32;0;
+42 
+43 
+<link linkend="model__main_8h_1a433873baf41da436ba9c1734c8c5ddd2">46 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a433873baf41da436ba9c1734c8c5ddd2">THRESHOLD_MAX</link>&#32;=&#32;100;
+<link linkend="model__main_8h_1a55f4484944f4174b5e677c0a71b30e4a">50 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a55f4484944f4174b5e677c0a71b30e4a">THRESHOLD_MIN</link>&#32;=&#32;30;
+<link linkend="model__main_8h_1a20ef6d41d2f384358522fb59fb6226cb">54 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a20ef6d41d2f384358522fb59fb6226cb">SYNAPSE_WEIGHT_MAX</link>&#32;=&#32;10;
+<link linkend="model__main_8h_1af38a0e2e2483ef81f7ea5175c366ce82">56 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1af38a0e2e2483ef81f7ea5175c366ce82">SYNAPSE_WEIGHT_MIN</link>&#32;=&#32;1;
+<link linkend="model__main_8h_1a776ede5752cb807ce8cc1a9c82182bdd">57 </link>tw_stime&#32;<link linkend="model__main_8h_1a776ede5752cb807ce8cc1a9c82182bdd">PER_SYNAPSE_DET_P</link>&#32;=&#32;.50;
+58 
+59 &#32;&#32;&#32;&#32;<emphasis class="comment">//Neuron&#32;Tuning&#32;variables:</emphasis>
+60 
+61 &#32;&#32;&#32;&#32;<emphasis class="comment">//Simulation&#32;Variables</emphasis>
+<link linkend="model__main_8h_1ad39b86a0b748731175572436f6672264">63 </link><emphasis class="comment"></emphasis><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1ad39b86a0b748731175572436f6672264">CORE_SIZE</link>;
+64 
+65 
+66 
+67 <emphasis class="preprocessor">#endif&#32;</emphasis><emphasis class="comment">/*&#32;defined(__ROSS_TOP__model_main__)&#32;*/</emphasis><emphasis class="preprocessor"></emphasis>
+    </computeroutput></literallayout>
+</section>

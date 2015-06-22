@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="assist_8c">
+    <title>assist.c File Reference</title>
+    <programlisting>#include &quot;assist.h&quot;</programlisting>
+<para>Include dependency diagram for assist.c</para>
+<para>
+    <figure>
+        <title>Dependency diagram</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="assist_8c__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+<para>Included by dependency diagram for assist.c</para>
+<para>
+    <figure>
+        <title>Dependency diagram</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="assist_8c__dep__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+        <section>
+            <title>Functions</title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>tw_stime <link linkend="assist_8c_1a30602b11dbfa6bcb90dc00e7942cfb02">getNextEventTime</link> (
+tw_lp * lp)<para><emphasis>Gets the next small-tick event time.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>tw_stime <link linkend="assist_8c_1a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</link> (
+tw_stime now)<para><emphasis>Given a tw_stime, returns the current big tick.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+    <simplesect>
+        <title>Detailed Description</title>
+    <para>Definition in file /Users/Mark/Development/TrueNorth/tnt_benchmark/assist.c</para>
+    </simplesect>
+    <literallayout><computeroutput>
+1 <emphasis class="comment">//</emphasis>
+2 <emphasis class="comment">//&#32;&#32;assist.c</emphasis>
+3 <emphasis class="comment">//&#32;&#32;ROSS_TOP</emphasis>
+4 <emphasis class="comment">//</emphasis>
+5 <emphasis class="comment">//&#32;&#32;Created&#32;by&#32;Mark&#32;Plagge&#32;on&#32;6/17/15.</emphasis>
+6 <emphasis class="comment">//</emphasis>
+7 <emphasis class="comment">//</emphasis>
+8 
+9 <emphasis class="preprocessor">#include&#32;&quot;<link linkend="assist_8h">assist.h</link>&quot;</emphasis>
+<link linkend="assist_8h_1a30602b11dbfa6bcb90dc00e7942cfb02">13 </link>tw_stime&#32;<link linkend="assist_8c_1a30602b11dbfa6bcb90dc00e7942cfb02">getNextEventTime</link>(tw_lp&#32;*lp){
+14 
+15 &#32;&#32;&#32;&#32;tw_stime&#32;r&#32;=tw_rand_unif(lp-&gt;rng)&#32;/&#32;10;
+16 
+17 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">return</emphasis>&#32;r;
+18 
+19 }
+<link linkend="assist_8h_1a4d378196b7fceed090d64ec8820b4065">29 </link>tw_stime&#32;<link linkend="assist_8c_1a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</link>(tw_stime&#32;now){
+30 
+31 
+32 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">return</emphasis>&#32;0;
+33 
+34 }
+    </computeroutput></literallayout>
+</section>

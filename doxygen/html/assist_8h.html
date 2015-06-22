@@ -127,8 +127,6 @@ $(document).ready(function(){initNavTree('assist_8h.html','');});
 Include dependency graph for assist.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="assist_8h__incl.png" border="0" usemap="#_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2assist_8h" alt=""/></div>
-<map name="_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2assist_8h" id="_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2assist_8h">
-</map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
@@ -149,10 +147,19 @@ Data Structures</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a3f7a6e6a1210b6d9d7a42177dcb9634b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assist_8h.html#a3f7a6e6a1210b6d9d7a42177dcb9634b">_idT</a>&#160;&#160;&#160;uint_fast32_t</td></tr>
+<tr class="memdesc:a3f7a6e6a1210b6d9d7a42177dcb9634b"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID type - local id type for bit shifts and ID cases.  <a href="#a3f7a6e6a1210b6d9d7a42177dcb9634b">More...</a><br /></td></tr>
 <tr class="separator:a3f7a6e6a1210b6d9d7a42177dcb9634b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe1fc1b8f9efd1187e564bcb8de7f815"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a>&#160;&#160;&#160;int_fast32_t</td></tr>
+<tr class="memdesc:abe1fc1b8f9efd1187e564bcb8de7f815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Voltage data type (membrane potential)  <a href="#abe1fc1b8f9efd1187e564bcb8de7f815">More...</a><br /></td></tr>
 <tr class="separator:abe1fc1b8f9efd1187e564bcb8de7f815"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa73c5ea0fe4ba938c96e6771b38dcb2a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assist_8h.html#aa73c5ea0fe4ba938c96e6771b38dcb2a">_weightT</a>&#160;&#160;&#160;uint_fast32_t</td></tr>
+<tr class="memdesc:aa73c5ea0fe4ba938c96e6771b38dcb2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Weight/probability type.  <a href="#aa73c5ea0fe4ba938c96e6771b38dcb2a">More...</a><br /></td></tr>
+<tr class="separator:aa73c5ea0fe4ba938c96e6771b38dcb2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5537d30256d443ce07efd3d879a4a720"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assist_8h.html#a5537d30256d443ce07efd3d879a4a720">_threshT</a>&#160;&#160;&#160;int_fast32_t</td></tr>
+<tr class="memdesc:a5537d30256d443ce07efd3d879a4a720"><td class="mdescLeft">&#160;</td><td class="mdescRight">threshold data type - In the paper, this is two unsigned values and a reversal flag. Here, this is a signed integer.  <a href="#a5537d30256d443ce07efd3d879a4a720">More...</a><br /></td></tr>
+<tr class="separator:a5537d30256d443ce07efd3d879a4a720"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad77e6fc5a9b03d46e7c97b7c4b92e89f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assist_8h.html#ad77e6fc5a9b03d46e7c97b7c4b92e89f">_statT</a>&#160;&#160;&#160;int_fast64_t</td></tr>
+<tr class="memdesc:ad77e6fc5a9b03d46e7c97b7c4b92e89f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counter data type for stats.  <a href="#ad77e6fc5a9b03d46e7c97b7c4b92e89f">More...</a><br /></td></tr>
 <tr class="separator:ad77e6fc5a9b03d46e7c97b7c4b92e89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd3130ec511af0cc7768768554bd36a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assist_8h.html#abd3130ec511af0cc7768768554bd36a0">_regIDT</a>&#160;&#160;&#160;uint32_t</td></tr>
 <tr class="memdesc:abd3130ec511af0cc7768768554bd36a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">_regIDT is a "regional id" type.  <a href="#abd3130ec511af0cc7768768554bd36a0">More...</a><br /></td></tr>
@@ -184,6 +191,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a30602b11dbfa6bcb90dc00e7942cfb02"><td class="memItemLeft" align="right" valign="top">tw_stime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02">getNextEventTime</a> (tw_lp *lp)</td></tr>
 <tr class="memdesc:a30602b11dbfa6bcb90dc00e7942cfb02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the next event time, based on a random function.  <a href="#a30602b11dbfa6bcb90dc00e7942cfb02">More...</a><br /></td></tr>
 <tr class="separator:a30602b11dbfa6bcb90dc00e7942cfb02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d378196b7fceed090d64ec8820b4065"><td class="memItemLeft" align="right" valign="top">tw_stime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assist_8h.html#a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</a> (tw_stime now)</td></tr>
+<tr class="memdesc:a4d378196b7fceed090d64ec8820b4065"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a tw_stime, returns the current big tick.  <a href="#a4d378196b7fceed090d64ec8820b4065">More...</a><br /></td></tr>
+<tr class="separator:a4d378196b7fceed090d64ec8820b4065"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -229,6 +239,8 @@ Variables</h2></td></tr>
 <tr class="memitem:ad39b86a0b748731175572436f6672264"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assist_8h.html#ad39b86a0b748731175572436f6672264">CORE_SIZE</a></td></tr>
 <tr class="memdesc:ad39b86a0b748731175572436f6672264"><td class="mdescLeft">&#160;</td><td class="mdescRight">CORE_SIZE is equal to the number of axions * number of aneurons + num neurons + num axions.  <a href="#ad39b86a0b748731175572436f6672264">More...</a><br /></td></tr>
 <tr class="separator:ad39b86a0b748731175572436f6672264"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69434dbcf2196fc2fd1ab7cb57fc9491"><td class="memItemLeft" align="right" valign="top">tw_stime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assist_8h.html#a69434dbcf2196fc2fd1ab7cb57fc9491">BIG_TICK_ERR</a></td></tr>
+<tr class="separator:a69434dbcf2196fc2fd1ab7cb57fc9491"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a3f7a6e6a1210b6d9d7a42177dcb9634b"></a>
@@ -240,6 +252,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>ID type - local id type for bit shifts and ID cases. </p>
 
 <p>Definition at line <a class="el" href="assist_8h_source.html#l00018">18</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
 
@@ -256,9 +270,9 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>_regIDT is a "regional id" type. </p>
-<p>This variable type is for storing coreIDs and localIDs. It must be half the bit size of tw_lpid.</p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>: add macro to adjust the bit width. </dd></dl>
+<p>This variable type is for storing coreIDs and localIDs. It must be half the bit size of tw_lpid. </p>
 
-<p>Definition at line <a class="el" href="assist_8h_source.html#l00024">24</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
+<p>Definition at line <a class="el" href="assist_8h_source.html#l00027">27</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
 
 </div>
 </div>
@@ -272,7 +286,25 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="assist_8h_source.html#l00020">20</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
+<p>Counter data type for stats. </p>
+
+<p>Definition at line <a class="el" href="assist_8h_source.html#l00023">23</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5537d30256d443ce07efd3d879a4a720"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _threshT&#160;&#160;&#160;int_fast32_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>threshold data type - In the paper, this is two unsigned values and a reversal flag. Here, this is a signed integer. </p>
+
+<p>Definition at line <a class="el" href="assist_8h_source.html#l00021">21</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
 
 </div>
 </div>
@@ -286,7 +318,25 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Voltage data type (membrane potential) </p>
+
 <p>Definition at line <a class="el" href="assist_8h_source.html#l00019">19</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa73c5ea0fe4ba938c96e6771b38dcb2a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _weightT&#160;&#160;&#160;uint_fast32_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Weight/probability type. </p>
+
+<p>Definition at line <a class="el" href="assist_8h_source.html#l00020">20</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
 
 </div>
 </div>
@@ -306,7 +356,7 @@ Variables</h2></td></tr>
 
 <p>IABS is an integer absolute value function. </p>
 
-<p>Definition at line <a class="el" href="assist_8h_source.html#l00029">29</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
+<p>Definition at line <a class="el" href="assist_8h_source.html#l00032">32</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
 
 </div>
 </div>
@@ -326,7 +376,7 @@ Variables</h2></td></tr>
 
 <p>RZER is a floor function - values below zero round up to zero. </p>
 
-<p>Definition at line <a class="el" href="assist_8h_source.html#l00031">31</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
+<p>Definition at line <a class="el" href="assist_8h_source.html#l00034">34</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
 
 </div>
 </div>
@@ -344,44 +394,78 @@ Variables</h2></td></tr>
 <p>evtType is a message/event identifier flag </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee"></a>AXON_OUT&#160;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a7c1688de451e0dea1e11617bce3ec450a9afa7ee7839cdd980f348a3a70b0054f"></a>AXON_HEARTBEAT&#160;</td><td class="fielddoc">
 <p>Message originates from an axon. </p>
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb"></a>SYNAPSE_OUT&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a7c1688de451e0dea1e11617bce3ec450a9afa7ee7839cdd980f348a3a70b0054f"></a>AXON_HEARTBEAT&#160;</td><td class="fielddoc">
 <p>Axon heartbeat message - big clock synchronization. </p>
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0"></a>NEURON_OUT&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb"></a>SYNAPSE_OUT&#160;</td><td class="fielddoc">
 <p>Message originates from a synapse. </p>
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e"></a>NEURON_HEARTBEAT&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0"></a>NEURON_OUT&#160;</td><td class="fielddoc">
 <p>Message originates from a neuron, and is going to an axion. </p>
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a7c1688de451e0dea1e11617bce3ec450add78176054e14835c454b5f2d1827d42"></a>GEN_HEARTBEAT&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e"></a>NEURON_HEARTBEAT&#160;</td><td class="fielddoc">
 <p>Neuron heartbeat messages - for big clock syncronization. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a7c1688de451e0dea1e11617bce3ec450add78176054e14835c454b5f2d1827d42"></a>GEN_HEARTBEAT&#160;</td><td class="fielddoc">
 <p>Signal generator messages &ndash; used to simulate input for benchmarking. </p>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="assist_8h_source.html#l00035">35</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
-<div class="fragment"><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;             {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee">AXON_OUT</a>, </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a9afa7ee7839cdd980f348a3a70b0054f">AXON_HEARTBEAT</a>, </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb">SYNAPSE_OUT</a>, </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0">NEURON_OUT</a>, </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e">NEURON_HEARTBEAT</a>, </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450add78176054e14835c454b5f2d1827d42">GEN_HEARTBEAT</a> </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;};</div>
-<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450add78176054e14835c454b5f2d1827d42"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450add78176054e14835c454b5f2d1827d42">GEN_HEARTBEAT</a></div><div class="ttdoc">Neuron heartbeat messages - for big clock syncronization. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00041">assist.h:41</a></div></div>
-<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e">NEURON_HEARTBEAT</a></div><div class="ttdoc">Message originates from a neuron, and is going to an axion. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00040">assist.h:40</a></div></div>
-<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a9afa7ee7839cdd980f348a3a70b0054f"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a9afa7ee7839cdd980f348a3a70b0054f">AXON_HEARTBEAT</a></div><div class="ttdoc">Message originates from an axon. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00037">assist.h:37</a></div></div>
-<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0">NEURON_OUT</a></div><div class="ttdoc">Message originates from a synapse. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00039">assist.h:39</a></div></div>
-<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb">SYNAPSE_OUT</a></div><div class="ttdoc">Axon heartbeat message - big clock synchronization. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00038">assist.h:38</a></div></div>
-<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee">AXON_OUT</a></div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00036">assist.h:36</a></div></div>
+<p>Definition at line <a class="el" href="assist_8h_source.html#l00038">38</a> of file <a class="el" href="assist_8h_source.html">assist.h</a>.</p>
+<div class="fragment"><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;             {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee">AXON_OUT</a>, </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a9afa7ee7839cdd980f348a3a70b0054f">AXON_HEARTBEAT</a>, </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb">SYNAPSE_OUT</a>, </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0">NEURON_OUT</a>, </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e">NEURON_HEARTBEAT</a>, </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450add78176054e14835c454b5f2d1827d42">GEN_HEARTBEAT</a> </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;};</div>
+<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450add78176054e14835c454b5f2d1827d42"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450add78176054e14835c454b5f2d1827d42">GEN_HEARTBEAT</a></div><div class="ttdoc">Signal generator messages – used to simulate input for benchmarking. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00044">assist.h:44</a></div></div>
+<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e">NEURON_HEARTBEAT</a></div><div class="ttdoc">Neuron heartbeat messages - for big clock syncronization. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00043">assist.h:43</a></div></div>
+<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a9afa7ee7839cdd980f348a3a70b0054f"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a9afa7ee7839cdd980f348a3a70b0054f">AXON_HEARTBEAT</a></div><div class="ttdoc">Axon heartbeat message - big clock synchronization. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00040">assist.h:40</a></div></div>
+<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0">NEURON_OUT</a></div><div class="ttdoc">Message originates from a neuron, and is going to an axion. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00042">assist.h:42</a></div></div>
+<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb">SYNAPSE_OUT</a></div><div class="ttdoc">Message originates from a synapse. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00041">assist.h:41</a></div></div>
+<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee">AXON_OUT</a></div><div class="ttdoc">Message originates from an axon. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00039">assist.h:39</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a4d378196b7fceed090d64ec8820b4065"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tw_stime getCurrentBigTick </td>
+          <td>(</td>
+          <td class="paramtype">tw_stime&#160;</td>
+          <td class="paramname"><em>now</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Given a tw_stime, returns the current big tick. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">now</td><td>current time</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the current big tick time.</dd></dl>
+<p>If the time is in-between big ticks, this rounds down to the last big tick. There is a bit of a fuzz for times close to the next big tick so if the current time is within <a class="el" href="assist_8h.html#a69434dbcf2196fc2fd1ab7cb57fc9491">BIG_TICK_ERR</a> of the next big tick, that will be returned instead. Sane parameters would probably be around .000001.</p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>: Implement &amp; determin if ε needs to be added to the return value.</dd></dl>
+
+<p>Definition at line <a class="el" href="assist_8c_source.html#l00029">29</a> of file <a class="el" href="assist_8c_source.html">assist.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                                        {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a class="anchor" id="a30602b11dbfa6bcb90dc00e7942cfb02"></a>
 <div class="memitem">
 <div class="memproto">
@@ -404,16 +488,18 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>a tw_stime value, such that \( 0 &lt; t &lt; 1 \). A delta for the next time slice. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>a tw_stime value, such that \( 0 &lt; t &lt; 1 \). A delta for the next time slice.</dd></dl>
+<p>Gets the next event time, based on a random function. </p>
 
-<p>Definition at line <a class="el" href="assist_8c_source.html#l00020">20</a> of file <a class="el" href="assist_8c_source.html">assist.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                                    {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    tw_stime r =tw_rand_unif(lp-&gt;rng) / 10;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordflow">return</span> r;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div><!-- fragment -->
+<p>Definition at line <a class="el" href="assist_8c_source.html#l00013">13</a> of file <a class="el" href="assist_8c_source.html">assist.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;                                    {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    tw_stime r =tw_rand_unif(lp-&gt;rng) / 10;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
@@ -431,6 +517,18 @@ Variables</h2></td></tr>
 <p>Generally is set to 1-1 with neurons in core </p>
 
 <p>Definition at line <a class="el" href="model__main_8h_source.html#l00029">29</a> of file <a class="el" href="model__main_8h_source.html">model_main.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a69434dbcf2196fc2fd1ab7cb57fc9491"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tw_stime BIG_TICK_ERR</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -680,7 +778,7 @@ Variables</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="assist_8h.html">assist.h</a></li>
-    <li class="footer">Generated on Fri Jun 19 2015 13:47:05 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Sun Jun 21 2015 16:46:03 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

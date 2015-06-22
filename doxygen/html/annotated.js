@@ -7,7 +7,7 @@ var annotated =
     [ "NeuronModel", "struct_neuron_model.html", null ],
     [ "neuronState", "structneuron_state.html", "structneuron_state" ],
     [ "randomSpikes", "structrandom_spikes.html", "structrandom_spikes" ],
-    [ "ResetRate", "union_reset_rate.html", "union_reset_rate" ],
+    [ "resetRate", "unionreset_rate.html", "unionreset_rate" ],
     [ "reverseLeakDel", "structreverse_leak_del.html", null ],
     [ "selectedSpikes", "structselected_spikes.html", "structselected_spikes" ],
     [ "synapseState", "structsynapse_state.html", "structsynapse_state" ]

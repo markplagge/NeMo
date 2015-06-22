@@ -11,20 +11,29 @@
 00008 
 00009 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \hyperlink{assist_8h}{"assist.h"}
 00010 \textcolor{comment}{/**}
-00011 \textcolor{comment}{ *  Gets the next event time, based on a random function. Moved here to allow for}
-00012 \textcolor{comment}{ *  easier abstraciton, and random function replacement.}
-00013 \textcolor{comment}{ *}
-00014 \textcolor{comment}{ *}
-00015 \textcolor{comment}{ *  @param lp Reference to the current LP so that the function can see the RNG}
-00016 \textcolor{comment}{ *}
-00017 \textcolor{comment}{ *  @return a tw\_stime value, such that \(\backslash\)f$ 0 < t < 1 \(\backslash\)f$. A delta for the next}
-00018 \textcolor{comment}{ *  time slice.}
-00019 \textcolor{comment}{ */}
-\hypertarget{assist_8c_source_l00020}{}\hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{00020} \hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{tw\_stime} \hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{getNextEventTime}(\hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{tw\_lp} *\hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{lp})\{
-00021 
-00022     tw\_stime r =tw\_rand\_unif(lp->rng) / 10;
-00023 
-00024     \textcolor{keywordflow}{return} r;
-00025 
-00026 \}
+00011 \textcolor{comment}{ *  Gets the next small-tick event time.}
+00012 \textcolor{comment}{ */}
+\hypertarget{assist_8c_source_l00013}{}\hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{00013} \hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{tw\_stime} \hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{getNextEventTime}(\hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{tw\_lp} *\hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{lp})\{
+00014 
+00015     tw\_stime r =tw\_rand\_unif(lp->rng) / 10;
+00016 
+00017     \textcolor{keywordflow}{return} r;
+00018 
+00019 \}
+00020 \textcolor{comment}{/**}
+00021 \textcolor{comment}{ *  @details  If the time is in-between}
+00022 \textcolor{comment}{ *  big ticks, this rounds down to the last big tick. There is a bit of a fuzz for}
+00023 \textcolor{comment}{ *  times close to the next big tick so if the current time is within  ::BIG\_TICK\_ERR}
+00024 \textcolor{comment}{ *  of the next big tick, that will be returned instead. Sane parameters would}
+00025 \textcolor{comment}{ *  probably be around .000001. @todo: Implement & determin if ε needs to be added}
+00026 \textcolor{comment}{ *  to the return value.}
+00027 \textcolor{comment}{}
+00028 \textcolor{comment}{ */}
+\hypertarget{assist_8c_source_l00029}{}\hyperlink{assist_8h_a4d378196b7fceed090d64ec8820b4065}{00029} \hyperlink{assist_8h_a4d378196b7fceed090d64ec8820b4065}{tw\_stime} \hyperlink{assist_8h_a4d378196b7fceed090d64ec8820b4065}{getCurrentBigTick}(\hyperlink{assist_8h_a4d378196b7fceed090d64ec8820b4065}{tw\_stime} 
+      \hyperlink{assist_8h_a4d378196b7fceed090d64ec8820b4065}{now})\{
+00030 
+00031 
+00032     \textcolor{keywordflow}{return} 0;
+00033 
+00034 \}
 \end{DoxyCode}

@@ -123,30 +123,39 @@ $(document).ready(function(){initNavTree('assist_8c_source.html','');});
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="assist_8h.html">&quot;assist.h&quot;</a></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">/**</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"> *  Gets the next event time, based on a random function. Moved here to allow for</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"> *  easier abstraciton, and random function replacement.</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"> *  @param lp Reference to the current LP so that the function can see the RNG</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"> *  @return a tw_stime value, such that \f$ 0 &lt; t &lt; 1 \f$. A delta for the next</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"> *  time slice.</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02">   20</a></span>&#160;<a class="code" href="assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02">tw_stime</a> <a class="code" href="assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02">getNextEventTime</a>(<a class="code" href="assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02">tw_lp</a> *<a class="code" href="assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02">lp</a>){</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    tw_stime r =tw_rand_unif(lp-&gt;rng) / 10;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordflow">return</span> r;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
-<div class="ttc" id="assist_8h_html_a30602b11dbfa6bcb90dc00e7942cfb02"><div class="ttname"><a href="assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02">getNextEventTime</a></div><div class="ttdeci">tw_stime getNextEventTime(tw_lp *lp)</div><div class="ttdoc">Gets the next event time, based on a random function. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8c_source.html#l00020">assist.c:20</a></div></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"> *  Gets the next small-tick event time.</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02">   13</a></span>&#160;<a class="code" href="assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02">tw_stime</a> <a class="code" href="assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02">getNextEventTime</a>(<a class="code" href="assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02">tw_lp</a> *<a class="code" href="assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02">lp</a>){</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    tw_stime r =tw_rand_unif(lp-&gt;rng) / 10;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;}</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"> *  @details  If the time is in-between</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment"> *  big ticks, this rounds down to the last big tick. There is a bit of a fuzz for</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment"> *  times close to the next big tick so if the current time is within  ::BIG_TICK_ERR</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment"> *  of the next big tick, that will be returned instead. Sane parameters would</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"> *  probably be around .000001. @todo: Implement &amp; determin if ε needs to be added</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> *  to the return value.</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="assist_8h.html#a4d378196b7fceed090d64ec8820b4065">   29</a></span>&#160;<a class="code" href="assist_8h.html#a4d378196b7fceed090d64ec8820b4065">tw_stime</a> <a class="code" href="assist_8h.html#a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</a>(<a class="code" href="assist_8h.html#a4d378196b7fceed090d64ec8820b4065">tw_stime</a> <a class="code" href="assist_8h.html#a4d378196b7fceed090d64ec8820b4065">now</a>){</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
+<div class="ttc" id="assist_8h_html_a30602b11dbfa6bcb90dc00e7942cfb02"><div class="ttname"><a href="assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02">getNextEventTime</a></div><div class="ttdeci">tw_stime getNextEventTime(tw_lp *lp)</div><div class="ttdoc">Gets the next event time, based on a random function. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8c_source.html#l00013">assist.c:13</a></div></div>
+<div class="ttc" id="assist_8h_html_a4d378196b7fceed090d64ec8820b4065"><div class="ttname"><a href="assist_8h.html#a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</a></div><div class="ttdeci">tw_stime getCurrentBigTick(tw_stime now)</div><div class="ttdoc">Given a tw_stime, returns the current big tick. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8c_source.html#l00029">assist.c:29</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="assist_8c.html">assist.c</a></li>
-    <li class="footer">Generated on Fri Jun 19 2015 13:47:05 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Sun Jun 21 2015 16:46:03 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

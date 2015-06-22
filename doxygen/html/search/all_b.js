@@ -1,6 +1,25 @@
 var searchData=
 [
-  ['outbound',['outbound',['../structinput_simulator_state.html#af892db49cef1c5e5d95010561e549678',1,'inputSimulatorState']]],
-  ['outputmesh',['outputMesh',['../structselected_spikes.html#a666eb9ad96121cf3e4ce134e1a4c12c0',1,'selectedSpikes::outputMesh()'],['../structinput_simulator_state.html#a666eb9ad96121cf3e4ce134e1a4c12c0',1,'inputSimulatorState::outputMesh()']]],
-  ['outputmeshlengh',['outputMeshLengh',['../structselected_spikes.html#a97727a3be0dbd5813f860c99733048a8',1,'selectedSpikes::outputMeshLengh()'],['../structinput_simulator_state.html#a97727a3be0dbd5813f860c99733048a8',1,'inputSimulatorState::outputMeshLengh()']]]
+  ['negativethreshold',['negativeThreshold',['../structneuron_state.html#a678bcd9f031e290178cd5d2855e74279',1,'neuronState']]],
+  ['negthresreset',['negThresReset',['../structneuron_state.html#a3ec480684e7a2cfc67a8ef7ac1bf57b9',1,'neuronState']]],
+  ['neuron_2ec',['neuron.c',['../neuron_8c.html',1,'']]],
+  ['neuron_2eh',['neuron.h',['../neuron_8h.html',1,'']]],
+  ['neuron_5fheartbeat',['NEURON_HEARTBEAT',['../assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e',1,'assist.h']]],
+  ['neuron_5fout',['NEURON_OUT',['../assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0',1,'assist.h']]],
+  ['neuronfire',['neuronFire',['../neuron_8c.html#ae071ef984b7e0dd4ec38fca91e0abe39',1,'neuronFire(neuronState *st, tw_stime time, Msg_Data *m):&#160;neuron.c'],['../neuron_8h.html#ae071ef984b7e0dd4ec38fca91e0abe39',1,'neuronFire(neuronState *st, tw_stime time, Msg_Data *m):&#160;neuron.c']]],
+  ['neuronfiremode',['neuronFireMode',['../neuron_8h.html#a48885ea6be5b55a2e24de9f97552d4ee',1,'neuron.h']]],
+  ['neuronmodel',['NeuronModel',['../struct_neuron_model.html',1,'']]],
+  ['neuronmsgsent',['neuronMsgSent',['../structsynapse_state.html#a9e389b0b50f9ec5e3f5b7b0f5383d6d5',1,'synapseState']]],
+  ['neuronpostfire',['neuronPostFire',['../neuron_8c.html#ab1f4997e4bfe11e78faa6d37748aee67',1,'neuronPostFire(neuronState *st, tw_stime time, Msg_Data *m):&#160;neuron.c'],['../neuron_8h.html#ab1f4997e4bfe11e78faa6d37748aee67',1,'neuronPostFire(neuronState *st, tw_stime time, Msg_Data *m):&#160;neuron.c']]],
+  ['neuronpostintegrate',['neuronPostIntegrate',['../neuron_8h.html#adadd3095c39786607629697406f3d1eb',1,'neuron.h']]],
+  ['neuronreceivemessage',['neuronReceiveMessage',['../neuron_8c.html#aa6819d7492f0173f2234ba0b8b0bb674',1,'neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m, tw_lp *lp):&#160;neuron.c'],['../neuron_8h.html#aa6819d7492f0173f2234ba0b8b0bb674',1,'neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m, tw_lp *lp):&#160;neuron.c']]],
+  ['neuronreversefinal',['neuronReverseFinal',['../neuron_8h.html#a01dcc8e3f0132786bd59ecb847013284',1,'neuron.h']]],
+  ['neurons_5fin_5fcore',['NEURONS_IN_CORE',['../assist_8h.html#a67e8e45768f76b984a60fcff2b7c51aa',1,'NEURONS_IN_CORE():&#160;model_main.h'],['../model__main_8h.html#a67e8e45768f76b984a60fcff2b7c51aa',1,'NEURONS_IN_CORE():&#160;model_main.h']]],
+  ['neuronshouldfire',['neuronShouldFire',['../neuron_8c.html#a92d5882a15e11e2a6733483d51428e46',1,'neuronShouldFire(neuronState *st):&#160;neuron.c'],['../neuron_8h.html#a92d5882a15e11e2a6733483d51428e46',1,'neuronShouldFire(neuronState *st):&#160;neuron.c']]],
+  ['neuronstate',['neuronState',['../structneuron_state.html',1,'']]],
+  ['nfm',['NFM',['../neuron_8h.html#a48885ea6be5b55a2e24de9f97552d4eea520c6b216334b8c2d914cf9fab8cd460',1,'neuron.h']]],
+  ['noleak',['noLeak',['../neuron_8c.html#a8e52befc10f975c6be39cc93af573d7e',1,'noLeak(void *neuron, tw_stime now):&#160;neuron.c'],['../neuron_8h.html#a8e52befc10f975c6be39cc93af573d7e',1,'noLeak(void *neuron, tw_stime now):&#160;neuron.c']]],
+  ['nonlinearrate',['nonLinearRate',['../unionreset_rate.html#a54aaba14ce85fd9c5d7b385d98727e36',1,'resetRate']]],
+  ['norm',['NORM',['../input__simulator_8h.html#aa0d25534cd73156287b1136dd89c0215ae003ec1158e3a4e295616ced12af154e',1,'input_simulator.h']]],
+  ['normgen',['normGen',['../input__simulator_8h.html#a7a9db804782d8a0c810fa90ae9c2dd05',1,'input_simulator.h']]]
 ];

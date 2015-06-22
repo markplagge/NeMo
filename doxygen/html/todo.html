@@ -108,15 +108,25 @@ $(document).ready(function(){initNavTree('todo.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt><a class="anchor" id="_todo000001"></a>globalScope&gt; Global <a class="el" href="assist_8h.html#abd3130ec511af0cc7768768554bd36a0">_regIDT</a>  </dt>
-<dd>: add macro to adjust the bit width. </dd>
+<dt><a class="anchor" id="_todo000001"></a>globalScope&gt; Global <a class="el" href="assist_8h.html#a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</a>  (tw_stime now)</dt>
+<dd>: Implement &amp; determin if ε needs to be added to the return value. </dd>
+<dt><a class="anchor" id="_todo000005"></a>globalScope&gt; Global <a class="el" href="neuron_8h.html#a92d5882a15e11e2a6733483d51428e46">neuronShouldFire</a>  (<a class="el" href="structneuron_state.html">neuronState</a> *st)</dt>
+<dd>check to see if this is needed, since it looks like just a simple if statement is in order. </dd>
+<dt><a class="anchor" id="_todo000006"></a>Global <a class="el" href="structneuron_state.html#a4199c14c5aabfd52f441e01623bdc84c">neuronState::dendriteGlobalDest</a>  </dt>
+<dd>: The dendriteCore and dendriteLocal values might not be needed anymroe.  </dd>
+<dt><a class="anchor" id="_todo000002"></a>Module <a class="el" href="neuron_8c.html#amgrpb71b6f136d39fa6c989fa9f8bce28fa9">ResetFunctions</a>  </dt>
+<dd>: Check that reverse reset functions are needed, since previous voltage is stored in the neuron.  </dd>
+<dt><a class="anchor" id="_todo000003"></a>globalScope&gt; Global <a class="el" href="neuron_8h.html#a2e78d7d2b70bf7349c3854b3727dcc25">resetLinear</a>  (void *neuronState)</dt>
+<dd>: Check implementation against paper. </dd>
+<dt><a class="anchor" id="_todo000004"></a>globalScope&gt; Global <a class="el" href="neuron_8h.html#ae53276ccdb759ba1ea09806cbf9fc940">reverseResetZero</a>  (void *neuronState)</dt>
+<dd>: Check that this is the proper way to handle reset zero function </dd>
 </dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Jun 19 2015 13:47:05 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Sun Jun 21 2015 16:46:03 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

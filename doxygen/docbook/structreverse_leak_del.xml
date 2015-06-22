@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="structreverse_leak_del">
+<title>reverseLeakDel struct Reference</title>
+<para>
+    <programlisting>#include <link linkend="neuron_8h">&lt;neuron.h&gt;</link></programlisting>
+</para>
+<para>Inheritance diagram for reverseLeakDel</para>
+<para>
+    <figure>
+        <title>Inheritance graph</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="structreverse_leak_del__inherit__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+<para>Collaboration diagram for reverseLeakDel</para>
+<para>
+    <figure>
+        <title>Collaboration graph</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="1" fileref="structreverse_leak_del__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </figure>
+</para>
+    <simplesect>
+
+<para>This fun. </para>
+    </simplesect>
+        <simplesect>
+            <title>Detailed Description</title>
+
+<para>pointer manages reverse leak functions </para>
+                <para>Definition at line 50 of file neuron.h</para>
+                <para>The Documentation for this struct was generated from the following file: </para>
+                <para><itemizedlist><listitem><para>neuron.h</para></listitem></itemizedlist></para>
+        </simplesect>
+</section>
