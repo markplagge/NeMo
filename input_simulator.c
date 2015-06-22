@@ -5,7 +5,7 @@
 //  Created by Mark Plagge on 6/18/15.
 //
 //
-
+//edtit
 #include "input_simulator.h"
 bool uniformGen(void *spikeGen, tw_lp *lp) {
 	bool willFire = false;
