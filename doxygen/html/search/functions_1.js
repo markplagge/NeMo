@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['integratesynapse',['integrateSynapse',['../neuron_8c.html#ae630bdf5dd3744870968f07a6971659c',1,'integrateSynapse(_idT synapseID, neuronState *st, tw_lp *lp):&#160;neuron.c'],['../neuron_8h.html#ae630bdf5dd3744870968f07a6971659c',1,'integrateSynapse(_idT synapseID, neuronState *st, tw_lp *lp):&#160;neuron.c']]]
+  ['convergentleak',['convergentLeak',['../neuron_8h.html#ad5df8be6cabf9a00abf073cee3be0362',1,'neuron.h']]],
+  ['createlps',['createLPs',['../model__main_8c.html#a614c89653e656c2b0436bed7f2c8de3e',1,'createLPs():&#160;model_main.c'],['../model__main_8h.html#a614c89653e656c2b0436bed7f2c8de3e',1,'createLPs():&#160;model_main.c']]]
 ];

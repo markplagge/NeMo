@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>TrueNorth TimeWarp Benchmark: /Users/Mark/Development/TrueNorth/tnt_benchmark/mapping.h Source File</title>
+<title>TrueNorth TimeWarp Benchmark: /home/mplagge/development/tnt_benchmark/mapping.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('mapping_8h_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">/Users/Mark/Development/TrueNorth/tnt_benchmark/mapping.h</div>  </div>
+<div class="title">/home/mplagge/development/tnt_benchmark/mapping.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a href="mapping_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
@@ -121,21 +121,53 @@ $(document).ready(function(){initNavTree('mapping_8h_source.html','');});
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">ifndef</span> <span class="preprocessor">__ROSS_TOP__mapping__</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">__ROSS_TOP__mapping__</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef __ROSS_TOP__mapping__</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define __ROSS_TOP__mapping__</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">stdio</span><span class="preprocessor">.</span><span class="preprocessor">h</span><span class="preprocessor">&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&quot;ross.h&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="assist_8h.html">&quot;assist.h&quot;</a></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;ross.h&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="assist_8h.html">assist.h</a>&quot;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">/* defined(__ROSS_TOP__mapping__) */</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code" href="mapping_8h.html#a67e8e45768f76b984a60fcff2b7c51aa">NEURONS_IN_CORE</a> ;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code" href="mapping_8h.html#a076b99099b46431255982b2bb8ce06fb">SYNAPSES_IN_CORE</a>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code" href="mapping_8h.html#ad39b86a0b748731175572436f6672264">CORE_SIZE</a>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code" href="mapping_8h.html#afe9ee9518533aa222adff4a27ff09281">nlp_per_kp</a>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code" href="mapping_8h.html#a929a1afa1773005b4881bea7869fdb60">nkp_per_pe</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="mapping_8h.html#ae2910f7a5d9f53ae602e62bb0248edba">   34</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="mapping_8h.html#ae2910f7a5d9f53ae602e62bb0248edba">CORE_LP_OFFSET</a>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code" href="mapping_8h.html#a1d3b60109ac1c91025d512707a3242a8">CPE</a>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;tw_peid <a class="code" href="mapping_8h.html#ab67eefe1d34d874bcd5f8cfa854e7fc7">lpToPeMap</a>(tw_peid gid);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordtype">void</span> <a class="code" href="mapping_8h.html#af6a8846083f1bd8ca747136c3b5967d8">mappingSetup</a>();</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;tw_lp * <a class="code" href="mapping_8h.html#a65ae45764256c6f8a0552ec04a132fcf">globalToLocal</a>(tw_lpid gid);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* defined(__ROSS_TOP__mapping__) */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="assist_8h_html"><div class="ttname"><a href="assist_8h.html">assist.h</a></div></div>
+<div class="ttc" id="mapping_8h_html_a1d3b60109ac1c91025d512707a3242a8"><div class="ttname"><a href="mapping_8h.html#a1d3b60109ac1c91025d512707a3242a8">CPE</a></div><div class="ttdeci">int CPE</div></div>
+<div class="ttc" id="mapping_8h_html_a65ae45764256c6f8a0552ec04a132fcf"><div class="ttname"><a href="mapping_8h.html#a65ae45764256c6f8a0552ec04a132fcf">globalToLocal</a></div><div class="ttdeci">tw_lp * globalToLocal(tw_lpid gid)</div><div class="ttdoc">Given a global ID, return a LP. </div></div>
+<div class="ttc" id="mapping_8h_html_a076b99099b46431255982b2bb8ce06fb"><div class="ttname"><a href="mapping_8h.html#a076b99099b46431255982b2bb8ce06fb">SYNAPSES_IN_CORE</a></div><div class="ttdeci">int SYNAPSES_IN_CORE</div><div class="ttdoc">Number of synapses per core. </div><div class="ttdef"><b>Definition:</b> <a href="model__main_8h_source.html#l00026">model_main.h:26</a></div></div>
+<div class="ttc" id="mapping_8h_html_afe9ee9518533aa222adff4a27ff09281"><div class="ttname"><a href="mapping_8h.html#afe9ee9518533aa222adff4a27ff09281">nlp_per_kp</a></div><div class="ttdeci">int nlp_per_kp</div></div>
+<div class="ttc" id="mapping_8h_html_ae2910f7a5d9f53ae602e62bb0248edba"><div class="ttname"><a href="mapping_8h.html#ae2910f7a5d9f53ae602e62bb0248edba">CORE_LP_OFFSET</a></div><div class="ttdeci">int CORE_LP_OFFSET</div><div class="ttdoc">CORE_LP_OFFSET - Manages the offset. </div><div class="ttdef"><b>Definition:</b> <a href="mapping_8h_source.html#l00034">mapping.h:34</a></div></div>
+<div class="ttc" id="mapping_8h_html_ad39b86a0b748731175572436f6672264"><div class="ttname"><a href="mapping_8h.html#ad39b86a0b748731175572436f6672264">CORE_SIZE</a></div><div class="ttdeci">int CORE_SIZE</div><div class="ttdoc">CORE_SIZE is equal to the number of axions * number of aneurons + num neurons + num axions...</div><div class="ttdef"><b>Definition:</b> <a href="model__main_8h_source.html#l00063">model_main.h:63</a></div></div>
+<div class="ttc" id="mapping_8h_html_ab67eefe1d34d874bcd5f8cfa854e7fc7"><div class="ttname"><a href="mapping_8h.html#ab67eefe1d34d874bcd5f8cfa854e7fc7">lpToPeMap</a></div><div class="ttdeci">tw_peid lpToPeMap(tw_peid gid)</div><div class="ttdoc">Custom Mapping - given a LP GID return a PE. </div></div>
+<div class="ttc" id="mapping_8h_html_af6a8846083f1bd8ca747136c3b5967d8"><div class="ttname"><a href="mapping_8h.html#af6a8846083f1bd8ca747136c3b5967d8">mappingSetup</a></div><div class="ttdeci">void mappingSetup()</div><div class="ttdoc">Setup mapping per PE. </div></div>
+<div class="ttc" id="mapping_8h_html_a67e8e45768f76b984a60fcff2b7c51aa"><div class="ttname"><a href="mapping_8h.html#a67e8e45768f76b984a60fcff2b7c51aa">NEURONS_IN_CORE</a></div><div class="ttdeci">int NEURONS_IN_CORE</div><div class="ttdoc">Number of neurons per core. </div><div class="ttdef"><b>Definition:</b> <a href="model__main_8h_source.html#l00024">model_main.h:24</a></div></div>
+<div class="ttc" id="mapping_8h_html_a929a1afa1773005b4881bea7869fdb60"><div class="ttname"><a href="mapping_8h.html#a929a1afa1773005b4881bea7869fdb60">nkp_per_pe</a></div><div class="ttdeci">int nkp_per_pe</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="mapping_8h.html">mapping.h</a></li>
-    <li class="footer">Generated on Sun Jun 21 2015 16:46:03 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Mon Jun 22 2015 12:44:59 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

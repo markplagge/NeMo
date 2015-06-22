@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="dir_1ae4179d5e953611aae20c997279e02c">
-    <title>/Users/Mark/Development/TrueNorth/tnt_benchmark/models Directory Reference</title>
-<para>Directory dependency diagram for /Users/Mark/Development/TrueNorth/tnt_benchmark/models</para>
+    <title>/home/mplagge/development/tnt_benchmark/models Directory Reference</title>
+<para>Directory dependency diagram for /home/mplagge/development/tnt_benchmark/models</para>
 <para>
     <figure>
         <title>Directory Dependency diagram</title>
@@ -59,6 +59,6 @@
         </simplesect>
     <simplesect>
         <title>Detailed Description</title>
-    <para>Directory location is /Users/Mark/Development/TrueNorth/tnt_benchmark/models/</para>
+    <para>Directory location is /home/mplagge/development/tnt_benchmark/models/</para>
     </simplesect>
 </section>

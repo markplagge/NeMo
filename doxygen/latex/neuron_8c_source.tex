@@ -1,5 +1,5 @@
 \hypertarget{neuron_8c_source}{}\section{neuron.\+c}
-\label{neuron_8c_source}\index{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/neuron.\+c@{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/neuron.\+c}}
+\label{neuron_8c_source}\index{/home/mplagge/development/tnt\+\_\+benchmark/models/neuron.\+c@{/home/mplagge/development/tnt\+\_\+benchmark/models/neuron.\+c}}
 
 \begin{DoxyCode}
 00001 \textcolor{comment}{//}
@@ -10,189 +10,205 @@
 00006 \textcolor{comment}{//}
 00007 \textcolor{comment}{//}
 00008 
-00009 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \hyperlink{neuron_8h}{"neuron.h"}
+00009 \textcolor{preprocessor}{#include "\hyperlink{neuron_8h}{neuron.h}"}
 00010 
-00011 \textcolor{comment}{/** @name LeakFunctions}
-00012 \textcolor{comment}{ * Neuron functions that manage leaks. All voltage state saving}
-00013 \textcolor{comment}{ * must be handled in the neuron event function neuronReceiveMessage().}
-00014 \textcolor{comment}{ * @\{}
-00015 \textcolor{comment}{ */}
-\hypertarget{neuron_8c_source_l00016}{}\hyperlink{neuron_8h_a8e52befc10f975c6be39cc93af573d7e}{00016} \textcolor{keywordtype}{void} \hyperlink{neuron_8h_a8e52befc10f975c6be39cc93af573d7e}{noLeak}(\textcolor{keywordtype}{void} *neuron, tw\_stime now) \{
+\hypertarget{neuron_8c_source_l00016}{}\hyperlink{neuron_8h_a8e52befc10f975c6be39cc93af573d7e}{00016} \textcolor{keywordtype}{void} \hyperlink{neuron_8c_a8e52befc10f975c6be39cc93af573d7e}{noLeak}(\textcolor{keywordtype}{void} *neuron, tw\_stime now) \{
 00017   \textcolor{comment}{// do nothing!!}
 00018 \}
-\hypertarget{neuron_8c_source_l00019}{}\hyperlink{neuron_8h_ac5bebec77c5216533ec5f6acd086532e}{00019} \textcolor{keywordtype}{void} \hyperlink{neuron_8h_ac5bebec77c5216533ec5f6acd086532e}{revNoLeak}(\textcolor{keywordtype}{void} *neuron, tw\_stime now) \{
+\hypertarget{neuron_8c_source_l00019}{}\hyperlink{neuron_8h_ac5bebec77c5216533ec5f6acd086532e}{00019} \textcolor{keywordtype}{void} \hyperlink{neuron_8c_ac5bebec77c5216533ec5f6acd086532e}{revNoLeak}(\textcolor{keywordtype}{void} *neuron, tw\_stime now) \{
 00020   \textcolor{comment}{// do nothing!!}
 00021 \}
-00022 \textcolor{comment}{/**}
-00023 \textcolor{comment}{ *  @details LinearLeak is the standard linear leak function from the paper. Using the leakRate
-       parameter inside \(\backslash\)link NeuronModel the neuron state \(\backslash\)endlink, this follows a simple linear function, reducing the
-       membrane potential by a fixed rate per tick.}
-00024 \textcolor{comment}{ *}
-00025 \textcolor{comment}{}
-00026 \textcolor{comment}{ *  @see NeuronModel}
-00027 \textcolor{comment}{ */}
-\hypertarget{neuron_8c_source_l00028}{}\hyperlink{neuron_8h_a64dc379b459a2b07b40bce35381210e8}{00028} \textcolor{keywordtype}{void} \hyperlink{neuron_8h_a64dc379b459a2b07b40bce35381210e8}{linearLeak}(\textcolor{keywordtype}{void} *neuron, tw\_stime now) \{
-00029     neuronState *s = (neuronState *)neuron;
-00030     tw\_stime bigTick = getCurrentBigTick(now);
-00031     tw\_stime delta = bigTick - s->lastLeakTime;
+\hypertarget{neuron_8c_source_l00028}{}\hyperlink{neuron_8h_a64dc379b459a2b07b40bce35381210e8}{00028} \textcolor{keywordtype}{void} \hyperlink{neuron_8c_a64dc379b459a2b07b40bce35381210e8}{linearLeak}(\textcolor{keywordtype}{void} *neuron, tw\_stime now) \{
+00029     \hyperlink{structneuron_state}{neuronState} *s = (\hyperlink{structneuron_state}{neuronState} *)neuron;
+00030     tw\_stime bigTick = \hyperlink{assist_8c_a4d378196b7fceed090d64ec8820b4065}{getCurrentBigTick}(now);
+00031     tw\_stime delta = bigTick - s->\hyperlink{structneuron_state_a6f4e4d8fc1cf0257b486e01f628d2656}{lastLeakTime};
 00032 
-00033     s->membranePot -= s->leakRate * delta;
-00034     s->lastLeakTime = now;
+00033         \textcolor{comment}{//s->membranePot -= s->leakRate * delta;}
+00034     s->\hyperlink{structneuron_state_a6f4e4d8fc1cf0257b486e01f628d2656}{lastLeakTime} = now;
 00035 \}
 00036 
-\hypertarget{neuron_8c_source_l00037}{}\hyperlink{neuron_8h_a26ced40d7ad7a0b448a136d8724fe18b}{00037} \textcolor{keywordtype}{void} \hyperlink{neuron_8h_a26ced40d7ad7a0b448a136d8724fe18b}{revLinearLeak}(\textcolor{keywordtype}{void} *neuron, tw\_stime now)\{
-00038     neuronState *s = (neuronState *)neuron;
-00039     tw\_stime delta = s->lastLeakTime - now;
+\hypertarget{neuron_8c_source_l00037}{}\hyperlink{neuron_8h_a26ced40d7ad7a0b448a136d8724fe18b}{00037} \textcolor{keywordtype}{void} \hyperlink{neuron_8c_a26ced40d7ad7a0b448a136d8724fe18b}{revLinearLeak}(\textcolor{keywordtype}{void} *neuron, tw\_stime now)\{
+00038     \hyperlink{structneuron_state}{neuronState} *s = (\hyperlink{structneuron_state}{neuronState} *)neuron;
+00039     tw\_stime delta = s->\hyperlink{structneuron_state_a6f4e4d8fc1cf0257b486e01f628d2656}{lastLeakTime} - now;
 00040 
-00041     s->membranePot += s->leakRate * delta;
-00042     s->lastLeakTime = now;
+00041         \textcolor{comment}{//s->membranePot += s->leakRate * delta;}
+00042     s->\hyperlink{structneuron_state_a6f4e4d8fc1cf0257b486e01f628d2656}{lastLeakTime} = now;
 00043 \}
 00044 
 00045 
 00046 
-00047 \textcolor{comment}{/** @\}*/}
-00048 \textcolor{comment}{/** @name ResetFunctions  }
-00049 \textcolor{comment}{ Reset function defs. Neuron reset functions will}
-00050 \textcolor{comment}{ change the neuron state without saving the previous state. All voltage state saving}
-00051 \textcolor{comment}{ must be handled in the neuron event function neuronReceiveMessage(). }
-00052 \textcolor{comment}{ @todo: Check that reverse reset functions are needed, since previous voltage is stored in the neuron.}
-00053 \textcolor{comment}{ * @\{ */}
-00054 
-00055 
-\hypertarget{neuron_8c_source_l00056}{}\hyperlink{neuron_8h_a7f8eaa35f03747c795a2b727b364537b}{00056} \textcolor{keywordtype}{void} \hyperlink{neuron_8h_a7f8eaa35f03747c795a2b727b364537b}{resetZero}(\textcolor{keywordtype}{void} *neuronState) \{
-00057     \textcolor{keyword}{struct} \hyperlink{structneuron_state}{NeuronModel} *s = (\textcolor{keyword}{struct} \hyperlink{structneuron_state}{NeuronModel} *)neuronState;
-00058     s\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{->}\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} = 0; \textcolor{comment}{// set current voltage to 0.}
+\hypertarget{neuron_8c_source_l00056}{}\hyperlink{neuron_8h_a233aa7ebe6cbfb664fe366a05a8dac1f}{00056} \textcolor{keywordtype}{void} \hyperlink{neuron_8c_a233aa7ebe6cbfb664fe366a05a8dac1f}{resetNormal}(\textcolor{keywordtype}{void} *\hyperlink{structneuron_state}{neuronState}) \{
+00057     \textcolor{keyword}{struct }NeuronModel *s = (\textcolor{keyword}{struct }NeuronModel *)neuronState;
+00058     s->membranePot = s->resetVoltage; \textcolor{comment}{// set current voltage to \(\backslash\)f$R\(\backslash\)f$.}
 00059 \}
 00060 
-00061 \textcolor{comment}{/**}
-00062 \textcolor{comment}{ *  @details  Note: Linear functions use the \(\backslash\)link \_voltT voltT \(\backslash\)endlink data type.}
-00063 \textcolor{comment}{ *  If a neuron uses a linear reset, this parameter must be set upon neuron creation. }
-00064 \textcolor{comment}{ @todo: Check implementation against paper.}
-00065 \textcolor{comment}{ *}
-00066 \textcolor{comment}{ */}
-\hypertarget{neuron_8c_source_l00067}{}\hyperlink{neuron_8h_a2e78d7d2b70bf7349c3854b3727dcc25}{00067} \textcolor{keywordtype}{void} \hyperlink{neuron_8h_a2e78d7d2b70bf7349c3854b3727dcc25}{resetLinear}(\textcolor{keywordtype}{void} *neuronState) \{
-00068     \textcolor{keyword}{struct} \hyperlink{structneuron_state}{NeuronModel} *s = (\textcolor{keyword}{struct} \hyperlink{structneuron_state}{NeuronModel} *)neuronState;
-00069   \textcolor{comment}{// reduce the value of the neuron based on the linear reduction function}
-00070   \textcolor{comment}{// in the paper}
-00071     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} resetParam = (\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT}) &resetParam;
-00072   s\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{->}\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} = s\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{->}\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} - resetParam;
-00073 \}
-00074 
-\hypertarget{neuron_8c_source_l00075}{}\hyperlink{neuron_8h_a09e54832158e2f6abe898437979aae00}{00075} \textcolor{keywordtype}{void} \hyperlink{neuron_8h_a09e54832158e2f6abe898437979aae00}{reverseResetLinear}(\textcolor{keywordtype}{void} *neuronState)\{
-00076     \textcolor{keyword}{struct} \hyperlink{structneuron_state}{NeuronModel} *s = (\textcolor{keyword}{struct} \hyperlink{structneuron_state}{NeuronModel} *)neuronState;
-00077     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} resetParam = (\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT}) &resetParam;
-00078     s\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{->}\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} = s\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{->}\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} + resetParam;
-00079 \}
-00080 \textcolor{comment}{/** @todo: Check that this is the proper way to handle reset zero function */}
-\hypertarget{neuron_8c_source_l00081}{}\hyperlink{neuron_8h_ae53276ccdb759ba1ea09806cbf9fc940}{00081} \textcolor{keywordtype}{void} \hyperlink{neuron_8h_ae53276ccdb759ba1ea09806cbf9fc940}{reverseResetZero}(\textcolor{keywordtype}{void} *neuronState)\{
+\hypertarget{neuron_8c_source_l00066}{}\hyperlink{neuron_8h_a2e78d7d2b70bf7349c3854b3727dcc25}{00066} \textcolor{keywordtype}{void} \hyperlink{neuron_8c_a2e78d7d2b70bf7349c3854b3727dcc25}{resetLinear}(\textcolor{keywordtype}{void} *\hyperlink{structneuron_state}{neuronState}) \{
+00067     \textcolor{keyword}{struct }NeuronModel *s = (\textcolor{keyword}{struct }NeuronModel *)neuronState;
+00068     s->membranePot = s->membranePot - s->threshold;
+00069 \}
+00070 
+\hypertarget{neuron_8c_source_l00071}{}\hyperlink{neuron_8h_a09e54832158e2f6abe898437979aae00}{00071} \textcolor{keywordtype}{void} \hyperlink{neuron_8c_a09e54832158e2f6abe898437979aae00}{reverseResetLinear}(\textcolor{keywordtype}{void} *\hyperlink{structneuron_state}{neuronState})\{
+00072     \textcolor{keyword}{struct }NeuronModel *s = (\textcolor{keyword}{struct }NeuronModel *)neuronState;
+00073     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} resetParam = (\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT}) &resetParam;
+00074     s->membranePot = s->membranePot + resetParam;
+00075 \}
+00076 
+00077 
+\hypertarget{neuron_8c_source_l00079}{}\hyperlink{neuron_8h_ae53276ccdb759ba1ea09806cbf9fc940}{00079} \textcolor{keywordtype}{void} \hyperlink{neuron_8c_ae53276ccdb759ba1ea09806cbf9fc940}{reverseResetZero}(\textcolor{keywordtype}{void} *\hyperlink{structneuron_state}{neuronState})\{
+00080 
+00081 \}
 00082 
-00083 \}
+00083 
 00084 
-00085 
-00086     \textcolor{comment}{/** @\} */}
-00087 
-00088 \textcolor{comment}{/** @name NeuronFunctions }
-00089 \textcolor{comment}{* Main neuron functions and behaviors}
-00090 \textcolor{comment}{*  @\{ }
-00091 \textcolor{comment}{ */}
-00092 
-00093 \textcolor{comment}{/**}
-00094 \textcolor{comment}{ *  @details  neruonReceiveMessage runs when an event is received by a neuron.}
-00095 \textcolor{comment}{ *  The events are handled in the following fashion:}
-00096 \textcolor{comment}{ *  - If the event is a synapse, the neuron integrates the weight of the synapse into its membrane
-       potential.}
-00097 \textcolor{comment}{ *    - The count of big-tick synapse messages recived is incremented.}
-00098 \textcolor{comment}{ *    - If the count changes from zero to one, the function creates and queues a heartbeat event for
-       the next big-tick.}
-00099 \textcolor{comment}{ *  - If the event is a heartbeat, the neuron will leak, potentially fire, and reset.}
-00100 \textcolor{comment}{ *}
-00101 \textcolor{comment}{ *  Big-Tick events are sent at time \(\backslash\)f$𝒯\_\{bigTick\} - ε\(\backslash\)f$, so that the the event will arrive at the
-       next bit-tick time.}
-00102 \textcolor{comment}{ *}
-00103 \textcolor{comment}{ */}
-\hypertarget{neuron_8c_source_l00104}{}\hyperlink{neuron_8h_aa6819d7492f0173f2234ba0b8b0bb674}{00104} \textcolor{keywordtype}{void} \hyperlink{neuron_8h_aa6819d7492f0173f2234ba0b8b0bb674}{neuronReceiveMessage}(neuronState *st, tw\_stime time, Msg\_Data *m,
-00105 tw\_lp *lp)\{
-00106     \textcolor{keywordtype}{bool} willFire = \textcolor{keyword}{false};
+\hypertarget{neuron_8c_source_l00103}{}\hyperlink{neuron_8h_aa6819d7492f0173f2234ba0b8b0bb674}{00103} \textcolor{keywordtype}{void} \hyperlink{neuron_8c_aa6819d7492f0173f2234ba0b8b0bb674}{neuronReceiveMessage}(\hyperlink{structneuron_state}{neuronState} *st, tw\_stime time, 
+      \hyperlink{struct_msg___data}{Msg\_Data} *m,
+00104 tw\_lp *lp)\{
+00105     \textcolor{keywordtype}{bool} willFire = \textcolor{keyword}{false};
+00106     st->\hyperlink{structneuron_state_a287eb8703dbfb177165d31c8840646b8}{firedLast} = \textcolor{keyword}{false};
 00107         \textcolor{comment}{//save the previous state of the neuron:}
-00108     st->savedLastLeakTime = st->lastLeakTime;
-00109     st->savedLastActiveTime = st->lastActiveTime;
-00110     st\hyperlink{structneuron_state_a5efe5de0478ea513ed5d90d89a49fcca}{->}\hyperlink{structneuron_state_a5efe5de0478ea513ed5d90d89a49fcca}{savedMembranePot} = st\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{->}\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot};
+00108     st->\hyperlink{structneuron_state_a50734a9ba605a083a90814b63d039a03}{savedLastLeakTime} = st->\hyperlink{structneuron_state_a6f4e4d8fc1cf0257b486e01f628d2656}{lastLeakTime};
+00109     st->\hyperlink{structneuron_state_a6922b3f3041346eb83cfc6352a22277b}{savedLastActiveTime} = st->\hyperlink{structneuron_state_a0658ad1f8b57a00589c6ea84f9a4ab13}{lastActiveTime};
+00110     st->\hyperlink{structneuron_state_a5efe5de0478ea513ed5d90d89a49fcca}{savedMembranePot} = st->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot};
 00111         \textcolor{comment}{//random fn call state management.}
 00112     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} startCount = lp->rng->count;
 00113 
-00114     \textcolor{keywordflow}{switch} (m\hyperlink{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}{->}\hyperlink{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}{eventType}) \{
-00115   \textcolor{keywordflow}{case} SYNAPSE\_OUT:
-00116             integrateSynapse(m->localID, st, lp);
+00114     \textcolor{keywordflow}{switch} (m->\hyperlink{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}{eventType}) \{
+00115   \textcolor{keywordflow}{case} \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb}{SYNAPSE\_OUT}:
+00116             \hyperlink{neuron_8c_ae630bdf5dd3744870968f07a6971659c}{integrateSynapse}(m->\hyperlink{struct_msg___data_aefc820e92a74047ec7ed74c1c45f818f}{localID}, st, lp);
 00117 
 00118                 \textcolor{comment}{//next, we will check if a heartbeat message should be sent}
-00119             \textcolor{keywordflow}{if}(st\hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{->}\hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{receivedSynapseMsgs} == 0) \{
-00120                 sendHeartbeat(st, lp, time);
+00119             \textcolor{keywordflow}{if}(st->\hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{receivedSynapseMsgs} == 0) \{
+00120                 \hyperlink{neuron_8c_a766dff9e530486b055e97ebe392268b8}{sendHeartbeat}(st, lp, time);
 00121             \}
-00122             st\hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{->}\hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{receivedSynapseMsgs} ++;
+00122             st->\hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{receivedSynapseMsgs} ++;
 00123 
 00124 
 00125             \textcolor{keywordflow}{break};
 00126 
 00127         \textcolor{keywordflow}{case} \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e}{NEURON\_HEARTBEAT}:
-00128             st\hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{->}\hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{receivedSynapseMsgs} = 0;
-00129 
-00130                 \textcolor{comment}{//Currently operates - leak->fire->(reset)}
-00131             st->doLeak(st, time);
-00132             willFire = \hyperlink{neuron_8h_a92d5882a15e11e2a6733483d51428e46}{neuronShouldFire}\hyperlink{neuron_8h_a92d5882a15e11e2a6733483d51428e46}{(}st\hyperlink{neuron_8h_a92d5882a15e11e2a6733483d51428e46}{)};
-00133             \textcolor{keywordflow}{if}(willFire)\{
-00134                 neuronFire(st, time, m);
-00135                 neuronPostFire(st, time, m);
-00136                 st\hyperlink{structneuron_state_afe8825076c4cf3863c677307fec63c61}{->}\hyperlink{structneuron_state_afe8825076c4cf3863c677307fec63c61}{fireCount} ++;
-00137             \}
-00138 
-00139             neuronPostIntegrate(st, time, lp, willFire);
-00140             \textcolor{comment}{//stats collection}
-00141             st\hyperlink{structneuron_state_a71fbb9a79e8048b473b6e09d29a64bbe}{->}\hyperlink{structneuron_state_a71fbb9a79e8048b473b6e09d29a64bbe}{SOPSCount} ++;
-00142             \textcolor{keywordflow}{break};
-00143 
-00144   \textcolor{keywordflow}{default}:
-00145                 \textcolor{comment}{//Error condition - non-valid input.}
-00146             \textcolor{keywordflow}{break};
-00147     \}
-00148 
-00149         \textcolor{comment}{//store the random calls in the message:}
-00150     m->rndCallCount = lp->rng->count - startCount;
+00128             st->\hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{receivedSynapseMsgs} = 0;
+00129                 \textcolor{comment}{//set up drawn random number for the heartbeat.}
+00130             \textcolor{keywordflow}{if}(st->\hyperlink{structneuron_state_aa501d6ee7cacd5435deec79c07637b08}{thresholdPRNMask} != 0)
+00131                 st->\hyperlink{structneuron_state_a296a4f04813c4882d6acd8c9074abd35}{drawnRandomNumber} = tw\_rand\_integer(lp->rng, 0, st->
+      \hyperlink{structneuron_state_aa501d6ee7cacd5435deec79c07637b08}{thresholdPRNMask});
+00132 
+00133                 \textcolor{comment}{//Currently operates - leak->fire->(reset)}
+00134             st->\hyperlink{structneuron_state_aa430f424f34dc59dc27736e27ec61320}{doLeak}(st, time);
+00135             willFire = \hyperlink{neuron_8c_a3520b013e0c2f711b9f5c16e19306be6}{neuronShouldFire}(st,lp);
+00136             \textcolor{keywordflow}{if}(willFire)\{
+00137                 \hyperlink{neuron_8c_a683379b633b55058dd5b8b67929c165c}{neuronFire}(st, time, lp);
+00138                 st->\hyperlink{structneuron_state_afe8825076c4cf3863c677307fec63c61}{fireCount} ++;
+00139             \}
+00140 
+00141             \hyperlink{neuron_8c_aabaff47eadb1e61b34c19b6e982f6511}{neuronPostIntegrate}(st, time, lp, willFire);
+00142             \textcolor{comment}{//stats collection}
+00143             st->\hyperlink{structneuron_state_a71fbb9a79e8048b473b6e09d29a64bbe}{SOPSCount} ++;
+00144             st->\hyperlink{structneuron_state_a0658ad1f8b57a00589c6ea84f9a4ab13}{lastActiveTime} = tw\_now(lp);
+00145             \textcolor{keywordflow}{break};
+00146 
+00147   \textcolor{keywordflow}{default}:
+00148                 \textcolor{comment}{//Error condition - non-valid input.}
+00149             \textcolor{keywordflow}{break};
+00150     \}
 00151 
-00152     st\hyperlink{structneuron_state_ab8f63a1dfdb2992657530ff8a63fdc01}{->}\hyperlink{structneuron_state_ab8f63a1dfdb2992657530ff8a63fdc01}{rcvdMsgCount} ++;
-00153 
+00152         \textcolor{comment}{//store the random calls in the message:}
+00153     m->\hyperlink{struct_msg___data_a2e49a6bcc6c45ade722f746b1ea707f2}{rndCallCount} = lp->rng->count - startCount;
 00154 
-00155 
-00156 \}
-\hypertarget{neuron_8c_source_l00157}{}\hyperlink{neuron_8h_a92d5882a15e11e2a6733483d51428e46}{00157} \textcolor{keywordtype}{bool} \hyperlink{neuron_8h_a92d5882a15e11e2a6733483d51428e46}{neuronShouldFire}(neuronState *st)\{
-00158         \textcolor{comment}{//check negative threshold values:}
-00159     \textcolor{keywordflow}{if}(st->membranePot < ) \{
-00160         \textcolor{keywordflow}{if}(st->negThresReset) \{
-00161                 \textcolor{comment}{//reset to \(\backslash\)f$－β\_j\(\backslash\)f$}
-00162         \}
-00163     \}
-00164     \textcolor{keywordflow}{return} st\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{->}\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} > st\hyperlink{structneuron_state_a132470c4c17828c209e3403ccf7ee680}{->}\hyperlink{structneuron_state_a132470c4c17828c209e3403ccf7ee680}{threshold};
+00155     st->\hyperlink{structneuron_state_ab8f63a1dfdb2992657530ff8a63fdc01}{rcvdMsgCount} ++;
+00156 
+00157 
+00158 
+00159 \}
+00160 
+\hypertarget{neuron_8c_source_l00161}{}\hyperlink{neuron_8h_a3520b013e0c2f711b9f5c16e19306be6}{00161} \textcolor{keywordtype}{bool} \hyperlink{neuron_8c_a3520b013e0c2f711b9f5c16e19306be6}{neuronShouldFire}(\hyperlink{structneuron_state}{neuronState} *st, tw\_lp *lp)\{
+00162         \textcolor{comment}{//check negative threshold values:}
+00163 
+00164     \textcolor{keywordflow}{return} st->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} >= st->\hyperlink{structneuron_state_a132470c4c17828c209e3403ccf7ee680}{threshold} + st->
+      \hyperlink{structneuron_state_a296a4f04813c4882d6acd8c9074abd35}{drawnRandomNumber};
 00165 \}
-\hypertarget{neuron_8c_source_l00166}{}\hyperlink{neuron_8h_ae071ef984b7e0dd4ec38fca91e0abe39}{00166} \textcolor{keywordtype}{void} \hyperlink{neuron_8h_ae071ef984b7e0dd4ec38fca91e0abe39}{neuronFire}(neuronState *st, tw\_stime time, Msg\_Data *m)\{
-00167 
-00168 \}
-\hypertarget{neuron_8c_source_l00169}{}\hyperlink{neuron_8h_ab1f4997e4bfe11e78faa6d37748aee67}{00169} \textcolor{keywordtype}{void} \hyperlink{neuron_8h_ab1f4997e4bfe11e78faa6d37748aee67}{neuronPostFire}(neuronState *st, tw\_stime time, Msg\_Data *m)\{
-00170 
-00171 \}
-\hypertarget{neuron_8c_source_l00172}{}\hyperlink{neuron_8h_a06ee765bfae45fe9b7f0619bf4abe63d}{00172} \textcolor{keywordtype}{void} \hyperlink{neuron_8h_a06ee765bfae45fe9b7f0619bf4abe63d}{generateWaitEvent}(neuronState *st, tw\_stime time, tw\_lp *lp)\{
-00173 
-00174 \}
-\hypertarget{neuron_8c_source_l00175}{}\hyperlink{neuron_8h_ae630bdf5dd3744870968f07a6971659c}{00175} \textcolor{keywordtype}{void} \hyperlink{neuron_8h_ae630bdf5dd3744870968f07a6971659c}{integrateSynapse}(\hyperlink{assist_8h_a3f7a6e6a1210b6d9d7a42177dcb9634b}{\_idT} synapseID,neuronState *st, tw\_lp *lp) \{
-00176     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} adjustedWeight;
-00177     \textcolor{keywordflow}{if}(st->perSynapseDet[synapseID] == \textcolor{keyword}{true}) \{
-00178         adjustedWeight = st->perSynapseWeight[synapseID];
-00179         st->membranePot += adjustedWeight;
-00180     \} \textcolor{keywordflow}{else} \{ \textcolor{comment}{//stochastic mode weights:}
-00181         \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} rand = tw\_rand\_integer(lp->rng, st->, <#\textcolor{keywordtype}{long} high#>)
-00182 
-00183 \}
-00184 
-00185 \textcolor{keywordtype}{void} neuronPostIntegrate(neuronState *st, tw\_stime time, tw\_lp *lp, \textcolor{keywordtype}{bool} didFire)\{
-00186 
-00187 \}
-00188 \textcolor{comment}{/** @\} */}
+00166 
+\hypertarget{neuron_8c_source_l00167}{}\hyperlink{neuron_8h_a683379b633b55058dd5b8b67929c165c}{00167} \textcolor{keywordtype}{void} \hyperlink{neuron_8c_a683379b633b55058dd5b8b67929c165c}{neuronFire}(\hyperlink{structneuron_state}{neuronState} *st, tw\_stime time, tw\_lp *lp)\{
+00168     tw\_stime nextHeartbeat = \hyperlink{assist_8c_aa961bc9b414f1429b123fc8212c989fd}{getNextBigTick}(time);
+00169     tw\_event *newEvent = tw\_event\_new(st->\hyperlink{structneuron_state_a4199c14c5aabfd52f441e01623bdc84c}{dendriteGlobalDest}, nextHeartbeat, lp);
+00170     \hyperlink{struct_msg___data}{Msg\_Data} *data = (\hyperlink{struct_msg___data}{Msg\_Data} *) tw\_event\_data(newEvent);
+00171     data->\hyperlink{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}{eventType} = \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0}{NEURON\_OUT};
+00172     data->\hyperlink{struct_msg___data_aefc820e92a74047ec7ed74c1c45f818f}{localID} = st->\hyperlink{structneuron_state_ac24762c24aede292a2ce5df78114881c}{myLocalID};
+00173     tw\_event\_send(newEvent);
+00174     st->\hyperlink{structneuron_state_a287eb8703dbfb177165d31c8840646b8}{firedLast} = \textcolor{keyword}{true};
+00175 \}
+00176 
+00177 
+00178 
+\hypertarget{neuron_8c_source_l00179}{}\hyperlink{neuron_8h_a766dff9e530486b055e97ebe392268b8}{00179} \textcolor{keywordtype}{void} \hyperlink{neuron_8c_a766dff9e530486b055e97ebe392268b8}{sendHeartbeat}(\hyperlink{structneuron_state}{neuronState} *st, tw\_lp *lp, tw\_stime time)\{
+00180         \textcolor{comment}{//heartbeat message gen:}
+00181     tw\_stime nextHeartbeat = \hyperlink{assist_8c_aa961bc9b414f1429b123fc8212c989fd}{getNextBigTick}(time);
+00182     tw\_event *newEvent = tw\_event\_new(lp->gid, nextHeartbeat, lp);
+00183     \hyperlink{struct_msg___data}{Msg\_Data} *data = (\hyperlink{struct_msg___data}{Msg\_Data} *) tw\_event\_data(newEvent);
+00184     data->\hyperlink{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}{eventType} = \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e}{NEURON\_HEARTBEAT};
+00185     data->\hyperlink{struct_msg___data_aefc820e92a74047ec7ed74c1c45f818f}{localID} = st->\hyperlink{structneuron_state_ac24762c24aede292a2ce5df78114881c}{myLocalID};
+00186     tw\_event\_send(newEvent);
+00187 
+00188 
+00189 \}
+00190 
+\hypertarget{neuron_8c_source_l00191}{}\hyperlink{neuron_8h_afee2e0acc66d8d10aee8d52c8d245c82}{00191} \textcolor{keywordtype}{void} \hyperlink{neuron_8c_afee2e0acc66d8d10aee8d52c8d245c82}{stochasticIntegrate}(\hyperlink{assist_8h_aa73c5ea0fe4ba938c96e6771b38dcb2a}{\_weightT} weight, \hyperlink{structneuron_state}{neuronState} *st, tw\_lp *lp)
+      \{
+00192     \textcolor{keywordtype}{long} drawnRandom = st->\hyperlink{structneuron_state_a296a4f04813c4882d6acd8c9074abd35}{drawnRandomNumber};
+00193     \textcolor{keywordflow}{if} (\hyperlink{assist_8h_abbf94867faa4abd8c53c87576efd05f3}{BINCOMP}(weight, drawnRandom))\{
+00194         st->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} += \hyperlink{assist_8h_a95ed41486ca0ed53262e4b8934d4afac}{SGN}(weight);
+00195     \}
+00196 \}
+00197 
+00198 
+\hypertarget{neuron_8c_source_l00199}{}\hyperlink{neuron_8h_ae630bdf5dd3744870968f07a6971659c}{00199} \textcolor{keywordtype}{void} \hyperlink{neuron_8c_ae630bdf5dd3744870968f07a6971659c}{integrateSynapse}(\hyperlink{assist_8h_a3f7a6e6a1210b6d9d7a42177dcb9634b}{\_idT} synapseID,\hyperlink{structneuron_state}{neuronState} *st, tw\_lp *lp) \{
+00200 
+00201     \textcolor{keywordflow}{if}(st->\hyperlink{structneuron_state_a4568f103808a436a62d7c7c47dc90e9b}{synapticWeightProbSelect}[synapseID] == \textcolor{keyword}{true}) \{
+00202         \hyperlink{neuron_8c_afee2e0acc66d8d10aee8d52c8d245c82}{stochasticIntegrate}(st->\hyperlink{structneuron_state_aa71c0acf1edf08865e1f9729a2414efa}{synapticWeightProb}[synapseID], st, lp)
+      ;
+00203     \} \textcolor{keywordflow}{else} \{ \textcolor{comment}{//det. mode integrate:}
+00204         \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} adjustedWeight = st->\hyperlink{structneuron_state_aa71c0acf1edf08865e1f9729a2414efa}{synapticWeightProb}[synapseID];
+00205         st->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} += adjustedWeight;
+00206     \}
+00207 
+00208 
+00209 \}
+\hypertarget{neuron_8c_source_l00214}{}\hyperlink{neuron_8h_aabaff47eadb1e61b34c19b6e982f6511}{00214} \textcolor{keywordtype}{void} \hyperlink{neuron_8c_aabaff47eadb1e61b34c19b6e982f6511}{neuronPostIntegrate}(\hyperlink{structneuron_state}{neuronState} *st, tw\_stime time, tw\_lp *lp, \textcolor{keywordtype}{bool} 
+      willFire)\{
+00215     \textcolor{keywordflow}{if}(willFire)\{ \textcolor{comment}{// neuron will/did fire:}
+00216         st->\hyperlink{structneuron_state_afcf9d931e4fda519c43b4efeab687463}{doReset}(st);
+00217     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (st->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} < -1 * (st->\hyperlink{structneuron_state_a678bcd9f031e290178cd5d2855e74279}{negativeThreshold} * st->
+      \hyperlink{structneuron_state_a3ec480684e7a2cfc67a8ef7ac1bf57b9}{negThresReset} + (st->\hyperlink{structneuron_state_a678bcd9f031e290178cd5d2855e74279}{negativeThreshold} + st->
+      \hyperlink{structneuron_state_a296a4f04813c4882d6acd8c9074abd35}{drawnRandomNumber})))\{
+00218             \textcolor{comment}{//sanity variables for the formulaic reset/bounce instead of calling functions:}
+00219         \hyperlink{assist_8h_a5537d30256d443ce07efd3d879a4a720}{\_threshT} B = st->\hyperlink{structneuron_state_a678bcd9f031e290178cd5d2855e74279}{negativeThreshold};
+00220         \textcolor{keywordtype}{int} K = st->\hyperlink{structneuron_state_a3ec480684e7a2cfc67a8ef7ac1bf57b9}{negThresReset};
+00221         \textcolor{keywordtype}{int} G = st->\hyperlink{structneuron_state_af67bb650aa3150a6a31e16a874d71f91}{resetMode};
+00222         \hyperlink{assist_8h_a520ac495f188eb0bc5645cffa3c4328b}{\_randT} n = st->\hyperlink{structneuron_state_a296a4f04813c4882d6acd8c9074abd35}{drawnRandomNumber};
+00223         \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} R = st->\hyperlink{structneuron_state_af69a2c108fe9e7154fa047ea5acc5d80}{resetVoltage};
+00224         \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} V = st->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot};
+00225         st->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} = (-(B*K) + (-(\hyperlink{assist_8h_acfde2b62c9c4e0413f3066bbd65c428a}{DT}(G)) * R +
+00226                                      \hyperlink{assist_8h_acfde2b62c9c4e0413f3066bbd65c428a}{DT}(G-1) * (V + (B + n)) +
+00227                                      \hyperlink{assist_8h_acfde2b62c9c4e0413f3066bbd65c428a}{DT}(G-2) * V) * (1-K));
+00228 
+00229     \}
+00230 
+00231 \}
+\hypertarget{neuron_8c_source_l00232}{}\hyperlink{neuron_8h_aaae24f12a4b2a537740f29d65eb3e51e}{00232} \textcolor{keywordtype}{void} \hyperlink{neuron_8c_aaae24f12a4b2a537740f29d65eb3e51e}{neronReverseSate}(\hyperlink{structneuron_state}{neuronState} *s, tw\_bf *CV, 
+      \hyperlink{struct_msg___data}{Msg\_Data} *M, tw\_lp *lp) \{
+00233         \textcolor{comment}{//reverse function.}
+00234     \textcolor{keywordflow}{if}(M->\hyperlink{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}{eventType} == \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb}{SYNAPSE\_OUT})
+00235         s->\hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{receivedSynapseMsgs} --;
+00236     \textcolor{keywordflow}{else}
+00237         s->\hyperlink{structneuron_state_a71fbb9a79e8048b473b6e09d29a64bbe}{SOPSCount} --;
+00238 
+00239     \textcolor{keywordflow}{if}(s->\hyperlink{structneuron_state_a287eb8703dbfb177165d31c8840646b8}{firedLast} == \textcolor{keyword}{true})\{
+00240         s->\hyperlink{structneuron_state_afe8825076c4cf3863c677307fec63c61}{fireCount} --;
+00241     \}
+00242 
+00243     s->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot}  = s->\hyperlink{structneuron_state_a5efe5de0478ea513ed5d90d89a49fcca}{savedMembranePot};
+00244     s->\hyperlink{structneuron_state_a0658ad1f8b57a00589c6ea84f9a4ab13}{lastActiveTime} = s->\hyperlink{structneuron_state_a6922b3f3041346eb83cfc6352a22277b}{savedLastActiveTime};
+00245     s->\hyperlink{structneuron_state_a6f4e4d8fc1cf0257b486e01f628d2656}{lastLeakTime} = s->\hyperlink{structneuron_state_a50734a9ba605a083a90814b63d039a03}{savedLastLeakTime};
+00246 
+00247 
+00248 \}
 \end{DoxyCode}

@@ -1,4 +1,4 @@
-\hypertarget{input__simulator_8h_source}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/input\+\_\+simulator.h}
+\hypertarget{input__simulator_8h_source}{}\section{/home/mplagge/development/tnt\+\_\+benchmark/input\+\_\+simulator.h}
 
 \begin{DoxyCode}
 00001 \textcolor{comment}{//}
@@ -9,57 +9,47 @@
 00006 \textcolor{comment}{//}
 00007 \textcolor{comment}{//}
 00008 
-00009 \textcolor{preprocessor}{#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{\_\_ROSS\_TOP\_\_input\_simulator\_\_}
-00010 \textcolor{preprocessor}{#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{\_\_ROSS\_TOP\_\_input\_simulator\_\_}
+00009 \textcolor{preprocessor}{#ifndef \_\_ROSS\_TOP\_\_input\_simulator\_\_}
+00010 \textcolor{preprocessor}{#define \_\_ROSS\_TOP\_\_input\_simulator\_\_}
 00011 
-00012 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{stdio}\textcolor{preprocessor}{.}\textcolor{preprocessor}{h}\textcolor{preprocessor}{>}
-00013 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \hyperlink{assist_8h}{"assist.h"}
-00014 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{"ross.h"}
+00012 \textcolor{preprocessor}{#include <stdio.h>}
+00013 \textcolor{preprocessor}{#include "\hyperlink{assist_8h}{assist.h}"}
+00014 \textcolor{preprocessor}{#include "ross.h"}
 00015 
-\hypertarget{input__simulator_8h_source_l00016}{}\hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215}{00016} \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215}{SelectedRandom} \{
+\hypertarget{input__simulator_8h_source_l00016}{}\hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215}{00016} \textcolor{keyword}{typedef} \textcolor{keyword}{enum} SelectedRandom \{
 \hypertarget{input__simulator_8h_source_l00017}{}\hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215a4b3574e75cec43aa4dd3a0fd7940c632}{00017}     \hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215a4b3574e75cec43aa4dd3a0fd7940c632}{UNF},
 \hypertarget{input__simulator_8h_source_l00018}{}\hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215ae003ec1158e3a4e295616ced12af154e}{00018}     \hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215ae003ec1158e3a4e295616ced12af154e}{NORM},
 \hypertarget{input__simulator_8h_source_l00019}{}\hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215a1697a91b22c2369eb2ba427c2d193329}{00019}     \hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215a1697a91b22c2369eb2ba427c2d193329}{SELECT}
-00020 \}selectedRandom;
-00021 \textcolor{comment}{/** SpikeGenerator Function Pointer. Chooses the spike method function. */}
-\hypertarget{input__simulator_8h_source_l00022}{}\hyperlink{input__simulator_8h_aa47e87d309aab7727810011578bae86e}{00022} \textcolor{keyword}{typedef} \textcolor{keywordtype}{bool} (*\hyperlink{input__simulator_8h_aa47e87d309aab7727810011578bae86e}{spikeGenDel})(\textcolor{keywordtype}{void} *spikeGen, tw\_lp *lp);
+00020 \}\hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215}{selectedRandom};
+\hypertarget{input__simulator_8h_source_l00022}{}\hyperlink{input__simulator_8h_aa47e87d309aab7727810011578bae86e}{00022} \textcolor{keyword}{typedef} bool (*\hyperlink{input__simulator_8h_aa47e87d309aab7727810011578bae86e}{spikeGenDel})(\textcolor{keywordtype}{void} *spikeGen, tw\_lp *lp);
 00023 \textcolor{keywordtype}{bool} \hyperlink{input__simulator_8h_ad6244e86a3542f8d3c64766e7e7c6746}{uniformGen}(\textcolor{keywordtype}{void} *gen\_state, tw\_lp *lp);
 00024 \textcolor{keywordtype}{bool} \hyperlink{input__simulator_8h_a7a9db804782d8a0c810fa90ae9c2dd05}{normGen}(\textcolor{keywordtype}{void} *gen\_state, tw\_lp *lp);
 00025 \textcolor{keywordtype}{bool} \hyperlink{input__simulator_8h_a7859f15c9115868c5c0ed88c43756482}{selectedGen}(\textcolor{keywordtype}{void} *spikeGen, tw\_lp *lp);
 00026 
 00027 
-00028 \textcolor{comment}{/** Struct that genreates spikes randomly. */}
-\hypertarget{input__simulator_8h_source_l00029}{}\hyperlink{structrandom_spikes}{00029} \textcolor{keyword}{typedef} \textcolor{keyword}{struct} \hyperlink{structrandom_spikes}{RandomSpikes} \{
-\hypertarget{input__simulator_8h_source_l00030}{}\hyperlink{structrandom_spikes_a1333eb5695ae83d1ffccf24b08bc6288}{00030}     \textcolor{keywordtype}{float} \hyperlink{structrandom_spikes_a1333eb5695ae83d1ffccf24b08bc6288}{randomRate}; \textcolor{comment}{/**< If the random value is over this, spike.*/}
-\hypertarget{input__simulator_8h_source_l00031}{}\hyperlink{structrandom_spikes_a18766f12fc4212349fb61b221f83b779}{00031}     selectedRandom \hyperlink{structrandom_spikes_a18766f12fc4212349fb61b221f83b779}{randMethod}; \textcolor{comment}{/**< Selected random generator. */}
-\hypertarget{input__simulator_8h_source_l00032}{}\hyperlink{structrandom_spikes_a0eb8199754a403ccc8eac256f9193a02}{00032}     \textcolor{keywordtype}{float} \hyperlink{structrandom_spikes_a0eb8199754a403ccc8eac256f9193a02}{rndFctVal}; \textcolor{comment}{/**<For functions that need a second parameter (eg, binomial etc.),
-       this is the second parameter. */}
-00033 \}randomSpikes;
+\hypertarget{input__simulator_8h_source_l00029}{}\hyperlink{structrandom_spikes}{00029} \textcolor{keyword}{typedef} \textcolor{keyword}{struct }RandomSpikes \{
+\hypertarget{input__simulator_8h_source_l00030}{}\hyperlink{structrandom_spikes_a1333eb5695ae83d1ffccf24b08bc6288}{00030}     \textcolor{keywordtype}{float} \hyperlink{structrandom_spikes_a1333eb5695ae83d1ffccf24b08bc6288}{randomRate}; 
+\hypertarget{input__simulator_8h_source_l00031}{}\hyperlink{structrandom_spikes_a18766f12fc4212349fb61b221f83b779}{00031}     \hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215}{selectedRandom} \hyperlink{structrandom_spikes_a18766f12fc4212349fb61b221f83b779}{randMethod}; 
+\hypertarget{input__simulator_8h_source_l00032}{}\hyperlink{structrandom_spikes_a0eb8199754a403ccc8eac256f9193a02}{00032}     \textcolor{keywordtype}{float} \hyperlink{structrandom_spikes_a0eb8199754a403ccc8eac256f9193a02}{rndFctVal}; 
+00033 \}\hyperlink{structrandom_spikes}{randomSpikes};
 00034 
-\hypertarget{input__simulator_8h_source_l00035}{}\hyperlink{structselected_spikes}{00035} \textcolor{keyword}{typedef} \textcolor{keyword}{struct} \hyperlink{structselected_spikes}{SelectedSpikes} \{
-\hypertarget{input__simulator_8h_source_l00036}{}\hyperlink{structselected_spikes_a666eb9ad96121cf3e4ce134e1a4c12c0}{00036}     \textcolor{keywordtype}{int} * \hyperlink{structselected_spikes_a666eb9ad96121cf3e4ce134e1a4c12c0}{outputMesh}; \textcolor{comment}{/**< Array that represents the output levels per tick.*/}
-\hypertarget{input__simulator_8h_source_l00037}{}\hyperlink{structselected_spikes_a97727a3be0dbd5813f860c99733048a8}{00037}     \textcolor{keywordtype}{int} \hyperlink{structselected_spikes_a97727a3be0dbd5813f860c99733048a8}{outputMeshLengh}; \textcolor{comment}{/**< Size of the output mesh. */}
-00038 \}selectedSpikes;
+\hypertarget{input__simulator_8h_source_l00035}{}\hyperlink{structselected_spikes}{00035} \textcolor{keyword}{typedef} \textcolor{keyword}{struct }SelectedSpikes \{
+\hypertarget{input__simulator_8h_source_l00036}{}\hyperlink{structselected_spikes_a666eb9ad96121cf3e4ce134e1a4c12c0}{00036}     \textcolor{keywordtype}{int} * \hyperlink{structselected_spikes_a666eb9ad96121cf3e4ce134e1a4c12c0}{outputMesh}; 
+\hypertarget{input__simulator_8h_source_l00037}{}\hyperlink{structselected_spikes_a97727a3be0dbd5813f860c99733048a8}{00037}     \textcolor{keywordtype}{int} \hyperlink{structselected_spikes_a97727a3be0dbd5813f860c99733048a8}{outputMeshLengh}; 
+00038 \}\hyperlink{structselected_spikes}{selectedSpikes};
 00039 
-00040 \textcolor{comment}{/** Struct that manages the spike generator. Generally, there should be one of these}
-00041 \textcolor{comment}{ *  per simulation! */}
-\hypertarget{input__simulator_8h_source_l00042}{}\hyperlink{structinput_simulator_state}{00042} \textcolor{keyword}{typedef} \textcolor{keyword}{struct} \hyperlink{structinput_simulator_state}{InputSimulator} \{
-\hypertarget{input__simulator_8h_source_l00043}{}\hyperlink{structinput_simulator_state_af892db49cef1c5e5d95010561e549678}{00043}     \textcolor{keywordtype}{int} \hyperlink{structinput_simulator_state_af892db49cef1c5e5d95010561e549678}{outbound}; \textcolor{comment}{/**< Represents how many conenctions the input system is attached to in
-       spike\_generator\_model#outbound. */}
-\hypertarget{input__simulator_8h_source_l00044}{}\hyperlink{structinput_simulator_state_a569dc67b8984bb0a3616bf17f9763ebb}{00044}     \hyperlink{structinput_simulator_state_a569dc67b8984bb0a3616bf17f9763ebb}{tw\_lpid} *\hyperlink{structinput_simulator_state_a569dc67b8984bb0a3616bf17f9763ebb}{connectedSynapses}; \textcolor{comment}{/**< An array of synapses that this is
-       RandomSpikes is attached to. */}
+\hypertarget{input__simulator_8h_source_l00042}{}\hyperlink{structinput_simulator_state}{00042} \textcolor{keyword}{typedef} \textcolor{keyword}{struct }InputSimulator \{
+\hypertarget{input__simulator_8h_source_l00043}{}\hyperlink{structinput_simulator_state_af892db49cef1c5e5d95010561e549678}{00043}     \textcolor{keywordtype}{int} \hyperlink{structinput_simulator_state_af892db49cef1c5e5d95010561e549678}{outbound}; 
+\hypertarget{input__simulator_8h_source_l00044}{}\hyperlink{structinput_simulator_state_a569dc67b8984bb0a3616bf17f9763ebb}{00044}     tw\_lpid *\hyperlink{structinput_simulator_state_a569dc67b8984bb0a3616bf17f9763ebb}{connectedSynapses}; 
 \hypertarget{input__simulator_8h_source_l00045}{}\hyperlink{structinput_simulator_state_ae40f21a48f3157bcad074f424046ed2c}{00045}     \hyperlink{input__simulator_8h_aa47e87d309aab7727810011578bae86e}{spikeGenDel} \hyperlink{structinput_simulator_state_ae40f21a48f3157bcad074f424046ed2c}{spikeGen};
 00046         \textcolor{comment}{//selectedSpikes  selSpikes;}
 00047         \textcolor{comment}{//randomSpikes  rndSpikes;}
-\hypertarget{input__simulator_8h_source_l00048}{}\hyperlink{structinput_simulator_state_a666eb9ad96121cf3e4ce134e1a4c12c0}{00048}     \textcolor{keywordtype}{int} * \hyperlink{structinput_simulator_state_a666eb9ad96121cf3e4ce134e1a4c12c0}{outputMesh}; \textcolor{comment}{/**< Array that represents the output levels per tick.*/}
-\hypertarget{input__simulator_8h_source_l00049}{}\hyperlink{structinput_simulator_state_a97727a3be0dbd5813f860c99733048a8}{00049}     \textcolor{keywordtype}{int} \hyperlink{structinput_simulator_state_a97727a3be0dbd5813f860c99733048a8}{outputMeshLengh}; \textcolor{comment}{/**< Size of the output mesh. */}
-\hypertarget{input__simulator_8h_source_l00050}{}\hyperlink{structinput_simulator_state_a1333eb5695ae83d1ffccf24b08bc6288}{00050}     \textcolor{keywordtype}{float} \hyperlink{structinput_simulator_state_a1333eb5695ae83d1ffccf24b08bc6288}{randomRate}; \textcolor{comment}{/**< If the random value is over this, spike.*/}
-\hypertarget{input__simulator_8h_source_l00051}{}\hyperlink{structinput_simulator_state_a18766f12fc4212349fb61b221f83b779}{00051}     selectedRandom \hyperlink{structinput_simulator_state_a18766f12fc4212349fb61b221f83b779}{randMethod}; \textcolor{comment}{/**< Selected random generator. */}
-\hypertarget{input__simulator_8h_source_l00052}{}\hyperlink{structinput_simulator_state_a0eb8199754a403ccc8eac256f9193a02}{00052}     \textcolor{keywordtype}{float} \hyperlink{structinput_simulator_state_a0eb8199754a403ccc8eac256f9193a02}{rndFctVal}; \textcolor{comment}{/**<For functions that need a second parameter (eg, binomial etc.),
-       this is the second parameter. */}
-\hypertarget{input__simulator_8h_source_l00053}{}\hyperlink{structinput_simulator_state_accc0c3f890194cda401a16f5f54e43cb}{00053}     \textcolor{keywordtype}{int} \hyperlink{structinput_simulator_state_accc0c3f890194cda401a16f5f54e43cb}{currentOut}; \textcolor{comment}{/**< currentOut is the currently selected output synapse. Used in
-       sequential mode */}
-00054 
-00055 \}inputSimulatorState;
-00056 \textcolor{preprocessor}{#}\textcolor{preprocessor}{endif} \textcolor{comment}{/* defined(\_\_ROSS\_TOP\_\_input\_simulator\_\_) */}
+\hypertarget{input__simulator_8h_source_l00048}{}\hyperlink{structinput_simulator_state_a666eb9ad96121cf3e4ce134e1a4c12c0}{00048}     \textcolor{keywordtype}{int} * \hyperlink{structinput_simulator_state_a666eb9ad96121cf3e4ce134e1a4c12c0}{outputMesh}; 
+\hypertarget{input__simulator_8h_source_l00049}{}\hyperlink{structinput_simulator_state_a97727a3be0dbd5813f860c99733048a8}{00049}     \textcolor{keywordtype}{int} \hyperlink{structinput_simulator_state_a97727a3be0dbd5813f860c99733048a8}{outputMeshLengh}; 
+\hypertarget{input__simulator_8h_source_l00050}{}\hyperlink{structinput_simulator_state_a1333eb5695ae83d1ffccf24b08bc6288}{00050}     \textcolor{keywordtype}{float} \hyperlink{structinput_simulator_state_a1333eb5695ae83d1ffccf24b08bc6288}{randomRate}; 
+\hypertarget{input__simulator_8h_source_l00051}{}\hyperlink{structinput_simulator_state_a18766f12fc4212349fb61b221f83b779}{00051}     \hyperlink{input__simulator_8h_aa0d25534cd73156287b1136dd89c0215}{selectedRandom} \hyperlink{structinput_simulator_state_a18766f12fc4212349fb61b221f83b779}{randMethod}; 
+\hypertarget{input__simulator_8h_source_l00052}{}\hyperlink{structinput_simulator_state_a0eb8199754a403ccc8eac256f9193a02}{00052}     \textcolor{keywordtype}{float} \hyperlink{structinput_simulator_state_a0eb8199754a403ccc8eac256f9193a02}{rndFctVal}; 
+\hypertarget{input__simulator_8h_source_l00053}{}\hyperlink{structinput_simulator_state_accc0c3f890194cda401a16f5f54e43cb}{00053}     \textcolor{keywordtype}{int} \hyperlink{structinput_simulator_state_accc0c3f890194cda401a16f5f54e43cb}{currentOut}; 
+00055 \}\hyperlink{structinput_simulator_state}{inputSimulatorState};
+00056 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* defined(\_\_ROSS\_TOP\_\_input\_simulator\_\_) */}\textcolor{preprocessor}{}
 \end{DoxyCode}

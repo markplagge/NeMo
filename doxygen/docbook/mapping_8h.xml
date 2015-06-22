@@ -26,9 +26,95 @@
         </mediaobject>
     </figure>
 </para>
+        <section>
+            <title>Variables</title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="mapping_8h_1a67e8e45768f76b984a60fcff2b7c51aa">NEURONS_IN_CORE</link><para><emphasis>Number of neurons per core.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="mapping_8h_1a076b99099b46431255982b2bb8ce06fb">SYNAPSES_IN_CORE</link><para><emphasis>Number of synapses per core.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="mapping_8h_1ad39b86a0b748731175572436f6672264">CORE_SIZE</link><para><emphasis>CORE_SIZE is equal to the number of axions * number of aneurons + num neurons + num axions.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="mapping_8h_1afe9ee9518533aa222adff4a27ff09281">nlp_per_kp</link></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="mapping_8h_1a929a1afa1773005b4881bea7869fdb60">nkp_per_pe</link></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="mapping_8h_1ae2910f7a5d9f53ae602e62bb0248edba">CORE_LP_OFFSET</link><para><emphasis>CORE_LP_OFFSET - Manages the offset.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="mapping_8h_1a1d3b60109ac1c91025d512707a3242a8">CPE</link></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+        <section>
+            <title>Functions</title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>tw_peid <link linkend="mapping_8h_1ab67eefe1d34d874bcd5f8cfa854e7fc7">lpToPeMap</link> (
+tw_peid gid)<para><emphasis>Custom Mapping - given a LP GID return a PE.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="mapping_8h_1af6a8846083f1bd8ca747136c3b5967d8">mappingSetup</link> (
+)<para><emphasis>Setup mapping per PE.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>tw_lp * <link linkend="mapping_8h_1a65ae45764256c6f8a0552ec04a132fcf">globalToLocal</link> (
+tw_lpid gid)<para><emphasis>Given a global ID, return a LP.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
     <simplesect>
         <title>Detailed Description</title>
-    <para>Definition in file /Users/Mark/Development/TrueNorth/tnt_benchmark/mapping.h</para>
+    <para>Definition in file /home/mplagge/development/tnt_benchmark/mapping.h</para>
     </simplesect>
     <literallayout><computeroutput>
 1 <emphasis class="comment">//</emphasis>
@@ -46,6 +132,27 @@
 13 <emphasis class="preprocessor">#include&#32;&quot;ross.h&quot;</emphasis>
 14 <emphasis class="preprocessor">#include&#32;&quot;<link linkend="assist_8h">assist.h</link>&quot;</emphasis>
 15 
-16 <emphasis class="preprocessor">#endif&#32;</emphasis><emphasis class="comment">/*&#32;defined(__ROSS_TOP__mapping__)&#32;*/</emphasis><emphasis class="preprocessor"></emphasis>
+16 <emphasis class="keyword">extern</emphasis>&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="mapping_8h_1a67e8e45768f76b984a60fcff2b7c51aa">NEURONS_IN_CORE</link>&#32;;
+20 <emphasis class="keyword">extern</emphasis>&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="mapping_8h_1a076b99099b46431255982b2bb8ce06fb">SYNAPSES_IN_CORE</link>;
+21 
+22 <emphasis class="keyword">extern</emphasis>&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="mapping_8h_1ad39b86a0b748731175572436f6672264">CORE_SIZE</link>;
+23 
+24 <emphasis class="keyword">extern</emphasis>&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="mapping_8h_1afe9ee9518533aa222adff4a27ff09281">nlp_per_kp</link>;
+25 <emphasis class="keyword">extern</emphasis>&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="mapping_8h_1a929a1afa1773005b4881bea7869fdb60">nkp_per_pe</link>;
+26 
+27 
+<link linkend="mapping_8h_1ae2910f7a5d9f53ae602e62bb0248edba">34 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="mapping_8h_1ae2910f7a5d9f53ae602e62bb0248edba">CORE_LP_OFFSET</link>;
+35 <emphasis class="keyword">extern</emphasis>&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="mapping_8h_1a1d3b60109ac1c91025d512707a3242a8">CPE</link>;
+36 
+44 tw_peid&#32;<link linkend="mapping_8h_1ab67eefe1d34d874bcd5f8cfa854e7fc7">lpToPeMap</link>(tw_peid&#32;gid);
+48 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="mapping_8h_1af6a8846083f1bd8ca747136c3b5967d8">mappingSetup</link>();
+49 
+50 
+58 tw_lp&#32;*&#32;<link linkend="mapping_8h_1a65ae45764256c6f8a0552ec04a132fcf">globalToLocal</link>(tw_lpid&#32;gid);
+59 
+60 
+61 
+62 
+63 <emphasis class="preprocessor">#endif&#32;</emphasis><emphasis class="comment">/*&#32;defined(__ROSS_TOP__mapping__)&#32;*/</emphasis><emphasis class="preprocessor"></emphasis>
     </computeroutput></literallayout>
 </section>

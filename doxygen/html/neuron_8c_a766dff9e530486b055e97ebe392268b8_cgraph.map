@@ -1,0 +1,4 @@
+<map id="sendHeartbeat" name="sendHeartbeat">
+<area shape="rect" id="node2" href="$assist_8c.html#aa961bc9b414f1429b123fc8212c989fd" title="Given a tw_stime, returns the next big&#45;tick that will happen. " alt="" coords="160,5,272,32"/>
+<area shape="rect" id="node3" href="$assist_8c.html#a4d378196b7fceed090d64ec8820b4065" title="Given a tw_stime, returns the current big tick. " alt="" coords="320,5,447,32"/>
+</map>

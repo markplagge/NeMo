@@ -2,13 +2,17 @@ var assist_8h =
 [
     [ "Msg_Data", "struct_msg___data.html", "struct_msg___data" ],
     [ "_idT", "assist_8h.html#a3f7a6e6a1210b6d9d7a42177dcb9634b", null ],
+    [ "_randT", "assist_8h.html#a520ac495f188eb0bc5645cffa3c4328b", null ],
     [ "_regIDT", "assist_8h.html#abd3130ec511af0cc7768768554bd36a0", null ],
     [ "_statT", "assist_8h.html#ad77e6fc5a9b03d46e7c97b7c4b92e89f", null ],
     [ "_threshT", "assist_8h.html#a5537d30256d443ce07efd3d879a4a720", null ],
     [ "_voltT", "assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815", null ],
     [ "_weightT", "assist_8h.html#aa73c5ea0fe4ba938c96e6771b38dcb2a", null ],
+    [ "BINCOMP", "assist_8h.html#abbf94867faa4abd8c53c87576efd05f3", null ],
+    [ "DT", "assist_8h.html#acfde2b62c9c4e0413f3066bbd65c428a", null ],
     [ "IABS", "assist_8h.html#aaf4b596256d346dd40bc6f14c3eb9371", null ],
     [ "RZER", "assist_8h.html#ad383c153e77508e2556003da0e4ac3eb", null ],
+    [ "SGN", "assist_8h.html#a95ed41486ca0ed53262e4b8934d4afac", null ],
     [ "evtType", "assist_8h.html#a7c1688de451e0dea1e11617bce3ec450", [
       [ "AXON_OUT", "assist_8h.html#a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee", null ],
       [ "AXON_HEARTBEAT", "assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a9afa7ee7839cdd980f348a3a70b0054f", null ],
@@ -18,6 +22,7 @@ var assist_8h =
       [ "GEN_HEARTBEAT", "assist_8h.html#a7c1688de451e0dea1e11617bce3ec450add78176054e14835c454b5f2d1827d42", null ]
     ] ],
     [ "getCurrentBigTick", "assist_8h.html#a4d378196b7fceed090d64ec8820b4065", null ],
+    [ "getNextBigTick", "assist_8h.html#aa961bc9b414f1429b123fc8212c989fd", null ],
     [ "getNextEventTime", "assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02", null ],
     [ "AXONS_IN_CORE", "assist_8h.html#a519a06367b2b3f793c56d3ab78f5b2ef", null ],
     [ "BIG_TICK_ERR", "assist_8h.html#a69434dbcf2196fc2fd1ab7cb57fc9491", null ],

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>TrueNorth TimeWarp Benchmark: /Users/Mark/Development/TrueNorth/tnt_benchmark/models/synapse.c File Reference</title>
+<title>TrueNorth TimeWarp Benchmark: /home/mplagge/development/tnt_benchmark/models/synapse.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -109,6 +109,8 @@ $(document).ready(function(){initNavTree('synapse_8c.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">synapse.c File Reference</div>  </div>
 </div><!--header-->
@@ -117,19 +119,161 @@ $(document).ready(function(){initNavTree('synapse_8c.html','');});
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for synapse.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="synapse_8c__incl.png" border="0" usemap="#_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2models_2synapse_8c" alt=""/></div>
-<map name="_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2models_2synapse_8c" id="_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2models_2synapse_8c">
-<area shape="rect" id="node2" href="synapse_8h.html" title="synapse.h" alt="" coords="53,105,135,131"/><area shape="rect" id="node4" href="assist_8h.html" title="../assist.h" alt="" coords="151,252,228,277"/><area shape="rect" id="node8" href="input__simulator_8h.html" title="../input_simulator.h" alt="" coords="131,179,264,204"/></map>
+<div class="center"><img src="synapse_8c__incl.png" border="0" usemap="#_2home_2mplagge_2development_2tnt__benchmark_2models_2synapse_8c" alt=""/></div>
+<map name="_2home_2mplagge_2development_2tnt__benchmark_2models_2synapse_8c" id="_2home_2mplagge_2development_2tnt__benchmark_2models_2synapse_8c">
+<area shape="rect" id="node2" href="synapse_8h.html" title="synapse.h" alt="" coords="75,95,158,121"/><area shape="rect" id="node4" href="assist_8h.html" title="../assist.h" alt="" coords="117,169,197,196"/></map>
 </div>
 </div>
 <p><a href="synapse_8c_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a751f7a42bfc55f55fc0fd299165c5906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="synapse_8c.html#a751f7a42bfc55f55fc0fd299165c5906">synapseReceiveMessage</a> (<a class="el" href="structsynapse_state.html">synapseState</a> *st, <a class="el" href="struct_msg___data.html">Msg_Data</a> *M, tw_lp *lp)</td></tr>
+<tr class="separator:a751f7a42bfc55f55fc0fd299165c5906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f9aab389278863b114c27bc10257864"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="synapse_8c.html#a8f9aab389278863b114c27bc10257864">synapseReverseState</a> (<a class="el" href="structsynapse_state.html">synapseState</a> *st, <a class="el" href="struct_msg___data.html">Msg_Data</a> *M, tw_lp *lp)</td></tr>
+<tr class="separator:a8f9aab389278863b114c27bc10257864"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a751f7a42bfc55f55fc0fd299165c5906"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void synapseReceiveMessage </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structsynapse_state.html">synapseState</a> *&#160;</td>
+          <td class="paramname"><em>st</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_msg___data.html">Msg_Data</a> *&#160;</td>
+          <td class="paramname"><em>M</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tw_lp *&#160;</td>
+          <td class="paramname"><em>lp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="synapse_8c_source.html#l00011">11</a> of file <a class="el" href="synapse_8c_source.html">synapse.c</a>.</p>
+
+<p>References <a class="el" href="synapse_8h_source.html#l00019">synapseState::destNeuron</a>, <a class="el" href="synapse_8h_source.html#l00018">synapseState::destSynapse</a>, <a class="el" href="assist_8h_source.html#l00071">Msg_Data::eventType</a>, <a class="el" href="assist_8c_source.html#l00014">getNextEventTime()</a>, <a class="el" href="synapse_8h_source.html#l00021">synapseState::msgSent</a>, <a class="el" href="synapse_8h_source.html#l00020">synapseState::mySynapseNum</a>, <a class="el" href="model__main_8h_source.html#l00024">NEURONS_IN_CORE</a>, <a class="el" href="assist_8h_source.html#l00072">Msg_Data::rndCallCount</a>, and <a class="el" href="assist_8h_source.html#l00060">SYNAPSE_OUT</a>.</p>
+<div class="fragment"><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;                                                                     {</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keywordtype">long</span> start_count = lp-&gt;rng-&gt;count;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    tw_stime time;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    st-&gt;<a class="code" href="structsynapse_state.html#a7d208d07285a221f4ef19f6fa307b536">msgSent</a> ++;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    time = <a class="code" href="assist_8c.html#a30602b11dbfa6bcb90dc00e7942cfb02">getNextEventTime</a>(lp);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    tw_event *newEvent = tw_event_new(st-&gt;<a class="code" href="structsynapse_state.html#a0710dca002b4b3a3f7ae72633bef3691">destNeuron</a>, time, lp);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="struct_msg___data.html">Msg_Data</a> *data = (<a class="code" href="struct_msg___data.html">Msg_Data</a> * ) tw_event_data(newEvent);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    data-&gt;<a class="code" href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">eventType</a> = <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb">SYNAPSE_OUT</a>;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    tw_event_send(newEvent);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="comment">//check to see if this is the last synapse:</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordflow">if</span>(st-&gt;<a class="code" href="structsynapse_state.html#ab73db495221608d3eae73d51670d29f0">mySynapseNum</a> &lt; <a class="code" href="assist_8h.html#a67e8e45768f76b984a60fcff2b7c51aa">NEURONS_IN_CORE</a>) {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            time = <a class="code" href="assist_8c.html#a30602b11dbfa6bcb90dc00e7942cfb02">getNextEventTime</a>(lp);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            tw_event *newEvent = tw_event_new(st-&gt;<a class="code" href="structsynapse_state.html#a665999819b255f36d756f17b85bc9a03">destSynapse</a>, time, lp);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <a class="code" href="struct_msg___data.html">Msg_Data</a> *data = (<a class="code" href="struct_msg___data.html">Msg_Data</a> * ) tw_event_data(newEvent);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            data-&gt;<a class="code" href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">eventType</a> = <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb">SYNAPSE_OUT</a>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            tw_event_send(newEvent);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        st-&gt;<a class="code" href="structsynapse_state.html#a7d208d07285a221f4ef19f6fa307b536">msgSent</a> ++;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        }</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    M-&gt;<a class="code" href="struct_msg___data.html#a2e49a6bcc6c45ade722f746b1ea707f2">rndCallCount</a> = lp-&gt;rng-&gt;count - start_count;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
+<div class="ttc" id="struct_msg___data_html_a2e49a6bcc6c45ade722f746b1ea707f2"><div class="ttname"><a href="struct_msg___data.html#a2e49a6bcc6c45ade722f746b1ea707f2">Msg_Data::rndCallCount</a></div><div class="ttdeci">unsigned long rndCallCount</div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00072">assist.h:72</a></div></div>
+<div class="ttc" id="assist_8c_html_a30602b11dbfa6bcb90dc00e7942cfb02"><div class="ttname"><a href="assist_8c.html#a30602b11dbfa6bcb90dc00e7942cfb02">getNextEventTime</a></div><div class="ttdeci">tw_stime getNextEventTime(tw_lp *lp)</div><div class="ttdoc">Gets the next small-tick event time. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8c_source.html#l00014">assist.c:14</a></div></div>
+<div class="ttc" id="structsynapse_state_html_a0710dca002b4b3a3f7ae72633bef3691"><div class="ttname"><a href="structsynapse_state.html#a0710dca002b4b3a3f7ae72633bef3691">synapseState::destNeuron</a></div><div class="ttdeci">tw_lpid destNeuron</div><div class="ttdef"><b>Definition:</b> <a href="synapse_8h_source.html#l00019">synapse.h:19</a></div></div>
+<div class="ttc" id="assist_8h_html_a67e8e45768f76b984a60fcff2b7c51aa"><div class="ttname"><a href="assist_8h.html#a67e8e45768f76b984a60fcff2b7c51aa">NEURONS_IN_CORE</a></div><div class="ttdeci">int NEURONS_IN_CORE</div><div class="ttdoc">Number of neurons per core. </div><div class="ttdef"><b>Definition:</b> <a href="model__main_8h_source.html#l00024">model_main.h:24</a></div></div>
+<div class="ttc" id="structsynapse_state_html_a7d208d07285a221f4ef19f6fa307b536"><div class="ttname"><a href="structsynapse_state.html#a7d208d07285a221f4ef19f6fa307b536">synapseState::msgSent</a></div><div class="ttdeci">_statT msgSent</div><div class="ttdef"><b>Definition:</b> <a href="synapse_8h_source.html#l00021">synapse.h:21</a></div></div>
+<div class="ttc" id="structsynapse_state_html_a665999819b255f36d756f17b85bc9a03"><div class="ttname"><a href="structsynapse_state.html#a665999819b255f36d756f17b85bc9a03">synapseState::destSynapse</a></div><div class="ttdeci">tw_lpid destSynapse</div><div class="ttdef"><b>Definition:</b> <a href="synapse_8h_source.html#l00018">synapse.h:18</a></div></div>
+<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb">SYNAPSE_OUT</a></div><div class="ttdoc">Message originates from a synapse. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00060">assist.h:60</a></div></div>
+<div class="ttc" id="struct_msg___data_html_a015b6eb45982e1842ee8fc389a099ced"><div class="ttname"><a href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">Msg_Data::eventType</a></div><div class="ttdeci">enum evtType eventType</div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00071">assist.h:71</a></div></div>
+<div class="ttc" id="struct_msg___data_html"><div class="ttname"><a href="struct_msg___data.html">Msg_Data</a></div><div class="ttdoc">Msg_Data is the main message struct. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00070">assist.h:70</a></div></div>
+<div class="ttc" id="structsynapse_state_html_ab73db495221608d3eae73d51670d29f0"><div class="ttname"><a href="structsynapse_state.html#ab73db495221608d3eae73d51670d29f0">synapseState::mySynapseNum</a></div><div class="ttdeci">id_t mySynapseNum</div><div class="ttdef"><b>Definition:</b> <a href="synapse_8h_source.html#l00020">synapse.h:20</a></div></div>
+</div><!-- fragment -->
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="synapse_8c_a751f7a42bfc55f55fc0fd299165c5906_cgraph.png" border="0" usemap="#synapse_8c_a751f7a42bfc55f55fc0fd299165c5906_cgraph" alt=""/></div>
+<map name="synapse_8c_a751f7a42bfc55f55fc0fd299165c5906_cgraph" id="synapse_8c_a751f7a42bfc55f55fc0fd299165c5906_cgraph">
+<area shape="rect" id="node2" href="assist_8c.html#a30602b11dbfa6bcb90dc00e7942cfb02" title="Gets the next small&#45;tick event time. " alt="" coords="225,5,356,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a8f9aab389278863b114c27bc10257864"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void synapseReverseState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structsynapse_state.html">synapseState</a> *&#160;</td>
+          <td class="paramname"><em>st</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_msg___data.html">Msg_Data</a> *&#160;</td>
+          <td class="paramname"><em>M</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tw_lp *&#160;</td>
+          <td class="paramname"><em>lp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="synapse_8c_source.html#l00040">40</a> of file <a class="el" href="synapse_8c_source.html">synapse.c</a>.</p>
+
+<p>References <a class="el" href="synapse_8h_source.html#l00021">synapseState::msgSent</a>, <a class="el" href="synapse_8h_source.html#l00020">synapseState::mySynapseNum</a>, <a class="el" href="model__main_8h_source.html#l00024">NEURONS_IN_CORE</a>, and <a class="el" href="assist_8h_source.html#l00072">Msg_Data::rndCallCount</a>.</p>
+<div class="fragment"><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                                                                   {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">if</span>(st-&gt;<a class="code" href="structsynapse_state.html#ab73db495221608d3eae73d51670d29f0">mySynapseNum</a> &lt; <a class="code" href="assist_8h.html#a67e8e45768f76b984a60fcff2b7c51aa">NEURONS_IN_CORE</a>) {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        st-&gt;<a class="code" href="structsynapse_state.html#a7d208d07285a221f4ef19f6fa307b536">msgSent</a> --;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">long</span> count = M-&gt;<a class="code" href="struct_msg___data.html#a2e49a6bcc6c45ade722f746b1ea707f2">rndCallCount</a>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">while</span> (count--) {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        tw_rand_reverse_unif(lp-&gt;rng);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}<div class="ttc" id="struct_msg___data_html_a2e49a6bcc6c45ade722f746b1ea707f2"><div class="ttname"><a href="struct_msg___data.html#a2e49a6bcc6c45ade722f746b1ea707f2">Msg_Data::rndCallCount</a></div><div class="ttdeci">unsigned long rndCallCount</div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00072">assist.h:72</a></div></div>
+<div class="ttc" id="assist_8h_html_a67e8e45768f76b984a60fcff2b7c51aa"><div class="ttname"><a href="assist_8h.html#a67e8e45768f76b984a60fcff2b7c51aa">NEURONS_IN_CORE</a></div><div class="ttdeci">int NEURONS_IN_CORE</div><div class="ttdoc">Number of neurons per core. </div><div class="ttdef"><b>Definition:</b> <a href="model__main_8h_source.html#l00024">model_main.h:24</a></div></div>
+<div class="ttc" id="structsynapse_state_html_a7d208d07285a221f4ef19f6fa307b536"><div class="ttname"><a href="structsynapse_state.html#a7d208d07285a221f4ef19f6fa307b536">synapseState::msgSent</a></div><div class="ttdeci">_statT msgSent</div><div class="ttdef"><b>Definition:</b> <a href="synapse_8h_source.html#l00021">synapse.h:21</a></div></div>
+<div class="ttc" id="structsynapse_state_html_ab73db495221608d3eae73d51670d29f0"><div class="ttname"><a href="structsynapse_state.html#ab73db495221608d3eae73d51670d29f0">synapseState::mySynapseNum</a></div><div class="ttdeci">id_t mySynapseNum</div><div class="ttdef"><b>Definition:</b> <a href="synapse_8h_source.html#l00020">synapse.h:20</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_1ae4179d5e953611aae20c997279e02c.html">models</a></li><li class="navelem"><a class="el" href="synapse_8c.html">synapse.c</a></li>
-    <li class="footer">Generated on Sun Jun 21 2015 16:46:03 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Mon Jun 22 2015 12:44:59 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

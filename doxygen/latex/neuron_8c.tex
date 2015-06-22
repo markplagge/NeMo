@@ -1,18 +1,14 @@
-\hypertarget{neuron_8c}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/neuron.c File Reference}
-\label{neuron_8c}\index{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/neuron.\+c@{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/neuron.\+c}}
+\hypertarget{neuron_8c}{}\section{/home/mplagge/development/tnt\+\_\+benchmark/models/neuron.c File Reference}
+\label{neuron_8c}\index{/home/mplagge/development/tnt\+\_\+benchmark/models/neuron.\+c@{/home/mplagge/development/tnt\+\_\+benchmark/models/neuron.\+c}}
 {\ttfamily \#include \char`\"{}neuron.\+h\char`\"{}}\\*
 Include dependency graph for neuron.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=338pt]{neuron_8c__incl}
+\includegraphics[width=340pt]{neuron_8c__incl}
 \end{center}
 \end{figure}
 \subsection*{Functions}
-\begin{DoxyCompactItemize}
-\item 
-void \hyperlink{neuron_8c_ae630bdf5dd3744870968f07a6971659c}{integrate\+Synapse} (\hyperlink{assist_8h_a3f7a6e6a1210b6d9d7a42177dcb9634b}{\+\_\+id\+T} synapse\+I\+D, \hyperlink{structneuron_state}{neuron\+State} $\ast$st, tw\+\_\+lp $\ast$lp)
-\begin{DoxyCompactList}\small\item\em function that adds a synapse\textquotesingle{}s value to the current neuron\textquotesingle{}s membrane potential. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \begin{Indent}{\bf Leak\+Functions}\par
 {\em Neuron functions that manage leaks.
 
@@ -23,7 +19,7 @@ void \hyperlink{neuron_8c_a8e52befc10f975c6be39cc93af573d7e}{no\+Leak} (void $\a
 void \hyperlink{neuron_8c_ac5bebec77c5216533ec5f6acd086532e}{rev\+No\+Leak} (void $\ast$neuron, tw\+\_\+stime now)
 \begin{DoxyCompactList}\small\item\em Reverse leak function for use when neurons have no defined leak function. \end{DoxyCompactList}\item 
 void \hyperlink{neuron_8c_a64dc379b459a2b07b40bce35381210e8}{linear\+Leak} (void $\ast$neuron, tw\+\_\+stime now)
-\begin{DoxyCompactList}\small\item\em A linear leak function. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em A linear leak function -\/ uses monotonic up and down leaks. \end{DoxyCompactList}\item 
 void \hyperlink{neuron_8c_a26ced40d7ad7a0b448a136d8724fe18b}{rev\+Linear\+Leak} (void $\ast$neuron, tw\+\_\+stime now)
 \begin{DoxyCompactList}\small\item\em Reverse leak function neurons that have a linear leak function assigned. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
@@ -31,11 +27,11 @@ void \hyperlink{neuron_8c_a26ced40d7ad7a0b448a136d8724fe18b}{rev\+Linear\+Leak} 
 {\em Reset function defs.
 
 Neuron reset functions will change the neuron state without saving the previous state. All voltage state saving must be handled in the neuron event function \hyperlink{neuron_8c_aa6819d7492f0173f2234ba0b8b0bb674}{neuron\+Receive\+Message()}. \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000002}{Todo}]\+: Check that reverse reset functions are needed, since previous voltage is stored in the neuron. \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000005}{Todo}]\+: Check that reverse reset functions are needed, since previous voltage is stored in the neuron. \end{DoxyRefDesc}
 }\begin{DoxyCompactItemize}
 \item 
-void \hyperlink{neuron_8c_a7f8eaa35f03747c795a2b727b364537b}{reset\+Zero} (void $\ast$\hyperlink{structneuron_state}{neuron\+State})
-\begin{DoxyCompactList}\small\item\em Resets neuron voltage to 0 after firing. \end{DoxyCompactList}\item 
+void \hyperlink{neuron_8c_a233aa7ebe6cbfb664fe366a05a8dac1f}{reset\+Normal} (void $\ast$\hyperlink{structneuron_state}{neuron\+State})
+\begin{DoxyCompactList}\small\item\em Resets neuron voltage to $R$ after firing. \end{DoxyCompactList}\item 
 void \hyperlink{neuron_8c_a2e78d7d2b70bf7349c3854b3727dcc25}{reset\+Linear} (void $\ast$\hyperlink{structneuron_state}{neuron\+State})
 \begin{DoxyCompactList}\small\item\em Resets neuron voltage based on linear function. \end{DoxyCompactList}\item 
 void \hyperlink{neuron_8c_a09e54832158e2f6abe898437979aae00}{reverse\+Reset\+Linear} (void $\ast$\hyperlink{structneuron_state}{neuron\+State})
@@ -48,41 +44,24 @@ void \hyperlink{neuron_8c_ae53276ccdb759ba1ea09806cbf9fc940}{reverse\+Reset\+Zer
 \item 
 void \hyperlink{neuron_8c_aa6819d7492f0173f2234ba0b8b0bb674}{neuron\+Receive\+Message} (\hyperlink{structneuron_state}{neuron\+State} $\ast$st, tw\+\_\+stime time, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$m, tw\+\_\+lp $\ast$lp)
 \begin{DoxyCompactList}\small\item\em handles incomming synapse messages. \end{DoxyCompactList}\item 
-bool \hyperlink{neuron_8c_a92d5882a15e11e2a6733483d51428e46}{neuron\+Should\+Fire} (\hyperlink{structneuron_state}{neuron\+State} $\ast$st)
+bool \hyperlink{neuron_8c_a3520b013e0c2f711b9f5c16e19306be6}{neuron\+Should\+Fire} (\hyperlink{structneuron_state}{neuron\+State} $\ast$st, tw\+\_\+lp $\ast$lp)
 \begin{DoxyCompactList}\small\item\em Checks to see if a neuron should fire. \end{DoxyCompactList}\item 
-void \hyperlink{neuron_8c_ae071ef984b7e0dd4ec38fca91e0abe39}{neuron\+Fire} (\hyperlink{structneuron_state}{neuron\+State} $\ast$st, tw\+\_\+stime time, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$m)
+void \hyperlink{neuron_8c_a683379b633b55058dd5b8b67929c165c}{neuron\+Fire} (\hyperlink{structneuron_state}{neuron\+State} $\ast$st, tw\+\_\+stime time, tw\+\_\+lp $\ast$lp)
 \begin{DoxyCompactList}\small\item\em neuron\+Fire manages a firing event. \end{DoxyCompactList}\item 
-void \hyperlink{neuron_8c_ab1f4997e4bfe11e78faa6d37748aee67}{neuron\+Post\+Fire} (\hyperlink{structneuron_state}{neuron\+State} $\ast$st, tw\+\_\+stime time, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$m)
-\begin{DoxyCompactList}\small\item\em neuron\+Post\+Fire manages post-\/firing events, including reset functions \end{DoxyCompactList}\item 
-void \hyperlink{neuron_8c_a06ee765bfae45fe9b7f0619bf4abe63d}{generate\+Wait\+Event} (\hyperlink{structneuron_state}{neuron\+State} $\ast$st, tw\+\_\+stime time, tw\+\_\+lp $\ast$lp)
-\begin{DoxyCompactList}\small\item\em generate\+Wait\+Event creates a new wait event to this neuron for big-\/tick synchronization \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{neuron_8c_a766dff9e530486b055e97ebe392268b8}{send\+Heartbeat} (\hyperlink{structneuron_state}{neuron\+State} $\ast$st, tw\+\_\+lp $\ast$lp, tw\+\_\+stime time)
+\begin{DoxyCompactList}\small\item\em Function that sends a heartbeat message to this neuron. \end{DoxyCompactList}\item 
+void \hyperlink{neuron_8c_afee2e0acc66d8d10aee8d52c8d245c82}{stochastic\+Integrate} (\hyperlink{assist_8h_aa73c5ea0fe4ba938c96e6771b38dcb2a}{\+\_\+weight\+T} weight, \hyperlink{structneuron_state}{neuron\+State} $\ast$st, tw\+\_\+lp $\ast$lp)
+\begin{DoxyCompactList}\small\item\em Neuron stochastic integration function -\/ for use with stochastic leaks and synapse messages. \end{DoxyCompactList}\item 
+void \hyperlink{neuron_8c_ae630bdf5dd3744870968f07a6971659c}{integrate\+Synapse} (\hyperlink{assist_8h_a3f7a6e6a1210b6d9d7a42177dcb9634b}{\+\_\+id\+T} synapse\+I\+D, \hyperlink{structneuron_state}{neuron\+State} $\ast$st, tw\+\_\+lp $\ast$lp)
+\begin{DoxyCompactList}\small\item\em function that adds a synapse\textquotesingle{}s value to the current neuron\textquotesingle{}s membrane potential. \end{DoxyCompactList}\item 
+void \hyperlink{neuron_8c_aabaff47eadb1e61b34c19b6e982f6511}{neuron\+Post\+Integrate} (\hyperlink{structneuron_state}{neuron\+State} $\ast$st, tw\+\_\+stime time, tw\+\_\+lp $\ast$lp, bool will\+Fire)
+\begin{DoxyCompactList}\small\item\em Function that runs after integration \& firing, for reset function and threshold bounce calls. \end{DoxyCompactList}\item 
+void \hyperlink{neuron_8c_aaae24f12a4b2a537740f29d65eb3e51e}{neron\+Reverse\+Sate} (\hyperlink{structneuron_state}{neuron\+State} $\ast$s, tw\+\_\+bf $\ast$C\+V, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$M, tw\+\_\+lp $\ast$lp)
+\end{DoxyCompactItemize}
 \end{Indent}
 
 
 \subsection{Function Documentation}
-\hypertarget{neuron_8c_a06ee765bfae45fe9b7f0619bf4abe63d}{}\index{neuron.\+c@{neuron.\+c}!generate\+Wait\+Event@{generate\+Wait\+Event}}
-\index{generate\+Wait\+Event@{generate\+Wait\+Event}!neuron.\+c@{neuron.\+c}}
-\subsubsection[{generate\+Wait\+Event}]{\setlength{\rightskip}{0pt plus 5cm}void generate\+Wait\+Event (
-\begin{DoxyParamCaption}
-\item[{{\bf neuron\+State} $\ast$}]{st, }
-\item[{tw\+\_\+stime}]{time, }
-\item[{tw\+\_\+lp $\ast$}]{lp}
-\end{DoxyParamCaption}
-)}\label{neuron_8c_a06ee765bfae45fe9b7f0619bf4abe63d}
-
-
-generate\+Wait\+Event creates a new wait event to this neuron for big-\/tick synchronization 
-
-
-
-Definition at line \hyperlink{neuron_8c_source_l00172}{172} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
-
-
-\begin{DoxyCode}
-00172                                                                  \{
-00173 
-00174 \}
-\end{DoxyCode}
 \hypertarget{neuron_8c_ae630bdf5dd3744870968f07a6971659c}{}\index{neuron.\+c@{neuron.\+c}!integrate\+Synapse@{integrate\+Synapse}}
 \index{integrate\+Synapse@{integrate\+Synapse}!neuron.\+c@{neuron.\+c}}
 \subsubsection[{integrate\+Synapse}]{\setlength{\rightskip}{0pt plus 5cm}void integrate\+Synapse (
@@ -103,7 +82,41 @@ function that adds a synapse\textquotesingle{}s value to the current neuron\text
 \end{DoxyParams}
 
 
-Definition at line \hyperlink{neuron_8c_source_l00175}{175} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+Definition at line \hyperlink{neuron_8c_source_l00199}{199} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+
+
+
+References \hyperlink{assist_8h_source_l00020}{\+\_\+volt\+T}, \hyperlink{neuron_8h_source_l00153}{neuron\+State\+::membrane\+Pot}, \hyperlink{neuron_8c_source_l00191}{stochastic\+Integrate()}, \hyperlink{neuron_8h_source_l00187}{neuron\+State\+::synaptic\+Weight\+Prob}, and \hyperlink{neuron_8h_source_l00192}{neuron\+State\+::synaptic\+Weight\+Prob\+Select}.
+
+
+
+Referenced by \hyperlink{neuron_8c_source_l00103}{neuron\+Receive\+Message()}.
+
+
+\begin{DoxyCode}
+00199                                                                  \{
+00200 
+00201     \textcolor{keywordflow}{if}(st->\hyperlink{structneuron_state_a4568f103808a436a62d7c7c47dc90e9b}{synapticWeightProbSelect}[synapseID] == \textcolor{keyword}{true}) \{
+00202         \hyperlink{neuron_8c_afee2e0acc66d8d10aee8d52c8d245c82}{stochasticIntegrate}(st->\hyperlink{structneuron_state_aa71c0acf1edf08865e1f9729a2414efa}{synapticWeightProb}[synapseID], st, lp)
+      ;
+00203     \} \textcolor{keywordflow}{else} \{ \textcolor{comment}{//det. mode integrate:}
+00204         \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} adjustedWeight = st->\hyperlink{structneuron_state_aa71c0acf1edf08865e1f9729a2414efa}{synapticWeightProb}[synapseID];
+00205         st->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} += adjustedWeight;
+00206     \}
+00207 
+00208 
+00209 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=308pt]{neuron_8c_ae630bdf5dd3744870968f07a6971659c_cgraph}
+\end{center}
+\end{figure}
+
 
 \hypertarget{neuron_8c_a64dc379b459a2b07b40bce35381210e8}{}\index{neuron.\+c@{neuron.\+c}!linear\+Leak@{linear\+Leak}}
 \index{linear\+Leak@{linear\+Leak}!neuron.\+c@{neuron.\+c}}
@@ -115,16 +128,20 @@ Definition at line \hyperlink{neuron_8c_source_l00175}{175} of file \hyperlink{n
 )}\label{neuron_8c_a64dc379b459a2b07b40bce35381210e8}
 
 
-A linear leak function. 
+A linear leak function -\/ uses monotonic up and down leaks. 
 
-Linear\+Leak is the standard linear leak function from the paper. Using the leak\+Rate parameter inside \hyperlink{struct_neuron_model}{the neuron state }, this follows a simple linear function, reducing the membrane potential by a fixed rate per tick.
+Linear\+Leak is the standard linear leak function from the paper. Using the leak\+Rate parameter inside \hyperlink{}{the neuron state }, this follows a simple linear function, reducing the membrane potential by a fixed rate per tick.
 
 \begin{DoxySeeAlso}{See also}
-\hyperlink{struct_neuron_model}{Neuron\+Model} 
+Neuron\+Model 
 \end{DoxySeeAlso}
 
 
 Definition at line \hyperlink{neuron_8c_source_l00028}{28} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+
+
+
+References \hyperlink{assist_8c_source_l00030}{get\+Current\+Big\+Tick()}, and \hyperlink{neuron_8h_source_l00162}{neuron\+State\+::last\+Leak\+Time}.
 
 
 \begin{DoxyCode}
@@ -133,55 +150,157 @@ Definition at line \hyperlink{neuron_8c_source_l00028}{28} of file \hyperlink{ne
 00030     tw\_stime bigTick = \hyperlink{assist_8c_a4d378196b7fceed090d64ec8820b4065}{getCurrentBigTick}(now);
 00031     tw\_stime delta = bigTick - s->\hyperlink{structneuron_state_a6f4e4d8fc1cf0257b486e01f628d2656}{lastLeakTime};
 00032 
-00033     s->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} -= s->leakRate * delta;
+00033         \textcolor{comment}{//s->membranePot -= s->leakRate * delta;}
 00034     s->\hyperlink{structneuron_state_a6f4e4d8fc1cf0257b486e01f628d2656}{lastLeakTime} = now;
 00035 \}
 \end{DoxyCode}
-\hypertarget{neuron_8c_ae071ef984b7e0dd4ec38fca91e0abe39}{}\index{neuron.\+c@{neuron.\+c}!neuron\+Fire@{neuron\+Fire}}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{neuron_8c_a64dc379b459a2b07b40bce35381210e8_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{neuron_8c_aaae24f12a4b2a537740f29d65eb3e51e}{}\index{neuron.\+c@{neuron.\+c}!neron\+Reverse\+Sate@{neron\+Reverse\+Sate}}
+\index{neron\+Reverse\+Sate@{neron\+Reverse\+Sate}!neuron.\+c@{neuron.\+c}}
+\subsubsection[{neron\+Reverse\+Sate}]{\setlength{\rightskip}{0pt plus 5cm}void neron\+Reverse\+Sate (
+\begin{DoxyParamCaption}
+\item[{{\bf neuron\+State} $\ast$}]{s, }
+\item[{tw\+\_\+bf $\ast$}]{C\+V, }
+\item[{{\bf Msg\+\_\+\+Data} $\ast$}]{M, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{neuron_8c_aaae24f12a4b2a537740f29d65eb3e51e}
+
+
+Definition at line \hyperlink{neuron_8c_source_l00232}{232} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+
+
+
+References \hyperlink{assist_8h_source_l00071}{Msg\+\_\+\+Data\+::event\+Type}, \hyperlink{neuron_8h_source_l00214}{neuron\+State\+::fire\+Count}, \hyperlink{neuron_8h_source_l00218}{neuron\+State\+::fired\+Last}, \hyperlink{neuron_8h_source_l00161}{neuron\+State\+::last\+Active\+Time}, \hyperlink{neuron_8h_source_l00162}{neuron\+State\+::last\+Leak\+Time}, \hyperlink{neuron_8h_source_l00153}{neuron\+State\+::membrane\+Pot}, \hyperlink{neuron_8h_source_l00166}{neuron\+State\+::received\+Synapse\+Msgs}, \hyperlink{neuron_8h_source_l00164}{neuron\+State\+::saved\+Last\+Active\+Time}, \hyperlink{neuron_8h_source_l00165}{neuron\+State\+::saved\+Last\+Leak\+Time}, \hyperlink{neuron_8h_source_l00154}{neuron\+State\+::saved\+Membrane\+Pot}, \hyperlink{neuron_8h_source_l00216}{neuron\+State\+::\+S\+O\+P\+S\+Count}, and \hyperlink{assist_8h_source_l00060}{S\+Y\+N\+A\+P\+S\+E\+\_\+\+O\+U\+T}.
+
+
+\begin{DoxyCode}
+00232                                                                          \{
+00233         \textcolor{comment}{//reverse function.}
+00234     \textcolor{keywordflow}{if}(M->\hyperlink{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}{eventType} == \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb}{SYNAPSE\_OUT})
+00235         s->\hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{receivedSynapseMsgs} --;
+00236     \textcolor{keywordflow}{else}
+00237         s->\hyperlink{structneuron_state_a71fbb9a79e8048b473b6e09d29a64bbe}{SOPSCount} --;
+00238 
+00239     \textcolor{keywordflow}{if}(s->\hyperlink{structneuron_state_a287eb8703dbfb177165d31c8840646b8}{firedLast} == \textcolor{keyword}{true})\{
+00240         s->\hyperlink{structneuron_state_afe8825076c4cf3863c677307fec63c61}{fireCount} --;
+00241     \}
+00242 
+00243     s->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot}  = s->\hyperlink{structneuron_state_a5efe5de0478ea513ed5d90d89a49fcca}{savedMembranePot};
+00244     s->\hyperlink{structneuron_state_a0658ad1f8b57a00589c6ea84f9a4ab13}{lastActiveTime} = s->\hyperlink{structneuron_state_a6922b3f3041346eb83cfc6352a22277b}{savedLastActiveTime};
+00245     s->\hyperlink{structneuron_state_a6f4e4d8fc1cf0257b486e01f628d2656}{lastLeakTime} = s->\hyperlink{structneuron_state_a50734a9ba605a083a90814b63d039a03}{savedLastLeakTime};
+00246 
+00247 
+00248 \}
+\end{DoxyCode}
+\hypertarget{neuron_8c_a683379b633b55058dd5b8b67929c165c}{}\index{neuron.\+c@{neuron.\+c}!neuron\+Fire@{neuron\+Fire}}
 \index{neuron\+Fire@{neuron\+Fire}!neuron.\+c@{neuron.\+c}}
 \subsubsection[{neuron\+Fire}]{\setlength{\rightskip}{0pt plus 5cm}void neuron\+Fire (
 \begin{DoxyParamCaption}
 \item[{{\bf neuron\+State} $\ast$}]{st, }
 \item[{tw\+\_\+stime}]{time, }
-\item[{{\bf Msg\+\_\+\+Data} $\ast$}]{m}
+\item[{tw\+\_\+lp $\ast$}]{lp}
 \end{DoxyParamCaption}
-)}\label{neuron_8c_ae071ef984b7e0dd4ec38fca91e0abe39}
+)}\label{neuron_8c_a683379b633b55058dd5b8b67929c165c}
 
 
 neuron\+Fire manages a firing event. 
 
 Firing events occur when a synchro message is received, so these calculations are done on big-\/ticks only. 
 
-Definition at line \hyperlink{neuron_8c_source_l00166}{166} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+Definition at line \hyperlink{neuron_8c_source_l00167}{167} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+
+
+
+References \hyperlink{neuron_8h_source_l00202}{neuron\+State\+::dendrite\+Global\+Dest}, \hyperlink{assist_8h_source_l00071}{Msg\+\_\+\+Data\+::event\+Type}, \hyperlink{neuron_8h_source_l00218}{neuron\+State\+::fired\+Last}, \hyperlink{assist_8c_source_l00041}{get\+Next\+Big\+Tick()}, \hyperlink{assist_8h_source_l00073}{Msg\+\_\+\+Data\+::local\+I\+D}, \hyperlink{neuron_8h_source_l00149}{neuron\+State\+::my\+Local\+I\+D}, and \hyperlink{assist_8h_source_l00061}{N\+E\+U\+R\+O\+N\+\_\+\+O\+U\+T}.
+
+
+
+Referenced by \hyperlink{neuron_8c_source_l00103}{neuron\+Receive\+Message()}.
 
 
 \begin{DoxyCode}
-00166                                                             \{
-00167 
-00168 \}
+00167                                                           \{
+00168     tw\_stime nextHeartbeat = \hyperlink{assist_8c_aa961bc9b414f1429b123fc8212c989fd}{getNextBigTick}(time);
+00169     tw\_event *newEvent = tw\_event\_new(st->\hyperlink{structneuron_state_a4199c14c5aabfd52f441e01623bdc84c}{dendriteGlobalDest}, nextHeartbeat, lp);
+00170     \hyperlink{struct_msg___data}{Msg\_Data} *data = (\hyperlink{struct_msg___data}{Msg\_Data} *) tw\_event\_data(newEvent);
+00171     data->\hyperlink{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}{eventType} = \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0}{NEURON\_OUT};
+00172     data->\hyperlink{struct_msg___data_aefc820e92a74047ec7ed74c1c45f818f}{localID} = st->\hyperlink{structneuron_state_ac24762c24aede292a2ce5df78114881c}{myLocalID};
+00173     tw\_event\_send(newEvent);
+00174     st->\hyperlink{structneuron_state_a287eb8703dbfb177165d31c8840646b8}{firedLast} = \textcolor{keyword}{true};
+00175 \}
 \end{DoxyCode}
-\hypertarget{neuron_8c_ab1f4997e4bfe11e78faa6d37748aee67}{}\index{neuron.\+c@{neuron.\+c}!neuron\+Post\+Fire@{neuron\+Post\+Fire}}
-\index{neuron\+Post\+Fire@{neuron\+Post\+Fire}!neuron.\+c@{neuron.\+c}}
-\subsubsection[{neuron\+Post\+Fire}]{\setlength{\rightskip}{0pt plus 5cm}void neuron\+Post\+Fire (
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{neuron_8c_a683379b633b55058dd5b8b67929c165c_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{neuron_8c_aabaff47eadb1e61b34c19b6e982f6511}{}\index{neuron.\+c@{neuron.\+c}!neuron\+Post\+Integrate@{neuron\+Post\+Integrate}}
+\index{neuron\+Post\+Integrate@{neuron\+Post\+Integrate}!neuron.\+c@{neuron.\+c}}
+\subsubsection[{neuron\+Post\+Integrate}]{\setlength{\rightskip}{0pt plus 5cm}void neuron\+Post\+Integrate (
 \begin{DoxyParamCaption}
 \item[{{\bf neuron\+State} $\ast$}]{st, }
 \item[{tw\+\_\+stime}]{time, }
-\item[{{\bf Msg\+\_\+\+Data} $\ast$}]{m}
+\item[{tw\+\_\+lp $\ast$}]{lp, }
+\item[{bool}]{will\+Fire}
 \end{DoxyParamCaption}
-)}\label{neuron_8c_ab1f4997e4bfe11e78faa6d37748aee67}
+)}\label{neuron_8c_aabaff47eadb1e61b34c19b6e982f6511}
 
 
-neuron\+Post\+Fire manages post-\/firing events, including reset functions 
+Function that runs after integration \& firing, for reset function and threshold bounce calls. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000007}{Todo}]There is potentially an issue here -\/ does the True\+North architecture draw a new pseudorandom number during the threshold, fire, reset functions, or does it resuse them? It looks like re-\/use, so that\textquotesingle{}s what I\textquotesingle{}m doing here. \end{DoxyRefDesc}
+
+
+Definition at line \hyperlink{neuron_8c_source_l00214}{214} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
 
 
 
-Definition at line \hyperlink{neuron_8c_source_l00169}{169} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+References \hyperlink{assist_8h_source_l00023}{\+\_\+rand\+T}, \hyperlink{assist_8h_source_l00022}{\+\_\+thresh\+T}, \hyperlink{assist_8h_source_l00020}{\+\_\+volt\+T}, \hyperlink{neuron_8h_source_l00177}{neuron\+State\+::do\+Reset}, \hyperlink{neuron_8h_source_l00158}{neuron\+State\+::drawn\+Random\+Number}, \hyperlink{assist_8h_source_l00048}{D\+T}, \hyperlink{neuron_8h_source_l00153}{neuron\+State\+::membrane\+Pot}, \hyperlink{neuron_8h_source_l00156}{neuron\+State\+::negative\+Threshold}, \hyperlink{neuron_8h_source_l00182}{neuron\+State\+::neg\+Thres\+Reset}, \hyperlink{neuron_8h_source_l00180}{neuron\+State\+::reset\+Mode}, and \hyperlink{neuron_8h_source_l00160}{neuron\+State\+::reset\+Voltage}.
+
+
+
+Referenced by \hyperlink{neuron_8c_source_l00103}{neuron\+Receive\+Message()}.
 
 
 \begin{DoxyCode}
-00169                                                                 \{
-00170 
-00171 \}
+00214                                                                                   \{
+00215     \textcolor{keywordflow}{if}(willFire)\{ \textcolor{comment}{// neuron will/did fire:}
+00216         st->\hyperlink{structneuron_state_afcf9d931e4fda519c43b4efeab687463}{doReset}(st);
+00217     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (st->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} < -1 * (st->\hyperlink{structneuron_state_a678bcd9f031e290178cd5d2855e74279}{negativeThreshold} * st->
+      \hyperlink{structneuron_state_a3ec480684e7a2cfc67a8ef7ac1bf57b9}{negThresReset} + (st->\hyperlink{structneuron_state_a678bcd9f031e290178cd5d2855e74279}{negativeThreshold} + st->
+      \hyperlink{structneuron_state_a296a4f04813c4882d6acd8c9074abd35}{drawnRandomNumber})))\{
+00218             \textcolor{comment}{//sanity variables for the formulaic reset/bounce instead of calling functions:}
+00219         \hyperlink{assist_8h_a5537d30256d443ce07efd3d879a4a720}{\_threshT} B = st->\hyperlink{structneuron_state_a678bcd9f031e290178cd5d2855e74279}{negativeThreshold};
+00220         \textcolor{keywordtype}{int} K = st->\hyperlink{structneuron_state_a3ec480684e7a2cfc67a8ef7ac1bf57b9}{negThresReset};
+00221         \textcolor{keywordtype}{int} G = st->\hyperlink{structneuron_state_af67bb650aa3150a6a31e16a874d71f91}{resetMode};
+00222         \hyperlink{assist_8h_a520ac495f188eb0bc5645cffa3c4328b}{\_randT} n = st->\hyperlink{structneuron_state_a296a4f04813c4882d6acd8c9074abd35}{drawnRandomNumber};
+00223         \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} R = st->\hyperlink{structneuron_state_af69a2c108fe9e7154fa047ea5acc5d80}{resetVoltage};
+00224         \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} V = st->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot};
+00225         st->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} = (-(B*K) + (-(\hyperlink{assist_8h_acfde2b62c9c4e0413f3066bbd65c428a}{DT}(G)) * R +
+00226                                      \hyperlink{assist_8h_acfde2b62c9c4e0413f3066bbd65c428a}{DT}(G-1) * (V + (B + n)) +
+00227                                      \hyperlink{assist_8h_acfde2b62c9c4e0413f3066bbd65c428a}{DT}(G-2) * V) * (1-K));
+00228 
+00229     \}
+00230 
+00231 \}
 \end{DoxyCode}
 \hypertarget{neuron_8c_aa6819d7492f0173f2234ba0b8b0bb674}{}\index{neuron.\+c@{neuron.\+c}!neuron\+Receive\+Message@{neuron\+Receive\+Message}}
 \index{neuron\+Receive\+Message@{neuron\+Receive\+Message}!neuron.\+c@{neuron.\+c}}
@@ -209,16 +328,17 @@ neruon\+Receive\+Message runs when an event is received by a neuron. The events 
 
 Big-\/\+Tick events are sent at time $𝒯_{bigTick} - ε$, so that the the event will arrive at the next bit-\/tick time. 
 
-Definition at line \hyperlink{neuron_8c_source_l00104}{104} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+Definition at line \hyperlink{neuron_8c_source_l00103}{103} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
 
 
 
-References \hyperlink{assist_8h_source_l00049}{Msg\+\_\+\+Data\+::event\+Type}, \hyperlink{neuron_8h_source_l00198}{neuron\+State\+::fire\+Count}, \hyperlink{neuron_8h_source_l00146}{neuron\+State\+::membrane\+Pot}, \hyperlink{assist_8h_source_l00043}{N\+E\+U\+R\+O\+N\+\_\+\+H\+E\+A\+R\+T\+B\+E\+A\+T}, \hyperlink{neuron_8c_source_l00157}{neuron\+Should\+Fire()}, \hyperlink{neuron_8h_source_l00199}{neuron\+State\+::rcvd\+Msg\+Count}, \hyperlink{neuron_8h_source_l00157}{neuron\+State\+::received\+Synapse\+Msgs}, \hyperlink{neuron_8h_source_l00147}{neuron\+State\+::saved\+Membrane\+Pot}, and \hyperlink{neuron_8h_source_l00200}{neuron\+State\+::\+S\+O\+P\+S\+Count}.
+References \hyperlink{neuron_8h_source_l00205}{neuron\+State\+::do\+Leak}, \hyperlink{neuron_8h_source_l00158}{neuron\+State\+::drawn\+Random\+Number}, \hyperlink{assist_8h_source_l00071}{Msg\+\_\+\+Data\+::event\+Type}, \hyperlink{neuron_8h_source_l00214}{neuron\+State\+::fire\+Count}, \hyperlink{neuron_8h_source_l00218}{neuron\+State\+::fired\+Last}, \hyperlink{neuron_8c_source_l00199}{integrate\+Synapse()}, \hyperlink{neuron_8h_source_l00161}{neuron\+State\+::last\+Active\+Time}, \hyperlink{neuron_8h_source_l00162}{neuron\+State\+::last\+Leak\+Time}, \hyperlink{assist_8h_source_l00073}{Msg\+\_\+\+Data\+::local\+I\+D}, \hyperlink{neuron_8h_source_l00153}{neuron\+State\+::membrane\+Pot}, \hyperlink{assist_8h_source_l00062}{N\+E\+U\+R\+O\+N\+\_\+\+H\+E\+A\+R\+T\+B\+E\+A\+T}, \hyperlink{neuron_8c_source_l00167}{neuron\+Fire()}, \hyperlink{neuron_8c_source_l00214}{neuron\+Post\+Integrate()}, \hyperlink{neuron_8c_source_l00161}{neuron\+Should\+Fire()}, \hyperlink{neuron_8h_source_l00215}{neuron\+State\+::rcvd\+Msg\+Count}, \hyperlink{neuron_8h_source_l00166}{neuron\+State\+::received\+Synapse\+Msgs}, \hyperlink{assist_8h_source_l00072}{Msg\+\_\+\+Data\+::rnd\+Call\+Count}, \hyperlink{neuron_8h_source_l00164}{neuron\+State\+::saved\+Last\+Active\+Time}, \hyperlink{neuron_8h_source_l00165}{neuron\+State\+::saved\+Last\+Leak\+Time}, \hyperlink{neuron_8h_source_l00154}{neuron\+State\+::saved\+Membrane\+Pot}, \hyperlink{neuron_8c_source_l00179}{send\+Heartbeat()}, \hyperlink{neuron_8h_source_l00216}{neuron\+State\+::\+S\+O\+P\+S\+Count}, \hyperlink{assist_8h_source_l00060}{S\+Y\+N\+A\+P\+S\+E\+\_\+\+O\+U\+T}, and \hyperlink{neuron_8h_source_l00157}{neuron\+State\+::threshold\+P\+R\+N\+Mask}.
 
 
 \begin{DoxyCode}
-00105           \{
-00106     \textcolor{keywordtype}{bool} willFire = \textcolor{keyword}{false};
+00104           \{
+00105     \textcolor{keywordtype}{bool} willFire = \textcolor{keyword}{false};
+00106     st->\hyperlink{structneuron_state_a287eb8703dbfb177165d31c8840646b8}{firedLast} = \textcolor{keyword}{false};
 00107         \textcolor{comment}{//save the previous state of the neuron:}
 00108     st->\hyperlink{structneuron_state_a50734a9ba605a083a90814b63d039a03}{savedLastLeakTime} = st->\hyperlink{structneuron_state_a6f4e4d8fc1cf0257b486e01f628d2656}{lastLeakTime};
 00109     st->\hyperlink{structneuron_state_a6922b3f3041346eb83cfc6352a22277b}{savedLastActiveTime} = st->\hyperlink{structneuron_state_a0658ad1f8b57a00589c6ea84f9a4ab13}{lastActiveTime};
@@ -232,7 +352,7 @@ References \hyperlink{assist_8h_source_l00049}{Msg\+\_\+\+Data\+::event\+Type}, 
 00117 
 00118                 \textcolor{comment}{//next, we will check if a heartbeat message should be sent}
 00119             \textcolor{keywordflow}{if}(st->\hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{receivedSynapseMsgs} == 0) \{
-00120                 \hyperlink{neuron_8h_a766dff9e530486b055e97ebe392268b8}{sendHeartbeat}(st, lp, time);
+00120                 \hyperlink{neuron_8c_a766dff9e530486b055e97ebe392268b8}{sendHeartbeat}(st, lp, time);
 00121             \}
 00122             st->\hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{receivedSynapseMsgs} ++;
 00123 
@@ -241,60 +361,64 @@ References \hyperlink{assist_8h_source_l00049}{Msg\+\_\+\+Data\+::event\+Type}, 
 00126 
 00127         \textcolor{keywordflow}{case} \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e}{NEURON\_HEARTBEAT}:
 00128             st->\hyperlink{structneuron_state_af8935bcba177f2f3dfb9119c39ef7dc5}{receivedSynapseMsgs} = 0;
-00129 
-00130                 \textcolor{comment}{//Currently operates - leak->fire->(reset)}
-00131             st->\hyperlink{structneuron_state_aa430f424f34dc59dc27736e27ec61320}{doLeak}(st, time);
-00132             willFire = \hyperlink{neuron_8c_a92d5882a15e11e2a6733483d51428e46}{neuronShouldFire}(st);
-00133             \textcolor{keywordflow}{if}(willFire)\{
-00134                 \hyperlink{neuron_8c_ae071ef984b7e0dd4ec38fca91e0abe39}{neuronFire}(st, time, m);
-00135                 \hyperlink{neuron_8c_ab1f4997e4bfe11e78faa6d37748aee67}{neuronPostFire}(st, time, m);
-00136                 st->\hyperlink{structneuron_state_afe8825076c4cf3863c677307fec63c61}{fireCount} ++;
-00137             \}
-00138 
-00139             \hyperlink{neuron_8h_adadd3095c39786607629697406f3d1eb}{neuronPostIntegrate}(st, time, lp, willFire);
-00140             \textcolor{comment}{//stats collection}
-00141             st->\hyperlink{structneuron_state_a71fbb9a79e8048b473b6e09d29a64bbe}{SOPSCount} ++;
-00142             \textcolor{keywordflow}{break};
-00143 
-00144   \textcolor{keywordflow}{default}:
-00145                 \textcolor{comment}{//Error condition - non-valid input.}
-00146             \textcolor{keywordflow}{break};
-00147     \}
-00148 
-00149         \textcolor{comment}{//store the random calls in the message:}
-00150     m->\hyperlink{struct_msg___data_a2e49a6bcc6c45ade722f746b1ea707f2}{rndCallCount} = lp->rng->count - startCount;
+00129                 \textcolor{comment}{//set up drawn random number for the heartbeat.}
+00130             \textcolor{keywordflow}{if}(st->\hyperlink{structneuron_state_aa501d6ee7cacd5435deec79c07637b08}{thresholdPRNMask} != 0)
+00131                 st->\hyperlink{structneuron_state_a296a4f04813c4882d6acd8c9074abd35}{drawnRandomNumber} = tw\_rand\_integer(lp->rng, 0, st->
+      \hyperlink{structneuron_state_aa501d6ee7cacd5435deec79c07637b08}{thresholdPRNMask});
+00132 
+00133                 \textcolor{comment}{//Currently operates - leak->fire->(reset)}
+00134             st->\hyperlink{structneuron_state_aa430f424f34dc59dc27736e27ec61320}{doLeak}(st, time);
+00135             willFire = \hyperlink{neuron_8c_a3520b013e0c2f711b9f5c16e19306be6}{neuronShouldFire}(st,lp);
+00136             \textcolor{keywordflow}{if}(willFire)\{
+00137                 \hyperlink{neuron_8c_a683379b633b55058dd5b8b67929c165c}{neuronFire}(st, time, lp);
+00138                 st->\hyperlink{structneuron_state_afe8825076c4cf3863c677307fec63c61}{fireCount} ++;
+00139             \}
+00140 
+00141             \hyperlink{neuron_8c_aabaff47eadb1e61b34c19b6e982f6511}{neuronPostIntegrate}(st, time, lp, willFire);
+00142             \textcolor{comment}{//stats collection}
+00143             st->\hyperlink{structneuron_state_a71fbb9a79e8048b473b6e09d29a64bbe}{SOPSCount} ++;
+00144             st->\hyperlink{structneuron_state_a0658ad1f8b57a00589c6ea84f9a4ab13}{lastActiveTime} = tw\_now(lp);
+00145             \textcolor{keywordflow}{break};
+00146 
+00147   \textcolor{keywordflow}{default}:
+00148                 \textcolor{comment}{//Error condition - non-valid input.}
+00149             \textcolor{keywordflow}{break};
+00150     \}
 00151 
-00152     st->\hyperlink{structneuron_state_ab8f63a1dfdb2992657530ff8a63fdc01}{rcvdMsgCount} ++;
-00153 
+00152         \textcolor{comment}{//store the random calls in the message:}
+00153     m->\hyperlink{struct_msg___data_a2e49a6bcc6c45ade722f746b1ea707f2}{rndCallCount} = lp->rng->count - startCount;
 00154 
-00155 
-00156 \}
+00155     st->\hyperlink{structneuron_state_ab8f63a1dfdb2992657530ff8a63fdc01}{rcvdMsgCount} ++;
+00156 
+00157 
+00158 
+00159 \}
 \end{DoxyCode}
 
 
-Here is the call graph for this function\+:
-\nopagebreak
+Here is the call graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=335pt]{neuron_8c_aa6819d7492f0173f2234ba0b8b0bb674_cgraph}
+\includegraphics[width=350pt]{neuron_8c_aa6819d7492f0173f2234ba0b8b0bb674_cgraph}
 \end{center}
 \end{figure}
 
 
-\hypertarget{neuron_8c_a92d5882a15e11e2a6733483d51428e46}{}\index{neuron.\+c@{neuron.\+c}!neuron\+Should\+Fire@{neuron\+Should\+Fire}}
+\hypertarget{neuron_8c_a3520b013e0c2f711b9f5c16e19306be6}{}\index{neuron.\+c@{neuron.\+c}!neuron\+Should\+Fire@{neuron\+Should\+Fire}}
 \index{neuron\+Should\+Fire@{neuron\+Should\+Fire}!neuron.\+c@{neuron.\+c}}
 \subsubsection[{neuron\+Should\+Fire}]{\setlength{\rightskip}{0pt plus 5cm}bool neuron\+Should\+Fire (
 \begin{DoxyParamCaption}
-\item[{{\bf neuron\+State} $\ast$}]{st}
+\item[{{\bf neuron\+State} $\ast$}]{st, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
 \end{DoxyParamCaption}
-)}\label{neuron_8c_a92d5882a15e11e2a6733483d51428e46}
+)}\label{neuron_8c_a3520b013e0c2f711b9f5c16e19306be6}
 
 
 Checks to see if a neuron should fire. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000005}{Todo}]check to see if this is needed, since it looks like just a simple if statement is in order.\end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000008}{Todo}]check to see if this is needed, since it looks like just a simple if statement is in order.\end{DoxyRefDesc}
 
 
 
@@ -307,26 +431,23 @@ true if the neuron is ready to fire.
 \end{DoxyReturn}
 
 
-Definition at line \hyperlink{neuron_8c_source_l00157}{157} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+Definition at line \hyperlink{neuron_8c_source_l00161}{161} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
 
 
 
-References \hyperlink{neuron_8h_source_l00146}{neuron\+State\+::membrane\+Pot}, and \hyperlink{neuron_8h_source_l00148}{neuron\+State\+::threshold}.
+References \hyperlink{neuron_8h_source_l00158}{neuron\+State\+::drawn\+Random\+Number}, \hyperlink{neuron_8h_source_l00153}{neuron\+State\+::membrane\+Pot}, and \hyperlink{neuron_8h_source_l00155}{neuron\+State\+::threshold}.
 
 
 
-Referenced by \hyperlink{neuron_8c_source_l00104}{neuron\+Receive\+Message()}.
+Referenced by \hyperlink{neuron_8c_source_l00103}{neuron\+Receive\+Message()}.
 
 
 \begin{DoxyCode}
-00157                                       \{
-00158         \textcolor{comment}{//check negative threshold values:}
-00159     \textcolor{keywordflow}{if}(st->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} < ) \{
-00160         \textcolor{keywordflow}{if}(st->\hyperlink{structneuron_state_a3ec480684e7a2cfc67a8ef7ac1bf57b9}{negThresReset}) \{
-00161                 \textcolor{comment}{//reset to \(\backslash\)f$－β\_j\(\backslash\)f$}
-00162         \}
-00163     \}
-00164     \textcolor{keywordflow}{return} st->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} > st->\hyperlink{structneuron_state_a132470c4c17828c209e3403ccf7ee680}{threshold};
+00161                                                  \{
+00162         \textcolor{comment}{//check negative threshold values:}
+00163 
+00164     \textcolor{keywordflow}{return} st->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} >= st->\hyperlink{structneuron_state_a132470c4c17828c209e3403ccf7ee680}{threshold} + st->
+      \hyperlink{structneuron_state_a296a4f04813c4882d6acd8c9074abd35}{drawnRandomNumber};
 00165 \}
 \end{DoxyCode}
 \hypertarget{neuron_8c_a8e52befc10f975c6be39cc93af573d7e}{}\index{neuron.\+c@{neuron.\+c}!no\+Leak@{no\+Leak}}
@@ -369,37 +490,29 @@ Definition at line \hyperlink{neuron_8c_source_l00016}{16} of file \hyperlink{ne
 
 Resets neuron voltage based on linear function. 
 
-Note\+: Linear functions use the \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{volt\+T } data type. If a neuron uses a linear reset, this parameter must be set upon neuron creation. \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000003}{Todo}]\+: Check implementation against paper.\end{DoxyRefDesc}
+Linear reset mode -\/ ignores $R$, and sets the membrane potential to the difference between the threshold and the potential. 
 
-
-Definition at line \hyperlink{neuron_8c_source_l00067}{67} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
-
-
-
-References \hyperlink{neuron_8h_source_l00146}{neuron\+State\+::membrane\+Pot}.
+Definition at line \hyperlink{neuron_8c_source_l00066}{66} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
 
 
 \begin{DoxyCode}
-00067                                     \{
-00068     \textcolor{keyword}{struct }\hyperlink{struct_neuron_model}{NeuronModel} *s = (\textcolor{keyword}{struct }\hyperlink{struct_neuron_model}{NeuronModel} *)
-      \hyperlink{structneuron_state}{neuronState};
-00069   \textcolor{comment}{// reduce the value of the neuron based on the linear reduction function}
-00070   \textcolor{comment}{// in the paper}
-00071     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} resetParam = (\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT}) &resetParam;
-00072   s->membranePot = s->membranePot - resetParam;
-00073 \}
+00066                                     \{
+00067     \textcolor{keyword}{struct }NeuronModel *s = (\textcolor{keyword}{struct }NeuronModel *)\hyperlink{structneuron_state}{neuronState};
+00068     s->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} = s->membranePot - s->threshold;
+00069 \}
 \end{DoxyCode}
-\hypertarget{neuron_8c_a7f8eaa35f03747c795a2b727b364537b}{}\index{neuron.\+c@{neuron.\+c}!reset\+Zero@{reset\+Zero}}
-\index{reset\+Zero@{reset\+Zero}!neuron.\+c@{neuron.\+c}}
-\subsubsection[{reset\+Zero}]{\setlength{\rightskip}{0pt plus 5cm}void reset\+Zero (
+\hypertarget{neuron_8c_a233aa7ebe6cbfb664fe366a05a8dac1f}{}\index{neuron.\+c@{neuron.\+c}!reset\+Normal@{reset\+Normal}}
+\index{reset\+Normal@{reset\+Normal}!neuron.\+c@{neuron.\+c}}
+\subsubsection[{reset\+Normal}]{\setlength{\rightskip}{0pt plus 5cm}void reset\+Normal (
 \begin{DoxyParamCaption}
 \item[{void $\ast$}]{neuron\+State}
 \end{DoxyParamCaption}
-)}\label{neuron_8c_a7f8eaa35f03747c795a2b727b364537b}
+)}\label{neuron_8c_a233aa7ebe6cbfb664fe366a05a8dac1f}
 
 
-Resets neuron voltage to 0 after firing. 
+Resets neuron voltage to $R$ after firing. 
+
+a normal reset mode function.
 
 
 \begin{DoxyParams}{Parameters}
@@ -411,15 +524,10 @@ Resets neuron voltage to 0 after firing.
 Definition at line \hyperlink{neuron_8c_source_l00056}{56} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
 
 
-
-References \hyperlink{neuron_8h_source_l00146}{neuron\+State\+::membrane\+Pot}.
-
-
 \begin{DoxyCode}
-00056                                   \{
-00057     \textcolor{keyword}{struct }\hyperlink{struct_neuron_model}{NeuronModel} *s = (\textcolor{keyword}{struct }\hyperlink{struct_neuron_model}{NeuronModel} *)
-      \hyperlink{structneuron_state}{neuronState};
-00058     s->membranePot = 0; \textcolor{comment}{// set current voltage to 0.}
+00056                                     \{
+00057     \textcolor{keyword}{struct }NeuronModel *s = (\textcolor{keyword}{struct }NeuronModel *)\hyperlink{structneuron_state}{neuronState};
+00058     s->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} = s->resetVoltage; \textcolor{comment}{// set current voltage to \(\backslash\)f$R\(\backslash\)f$.}
 00059 \}
 \end{DoxyCode}
 \hypertarget{neuron_8c_a09e54832158e2f6abe898437979aae00}{}\index{neuron.\+c@{neuron.\+c}!reverse\+Reset\+Linear@{reverse\+Reset\+Linear}}
@@ -431,20 +539,19 @@ References \hyperlink{neuron_8h_source_l00146}{neuron\+State\+::membrane\+Pot}.
 )}\label{neuron_8c_a09e54832158e2f6abe898437979aae00}
 
 
-Definition at line \hyperlink{neuron_8c_source_l00075}{75} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+Definition at line \hyperlink{neuron_8c_source_l00071}{71} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
 
 
 
-References \hyperlink{neuron_8h_source_l00146}{neuron\+State\+::membrane\+Pot}.
+References \hyperlink{assist_8h_source_l00020}{\+\_\+volt\+T}.
 
 
 \begin{DoxyCode}
-00075                                           \{
-00076     \textcolor{keyword}{struct }\hyperlink{struct_neuron_model}{NeuronModel} *s = (\textcolor{keyword}{struct }\hyperlink{struct_neuron_model}{NeuronModel} *)
-      \hyperlink{structneuron_state}{neuronState};
-00077     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} resetParam = (\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT}) &resetParam;
-00078     s->membranePot = s->membranePot + resetParam;
-00079 \}
+00071                                           \{
+00072     \textcolor{keyword}{struct }NeuronModel *s = (\textcolor{keyword}{struct }NeuronModel *)\hyperlink{structneuron_state}{neuronState};
+00073     \hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT} resetParam = (\hyperlink{assist_8h_abe1fc1b8f9efd1187e564bcb8de7f815}{\_voltT}) &resetParam;
+00074     s->membranePot = s->membranePot + resetParam;
+00075 \}
 \end{DoxyCode}
 \hypertarget{neuron_8c_ae53276ccdb759ba1ea09806cbf9fc940}{}\index{neuron.\+c@{neuron.\+c}!reverse\+Reset\+Zero@{reverse\+Reset\+Zero}}
 \index{reverse\+Reset\+Zero@{reverse\+Reset\+Zero}!neuron.\+c@{neuron.\+c}}
@@ -454,16 +561,16 @@ References \hyperlink{neuron_8h_source_l00146}{neuron\+State\+::membrane\+Pot}.
 \end{DoxyParamCaption}
 )}\label{neuron_8c_ae53276ccdb759ba1ea09806cbf9fc940}
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000004}{Todo}]\+: Check that this is the proper way to handle reset zero function \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000006}{Todo}]\+: Check that this is the proper way to handle reset zero function \end{DoxyRefDesc}
 
 
-Definition at line \hyperlink{neuron_8c_source_l00081}{81} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+Definition at line \hyperlink{neuron_8c_source_l00079}{79} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
 
 
 \begin{DoxyCode}
-00081                                         \{
-00082 
-00083 \}
+00079                                         \{
+00080 
+00081 \}
 \end{DoxyCode}
 \hypertarget{neuron_8c_a26ced40d7ad7a0b448a136d8724fe18b}{}\index{neuron.\+c@{neuron.\+c}!rev\+Linear\+Leak@{rev\+Linear\+Leak}}
 \index{rev\+Linear\+Leak@{rev\+Linear\+Leak}!neuron.\+c@{neuron.\+c}}
@@ -489,12 +596,16 @@ Reverse leak function neurons that have a linear leak function assigned.
 Definition at line \hyperlink{neuron_8c_source_l00037}{37} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
 
 
+
+References \hyperlink{neuron_8h_source_l00162}{neuron\+State\+::last\+Leak\+Time}.
+
+
 \begin{DoxyCode}
 00037                                               \{
 00038     \hyperlink{structneuron_state}{neuronState} *s = (\hyperlink{structneuron_state}{neuronState} *)neuron;
 00039     tw\_stime delta = s->\hyperlink{structneuron_state_a6f4e4d8fc1cf0257b486e01f628d2656}{lastLeakTime} - now;
 00040 
-00041     s->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} += s->leakRate * delta;
+00041         \textcolor{comment}{//s->membranePot += s->leakRate * delta;}
 00042     s->\hyperlink{structneuron_state_a6f4e4d8fc1cf0257b486e01f628d2656}{lastLeakTime} = now;
 00043 \}
 \end{DoxyCode}
@@ -526,4 +637,104 @@ Definition at line \hyperlink{neuron_8c_source_l00019}{19} of file \hyperlink{ne
 00019                                            \{
 00020   \textcolor{comment}{// do nothing!!}
 00021 \}
+\end{DoxyCode}
+\hypertarget{neuron_8c_a766dff9e530486b055e97ebe392268b8}{}\index{neuron.\+c@{neuron.\+c}!send\+Heartbeat@{send\+Heartbeat}}
+\index{send\+Heartbeat@{send\+Heartbeat}!neuron.\+c@{neuron.\+c}}
+\subsubsection[{send\+Heartbeat}]{\setlength{\rightskip}{0pt plus 5cm}void send\+Heartbeat (
+\begin{DoxyParamCaption}
+\item[{{\bf neuron\+State} $\ast$}]{st, }
+\item[{tw\+\_\+lp $\ast$}]{lp, }
+\item[{tw\+\_\+stime}]{time}
+\end{DoxyParamCaption}
+)}\label{neuron_8c_a766dff9e530486b055e97ebe392268b8}
+
+
+Function that sends a heartbeat message to this neuron. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lp} & $<$\#lp description\#$>$ \\
+\hline
+{\em time} & $<$\#time description\#$>$ \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{neuron_8c_source_l00179}{179} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+
+
+
+References \hyperlink{assist_8h_source_l00071}{Msg\+\_\+\+Data\+::event\+Type}, \hyperlink{assist_8c_source_l00041}{get\+Next\+Big\+Tick()}, \hyperlink{assist_8h_source_l00073}{Msg\+\_\+\+Data\+::local\+I\+D}, \hyperlink{neuron_8h_source_l00149}{neuron\+State\+::my\+Local\+I\+D}, and \hyperlink{assist_8h_source_l00062}{N\+E\+U\+R\+O\+N\+\_\+\+H\+E\+A\+R\+T\+B\+E\+A\+T}.
+
+
+
+Referenced by \hyperlink{neuron_8c_source_l00103}{neuron\+Receive\+Message()}.
+
+
+\begin{DoxyCode}
+00179                                                              \{
+00180         \textcolor{comment}{//heartbeat message gen:}
+00181     tw\_stime nextHeartbeat = \hyperlink{assist_8c_aa961bc9b414f1429b123fc8212c989fd}{getNextBigTick}(time);
+00182     tw\_event *newEvent = tw\_event\_new(lp->gid, nextHeartbeat, lp);
+00183     \hyperlink{struct_msg___data}{Msg\_Data} *data = (\hyperlink{struct_msg___data}{Msg\_Data} *) tw\_event\_data(newEvent);
+00184     data->\hyperlink{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}{eventType} = \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e}{NEURON\_HEARTBEAT};
+00185     data->\hyperlink{struct_msg___data_aefc820e92a74047ec7ed74c1c45f818f}{localID} = st->\hyperlink{structneuron_state_ac24762c24aede292a2ce5df78114881c}{myLocalID};
+00186     tw\_event\_send(newEvent);
+00187 
+00188 
+00189 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{neuron_8c_a766dff9e530486b055e97ebe392268b8_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{neuron_8c_afee2e0acc66d8d10aee8d52c8d245c82}{}\index{neuron.\+c@{neuron.\+c}!stochastic\+Integrate@{stochastic\+Integrate}}
+\index{stochastic\+Integrate@{stochastic\+Integrate}!neuron.\+c@{neuron.\+c}}
+\subsubsection[{stochastic\+Integrate}]{\setlength{\rightskip}{0pt plus 5cm}void stochastic\+Integrate (
+\begin{DoxyParamCaption}
+\item[{{\bf \+\_\+weight\+T}}]{weight, }
+\item[{{\bf neuron\+State} $\ast$}]{st, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{neuron_8c_afee2e0acc66d8d10aee8d52c8d245c82}
+
+
+Neuron stochastic integration function -\/ for use with stochastic leaks and synapse messages. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em weight} & weight of selected leak or synapse \\
+\hline
+{\em st} & the neuron state \\
+\hline
+{\em lp} & lp for range functions. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{neuron_8c_source_l00191}{191} of file \hyperlink{neuron_8c_source}{neuron.\+c}.
+
+
+
+References \hyperlink{assist_8h_source_l00052}{B\+I\+N\+C\+O\+M\+P}, \hyperlink{neuron_8h_source_l00158}{neuron\+State\+::drawn\+Random\+Number}, \hyperlink{neuron_8h_source_l00153}{neuron\+State\+::membrane\+Pot}, and \hyperlink{assist_8h_source_l00050}{S\+G\+N}.
+
+
+
+Referenced by \hyperlink{neuron_8c_source_l00199}{integrate\+Synapse()}.
+
+
+\begin{DoxyCode}
+00191                                                                      \{
+00192     \textcolor{keywordtype}{long} drawnRandom = st->\hyperlink{structneuron_state_a296a4f04813c4882d6acd8c9074abd35}{drawnRandomNumber};
+00193     \textcolor{keywordflow}{if} (\hyperlink{assist_8h_abbf94867faa4abd8c53c87576efd05f3}{BINCOMP}(weight, drawnRandom))\{
+00194         st->\hyperlink{structneuron_state_a0fdd8f44c4105a94e17c4c58a51db486}{membranePot} += \hyperlink{assist_8h_a95ed41486ca0ed53262e4b8934d4afac}{SGN}(weight);
+00195     \}
+00196 \}
 \end{DoxyCode}

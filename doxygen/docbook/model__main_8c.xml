@@ -25,19 +25,164 @@
     </figure>
 </para>
         <section>
+            <title>Variables</title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>tw_lptype <link linkend="model__main_8c_1a6acf8f296294224aa8201bdea5aba47e">model_lps</link></para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+        <section>
             <title>Functions</title>
             <para>
                 <itemizedlist>
                     <listitem>
-                        <para>int <link linkend="model__main_8c_1ae66f6b31b5ad750f1fe042a706a4e3d4">main</link> (
-)</para>
+                        <para>void <link linkend="model__main_8c_1a614c89653e656c2b0436bed7f2c8de3e">createLPs</link> (
+)<para><emphasis>createLPs will create the LPs needed for the simulation on this PE.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="model__main_8c_1a0ddf1224851353fc92bfbff6f499fa97">main</link> (
+int argc, char * argv)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8c_1a8022723eba89664cca80e179b80a2b37">neuron_init</link> (
+<link linkend="structneuron_state">neuronState</link> * s, tw_lp * lp)<para><emphasis>neuron_init Neuron lp initialization.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8c_1a801f93205937969fea2eff0bf2e76de9">setSynapseWeight</link> (
+<link linkend="structneuron_state">neuronState</link> * s, tw_lp * lp, int synapseID)<para><emphasis>setSynapseWeight is called from \a neuron_init and sets up the weights
+of a neuron.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8c_1a9309446aa05714b141a3d3caae4254db">neuron_event</link> (
+<link linkend="structneuron_state">neuronState</link> * s, tw_bf * CV, <link linkend="struct_msg___data">Msg_Data</link> * M, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8c_1a5f7d6a6aca030b5db84292b873816fa0">neuron_reverse</link> (
+<link linkend="structneuron_state">neuronState</link> * s, tw_bf * CV, <link linkend="struct_msg___data">Msg_Data</link> * MCV, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8c_1acac9e41bea7d1d0911a0220de60a37b0">neuron_final</link> (
+<link linkend="structneuron_state">neuronState</link> * s, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8c_1a579d8e5af0b1c0a80c8e83b7a534f873">synapse_init</link> (
+<link linkend="structsynapse_state">synapseState</link> * s, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8c_1a4b3ee4a7c010a99b7952de6ee58717c1">synapse_event</link> (
+<link linkend="structsynapse_state">synapseState</link> * s, tw_bf * CV, <link linkend="struct_msg___data">Msg_Data</link> * M, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8c_1a4a4d6985a03804162eb0a71bbdbc0cc2">synapse_reverse</link> (
+<link linkend="structsynapse_state">synapseState</link> * s, tw_bf * CV, <link linkend="struct_msg___data">Msg_Data</link> * M, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8c_1a3d695e7995cce87a03d6407d801e043d">synapse_final</link> (
+<link linkend="structsynapse_state">synapseState</link> * s, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8c_1aa1b78ccf8fb2ff34c960d4c55576c714">axon_init</link> (
+<link linkend="structaxon_state">axonState</link> * s, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8c_1a8fae0a84a982a733de15203fd551e6db">axon_event</link> (
+<link linkend="structaxon_state">axonState</link> * s, tw_bf * CV, <link linkend="struct_msg___data">Msg_Data</link> * M, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8c_1a76fff63b340bdcd9b63c490e67797178">axon_reverse</link> (
+<link linkend="structaxon_state">axonState</link> * s, tw_bf * CV, <link linkend="struct_msg___data">Msg_Data</link> * M, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8c_1a9f5c1071ccef11cdc8027264fca860c7">axon_final</link> (
+<link linkend="structaxon_state">axonState</link> * s, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8c_1a9397f1f0e189cd7dac262423993811e4">mapping</link> (
+tw_lp gid)<para><emphasis>mapping - the initial mapping function, either assigns a simple mapping
+or uses one of the more complex custom mapping functions.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8c_1a7a8df3f99e1d582c6c136b16d6e34d13">pre_run</link> (
+)<para><emphasis>pre_run Not used - placeholder function for compatibility.</emphasis></para>
+</para>
                     </listitem>
                 </itemizedlist>
             </para>
         </section>
     <simplesect>
         <title>Detailed Description</title>
-    <para>Definition in file /Users/Mark/Development/TrueNorth/tnt_benchmark/model_main.c</para>
+    <para>Definition in file /home/mplagge/development/tnt_benchmark/model_main.c</para>
     </simplesect>
     <literallayout><computeroutput>
 1 <emphasis class="comment">//</emphasis>
@@ -50,9 +195,169 @@
 8 
 9 <emphasis class="preprocessor">#include&#32;&quot;<link linkend="model__main_8h">model_main.h</link>&quot;</emphasis>
 10 
-<link linkend="model__main_8c_1ae66f6b31b5ad750f1fe042a706a4e3d4">11 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8c_1ae66f6b31b5ad750f1fe042a706a4e3d4">main</link>()&#32;{
-12 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">return</emphasis>&#32;0;
-13 }
-14 
+<link linkend="model__main_8c_1a6acf8f296294224aa8201bdea5aba47e">11 </link>tw_lptype&#32;<link linkend="model__main_8c_1a6acf8f296294224aa8201bdea5aba47e">model_lps</link>[]&#32;=&#32;{{
+12 
+13 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(init_f)<link linkend="model__main_8c_1a8022723eba89664cca80e179b80a2b37">neuron_init</link>,
+14 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(pre_run_f)<link linkend="model__main_8c_1a7a8df3f99e1d582c6c136b16d6e34d13">pre_run</link>,
+15 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(event_f)<link linkend="model__main_8c_1a9309446aa05714b141a3d3caae4254db">neuron_event</link>,
+16 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(revent_f)<link linkend="model__main_8c_1a5f7d6a6aca030b5db84292b873816fa0">neuron_reverse</link>,
+17 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(final_f)<link linkend="model__main_8c_1acac9e41bea7d1d0911a0220de60a37b0">neuron_final</link>,
+18 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(map_f)<link linkend="model__main_8c_1a9397f1f0e189cd7dac262423993811e4">mapping</link>,
+19 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keyword">sizeof</emphasis>(<link linkend="structneuron_state">neuronState</link>)},
+20 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+21 
+22 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(init_f)<link linkend="model__main_8c_1a579d8e5af0b1c0a80c8e83b7a534f873">synapse_init</link>,
+23 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(pre_run_f)<link linkend="model__main_8c_1a7a8df3f99e1d582c6c136b16d6e34d13">pre_run</link>,
+24 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(event_f)<link linkend="model__main_8c_1a4b3ee4a7c010a99b7952de6ee58717c1">synapse_event</link>,
+25 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(revent_f)<link linkend="model__main_8c_1a4a4d6985a03804162eb0a71bbdbc0cc2">synapse_reverse</link>,
+26 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(final_f)<link linkend="model__main_8c_1a3d695e7995cce87a03d6407d801e043d">synapse_final</link>,
+27 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(map_f)<link linkend="model__main_8c_1a9397f1f0e189cd7dac262423993811e4">mapping</link>,
+28 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keyword">sizeof</emphasis>(<link linkend="structsynapse_state">synapseState</link>)},
+29 
+30 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{(init_f)<link linkend="model__main_8c_1aa1b78ccf8fb2ff34c960d4c55576c714">axon_init</link>,
+31 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(pre_run_f)<link linkend="model__main_8c_1a7a8df3f99e1d582c6c136b16d6e34d13">pre_run</link>,
+32 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(event_f)<link linkend="model__main_8c_1a8fae0a84a982a733de15203fd551e6db">axon_event</link>,
+33 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(revent_f)<link linkend="model__main_8c_1a76fff63b340bdcd9b63c490e67797178">axon_reverse</link>,
+34 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(final_f)<link linkend="model__main_8c_1a9f5c1071ccef11cdc8027264fca860c7">axon_final</link>,
+35 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(map_f)<link linkend="model__main_8c_1a9397f1f0e189cd7dac262423993811e4">mapping</link>,
+36 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keyword">sizeof</emphasis>(<link linkend="structaxon_state">axonState</link>)},
+37 
+38 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{0}
+39 
+40 };
+41 
+<link linkend="model__main_8h_1a614c89653e656c2b0436bed7f2c8de3e">46 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1a614c89653e656c2b0436bed7f2c8de3e">createLPs</link>()&#32;{
+47 &#32;&#32;tw_define_lps(g_tw_nlp,&#32;<emphasis class="keyword">sizeof</emphasis>(<link linkend="struct_msg___data">Msg_Data</link>),&#32;0);
+48 &#32;&#32;&#32;&#32;<emphasis class="keywordtype">int</emphasis>&#32;neurons&#32;=&#32;0;
+49 &#32;&#32;&#32;&#32;<emphasis class="keywordtype">int</emphasis>&#32;synapses&#32;=&#32;0;
+50 &#32;&#32;&#32;&#32;<emphasis class="keywordtype">int</emphasis>&#32;axons&#32;=&#32;0;
+51 &#32;&#32;&#32;&#32;<emphasis class="keywordtype">int</emphasis>&#32;soff&#32;=&#32;<link linkend="assist_8h_1a519a06367b2b3f793c56d3ab78f5b2ef">AXONS_IN_CORE</link>&#32;+&#32;<link linkend="assist_8h_1a076b99099b46431255982b2bb8ce06fb">SYNAPSES_IN_CORE</link>;
+52 &#32;&#32;&#32;&#32;<emphasis class="keywordtype">int</emphasis>&#32;noff&#32;=&#32;<link linkend="assist_8h_1ad39b86a0b748731175572436f6672264">CORE_SIZE</link>&#32;-&#32;<link linkend="assist_8h_1a67e8e45768f76b984a60fcff2b7c51aa">NEURONS_IN_CORE</link>;
+53 &#32;&#32;<emphasis class="keywordflow">for</emphasis>&#32;(<emphasis class="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;g_tw_nlp;&#32;i++)&#32;{
+54 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keywordflow">if</emphasis>(i&#32;&lt;&#32;<link linkend="assist_8h_1a519a06367b2b3f793c56d3ab78f5b2ef">AXONS_IN_CORE</link>){
+55 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//tw_lp_settype(i,&#32;&amp;model_lps[2]);</emphasis>
+56 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;axons++;
+57 &#32;&#32;&#32;&#32;&#32;&#32;}
+58 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keywordflow">else</emphasis>&#32;<emphasis class="keywordflow">if</emphasis>&#32;(i&#32;&lt;&#32;soff)&#32;{
+59 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//tw_lp_settype(i,&#32;&amp;model_lps[1]);</emphasis>
+60 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;synapses++;
+61 
+62 
+63 &#32;&#32;&#32;&#32;&#32;&#32;}
+64 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keywordflow">else</emphasis>&#32;{
+65 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//tw_lp_settype(i,&#32;&amp;model_lps[0]);</emphasis>
+66 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;neurons&#32;++;
+67 
+68 &#32;&#32;&#32;&#32;&#32;&#32;}
+69 &#32;&#32;}
+70 &#32;&#32;&#32;&#32;printf(<emphasis class="stringliteral">&quot;A&#32;%i,&#32;S&#32;%i,&#32;N&#32;%i&quot;</emphasis>,&#32;axons,&#32;synapses,&#32;neurons);
+71 }
+72 
+<link linkend="model__main_8c_1a0ddf1224851353fc92bfbff6f499fa97">73 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8c_1a0ddf1224851353fc92bfbff6f499fa97">main</link>(<emphasis class="keywordtype">int</emphasis>&#32;argc,&#32;<emphasis class="keywordtype">char</emphasis>&#32;*argv[])&#32;{
+74 &#32;&#32;<emphasis class="comment">//set&#32;up&#32;core&#32;sizes.</emphasis>
+75 &#32;&#32;<link linkend="assist_8h_1a076b99099b46431255982b2bb8ce06fb">SYNAPSES_IN_CORE</link>&#32;=&#32;<link linkend="assist_8h_1a67e8e45768f76b984a60fcff2b7c51aa">NEURONS_IN_CORE</link>&#32;*&#32;<link linkend="assist_8h_1a519a06367b2b3f793c56d3ab78f5b2ef">AXONS_IN_CORE</link>;
+76 &#32;&#32;<link linkend="assist_8h_1ad39b86a0b748731175572436f6672264">CORE_SIZE</link>&#32;=&#32;<link linkend="assist_8h_1a076b99099b46431255982b2bb8ce06fb">SYNAPSES_IN_CORE</link>&#32;+&#32;<link linkend="assist_8h_1a67e8e45768f76b984a60fcff2b7c51aa">NEURONS_IN_CORE</link>&#32;+&#32;<link linkend="assist_8h_1a519a06367b2b3f793c56d3ab78f5b2ef">AXONS_IN_CORE</link>;
+77 &#32;&#32;g_tw_nlp&#32;=&#32;<link linkend="assist_8h_1ad39b86a0b748731175572436f6672264">CORE_SIZE</link>;
+78 
+79 &#32;&#32;tw_init(&amp;argc,&#32;&amp;argv);
+80 
+81 &#32;&#32;&#32;&#32;<link linkend="model__main_8c_1a614c89653e656c2b0436bed7f2c8de3e">createLPs</link>();
+82 &#32;&#32;<emphasis class="keywordflow">return</emphasis>&#32;0;
+83 }
+84 
+85 
+86 
+87 
+88 <emphasis class="comment">//neuron&#32;functions</emphasis>
+<link linkend="model__main_8h_1a8022723eba89664cca80e179b80a2b37">89 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1a8022723eba89664cca80e179b80a2b37">neuron_init</link>(<link linkend="structneuron_state">neuronState</link>&#32;*s,&#32;tw_lp&#32;*lp)
+90 {
+91 
+92 }
+93 
+<link linkend="model__main_8h_1a801f93205937969fea2eff0bf2e76de9">94 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1a801f93205937969fea2eff0bf2e76de9">setSynapseWeight</link>(<link linkend="structneuron_state">neuronState</link>&#32;*s,&#32;tw_lp&#32;*lp,&#32;<emphasis class="keywordtype">int</emphasis>&#32;synapseID)
+95 {
+96 
+97 }
+98 
+99 
+<link linkend="model__main_8h_1a9309446aa05714b141a3d3caae4254db">100 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1a9309446aa05714b141a3d3caae4254db">neuron_event</link>(<link linkend="structneuron_state">neuronState</link>&#32;*s,&#32;tw_bf&#32;*CV,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*M,&#32;tw_lp&#32;*lp)
+101 {
+102 
+103 }
+104 
+105 
+106 
+<link linkend="model__main_8h_1a4bd8bcd9c6de148a9f5c84fadd51106c">107 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1a5f7d6a6aca030b5db84292b873816fa0">neuron_reverse</link>(<link linkend="structneuron_state">neuronState</link>&#32;*s,&#32;tw_bf&#32;*CV,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*MCV,&#32;tw_lp&#32;*lp)
+108 {
+109 
+110 }
+111 
+112 
+<link linkend="model__main_8h_1acac9e41bea7d1d0911a0220de60a37b0">113 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1acac9e41bea7d1d0911a0220de60a37b0">neuron_final</link>(<link linkend="structneuron_state">neuronState</link>&#32;*s,&#32;tw_lp&#32;*lp)
+114 {
+115 
+116 }
+117 
+118 <emphasis class="comment">//synapse&#32;function</emphasis>
+<link linkend="model__main_8h_1a579d8e5af0b1c0a80c8e83b7a534f873">119 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1a579d8e5af0b1c0a80c8e83b7a534f873">synapse_init</link>(<link linkend="structsynapse_state">synapseState</link>&#32;*s,&#32;tw_lp&#32;*lp)
+120 {
+121 
+122 }
+123 
+124 
+<link linkend="model__main_8h_1aea7de5bc5028e2df35cf3fe64f6cca6c">125 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1a4b3ee4a7c010a99b7952de6ee58717c1">synapse_event</link>(<link linkend="structsynapse_state">synapseState</link>&#32;*s,&#32;tw_bf&#32;*CV,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*M,&#32;tw_lp&#32;*lp)
+126 {
+127 
+128 }
+129 
+130 
+<link linkend="model__main_8h_1ae7966fd834efb0fe64477f6f8c2205f3">131 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1a4a4d6985a03804162eb0a71bbdbc0cc2">synapse_reverse</link>(<link linkend="structsynapse_state">synapseState</link>&#32;*s,&#32;tw_bf&#32;*CV,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*M,&#32;tw_lp&#32;*lp)
+132 {
+133 
+134 }
+135 
+136 
+<link linkend="model__main_8h_1a3d695e7995cce87a03d6407d801e043d">137 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1a3d695e7995cce87a03d6407d801e043d">synapse_final</link>(<link linkend="structsynapse_state">synapseState</link>&#32;*s,&#32;tw_lp&#32;*lp)
+138 {
+139 
+140 }
+141 
+142 <emphasis class="comment">//&#32;Axon&#32;function.</emphasis>
+<link linkend="model__main_8h_1aa1b78ccf8fb2ff34c960d4c55576c714">143 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1aa1b78ccf8fb2ff34c960d4c55576c714">axon_init</link>(<link linkend="structaxon_state">axonState</link>&#32;*s,&#32;tw_lp&#32;*lp)
+144 {
+145 
+146 }
+147 
+<link linkend="model__main_8h_1a3c053cd53c8082f6cfdd74666d2a484b">148 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1a8fae0a84a982a733de15203fd551e6db">axon_event</link>(<link linkend="structaxon_state">axonState</link>&#32;*s,&#32;tw_bf&#32;*CV,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*M,&#32;tw_lp&#32;*lp)
+149 {
+150 
+151 }
+152 
+153 
+<link linkend="model__main_8h_1a5d4a72afee6ac1e8fd422d8f85a338b4">154 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1a76fff63b340bdcd9b63c490e67797178">axon_reverse</link>(<link linkend="structaxon_state">axonState</link>&#32;*s,&#32;tw_bf&#32;*CV,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*M,&#32;tw_lp&#32;*lp)
+155 {
+156 
+157 }
+158 
+159 
+<link linkend="model__main_8h_1a9f5c1071ccef11cdc8027264fca860c7">160 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1a9f5c1071ccef11cdc8027264fca860c7">axon_final</link>(<link linkend="structaxon_state">axonState</link>&#32;*s,&#32;tw_lp&#32;*lp)
+161 {
+162 
+163 }
+164 
+165 
+166 
+167 
+168 
+<link linkend="model__main_8h_1a9397f1f0e189cd7dac262423993811e4">169 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1a9397f1f0e189cd7dac262423993811e4">mapping</link>(tw_lp&#32;gid)
+170 {
+171 
+172 }
+173 
+174 
+<link linkend="model__main_8h_1a7a8df3f99e1d582c6c136b16d6e34d13">175 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8c_1a7a8df3f99e1d582c6c136b16d6e34d13">pre_run</link>()
+176 {
+177 
+178 }
     </computeroutput></literallayout>
 </section>

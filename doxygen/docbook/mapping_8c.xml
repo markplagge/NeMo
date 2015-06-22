@@ -26,7 +26,7 @@
 </para>
     <simplesect>
         <title>Detailed Description</title>
-    <para>Definition in file /Users/Mark/Development/TrueNorth/tnt_benchmark/mapping.c</para>
+    <para>Definition in file /home/mplagge/development/tnt_benchmark/mapping.c</para>
     </simplesect>
     <literallayout><computeroutput>
 1 <emphasis class="comment">//</emphasis>
@@ -38,5 +38,6 @@
 7 <emphasis class="comment">//</emphasis>
 8 
 9 <emphasis class="preprocessor">#include&#32;&quot;<link linkend="mapping_8h">mapping.h</link>&quot;</emphasis>
+10 
     </computeroutput></literallayout>
 </section>

@@ -1,10 +1,109 @@
-\hypertarget{axon_8c}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/axon.c File Reference}
-\label{axon_8c}\index{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/axon.\+c@{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/axon.\+c}}
+\hypertarget{axon_8c}{}\section{/home/mplagge/development/tnt\+\_\+benchmark/models/axon.c File Reference}
+\label{axon_8c}\index{/home/mplagge/development/tnt\+\_\+benchmark/models/axon.\+c@{/home/mplagge/development/tnt\+\_\+benchmark/models/axon.\+c}}
 {\ttfamily \#include \char`\"{}axon.\+h\char`\"{}}\\*
 Include dependency graph for axon.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=341pt]{axon_8c__incl}
+\includegraphics[width=350pt]{axon_8c__incl}
 \end{center}
 \end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{axon_8c_ab136d88cfbbb1e9f0f3687908dd54851}{axon\+Receive\+Message} (\hyperlink{structaxon_state}{axon\+State} $\ast$st, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$M, tw\+\_\+lp $\ast$lp)
+\begin{DoxyCompactList}\small\item\em Handles a message sent to an Axon. \end{DoxyCompactList}\item 
+void \hyperlink{axon_8c_a4540abe1d7c57cae5b0ff088d3d47fd1}{axon\+Reverse\+State} (\hyperlink{structaxon_state}{axon\+State} $\ast$st, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$M, tw\+\_\+lp $\ast$lp)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{axon_8c_ab136d88cfbbb1e9f0f3687908dd54851}{}\index{axon.\+c@{axon.\+c}!axon\+Receive\+Message@{axon\+Receive\+Message}}
+\index{axon\+Receive\+Message@{axon\+Receive\+Message}!axon.\+c@{axon.\+c}}
+\subsubsection[{axon\+Receive\+Message}]{\setlength{\rightskip}{0pt plus 5cm}void axon\+Receive\+Message (
+\begin{DoxyParamCaption}
+\item[{{\bf axon\+State} $\ast$}]{st, }
+\item[{{\bf Msg\+\_\+\+Data} $\ast$}]{M, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{axon_8c_ab136d88cfbbb1e9f0f3687908dd54851}
+
+
+Handles a message sent to an Axon. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em st} & state \\
+\hline
+{\em M} & message \\
+\hline
+{\em lp} & lp \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{axon_8c_source_l00011}{11} of file \hyperlink{axon_8c_source}{axon.\+c}.
+
+
+
+References \hyperlink{assist_8h_source_l00058}{A\+X\+O\+N\+\_\+\+O\+U\+T}, \hyperlink{axon_8h_source_l00018}{axon\+State\+::dest\+Synapse}, \hyperlink{assist_8h_source_l00071}{Msg\+\_\+\+Data\+::event\+Type}, \hyperlink{assist_8c_source_l00014}{get\+Next\+Event\+Time()}, \hyperlink{assist_8h_source_l00061}{N\+E\+U\+R\+O\+N\+\_\+\+O\+U\+T}, \hyperlink{assist_8h_source_l00072}{Msg\+\_\+\+Data\+::rnd\+Call\+Count}, and \hyperlink{axon_8h_source_l00017}{axon\+State\+::send\+Msg\+Count}.
+
+
+\begin{DoxyCode}
+00011                                                               \{
+00012     \textcolor{keywordtype}{long} start\_count = lp->rng->count;
+00013     tw\_stime time;
+00014     st->\hyperlink{structaxon_state_a217ba44fb923dc4dc62bb73b14e61517}{sendMsgCount} ++;
+00015     \textcolor{keywordflow}{if}(M->\hyperlink{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}{eventType} == \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0}{NEURON\_OUT}) \{
+00016             time = \hyperlink{assist_8c_a30602b11dbfa6bcb90dc00e7942cfb02}{getNextEventTime}(lp);
+00017             tw\_event *newEvent = tw\_event\_new(st->\hyperlink{structaxon_state_a665999819b255f36d756f17b85bc9a03}{destSynapse}, time, lp);
+00018             \hyperlink{struct_msg___data}{Msg\_Data} *data = (\hyperlink{struct_msg___data}{Msg\_Data} * ) tw\_event\_data(newEvent);
+00019             data->\hyperlink{struct_msg___data_a015b6eb45982e1842ee8fc389a099ced}{eventType} = \hyperlink{assist_8h_a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee}{AXON\_OUT};
+00020             tw\_event\_send(newEvent);
+00021     \}
+00022     \textcolor{keywordflow}{else} \{
+00023             \textcolor{comment}{//Call the signal generator. TBD}
+00024 
+00025     \}
+00026     M->\hyperlink{struct_msg___data_a2e49a6bcc6c45ade722f746b1ea707f2}{rndCallCount} = lp->rng->count - start\_count;
+00027 
+00028 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=327pt]{axon_8c_ab136d88cfbbb1e9f0f3687908dd54851_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{axon_8c_a4540abe1d7c57cae5b0ff088d3d47fd1}{}\index{axon.\+c@{axon.\+c}!axon\+Reverse\+State@{axon\+Reverse\+State}}
+\index{axon\+Reverse\+State@{axon\+Reverse\+State}!axon.\+c@{axon.\+c}}
+\subsubsection[{axon\+Reverse\+State}]{\setlength{\rightskip}{0pt plus 5cm}void axon\+Reverse\+State (
+\begin{DoxyParamCaption}
+\item[{{\bf axon\+State} $\ast$}]{st, }
+\item[{{\bf Msg\+\_\+\+Data} $\ast$}]{M, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{axon_8c_a4540abe1d7c57cae5b0ff088d3d47fd1}
+
+
+Definition at line \hyperlink{axon_8c_source_l00029}{29} of file \hyperlink{axon_8c_source}{axon.\+c}.
+
+
+
+References \hyperlink{assist_8h_source_l00072}{Msg\+\_\+\+Data\+::rnd\+Call\+Count}, and \hyperlink{axon_8h_source_l00017}{axon\+State\+::send\+Msg\+Count}.
+
+
+\begin{DoxyCode}
+00029                                                              \{
+00030     st->\hyperlink{structaxon_state_a217ba44fb923dc4dc62bb73b14e61517}{sendMsgCount} --;
+00031     \textcolor{keywordtype}{long} count = M->\hyperlink{struct_msg___data_a2e49a6bcc6c45ade722f746b1ea707f2}{rndCallCount};
+00032     \textcolor{keywordflow}{while} (count--) \{
+00033         tw\_rand\_reverse\_unif(lp->rng);
+00034     \}
+00035 
+00036 \}\end{DoxyCode}

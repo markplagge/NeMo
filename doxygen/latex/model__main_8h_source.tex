@@ -1,4 +1,4 @@
-\hypertarget{model__main_8h_source}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/model\+\_\+main.h}
+\hypertarget{model__main_8h_source}{}\section{/home/mplagge/development/tnt\+\_\+benchmark/model\+\_\+main.h}
 
 \begin{DoxyCode}
 00001 \textcolor{comment}{//}
@@ -9,31 +9,23 @@
 00006 \textcolor{comment}{//}
 00007 \textcolor{comment}{//}
 00008 
-00009 \textcolor{preprocessor}{#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{\_\_ROSS\_TOP\_\_model\_main\_\_}
-00010 \textcolor{preprocessor}{#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{\_\_ROSS\_TOP\_\_model\_main\_\_}
+00009 \textcolor{preprocessor}{#ifndef \_\_ROSS\_TOP\_\_model\_main\_\_}
+00010 \textcolor{preprocessor}{#define \_\_ROSS\_TOP\_\_model\_main\_\_}
 00011 
-00012 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{stdio}\textcolor{preprocessor}{.}\textcolor{preprocessor}{h}\textcolor{preprocessor}{>}
-00013 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \hyperlink{assist_8h}{"assist.h"}
-00014 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{"ross.h"}
-00015 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{stdbool}\textcolor{preprocessor}{.}\textcolor{preprocessor}{h}\textcolor{preprocessor}{>}
-00016 
-00017     \textcolor{comment}{// Variable holders for command lne params & external variables */}
-00018 \textcolor{comment}{/**}
-00019 \textcolor{comment}{ *  Number of neurons per core.}
-00020 \textcolor{comment}{ */}
-\hypertarget{model__main_8h_source_l00021}{}\hyperlink{model__main_8h_a67e8e45768f76b984a60fcff2b7c51aa}{00021} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a67e8e45768f76b984a60fcff2b7c51aa}{NEURONS\_IN\_CORE} = 128;
-00022 
-00023 \textcolor{comment}{/** number of synapses per core. Calculated value, needs to be neurons * axons */}
-\hypertarget{model__main_8h_source_l00024}{}\hyperlink{model__main_8h_adc924fa4a60574e27538b63daed224d2}{00024} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_adc924fa4a60574e27538b63daed224d2}{SYNSAPES\_IN\_CORE};
-00025 \textcolor{comment}{/* Calculated number of cores in simulation */}
-\hypertarget{model__main_8h_source_l00026}{}\hyperlink{model__main_8h_a142b2655c5a899956164ef4e1c394fea}{00026} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a142b2655c5a899956164ef4e1c394fea}{CORES\_IN\_SIM};
-00027 
-00028 \textcolor{comment}{/** Number of axions per core. Generally is set to 1-1 with neurons in core */}
-\hypertarget{model__main_8h_source_l00029}{}\hyperlink{model__main_8h_a519a06367b2b3f793c56d3ab78f5b2ef}{00029} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a519a06367b2b3f793c56d3ab78f5b2ef}{AXONS\_IN\_CORE} = 128;
-00030 
-00031 \textcolor{comment}{/** Simulation tuning variables */}
-00032 
-00033 \textcolor{comment}{/** noise generator values */}
+00012 \textcolor{preprocessor}{#include <stdio.h>}
+00013 \textcolor{preprocessor}{#include "\hyperlink{assist_8h}{assist.h}"}
+00014 \textcolor{preprocessor}{#include "ross.h"}
+00015 \textcolor{preprocessor}{#include "\hyperlink{axon_8h}{models/axon.h}"}
+00016 \textcolor{preprocessor}{#include "\hyperlink{neuron_8h}{models/neuron.h}"}
+00017 \textcolor{preprocessor}{#include "\hyperlink{synapse_8h}{models/synapse.h}"}
+00018 \textcolor{preprocessor}{#include <stdbool.h>}
+00019 
+00020         \textcolor{comment}{// Variable holders for command lne params & external variables}
+\hypertarget{model__main_8h_source_l00024}{}\hyperlink{model__main_8h_a67e8e45768f76b984a60fcff2b7c51aa}{00024} \textcolor{comment}{}\textcolor{keywordtype}{int} \hyperlink{model__main_8h_a67e8e45768f76b984a60fcff2b7c51aa}{NEURONS\_IN\_CORE} = 256;
+\hypertarget{model__main_8h_source_l00026}{}\hyperlink{model__main_8h_a076b99099b46431255982b2bb8ce06fb}{00026} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a076b99099b46431255982b2bb8ce06fb}{SYNAPSES\_IN\_CORE} = 0;
+\hypertarget{model__main_8h_source_l00028}{}\hyperlink{model__main_8h_a519a06367b2b3f793c56d3ab78f5b2ef}{00028} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a519a06367b2b3f793c56d3ab78f5b2ef}{AXONS\_IN\_CORE} = 256;
+00029 \textcolor{comment}{/* Calculated number of cores in simulation */}
+\hypertarget{model__main_8h_source_l00030}{}\hyperlink{model__main_8h_a142b2655c5a899956164ef4e1c394fea}{00030} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a142b2655c5a899956164ef4e1c394fea}{CORES\_IN\_SIM};
 \hypertarget{model__main_8h_source_l00034}{}\hyperlink{model__main_8h_a74019486208bb1d640927710d5344a94}{00034} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a74019486208bb1d640927710d5344a94}{GEN\_ON} = 1;
 \hypertarget{model__main_8h_source_l00035}{}\hyperlink{model__main_8h_ab42fd7d6d043114d1147acc77bd7e867}{00035} \textcolor{keywordtype}{bool} \hyperlink{model__main_8h_ab42fd7d6d043114d1147acc77bd7e867}{GEN\_RND} = 1;
 \hypertarget{model__main_8h_source_l00036}{}\hyperlink{model__main_8h_a516f1496efbe86dedb0e2883bb7e7834}{00036} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a516f1496efbe86dedb0e2883bb7e7834}{RND\_MODE} = 0;
@@ -44,28 +36,39 @@
 \hypertarget{model__main_8h_source_l00041}{}\hyperlink{model__main_8h_a0a9f8592bd29be6c5c7433c3c0bf42dd}{00041} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a0a9f8592bd29be6c5c7433c3c0bf42dd}{SP\_DBG} = 0;
 00042 
 00043 
-00044 \textcolor{comment}{/**  Determines the maximum and minimum thresholds for a neuron to fire.}
-00045 \textcolor{comment}{ */}
 \hypertarget{model__main_8h_source_l00046}{}\hyperlink{model__main_8h_a433873baf41da436ba9c1734c8c5ddd2}{00046} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a433873baf41da436ba9c1734c8c5ddd2}{THRESHOLD\_MAX} = 100;
-00047 \textcolor{comment}{/**}
-00048 \textcolor{comment}{ *  Minimum threshold. @see THRESHOLD\_MAX}
-00049 \textcolor{comment}{ */}
 \hypertarget{model__main_8h_source_l00050}{}\hyperlink{model__main_8h_a55f4484944f4174b5e677c0a71b30e4a}{00050} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a55f4484944f4174b5e677c0a71b30e4a}{THRESHOLD\_MIN} = 30;
-00051 \textcolor{comment}{/**}
-00052 \textcolor{comment}{ *  Each neuron is connected to the synapses (inputs) within the core it is running in.}
-00053 \textcolor{comment}{ *  These parameters adjust the input weight given to each synapse. */}
 \hypertarget{model__main_8h_source_l00054}{}\hyperlink{model__main_8h_a20ef6d41d2f384358522fb59fb6226cb}{00054} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_a20ef6d41d2f384358522fb59fb6226cb}{SYNAPSE\_WEIGHT\_MAX} = 10;
-00055 \textcolor{comment}{/** Minimum synapse weight. @see SYNAPSE\_WEIGHT\_MAX */}
 \hypertarget{model__main_8h_source_l00056}{}\hyperlink{model__main_8h_af38a0e2e2483ef81f7ea5175c366ce82}{00056} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_af38a0e2e2483ef81f7ea5175c366ce82}{SYNAPSE\_WEIGHT\_MIN} = 1;
-\hypertarget{model__main_8h_source_l00057}{}\hyperlink{model__main_8h_a776ede5752cb807ce8cc1a9c82182bdd}{00057} \hyperlink{model__main_8h_a776ede5752cb807ce8cc1a9c82182bdd}{tw\_stime} \hyperlink{model__main_8h_a776ede5752cb807ce8cc1a9c82182bdd}{PER\_SYNAPSE\_DET\_P} = .50;
+\hypertarget{model__main_8h_source_l00057}{}\hyperlink{model__main_8h_a776ede5752cb807ce8cc1a9c82182bdd}{00057} tw\_stime \hyperlink{model__main_8h_a776ede5752cb807ce8cc1a9c82182bdd}{PER\_SYNAPSE\_DET\_P} = .50;
 00058 
 00059     \textcolor{comment}{//Neuron Tuning variables:}
 00060 
 00061     \textcolor{comment}{//Simulation Variables}
-00062 \textcolor{comment}{/**CORE\_SIZE is equal to the number of axions * number of aneurons + num neurons + num axions */}
-\hypertarget{model__main_8h_source_l00063}{}\hyperlink{model__main_8h_ad39b86a0b748731175572436f6672264}{00063} \textcolor{keywordtype}{int} \hyperlink{model__main_8h_ad39b86a0b748731175572436f6672264}{CORE\_SIZE};
+\hypertarget{model__main_8h_source_l00063}{}\hyperlink{model__main_8h_ad39b86a0b748731175572436f6672264}{00063} \textcolor{comment}{}\textcolor{keywordtype}{int} \hyperlink{model__main_8h_ad39b86a0b748731175572436f6672264}{CORE\_SIZE};
 00064 
-00065 
-00066 
-00067 \textcolor{preprocessor}{#}\textcolor{preprocessor}{endif} \textcolor{comment}{/* defined(\_\_ROSS\_TOP\_\_model\_main\_\_) */}
+00065 \textcolor{comment}{/* **** Model Main Function */}
+00070 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_a614c89653e656c2b0436bed7f2c8de3e}{createLPs}();
+00076 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_a7a8df3f99e1d582c6c136b16d6e34d13}{pre\_run}();
+00077 
+00083 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_a8022723eba89664cca80e179b80a2b37}{neuron\_init}(\hyperlink{structneuron_state}{neuronState} *s, tw\_lp *lp);
+00091 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_a801f93205937969fea2eff0bf2e76de9}{setSynapseWeight}(\hyperlink{structneuron_state}{neuronState} *s, tw\_lp *lp, \textcolor{keywordtype}{int} synapseID);
+00092 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_a9309446aa05714b141a3d3caae4254db}{neuron\_event}(\hyperlink{structneuron_state}{neuronState} *s, tw\_bf *CV, \hyperlink{struct_msg___data}{Msg\_Data} *M, tw\_lp *lp);
+00093 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_a4bd8bcd9c6de148a9f5c84fadd51106c}{neuron\_reverse}(\hyperlink{structneuron_state}{neuronState} *, tw\_bf *, \hyperlink{struct_msg___data}{Msg\_Data} *, tw\_lp *);
+00094 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_acac9e41bea7d1d0911a0220de60a37b0}{neuron\_final}(\hyperlink{structneuron_state}{neuronState} *s, tw\_lp *lp);
+00095 
+00096 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_a579d8e5af0b1c0a80c8e83b7a534f873}{synapse\_init}(\hyperlink{structsynapse_state}{synapseState} *s, tw\_lp *lp);
+00097 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_aea7de5bc5028e2df35cf3fe64f6cca6c}{synapse\_event}(\hyperlink{structsynapse_state}{synapseState} *s, tw\_bf *, \hyperlink{struct_msg___data}{Msg\_Data} *M, tw\_lp *lp);
+00098 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_ae7966fd834efb0fe64477f6f8c2205f3}{synapse\_reverse}(\hyperlink{structsynapse_state}{synapseState} *, tw\_bf *, 
+      \hyperlink{struct_msg___data}{Msg\_Data} *M, tw\_lp *);
+00099 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_a3d695e7995cce87a03d6407d801e043d}{synapse\_final}(\hyperlink{structsynapse_state}{synapseState} *s, tw\_lp *lp);
+00100 
+00101 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_aa1b78ccf8fb2ff34c960d4c55576c714}{axon\_init}(\hyperlink{structaxon_state}{axonState} *s, tw\_lp *lp);
+00102 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_a3c053cd53c8082f6cfdd74666d2a484b}{axon\_event}(\hyperlink{structaxon_state}{axonState} *s, tw\_bf *, \hyperlink{struct_msg___data}{Msg\_Data} *M, tw\_lp *lp);
+00103 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_a5d4a72afee6ac1e8fd422d8f85a338b4}{axon\_reverse}(\hyperlink{structaxon_state}{axonState} *, tw\_bf *, \hyperlink{struct_msg___data}{Msg\_Data} *M, tw\_lp *);
+00104 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_a9f5c1071ccef11cdc8027264fca860c7}{axon\_final}(\hyperlink{structaxon_state}{axonState} *s, tw\_lp *lp);
+00110 \textcolor{keywordtype}{void} \hyperlink{model__main_8h_a9397f1f0e189cd7dac262423993811e4}{mapping}(tw\_lp gid);
+00111 
+00112 
+00113 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* defined(\_\_ROSS\_TOP\_\_model\_main\_\_) */}\textcolor{preprocessor}{}
 \end{DoxyCode}

@@ -1,11 +1,11 @@
-\hypertarget{input__simulator_8c}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/input\+\_\+simulator.c File Reference}
-\label{input__simulator_8c}\index{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/input\+\_\+simulator.\+c@{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/input\+\_\+simulator.\+c}}
+\hypertarget{input__simulator_8c}{}\section{/home/mplagge/development/tnt\+\_\+benchmark/input\+\_\+simulator.c File Reference}
+\label{input__simulator_8c}\index{/home/mplagge/development/tnt\+\_\+benchmark/input\+\_\+simulator.\+c@{/home/mplagge/development/tnt\+\_\+benchmark/input\+\_\+simulator.\+c}}
 {\ttfamily \#include \char`\"{}input\+\_\+simulator.\+h\char`\"{}}\\*
 Include dependency graph for input\+\_\+simulator.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=338pt]{input__simulator_8c__incl}
+\includegraphics[width=340pt]{input__simulator_8c__incl}
 \end{center}
 \end{figure}
 \subsection*{Functions}
@@ -29,6 +29,10 @@ bool \hyperlink{input__simulator_8c_a7ffa6df128d9c249ace6677ae62d1723}{uniform\+
 Definition at line \hyperlink{input__simulator_8c_source_l00010}{10} of file \hyperlink{input__simulator_8c_source}{input\+\_\+simulator.\+c}.
 
 
+
+References \hyperlink{input__simulator_8h_source_l00050}{input\+Simulator\+State\+::random\+Rate}.
+
+
 \begin{DoxyCode}
 00010                                            \{
 00011     \textcolor{keywordtype}{bool} willFire = \textcolor{keyword}{false};
@@ -38,4 +42,5 @@ Definition at line \hyperlink{input__simulator_8c_source_l00010}{10} of file \hy
 00015     \textcolor{keywordflow}{if}(tw\_rand\_unif(str) < st->\hyperlink{structinput_simulator_state_a1333eb5695ae83d1ffccf24b08bc6288}{randomRate})
 00016         willFire = \textcolor{keyword}{true};
 00017     \textcolor{keywordflow}{return} willFire;
-00018 \}\end{DoxyCode}
+00018 \}
+\end{DoxyCode}

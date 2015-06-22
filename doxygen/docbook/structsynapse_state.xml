@@ -52,14 +52,7 @@
             <para>
                 <itemizedlist>
                     <listitem>
-                        <para>_statT neuronMsgSent</para>
-                    </listitem>
-                </itemizedlist>
-            </para>
-            <para>
-                <itemizedlist>
-                    <listitem>
-                        <para>_statT synapseMsgSent</para>
+                        <para>_statT msgSent</para>
                     </listitem>
                 </itemizedlist>
             </para>
@@ -76,7 +69,7 @@
 <para>getNextEventTS(tw_lp* lp). Synapses within the core, I.E., neuron nums &lt; j-1, send a message at ε to the next synapse in the core. This simulates the &quot;synaptic crossbar&quot; found in the TrueNorth architecture. Synapses also have stats on sent neuron messages, and sent synapse messages. </para>
 </formalpara>
 </para>
-                <para>Definition at line 18 of file synapse.h</para>
+                <para>Definition at line 17 of file synapse.h</para>
                 <para>The Documentation for this struct was generated from the following file: </para>
                 <para><itemizedlist><listitem><para>synapse.h</para></listitem></itemizedlist></para>
         </simplesect>

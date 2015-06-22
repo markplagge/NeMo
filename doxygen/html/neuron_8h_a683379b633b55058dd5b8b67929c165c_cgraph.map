@@ -1,0 +1,4 @@
+<map id="neuronFire" name="neuronFire">
+<area shape="rect" id="node2" href="$assist_8c.html#aa961bc9b414f1429b123fc8212c989fd" title="Given a tw_stime, returns the next big&#45;tick that will happen. " alt="" coords="136,5,248,32"/>
+<area shape="rect" id="node3" href="$assist_8c.html#a4d378196b7fceed090d64ec8820b4065" title="Given a tw_stime, returns the current big tick. " alt="" coords="296,5,423,32"/>
+</map>

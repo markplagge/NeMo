@@ -53,7 +53,7 @@ void * neuron, tw_stime now)<para><emphasis>Reverse leak function for use when n
                 <itemizedlist>
                     <listitem>
                         <para>void <link linkend="neuron_8c_1a64dc379b459a2b07b40bce35381210e8">linearLeak</link> (
-void * neuron, tw_stime now)<para><emphasis>A linear leak function.</emphasis></para>
+void * neuron, tw_stime now)<para><emphasis>A linear leak function - uses monotonic up and down leaks.</emphasis></para>
 </para>
                     </listitem>
                 </itemizedlist>
@@ -73,15 +73,15 @@ void * neuron, tw_stime now)<para><emphasis>Reverse leak function neurons that h
       <description>
 <para>Reset function defs.</para>
 
-<para>Neuron reset functions will change the neuron state without saving the previous state. All voltage state saving must be handled in the neuron event function <link linkend="neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674">neuronReceiveMessage()</link>. <para><link linkend="todo_1_todo000002">Todo</link> 
+<para>Neuron reset functions will change the neuron state without saving the previous state. All voltage state saving must be handled in the neuron event function <link linkend="neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674">neuronReceiveMessage()</link>. <para><link linkend="todo_1_todo000005">Todo</link> 
 <para>: Check that reverse reset functions are needed, since previous voltage is stored in the neuron. </para>
 </para></para>
 </description>
             <para>
                 <itemizedlist>
                     <listitem>
-                        <para>void <link linkend="neuron_8c_1a7f8eaa35f03747c795a2b727b364537b">resetZero</link> (
-void * neuronState)<para><emphasis>Resets neuron voltage to 0 after firing.</emphasis></para>
+                        <para>void <link linkend="neuron_8c_1a233aa7ebe6cbfb664fe366a05a8dac1f">resetNormal</link> (
+void * neuronState)<para><emphasis>Resets neuron voltage to \form#1 after firing.</emphasis></para>
 </para>
                     </listitem>
                 </itemizedlist>
@@ -129,8 +129,8 @@ void * neuronState)</para>
             <para>
                 <itemizedlist>
                     <listitem>
-                        <para>bool <link linkend="neuron_8c_1a92d5882a15e11e2a6733483d51428e46">neuronShouldFire</link> (
-<link linkend="structneuron_state">neuronState</link> * st)<para><emphasis>Checks to see if a neuron should fire.</emphasis></para>
+                        <para>bool <link linkend="neuron_8c_1a3520b013e0c2f711b9f5c16e19306be6">neuronShouldFire</link> (
+<link linkend="structneuron_state">neuronState</link> * st, tw_lp * lp)<para><emphasis>Checks to see if a neuron should fire.</emphasis></para>
 </para>
                     </listitem>
                 </itemizedlist>
@@ -138,8 +138,8 @@ void * neuronState)</para>
             <para>
                 <itemizedlist>
                     <listitem>
-                        <para>void <link linkend="neuron_8c_1ae071ef984b7e0dd4ec38fca91e0abe39">neuronFire</link> (
-<link linkend="structneuron_state">neuronState</link> * st, tw_stime time, <link linkend="struct_msg___data">Msg_Data</link> * m)<para><emphasis>neuronFire manages a firing event.</emphasis></para>
+                        <para>void <link linkend="neuron_8c_1a683379b633b55058dd5b8b67929c165c">neuronFire</link> (
+<link linkend="structneuron_state">neuronState</link> * st, tw_stime time, tw_lp * lp)<para><emphasis>neuronFire manages a firing event.</emphasis></para>
 </para>
                     </listitem>
                 </itemizedlist>
@@ -147,8 +147,8 @@ void * neuronState)</para>
             <para>
                 <itemizedlist>
                     <listitem>
-                        <para>void <link linkend="neuron_8c_1ab1f4997e4bfe11e78faa6d37748aee67">neuronPostFire</link> (
-<link linkend="structneuron_state">neuronState</link> * st, tw_stime time, <link linkend="struct_msg___data">Msg_Data</link> * m)<para><emphasis>neuronPostFire manages post-firing events, including reset functions</emphasis></para>
+                        <para>void <link linkend="neuron_8c_1a766dff9e530486b055e97ebe392268b8">sendHeartbeat</link> (
+<link linkend="structneuron_state">neuronState</link> * st, tw_lp * lp, tw_stime time)<para><emphasis>Function that sends a heartbeat message to this neuron.</emphasis></para>
 </para>
                     </listitem>
                 </itemizedlist>
@@ -156,15 +156,12 @@ void * neuronState)</para>
             <para>
                 <itemizedlist>
                     <listitem>
-                        <para>void <link linkend="neuron_8c_1a06ee765bfae45fe9b7f0619bf4abe63d">generateWaitEvent</link> (
-<link linkend="structneuron_state">neuronState</link> * st, tw_stime time, tw_lp * lp)<para><emphasis>generateWaitEvent creates a new wait event to this neuron for big-tick synchronization</emphasis></para>
+                        <para>void <link linkend="neuron_8c_1afee2e0acc66d8d10aee8d52c8d245c82">stochasticIntegrate</link> (
+<link linkend="assist_8h_1aa73c5ea0fe4ba938c96e6771b38dcb2a">_weightT</link> weight, <link linkend="structneuron_state">neuronState</link> * st, tw_lp * lp)<para><emphasis>Neuron stochastic integration function - for use with stochastic leaks and synapse messages.</emphasis></para>
 </para>
                     </listitem>
                 </itemizedlist>
             </para>
-        </section>
-        <section>
-            <title>Functions</title>
             <para>
                 <itemizedlist>
                     <listitem>
@@ -174,10 +171,27 @@ void * neuronState)</para>
                     </listitem>
                 </itemizedlist>
             </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="neuron_8c_1aabaff47eadb1e61b34c19b6e982f6511">neuronPostIntegrate</link> (
+<link linkend="structneuron_state">neuronState</link> * st, tw_stime time, tw_lp * lp, bool willFire)<para><emphasis>Function that runs after integration &amp; firing, for reset function and threshold bounce calls.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="neuron_8c_1aaae24f12a4b2a537740f29d65eb3e51e">neronReverseSate</link> (
+<link linkend="structneuron_state">neuronState</link> * s, tw_bf * CV, <link linkend="struct_msg___data">Msg_Data</link> * M, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
         </section>
     <simplesect>
         <title>Detailed Description</title>
-    <para>Definition in file /Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.c</para>
+    <para>Definition in file /home/mplagge/development/tnt_benchmark/models/neuron.c</para>
     </simplesect>
     <literallayout><computeroutput>
 1 <emphasis class="comment">//</emphasis>
@@ -201,7 +215,7 @@ void * neuronState)</para>
 30 &#32;&#32;&#32;&#32;tw_stime&#32;bigTick&#32;=&#32;<link linkend="assist_8c_1a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</link>(now);
 31 &#32;&#32;&#32;&#32;tw_stime&#32;delta&#32;=&#32;bigTick&#32;-&#32;s-&gt;<link linkend="structneuron_state_1a6f4e4d8fc1cf0257b486e01f628d2656">lastLeakTime</link>;
 32 
-33 &#32;&#32;&#32;&#32;s-&gt;<link linkend="structneuron_state_1a0fdd8f44c4105a94e17c4c58a51db486">membranePot</link>&#32;-=&#32;s-&gt;leakRate&#32;*&#32;delta;
+33 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//s-&gt;membranePot&#32;-=&#32;s-&gt;leakRate&#32;*&#32;delta;</emphasis>
 34 &#32;&#32;&#32;&#32;s-&gt;<link linkend="structneuron_state_1a6f4e4d8fc1cf0257b486e01f628d2656">lastLeakTime</link>&#32;=&#32;now;
 35 }
 36 
@@ -209,38 +223,39 @@ void * neuronState)</para>
 38 &#32;&#32;&#32;&#32;<link linkend="structneuron_state">neuronState</link>&#32;*s&#32;=&#32;(<link linkend="structneuron_state">neuronState</link>&#32;*)neuron;
 39 &#32;&#32;&#32;&#32;tw_stime&#32;delta&#32;=&#32;s-&gt;<link linkend="structneuron_state_1a6f4e4d8fc1cf0257b486e01f628d2656">lastLeakTime</link>&#32;-&#32;now;
 40 
-41 &#32;&#32;&#32;&#32;s-&gt;<link linkend="structneuron_state_1a0fdd8f44c4105a94e17c4c58a51db486">membranePot</link>&#32;+=&#32;s-&gt;leakRate&#32;*&#32;delta;
+41 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//s-&gt;membranePot&#32;+=&#32;s-&gt;leakRate&#32;*&#32;delta;</emphasis>
 42 &#32;&#32;&#32;&#32;s-&gt;<link linkend="structneuron_state_1a6f4e4d8fc1cf0257b486e01f628d2656">lastLeakTime</link>&#32;=&#32;now;
 43 }
 44 
 45 
 46 
-<link linkend="neuron_8h_1a7f8eaa35f03747c795a2b727b364537b">56 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1a7f8eaa35f03747c795a2b727b364537b">resetZero</link>(<emphasis class="keywordtype">void</emphasis>&#32;*<link linkend="structneuron_state">neuronState</link>)&#32;{
-57 &#32;&#32;&#32;&#32;<emphasis class="keyword">struct&#32;</emphasis><link linkend="struct_neuron_model">NeuronModel</link>&#32;*s&#32;=&#32;(<emphasis class="keyword">struct&#32;</emphasis><link linkend="struct_neuron_model">NeuronModel</link>&#32;*)neuronState;
-58 &#32;&#32;&#32;&#32;s-&gt;membranePot&#32;=&#32;0;&#32;<emphasis class="comment">//&#32;set&#32;current&#32;voltage&#32;to&#32;0.</emphasis>
+<link linkend="neuron_8h_1a233aa7ebe6cbfb664fe366a05a8dac1f">56 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1a233aa7ebe6cbfb664fe366a05a8dac1f">resetNormal</link>(<emphasis class="keywordtype">void</emphasis>&#32;*<link linkend="structneuron_state">neuronState</link>)&#32;{
+57 &#32;&#32;&#32;&#32;<emphasis class="keyword">struct&#32;</emphasis>NeuronModel&#32;*s&#32;=&#32;(<emphasis class="keyword">struct&#32;</emphasis>NeuronModel&#32;*)neuronState;
+58 &#32;&#32;&#32;&#32;s-&gt;membranePot&#32;=&#32;s-&gt;resetVoltage;&#32;<emphasis class="comment">//&#32;set&#32;current&#32;voltage&#32;to&#32;\f$R\f$.</emphasis>
 59 }
 60 
-<link linkend="neuron_8h_1a2e78d7d2b70bf7349c3854b3727dcc25">67 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1a2e78d7d2b70bf7349c3854b3727dcc25">resetLinear</link>(<emphasis class="keywordtype">void</emphasis>&#32;*<link linkend="structneuron_state">neuronState</link>)&#32;{
-68 &#32;&#32;&#32;&#32;<emphasis class="keyword">struct&#32;</emphasis><link linkend="struct_neuron_model">NeuronModel</link>&#32;*s&#32;=&#32;(<emphasis class="keyword">struct&#32;</emphasis><link linkend="struct_neuron_model">NeuronModel</link>&#32;*)neuronState;
-69 &#32;&#32;<emphasis class="comment">//&#32;reduce&#32;the&#32;value&#32;of&#32;the&#32;neuron&#32;based&#32;on&#32;the&#32;linear&#32;reduction&#32;function</emphasis>
-70 &#32;&#32;<emphasis class="comment">//&#32;in&#32;the&#32;paper</emphasis>
-71 &#32;&#32;&#32;&#32;<link linkend="assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</link>&#32;resetParam&#32;=&#32;(<link linkend="assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</link>)&#32;&amp;resetParam;
-72 &#32;&#32;s-&gt;membranePot&#32;=&#32;s-&gt;membranePot&#32;-&#32;resetParam;
-73 }
-74 
-<link linkend="neuron_8h_1a09e54832158e2f6abe898437979aae00">75 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1a09e54832158e2f6abe898437979aae00">reverseResetLinear</link>(<emphasis class="keywordtype">void</emphasis>&#32;*<link linkend="structneuron_state">neuronState</link>){
-76 &#32;&#32;&#32;&#32;<emphasis class="keyword">struct&#32;</emphasis><link linkend="struct_neuron_model">NeuronModel</link>&#32;*s&#32;=&#32;(<emphasis class="keyword">struct&#32;</emphasis><link linkend="struct_neuron_model">NeuronModel</link>&#32;*)neuronState;
-77 &#32;&#32;&#32;&#32;<link linkend="assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</link>&#32;resetParam&#32;=&#32;(<link linkend="assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</link>)&#32;&amp;resetParam;
-78 &#32;&#32;&#32;&#32;s-&gt;membranePot&#32;=&#32;s-&gt;membranePot&#32;+&#32;resetParam;
-79 }
-<link linkend="neuron_8h_1ae53276ccdb759ba1ea09806cbf9fc940">81 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1ae53276ccdb759ba1ea09806cbf9fc940">reverseResetZero</link>(<emphasis class="keywordtype">void</emphasis>&#32;*<link linkend="structneuron_state">neuronState</link>){
+<link linkend="neuron_8h_1a2e78d7d2b70bf7349c3854b3727dcc25">66 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1a2e78d7d2b70bf7349c3854b3727dcc25">resetLinear</link>(<emphasis class="keywordtype">void</emphasis>&#32;*<link linkend="structneuron_state">neuronState</link>)&#32;{
+67 &#32;&#32;&#32;&#32;<emphasis class="keyword">struct&#32;</emphasis>NeuronModel&#32;*s&#32;=&#32;(<emphasis class="keyword">struct&#32;</emphasis>NeuronModel&#32;*)neuronState;
+68 &#32;&#32;&#32;&#32;s-&gt;membranePot&#32;=&#32;s-&gt;membranePot&#32;-&#32;s-&gt;threshold;
+69 }
+70 
+<link linkend="neuron_8h_1a09e54832158e2f6abe898437979aae00">71 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1a09e54832158e2f6abe898437979aae00">reverseResetLinear</link>(<emphasis class="keywordtype">void</emphasis>&#32;*<link linkend="structneuron_state">neuronState</link>){
+72 &#32;&#32;&#32;&#32;<emphasis class="keyword">struct&#32;</emphasis>NeuronModel&#32;*s&#32;=&#32;(<emphasis class="keyword">struct&#32;</emphasis>NeuronModel&#32;*)neuronState;
+73 &#32;&#32;&#32;&#32;<link linkend="assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</link>&#32;resetParam&#32;=&#32;(<link linkend="assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</link>)&#32;&amp;resetParam;
+74 &#32;&#32;&#32;&#32;s-&gt;membranePot&#32;=&#32;s-&gt;membranePot&#32;+&#32;resetParam;
+75 }
+76 
+77 
+<link linkend="neuron_8h_1ae53276ccdb759ba1ea09806cbf9fc940">79 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1ae53276ccdb759ba1ea09806cbf9fc940">reverseResetZero</link>(<emphasis class="keywordtype">void</emphasis>&#32;*<link linkend="structneuron_state">neuronState</link>){
+80 
+81 }
 82 
-83 }
+83 
 84 
-85 
-<link linkend="neuron_8h_1aa6819d7492f0173f2234ba0b8b0bb674">104 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674">neuronReceiveMessage</link>(<link linkend="structneuron_state">neuronState</link>&#32;*st,&#32;tw_stime&#32;time,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*m,
-105 tw_lp&#32;*lp){
-106 &#32;&#32;&#32;&#32;<emphasis class="keywordtype">bool</emphasis>&#32;willFire&#32;=&#32;<emphasis class="keyword">false</emphasis>;
+<link linkend="neuron_8h_1aa6819d7492f0173f2234ba0b8b0bb674">103 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1aa6819d7492f0173f2234ba0b8b0bb674">neuronReceiveMessage</link>(<link linkend="structneuron_state">neuronState</link>&#32;*st,&#32;tw_stime&#32;time,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*m,
+104 tw_lp&#32;*lp){
+105 &#32;&#32;&#32;&#32;<emphasis class="keywordtype">bool</emphasis>&#32;willFire&#32;=&#32;<emphasis class="keyword">false</emphasis>;
+106 &#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1a287eb8703dbfb177165d31c8840646b8">firedLast</link>&#32;=&#32;<emphasis class="keyword">false</emphasis>;
 107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//save&#32;the&#32;previous&#32;state&#32;of&#32;the&#32;neuron:</emphasis>
 108 &#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1a50734a9ba605a083a90814b63d039a03">savedLastLeakTime</link>&#32;=&#32;st-&gt;<link linkend="structneuron_state_1a6f4e4d8fc1cf0257b486e01f628d2656">lastLeakTime</link>;
 109 &#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1a6922b3f3041346eb83cfc6352a22277b">savedLastActiveTime</link>&#32;=&#32;st-&gt;<link linkend="structneuron_state_1a0658ad1f8b57a00589c6ea84f9a4ab13">lastActiveTime</link>;
@@ -254,7 +269,7 @@ void * neuronState)</para>
 117 
 118 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//next,&#32;we&#32;will&#32;check&#32;if&#32;a&#32;heartbeat&#32;message&#32;should&#32;be&#32;sent</emphasis>
 119 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keywordflow">if</emphasis>(st-&gt;<link linkend="structneuron_state_1af8935bcba177f2f3dfb9119c39ef7dc5">receivedSynapseMsgs</link>&#32;==&#32;0)&#32;{
-120 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="neuron_8h_1a766dff9e530486b055e97ebe392268b8">sendHeartbeat</link>(st,&#32;lp,&#32;time);
+120 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="neuron_8c_1a766dff9e530486b055e97ebe392268b8">sendHeartbeat</link>(st,&#32;lp,&#32;time);
 121 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
 122 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1af8935bcba177f2f3dfb9119c39ef7dc5">receivedSynapseMsgs</link>&#32;++;
 123 
@@ -263,64 +278,121 @@ void * neuronState)</para>
 126 
 127 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keywordflow">case</emphasis>&#32;<link linkend="assist_8h_1a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e">NEURON_HEARTBEAT</link>:
 128 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1af8935bcba177f2f3dfb9119c39ef7dc5">receivedSynapseMsgs</link>&#32;=&#32;0;
-129 
-130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//Currently&#32;operates&#32;-&#32;leak-&gt;fire-&gt;(reset)</emphasis>
-131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1aa430f424f34dc59dc27736e27ec61320">doLeak</link>(st,&#32;time);
-132 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;willFire&#32;=&#32;<link linkend="neuron_8c_1a92d5882a15e11e2a6733483d51428e46">neuronShouldFire</link>(st);
-133 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keywordflow">if</emphasis>(willFire){
-134 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="neuron_8c_1ae071ef984b7e0dd4ec38fca91e0abe39">neuronFire</link>(st,&#32;time,&#32;m);
-135 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="neuron_8c_1ab1f4997e4bfe11e78faa6d37748aee67">neuronPostFire</link>(st,&#32;time,&#32;m);
-136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1afe8825076c4cf3863c677307fec63c61">fireCount</link>&#32;++;
-137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
-138 
-139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="neuron_8h_1adadd3095c39786607629697406f3d1eb">neuronPostIntegrate</link>(st,&#32;time,&#32;lp,&#32;willFire);
-140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//stats&#32;collection</emphasis>
-141 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1a71fbb9a79e8048b473b6e09d29a64bbe">SOPSCount</link>&#32;++;
-142 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keywordflow">break</emphasis>;
-143 
-144 &#32;&#32;<emphasis class="keywordflow">default</emphasis>:
-145 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//Error&#32;condition&#32;-&#32;non-valid&#32;input.</emphasis>
-146 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keywordflow">break</emphasis>;
-147 &#32;&#32;&#32;&#32;}
-148 
-149 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//store&#32;the&#32;random&#32;calls&#32;in&#32;the&#32;message:</emphasis>
-150 &#32;&#32;&#32;&#32;m-&gt;<link linkend="struct_msg___data_1a2e49a6bcc6c45ade722f746b1ea707f2">rndCallCount</link>&#32;=&#32;lp-&gt;rng-&gt;count&#32;-&#32;startCount;
+129 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//set&#32;up&#32;drawn&#32;random&#32;number&#32;for&#32;the&#32;heartbeat.</emphasis>
+130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keywordflow">if</emphasis>(st-&gt;<link linkend="structneuron_state_1aa501d6ee7cacd5435deec79c07637b08">thresholdPRNMask</link>&#32;!=&#32;0)
+131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1a296a4f04813c4882d6acd8c9074abd35">drawnRandomNumber</link>&#32;=&#32;tw_rand_integer(lp-&gt;rng,&#32;0,&#32;st-&gt;<link linkend="structneuron_state_1aa501d6ee7cacd5435deec79c07637b08">thresholdPRNMask</link>);
+132 
+133 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//Currently&#32;operates&#32;-&#32;leak-&gt;fire-&gt;(reset)</emphasis>
+134 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1aa430f424f34dc59dc27736e27ec61320">doLeak</link>(st,&#32;time);
+135 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;willFire&#32;=&#32;<link linkend="neuron_8c_1a3520b013e0c2f711b9f5c16e19306be6">neuronShouldFire</link>(st,lp);
+136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keywordflow">if</emphasis>(willFire){
+137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="neuron_8c_1a683379b633b55058dd5b8b67929c165c">neuronFire</link>(st,&#32;time,&#32;lp);
+138 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1afe8825076c4cf3863c677307fec63c61">fireCount</link>&#32;++;
+139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+140 
+141 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="neuron_8c_1aabaff47eadb1e61b34c19b6e982f6511">neuronPostIntegrate</link>(st,&#32;time,&#32;lp,&#32;willFire);
+142 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//stats&#32;collection</emphasis>
+143 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1a71fbb9a79e8048b473b6e09d29a64bbe">SOPSCount</link>&#32;++;
+144 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1a0658ad1f8b57a00589c6ea84f9a4ab13">lastActiveTime</link>&#32;=&#32;tw_now(lp);
+145 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keywordflow">break</emphasis>;
+146 
+147 &#32;&#32;<emphasis class="keywordflow">default</emphasis>:
+148 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//Error&#32;condition&#32;-&#32;non-valid&#32;input.</emphasis>
+149 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keywordflow">break</emphasis>;
+150 &#32;&#32;&#32;&#32;}
 151 
-152 &#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1ab8f63a1dfdb2992657530ff8a63fdc01">rcvdMsgCount</link>&#32;++;
-153 
+152 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//store&#32;the&#32;random&#32;calls&#32;in&#32;the&#32;message:</emphasis>
+153 &#32;&#32;&#32;&#32;m-&gt;<link linkend="struct_msg___data_1a2e49a6bcc6c45ade722f746b1ea707f2">rndCallCount</link>&#32;=&#32;lp-&gt;rng-&gt;count&#32;-&#32;startCount;
 154 
-155 
-156 }
-<link linkend="neuron_8h_1a92d5882a15e11e2a6733483d51428e46">157 </link><emphasis class="keywordtype">bool</emphasis>&#32;<link linkend="neuron_8c_1a92d5882a15e11e2a6733483d51428e46">neuronShouldFire</link>(<link linkend="structneuron_state">neuronState</link>&#32;*st){
-158 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//check&#32;negative&#32;threshold&#32;values:</emphasis>
-159 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">if</emphasis>(st-&gt;<link linkend="structneuron_state_1a0fdd8f44c4105a94e17c4c58a51db486">membranePot</link>&#32;&lt;&#32;)&#32;{
-160 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keywordflow">if</emphasis>(st-&gt;<link linkend="structneuron_state_1a3ec480684e7a2cfc67a8ef7ac1bf57b9">negThresReset</link>)&#32;{
-161 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//reset&#32;to&#32;\f$－β_j\f$</emphasis>
-162 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
-163 &#32;&#32;&#32;&#32;}
-164 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">return</emphasis>&#32;st-&gt;<link linkend="structneuron_state_1a0fdd8f44c4105a94e17c4c58a51db486">membranePot</link>&#32;&gt;&#32;st-&gt;<link linkend="structneuron_state_1a132470c4c17828c209e3403ccf7ee680">threshold</link>;
+155 &#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1ab8f63a1dfdb2992657530ff8a63fdc01">rcvdMsgCount</link>&#32;++;
+156 
+157 
+158 
+159 }
+160 
+<link linkend="neuron_8h_1a3520b013e0c2f711b9f5c16e19306be6">161 </link><emphasis class="keywordtype">bool</emphasis>&#32;<link linkend="neuron_8c_1a3520b013e0c2f711b9f5c16e19306be6">neuronShouldFire</link>(<link linkend="structneuron_state">neuronState</link>&#32;*st,&#32;tw_lp&#32;*lp){
+162 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//check&#32;negative&#32;threshold&#32;values:</emphasis>
+163 
+164 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">return</emphasis>&#32;st-&gt;<link linkend="structneuron_state_1a0fdd8f44c4105a94e17c4c58a51db486">membranePot</link>&#32;&gt;=&#32;st-&gt;<link linkend="structneuron_state_1a132470c4c17828c209e3403ccf7ee680">threshold</link>&#32;+&#32;st-&gt;<link linkend="structneuron_state_1a296a4f04813c4882d6acd8c9074abd35">drawnRandomNumber</link>;
 165 }
-<link linkend="neuron_8h_1ae071ef984b7e0dd4ec38fca91e0abe39">166 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1ae071ef984b7e0dd4ec38fca91e0abe39">neuronFire</link>(<link linkend="structneuron_state">neuronState</link>&#32;*st,&#32;tw_stime&#32;time,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*m){
-167 
-168 }
-<link linkend="neuron_8h_1ab1f4997e4bfe11e78faa6d37748aee67">169 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1ab1f4997e4bfe11e78faa6d37748aee67">neuronPostFire</link>(<link linkend="structneuron_state">neuronState</link>&#32;*st,&#32;tw_stime&#32;time,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*m){
-170 
-171 }
-<link linkend="neuron_8h_1a06ee765bfae45fe9b7f0619bf4abe63d">172 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1a06ee765bfae45fe9b7f0619bf4abe63d">generateWaitEvent</link>(<link linkend="structneuron_state">neuronState</link>&#32;*st,&#32;tw_stime&#32;time,&#32;tw_lp&#32;*lp){
-173 
-174 }
-<link linkend="neuron_8h_1ae630bdf5dd3744870968f07a6971659c">175 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1ae630bdf5dd3744870968f07a6971659c">integrateSynapse</link>(<link linkend="assist_8h_1a3f7a6e6a1210b6d9d7a42177dcb9634b">_idT</link>&#32;synapseID,<link linkend="structneuron_state">neuronState</link>&#32;*st,&#32;tw_lp&#32;*lp)&#32;{
-176 &#32;&#32;&#32;&#32;<link linkend="assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</link>&#32;adjustedWeight;
-177 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">if</emphasis>(st-&gt;perSynapseDet[synapseID]&#32;==&#32;<emphasis class="keyword">true</emphasis>)&#32;{
-178 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;adjustedWeight&#32;=&#32;st-&gt;perSynapseWeight[synapseID];
-179 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1a0fdd8f44c4105a94e17c4c58a51db486">membranePot</link>&#32;+=&#32;adjustedWeight;
-180 &#32;&#32;&#32;&#32;}&#32;<emphasis class="keywordflow">else</emphasis>&#32;{&#32;<emphasis class="comment">//stochastic&#32;mode&#32;weights:</emphasis>
-181 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</link>&#32;rand&#32;=&#32;tw_rand_integer(lp-&gt;rng,&#32;st-&gt;,&#32;&lt;#<emphasis class="keywordtype">long</emphasis>&#32;high#&gt;)
-182 
-183 }
-184 
-185 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8h_1adadd3095c39786607629697406f3d1eb">neuronPostIntegrate</link>(<link linkend="structneuron_state">neuronState</link>&#32;*st,&#32;tw_stime&#32;time,&#32;tw_lp&#32;*lp,&#32;<emphasis class="keywordtype">bool</emphasis>&#32;didFire){
-186 
-187 }
+166 
+<link linkend="neuron_8h_1a683379b633b55058dd5b8b67929c165c">167 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1a683379b633b55058dd5b8b67929c165c">neuronFire</link>(<link linkend="structneuron_state">neuronState</link>&#32;*st,&#32;tw_stime&#32;time,&#32;tw_lp&#32;*lp){
+168 &#32;&#32;&#32;&#32;tw_stime&#32;nextHeartbeat&#32;=&#32;<link linkend="assist_8c_1aa961bc9b414f1429b123fc8212c989fd">getNextBigTick</link>(time);
+169 &#32;&#32;&#32;&#32;tw_event&#32;*newEvent&#32;=&#32;tw_event_new(st-&gt;<link linkend="structneuron_state_1a4199c14c5aabfd52f441e01623bdc84c">dendriteGlobalDest</link>,&#32;nextHeartbeat,&#32;lp);
+170 &#32;&#32;&#32;&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*data&#32;=&#32;(<link linkend="struct_msg___data">Msg_Data</link>&#32;*)&#32;tw_event_data(newEvent);
+171 &#32;&#32;&#32;&#32;data-&gt;<link linkend="struct_msg___data_1a015b6eb45982e1842ee8fc389a099ced">eventType</link>&#32;=&#32;<link linkend="assist_8h_1a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0">NEURON_OUT</link>;
+172 &#32;&#32;&#32;&#32;data-&gt;<link linkend="struct_msg___data_1aefc820e92a74047ec7ed74c1c45f818f">localID</link>&#32;=&#32;st-&gt;<link linkend="structneuron_state_1ac24762c24aede292a2ce5df78114881c">myLocalID</link>;
+173 &#32;&#32;&#32;&#32;tw_event_send(newEvent);
+174 &#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1a287eb8703dbfb177165d31c8840646b8">firedLast</link>&#32;=&#32;<emphasis class="keyword">true</emphasis>;
+175 }
+176 
+177 
+178 
+<link linkend="neuron_8h_1a766dff9e530486b055e97ebe392268b8">179 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1a766dff9e530486b055e97ebe392268b8">sendHeartbeat</link>(<link linkend="structneuron_state">neuronState</link>&#32;*st,&#32;tw_lp&#32;*lp,&#32;tw_stime&#32;time){
+180 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//heartbeat&#32;message&#32;gen:</emphasis>
+181 &#32;&#32;&#32;&#32;tw_stime&#32;nextHeartbeat&#32;=&#32;<link linkend="assist_8c_1aa961bc9b414f1429b123fc8212c989fd">getNextBigTick</link>(time);
+182 &#32;&#32;&#32;&#32;tw_event&#32;*newEvent&#32;=&#32;tw_event_new(lp-&gt;gid,&#32;nextHeartbeat,&#32;lp);
+183 &#32;&#32;&#32;&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*data&#32;=&#32;(<link linkend="struct_msg___data">Msg_Data</link>&#32;*)&#32;tw_event_data(newEvent);
+184 &#32;&#32;&#32;&#32;data-&gt;<link linkend="struct_msg___data_1a015b6eb45982e1842ee8fc389a099ced">eventType</link>&#32;=&#32;<link linkend="assist_8h_1a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e">NEURON_HEARTBEAT</link>;
+185 &#32;&#32;&#32;&#32;data-&gt;<link linkend="struct_msg___data_1aefc820e92a74047ec7ed74c1c45f818f">localID</link>&#32;=&#32;st-&gt;<link linkend="structneuron_state_1ac24762c24aede292a2ce5df78114881c">myLocalID</link>;
+186 &#32;&#32;&#32;&#32;tw_event_send(newEvent);
+187 
+188 
+189 }
+190 
+<link linkend="neuron_8h_1afee2e0acc66d8d10aee8d52c8d245c82">191 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1afee2e0acc66d8d10aee8d52c8d245c82">stochasticIntegrate</link>(<link linkend="assist_8h_1aa73c5ea0fe4ba938c96e6771b38dcb2a">_weightT</link>&#32;weight,&#32;<link linkend="structneuron_state">neuronState</link>&#32;*st,&#32;tw_lp&#32;*lp){
+192 &#32;&#32;&#32;&#32;<emphasis class="keywordtype">long</emphasis>&#32;drawnRandom&#32;=&#32;st-&gt;<link linkend="structneuron_state_1a296a4f04813c4882d6acd8c9074abd35">drawnRandomNumber</link>;
+193 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">if</emphasis>&#32;(<link linkend="assist_8h_1abbf94867faa4abd8c53c87576efd05f3">BINCOMP</link>(weight,&#32;drawnRandom)){
+194 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1a0fdd8f44c4105a94e17c4c58a51db486">membranePot</link>&#32;+=&#32;<link linkend="assist_8h_1a95ed41486ca0ed53262e4b8934d4afac">SGN</link>(weight);
+195 &#32;&#32;&#32;&#32;}
+196 }
+197 
+198 
+<link linkend="neuron_8h_1ae630bdf5dd3744870968f07a6971659c">199 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1ae630bdf5dd3744870968f07a6971659c">integrateSynapse</link>(<link linkend="assist_8h_1a3f7a6e6a1210b6d9d7a42177dcb9634b">_idT</link>&#32;synapseID,<link linkend="structneuron_state">neuronState</link>&#32;*st,&#32;tw_lp&#32;*lp)&#32;{
+200 
+201 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">if</emphasis>(st-&gt;<link linkend="structneuron_state_1a4568f103808a436a62d7c7c47dc90e9b">synapticWeightProbSelect</link>[synapseID]&#32;==&#32;<emphasis class="keyword">true</emphasis>)&#32;{
+202 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="neuron_8c_1afee2e0acc66d8d10aee8d52c8d245c82">stochasticIntegrate</link>(st-&gt;<link linkend="structneuron_state_1aa71c0acf1edf08865e1f9729a2414efa">synapticWeightProb</link>[synapseID],&#32;st,&#32;lp);
+203 &#32;&#32;&#32;&#32;}&#32;<emphasis class="keywordflow">else</emphasis>&#32;{&#32;<emphasis class="comment">//det.&#32;mode&#32;integrate:</emphasis>
+204 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</link>&#32;adjustedWeight&#32;=&#32;st-&gt;<link linkend="structneuron_state_1aa71c0acf1edf08865e1f9729a2414efa">synapticWeightProb</link>[synapseID];
+205 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1a0fdd8f44c4105a94e17c4c58a51db486">membranePot</link>&#32;+=&#32;adjustedWeight;
+206 &#32;&#32;&#32;&#32;}
+207 
+208 
+209 }
+<link linkend="neuron_8h_1aabaff47eadb1e61b34c19b6e982f6511">214 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1aabaff47eadb1e61b34c19b6e982f6511">neuronPostIntegrate</link>(<link linkend="structneuron_state">neuronState</link>&#32;*st,&#32;tw_stime&#32;time,&#32;tw_lp&#32;*lp,&#32;<emphasis class="keywordtype">bool</emphasis>&#32;willFire){
+215 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">if</emphasis>(willFire){&#32;<emphasis class="comment">//&#32;neuron&#32;will/did&#32;fire:</emphasis>
+216 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1afcf9d931e4fda519c43b4efeab687463">doReset</link>(st);
+217 &#32;&#32;&#32;&#32;}&#32;<emphasis class="keywordflow">else</emphasis>&#32;<emphasis class="keywordflow">if</emphasis>&#32;(st-&gt;<link linkend="structneuron_state_1a0fdd8f44c4105a94e17c4c58a51db486">membranePot</link>&#32;&lt;&#32;-1&#32;*&#32;(st-&gt;<link linkend="structneuron_state_1a678bcd9f031e290178cd5d2855e74279">negativeThreshold</link>&#32;*&#32;st-&gt;<link linkend="structneuron_state_1a3ec480684e7a2cfc67a8ef7ac1bf57b9">negThresReset</link>&#32;+&#32;(st-&gt;<link linkend="structneuron_state_1a678bcd9f031e290178cd5d2855e74279">negativeThreshold</link>&#32;+&#32;st-&gt;<link linkend="structneuron_state_1a296a4f04813c4882d6acd8c9074abd35">drawnRandomNumber</link>))){
+218 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//sanity&#32;variables&#32;for&#32;the&#32;formulaic&#32;reset/bounce&#32;instead&#32;of&#32;calling&#32;functions:</emphasis>
+219 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="assist_8h_1a5537d30256d443ce07efd3d879a4a720">_threshT</link>&#32;B&#32;=&#32;st-&gt;<link linkend="structneuron_state_1a678bcd9f031e290178cd5d2855e74279">negativeThreshold</link>;
+220 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keywordtype">int</emphasis>&#32;K&#32;=&#32;st-&gt;<link linkend="structneuron_state_1a3ec480684e7a2cfc67a8ef7ac1bf57b9">negThresReset</link>;
+221 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="keywordtype">int</emphasis>&#32;G&#32;=&#32;st-&gt;<link linkend="structneuron_state_1af67bb650aa3150a6a31e16a874d71f91">resetMode</link>;
+222 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="assist_8h_1a520ac495f188eb0bc5645cffa3c4328b">_randT</link>&#32;n&#32;=&#32;st-&gt;<link linkend="structneuron_state_1a296a4f04813c4882d6acd8c9074abd35">drawnRandomNumber</link>;
+223 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</link>&#32;R&#32;=&#32;st-&gt;<link linkend="structneuron_state_1af69a2c108fe9e7154fa047ea5acc5d80">resetVoltage</link>;
+224 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="assist_8h_1abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</link>&#32;V&#32;=&#32;st-&gt;<link linkend="structneuron_state_1a0fdd8f44c4105a94e17c4c58a51db486">membranePot</link>;
+225 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st-&gt;<link linkend="structneuron_state_1a0fdd8f44c4105a94e17c4c58a51db486">membranePot</link>&#32;=&#32;(-(B*K)&#32;+&#32;(-(<link linkend="assist_8h_1acfde2b62c9c4e0413f3066bbd65c428a">DT</link>(G))&#32;*&#32;R&#32;+
+226 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="assist_8h_1acfde2b62c9c4e0413f3066bbd65c428a">DT</link>(G-1)&#32;*&#32;(V&#32;+&#32;(B&#32;+&#32;n))&#32;+
+227 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="assist_8h_1acfde2b62c9c4e0413f3066bbd65c428a">DT</link>(G-2)&#32;*&#32;V)&#32;*&#32;(1-K));
+228 
+229 &#32;&#32;&#32;&#32;}
+230 
+231 }
+<link linkend="neuron_8h_1aaae24f12a4b2a537740f29d65eb3e51e">232 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="neuron_8c_1aaae24f12a4b2a537740f29d65eb3e51e">neronReverseSate</link>(<link linkend="structneuron_state">neuronState</link>&#32;*s,&#32;tw_bf&#32;*CV,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*M,&#32;tw_lp&#32;*lp)&#32;{
+233 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//reverse&#32;function.</emphasis>
+234 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">if</emphasis>(M-&gt;<link linkend="struct_msg___data_1a015b6eb45982e1842ee8fc389a099ced">eventType</link>&#32;==&#32;<link linkend="assist_8h_1a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb">SYNAPSE_OUT</link>)
+235 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;s-&gt;<link linkend="structneuron_state_1af8935bcba177f2f3dfb9119c39ef7dc5">receivedSynapseMsgs</link>&#32;--;
+236 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">else</emphasis>
+237 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;s-&gt;<link linkend="structneuron_state_1a71fbb9a79e8048b473b6e09d29a64bbe">SOPSCount</link>&#32;--;
+238 
+239 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">if</emphasis>(s-&gt;<link linkend="structneuron_state_1a287eb8703dbfb177165d31c8840646b8">firedLast</link>&#32;==&#32;<emphasis class="keyword">true</emphasis>){
+240 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;s-&gt;<link linkend="structneuron_state_1afe8825076c4cf3863c677307fec63c61">fireCount</link>&#32;--;
+241 &#32;&#32;&#32;&#32;}
+242 
+243 &#32;&#32;&#32;&#32;s-&gt;<link linkend="structneuron_state_1a0fdd8f44c4105a94e17c4c58a51db486">membranePot</link>&#32;&#32;=&#32;s-&gt;<link linkend="structneuron_state_1a5efe5de0478ea513ed5d90d89a49fcca">savedMembranePot</link>;
+244 &#32;&#32;&#32;&#32;s-&gt;<link linkend="structneuron_state_1a0658ad1f8b57a00589c6ea84f9a4ab13">lastActiveTime</link>&#32;=&#32;s-&gt;<link linkend="structneuron_state_1a6922b3f3041346eb83cfc6352a22277b">savedLastActiveTime</link>;
+245 &#32;&#32;&#32;&#32;s-&gt;<link linkend="structneuron_state_1a6f4e4d8fc1cf0257b486e01f628d2656">lastLeakTime</link>&#32;=&#32;s-&gt;<link linkend="structneuron_state_1a50734a9ba605a083a90814b63d039a03">savedLastLeakTime</link>;
+246 
+247 
+248 }
     </computeroutput></literallayout>
 </section>

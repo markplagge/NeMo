@@ -1,5 +1,5 @@
 \hypertarget{axon_8h_source}{}\section{axon.\+h}
-\label{axon_8h_source}\index{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/axon.\+h@{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/models/axon.\+h}}
+\label{axon_8h_source}\index{/home/mplagge/development/tnt\+\_\+benchmark/models/axon.\+h@{/home/mplagge/development/tnt\+\_\+benchmark/models/axon.\+h}}
 
 \begin{DoxyCode}
 00001 \textcolor{comment}{//}
@@ -10,16 +10,20 @@
 00006 \textcolor{comment}{//}
 00007 \textcolor{comment}{//}
 00008 
-00009 \textcolor{preprocessor}{#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{\_\_ROSS\_TOP\_\_axon\_\_}
-00010 \textcolor{preprocessor}{#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{\_\_ROSS\_TOP\_\_axon\_\_}
+00009 \textcolor{preprocessor}{#ifndef \_\_ROSS\_TOP\_\_axon\_\_}
+00010 \textcolor{preprocessor}{#define \_\_ROSS\_TOP\_\_axon\_\_}
 00011 
-00012 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{stdio}\textcolor{preprocessor}{.}\textcolor{preprocessor}{h}\textcolor{preprocessor}{>}
-00013 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{"../assist.h"}
-\hypertarget{axon_8h_source_l00014}{}\hyperlink{structaxon_state}{00014} \textcolor{keyword}{typedef} \textcolor{keyword}{struct} \hyperlink{structaxon_state}{AxonState} \{
-\hypertarget{axon_8h_source_l00015}{}\hyperlink{structaxon_state_a7fc444364b1559859bccdf91f1e95475}{00015}     \hyperlink{assist_8h_ad77e6fc5a9b03d46e7c97b7c4b92e89f}{\_statT} \hyperlink{structaxon_state_a7fc444364b1559859bccdf91f1e95475}{recvMsgCount};
-\hypertarget{axon_8h_source_l00016}{}\hyperlink{structaxon_state_a217ba44fb923dc4dc62bb73b14e61517}{00016}     \hyperlink{assist_8h_ad77e6fc5a9b03d46e7c97b7c4b92e89f}{\_statT} \hyperlink{structaxon_state_a217ba44fb923dc4dc62bb73b14e61517}{sendMsgCount};
-\hypertarget{axon_8h_source_l00017}{}\hyperlink{structaxon_state_a665999819b255f36d756f17b85bc9a03}{00017}     \hyperlink{structaxon_state_a665999819b255f36d756f17b85bc9a03}{tw\_lpid} \hyperlink{structaxon_state_a665999819b255f36d756f17b85bc9a03}{destSynapse};
-00018 \}axonState;
+00012 \textcolor{preprocessor}{#include <stdio.h>}
+00013 \textcolor{preprocessor}{#include "../assist.h"}
+00014 \textcolor{preprocessor}{#include "../input\_simulator.h"}
+00015 
+\hypertarget{axon_8h_source_l00016}{}\hyperlink{structaxon_state}{00016} \textcolor{keyword}{typedef} \textcolor{keyword}{struct }AxonState \{
+\hypertarget{axon_8h_source_l00017}{}\hyperlink{structaxon_state_a217ba44fb923dc4dc62bb73b14e61517}{00017}     \hyperlink{assist_8h_ad77e6fc5a9b03d46e7c97b7c4b92e89f}{\_statT} \hyperlink{structaxon_state_a217ba44fb923dc4dc62bb73b14e61517}{sendMsgCount};
+\hypertarget{axon_8h_source_l00018}{}\hyperlink{structaxon_state_a665999819b255f36d756f17b85bc9a03}{00018}     tw\_lpid \hyperlink{structaxon_state_a665999819b255f36d756f17b85bc9a03}{destSynapse};
 00019 
-00020 \textcolor{preprocessor}{#}\textcolor{preprocessor}{endif} \textcolor{comment}{/* defined(\_\_ROSS\_TOP\_\_axon\_\_) */}
+\hypertarget{axon_8h_source_l00020}{}\hyperlink{structaxon_state_ad1d67487729ff78dd3f00885184b1ef3}{00020}     \hyperlink{structinput_simulator_state}{inputSimulatorState} *\hyperlink{structaxon_state_ad1d67487729ff78dd3f00885184b1ef3}{sim};
+00021 \}\hyperlink{structaxon_state}{axonState};
+00029 \textcolor{keywordtype}{void} \hyperlink{axon_8h_ab136d88cfbbb1e9f0f3687908dd54851}{axonReceiveMessage}(\hyperlink{structaxon_state}{axonState} *st, \hyperlink{struct_msg___data}{Msg\_Data} *M, tw\_lp *lp);
+00030 \textcolor{keywordtype}{void} \hyperlink{axon_8h_a4540abe1d7c57cae5b0ff088d3d47fd1}{axonReverseState}(\hyperlink{structaxon_state}{axonState} *st, \hyperlink{struct_msg___data}{Msg\_Data} *M, tw\_lp *lp);
+00031 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* defined(\_\_ROSS\_TOP\_\_axon\_\_) */}\textcolor{preprocessor}{}
 \end{DoxyCode}

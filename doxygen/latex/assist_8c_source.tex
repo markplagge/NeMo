@@ -1,4 +1,4 @@
-\hypertarget{assist_8c_source}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/assist.c}
+\hypertarget{assist_8c_source}{}\section{/home/mplagge/development/tnt\+\_\+benchmark/assist.c}
 
 \begin{DoxyCode}
 00001 \textcolor{comment}{//}
@@ -9,31 +9,30 @@
 00006 \textcolor{comment}{//}
 00007 \textcolor{comment}{//}
 00008 
-00009 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \hyperlink{assist_8h}{"assist.h"}
-00010 \textcolor{comment}{/**}
-00011 \textcolor{comment}{ *  Gets the next small-tick event time.}
-00012 \textcolor{comment}{ */}
-\hypertarget{assist_8c_source_l00013}{}\hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{00013} \hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{tw\_stime} \hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{getNextEventTime}(\hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{tw\_lp} *\hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{lp})\{
-00014 
-00015     tw\_stime r =tw\_rand\_unif(lp->rng) / 10;
-00016 
-00017     \textcolor{keywordflow}{return} r;
-00018 
-00019 \}
-00020 \textcolor{comment}{/**}
-00021 \textcolor{comment}{ *  @details  If the time is in-between}
-00022 \textcolor{comment}{ *  big ticks, this rounds down to the last big tick. There is a bit of a fuzz for}
-00023 \textcolor{comment}{ *  times close to the next big tick so if the current time is within  ::BIG\_TICK\_ERR}
-00024 \textcolor{comment}{ *  of the next big tick, that will be returned instead. Sane parameters would}
-00025 \textcolor{comment}{ *  probably be around .000001. @todo: Implement & determin if ε needs to be added}
-00026 \textcolor{comment}{ *  to the return value.}
-00027 \textcolor{comment}{}
-00028 \textcolor{comment}{ */}
-\hypertarget{assist_8c_source_l00029}{}\hyperlink{assist_8h_a4d378196b7fceed090d64ec8820b4065}{00029} \hyperlink{assist_8h_a4d378196b7fceed090d64ec8820b4065}{tw\_stime} \hyperlink{assist_8h_a4d378196b7fceed090d64ec8820b4065}{getCurrentBigTick}(\hyperlink{assist_8h_a4d378196b7fceed090d64ec8820b4065}{tw\_stime} 
-      \hyperlink{assist_8h_a4d378196b7fceed090d64ec8820b4065}{now})\{
-00030 
-00031 
-00032     \textcolor{keywordflow}{return} 0;
-00033 
-00034 \}
+00009 \textcolor{preprocessor}{#include "\hyperlink{assist_8h}{assist.h}"}
+00010 \textcolor{preprocessor}{    #include <math.h>}
+\hypertarget{assist_8c_source_l00014}{}\hyperlink{assist_8h_a30602b11dbfa6bcb90dc00e7942cfb02}{00014} tw\_stime \hyperlink{assist_8c_a30602b11dbfa6bcb90dc00e7942cfb02}{getNextEventTime}(tw\_lp *lp)\{
+00015 
+00016     tw\_stime r =tw\_rand\_unif(lp->rng) / 10;
+00017 
+00018     \textcolor{keywordflow}{return} r;
+00019 
+00020 \}
+\hypertarget{assist_8c_source_l00030}{}\hyperlink{assist_8h_a4d378196b7fceed090d64ec8820b4065}{00030} tw\_stime \hyperlink{assist_8c_a4d378196b7fceed090d64ec8820b4065}{getCurrentBigTick}(tw\_stime now)\{
+00031     tw\_stime ctick = now / \hyperlink{assist_8h_ad39b86a0b748731175572436f6672264}{CORE\_SIZE};
+00033     \textcolor{keywordtype}{long} \textcolor{keywordtype}{double} vtr = 0;
+00034     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} rem = modfl(ctick, &vtr);
+00035     \textcolor{comment}{//Rem is current tick, vtr is offset.}
+00036 
+00037     \textcolor{keywordflow}{return} rem;
+00038 
+00039 \}
+00040     \textcolor{comment}{//@todo This does not work - need to whiteboard it to figure out the conversion.}
+\hypertarget{assist_8c_source_l00041}{}\hyperlink{assist_8h_aa961bc9b414f1429b123fc8212c989fd}{00041} tw\_stime \hyperlink{assist_8c_aa961bc9b414f1429b123fc8212c989fd}{getNextBigTick}(tw\_stime now) \{
+00042     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} curr = \hyperlink{assist_8h_ad39b86a0b748731175572436f6672264}{CORE\_SIZE} * \hyperlink{assist_8c_a4d378196b7fceed090d64ec8820b4065}{getCurrentBigTick}(now) + 1;
+00043     \textcolor{keywordflow}{return} curr - now;
+00044 
+00045         \textcolor{comment}{//Need to figure this out - not accurate until this is done:}
+00046 
+00047 \}
 \end{DoxyCode}

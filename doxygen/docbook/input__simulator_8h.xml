@@ -107,7 +107,7 @@ void * spikeGen, tw_lp * lp)</para>
         </section>
     <simplesect>
         <title>Detailed Description</title>
-    <para>Definition in file /Users/Mark/Development/TrueNorth/tnt_benchmark/input_simulator.h</para>
+    <para>Definition in file /home/mplagge/development/tnt_benchmark/input_simulator.h</para>
     </simplesect>
     <literallayout><computeroutput>
 1 <emphasis class="comment">//</emphasis>

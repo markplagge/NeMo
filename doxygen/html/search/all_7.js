@@ -7,7 +7,8 @@ var searchData=
   ['gen_5fprob',['GEN_PROB',['../assist_8h.html#a4875b976acd12ff43cc03898be994253',1,'GEN_PROB():&#160;model_main.h'],['../model__main_8h.html#a4875b976acd12ff43cc03898be994253',1,'GEN_PROB():&#160;model_main.h']]],
   ['gen_5frnd',['GEN_RND',['../assist_8h.html#ab42fd7d6d043114d1147acc77bd7e867',1,'GEN_RND():&#160;model_main.h'],['../model__main_8h.html#ab42fd7d6d043114d1147acc77bd7e867',1,'GEN_RND():&#160;model_main.h']]],
   ['gen_5fsel_5fmode',['GEN_SEL_MODE',['../assist_8h.html#ab161ae8a99d41559eba4ab3dd8d69218',1,'GEN_SEL_MODE():&#160;model_main.h'],['../model__main_8h.html#ab161ae8a99d41559eba4ab3dd8d69218',1,'GEN_SEL_MODE():&#160;model_main.h']]],
-  ['generatewaitevent',['generateWaitEvent',['../neuron_8c.html#a06ee765bfae45fe9b7f0619bf4abe63d',1,'generateWaitEvent(neuronState *st, tw_stime time, tw_lp *lp):&#160;neuron.c'],['../neuron_8h.html#a06ee765bfae45fe9b7f0619bf4abe63d',1,'generateWaitEvent(neuronState *st, tw_stime time, tw_lp *lp):&#160;neuron.c']]],
   ['getcurrentbigtick',['getCurrentBigTick',['../assist_8c.html#a4d378196b7fceed090d64ec8820b4065',1,'getCurrentBigTick(tw_stime now):&#160;assist.c'],['../assist_8h.html#a4d378196b7fceed090d64ec8820b4065',1,'getCurrentBigTick(tw_stime now):&#160;assist.c']]],
-  ['getnexteventtime',['getNextEventTime',['../assist_8c.html#a30602b11dbfa6bcb90dc00e7942cfb02',1,'getNextEventTime(tw_lp *lp):&#160;assist.c'],['../assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02',1,'getNextEventTime(tw_lp *lp):&#160;assist.c']]]
+  ['getnextbigtick',['getNextBigTick',['../assist_8c.html#aa961bc9b414f1429b123fc8212c989fd',1,'getNextBigTick(tw_stime now):&#160;assist.c'],['../assist_8h.html#aa961bc9b414f1429b123fc8212c989fd',1,'getNextBigTick(tw_stime now):&#160;assist.c']]],
+  ['getnexteventtime',['getNextEventTime',['../assist_8c.html#a30602b11dbfa6bcb90dc00e7942cfb02',1,'getNextEventTime(tw_lp *lp):&#160;assist.c'],['../assist_8h.html#a30602b11dbfa6bcb90dc00e7942cfb02',1,'getNextEventTime(tw_lp *lp):&#160;assist.c']]],
+  ['globaltolocal',['globalToLocal',['../mapping_8h.html#a65ae45764256c6f8a0552ec04a132fcf',1,'mapping.h']]]
 ];

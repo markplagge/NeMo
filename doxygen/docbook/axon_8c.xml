@@ -24,9 +24,29 @@
         </mediaobject>
     </figure>
 </para>
+        <section>
+            <title>Functions</title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="axon_8c_1ab136d88cfbbb1e9f0f3687908dd54851">axonReceiveMessage</link> (
+<link linkend="structaxon_state">axonState</link> * st, <link linkend="struct_msg___data">Msg_Data</link> * M, tw_lp * lp)<para><emphasis>Handles a message sent to an Axon.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="axon_8c_1a4540abe1d7c57cae5b0ff088d3d47fd1">axonReverseState</link> (
+<link linkend="structaxon_state">axonState</link> * st, <link linkend="struct_msg___data">Msg_Data</link> * M, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
     <simplesect>
         <title>Detailed Description</title>
-    <para>Definition in file /Users/Mark/Development/TrueNorth/tnt_benchmark/models/axon.c</para>
+    <para>Definition in file /home/mplagge/development/tnt_benchmark/models/axon.c</para>
     </simplesect>
     <literallayout><computeroutput>
 1 <emphasis class="comment">//</emphasis>
@@ -38,5 +58,32 @@
 7 <emphasis class="comment">//</emphasis>
 8 
 9 <emphasis class="preprocessor">#include&#32;&quot;<link linkend="axon_8h">axon.h</link>&quot;</emphasis>
+10 
+<link linkend="axon_8h_1ab136d88cfbbb1e9f0f3687908dd54851">11 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="axon_8c_1ab136d88cfbbb1e9f0f3687908dd54851">axonReceiveMessage</link>(<link linkend="structaxon_state">axonState</link>&#32;*st,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*M,&#32;tw_lp&#32;*lp){
+12 &#32;&#32;&#32;&#32;<emphasis class="keywordtype">long</emphasis>&#32;start_count&#32;=&#32;lp-&gt;rng-&gt;count;
+13 &#32;&#32;&#32;&#32;tw_stime&#32;time;
+14 &#32;&#32;&#32;&#32;st-&gt;<link linkend="structaxon_state_1a217ba44fb923dc4dc62bb73b14e61517">sendMsgCount</link>&#32;++;
+15 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">if</emphasis>(M-&gt;<link linkend="struct_msg___data_1a015b6eb45982e1842ee8fc389a099ced">eventType</link>&#32;==&#32;<link linkend="assist_8h_1a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0">NEURON_OUT</link>)&#32;{
+16 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;time&#32;=&#32;<link linkend="assist_8c_1a30602b11dbfa6bcb90dc00e7942cfb02">getNextEventTime</link>(lp);
+17 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tw_event&#32;*newEvent&#32;=&#32;tw_event_new(st-&gt;<link linkend="structaxon_state_1a665999819b255f36d756f17b85bc9a03">destSynapse</link>,&#32;time,&#32;lp);
+18 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*data&#32;=&#32;(<link linkend="struct_msg___data">Msg_Data</link>&#32;*&#32;)&#32;tw_event_data(newEvent);
+19 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;data-&gt;<link linkend="struct_msg___data_1a015b6eb45982e1842ee8fc389a099ced">eventType</link>&#32;=&#32;<link linkend="assist_8h_1a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee">AXON_OUT</link>;
+20 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tw_event_send(newEvent);
+21 &#32;&#32;&#32;&#32;}
+22 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">else</emphasis>&#32;{
+23 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//Call&#32;the&#32;signal&#32;generator.&#32;TBD</emphasis>
+24 
+25 &#32;&#32;&#32;&#32;}
+26 &#32;&#32;&#32;&#32;M-&gt;<link linkend="struct_msg___data_1a2e49a6bcc6c45ade722f746b1ea707f2">rndCallCount</link>&#32;=&#32;lp-&gt;rng-&gt;count&#32;-&#32;start_count;
+27 
+28 }
+<link linkend="axon_8h_1a4540abe1d7c57cae5b0ff088d3d47fd1">29 </link><emphasis class="keywordtype">void</emphasis>&#32;<link linkend="axon_8c_1a4540abe1d7c57cae5b0ff088d3d47fd1">axonReverseState</link>(<link linkend="structaxon_state">axonState</link>&#32;*st,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*M,&#32;tw_lp&#32;*lp)&#32;{
+30 &#32;&#32;&#32;&#32;st-&gt;<link linkend="structaxon_state_1a217ba44fb923dc4dc62bb73b14e61517">sendMsgCount</link>&#32;--;
+31 &#32;&#32;&#32;&#32;<emphasis class="keywordtype">long</emphasis>&#32;count&#32;=&#32;M-&gt;<link linkend="struct_msg___data_1a2e49a6bcc6c45ade722f746b1ea707f2">rndCallCount</link>;
+32 &#32;&#32;&#32;&#32;<emphasis class="keywordflow">while</emphasis>&#32;(count--)&#32;{
+33 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tw_rand_reverse_unif(lp-&gt;rng);
+34 &#32;&#32;&#32;&#32;}
+35 
+36 }
     </computeroutput></literallayout>
 </section>

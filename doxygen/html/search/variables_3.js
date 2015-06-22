@@ -7,5 +7,6 @@ var searchData=
   ['destsynapse',['destSynapse',['../structaxon_state.html#a665999819b255f36d756f17b85bc9a03',1,'axonState::destSynapse()'],['../structsynapse_state.html#a665999819b255f36d756f17b85bc9a03',1,'synapseState::destSynapse()']]],
   ['doleak',['doLeak',['../structneuron_state.html#aa430f424f34dc59dc27736e27ec61320',1,'neuronState']]],
   ['doleakreverse',['doLeakReverse',['../structneuron_state.html#af4ded7f575b64ada6c0a6664f638307c',1,'neuronState']]],
-  ['doreset',['doReset',['../structneuron_state.html#afcf9d931e4fda519c43b4efeab687463',1,'neuronState']]]
+  ['doreset',['doReset',['../structneuron_state.html#afcf9d931e4fda519c43b4efeab687463',1,'neuronState']]],
+  ['drawnrandomnumber',['drawnRandomNumber',['../structneuron_state.html#a296a4f04813c4882d6acd8c9074abd35',1,'neuronState']]]
 ];

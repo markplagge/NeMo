@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>TrueNorth TimeWarp Benchmark: /Users/Mark/Development/TrueNorth/tnt_benchmark/assist.c File Reference</title>
+<title>TrueNorth TimeWarp Benchmark: /home/mplagge/development/tnt_benchmark/assist.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -112,16 +112,17 @@ $(document).ready(function(){initNavTree('assist_8c.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">/Users/Mark/Development/TrueNorth/tnt_benchmark/assist.c File Reference</div>  </div>
+<div class="title">/home/mplagge/development/tnt_benchmark/assist.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="assist_8h_source.html">assist.h</a>&quot;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for assist.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="assist_8c__incl.png" border="0" usemap="#_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2assist_8c" alt=""/></div>
-<map name="_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2assist_8c" id="_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2assist_8c">
-<area shape="rect" id="node2" href="assist_8h.html" title="assist.h" alt="" coords="146,105,213,131"/></map>
+<div class="center"><img src="assist_8c__incl.png" border="0" usemap="#_2home_2mplagge_2development_2tnt__benchmark_2assist_8c" alt=""/></div>
+<map name="_2home_2mplagge_2development_2tnt__benchmark_2assist_8c" id="_2home_2mplagge_2development_2tnt__benchmark_2assist_8c">
+<area shape="rect" id="node2" href="assist_8h.html" title="assist.h" alt="" coords="147,95,215,121"/></map>
 </div>
 </div>
 <p><a href="assist_8c_source.html">Go to the source code of this file.</a></p>
@@ -134,6 +135,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a4d378196b7fceed090d64ec8820b4065"><td class="memItemLeft" align="right" valign="top">tw_stime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assist_8c.html#a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</a> (tw_stime now)</td></tr>
 <tr class="memdesc:a4d378196b7fceed090d64ec8820b4065"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a tw_stime, returns the current big tick.  <a href="#a4d378196b7fceed090d64ec8820b4065">More...</a><br /></td></tr>
 <tr class="separator:a4d378196b7fceed090d64ec8820b4065"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa961bc9b414f1429b123fc8212c989fd"><td class="memItemLeft" align="right" valign="top">tw_stime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="assist_8c.html#aa961bc9b414f1429b123fc8212c989fd">getNextBigTick</a> (tw_stime now)</td></tr>
+<tr class="memdesc:aa961bc9b414f1429b123fc8212c989fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a tw_stime, returns the next big-tick that will happen.  <a href="#aa961bc9b414f1429b123fc8212c989fd">More...</a><br /></td></tr>
+<tr class="separator:aa961bc9b414f1429b123fc8212c989fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a4d378196b7fceed090d64ec8820b4065"></a>
@@ -151,16 +155,73 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Given a tw_stime, returns the current big tick. </p>
-<p>If the time is in-between big ticks, this rounds down to the last big tick. There is a bit of a fuzz for times close to the next big tick so if the current time is within <a class="el" href="assist_8h.html#a69434dbcf2196fc2fd1ab7cb57fc9491">BIG_TICK_ERR</a> of the next big tick, that will be returned instead. Sane parameters would probably be around .000001.</p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>: Implement &amp; determin if ε needs to be added to the return value.</dd></dl>
+<p>If the time is in-between big ticks, this rounds down to the last big tick. There is a bit of a fuzz for times close to the next big tick so if the current time is within <a class="el" href="assist_8h.html#a69434dbcf2196fc2fd1ab7cb57fc9491" title="Tick error - tw_stime can be this much under the next big tick and register as a big-tick. ">BIG_TICK_ERR</a> of the next big tick, that will be returned instead. Sane parameters would probably be around .000001.</p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>: Implement &amp; determin if ε needs to be added to the return value.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>need to see if this will kill performance: </dd></dl>
 
-<p>Definition at line <a class="el" href="assist_8c_source.html#l00029">29</a> of file <a class="el" href="assist_8c_source.html">assist.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                                        {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
+<p>Definition at line <a class="el" href="assist_8c_source.html#l00030">30</a> of file <a class="el" href="assist_8c_source.html">assist.c</a>.</p>
+
+<p>References <a class="el" href="model__main_8h_source.html#l00063">CORE_SIZE</a>.</p>
+
+<p>Referenced by <a class="el" href="assist_8c_source.html#l00041">getNextBigTick()</a>, and <a class="el" href="neuron_8c_source.html#l00028">linearLeak()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                                        {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    tw_stime ctick = now / <a class="code" href="assist_8h.html#ad39b86a0b748731175572436f6672264">CORE_SIZE</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">long</span> <span class="keywordtype">double</span> vtr = 0;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">long</span> <span class="keywordtype">long</span> rem = modfl(ctick, &amp;vtr);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="comment">//Rem is current tick, vtr is offset.</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordflow">return</span> rem;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
+<div class="ttc" id="assist_8h_html_ad39b86a0b748731175572436f6672264"><div class="ttname"><a href="assist_8h.html#ad39b86a0b748731175572436f6672264">CORE_SIZE</a></div><div class="ttdeci">int CORE_SIZE</div><div class="ttdoc">CORE_SIZE is equal to the number of axions * number of aneurons + num neurons + num axions...</div><div class="ttdef"><b>Definition:</b> <a href="model__main_8h_source.html#l00063">model_main.h:63</a></div></div>
 </div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="aa961bc9b414f1429b123fc8212c989fd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tw_stime getNextBigTick </td>
+          <td>(</td>
+          <td class="paramtype">tw_stime&#160;</td>
+          <td class="paramname"><em>now</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Given a tw_stime, returns the next big-tick that will happen. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">now</td><td>Right now!</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Next big tick time. </dd></dl>
+
+<p>Definition at line <a class="el" href="assist_8c_source.html#l00041">41</a> of file <a class="el" href="assist_8c_source.html">assist.c</a>.</p>
+
+<p>References <a class="el" href="model__main_8h_source.html#l00063">CORE_SIZE</a>, and <a class="el" href="assist_8c_source.html#l00030">getCurrentBigTick()</a>.</p>
+
+<p>Referenced by <a class="el" href="neuron_8c_source.html#l00167">neuronFire()</a>, and <a class="el" href="neuron_8c_source.html#l00179">sendHeartbeat()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                                      {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">long</span> <span class="keywordtype">long</span> curr = <a class="code" href="assist_8h.html#ad39b86a0b748731175572436f6672264">CORE_SIZE</a> * <a class="code" href="assist_8c.html#a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</a>(now) + 1;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">return</span> curr - now;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="comment">//Need to figure this out - not accurate until this is done:</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}<div class="ttc" id="assist_8h_html_ad39b86a0b748731175572436f6672264"><div class="ttname"><a href="assist_8h.html#ad39b86a0b748731175572436f6672264">CORE_SIZE</a></div><div class="ttdeci">int CORE_SIZE</div><div class="ttdoc">CORE_SIZE is equal to the number of axions * number of aneurons + num neurons + num axions...</div><div class="ttdef"><b>Definition:</b> <a href="model__main_8h_source.html#l00063">model_main.h:63</a></div></div>
+<div class="ttc" id="assist_8c_html_a4d378196b7fceed090d64ec8820b4065"><div class="ttname"><a href="assist_8c.html#a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</a></div><div class="ttdeci">tw_stime getCurrentBigTick(tw_stime now)</div><div class="ttdoc">Given a tw_stime, returns the current big tick. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8c_source.html#l00030">assist.c:30</a></div></div>
+</div><!-- fragment -->
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="assist_8c_aa961bc9b414f1429b123fc8212c989fd_cgraph.png" border="0" usemap="#assist_8c_aa961bc9b414f1429b123fc8212c989fd_cgraph" alt=""/></div>
+<map name="assist_8c_aa961bc9b414f1429b123fc8212c989fd_cgraph" id="assist_8c_aa961bc9b414f1429b123fc8212c989fd_cgraph">
+<area shape="rect" id="node2" href="assist_8c.html#a4d378196b7fceed090d64ec8820b4065" title="Given a tw_stime, returns the current big tick. " alt="" coords="165,5,292,32"/></map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="a30602b11dbfa6bcb90dc00e7942cfb02"></a>
@@ -180,14 +241,16 @@ Functions</h2></td></tr>
 <p>Gets the next small-tick event time. </p>
 <p>Gets the next event time, based on a random function. </p>
 
-<p>Definition at line <a class="el" href="assist_8c_source.html#l00013">13</a> of file <a class="el" href="assist_8c_source.html">assist.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;                                    {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    tw_stime r =tw_rand_unif(lp-&gt;rng) / 10;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordflow">return</span> r;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;}</div>
+<p>Definition at line <a class="el" href="assist_8c_source.html#l00014">14</a> of file <a class="el" href="assist_8c_source.html">assist.c</a>.</p>
+
+<p>Referenced by <a class="el" href="axon_8c_source.html#l00011">axonReceiveMessage()</a>, and <a class="el" href="synapse_8c_source.html#l00011">synapseReceiveMessage()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                                    {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    tw_stime r =tw_rand_unif(lp-&gt;rng) / 10;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -197,7 +260,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="assist_8c.html">assist.c</a></li>
-    <li class="footer">Generated on Sun Jun 21 2015 16:46:03 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Mon Jun 22 2015 12:44:59 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

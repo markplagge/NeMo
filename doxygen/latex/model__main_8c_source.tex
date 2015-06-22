@@ -1,4 +1,4 @@
-\hypertarget{model__main_8c_source}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/model\+\_\+main.c}
+\hypertarget{model__main_8c_source}{}\section{/home/mplagge/development/tnt\+\_\+benchmark/model\+\_\+main.c}
 
 \begin{DoxyCode}
 00001 \textcolor{comment}{//}
@@ -9,9 +9,173 @@
 00006 \textcolor{comment}{//}
 00007 \textcolor{comment}{//}
 00008 
-00009 \textcolor{preprocessor}{#}\textcolor{preprocessor}{include} \hyperlink{model__main_8h}{"model\_main.h"}
+00009 \textcolor{preprocessor}{#include "\hyperlink{model__main_8h}{model\_main.h}"}
 00010 
-\hypertarget{model__main_8c_source_l00011}{}\hyperlink{model__main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{00011} \textcolor{keywordtype}{int} \hyperlink{model__main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}() \{
-00012     \textcolor{keywordflow}{return} 0;
-00013 \}
+\hypertarget{model__main_8c_source_l00011}{}\hyperlink{model__main_8c_a6acf8f296294224aa8201bdea5aba47e}{00011} tw\_lptype \hyperlink{model__main_8c_a6acf8f296294224aa8201bdea5aba47e}{model\_lps}[] = \{\{
+00012 
+00013                              (init\_f)\hyperlink{model__main_8c_a8022723eba89664cca80e179b80a2b37}{neuron\_init},
+00014                              (pre\_run\_f)\hyperlink{model__main_8c_a7a8df3f99e1d582c6c136b16d6e34d13}{pre\_run},
+00015                              (event\_f)\hyperlink{model__main_8c_a9309446aa05714b141a3d3caae4254db}{neuron\_event},
+00016                              (revent\_f)\hyperlink{model__main_8c_a5f7d6a6aca030b5db84292b873816fa0}{neuron\_reverse},
+00017                              (final\_f)\hyperlink{model__main_8c_acac9e41bea7d1d0911a0220de60a37b0}{neuron\_final},
+00018                              (map\_f)\hyperlink{model__main_8c_a9397f1f0e189cd7dac262423993811e4}{mapping},
+00019                              \textcolor{keyword}{sizeof}(\hyperlink{structneuron_state}{neuronState})\},
+00020                          \{
+00021 
+00022                              (init\_f)\hyperlink{model__main_8c_a579d8e5af0b1c0a80c8e83b7a534f873}{synapse\_init},
+00023                              (pre\_run\_f)\hyperlink{model__main_8c_a7a8df3f99e1d582c6c136b16d6e34d13}{pre\_run},
+00024                              (event\_f)\hyperlink{model__main_8c_a4b3ee4a7c010a99b7952de6ee58717c1}{synapse\_event},
+00025                              (revent\_f)\hyperlink{model__main_8c_a4a4d6985a03804162eb0a71bbdbc0cc2}{synapse\_reverse},
+00026                              (final\_f)\hyperlink{model__main_8c_a3d695e7995cce87a03d6407d801e043d}{synapse\_final},
+00027                              (map\_f)\hyperlink{model__main_8c_a9397f1f0e189cd7dac262423993811e4}{mapping},
+00028                              \textcolor{keyword}{sizeof}(\hyperlink{structsynapse_state}{synapseState})\},
+00029 
+00030                          \{(init\_f)\hyperlink{model__main_8c_aa1b78ccf8fb2ff34c960d4c55576c714}{axon\_init},
+00031                           (pre\_run\_f)\hyperlink{model__main_8c_a7a8df3f99e1d582c6c136b16d6e34d13}{pre\_run},
+00032                           (event\_f)\hyperlink{model__main_8c_a8fae0a84a982a733de15203fd551e6db}{axon\_event},
+00033                           (revent\_f)\hyperlink{model__main_8c_a76fff63b340bdcd9b63c490e67797178}{axon\_reverse},
+00034                           (final\_f)\hyperlink{model__main_8c_a9f5c1071ccef11cdc8027264fca860c7}{axon\_final},
+00035                           (map\_f)\hyperlink{model__main_8c_a9397f1f0e189cd7dac262423993811e4}{mapping},
+00036                           \textcolor{keyword}{sizeof}(\hyperlink{structaxon_state}{axonState})\},
+00037 
+00038                          \{0\}
+00039 
+00040 \};
+00041 
+\hypertarget{model__main_8c_source_l00046}{}\hyperlink{model__main_8h_a614c89653e656c2b0436bed7f2c8de3e}{00046} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_a614c89653e656c2b0436bed7f2c8de3e}{createLPs}() \{
+00047   tw\_define\_lps(g\_tw\_nlp, \textcolor{keyword}{sizeof}(\hyperlink{struct_msg___data}{Msg\_Data}), 0);
+00048     \textcolor{keywordtype}{int} neurons = 0;
+00049     \textcolor{keywordtype}{int} synapses = 0;
+00050     \textcolor{keywordtype}{int} axons = 0;
+00051     \textcolor{keywordtype}{int} soff = \hyperlink{assist_8h_a519a06367b2b3f793c56d3ab78f5b2ef}{AXONS\_IN\_CORE} + \hyperlink{assist_8h_a076b99099b46431255982b2bb8ce06fb}{SYNAPSES\_IN\_CORE};
+00052     \textcolor{keywordtype}{int} noff = \hyperlink{assist_8h_ad39b86a0b748731175572436f6672264}{CORE\_SIZE} - \hyperlink{assist_8h_a67e8e45768f76b984a60fcff2b7c51aa}{NEURONS\_IN\_CORE};
+00053   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < g\_tw\_nlp; i++) \{
+00054       \textcolor{keywordflow}{if}(i < \hyperlink{assist_8h_a519a06367b2b3f793c56d3ab78f5b2ef}{AXONS\_IN\_CORE})\{
+00055               \textcolor{comment}{//tw\_lp\_settype(i, &model\_lps[2]);}
+00056           axons++;
+00057       \}
+00058       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (i < soff) \{
+00059               \textcolor{comment}{//tw\_lp\_settype(i, &model\_lps[1]);}
+00060           synapses++;
+00061 
+00062 
+00063       \}
+00064       \textcolor{keywordflow}{else} \{
+00065               \textcolor{comment}{//tw\_lp\_settype(i, &model\_lps[0]);}
+00066           neurons ++;
+00067 
+00068       \}
+00069   \}
+00070     printf(\textcolor{stringliteral}{"A %i, S %i, N %i"}, axons, synapses, neurons);
+00071 \}
+00072 
+\hypertarget{model__main_8c_source_l00073}{}\hyperlink{model__main_8c_a0ddf1224851353fc92bfbff6f499fa97}{00073} \textcolor{keywordtype}{int} \hyperlink{model__main_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} *argv[]) \{
+00074   \textcolor{comment}{//set up core sizes.}
+00075   \hyperlink{assist_8h_a076b99099b46431255982b2bb8ce06fb}{SYNAPSES\_IN\_CORE} = \hyperlink{assist_8h_a67e8e45768f76b984a60fcff2b7c51aa}{NEURONS\_IN\_CORE} * 
+      \hyperlink{assist_8h_a519a06367b2b3f793c56d3ab78f5b2ef}{AXONS\_IN\_CORE};
+00076   \hyperlink{assist_8h_ad39b86a0b748731175572436f6672264}{CORE\_SIZE} = \hyperlink{assist_8h_a076b99099b46431255982b2bb8ce06fb}{SYNAPSES\_IN\_CORE} + \hyperlink{assist_8h_a67e8e45768f76b984a60fcff2b7c51aa}{NEURONS\_IN\_CORE} + 
+      \hyperlink{assist_8h_a519a06367b2b3f793c56d3ab78f5b2ef}{AXONS\_IN\_CORE};
+00077   g\_tw\_nlp = \hyperlink{assist_8h_ad39b86a0b748731175572436f6672264}{CORE\_SIZE};
+00078 
+00079   tw\_init(&argc, &argv);
+00080 
+00081     \hyperlink{model__main_8c_a614c89653e656c2b0436bed7f2c8de3e}{createLPs}();
+00082   \textcolor{keywordflow}{return} 0;
+00083 \}
+00084 
+00085 
+00086 
+00087 
+00088 \textcolor{comment}{//neuron functions}
+\hypertarget{model__main_8c_source_l00089}{}\hyperlink{model__main_8h_a8022723eba89664cca80e179b80a2b37}{00089} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_a8022723eba89664cca80e179b80a2b37}{neuron\_init}(\hyperlink{structneuron_state}{neuronState} *s, tw\_lp *lp)
+00090 \{
+00091 
+00092 \}
+00093 
+\hypertarget{model__main_8c_source_l00094}{}\hyperlink{model__main_8h_a801f93205937969fea2eff0bf2e76de9}{00094} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_a801f93205937969fea2eff0bf2e76de9}{setSynapseWeight}(\hyperlink{structneuron_state}{neuronState} *s, tw\_lp *lp, \textcolor{keywordtype}{int} synapseID)
+00095 \{
+00096 
+00097 \}
+00098 
+00099 
+\hypertarget{model__main_8c_source_l00100}{}\hyperlink{model__main_8h_a9309446aa05714b141a3d3caae4254db}{00100} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_a9309446aa05714b141a3d3caae4254db}{neuron\_event}(\hyperlink{structneuron_state}{neuronState} *s, tw\_bf *CV, \hyperlink{struct_msg___data}{Msg\_Data} *M, tw\_lp *lp)
+00101 \{
+00102 
+00103 \}
+00104 
+00105 
+00106 
+\hypertarget{model__main_8c_source_l00107}{}\hyperlink{model__main_8h_a4bd8bcd9c6de148a9f5c84fadd51106c}{00107} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_a5f7d6a6aca030b5db84292b873816fa0}{neuron\_reverse}(\hyperlink{structneuron_state}{neuronState} *s, tw\_bf *CV, \hyperlink{struct_msg___data}{Msg\_Data} *MCV, tw\_lp *lp)
+00108 \{
+00109 
+00110 \}
+00111 
+00112 
+\hypertarget{model__main_8c_source_l00113}{}\hyperlink{model__main_8h_acac9e41bea7d1d0911a0220de60a37b0}{00113} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_acac9e41bea7d1d0911a0220de60a37b0}{neuron\_final}(\hyperlink{structneuron_state}{neuronState} *s, tw\_lp *lp)
+00114 \{
+00115 
+00116 \}
+00117 
+00118 \textcolor{comment}{//synapse function}
+\hypertarget{model__main_8c_source_l00119}{}\hyperlink{model__main_8h_a579d8e5af0b1c0a80c8e83b7a534f873}{00119} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_a579d8e5af0b1c0a80c8e83b7a534f873}{synapse\_init}(\hyperlink{structsynapse_state}{synapseState} *s, tw\_lp *lp)
+00120 \{
+00121 
+00122 \}
+00123 
+00124 
+\hypertarget{model__main_8c_source_l00125}{}\hyperlink{model__main_8h_aea7de5bc5028e2df35cf3fe64f6cca6c}{00125} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_a4b3ee4a7c010a99b7952de6ee58717c1}{synapse\_event}(\hyperlink{structsynapse_state}{synapseState} *s, tw\_bf *CV, \hyperlink{struct_msg___data}{Msg\_Data} *M, tw\_lp *lp)
+00126 \{
+00127 
+00128 \}
+00129 
+00130 
+\hypertarget{model__main_8c_source_l00131}{}\hyperlink{model__main_8h_ae7966fd834efb0fe64477f6f8c2205f3}{00131} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_a4a4d6985a03804162eb0a71bbdbc0cc2}{synapse\_reverse}(\hyperlink{structsynapse_state}{synapseState} *s, tw\_bf *CV, 
+      \hyperlink{struct_msg___data}{Msg\_Data} *M, tw\_lp *lp)
+00132 \{
+00133 
+00134 \}
+00135 
+00136 
+\hypertarget{model__main_8c_source_l00137}{}\hyperlink{model__main_8h_a3d695e7995cce87a03d6407d801e043d}{00137} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_a3d695e7995cce87a03d6407d801e043d}{synapse\_final}(\hyperlink{structsynapse_state}{synapseState} *s, tw\_lp *lp)
+00138 \{
+00139 
+00140 \}
+00141 
+00142 \textcolor{comment}{// Axon function.}
+\hypertarget{model__main_8c_source_l00143}{}\hyperlink{model__main_8h_aa1b78ccf8fb2ff34c960d4c55576c714}{00143} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_aa1b78ccf8fb2ff34c960d4c55576c714}{axon\_init}(\hyperlink{structaxon_state}{axonState} *s, tw\_lp *lp)
+00144 \{
+00145 
+00146 \}
+00147 
+\hypertarget{model__main_8c_source_l00148}{}\hyperlink{model__main_8h_a3c053cd53c8082f6cfdd74666d2a484b}{00148} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_a8fae0a84a982a733de15203fd551e6db}{axon\_event}(\hyperlink{structaxon_state}{axonState} *s, tw\_bf *CV, \hyperlink{struct_msg___data}{Msg\_Data} *M, tw\_lp *lp)
+00149 \{
+00150 
+00151 \}
+00152 
+00153 
+\hypertarget{model__main_8c_source_l00154}{}\hyperlink{model__main_8h_a5d4a72afee6ac1e8fd422d8f85a338b4}{00154} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_a76fff63b340bdcd9b63c490e67797178}{axon\_reverse}(\hyperlink{structaxon_state}{axonState} *s, tw\_bf *CV, \hyperlink{struct_msg___data}{Msg\_Data} *M, tw\_lp *lp)
+00155 \{
+00156 
+00157 \}
+00158 
+00159 
+\hypertarget{model__main_8c_source_l00160}{}\hyperlink{model__main_8h_a9f5c1071ccef11cdc8027264fca860c7}{00160} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_a9f5c1071ccef11cdc8027264fca860c7}{axon\_final}(\hyperlink{structaxon_state}{axonState} *s, tw\_lp *lp)
+00161 \{
+00162 
+00163 \}
+00164 
+00165 
+00166 
+00167 
+00168 
+\hypertarget{model__main_8c_source_l00169}{}\hyperlink{model__main_8h_a9397f1f0e189cd7dac262423993811e4}{00169} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_a9397f1f0e189cd7dac262423993811e4}{mapping}(tw\_lp gid)
+00170 \{
+00171 
+00172 \}
+00173 
+00174 
+\hypertarget{model__main_8c_source_l00175}{}\hyperlink{model__main_8h_a7a8df3f99e1d582c6c136b16d6e34d13}{00175} \textcolor{keywordtype}{void} \hyperlink{model__main_8c_a7a8df3f99e1d582c6c136b16d6e34d13}{pre\_run}()
+00176 \{
+00177 
+00178 \}
 \end{DoxyCode}

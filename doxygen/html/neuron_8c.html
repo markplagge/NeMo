@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>TrueNorth TimeWarp Benchmark: /Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.c File Reference</title>
+<title>TrueNorth TimeWarp Benchmark: /home/mplagge/development/tnt_benchmark/models/neuron.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -109,8 +109,6 @@ $(document).ready(function(){initNavTree('neuron_8c.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">neuron.c File Reference</div>  </div>
 </div><!--header-->
@@ -119,18 +117,15 @@ $(document).ready(function(){initNavTree('neuron_8c.html','');});
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for neuron.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="neuron_8c__incl.png" border="0" usemap="#_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2models_2neuron_8c" alt=""/></div>
-<map name="_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2models_2neuron_8c" id="_2_users_2_mark_2_development_2_true_north_2tnt__benchmark_2models_2neuron_8c">
-<area shape="rect" id="node2" href="neuron_8h.html" title="neuron.h" alt="" coords="139,105,213,131"/><area shape="rect" id="node4" href="assist_8h.html" title="../assist.h" alt="" coords="95,252,173,277"/><area shape="rect" id="node8" href="mapping_8h.html" title="../mapping.h" alt="" coords="128,179,223,204"/></map>
+<div class="center"><img src="neuron_8c__incl.png" border="0" usemap="#_2home_2mplagge_2development_2tnt__benchmark_2models_2neuron_8c" alt=""/></div>
+<map name="_2home_2mplagge_2development_2tnt__benchmark_2models_2neuron_8c" id="_2home_2mplagge_2development_2tnt__benchmark_2models_2neuron_8c">
+<area shape="rect" id="node2" href="neuron_8h.html" title="neuron.h" alt="" coords="143,95,215,121"/><area shape="rect" id="node4" href="assist_8h.html" title="../assist.h" alt="" coords="96,244,176,271"/><area shape="rect" id="node8" href="mapping_8h.html" title="../mapping.h" alt="" coords="131,169,226,196"/></map>
 </div>
 </div>
 <p><a href="neuron_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae630bdf5dd3744870968f07a6971659c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#ae630bdf5dd3744870968f07a6971659c">integrateSynapse</a> (<a class="el" href="assist_8h.html#a3f7a6e6a1210b6d9d7a42177dcb9634b">_idT</a> synapseID, <a class="el" href="structneuron_state.html">neuronState</a> *st, tw_lp *lp)</td></tr>
-<tr class="memdesc:ae630bdf5dd3744870968f07a6971659c"><td class="mdescLeft">&#160;</td><td class="mdescRight">function that adds a synapse's value to the current neuron's membrane potential.  <a href="#ae630bdf5dd3744870968f07a6971659c">More...</a><br /></td></tr>
-<tr class="separator:ae630bdf5dd3744870968f07a6971659c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">LeakFunctions</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>Neuron functions that manage leaks.</p>
 <p>All voltage state saving must be handled in the neuron event function <a class="el" href="neuron_8c.html#aa6819d7492f0173f2234ba0b8b0bb674" title="handles incomming synapse messages. ">neuronReceiveMessage()</a>. </p>
@@ -142,18 +137,18 @@ Functions</h2></td></tr>
 <tr class="memdesc:ac5bebec77c5216533ec5f6acd086532e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverse leak function for use when neurons have no defined leak function.  <a href="#ac5bebec77c5216533ec5f6acd086532e">More...</a><br /></td></tr>
 <tr class="separator:ac5bebec77c5216533ec5f6acd086532e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64dc379b459a2b07b40bce35381210e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#a64dc379b459a2b07b40bce35381210e8">linearLeak</a> (void *neuron, tw_stime now)</td></tr>
-<tr class="memdesc:a64dc379b459a2b07b40bce35381210e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">A linear leak function.  <a href="#a64dc379b459a2b07b40bce35381210e8">More...</a><br /></td></tr>
+<tr class="memdesc:a64dc379b459a2b07b40bce35381210e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">A linear leak function - uses monotonic up and down leaks.  <a href="#a64dc379b459a2b07b40bce35381210e8">More...</a><br /></td></tr>
 <tr class="separator:a64dc379b459a2b07b40bce35381210e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26ced40d7ad7a0b448a136d8724fe18b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#a26ced40d7ad7a0b448a136d8724fe18b">revLinearLeak</a> (void *neuron, tw_stime now)</td></tr>
 <tr class="memdesc:a26ced40d7ad7a0b448a136d8724fe18b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverse leak function neurons that have a linear leak function assigned.  <a href="#a26ced40d7ad7a0b448a136d8724fe18b">More...</a><br /></td></tr>
 <tr class="separator:a26ced40d7ad7a0b448a136d8724fe18b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">ResetFunctions</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>Reset function defs.</p>
-<p>Neuron reset functions will change the neuron state without saving the previous state. All voltage state saving must be handled in the neuron event function <a class="el" href="neuron_8c.html#aa6819d7492f0173f2234ba0b8b0bb674" title="handles incomming synapse messages. ">neuronReceiveMessage()</a>. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>: Check that reverse reset functions are needed, since previous voltage is stored in the neuron. </dd></dl>
+<p>Neuron reset functions will change the neuron state without saving the previous state. All voltage state saving must be handled in the neuron event function <a class="el" href="neuron_8c.html#aa6819d7492f0173f2234ba0b8b0bb674" title="handles incomming synapse messages. ">neuronReceiveMessage()</a>. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>: Check that reverse reset functions are needed, since previous voltage is stored in the neuron. </dd></dl>
 </div></td></tr>
-<tr class="memitem:a7f8eaa35f03747c795a2b727b364537b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#a7f8eaa35f03747c795a2b727b364537b">resetZero</a> (void *<a class="el" href="structneuron_state.html">neuronState</a>)</td></tr>
-<tr class="memdesc:a7f8eaa35f03747c795a2b727b364537b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets neuron voltage to 0 after firing.  <a href="#a7f8eaa35f03747c795a2b727b364537b">More...</a><br /></td></tr>
-<tr class="separator:a7f8eaa35f03747c795a2b727b364537b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a233aa7ebe6cbfb664fe366a05a8dac1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#a233aa7ebe6cbfb664fe366a05a8dac1f">resetNormal</a> (void *<a class="el" href="structneuron_state.html">neuronState</a>)</td></tr>
+<tr class="memdesc:a233aa7ebe6cbfb664fe366a05a8dac1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets neuron voltage to \(R\) after firing.  <a href="#a233aa7ebe6cbfb664fe366a05a8dac1f">More...</a><br /></td></tr>
+<tr class="separator:a233aa7ebe6cbfb664fe366a05a8dac1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e78d7d2b70bf7349c3854b3727dcc25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#a2e78d7d2b70bf7349c3854b3727dcc25">resetLinear</a> (void *<a class="el" href="structneuron_state.html">neuronState</a>)</td></tr>
 <tr class="memdesc:a2e78d7d2b70bf7349c3854b3727dcc25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets neuron voltage based on linear function.  <a href="#a2e78d7d2b70bf7349c3854b3727dcc25">More...</a><br /></td></tr>
 <tr class="separator:a2e78d7d2b70bf7349c3854b3727dcc25"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,59 +162,28 @@ Functions</h2></td></tr>
 <tr class="memitem:aa6819d7492f0173f2234ba0b8b0bb674"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#aa6819d7492f0173f2234ba0b8b0bb674">neuronReceiveMessage</a> (<a class="el" href="structneuron_state.html">neuronState</a> *st, tw_stime time, <a class="el" href="struct_msg___data.html">Msg_Data</a> *m, tw_lp *lp)</td></tr>
 <tr class="memdesc:aa6819d7492f0173f2234ba0b8b0bb674"><td class="mdescLeft">&#160;</td><td class="mdescRight">handles incomming synapse messages.  <a href="#aa6819d7492f0173f2234ba0b8b0bb674">More...</a><br /></td></tr>
 <tr class="separator:aa6819d7492f0173f2234ba0b8b0bb674"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92d5882a15e11e2a6733483d51428e46"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#a92d5882a15e11e2a6733483d51428e46">neuronShouldFire</a> (<a class="el" href="structneuron_state.html">neuronState</a> *st)</td></tr>
-<tr class="memdesc:a92d5882a15e11e2a6733483d51428e46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a neuron should fire.  <a href="#a92d5882a15e11e2a6733483d51428e46">More...</a><br /></td></tr>
-<tr class="separator:a92d5882a15e11e2a6733483d51428e46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae071ef984b7e0dd4ec38fca91e0abe39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#ae071ef984b7e0dd4ec38fca91e0abe39">neuronFire</a> (<a class="el" href="structneuron_state.html">neuronState</a> *st, tw_stime time, <a class="el" href="struct_msg___data.html">Msg_Data</a> *m)</td></tr>
-<tr class="memdesc:ae071ef984b7e0dd4ec38fca91e0abe39"><td class="mdescLeft">&#160;</td><td class="mdescRight">neuronFire manages a firing event.  <a href="#ae071ef984b7e0dd4ec38fca91e0abe39">More...</a><br /></td></tr>
-<tr class="separator:ae071ef984b7e0dd4ec38fca91e0abe39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1f4997e4bfe11e78faa6d37748aee67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#ab1f4997e4bfe11e78faa6d37748aee67">neuronPostFire</a> (<a class="el" href="structneuron_state.html">neuronState</a> *st, tw_stime time, <a class="el" href="struct_msg___data.html">Msg_Data</a> *m)</td></tr>
-<tr class="memdesc:ab1f4997e4bfe11e78faa6d37748aee67"><td class="mdescLeft">&#160;</td><td class="mdescRight">neuronPostFire manages post-firing events, including reset functions  <a href="#ab1f4997e4bfe11e78faa6d37748aee67">More...</a><br /></td></tr>
-<tr class="separator:ab1f4997e4bfe11e78faa6d37748aee67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06ee765bfae45fe9b7f0619bf4abe63d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#a06ee765bfae45fe9b7f0619bf4abe63d">generateWaitEvent</a> (<a class="el" href="structneuron_state.html">neuronState</a> *st, tw_stime time, tw_lp *lp)</td></tr>
-<tr class="memdesc:a06ee765bfae45fe9b7f0619bf4abe63d"><td class="mdescLeft">&#160;</td><td class="mdescRight">generateWaitEvent creates a new wait event to this neuron for big-tick synchronization  <a href="#a06ee765bfae45fe9b7f0619bf4abe63d">More...</a><br /></td></tr>
-<tr class="separator:a06ee765bfae45fe9b7f0619bf4abe63d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3520b013e0c2f711b9f5c16e19306be6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#a3520b013e0c2f711b9f5c16e19306be6">neuronShouldFire</a> (<a class="el" href="structneuron_state.html">neuronState</a> *st, tw_lp *lp)</td></tr>
+<tr class="memdesc:a3520b013e0c2f711b9f5c16e19306be6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a neuron should fire.  <a href="#a3520b013e0c2f711b9f5c16e19306be6">More...</a><br /></td></tr>
+<tr class="separator:a3520b013e0c2f711b9f5c16e19306be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a683379b633b55058dd5b8b67929c165c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#a683379b633b55058dd5b8b67929c165c">neuronFire</a> (<a class="el" href="structneuron_state.html">neuronState</a> *st, tw_stime time, tw_lp *lp)</td></tr>
+<tr class="memdesc:a683379b633b55058dd5b8b67929c165c"><td class="mdescLeft">&#160;</td><td class="mdescRight">neuronFire manages a firing event.  <a href="#a683379b633b55058dd5b8b67929c165c">More...</a><br /></td></tr>
+<tr class="separator:a683379b633b55058dd5b8b67929c165c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a766dff9e530486b055e97ebe392268b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#a766dff9e530486b055e97ebe392268b8">sendHeartbeat</a> (<a class="el" href="structneuron_state.html">neuronState</a> *st, tw_lp *lp, tw_stime time)</td></tr>
+<tr class="memdesc:a766dff9e530486b055e97ebe392268b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that sends a heartbeat message to this neuron.  <a href="#a766dff9e530486b055e97ebe392268b8">More...</a><br /></td></tr>
+<tr class="separator:a766dff9e530486b055e97ebe392268b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afee2e0acc66d8d10aee8d52c8d245c82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#afee2e0acc66d8d10aee8d52c8d245c82">stochasticIntegrate</a> (<a class="el" href="assist_8h.html#aa73c5ea0fe4ba938c96e6771b38dcb2a">_weightT</a> weight, <a class="el" href="structneuron_state.html">neuronState</a> *st, tw_lp *lp)</td></tr>
+<tr class="memdesc:afee2e0acc66d8d10aee8d52c8d245c82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Neuron stochastic integration function - for use with stochastic leaks and synapse messages.  <a href="#afee2e0acc66d8d10aee8d52c8d245c82">More...</a><br /></td></tr>
+<tr class="separator:afee2e0acc66d8d10aee8d52c8d245c82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae630bdf5dd3744870968f07a6971659c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#ae630bdf5dd3744870968f07a6971659c">integrateSynapse</a> (<a class="el" href="assist_8h.html#a3f7a6e6a1210b6d9d7a42177dcb9634b">_idT</a> synapseID, <a class="el" href="structneuron_state.html">neuronState</a> *st, tw_lp *lp)</td></tr>
+<tr class="memdesc:ae630bdf5dd3744870968f07a6971659c"><td class="mdescLeft">&#160;</td><td class="mdescRight">function that adds a synapse's value to the current neuron's membrane potential.  <a href="#ae630bdf5dd3744870968f07a6971659c">More...</a><br /></td></tr>
+<tr class="separator:ae630bdf5dd3744870968f07a6971659c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabaff47eadb1e61b34c19b6e982f6511"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#aabaff47eadb1e61b34c19b6e982f6511">neuronPostIntegrate</a> (<a class="el" href="structneuron_state.html">neuronState</a> *st, tw_stime time, tw_lp *lp, bool willFire)</td></tr>
+<tr class="memdesc:aabaff47eadb1e61b34c19b6e982f6511"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that runs after integration &amp; firing, for reset function and threshold bounce calls.  <a href="#aabaff47eadb1e61b34c19b6e982f6511">More...</a><br /></td></tr>
+<tr class="separator:aabaff47eadb1e61b34c19b6e982f6511"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaae24f12a4b2a537740f29d65eb3e51e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="neuron_8c.html#aaae24f12a4b2a537740f29d65eb3e51e">neronReverseSate</a> (<a class="el" href="structneuron_state.html">neuronState</a> *s, tw_bf *CV, <a class="el" href="struct_msg___data.html">Msg_Data</a> *M, tw_lp *lp)</td></tr>
+<tr class="separator:aaae24f12a4b2a537740f29d65eb3e51e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a06ee765bfae45fe9b7f0619bf4abe63d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void generateWaitEvent </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structneuron_state.html">neuronState</a> *&#160;</td>
-          <td class="paramname"><em>st</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">tw_stime&#160;</td>
-          <td class="paramname"><em>time</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">tw_lp *&#160;</td>
-          <td class="paramname"><em>lp</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>generateWaitEvent creates a new wait event to this neuron for big-tick synchronization </p>
-
-<p>Definition at line <a class="el" href="neuron_8c_source.html#l00172">172</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;                                                                 {</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;}</div>
-</div><!-- fragment -->
-</div>
-</div>
 <a class="anchor" id="ae630bdf5dd3744870968f07a6971659c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -258,7 +222,36 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="neuron_8c_source.html#l00175">175</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8c_source.html#l00199">199</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
+
+<p>References <a class="el" href="assist_8h_source.html#l00020">_voltT</a>, <a class="el" href="neuron_8h_source.html#l00153">neuronState::membranePot</a>, <a class="el" href="neuron_8c_source.html#l00191">stochasticIntegrate()</a>, <a class="el" href="neuron_8h_source.html#l00187">neuronState::synapticWeightProb</a>, and <a class="el" href="neuron_8h_source.html#l00192">neuronState::synapticWeightProbSelect</a>.</p>
+
+<p>Referenced by <a class="el" href="neuron_8c_source.html#l00103">neuronReceiveMessage()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;                                                                 {</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="keywordflow">if</span>(st-&gt;<a class="code" href="structneuron_state.html#a4568f103808a436a62d7c7c47dc90e9b">synapticWeightProbSelect</a>[synapseID] == <span class="keyword">true</span>) {</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;        <a class="code" href="neuron_8c.html#afee2e0acc66d8d10aee8d52c8d245c82">stochasticIntegrate</a>(st-&gt;<a class="code" href="structneuron_state.html#aa71c0acf1edf08865e1f9729a2414efa">synapticWeightProb</a>[synapseID], st, lp);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    } <span class="keywordflow">else</span> { <span class="comment">//det. mode integrate:</span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        <a class="code" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a> adjustedWeight = st-&gt;<a class="code" href="structneuron_state.html#aa71c0acf1edf08865e1f9729a2414efa">synapticWeightProb</a>[synapseID];</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        st-&gt;<a class="code" href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">membranePot</a> += adjustedWeight;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    }</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;}</div>
+<div class="ttc" id="structneuron_state_html_a4568f103808a436a62d7c7c47dc90e9b"><div class="ttname"><a href="structneuron_state.html#a4568f103808a436a62d7c7c47dc90e9b">neuronState::synapticWeightProbSelect</a></div><div class="ttdeci">bool * synapticWeightProbSelect</div><div class="ttdoc">An array determining if each synapse is handled stochastically or deterministically. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00192">neuron.h:192</a></div></div>
+<div class="ttc" id="structneuron_state_html_a0fdd8f44c4105a94e17c4c58a51db486"><div class="ttname"><a href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">neuronState::membranePot</a></div><div class="ttdeci">_voltT membranePot</div><div class="ttdoc">current "voltage" of neuron, . Since this is PDES, t is implicit </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00153">neuron.h:153</a></div></div>
+<div class="ttc" id="neuron_8c_html_afee2e0acc66d8d10aee8d52c8d245c82"><div class="ttname"><a href="neuron_8c.html#afee2e0acc66d8d10aee8d52c8d245c82">stochasticIntegrate</a></div><div class="ttdeci">void stochasticIntegrate(_weightT weight, neuronState *st, tw_lp *lp)</div><div class="ttdoc">Neuron stochastic integration function - for use with stochastic leaks and synapse messages...</div><div class="ttdef"><b>Definition:</b> <a href="neuron_8c_source.html#l00191">neuron.c:191</a></div></div>
+<div class="ttc" id="structneuron_state_html_aa71c0acf1edf08865e1f9729a2414efa"><div class="ttname"><a href="structneuron_state.html#aa71c0acf1edf08865e1f9729a2414efa">neuronState::synapticWeightProb</a></div><div class="ttdeci">_weightT * synapticWeightProb</div><div class="ttdoc">In this simulation, each synappse can have a unique weight. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00187">neuron.h:187</a></div></div>
+<div class="ttc" id="assist_8h_html_abe1fc1b8f9efd1187e564bcb8de7f815"><div class="ttname"><a href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a></div><div class="ttdeci">#define _voltT</div><div class="ttdoc">Voltage data type (membrane potential) </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00020">assist.h:20</a></div></div>
+</div><!-- fragment -->
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="neuron_8c_ae630bdf5dd3744870968f07a6971659c_cgraph.png" border="0" usemap="#neuron_8c_ae630bdf5dd3744870968f07a6971659c_cgraph" alt=""/></div>
+<map name="neuron_8c_ae630bdf5dd3744870968f07a6971659c_cgraph" id="neuron_8c_ae630bdf5dd3744870968f07a6971659c_cgraph">
+<area shape="rect" id="node2" href="neuron_8c.html#afee2e0acc66d8d10aee8d52c8d245c82" title="Neuron stochastic integration function &#45; for use with stochastic leaks and synapse messages..." alt="" coords="176,5,309,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -286,27 +279,108 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>A linear leak function. </p>
-<p>LinearLeak is the standard linear leak function from the paper. Using the leakRate parameter inside <a class="el" href="struct_neuron_model.html">the neuron state </a>, this follows a simple linear function, reducing the membrane potential by a fixed rate per tick.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="struct_neuron_model.html" title="This struct maintains the state of an individual neuron.The neuron struct contains the parameters nee...">NeuronModel</a> </dd></dl>
+<p>A linear leak function - uses monotonic up and down leaks. </p>
+<p>LinearLeak is the standard linear leak function from the paper. Using the leakRate parameter inside <a class="el" href="">the neuron state </a>, this follows a simple linear function, reducing the membrane potential by a fixed rate per tick.</p>
+<dl class="section see"><dt>See also</dt><dd>NeuronModel </dd></dl>
 
 <p>Definition at line <a class="el" href="neuron_8c_source.html#l00028">28</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
+
+<p>References <a class="el" href="assist_8c_source.html#l00030">getCurrentBigTick()</a>, and <a class="el" href="neuron_8h_source.html#l00162">neuronState::lastLeakTime</a>.</p>
 <div class="fragment"><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                                            {</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="structneuron_state.html">neuronState</a> *s = (<a class="code" href="structneuron_state.html">neuronState</a> *)neuron;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    tw_stime bigTick = <a class="code" href="assist_8c.html#a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</a>(now);</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    tw_stime delta = bigTick - s-&gt;<a class="code" href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">lastLeakTime</a>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    s-&gt;<a class="code" href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">membranePot</a> -= s-&gt;leakRate * delta;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="comment">//s-&gt;membranePot -= s-&gt;leakRate * delta;</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    s-&gt;<a class="code" href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">lastLeakTime</a> = now;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
-<div class="ttc" id="structneuron_state_html_a0fdd8f44c4105a94e17c4c58a51db486"><div class="ttname"><a href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">neuronState::membranePot</a></div><div class="ttdeci">_voltT membranePot</div><div class="ttdoc">current "voltage" of neuron, 𝒱 </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00146">neuron.h:146</a></div></div>
-<div class="ttc" id="structneuron_state_html"><div class="ttname"><a href="structneuron_state.html">neuronState</a></div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00137">neuron.h:137</a></div></div>
-<div class="ttc" id="structneuron_state_html_a6f4e4d8fc1cf0257b486e01f628d2656"><div class="ttname"><a href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">neuronState::lastLeakTime</a></div><div class="ttdeci">tw_stime lastLeakTime</div><div class="ttdoc">Timestamp for leak functions. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00153">neuron.h:153</a></div></div>
-<div class="ttc" id="assist_8c_html_a4d378196b7fceed090d64ec8820b4065"><div class="ttname"><a href="assist_8c.html#a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</a></div><div class="ttdeci">tw_stime getCurrentBigTick(tw_stime now)</div><div class="ttdoc">Given a tw_stime, returns the current big tick. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8c_source.html#l00029">assist.c:29</a></div></div>
+<div class="ttc" id="structneuron_state_html"><div class="ttname"><a href="structneuron_state.html">neuronState</a></div><div class="ttdoc">This struct maintains the state of an individual neuron.The neuron struct contains the parameters nee...</div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00144">neuron.h:144</a></div></div>
+<div class="ttc" id="structneuron_state_html_a6f4e4d8fc1cf0257b486e01f628d2656"><div class="ttname"><a href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">neuronState::lastLeakTime</a></div><div class="ttdeci">tw_stime lastLeakTime</div><div class="ttdoc">Timestamp for leak functions. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00162">neuron.h:162</a></div></div>
+<div class="ttc" id="assist_8c_html_a4d378196b7fceed090d64ec8820b4065"><div class="ttname"><a href="assist_8c.html#a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</a></div><div class="ttdeci">tw_stime getCurrentBigTick(tw_stime now)</div><div class="ttdoc">Given a tw_stime, returns the current big tick. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8c_source.html#l00030">assist.c:30</a></div></div>
+</div><!-- fragment -->
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="neuron_8c_a64dc379b459a2b07b40bce35381210e8_cgraph.png" border="0" usemap="#neuron_8c_a64dc379b459a2b07b40bce35381210e8_cgraph" alt=""/></div>
+<map name="neuron_8c_a64dc379b459a2b07b40bce35381210e8_cgraph" id="neuron_8c_a64dc379b459a2b07b40bce35381210e8_cgraph">
+<area shape="rect" id="node2" href="assist_8c.html#a4d378196b7fceed090d64ec8820b4065" title="Given a tw_stime, returns the current big tick. " alt="" coords="135,5,261,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aaae24f12a4b2a537740f29d65eb3e51e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void neronReverseSate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structneuron_state.html">neuronState</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tw_bf *&#160;</td>
+          <td class="paramname"><em>CV</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_msg___data.html">Msg_Data</a> *&#160;</td>
+          <td class="paramname"><em>M</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tw_lp *&#160;</td>
+          <td class="paramname"><em>lp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="neuron_8c_source.html#l00232">232</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
+
+<p>References <a class="el" href="assist_8h_source.html#l00071">Msg_Data::eventType</a>, <a class="el" href="neuron_8h_source.html#l00214">neuronState::fireCount</a>, <a class="el" href="neuron_8h_source.html#l00218">neuronState::firedLast</a>, <a class="el" href="neuron_8h_source.html#l00161">neuronState::lastActiveTime</a>, <a class="el" href="neuron_8h_source.html#l00162">neuronState::lastLeakTime</a>, <a class="el" href="neuron_8h_source.html#l00153">neuronState::membranePot</a>, <a class="el" href="neuron_8h_source.html#l00166">neuronState::receivedSynapseMsgs</a>, <a class="el" href="neuron_8h_source.html#l00164">neuronState::savedLastActiveTime</a>, <a class="el" href="neuron_8h_source.html#l00165">neuronState::savedLastLeakTime</a>, <a class="el" href="neuron_8h_source.html#l00154">neuronState::savedMembranePot</a>, <a class="el" href="neuron_8h_source.html#l00216">neuronState::SOPSCount</a>, and <a class="el" href="assist_8h_source.html#l00060">SYNAPSE_OUT</a>.</p>
+<div class="fragment"><div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;                                                                         {</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        <span class="comment">//reverse function.</span></div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="keywordflow">if</span>(M-&gt;<a class="code" href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">eventType</a> == <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb">SYNAPSE_OUT</a>)</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        s-&gt;<a class="code" href="structneuron_state.html#af8935bcba177f2f3dfb9119c39ef7dc5">receivedSynapseMsgs</a> --;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        s-&gt;<a class="code" href="structneuron_state.html#a71fbb9a79e8048b473b6e09d29a64bbe">SOPSCount</a> --;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="keywordflow">if</span>(s-&gt;<a class="code" href="structneuron_state.html#a287eb8703dbfb177165d31c8840646b8">firedLast</a> == <span class="keyword">true</span>){</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;        s-&gt;<a class="code" href="structneuron_state.html#afe8825076c4cf3863c677307fec63c61">fireCount</a> --;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    }</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    s-&gt;<a class="code" href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">membranePot</a>  = s-&gt;<a class="code" href="structneuron_state.html#a5efe5de0478ea513ed5d90d89a49fcca">savedMembranePot</a>;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    s-&gt;<a class="code" href="structneuron_state.html#a0658ad1f8b57a00589c6ea84f9a4ab13">lastActiveTime</a> = s-&gt;<a class="code" href="structneuron_state.html#a6922b3f3041346eb83cfc6352a22277b">savedLastActiveTime</a>;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    s-&gt;<a class="code" href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">lastLeakTime</a> = s-&gt;<a class="code" href="structneuron_state.html#a50734a9ba605a083a90814b63d039a03">savedLastLeakTime</a>;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;}</div>
+<div class="ttc" id="structneuron_state_html_af8935bcba177f2f3dfb9119c39ef7dc5"><div class="ttname"><a href="structneuron_state.html#af8935bcba177f2f3dfb9119c39ef7dc5">neuronState::receivedSynapseMsgs</a></div><div class="ttdeci">uint_fast16_t receivedSynapseMsgs</div><div class="ttdoc">Used for big-tick synchronization. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00166">neuron.h:166</a></div></div>
+<div class="ttc" id="structneuron_state_html_a0fdd8f44c4105a94e17c4c58a51db486"><div class="ttname"><a href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">neuronState::membranePot</a></div><div class="ttdeci">_voltT membranePot</div><div class="ttdoc">current "voltage" of neuron, . Since this is PDES, t is implicit </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00153">neuron.h:153</a></div></div>
+<div class="ttc" id="structneuron_state_html_a0658ad1f8b57a00589c6ea84f9a4ab13"><div class="ttname"><a href="structneuron_state.html#a0658ad1f8b57a00589c6ea84f9a4ab13">neuronState::lastActiveTime</a></div><div class="ttdeci">tw_stime lastActiveTime</div><div class="ttdoc">last time the neuron fired - used for calculating leak and reverse functions. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00161">neuron.h:161</a></div></div>
+<div class="ttc" id="structneuron_state_html_a71fbb9a79e8048b473b6e09d29a64bbe"><div class="ttname"><a href="structneuron_state.html#a71fbb9a79e8048b473b6e09d29a64bbe">neuronState::SOPSCount</a></div><div class="ttdeci">_statT SOPSCount</div><div class="ttdoc">A count for SOPS calculation. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00216">neuron.h:216</a></div></div>
+<div class="ttc" id="structneuron_state_html_afe8825076c4cf3863c677307fec63c61"><div class="ttname"><a href="structneuron_state.html#afe8825076c4cf3863c677307fec63c61">neuronState::fireCount</a></div><div class="ttdeci">_statT fireCount</div><div class="ttdoc">count of this neuron&#39;s output </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00214">neuron.h:214</a></div></div>
+<div class="ttc" id="structneuron_state_html_a5efe5de0478ea513ed5d90d89a49fcca"><div class="ttname"><a href="structneuron_state.html#a5efe5de0478ea513ed5d90d89a49fcca">neuronState::savedMembranePot</a></div><div class="ttdeci">_voltT savedMembranePot</div><div class="ttdoc">previous state membrane potential </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00154">neuron.h:154</a></div></div>
+<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb">SYNAPSE_OUT</a></div><div class="ttdoc">Message originates from a synapse. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00060">assist.h:60</a></div></div>
+<div class="ttc" id="structneuron_state_html_a6f4e4d8fc1cf0257b486e01f628d2656"><div class="ttname"><a href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">neuronState::lastLeakTime</a></div><div class="ttdeci">tw_stime lastLeakTime</div><div class="ttdoc">Timestamp for leak functions. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00162">neuron.h:162</a></div></div>
+<div class="ttc" id="struct_msg___data_html_a015b6eb45982e1842ee8fc389a099ced"><div class="ttname"><a href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">Msg_Data::eventType</a></div><div class="ttdeci">enum evtType eventType</div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00071">assist.h:71</a></div></div>
+<div class="ttc" id="structneuron_state_html_a50734a9ba605a083a90814b63d039a03"><div class="ttname"><a href="structneuron_state.html#a50734a9ba605a083a90814b63d039a03">neuronState::savedLastLeakTime</a></div><div class="ttdeci">tw_stime savedLastLeakTime</div><div class="ttdoc">For state rollback - saved last time neuron used leak function. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00165">neuron.h:165</a></div></div>
+<div class="ttc" id="structneuron_state_html_a6922b3f3041346eb83cfc6352a22277b"><div class="ttname"><a href="structneuron_state.html#a6922b3f3041346eb83cfc6352a22277b">neuronState::savedLastActiveTime</a></div><div class="ttdeci">tw_stime savedLastActiveTime</div><div class="ttdoc">For state rollback - this the last time the neuron integrated and fired, before the new big-tick...</div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00164">neuron.h:164</a></div></div>
+<div class="ttc" id="structneuron_state_html_a287eb8703dbfb177165d31c8840646b8"><div class="ttname"><a href="structneuron_state.html#a287eb8703dbfb177165d31c8840646b8">neuronState::firedLast</a></div><div class="ttdeci">bool firedLast</div><div class="ttdoc">Did the neuron fire during the last message? </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00218">neuron.h:218</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="ae071ef984b7e0dd4ec38fca91e0abe39"></a>
+<a class="anchor" id="a683379b633b55058dd5b8b67929c165c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -325,8 +399,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_msg___data.html">Msg_Data</a> *&#160;</td>
-          <td class="paramname"><em>m</em>&#160;</td>
+          <td class="paramtype">tw_lp *&#160;</td>
+          <td class="paramname"><em>lp</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -339,19 +413,46 @@ Functions</h2></td></tr>
 <p>neuronFire manages a firing event. </p>
 <p>Firing events occur when a synchro message is received, so these calculations are done on big-ticks only. </p>
 
-<p>Definition at line <a class="el" href="neuron_8c_source.html#l00166">166</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;                                                            {</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;}</div>
+<p>Definition at line <a class="el" href="neuron_8c_source.html#l00167">167</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
+
+<p>References <a class="el" href="neuron_8h_source.html#l00202">neuronState::dendriteGlobalDest</a>, <a class="el" href="assist_8h_source.html#l00071">Msg_Data::eventType</a>, <a class="el" href="neuron_8h_source.html#l00218">neuronState::firedLast</a>, <a class="el" href="assist_8c_source.html#l00041">getNextBigTick()</a>, <a class="el" href="assist_8h_source.html#l00073">Msg_Data::localID</a>, <a class="el" href="neuron_8h_source.html#l00149">neuronState::myLocalID</a>, and <a class="el" href="assist_8h_source.html#l00061">NEURON_OUT</a>.</p>
+
+<p>Referenced by <a class="el" href="neuron_8c_source.html#l00103">neuronReceiveMessage()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;                                                          {</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    tw_stime nextHeartbeat = <a class="code" href="assist_8c.html#aa961bc9b414f1429b123fc8212c989fd">getNextBigTick</a>(time);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    tw_event *newEvent = tw_event_new(st-&gt;<a class="code" href="structneuron_state.html#a4199c14c5aabfd52f441e01623bdc84c">dendriteGlobalDest</a>, nextHeartbeat, lp);</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <a class="code" href="struct_msg___data.html">Msg_Data</a> *data = (<a class="code" href="struct_msg___data.html">Msg_Data</a> *) tw_event_data(newEvent);</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    data-&gt;<a class="code" href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">eventType</a> = <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0">NEURON_OUT</a>;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    data-&gt;<a class="code" href="struct_msg___data.html#aefc820e92a74047ec7ed74c1c45f818f">localID</a> = st-&gt;<a class="code" href="structneuron_state.html#ac24762c24aede292a2ce5df78114881c">myLocalID</a>;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    tw_event_send(newEvent);</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    st-&gt;<a class="code" href="structneuron_state.html#a287eb8703dbfb177165d31c8840646b8">firedLast</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;}</div>
+<div class="ttc" id="assist_8c_html_aa961bc9b414f1429b123fc8212c989fd"><div class="ttname"><a href="assist_8c.html#aa961bc9b414f1429b123fc8212c989fd">getNextBigTick</a></div><div class="ttdeci">tw_stime getNextBigTick(tw_stime now)</div><div class="ttdoc">Given a tw_stime, returns the next big-tick that will happen. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8c_source.html#l00041">assist.c:41</a></div></div>
+<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0">NEURON_OUT</a></div><div class="ttdoc">Message originates from a neuron, and is going to an axion. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00061">assist.h:61</a></div></div>
+<div class="ttc" id="struct_msg___data_html_a015b6eb45982e1842ee8fc389a099ced"><div class="ttname"><a href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">Msg_Data::eventType</a></div><div class="ttdeci">enum evtType eventType</div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00071">assist.h:71</a></div></div>
+<div class="ttc" id="struct_msg___data_html"><div class="ttname"><a href="struct_msg___data.html">Msg_Data</a></div><div class="ttdoc">Msg_Data is the main message struct. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00070">assist.h:70</a></div></div>
+<div class="ttc" id="struct_msg___data_html_aefc820e92a74047ec7ed74c1c45f818f"><div class="ttname"><a href="struct_msg___data.html#aefc820e92a74047ec7ed74c1c45f818f">Msg_Data::localID</a></div><div class="ttdeci">_idT localID</div><div class="ttdoc">Sender&#39;s local (within a core) id - used for weight lookups. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00073">assist.h:73</a></div></div>
+<div class="ttc" id="structneuron_state_html_a287eb8703dbfb177165d31c8840646b8"><div class="ttname"><a href="structneuron_state.html#a287eb8703dbfb177165d31c8840646b8">neuronState::firedLast</a></div><div class="ttdeci">bool firedLast</div><div class="ttdoc">Did the neuron fire during the last message? </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00218">neuron.h:218</a></div></div>
+<div class="ttc" id="structneuron_state_html_ac24762c24aede292a2ce5df78114881c"><div class="ttname"><a href="structneuron_state.html#ac24762c24aede292a2ce5df78114881c">neuronState::myLocalID</a></div><div class="ttdeci">_idT myLocalID</div><div class="ttdoc">Neuron&#39;s local ID (from 0 - j-1);. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00149">neuron.h:149</a></div></div>
+<div class="ttc" id="structneuron_state_html_a4199c14c5aabfd52f441e01623bdc84c"><div class="ttname"><a href="structneuron_state.html#a4199c14c5aabfd52f441e01623bdc84c">neuronState::dendriteGlobalDest</a></div><div class="ttdeci">tw_lpid dendriteGlobalDest</div><div class="ttdoc">GID of the axon this neuron talks to. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00202">neuron.h:202</a></div></div>
 </div><!-- fragment -->
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="neuron_8c_a683379b633b55058dd5b8b67929c165c_cgraph.png" border="0" usemap="#neuron_8c_a683379b633b55058dd5b8b67929c165c_cgraph" alt=""/></div>
+<map name="neuron_8c_a683379b633b55058dd5b8b67929c165c_cgraph" id="neuron_8c_a683379b633b55058dd5b8b67929c165c_cgraph">
+<area shape="rect" id="node2" href="assist_8c.html#aa961bc9b414f1429b123fc8212c989fd" title="Given a tw_stime, returns the next big&#45;tick that will happen. " alt="" coords="136,5,248,32"/><area shape="rect" id="node3" href="assist_8c.html#a4d378196b7fceed090d64ec8820b4065" title="Given a tw_stime, returns the current big tick. " alt="" coords="296,5,423,32"/></map>
+</div>
+</p>
+
 </div>
 </div>
-<a class="anchor" id="ab1f4997e4bfe11e78faa6d37748aee67"></a>
+<a class="anchor" id="aabaff47eadb1e61b34c19b6e982f6511"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void neuronPostFire </td>
+          <td class="memname">void neuronPostIntegrate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structneuron_state.html">neuronState</a> *&#160;</td>
           <td class="paramname"><em>st</em>, </td>
@@ -365,8 +466,14 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_msg___data.html">Msg_Data</a> *&#160;</td>
-          <td class="paramname"><em>m</em>&#160;</td>
+          <td class="paramtype">tw_lp *&#160;</td>
+          <td class="paramname"><em>lp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>willFire</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -376,12 +483,43 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>neuronPostFire manages post-firing events, including reset functions </p>
+<p>Function that runs after integration &amp; firing, for reset function and threshold bounce calls. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>There is potentially an issue here - does the TrueNorth architecture draw a new pseudorandom number during the threshold, fire, reset functions, or does it resuse them? It looks like re-use, so that's what I'm doing here. </dd></dl>
 
-<p>Definition at line <a class="el" href="neuron_8c_source.html#l00169">169</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;                                                                {</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;}</div>
+<p>Definition at line <a class="el" href="neuron_8c_source.html#l00214">214</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
+
+<p>References <a class="el" href="assist_8h_source.html#l00023">_randT</a>, <a class="el" href="assist_8h_source.html#l00022">_threshT</a>, <a class="el" href="assist_8h_source.html#l00020">_voltT</a>, <a class="el" href="neuron_8h_source.html#l00177">neuronState::doReset</a>, <a class="el" href="neuron_8h_source.html#l00158">neuronState::drawnRandomNumber</a>, <a class="el" href="assist_8h_source.html#l00048">DT</a>, <a class="el" href="neuron_8h_source.html#l00153">neuronState::membranePot</a>, <a class="el" href="neuron_8h_source.html#l00156">neuronState::negativeThreshold</a>, <a class="el" href="neuron_8h_source.html#l00182">neuronState::negThresReset</a>, <a class="el" href="neuron_8h_source.html#l00180">neuronState::resetMode</a>, and <a class="el" href="neuron_8h_source.html#l00160">neuronState::resetVoltage</a>.</p>
+
+<p>Referenced by <a class="el" href="neuron_8c_source.html#l00103">neuronReceiveMessage()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;                                                                                  {</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    <span class="keywordflow">if</span>(willFire){ <span class="comment">// neuron will/did fire:</span></div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;        st-&gt;<a class="code" href="structneuron_state.html#afcf9d931e4fda519c43b4efeab687463">doReset</a>(st);</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (st-&gt;<a class="code" href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">membranePot</a> &lt; -1 * (st-&gt;<a class="code" href="structneuron_state.html#a678bcd9f031e290178cd5d2855e74279">negativeThreshold</a> * st-&gt;<a class="code" href="structneuron_state.html#a3ec480684e7a2cfc67a8ef7ac1bf57b9">negThresReset</a> + (st-&gt;<a class="code" href="structneuron_state.html#a678bcd9f031e290178cd5d2855e74279">negativeThreshold</a> + st-&gt;<a class="code" href="structneuron_state.html#a296a4f04813c4882d6acd8c9074abd35">drawnRandomNumber</a>))){</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;            <span class="comment">//sanity variables for the formulaic reset/bounce instead of calling functions:</span></div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <a class="code" href="assist_8h.html#a5537d30256d443ce07efd3d879a4a720">_threshT</a> B = st-&gt;<a class="code" href="structneuron_state.html#a678bcd9f031e290178cd5d2855e74279">negativeThreshold</a>;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        <span class="keywordtype">int</span> K = st-&gt;<a class="code" href="structneuron_state.html#a3ec480684e7a2cfc67a8ef7ac1bf57b9">negThresReset</a>;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        <span class="keywordtype">int</span> G = st-&gt;<a class="code" href="structneuron_state.html#af67bb650aa3150a6a31e16a874d71f91">resetMode</a>;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        <a class="code" href="assist_8h.html#a520ac495f188eb0bc5645cffa3c4328b">_randT</a> n = st-&gt;<a class="code" href="structneuron_state.html#a296a4f04813c4882d6acd8c9074abd35">drawnRandomNumber</a>;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <a class="code" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a> R = st-&gt;<a class="code" href="structneuron_state.html#af69a2c108fe9e7154fa047ea5acc5d80">resetVoltage</a>;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        <a class="code" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a> V = st-&gt;<a class="code" href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">membranePot</a>;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        st-&gt;<a class="code" href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">membranePot</a> = (-(B*K) + (-(<a class="code" href="assist_8h.html#acfde2b62c9c4e0413f3066bbd65c428a">DT</a>(G)) * R +</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;                                     <a class="code" href="assist_8h.html#acfde2b62c9c4e0413f3066bbd65c428a">DT</a>(G-1) * (V + (B + n)) +</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;                                     <a class="code" href="assist_8h.html#acfde2b62c9c4e0413f3066bbd65c428a">DT</a>(G-2) * V) * (1-K));</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    }</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;}</div>
+<div class="ttc" id="structneuron_state_html_afcf9d931e4fda519c43b4efeab687463"><div class="ttname"><a href="structneuron_state.html#afcf9d931e4fda519c43b4efeab687463">neuronState::doReset</a></div><div class="ttdeci">resetFunDel doReset</div><div class="ttdoc">neuron&#39;s firing mode </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00177">neuron.h:177</a></div></div>
+<div class="ttc" id="structneuron_state_html_a0fdd8f44c4105a94e17c4c58a51db486"><div class="ttname"><a href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">neuronState::membranePot</a></div><div class="ttdeci">_voltT membranePot</div><div class="ttdoc">current "voltage" of neuron, . Since this is PDES, t is implicit </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00153">neuron.h:153</a></div></div>
+<div class="ttc" id="assist_8h_html_acfde2b62c9c4e0413f3066bbd65c428a"><div class="ttname"><a href="assist_8h.html#acfde2b62c9c4e0413f3066bbd65c428a">DT</a></div><div class="ttdeci">#define DT(x)</div><div class="ttdoc">Kronecker Delta function. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00048">assist.h:48</a></div></div>
+<div class="ttc" id="assist_8h_html_a520ac495f188eb0bc5645cffa3c4328b"><div class="ttname"><a href="assist_8h.html#a520ac495f188eb0bc5645cffa3c4328b">_randT</a></div><div class="ttdeci">#define _randT</div><div class="ttdoc">Random value storage for neurons. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00023">assist.h:23</a></div></div>
+<div class="ttc" id="structneuron_state_html_af69a2c108fe9e7154fa047ea5acc5d80"><div class="ttname"><a href="structneuron_state.html#af69a2c108fe9e7154fa047ea5acc5d80">neuronState::resetVoltage</a></div><div class="ttdeci">_voltT resetVoltage</div><div class="ttdoc">Reset voltage for reset params, . </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00160">neuron.h:160</a></div></div>
+<div class="ttc" id="structneuron_state_html_a3ec480684e7a2cfc67a8ef7ac1bf57b9"><div class="ttname"><a href="structneuron_state.html#a3ec480684e7a2cfc67a8ef7ac1bf57b9">neuronState::negThresReset</a></div><div class="ttdeci">bool negThresReset</div><div class="ttdoc">From the paper&#39;s , , negative threshold setting to reset or saturate. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00182">neuron.h:182</a></div></div>
+<div class="ttc" id="assist_8h_html_a5537d30256d443ce07efd3d879a4a720"><div class="ttname"><a href="assist_8h.html#a5537d30256d443ce07efd3d879a4a720">_threshT</a></div><div class="ttdeci">#define _threshT</div><div class="ttdoc">threshold data type - In the paper, this is two unsigned values and a reversal flag. Here, this is a signed integer. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00022">assist.h:22</a></div></div>
+<div class="ttc" id="assist_8h_html_abe1fc1b8f9efd1187e564bcb8de7f815"><div class="ttname"><a href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a></div><div class="ttdeci">#define _voltT</div><div class="ttdoc">Voltage data type (membrane potential) </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00020">assist.h:20</a></div></div>
+<div class="ttc" id="structneuron_state_html_af67bb650aa3150a6a31e16a874d71f91"><div class="ttname"><a href="structneuron_state.html#af67bb650aa3150a6a31e16a874d71f91">neuronState::resetMode</a></div><div class="ttdeci">short int resetMode</div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00180">neuron.h:180</a></div></div>
+<div class="ttc" id="structneuron_state_html_a678bcd9f031e290178cd5d2855e74279"><div class="ttname"><a href="structneuron_state.html#a678bcd9f031e290178cd5d2855e74279">neuronState::negativeThreshold</a></div><div class="ttdeci">_threshT negativeThreshold</div><div class="ttdoc">neuron&#39;s negative threshold, 𝛽 </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00156">neuron.h:156</a></div></div>
+<div class="ttc" id="structneuron_state_html_a296a4f04813c4882d6acd8c9074abd35"><div class="ttname"><a href="structneuron_state.html#a296a4f04813c4882d6acd8c9074abd35">neuronState::drawnRandomNumber</a></div><div class="ttdeci">_randT drawnRandomNumber</div><div class="ttdoc">When activated, neurons draw a new random number. Reset after every big-tick as needed. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00158">neuron.h:158</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -432,11 +570,12 @@ Functions</h2></td></tr>
 </ul>
 <p>Big-Tick events are sent at time \(𝒯_{bigTick} - ε\), so that the the event will arrive at the next bit-tick time. </p>
 
-<p>Definition at line <a class="el" href="neuron_8c_source.html#l00104">104</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8c_source.html#l00103">103</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
 
-<p>References <a class="el" href="assist_8h_source.html#l00049">Msg_Data::eventType</a>, <a class="el" href="neuron_8h_source.html#l00198">neuronState::fireCount</a>, <a class="el" href="neuron_8h_source.html#l00146">neuronState::membranePot</a>, <a class="el" href="assist_8h_source.html#l00043">NEURON_HEARTBEAT</a>, <a class="el" href="neuron_8c_source.html#l00157">neuronShouldFire()</a>, <a class="el" href="neuron_8h_source.html#l00199">neuronState::rcvdMsgCount</a>, <a class="el" href="neuron_8h_source.html#l00157">neuronState::receivedSynapseMsgs</a>, <a class="el" href="neuron_8h_source.html#l00147">neuronState::savedMembranePot</a>, and <a class="el" href="neuron_8h_source.html#l00200">neuronState::SOPSCount</a>.</p>
-<div class="fragment"><div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;          {</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordtype">bool</span> willFire = <span class="keyword">false</span>;</div>
+<p>References <a class="el" href="neuron_8h_source.html#l00205">neuronState::doLeak</a>, <a class="el" href="neuron_8h_source.html#l00158">neuronState::drawnRandomNumber</a>, <a class="el" href="assist_8h_source.html#l00071">Msg_Data::eventType</a>, <a class="el" href="neuron_8h_source.html#l00214">neuronState::fireCount</a>, <a class="el" href="neuron_8h_source.html#l00218">neuronState::firedLast</a>, <a class="el" href="neuron_8c_source.html#l00199">integrateSynapse()</a>, <a class="el" href="neuron_8h_source.html#l00161">neuronState::lastActiveTime</a>, <a class="el" href="neuron_8h_source.html#l00162">neuronState::lastLeakTime</a>, <a class="el" href="assist_8h_source.html#l00073">Msg_Data::localID</a>, <a class="el" href="neuron_8h_source.html#l00153">neuronState::membranePot</a>, <a class="el" href="assist_8h_source.html#l00062">NEURON_HEARTBEAT</a>, <a class="el" href="neuron_8c_source.html#l00167">neuronFire()</a>, <a class="el" href="neuron_8c_source.html#l00214">neuronPostIntegrate()</a>, <a class="el" href="neuron_8c_source.html#l00161">neuronShouldFire()</a>, <a class="el" href="neuron_8h_source.html#l00215">neuronState::rcvdMsgCount</a>, <a class="el" href="neuron_8h_source.html#l00166">neuronState::receivedSynapseMsgs</a>, <a class="el" href="assist_8h_source.html#l00072">Msg_Data::rndCallCount</a>, <a class="el" href="neuron_8h_source.html#l00164">neuronState::savedLastActiveTime</a>, <a class="el" href="neuron_8h_source.html#l00165">neuronState::savedLastLeakTime</a>, <a class="el" href="neuron_8h_source.html#l00154">neuronState::savedMembranePot</a>, <a class="el" href="neuron_8c_source.html#l00179">sendHeartbeat()</a>, <a class="el" href="neuron_8h_source.html#l00216">neuronState::SOPSCount</a>, <a class="el" href="assist_8h_source.html#l00060">SYNAPSE_OUT</a>, and <a class="el" href="neuron_8h_source.html#l00157">neuronState::thresholdPRNMask</a>.</p>
+<div class="fragment"><div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;          {</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordtype">bool</span> willFire = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    st-&gt;<a class="code" href="structneuron_state.html#a287eb8703dbfb177165d31c8840646b8">firedLast</a> = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="comment">//save the previous state of the neuron:</span></div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    st-&gt;<a class="code" href="structneuron_state.html#a50734a9ba605a083a90814b63d039a03">savedLastLeakTime</a> = st-&gt;<a class="code" href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">lastLeakTime</a>;</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    st-&gt;<a class="code" href="structneuron_state.html#a6922b3f3041346eb83cfc6352a22277b">savedLastActiveTime</a> = st-&gt;<a class="code" href="structneuron_state.html#a0658ad1f8b57a00589c6ea84f9a4ab13">lastActiveTime</a>;</div>
@@ -450,7 +589,7 @@ Functions</h2></td></tr>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                <span class="comment">//next, we will check if a heartbeat message should be sent</span></div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            <span class="keywordflow">if</span>(st-&gt;<a class="code" href="structneuron_state.html#af8935bcba177f2f3dfb9119c39ef7dc5">receivedSynapseMsgs</a> == 0) {</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;                <a class="code" href="neuron_8h.html#a766dff9e530486b055e97ebe392268b8">sendHeartbeat</a>(st, lp, time);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;                <a class="code" href="neuron_8c.html#a766dff9e530486b055e97ebe392268b8">sendHeartbeat</a>(st, lp, time);</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            }</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            st-&gt;<a class="code" href="structneuron_state.html#af8935bcba177f2f3dfb9119c39ef7dc5">receivedSynapseMsgs</a> ++;</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
@@ -459,69 +598,74 @@ Functions</h2></td></tr>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e">NEURON_HEARTBEAT</a>:</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            st-&gt;<a class="code" href="structneuron_state.html#af8935bcba177f2f3dfb9119c39ef7dc5">receivedSynapseMsgs</a> = 0;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;                <span class="comment">//Currently operates - leak-&gt;fire-&gt;(reset)</span></div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;            st-&gt;<a class="code" href="structneuron_state.html#aa430f424f34dc59dc27736e27ec61320">doLeak</a>(st, time);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            willFire = <a class="code" href="neuron_8c.html#a92d5882a15e11e2a6733483d51428e46">neuronShouldFire</a>(st);</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;            <span class="keywordflow">if</span>(willFire){</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;                <a class="code" href="neuron_8c.html#ae071ef984b7e0dd4ec38fca91e0abe39">neuronFire</a>(st, time, m);</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;                <a class="code" href="neuron_8c.html#ab1f4997e4bfe11e78faa6d37748aee67">neuronPostFire</a>(st, time, m);</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;                st-&gt;<a class="code" href="structneuron_state.html#afe8825076c4cf3863c677307fec63c61">fireCount</a> ++;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            }</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;            <a class="code" href="neuron_8h.html#adadd3095c39786607629697406f3d1eb">neuronPostIntegrate</a>(st, time, lp, willFire);</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;            <span class="comment">//stats collection</span></div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;            st-&gt;<a class="code" href="structneuron_state.html#a71fbb9a79e8048b473b6e09d29a64bbe">SOPSCount</a> ++;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;                <span class="comment">//Error condition - non-valid input.</span></div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    }</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        <span class="comment">//store the random calls in the message:</span></div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    m-&gt;<a class="code" href="struct_msg___data.html#a2e49a6bcc6c45ade722f746b1ea707f2">rndCallCount</a> = lp-&gt;rng-&gt;count - startCount;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                <span class="comment">//set up drawn random number for the heartbeat.</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            <span class="keywordflow">if</span>(st-&gt;<a class="code" href="structneuron_state.html#aa501d6ee7cacd5435deec79c07637b08">thresholdPRNMask</a> != 0)</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;                st-&gt;<a class="code" href="structneuron_state.html#a296a4f04813c4882d6acd8c9074abd35">drawnRandomNumber</a> = tw_rand_integer(lp-&gt;rng, 0, st-&gt;<a class="code" href="structneuron_state.html#aa501d6ee7cacd5435deec79c07637b08">thresholdPRNMask</a>);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;                <span class="comment">//Currently operates - leak-&gt;fire-&gt;(reset)</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            st-&gt;<a class="code" href="structneuron_state.html#aa430f424f34dc59dc27736e27ec61320">doLeak</a>(st, time);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            willFire = <a class="code" href="neuron_8c.html#a3520b013e0c2f711b9f5c16e19306be6">neuronShouldFire</a>(st,lp);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;            <span class="keywordflow">if</span>(willFire){</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;                <a class="code" href="neuron_8c.html#a683379b633b55058dd5b8b67929c165c">neuronFire</a>(st, time, lp);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;                st-&gt;<a class="code" href="structneuron_state.html#afe8825076c4cf3863c677307fec63c61">fireCount</a> ++;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;            }</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;            <a class="code" href="neuron_8c.html#aabaff47eadb1e61b34c19b6e982f6511">neuronPostIntegrate</a>(st, time, lp, willFire);</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;            <span class="comment">//stats collection</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;            st-&gt;<a class="code" href="structneuron_state.html#a71fbb9a79e8048b473b6e09d29a64bbe">SOPSCount</a> ++;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;            st-&gt;<a class="code" href="structneuron_state.html#a0658ad1f8b57a00589c6ea84f9a4ab13">lastActiveTime</a> = tw_now(lp);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;                <span class="comment">//Error condition - non-valid input.</span></div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    }</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    st-&gt;<a class="code" href="structneuron_state.html#ab8f63a1dfdb2992657530ff8a63fdc01">rcvdMsgCount</a> ++;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <span class="comment">//store the random calls in the message:</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    m-&gt;<a class="code" href="struct_msg___data.html#a2e49a6bcc6c45ade722f746b1ea707f2">rndCallCount</a> = lp-&gt;rng-&gt;count - startCount;</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;}</div>
-<div class="ttc" id="structneuron_state_html_af8935bcba177f2f3dfb9119c39ef7dc5"><div class="ttname"><a href="structneuron_state.html#af8935bcba177f2f3dfb9119c39ef7dc5">neuronState::receivedSynapseMsgs</a></div><div class="ttdeci">uint_fast16_t receivedSynapseMsgs</div><div class="ttdoc">Used for big-tick synchronization. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00157">neuron.h:157</a></div></div>
-<div class="ttc" id="structneuron_state_html_a0fdd8f44c4105a94e17c4c58a51db486"><div class="ttname"><a href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">neuronState::membranePot</a></div><div class="ttdeci">_voltT membranePot</div><div class="ttdoc">current "voltage" of neuron, 𝒱 </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00146">neuron.h:146</a></div></div>
-<div class="ttc" id="struct_msg___data_html_a2e49a6bcc6c45ade722f746b1ea707f2"><div class="ttname"><a href="struct_msg___data.html#a2e49a6bcc6c45ade722f746b1ea707f2">Msg_Data::rndCallCount</a></div><div class="ttdeci">unsigned long rndCallCount</div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00050">assist.h:50</a></div></div>
-<div class="ttc" id="structneuron_state_html_a0658ad1f8b57a00589c6ea84f9a4ab13"><div class="ttname"><a href="structneuron_state.html#a0658ad1f8b57a00589c6ea84f9a4ab13">neuronState::lastActiveTime</a></div><div class="ttdeci">tw_stime lastActiveTime</div><div class="ttdoc">last time the neuron fired - used for calculating leak and reverse functions. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00152">neuron.h:152</a></div></div>
-<div class="ttc" id="neuron_8h_html_adadd3095c39786607629697406f3d1eb"><div class="ttname"><a href="neuron_8h.html#adadd3095c39786607629697406f3d1eb">neuronPostIntegrate</a></div><div class="ttdeci">void neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool didFire)</div><div class="ttdoc">Function that runs after integration & firing, for reset function calls. </div></div>
-<div class="ttc" id="structneuron_state_html_aa430f424f34dc59dc27736e27ec61320"><div class="ttname"><a href="structneuron_state.html#aa430f424f34dc59dc27736e27ec61320">neuronState::doLeak</a></div><div class="ttdeci">leakFunDel doLeak</div><div class="ttdoc">Function pointer to the neuron&#39;s current leak function. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00190">neuron.h:190</a></div></div>
-<div class="ttc" id="structneuron_state_html_a71fbb9a79e8048b473b6e09d29a64bbe"><div class="ttname"><a href="structneuron_state.html#a71fbb9a79e8048b473b6e09d29a64bbe">neuronState::SOPSCount</a></div><div class="ttdeci">_statT SOPSCount</div><div class="ttdoc">A count for SOPS calculation. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00200">neuron.h:200</a></div></div>
-<div class="ttc" id="structneuron_state_html_afe8825076c4cf3863c677307fec63c61"><div class="ttname"><a href="structneuron_state.html#afe8825076c4cf3863c677307fec63c61">neuronState::fireCount</a></div><div class="ttdeci">_statT fireCount</div><div class="ttdoc">count of this neuron&#39;s output </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00198">neuron.h:198</a></div></div>
-<div class="ttc" id="neuron_8h_html_a766dff9e530486b055e97ebe392268b8"><div class="ttname"><a href="neuron_8h.html#a766dff9e530486b055e97ebe392268b8">sendHeartbeat</a></div><div class="ttdeci">void sendHeartbeat(neuronState *st, tw_lp *lp, tw_stime time)</div><div class="ttdoc">Function that sends a heartbeat message to this neuron. </div></div>
-<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e">NEURON_HEARTBEAT</a></div><div class="ttdoc">Neuron heartbeat messages - for big clock syncronization. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00043">assist.h:43</a></div></div>
-<div class="ttc" id="structneuron_state_html_a5efe5de0478ea513ed5d90d89a49fcca"><div class="ttname"><a href="structneuron_state.html#a5efe5de0478ea513ed5d90d89a49fcca">neuronState::savedMembranePot</a></div><div class="ttdeci">_voltT savedMembranePot</div><div class="ttdoc">previous state membrane potential </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00147">neuron.h:147</a></div></div>
-<div class="ttc" id="neuron_8c_html_ae071ef984b7e0dd4ec38fca91e0abe39"><div class="ttname"><a href="neuron_8c.html#ae071ef984b7e0dd4ec38fca91e0abe39">neuronFire</a></div><div class="ttdeci">void neuronFire(neuronState *st, tw_stime time, Msg_Data *m)</div><div class="ttdoc">neuronFire manages a firing event. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8c_source.html#l00166">neuron.c:166</a></div></div>
-<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb">SYNAPSE_OUT</a></div><div class="ttdoc">Message originates from a synapse. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00041">assist.h:41</a></div></div>
-<div class="ttc" id="structneuron_state_html_a6f4e4d8fc1cf0257b486e01f628d2656"><div class="ttname"><a href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">neuronState::lastLeakTime</a></div><div class="ttdeci">tw_stime lastLeakTime</div><div class="ttdoc">Timestamp for leak functions. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00153">neuron.h:153</a></div></div>
-<div class="ttc" id="neuron_8c_html_ab1f4997e4bfe11e78faa6d37748aee67"><div class="ttname"><a href="neuron_8c.html#ab1f4997e4bfe11e78faa6d37748aee67">neuronPostFire</a></div><div class="ttdeci">void neuronPostFire(neuronState *st, tw_stime time, Msg_Data *m)</div><div class="ttdoc">neuronPostFire manages post-firing events, including reset functions </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8c_source.html#l00169">neuron.c:169</a></div></div>
-<div class="ttc" id="struct_msg___data_html_a015b6eb45982e1842ee8fc389a099ced"><div class="ttname"><a href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">Msg_Data::eventType</a></div><div class="ttdeci">enum evtType eventType</div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00049">assist.h:49</a></div></div>
-<div class="ttc" id="structneuron_state_html_a50734a9ba605a083a90814b63d039a03"><div class="ttname"><a href="structneuron_state.html#a50734a9ba605a083a90814b63d039a03">neuronState::savedLastLeakTime</a></div><div class="ttdeci">tw_stime savedLastLeakTime</div><div class="ttdoc">For state rollback - saved last time neuron used leak function. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00156">neuron.h:156</a></div></div>
-<div class="ttc" id="struct_msg___data_html_aefc820e92a74047ec7ed74c1c45f818f"><div class="ttname"><a href="struct_msg___data.html#aefc820e92a74047ec7ed74c1c45f818f">Msg_Data::localID</a></div><div class="ttdeci">_idT localID</div><div class="ttdoc">Sender&#39;s local (within a core) id - used for weight lookups. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00051">assist.h:51</a></div></div>
-<div class="ttc" id="structneuron_state_html_a6922b3f3041346eb83cfc6352a22277b"><div class="ttname"><a href="structneuron_state.html#a6922b3f3041346eb83cfc6352a22277b">neuronState::savedLastActiveTime</a></div><div class="ttdeci">tw_stime savedLastActiveTime</div><div class="ttdoc">For state rollback - this the last time the neuron integrated and fired, before the new big-tick...</div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00155">neuron.h:155</a></div></div>
-<div class="ttc" id="neuron_8c_html_ae630bdf5dd3744870968f07a6971659c"><div class="ttname"><a href="neuron_8c.html#ae630bdf5dd3744870968f07a6971659c">integrateSynapse</a></div><div class="ttdeci">void integrateSynapse(_idT synapseID, neuronState *st, tw_lp *lp)</div><div class="ttdoc">function that adds a synapse&#39;s value to the current neuron&#39;s membrane potential. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8c_source.html#l00175">neuron.c:175</a></div></div>
-<div class="ttc" id="structneuron_state_html_ab8f63a1dfdb2992657530ff8a63fdc01"><div class="ttname"><a href="structneuron_state.html#ab8f63a1dfdb2992657530ff8a63fdc01">neuronState::rcvdMsgCount</a></div><div class="ttdeci">_statT rcvdMsgCount</div><div class="ttdoc">The number of synaptic messages received. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00199">neuron.h:199</a></div></div>
-<div class="ttc" id="neuron_8c_html_a92d5882a15e11e2a6733483d51428e46"><div class="ttname"><a href="neuron_8c.html#a92d5882a15e11e2a6733483d51428e46">neuronShouldFire</a></div><div class="ttdeci">bool neuronShouldFire(neuronState *st)</div><div class="ttdoc">Checks to see if a neuron should fire. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8c_source.html#l00157">neuron.c:157</a></div></div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    st-&gt;<a class="code" href="structneuron_state.html#ab8f63a1dfdb2992657530ff8a63fdc01">rcvdMsgCount</a> ++;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;}</div>
+<div class="ttc" id="structneuron_state_html_af8935bcba177f2f3dfb9119c39ef7dc5"><div class="ttname"><a href="structneuron_state.html#af8935bcba177f2f3dfb9119c39ef7dc5">neuronState::receivedSynapseMsgs</a></div><div class="ttdeci">uint_fast16_t receivedSynapseMsgs</div><div class="ttdoc">Used for big-tick synchronization. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00166">neuron.h:166</a></div></div>
+<div class="ttc" id="structneuron_state_html_a0fdd8f44c4105a94e17c4c58a51db486"><div class="ttname"><a href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">neuronState::membranePot</a></div><div class="ttdeci">_voltT membranePot</div><div class="ttdoc">current "voltage" of neuron, . Since this is PDES, t is implicit </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00153">neuron.h:153</a></div></div>
+<div class="ttc" id="struct_msg___data_html_a2e49a6bcc6c45ade722f746b1ea707f2"><div class="ttname"><a href="struct_msg___data.html#a2e49a6bcc6c45ade722f746b1ea707f2">Msg_Data::rndCallCount</a></div><div class="ttdeci">unsigned long rndCallCount</div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00072">assist.h:72</a></div></div>
+<div class="ttc" id="structneuron_state_html_a0658ad1f8b57a00589c6ea84f9a4ab13"><div class="ttname"><a href="structneuron_state.html#a0658ad1f8b57a00589c6ea84f9a4ab13">neuronState::lastActiveTime</a></div><div class="ttdeci">tw_stime lastActiveTime</div><div class="ttdoc">last time the neuron fired - used for calculating leak and reverse functions. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00161">neuron.h:161</a></div></div>
+<div class="ttc" id="neuron_8c_html_a683379b633b55058dd5b8b67929c165c"><div class="ttname"><a href="neuron_8c.html#a683379b633b55058dd5b8b67929c165c">neuronFire</a></div><div class="ttdeci">void neuronFire(neuronState *st, tw_stime time, tw_lp *lp)</div><div class="ttdoc">neuronFire manages a firing event. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8c_source.html#l00167">neuron.c:167</a></div></div>
+<div class="ttc" id="structneuron_state_html_aa430f424f34dc59dc27736e27ec61320"><div class="ttname"><a href="structneuron_state.html#aa430f424f34dc59dc27736e27ec61320">neuronState::doLeak</a></div><div class="ttdeci">leakFunDel doLeak</div><div class="ttdoc">Function pointer to the neuron&#39;s current leak function. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00205">neuron.h:205</a></div></div>
+<div class="ttc" id="structneuron_state_html_a71fbb9a79e8048b473b6e09d29a64bbe"><div class="ttname"><a href="structneuron_state.html#a71fbb9a79e8048b473b6e09d29a64bbe">neuronState::SOPSCount</a></div><div class="ttdeci">_statT SOPSCount</div><div class="ttdoc">A count for SOPS calculation. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00216">neuron.h:216</a></div></div>
+<div class="ttc" id="neuron_8c_html_a3520b013e0c2f711b9f5c16e19306be6"><div class="ttname"><a href="neuron_8c.html#a3520b013e0c2f711b9f5c16e19306be6">neuronShouldFire</a></div><div class="ttdeci">bool neuronShouldFire(neuronState *st, tw_lp *lp)</div><div class="ttdoc">Checks to see if a neuron should fire. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8c_source.html#l00161">neuron.c:161</a></div></div>
+<div class="ttc" id="structneuron_state_html_afe8825076c4cf3863c677307fec63c61"><div class="ttname"><a href="structneuron_state.html#afe8825076c4cf3863c677307fec63c61">neuronState::fireCount</a></div><div class="ttdeci">_statT fireCount</div><div class="ttdoc">count of this neuron&#39;s output </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00214">neuron.h:214</a></div></div>
+<div class="ttc" id="neuron_8c_html_a766dff9e530486b055e97ebe392268b8"><div class="ttname"><a href="neuron_8c.html#a766dff9e530486b055e97ebe392268b8">sendHeartbeat</a></div><div class="ttdeci">void sendHeartbeat(neuronState *st, tw_lp *lp, tw_stime time)</div><div class="ttdoc">Function that sends a heartbeat message to this neuron. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8c_source.html#l00179">neuron.c:179</a></div></div>
+<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e">NEURON_HEARTBEAT</a></div><div class="ttdoc">Neuron heartbeat messages - for big clock syncronization. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00062">assist.h:62</a></div></div>
+<div class="ttc" id="structneuron_state_html_a5efe5de0478ea513ed5d90d89a49fcca"><div class="ttname"><a href="structneuron_state.html#a5efe5de0478ea513ed5d90d89a49fcca">neuronState::savedMembranePot</a></div><div class="ttdeci">_voltT savedMembranePot</div><div class="ttdoc">previous state membrane potential </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00154">neuron.h:154</a></div></div>
+<div class="ttc" id="structneuron_state_html_aa501d6ee7cacd5435deec79c07637b08"><div class="ttname"><a href="structneuron_state.html#aa501d6ee7cacd5435deec79c07637b08">neuronState::thresholdPRNMask</a></div><div class="ttdeci">_threshT thresholdPRNMask</div><div class="ttdoc">The neuron&#39;s random threshold mask - used for randomized thresholds (  ) </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00157">neuron.h:157</a></div></div>
+<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a6ad6b93d8a818550e7246f6e0d143afb">SYNAPSE_OUT</a></div><div class="ttdoc">Message originates from a synapse. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00060">assist.h:60</a></div></div>
+<div class="ttc" id="structneuron_state_html_a6f4e4d8fc1cf0257b486e01f628d2656"><div class="ttname"><a href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">neuronState::lastLeakTime</a></div><div class="ttdeci">tw_stime lastLeakTime</div><div class="ttdoc">Timestamp for leak functions. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00162">neuron.h:162</a></div></div>
+<div class="ttc" id="struct_msg___data_html_a015b6eb45982e1842ee8fc389a099ced"><div class="ttname"><a href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">Msg_Data::eventType</a></div><div class="ttdeci">enum evtType eventType</div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00071">assist.h:71</a></div></div>
+<div class="ttc" id="structneuron_state_html_a50734a9ba605a083a90814b63d039a03"><div class="ttname"><a href="structneuron_state.html#a50734a9ba605a083a90814b63d039a03">neuronState::savedLastLeakTime</a></div><div class="ttdeci">tw_stime savedLastLeakTime</div><div class="ttdoc">For state rollback - saved last time neuron used leak function. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00165">neuron.h:165</a></div></div>
+<div class="ttc" id="neuron_8c_html_aabaff47eadb1e61b34c19b6e982f6511"><div class="ttname"><a href="neuron_8c.html#aabaff47eadb1e61b34c19b6e982f6511">neuronPostIntegrate</a></div><div class="ttdeci">void neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFire)</div><div class="ttdoc">Function that runs after integration & firing, for reset function and threshold bounce calls...</div><div class="ttdef"><b>Definition:</b> <a href="neuron_8c_source.html#l00214">neuron.c:214</a></div></div>
+<div class="ttc" id="struct_msg___data_html_aefc820e92a74047ec7ed74c1c45f818f"><div class="ttname"><a href="struct_msg___data.html#aefc820e92a74047ec7ed74c1c45f818f">Msg_Data::localID</a></div><div class="ttdeci">_idT localID</div><div class="ttdoc">Sender&#39;s local (within a core) id - used for weight lookups. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00073">assist.h:73</a></div></div>
+<div class="ttc" id="structneuron_state_html_a6922b3f3041346eb83cfc6352a22277b"><div class="ttname"><a href="structneuron_state.html#a6922b3f3041346eb83cfc6352a22277b">neuronState::savedLastActiveTime</a></div><div class="ttdeci">tw_stime savedLastActiveTime</div><div class="ttdoc">For state rollback - this the last time the neuron integrated and fired, before the new big-tick...</div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00164">neuron.h:164</a></div></div>
+<div class="ttc" id="neuron_8c_html_ae630bdf5dd3744870968f07a6971659c"><div class="ttname"><a href="neuron_8c.html#ae630bdf5dd3744870968f07a6971659c">integrateSynapse</a></div><div class="ttdeci">void integrateSynapse(_idT synapseID, neuronState *st, tw_lp *lp)</div><div class="ttdoc">function that adds a synapse&#39;s value to the current neuron&#39;s membrane potential. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8c_source.html#l00199">neuron.c:199</a></div></div>
+<div class="ttc" id="structneuron_state_html_a287eb8703dbfb177165d31c8840646b8"><div class="ttname"><a href="structneuron_state.html#a287eb8703dbfb177165d31c8840646b8">neuronState::firedLast</a></div><div class="ttdeci">bool firedLast</div><div class="ttdoc">Did the neuron fire during the last message? </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00218">neuron.h:218</a></div></div>
+<div class="ttc" id="structneuron_state_html_ab8f63a1dfdb2992657530ff8a63fdc01"><div class="ttname"><a href="structneuron_state.html#ab8f63a1dfdb2992657530ff8a63fdc01">neuronState::rcvdMsgCount</a></div><div class="ttdeci">_statT rcvdMsgCount</div><div class="ttdoc">The number of synaptic messages received. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00215">neuron.h:215</a></div></div>
+<div class="ttc" id="structneuron_state_html_a296a4f04813c4882d6acd8c9074abd35"><div class="ttname"><a href="structneuron_state.html#a296a4f04813c4882d6acd8c9074abd35">neuronState::drawnRandomNumber</a></div><div class="ttdeci">_randT drawnRandomNumber</div><div class="ttdoc">When activated, neurons draw a new random number. Reset after every big-tick as needed. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00158">neuron.h:158</a></div></div>
 </div><!-- fragment -->
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="neuron_8c_aa6819d7492f0173f2234ba0b8b0bb674_cgraph.png" border="0" usemap="#neuron_8c_aa6819d7492f0173f2234ba0b8b0bb674_cgraph" alt=""/></div>
 <map name="neuron_8c_aa6819d7492f0173f2234ba0b8b0bb674_cgraph" id="neuron_8c_aa6819d7492f0173f2234ba0b8b0bb674_cgraph">
-<area shape="rect" id="node2" href="neuron_8h.html#a92d5882a15e11e2a6733483d51428e46" title="Checks to see if a neuron should fire. " alt="" coords="218,5,346,31"/></map>
+<area shape="rect" id="node2" href="neuron_8c.html#ae630bdf5dd3744870968f07a6971659c" title="function that adds a synapse&#39;s value to the current neuron&#39;s membrane potential. " alt="" coords="224,5,347,32"/><area shape="rect" id="node4" href="neuron_8c.html#a683379b633b55058dd5b8b67929c165c" title="neuronFire manages a firing event. " alt="" coords="244,56,327,83"/><area shape="rect" id="node7" href="neuron_8c.html#aabaff47eadb1e61b34c19b6e982f6511" title="Function that runs after integration &amp; firing, for reset function and threshold bounce calls..." alt="" coords="216,107,355,133"/><area shape="rect" id="node8" href="neuron_8c.html#a3520b013e0c2f711b9f5c16e19306be6" title="Checks to see if a neuron should fire. " alt="" coords="224,157,347,184"/><area shape="rect" id="node9" href="neuron_8c.html#a766dff9e530486b055e97ebe392268b8" title="Function that sends a heartbeat message to this neuron. " alt="" coords="232,208,339,235"/><area shape="rect" id="node3" href="neuron_8c.html#afee2e0acc66d8d10aee8d52c8d245c82" title="Neuron stochastic integration function &#45; for use with stochastic leaks and synapse messages..." alt="" coords="403,5,536,32"/><area shape="rect" id="node5" href="assist_8c.html#aa961bc9b414f1429b123fc8212c989fd" title="Given a tw_stime, returns the next big&#45;tick that will happen. " alt="" coords="413,132,525,159"/><area shape="rect" id="node6" href="assist_8c.html#a4d378196b7fceed090d64ec8820b4065" title="Given a tw_stime, returns the current big tick. " alt="" coords="584,132,711,159"/></map>
 </div>
 </p>
 
 </div>
 </div>
-<a class="anchor" id="a92d5882a15e11e2a6733483d51428e46"></a>
+<a class="anchor" id="a3520b013e0c2f711b9f5c16e19306be6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -529,14 +673,24 @@ Here is the call graph for this function:</div>
           <td class="memname">bool neuronShouldFire </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structneuron_state.html">neuronState</a> *&#160;</td>
-          <td class="paramname"><em>st</em></td><td>)</td>
+          <td class="paramname"><em>st</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">tw_lp *&#160;</td>
+          <td class="paramname"><em>lp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Checks to see if a neuron should fire. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>check to see if this is needed, since it looks like just a simple if statement is in order.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>check to see if this is needed, since it looks like just a simple if statement is in order.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">st</td><td>neuron state</td></tr>
@@ -545,23 +699,19 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the neuron is ready to fire. </dd></dl>
 
-<p>Definition at line <a class="el" href="neuron_8c_source.html#l00157">157</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8c_source.html#l00161">161</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
 
-<p>References <a class="el" href="neuron_8h_source.html#l00146">neuronState::membranePot</a>, and <a class="el" href="neuron_8h_source.html#l00148">neuronState::threshold</a>.</p>
+<p>References <a class="el" href="neuron_8h_source.html#l00158">neuronState::drawnRandomNumber</a>, <a class="el" href="neuron_8h_source.html#l00153">neuronState::membranePot</a>, and <a class="el" href="neuron_8h_source.html#l00155">neuronState::threshold</a>.</p>
 
-<p>Referenced by <a class="el" href="neuron_8c_source.html#l00104">neuronReceiveMessage()</a>.</p>
-<div class="fragment"><div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                                      {</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        <span class="comment">//check negative threshold values:</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <span class="keywordflow">if</span>(st-&gt;<a class="code" href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">membranePot</a> &lt; ) {</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="keywordflow">if</span>(st-&gt;<a class="code" href="structneuron_state.html#a3ec480684e7a2cfc67a8ef7ac1bf57b9">negThresReset</a>) {</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                <span class="comment">//reset to \f$－β_j\f$</span></div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        }</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    }</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keywordflow">return</span> st-&gt;<a class="code" href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">membranePot</a> &gt; st-&gt;<a class="code" href="structneuron_state.html#a132470c4c17828c209e3403ccf7ee680">threshold</a>;</div>
+<p>Referenced by <a class="el" href="neuron_8c_source.html#l00103">neuronReceiveMessage()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                                                 {</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <span class="comment">//check negative threshold values:</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keywordflow">return</span> st-&gt;<a class="code" href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">membranePot</a> &gt;= st-&gt;<a class="code" href="structneuron_state.html#a132470c4c17828c209e3403ccf7ee680">threshold</a> + st-&gt;<a class="code" href="structneuron_state.html#a296a4f04813c4882d6acd8c9074abd35">drawnRandomNumber</a>;</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;}</div>
-<div class="ttc" id="structneuron_state_html_a0fdd8f44c4105a94e17c4c58a51db486"><div class="ttname"><a href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">neuronState::membranePot</a></div><div class="ttdeci">_voltT membranePot</div><div class="ttdoc">current "voltage" of neuron, 𝒱 </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00146">neuron.h:146</a></div></div>
-<div class="ttc" id="structneuron_state_html_a132470c4c17828c209e3403ccf7ee680"><div class="ttname"><a href="structneuron_state.html#a132470c4c17828c209e3403ccf7ee680">neuronState::threshold</a></div><div class="ttdeci">_threshT threshold</div><div class="ttdoc">neuron&#39;s threshold value 𝛂 </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00148">neuron.h:148</a></div></div>
-<div class="ttc" id="structneuron_state_html_a3ec480684e7a2cfc67a8ef7ac1bf57b9"><div class="ttname"><a href="structneuron_state.html#a3ec480684e7a2cfc67a8ef7ac1bf57b9">neuronState::negThresReset</a></div><div class="ttdeci">bool negThresReset</div><div class="ttdoc">From the paper&#39;s , , negative threshold setting to reset or saturate. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00170">neuron.h:170</a></div></div>
+<div class="ttc" id="structneuron_state_html_a0fdd8f44c4105a94e17c4c58a51db486"><div class="ttname"><a href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">neuronState::membranePot</a></div><div class="ttdeci">_voltT membranePot</div><div class="ttdoc">current "voltage" of neuron, . Since this is PDES, t is implicit </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00153">neuron.h:153</a></div></div>
+<div class="ttc" id="structneuron_state_html_a132470c4c17828c209e3403ccf7ee680"><div class="ttname"><a href="structneuron_state.html#a132470c4c17828c209e3403ccf7ee680">neuronState::threshold</a></div><div class="ttdeci">_threshT threshold</div><div class="ttdoc">neuron&#39;s threshold value 𝛼 </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00155">neuron.h:155</a></div></div>
+<div class="ttc" id="structneuron_state_html_a296a4f04813c4882d6acd8c9074abd35"><div class="ttname"><a href="structneuron_state.html#a296a4f04813c4882d6acd8c9074abd35">neuronState::drawnRandomNumber</a></div><div class="ttdeci">_randT drawnRandomNumber</div><div class="ttdoc">When activated, neurons draw a new random number. Reset after every big-tick as needed. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00158">neuron.h:158</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -620,30 +770,24 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Resets neuron voltage based on linear function. </p>
-<p>Note: Linear functions use the <a class="el" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">voltT </a> data type. If a neuron uses a linear reset, this parameter must be set upon neuron creation. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>: Check implementation against paper.</dd></dl>
+<p>Linear reset mode - ignores \(R\), and sets the membrane potential to the difference between the threshold and the potential. </p>
 
-<p>Definition at line <a class="el" href="neuron_8c_source.html#l00067">67</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
-
-<p>References <a class="el" href="neuron_8h_source.html#l00146">neuronState::membranePot</a>.</p>
-<div class="fragment"><div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                                    {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">struct </span><a class="code" href="struct_neuron_model.html">NeuronModel</a> *s = (<span class="keyword">struct </span><a class="code" href="struct_neuron_model.html">NeuronModel</a> *)<a class="code" href="structneuron_state.html">neuronState</a>;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="comment">// reduce the value of the neuron based on the linear reduction function</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="comment">// in the paper</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="code" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a> resetParam = (<a class="code" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a>) &amp;resetParam;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  s-&gt;membranePot = s-&gt;membranePot - resetParam;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
-<div class="ttc" id="structneuron_state_html"><div class="ttname"><a href="structneuron_state.html">neuronState</a></div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00137">neuron.h:137</a></div></div>
-<div class="ttc" id="struct_neuron_model_html"><div class="ttname"><a href="struct_neuron_model.html">NeuronModel</a></div><div class="ttdoc">This struct maintains the state of an individual neuron.The neuron struct contains the parameters nee...</div></div>
-<div class="ttc" id="assist_8h_html_abe1fc1b8f9efd1187e564bcb8de7f815"><div class="ttname"><a href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a></div><div class="ttdeci">#define _voltT</div><div class="ttdoc">Voltage data type (membrane potential) </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00019">assist.h:19</a></div></div>
+<p>Definition at line <a class="el" href="neuron_8c_source.html#l00066">66</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                                    {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">struct </span>NeuronModel *s = (<span class="keyword">struct </span>NeuronModel *)<a class="code" href="structneuron_state.html">neuronState</a>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    s-&gt;<a class="code" href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">membranePot</a> = s-&gt;membranePot - s-&gt;threshold;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
+<div class="ttc" id="structneuron_state_html_a0fdd8f44c4105a94e17c4c58a51db486"><div class="ttname"><a href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">neuronState::membranePot</a></div><div class="ttdeci">_voltT membranePot</div><div class="ttdoc">current "voltage" of neuron, . Since this is PDES, t is implicit </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00153">neuron.h:153</a></div></div>
+<div class="ttc" id="structneuron_state_html"><div class="ttname"><a href="structneuron_state.html">neuronState</a></div><div class="ttdoc">This struct maintains the state of an individual neuron.The neuron struct contains the parameters nee...</div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00144">neuron.h:144</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="a7f8eaa35f03747c795a2b727b364537b"></a>
+<a class="anchor" id="a233aa7ebe6cbfb664fe366a05a8dac1f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void resetZero </td>
+          <td class="memname">void resetNormal </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>neuronState</em></td><td>)</td>
@@ -652,23 +796,22 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Resets neuron voltage to 0 after firing. </p>
+<p>Resets neuron voltage to \(R\) after firing. </p>
+<p>a normal reset mode function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"><a class="el" href="structneuron_state.html">neuronState</a></td><td>current neuron state </td></tr>
+    <tr><td class="paramname"><a class="el" href="structneuron_state.html" title="This struct maintains the state of an individual neuron.The neuron struct contains the parameters nee...">neuronState</a></td><td>current neuron state </td></tr>
   </table>
   </dd>
 </dl>
 
 <p>Definition at line <a class="el" href="neuron_8c_source.html#l00056">56</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
-
-<p>References <a class="el" href="neuron_8h_source.html#l00146">neuronState::membranePot</a>.</p>
-<div class="fragment"><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                                  {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">struct </span><a class="code" href="struct_neuron_model.html">NeuronModel</a> *s = (<span class="keyword">struct </span><a class="code" href="struct_neuron_model.html">NeuronModel</a> *)<a class="code" href="structneuron_state.html">neuronState</a>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    s-&gt;membranePot = 0; <span class="comment">// set current voltage to 0.</span></div>
+<div class="fragment"><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                                    {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">struct </span>NeuronModel *s = (<span class="keyword">struct </span>NeuronModel *)<a class="code" href="structneuron_state.html">neuronState</a>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    s-&gt;<a class="code" href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">membranePot</a> = s-&gt;resetVoltage; <span class="comment">// set current voltage to \f$R\f$.</span></div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
-<div class="ttc" id="structneuron_state_html"><div class="ttname"><a href="structneuron_state.html">neuronState</a></div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00137">neuron.h:137</a></div></div>
-<div class="ttc" id="struct_neuron_model_html"><div class="ttname"><a href="struct_neuron_model.html">NeuronModel</a></div><div class="ttdoc">This struct maintains the state of an individual neuron.The neuron struct contains the parameters nee...</div></div>
+<div class="ttc" id="structneuron_state_html_a0fdd8f44c4105a94e17c4c58a51db486"><div class="ttname"><a href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">neuronState::membranePot</a></div><div class="ttdeci">_voltT membranePot</div><div class="ttdoc">current "voltage" of neuron, . Since this is PDES, t is implicit </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00153">neuron.h:153</a></div></div>
+<div class="ttc" id="structneuron_state_html"><div class="ttname"><a href="structneuron_state.html">neuronState</a></div><div class="ttdoc">This struct maintains the state of an individual neuron.The neuron struct contains the parameters nee...</div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00144">neuron.h:144</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -686,17 +829,16 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="neuron_8c_source.html#l00075">75</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
+<p>Definition at line <a class="el" href="neuron_8c_source.html#l00071">71</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
 
-<p>References <a class="el" href="neuron_8h_source.html#l00146">neuronState::membranePot</a>.</p>
-<div class="fragment"><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                                          {</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">struct </span><a class="code" href="struct_neuron_model.html">NeuronModel</a> *s = (<span class="keyword">struct </span><a class="code" href="struct_neuron_model.html">NeuronModel</a> *)<a class="code" href="structneuron_state.html">neuronState</a>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <a class="code" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a> resetParam = (<a class="code" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a>) &amp;resetParam;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    s-&gt;membranePot = s-&gt;membranePot + resetParam;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
-<div class="ttc" id="structneuron_state_html"><div class="ttname"><a href="structneuron_state.html">neuronState</a></div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00137">neuron.h:137</a></div></div>
-<div class="ttc" id="struct_neuron_model_html"><div class="ttname"><a href="struct_neuron_model.html">NeuronModel</a></div><div class="ttdoc">This struct maintains the state of an individual neuron.The neuron struct contains the parameters nee...</div></div>
-<div class="ttc" id="assist_8h_html_abe1fc1b8f9efd1187e564bcb8de7f815"><div class="ttname"><a href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a></div><div class="ttdeci">#define _voltT</div><div class="ttdoc">Voltage data type (membrane potential) </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00019">assist.h:19</a></div></div>
+<p>References <a class="el" href="assist_8h_source.html#l00020">_voltT</a>.</p>
+<div class="fragment"><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                                          {</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">struct </span>NeuronModel *s = (<span class="keyword">struct </span>NeuronModel *)<a class="code" href="structneuron_state.html">neuronState</a>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a> resetParam = (<a class="code" href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a>) &amp;resetParam;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    s-&gt;membranePot = s-&gt;membranePot + resetParam;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
+<div class="ttc" id="structneuron_state_html"><div class="ttname"><a href="structneuron_state.html">neuronState</a></div><div class="ttdoc">This struct maintains the state of an individual neuron.The neuron struct contains the parameters nee...</div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00144">neuron.h:144</a></div></div>
+<div class="ttc" id="assist_8h_html_abe1fc1b8f9efd1187e564bcb8de7f815"><div class="ttname"><a href="assist_8h.html#abe1fc1b8f9efd1187e564bcb8de7f815">_voltT</a></div><div class="ttdeci">#define _voltT</div><div class="ttdoc">Voltage data type (membrane potential) </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00020">assist.h:20</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -713,12 +855,12 @@ Here is the call graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>: Check that this is the proper way to handle reset zero function </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>: Check that this is the proper way to handle reset zero function </dd></dl>
 
-<p>Definition at line <a class="el" href="neuron_8c_source.html#l00081">81</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
-<div class="fragment"><div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                                        {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;}</div>
+<p>Definition at line <a class="el" href="neuron_8c_source.html#l00079">79</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
+<div class="fragment"><div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                                        {</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -756,16 +898,17 @@ Here is the call graph for this function:</div>
 </dl>
 
 <p>Definition at line <a class="el" href="neuron_8c_source.html#l00037">37</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
+
+<p>References <a class="el" href="neuron_8h_source.html#l00162">neuronState::lastLeakTime</a>.</p>
 <div class="fragment"><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                                              {</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="structneuron_state.html">neuronState</a> *s = (<a class="code" href="structneuron_state.html">neuronState</a> *)neuron;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    tw_stime delta = s-&gt;<a class="code" href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">lastLeakTime</a> - now;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    s-&gt;<a class="code" href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">membranePot</a> += s-&gt;leakRate * delta;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="comment">//s-&gt;membranePot += s-&gt;leakRate * delta;</span></div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    s-&gt;<a class="code" href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">lastLeakTime</a> = now;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
-<div class="ttc" id="structneuron_state_html_a0fdd8f44c4105a94e17c4c58a51db486"><div class="ttname"><a href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">neuronState::membranePot</a></div><div class="ttdeci">_voltT membranePot</div><div class="ttdoc">current "voltage" of neuron, 𝒱 </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00146">neuron.h:146</a></div></div>
-<div class="ttc" id="structneuron_state_html"><div class="ttname"><a href="structneuron_state.html">neuronState</a></div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00137">neuron.h:137</a></div></div>
-<div class="ttc" id="structneuron_state_html_a6f4e4d8fc1cf0257b486e01f628d2656"><div class="ttname"><a href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">neuronState::lastLeakTime</a></div><div class="ttdeci">tw_stime lastLeakTime</div><div class="ttdoc">Timestamp for leak functions. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00153">neuron.h:153</a></div></div>
+<div class="ttc" id="structneuron_state_html"><div class="ttname"><a href="structneuron_state.html">neuronState</a></div><div class="ttdoc">This struct maintains the state of an individual neuron.The neuron struct contains the parameters nee...</div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00144">neuron.h:144</a></div></div>
+<div class="ttc" id="structneuron_state_html_a6f4e4d8fc1cf0257b486e01f628d2656"><div class="ttname"><a href="structneuron_state.html#a6f4e4d8fc1cf0257b486e01f628d2656">neuronState::lastLeakTime</a></div><div class="ttdeci">tw_stime lastLeakTime</div><div class="ttdoc">Timestamp for leak functions. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00162">neuron.h:162</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -809,13 +952,144 @@ Here is the call graph for this function:</div>
 </div><!-- fragment -->
 </div>
 </div>
+<a class="anchor" id="a766dff9e530486b055e97ebe392268b8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sendHeartbeat </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structneuron_state.html">neuronState</a> *&#160;</td>
+          <td class="paramname"><em>st</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tw_lp *&#160;</td>
+          <td class="paramname"><em>lp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tw_stime&#160;</td>
+          <td class="paramname"><em>time</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function that sends a heartbeat message to this neuron. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lp</td><td>&lt;#lp description#&gt; </td></tr>
+    <tr><td class="paramname">time</td><td>&lt;#time description#&gt; </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="neuron_8c_source.html#l00179">179</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
+
+<p>References <a class="el" href="assist_8h_source.html#l00071">Msg_Data::eventType</a>, <a class="el" href="assist_8c_source.html#l00041">getNextBigTick()</a>, <a class="el" href="assist_8h_source.html#l00073">Msg_Data::localID</a>, <a class="el" href="neuron_8h_source.html#l00149">neuronState::myLocalID</a>, and <a class="el" href="assist_8h_source.html#l00062">NEURON_HEARTBEAT</a>.</p>
+
+<p>Referenced by <a class="el" href="neuron_8c_source.html#l00103">neuronReceiveMessage()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;                                                             {</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        <span class="comment">//heartbeat message gen:</span></div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    tw_stime nextHeartbeat = <a class="code" href="assist_8c.html#aa961bc9b414f1429b123fc8212c989fd">getNextBigTick</a>(time);</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    tw_event *newEvent = tw_event_new(lp-&gt;gid, nextHeartbeat, lp);</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <a class="code" href="struct_msg___data.html">Msg_Data</a> *data = (<a class="code" href="struct_msg___data.html">Msg_Data</a> *) tw_event_data(newEvent);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    data-&gt;<a class="code" href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">eventType</a> = <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e">NEURON_HEARTBEAT</a>;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    data-&gt;<a class="code" href="struct_msg___data.html#aefc820e92a74047ec7ed74c1c45f818f">localID</a> = st-&gt;<a class="code" href="structneuron_state.html#ac24762c24aede292a2ce5df78114881c">myLocalID</a>;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    tw_event_send(newEvent);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;}</div>
+<div class="ttc" id="assist_8c_html_aa961bc9b414f1429b123fc8212c989fd"><div class="ttname"><a href="assist_8c.html#aa961bc9b414f1429b123fc8212c989fd">getNextBigTick</a></div><div class="ttdeci">tw_stime getNextBigTick(tw_stime now)</div><div class="ttdoc">Given a tw_stime, returns the next big-tick that will happen. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8c_source.html#l00041">assist.c:41</a></div></div>
+<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a226690009a653238a52339561e6c466e">NEURON_HEARTBEAT</a></div><div class="ttdoc">Neuron heartbeat messages - for big clock syncronization. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00062">assist.h:62</a></div></div>
+<div class="ttc" id="struct_msg___data_html_a015b6eb45982e1842ee8fc389a099ced"><div class="ttname"><a href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">Msg_Data::eventType</a></div><div class="ttdeci">enum evtType eventType</div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00071">assist.h:71</a></div></div>
+<div class="ttc" id="struct_msg___data_html"><div class="ttname"><a href="struct_msg___data.html">Msg_Data</a></div><div class="ttdoc">Msg_Data is the main message struct. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00070">assist.h:70</a></div></div>
+<div class="ttc" id="struct_msg___data_html_aefc820e92a74047ec7ed74c1c45f818f"><div class="ttname"><a href="struct_msg___data.html#aefc820e92a74047ec7ed74c1c45f818f">Msg_Data::localID</a></div><div class="ttdeci">_idT localID</div><div class="ttdoc">Sender&#39;s local (within a core) id - used for weight lookups. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00073">assist.h:73</a></div></div>
+<div class="ttc" id="structneuron_state_html_ac24762c24aede292a2ce5df78114881c"><div class="ttname"><a href="structneuron_state.html#ac24762c24aede292a2ce5df78114881c">neuronState::myLocalID</a></div><div class="ttdeci">_idT myLocalID</div><div class="ttdoc">Neuron&#39;s local ID (from 0 - j-1);. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00149">neuron.h:149</a></div></div>
+</div><!-- fragment -->
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="neuron_8c_a766dff9e530486b055e97ebe392268b8_cgraph.png" border="0" usemap="#neuron_8c_a766dff9e530486b055e97ebe392268b8_cgraph" alt=""/></div>
+<map name="neuron_8c_a766dff9e530486b055e97ebe392268b8_cgraph" id="neuron_8c_a766dff9e530486b055e97ebe392268b8_cgraph">
+<area shape="rect" id="node2" href="assist_8c.html#aa961bc9b414f1429b123fc8212c989fd" title="Given a tw_stime, returns the next big&#45;tick that will happen. " alt="" coords="160,5,272,32"/><area shape="rect" id="node3" href="assist_8c.html#a4d378196b7fceed090d64ec8820b4065" title="Given a tw_stime, returns the current big tick. " alt="" coords="320,5,447,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="afee2e0acc66d8d10aee8d52c8d245c82"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void stochasticIntegrate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="assist_8h.html#aa73c5ea0fe4ba938c96e6771b38dcb2a">_weightT</a>&#160;</td>
+          <td class="paramname"><em>weight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structneuron_state.html">neuronState</a> *&#160;</td>
+          <td class="paramname"><em>st</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tw_lp *&#160;</td>
+          <td class="paramname"><em>lp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Neuron stochastic integration function - for use with stochastic leaks and synapse messages. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">weight</td><td>weight of selected leak or synapse </td></tr>
+    <tr><td class="paramname">st</td><td>the neuron state </td></tr>
+    <tr><td class="paramname">lp</td><td>lp for range functions. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="neuron_8c_source.html#l00191">191</a> of file <a class="el" href="neuron_8c_source.html">neuron.c</a>.</p>
+
+<p>References <a class="el" href="assist_8h_source.html#l00052">BINCOMP</a>, <a class="el" href="neuron_8h_source.html#l00158">neuronState::drawnRandomNumber</a>, <a class="el" href="neuron_8h_source.html#l00153">neuronState::membranePot</a>, and <a class="el" href="assist_8h_source.html#l00050">SGN</a>.</p>
+
+<p>Referenced by <a class="el" href="neuron_8c_source.html#l00199">integrateSynapse()</a>.</p>
+<div class="fragment"><div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;                                                                     {</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordtype">long</span> drawnRandom = st-&gt;<a class="code" href="structneuron_state.html#a296a4f04813c4882d6acd8c9074abd35">drawnRandomNumber</a>;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="assist_8h.html#abbf94867faa4abd8c53c87576efd05f3">BINCOMP</a>(weight, drawnRandom)){</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        st-&gt;<a class="code" href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">membranePot</a> += <a class="code" href="assist_8h.html#a95ed41486ca0ed53262e4b8934d4afac">SGN</a>(weight);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    }</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;}</div>
+<div class="ttc" id="structneuron_state_html_a0fdd8f44c4105a94e17c4c58a51db486"><div class="ttname"><a href="structneuron_state.html#a0fdd8f44c4105a94e17c4c58a51db486">neuronState::membranePot</a></div><div class="ttdeci">_voltT membranePot</div><div class="ttdoc">current "voltage" of neuron, . Since this is PDES, t is implicit </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00153">neuron.h:153</a></div></div>
+<div class="ttc" id="assist_8h_html_a95ed41486ca0ed53262e4b8934d4afac"><div class="ttname"><a href="assist_8h.html#a95ed41486ca0ed53262e4b8934d4afac">SGN</a></div><div class="ttdeci">#define SGN(x)</div><div class="ttdoc">Signum function. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00050">assist.h:50</a></div></div>
+<div class="ttc" id="structneuron_state_html_a296a4f04813c4882d6acd8c9074abd35"><div class="ttname"><a href="structneuron_state.html#a296a4f04813c4882d6acd8c9074abd35">neuronState::drawnRandomNumber</a></div><div class="ttdeci">_randT drawnRandomNumber</div><div class="ttdoc">When activated, neurons draw a new random number. Reset after every big-tick as needed. </div><div class="ttdef"><b>Definition:</b> <a href="neuron_8h_source.html#l00158">neuron.h:158</a></div></div>
+<div class="ttc" id="assist_8h_html_abbf94867faa4abd8c53c87576efd05f3"><div class="ttname"><a href="assist_8h.html#abbf94867faa4abd8c53c87576efd05f3">BINCOMP</a></div><div class="ttdeci">#define BINCOMP(s, p)</div><div class="ttdoc">binary comparison for conditional stochastic evaluation </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00052">assist.h:52</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_1ae4179d5e953611aae20c997279e02c.html">models</a></li><li class="navelem"><a class="el" href="neuron_8c.html">neuron.c</a></li>
-    <li class="footer">Generated on Sun Jun 21 2015 16:46:03 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Mon Jun 22 2015 12:44:59 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

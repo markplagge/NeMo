@@ -34,7 +34,7 @@
             <title>Detailed Description</title>
 
 <para>Each parameter contained within Cassidy2013}Preissl2012}Amir2013}&apos;s models of Neuromporphic design that operate with the neuron are contained within this struct. Consider this struct a proto-object, just sans functions. </para>
-                <para>Definition at line 128 of file neuron.h</para>
+                <para>Definition at line 135 of file neuron.h</para>
                 <para>The Documentation for this struct was generated from the following file: </para>
                 <para><itemizedlist><listitem><para>neuron.h</para></listitem></itemizedlist></para>
         </simplesect>

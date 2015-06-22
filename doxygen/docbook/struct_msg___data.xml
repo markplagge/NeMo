@@ -52,7 +52,7 @@
         </section>
     <simplesect>
 
-<para>Main message struct. </para>
+<para><link linkend="struct_msg___data">Msg_Data</link> is the main message struct. </para>
     </simplesect>
         <section>
             <title>Field Documentation</title>

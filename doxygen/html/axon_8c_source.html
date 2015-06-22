@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>TrueNorth TimeWarp Benchmark: /Users/Mark/Development/TrueNorth/tnt_benchmark/models/axon.c Source File</title>
+<title>TrueNorth TimeWarp Benchmark: /home/mplagge/development/tnt_benchmark/models/axon.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -121,14 +121,53 @@ $(document).ready(function(){initNavTree('axon_8c_source.html','');});
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="axon_8h.html">&quot;axon.h&quot;</a></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="axon_8h.html">axon.h</a>&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="axon_8h.html#ab136d88cfbbb1e9f0f3687908dd54851">   11</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="axon_8c.html#ab136d88cfbbb1e9f0f3687908dd54851">axonReceiveMessage</a>(<a class="code" href="structaxon_state.html">axonState</a> *st, <a class="code" href="struct_msg___data.html">Msg_Data</a> *M, tw_lp *lp){</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keywordtype">long</span> start_count = lp-&gt;rng-&gt;count;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    tw_stime time;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    st-&gt;<a class="code" href="structaxon_state.html#a217ba44fb923dc4dc62bb73b14e61517">sendMsgCount</a> ++;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keywordflow">if</span>(M-&gt;<a class="code" href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">eventType</a> == <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0">NEURON_OUT</a>) {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            time = <a class="code" href="assist_8c.html#a30602b11dbfa6bcb90dc00e7942cfb02">getNextEventTime</a>(lp);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            tw_event *newEvent = tw_event_new(st-&gt;<a class="code" href="structaxon_state.html#a665999819b255f36d756f17b85bc9a03">destSynapse</a>, time, lp);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            <a class="code" href="struct_msg___data.html">Msg_Data</a> *data = (<a class="code" href="struct_msg___data.html">Msg_Data</a> * ) tw_event_data(newEvent);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            data-&gt;<a class="code" href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">eventType</a> = <a class="code" href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee">AXON_OUT</a>;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            tw_event_send(newEvent);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    }</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <span class="comment">//Call the signal generator. TBD</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    }</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    M-&gt;<a class="code" href="struct_msg___data.html#a2e49a6bcc6c45ade722f746b1ea707f2">rndCallCount</a> = lp-&gt;rng-&gt;count - start_count;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="axon_8h.html#a4540abe1d7c57cae5b0ff088d3d47fd1">   29</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="axon_8c.html#a4540abe1d7c57cae5b0ff088d3d47fd1">axonReverseState</a>(<a class="code" href="structaxon_state.html">axonState</a> *st, <a class="code" href="struct_msg___data.html">Msg_Data</a> *M, tw_lp *lp) {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    st-&gt;<a class="code" href="structaxon_state.html#a217ba44fb923dc4dc62bb73b14e61517">sendMsgCount</a> --;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">long</span> count = M-&gt;<a class="code" href="struct_msg___data.html#a2e49a6bcc6c45ade722f746b1ea707f2">rndCallCount</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">while</span> (count--) {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        tw_rand_reverse_unif(lp-&gt;rng);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    }</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;}</div>
+<div class="ttc" id="struct_msg___data_html_a2e49a6bcc6c45ade722f746b1ea707f2"><div class="ttname"><a href="struct_msg___data.html#a2e49a6bcc6c45ade722f746b1ea707f2">Msg_Data::rndCallCount</a></div><div class="ttdeci">unsigned long rndCallCount</div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00072">assist.h:72</a></div></div>
+<div class="ttc" id="assist_8c_html_a30602b11dbfa6bcb90dc00e7942cfb02"><div class="ttname"><a href="assist_8c.html#a30602b11dbfa6bcb90dc00e7942cfb02">getNextEventTime</a></div><div class="ttdeci">tw_stime getNextEventTime(tw_lp *lp)</div><div class="ttdoc">Gets the next small-tick event time. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8c_source.html#l00014">assist.c:14</a></div></div>
+<div class="ttc" id="structaxon_state_html_a217ba44fb923dc4dc62bb73b14e61517"><div class="ttname"><a href="structaxon_state.html#a217ba44fb923dc4dc62bb73b14e61517">axonState::sendMsgCount</a></div><div class="ttdeci">_statT sendMsgCount</div><div class="ttdef"><b>Definition:</b> <a href="axon_8h_source.html#l00017">axon.h:17</a></div></div>
+<div class="ttc" id="structaxon_state_html"><div class="ttname"><a href="structaxon_state.html">axonState</a></div><div class="ttdef"><b>Definition:</b> <a href="axon_8h_source.html#l00016">axon.h:16</a></div></div>
+<div class="ttc" id="structaxon_state_html_a665999819b255f36d756f17b85bc9a03"><div class="ttname"><a href="structaxon_state.html#a665999819b255f36d756f17b85bc9a03">axonState::destSynapse</a></div><div class="ttdeci">tw_lpid destSynapse</div><div class="ttdef"><b>Definition:</b> <a href="axon_8h_source.html#l00018">axon.h:18</a></div></div>
+<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450a777cedd6ca25a5d7a84aab10a8735af0">NEURON_OUT</a></div><div class="ttdoc">Message originates from a neuron, and is going to an axion. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00061">assist.h:61</a></div></div>
+<div class="ttc" id="struct_msg___data_html_a015b6eb45982e1842ee8fc389a099ced"><div class="ttname"><a href="struct_msg___data.html#a015b6eb45982e1842ee8fc389a099ced">Msg_Data::eventType</a></div><div class="ttdeci">enum evtType eventType</div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00071">assist.h:71</a></div></div>
+<div class="ttc" id="axon_8h_html"><div class="ttname"><a href="axon_8h.html">axon.h</a></div></div>
+<div class="ttc" id="struct_msg___data_html"><div class="ttname"><a href="struct_msg___data.html">Msg_Data</a></div><div class="ttdoc">Msg_Data is the main message struct. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00070">assist.h:70</a></div></div>
+<div class="ttc" id="assist_8h_html_a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee"><div class="ttname"><a href="assist_8h.html#a7c1688de451e0dea1e11617bce3ec450abb8b28588ca2e1c33d29df003b3b90ee">AXON_OUT</a></div><div class="ttdoc">Message originates from an axon. </div><div class="ttdef"><b>Definition:</b> <a href="assist_8h_source.html#l00058">assist.h:58</a></div></div>
+<div class="ttc" id="axon_8c_html_ab136d88cfbbb1e9f0f3687908dd54851"><div class="ttname"><a href="axon_8c.html#ab136d88cfbbb1e9f0f3687908dd54851">axonReceiveMessage</a></div><div class="ttdeci">void axonReceiveMessage(axonState *st, Msg_Data *M, tw_lp *lp)</div><div class="ttdoc">Handles a message sent to an Axon. </div><div class="ttdef"><b>Definition:</b> <a href="axon_8c_source.html#l00011">axon.c:11</a></div></div>
+<div class="ttc" id="axon_8c_html_a4540abe1d7c57cae5b0ff088d3d47fd1"><div class="ttname"><a href="axon_8c.html#a4540abe1d7c57cae5b0ff088d3d47fd1">axonReverseState</a></div><div class="ttdeci">void axonReverseState(axonState *st, Msg_Data *M, tw_lp *lp)</div><div class="ttdef"><b>Definition:</b> <a href="axon_8c_source.html#l00029">axon.c:29</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_1ae4179d5e953611aae20c997279e02c.html">models</a></li><li class="navelem"><a class="el" href="axon_8c.html">axon.c</a></li>
-    <li class="footer">Generated on Sun Jun 21 2015 16:46:03 for TrueNorth TimeWarp Benchmark by
+    <li class="footer">Generated on Mon Jun 22 2015 12:44:59 for TrueNorth TimeWarp Benchmark by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

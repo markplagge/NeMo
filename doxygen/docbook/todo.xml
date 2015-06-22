@@ -3,29 +3,39 @@
     <title>Todo List</title>
 
 <para><variablelist>
+<varlistentry><term><anchor id="todo_1_todo000004"/>globalScope&gt; Global <link linkend="model__main_8h_1a614c89653e656c2b0436bed7f2c8de3e">createLPs</link>  ()</term>
+<listitem>
+<para>need to create better mapping.  </para>
+</listitem></varlistentry>
 <varlistentry><term><anchor id="todo_1_todo000001"/>globalScope&gt; Global <link linkend="assist_8h_1a4d378196b7fceed090d64ec8820b4065">getCurrentBigTick</link>  (tw_stime now)</term>
 <listitem>
-<para>: Implement &amp; determin if ε needs to be added to the return value. </para>
+<para>: Implement &amp; determin if ε needs to be added to the return value.</para>
+
+<para>need to see if this will kill performance:  </para>
 </listitem></varlistentry>
-<varlistentry><term><anchor id="todo_1_todo000005"/>globalScope&gt; Global <link linkend="neuron_8h_1a92d5882a15e11e2a6733483d51428e46">neuronShouldFire</link>  (<link linkend="structneuron_state">neuronState</link> *st)</term>
+<varlistentry><term><anchor id="todo_1_todo000007"/>globalScope&gt; Global <link linkend="neuron_8h_1aabaff47eadb1e61b34c19b6e982f6511">neuronPostIntegrate</link>  (<link linkend="structneuron_state">neuronState</link> *st, tw_stime time, tw_lp *lp, bool willFire)</term>
+<listitem>
+<para>There is potentially an issue here - does the TrueNorth architecture draw a new pseudorandom number during the threshold, fire, reset functions, or does it resuse them? It looks like re-use, so that&apos;s what I&apos;m doing here.  </para>
+</listitem></varlistentry>
+<varlistentry><term><anchor id="todo_1_todo000008"/>globalScope&gt; Global <link linkend="neuron_8h_1a3520b013e0c2f711b9f5c16e19306be6">neuronShouldFire</link>  (<link linkend="structneuron_state">neuronState</link> *st, tw_lp *lp)</term>
 <listitem>
 <para>check to see if this is needed, since it looks like just a simple if statement is in order. </para>
 </listitem></varlistentry>
-<varlistentry><term><anchor id="todo_1_todo000006"/>Global <link linkend="structneuron_state_1a4199c14c5aabfd52f441e01623bdc84c">neuronState::dendriteGlobalDest</link>  </term>
+<varlistentry><term><anchor id="todo_1_todo000009"/>Global <link linkend="structneuron_state_1a4199c14c5aabfd52f441e01623bdc84c">neuronState::dendriteGlobalDest</link>  </term>
 <listitem>
 <para>: The dendriteCore and dendriteLocal values might not be needed anymroe.  </para>
 </listitem></varlistentry>
-<varlistentry><term><anchor id="todo_1_todo000002"/>Module <link linkend="neuron_8c_1amgrpb71b6f136d39fa6c989fa9f8bce28fa9">ResetFunctions</link>  </term>
+<varlistentry><term><anchor id="todo_1_todo000005"/>Module <link linkend="neuron_8c_1amgrpb71b6f136d39fa6c989fa9f8bce28fa9">ResetFunctions</link>  </term>
 <listitem>
 <para>: Check that reverse reset functions are needed, since previous voltage is stored in the neuron.  </para>
 </listitem></varlistentry>
-<varlistentry><term><anchor id="todo_1_todo000003"/>globalScope&gt; Global <link linkend="neuron_8h_1a2e78d7d2b70bf7349c3854b3727dcc25">resetLinear</link>  (void *neuronState)</term>
+<varlistentry><term><anchor id="todo_1_todo000006"/>globalScope&gt; Global <link linkend="neuron_8h_1ae53276ccdb759ba1ea09806cbf9fc940">reverseResetZero</link>  (void *neuronState)</term>
 <listitem>
-<para>: Check implementation against paper. </para>
+<para>: Check that this is the proper way to handle reset zero function  </para>
 </listitem></varlistentry>
-<varlistentry><term><anchor id="todo_1_todo000004"/>globalScope&gt; Global <link linkend="neuron_8h_1ae53276ccdb759ba1ea09806cbf9fc940">reverseResetZero</link>  (void *neuronState)</term>
+<varlistentry><term><anchor id="todo_1_todo000003"/>globalScope&gt; Global <link linkend="assist_8h_1ad383c153e77508e2556003da0e4ac3eb">RZER</link>  (a)</term>
 <listitem>
-<para>: Check that this is the proper way to handle reset zero function </para>
+<para>this method will be faster on BGQ, but need to make sure that it works properly </para>
 </listitem></varlistentry>
 </variablelist>
 </para>

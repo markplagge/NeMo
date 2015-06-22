@@ -4,6 +4,9 @@
     <programlisting>#include &lt;stdio.h&gt;</programlisting>
     <programlisting>#include &quot;assist.h&quot;</programlisting>
     <programlisting>#include &quot;ross.h&quot;</programlisting>
+    <programlisting>#include &quot;models/axon.h&quot;</programlisting>
+    <programlisting>#include &quot;models/neuron.h&quot;</programlisting>
+    <programlisting>#include &quot;models/synapse.h&quot;</programlisting>
     <programlisting>#include &lt;stdbool.h&gt;</programlisting>
 <para>Include dependency diagram for model_main.h</para>
 <para>
@@ -40,15 +43,8 @@
             <para>
                 <itemizedlist>
                     <listitem>
-                        <para>int <link linkend="model__main_8h_1adc924fa4a60574e27538b63daed224d2">SYNSAPES_IN_CORE</link><para><emphasis>number of synapses per core.</emphasis></para>
+                        <para>int <link linkend="model__main_8h_1a076b99099b46431255982b2bb8ce06fb">SYNAPSES_IN_CORE</link><para><emphasis>number of synapses per core.</emphasis></para>
 </para>
-                    </listitem>
-                </itemizedlist>
-            </para>
-            <para>
-                <itemizedlist>
-                    <listitem>
-                        <para>int <link linkend="model__main_8h_1a142b2655c5a899956164ef4e1c394fea">CORES_IN_SIM</link></para>
                     </listitem>
                 </itemizedlist>
             </para>
@@ -57,6 +53,13 @@
                     <listitem>
                         <para>int <link linkend="model__main_8h_1a519a06367b2b3f793c56d3ab78f5b2ef">AXONS_IN_CORE</link><para><emphasis>Number of axions per core.</emphasis></para>
 </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>int <link linkend="model__main_8h_1a142b2655c5a899956164ef4e1c394fea">CORES_IN_SIM</link></para>
                     </listitem>
                 </itemizedlist>
             </para>
@@ -165,9 +168,147 @@
                 </itemizedlist>
             </para>
         </section>
+        <section>
+            <title>Functions</title>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1a614c89653e656c2b0436bed7f2c8de3e">createLPs</link> (
+)<para><emphasis>createLPs will create the LPs needed for the simulation on this PE.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1a7a8df3f99e1d582c6c136b16d6e34d13">pre_run</link> (
+)<para><emphasis>pre_run Not used - placeholder function for compatibility.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1a8022723eba89664cca80e179b80a2b37">neuron_init</link> (
+<link linkend="structneuron_state">neuronState</link> * s, tw_lp * lp)<para><emphasis>neuron_init Neuron lp initialization.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1a801f93205937969fea2eff0bf2e76de9">setSynapseWeight</link> (
+<link linkend="structneuron_state">neuronState</link> * s, tw_lp * lp, int synapseID)<para><emphasis>setSynapseWeight is called from \a neuron_init and sets up the weights
+of a neuron.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1a9309446aa05714b141a3d3caae4254db">neuron_event</link> (
+<link linkend="structneuron_state">neuronState</link> * s, tw_bf * CV, <link linkend="struct_msg___data">Msg_Data</link> * M, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1a4bd8bcd9c6de148a9f5c84fadd51106c">neuron_reverse</link> (
+<link linkend="structneuron_state">neuronState</link> * , tw_bf * , <link linkend="struct_msg___data">Msg_Data</link> * , tw_lp * )</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1acac9e41bea7d1d0911a0220de60a37b0">neuron_final</link> (
+<link linkend="structneuron_state">neuronState</link> * s, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1a579d8e5af0b1c0a80c8e83b7a534f873">synapse_init</link> (
+<link linkend="structsynapse_state">synapseState</link> * s, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1aea7de5bc5028e2df35cf3fe64f6cca6c">synapse_event</link> (
+<link linkend="structsynapse_state">synapseState</link> * s, tw_bf * , <link linkend="struct_msg___data">Msg_Data</link> * M, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1ae7966fd834efb0fe64477f6f8c2205f3">synapse_reverse</link> (
+<link linkend="structsynapse_state">synapseState</link> * , tw_bf * , <link linkend="struct_msg___data">Msg_Data</link> * M, tw_lp * )</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1a3d695e7995cce87a03d6407d801e043d">synapse_final</link> (
+<link linkend="structsynapse_state">synapseState</link> * s, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1aa1b78ccf8fb2ff34c960d4c55576c714">axon_init</link> (
+<link linkend="structaxon_state">axonState</link> * s, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1a3c053cd53c8082f6cfdd74666d2a484b">axon_event</link> (
+<link linkend="structaxon_state">axonState</link> * s, tw_bf * , <link linkend="struct_msg___data">Msg_Data</link> * M, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1a5d4a72afee6ac1e8fd422d8f85a338b4">axon_reverse</link> (
+<link linkend="structaxon_state">axonState</link> * , tw_bf * , <link linkend="struct_msg___data">Msg_Data</link> * M, tw_lp * )</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1a9f5c1071ccef11cdc8027264fca860c7">axon_final</link> (
+<link linkend="structaxon_state">axonState</link> * s, tw_lp * lp)</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>void <link linkend="model__main_8h_1a9397f1f0e189cd7dac262423993811e4">mapping</link> (
+tw_lp gid)<para><emphasis>mapping - the initial mapping function, either assigns a simple mapping
+or uses one of the more complex custom mapping functions.</emphasis></para>
+</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
     <simplesect>
         <title>Detailed Description</title>
-    <para>Definition in file /Users/Mark/Development/TrueNorth/tnt_benchmark/model_main.h</para>
+    <para>Definition in file /home/mplagge/development/tnt_benchmark/model_main.h</para>
     </simplesect>
     <literallayout><computeroutput>
 1 <emphasis class="comment">//</emphasis>
@@ -184,17 +325,17 @@
 12 <emphasis class="preprocessor">#include&#32;&lt;stdio.h&gt;</emphasis>
 13 <emphasis class="preprocessor">#include&#32;&quot;<link linkend="assist_8h">assist.h</link>&quot;</emphasis>
 14 <emphasis class="preprocessor">#include&#32;&quot;ross.h&quot;</emphasis>
-15 <emphasis class="preprocessor">#include&#32;&lt;stdbool.h&gt;</emphasis>
-16 
-17 &#32;&#32;&#32;&#32;<emphasis class="comment">//&#32;Variable&#32;holders&#32;for&#32;command&#32;lne&#32;params&#32;&amp;&#32;external&#32;variables&#32;*/</emphasis>
-<link linkend="model__main_8h_1a67e8e45768f76b984a60fcff2b7c51aa">21 </link><emphasis class="comment"></emphasis><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a67e8e45768f76b984a60fcff2b7c51aa">NEURONS_IN_CORE</link>&#32;=&#32;128;
-22 
-<link linkend="model__main_8h_1adc924fa4a60574e27538b63daed224d2">24 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1adc924fa4a60574e27538b63daed224d2">SYNSAPES_IN_CORE</link>;
-25 <emphasis class="comment">/*&#32;Calculated&#32;number&#32;of&#32;cores&#32;in&#32;simulation&#32;*/</emphasis>
-<link linkend="model__main_8h_1a142b2655c5a899956164ef4e1c394fea">26 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a142b2655c5a899956164ef4e1c394fea">CORES_IN_SIM</link>;
-27 
-<link linkend="model__main_8h_1a519a06367b2b3f793c56d3ab78f5b2ef">29 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a519a06367b2b3f793c56d3ab78f5b2ef">AXONS_IN_CORE</link>&#32;=&#32;128;
-30 
+15 <emphasis class="preprocessor">#include&#32;&quot;<link linkend="axon_8h">models/axon.h</link>&quot;</emphasis>
+16 <emphasis class="preprocessor">#include&#32;&quot;<link linkend="neuron_8h">models/neuron.h</link>&quot;</emphasis>
+17 <emphasis class="preprocessor">#include&#32;&quot;<link linkend="synapse_8h">models/synapse.h</link>&quot;</emphasis>
+18 <emphasis class="preprocessor">#include&#32;&lt;stdbool.h&gt;</emphasis>
+19 
+20 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis class="comment">//&#32;Variable&#32;holders&#32;for&#32;command&#32;lne&#32;params&#32;&amp;&#32;external&#32;variables</emphasis>
+<link linkend="model__main_8h_1a67e8e45768f76b984a60fcff2b7c51aa">24 </link><emphasis class="comment"></emphasis><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a67e8e45768f76b984a60fcff2b7c51aa">NEURONS_IN_CORE</link>&#32;=&#32;256;
+<link linkend="model__main_8h_1a076b99099b46431255982b2bb8ce06fb">26 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a076b99099b46431255982b2bb8ce06fb">SYNAPSES_IN_CORE</link>&#32;=&#32;0;
+<link linkend="model__main_8h_1a519a06367b2b3f793c56d3ab78f5b2ef">28 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a519a06367b2b3f793c56d3ab78f5b2ef">AXONS_IN_CORE</link>&#32;=&#32;256;
+29 <emphasis class="comment">/*&#32;Calculated&#32;number&#32;of&#32;cores&#32;in&#32;simulation&#32;*/</emphasis>
+<link linkend="model__main_8h_1a142b2655c5a899956164ef4e1c394fea">30 </link><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a142b2655c5a899956164ef4e1c394fea">CORES_IN_SIM</link>;
 <link linkend="model__main_8h_1a74019486208bb1d640927710d5344a94">34 </link><emphasis class="keywordtype">unsigned</emphasis>&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a74019486208bb1d640927710d5344a94">GEN_ON</link>&#32;=&#32;1;
 <link linkend="model__main_8h_1ab42fd7d6d043114d1147acc77bd7e867">35 </link><emphasis class="keywordtype">bool</emphasis>&#32;<link linkend="model__main_8h_1ab42fd7d6d043114d1147acc77bd7e867">GEN_RND</link>&#32;=&#32;1;
 <link linkend="model__main_8h_1a516f1496efbe86dedb0e2883bb7e7834">36 </link><emphasis class="keywordtype">unsigned</emphasis>&#32;<emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1a516f1496efbe86dedb0e2883bb7e7834">RND_MODE</link>&#32;=&#32;0;
@@ -216,8 +357,28 @@
 61 &#32;&#32;&#32;&#32;<emphasis class="comment">//Simulation&#32;Variables</emphasis>
 <link linkend="model__main_8h_1ad39b86a0b748731175572436f6672264">63 </link><emphasis class="comment"></emphasis><emphasis class="keywordtype">int</emphasis>&#32;<link linkend="model__main_8h_1ad39b86a0b748731175572436f6672264">CORE_SIZE</link>;
 64 
-65 
-66 
-67 <emphasis class="preprocessor">#endif&#32;</emphasis><emphasis class="comment">/*&#32;defined(__ROSS_TOP__model_main__)&#32;*/</emphasis><emphasis class="preprocessor"></emphasis>
+65 <emphasis class="comment">/*&#32;****&#32;Model&#32;Main&#32;Function&#32;*/</emphasis>
+70 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1a614c89653e656c2b0436bed7f2c8de3e">createLPs</link>();
+76 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1a7a8df3f99e1d582c6c136b16d6e34d13">pre_run</link>();
+77 
+83 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1a8022723eba89664cca80e179b80a2b37">neuron_init</link>(<link linkend="structneuron_state">neuronState</link>&#32;*s,&#32;tw_lp&#32;*lp);
+91 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1a801f93205937969fea2eff0bf2e76de9">setSynapseWeight</link>(<link linkend="structneuron_state">neuronState</link>&#32;*s,&#32;tw_lp&#32;*lp,&#32;<emphasis class="keywordtype">int</emphasis>&#32;synapseID);
+92 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1a9309446aa05714b141a3d3caae4254db">neuron_event</link>(<link linkend="structneuron_state">neuronState</link>&#32;*s,&#32;tw_bf&#32;*CV,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*M,&#32;tw_lp&#32;*lp);
+93 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1a4bd8bcd9c6de148a9f5c84fadd51106c">neuron_reverse</link>(<link linkend="structneuron_state">neuronState</link>&#32;*,&#32;tw_bf&#32;*,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*,&#32;tw_lp&#32;*);
+94 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1acac9e41bea7d1d0911a0220de60a37b0">neuron_final</link>(<link linkend="structneuron_state">neuronState</link>&#32;*s,&#32;tw_lp&#32;*lp);
+95 
+96 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1a579d8e5af0b1c0a80c8e83b7a534f873">synapse_init</link>(<link linkend="structsynapse_state">synapseState</link>&#32;*s,&#32;tw_lp&#32;*lp);
+97 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1aea7de5bc5028e2df35cf3fe64f6cca6c">synapse_event</link>(<link linkend="structsynapse_state">synapseState</link>&#32;*s,&#32;tw_bf&#32;*,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*M,&#32;tw_lp&#32;*lp);
+98 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1ae7966fd834efb0fe64477f6f8c2205f3">synapse_reverse</link>(<link linkend="structsynapse_state">synapseState</link>&#32;*,&#32;tw_bf&#32;*,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*M,&#32;tw_lp&#32;*);
+99 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1a3d695e7995cce87a03d6407d801e043d">synapse_final</link>(<link linkend="structsynapse_state">synapseState</link>&#32;*s,&#32;tw_lp&#32;*lp);
+100 
+101 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1aa1b78ccf8fb2ff34c960d4c55576c714">axon_init</link>(<link linkend="structaxon_state">axonState</link>&#32;*s,&#32;tw_lp&#32;*lp);
+102 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1a3c053cd53c8082f6cfdd74666d2a484b">axon_event</link>(<link linkend="structaxon_state">axonState</link>&#32;*s,&#32;tw_bf&#32;*,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*M,&#32;tw_lp&#32;*lp);
+103 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1a5d4a72afee6ac1e8fd422d8f85a338b4">axon_reverse</link>(<link linkend="structaxon_state">axonState</link>&#32;*,&#32;tw_bf&#32;*,&#32;<link linkend="struct_msg___data">Msg_Data</link>&#32;*M,&#32;tw_lp&#32;*);
+104 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1a9f5c1071ccef11cdc8027264fca860c7">axon_final</link>(<link linkend="structaxon_state">axonState</link>&#32;*s,&#32;tw_lp&#32;*lp);
+110 <emphasis class="keywordtype">void</emphasis>&#32;<link linkend="model__main_8h_1a9397f1f0e189cd7dac262423993811e4">mapping</link>(tw_lp&#32;gid);
+111 
+112 
+113 <emphasis class="preprocessor">#endif&#32;</emphasis><emphasis class="comment">/*&#32;defined(__ROSS_TOP__model_main__)&#32;*/</emphasis><emphasis class="preprocessor"></emphasis>
     </computeroutput></literallayout>
 </section>

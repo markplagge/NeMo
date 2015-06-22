@@ -1,5 +1,5 @@
-\hypertarget{mapping_8h}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/mapping.h File Reference}
-\label{mapping_8h}\index{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/mapping.\+h@{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/mapping.\+h}}
+\hypertarget{mapping_8h}{}\section{/home/mplagge/development/tnt\+\_\+benchmark/mapping.h File Reference}
+\label{mapping_8h}\index{/home/mplagge/development/tnt\+\_\+benchmark/mapping.\+h@{/home/mplagge/development/tnt\+\_\+benchmark/mapping.\+h}}
 {\ttfamily \#include $<$stdio.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}ross.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}assist.\+h\char`\"{}}\\*
@@ -7,7 +7,7 @@ Include dependency graph for mapping.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=338pt]{mapping_8h__incl}
+\includegraphics[width=340pt]{mapping_8h__incl}
 \end{center}
 \end{figure}
 This graph shows which files directly or indirectly include this file\+:\nopagebreak
@@ -17,3 +17,139 @@ This graph shows which files directly or indirectly include this file\+:\nopageb
 \includegraphics[width=350pt]{mapping_8h__dep__incl}
 \end{center}
 \end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+tw\+\_\+peid \hyperlink{mapping_8h_ab67eefe1d34d874bcd5f8cfa854e7fc7}{lp\+To\+Pe\+Map} (tw\+\_\+peid gid)
+\begin{DoxyCompactList}\small\item\em Custom Mapping -\/ given a L\+P G\+I\+D return a P\+E. \end{DoxyCompactList}\item 
+void \hyperlink{mapping_8h_af6a8846083f1bd8ca747136c3b5967d8}{mapping\+Setup} ()
+\begin{DoxyCompactList}\small\item\em Setup mapping per P\+E. \end{DoxyCompactList}\item 
+tw\+\_\+lp $\ast$ \hyperlink{mapping_8h_a65ae45764256c6f8a0552ec04a132fcf}{global\+To\+Local} (tw\+\_\+lpid gid)
+\begin{DoxyCompactList}\small\item\em Given a global I\+D, return a L\+P. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{mapping_8h_a67e8e45768f76b984a60fcff2b7c51aa}{N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}
+\begin{DoxyCompactList}\small\item\em Number of neurons per core. \end{DoxyCompactList}\item 
+int \hyperlink{mapping_8h_a076b99099b46431255982b2bb8ce06fb}{S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}
+\begin{DoxyCompactList}\small\item\em Number of synapses per core. \end{DoxyCompactList}\item 
+int \hyperlink{mapping_8h_ad39b86a0b748731175572436f6672264}{C\+O\+R\+E\+\_\+\+S\+I\+Z\+E}
+\begin{DoxyCompactList}\small\item\em C\+O\+R\+E\+\_\+\+S\+I\+Z\+E is equal to the number of axions $\ast$ number of aneurons + num neurons + num axions. \end{DoxyCompactList}\item 
+int \hyperlink{mapping_8h_afe9ee9518533aa222adff4a27ff09281}{nlp\+\_\+per\+\_\+kp}
+\item 
+int \hyperlink{mapping_8h_a929a1afa1773005b4881bea7869fdb60}{nkp\+\_\+per\+\_\+pe}
+\item 
+int \hyperlink{mapping_8h_ae2910f7a5d9f53ae602e62bb0248edba}{C\+O\+R\+E\+\_\+\+L\+P\+\_\+\+O\+F\+F\+S\+E\+T}
+\begin{DoxyCompactList}\small\item\em C\+O\+R\+E\+\_\+\+L\+P\+\_\+\+O\+F\+F\+S\+E\+T -\/ Manages the offset. \end{DoxyCompactList}\item 
+int \hyperlink{mapping_8h_a1d3b60109ac1c91025d512707a3242a8}{C\+P\+E}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{mapping_8h_a65ae45764256c6f8a0552ec04a132fcf}{}\index{mapping.\+h@{mapping.\+h}!global\+To\+Local@{global\+To\+Local}}
+\index{global\+To\+Local@{global\+To\+Local}!mapping.\+h@{mapping.\+h}}
+\subsubsection[{global\+To\+Local}]{\setlength{\rightskip}{0pt plus 5cm}tw\+\_\+lp$\ast$ global\+To\+Local (
+\begin{DoxyParamCaption}
+\item[{tw\+\_\+lpid}]{gid}
+\end{DoxyParamCaption}
+)}\label{mapping_8h_a65ae45764256c6f8a0552ec04a132fcf}
+
+
+Given a global I\+D, return a L\+P. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gid} & $<$\#gid description\#$>$\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$<$\#return value description\#$>$ 
+\end{DoxyReturn}
+\hypertarget{mapping_8h_ab67eefe1d34d874bcd5f8cfa854e7fc7}{}\index{mapping.\+h@{mapping.\+h}!lp\+To\+Pe\+Map@{lp\+To\+Pe\+Map}}
+\index{lp\+To\+Pe\+Map@{lp\+To\+Pe\+Map}!mapping.\+h@{mapping.\+h}}
+\subsubsection[{lp\+To\+Pe\+Map}]{\setlength{\rightskip}{0pt plus 5cm}tw\+\_\+peid lp\+To\+Pe\+Map (
+\begin{DoxyParamCaption}
+\item[{tw\+\_\+peid}]{gid}
+\end{DoxyParamCaption}
+)}\label{mapping_8h_ab67eefe1d34d874bcd5f8cfa854e7fc7}
+
+
+Custom Mapping -\/ given a L\+P G\+I\+D return a P\+E. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gid} & $<$\#gid description\#$>$\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$<$\#return value description\#$>$ 
+\end{DoxyReturn}
+\hypertarget{mapping_8h_af6a8846083f1bd8ca747136c3b5967d8}{}\index{mapping.\+h@{mapping.\+h}!mapping\+Setup@{mapping\+Setup}}
+\index{mapping\+Setup@{mapping\+Setup}!mapping.\+h@{mapping.\+h}}
+\subsubsection[{mapping\+Setup}]{\setlength{\rightskip}{0pt plus 5cm}void mapping\+Setup (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{mapping_8h_af6a8846083f1bd8ca747136c3b5967d8}
+
+
+Setup mapping per P\+E. 
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{mapping_8h_ae2910f7a5d9f53ae602e62bb0248edba}{}\index{mapping.\+h@{mapping.\+h}!C\+O\+R\+E\+\_\+\+L\+P\+\_\+\+O\+F\+F\+S\+E\+T@{C\+O\+R\+E\+\_\+\+L\+P\+\_\+\+O\+F\+F\+S\+E\+T}}
+\index{C\+O\+R\+E\+\_\+\+L\+P\+\_\+\+O\+F\+F\+S\+E\+T@{C\+O\+R\+E\+\_\+\+L\+P\+\_\+\+O\+F\+F\+S\+E\+T}!mapping.\+h@{mapping.\+h}}
+\subsubsection[{C\+O\+R\+E\+\_\+\+L\+P\+\_\+\+O\+F\+F\+S\+E\+T}]{\setlength{\rightskip}{0pt plus 5cm}int C\+O\+R\+E\+\_\+\+L\+P\+\_\+\+O\+F\+F\+S\+E\+T}\label{mapping_8h_ae2910f7a5d9f53ae602e62bb0248edba}
+
+
+C\+O\+R\+E\+\_\+\+L\+P\+\_\+\+O\+F\+F\+S\+E\+T -\/ Manages the offset. 
+
+Calculated based on the size of a core, and the C\+P\+E vale, the number of P\+Es required to simulate a single core. For example, if core size is 128, and C\+P\+E is 2, then each P\+E will get 64 L\+Ps. T\+O\+D\+O\+: Add a synapse and neuron balancing function. 
+
+Definition at line \hyperlink{mapping_8h_source_l00034}{34} of file \hyperlink{mapping_8h_source}{mapping.\+h}.
+
+\hypertarget{mapping_8h_ad39b86a0b748731175572436f6672264}{}\index{mapping.\+h@{mapping.\+h}!C\+O\+R\+E\+\_\+\+S\+I\+Z\+E@{C\+O\+R\+E\+\_\+\+S\+I\+Z\+E}}
+\index{C\+O\+R\+E\+\_\+\+S\+I\+Z\+E@{C\+O\+R\+E\+\_\+\+S\+I\+Z\+E}!mapping.\+h@{mapping.\+h}}
+\subsubsection[{C\+O\+R\+E\+\_\+\+S\+I\+Z\+E}]{\setlength{\rightskip}{0pt plus 5cm}int C\+O\+R\+E\+\_\+\+S\+I\+Z\+E}\label{mapping_8h_ad39b86a0b748731175572436f6672264}
+
+
+C\+O\+R\+E\+\_\+\+S\+I\+Z\+E is equal to the number of axions $\ast$ number of aneurons + num neurons + num axions. 
+
+
+
+Definition at line \hyperlink{model__main_8h_source_l00063}{63} of file \hyperlink{model__main_8h_source}{model\+\_\+main.\+h}.
+
+\hypertarget{mapping_8h_a1d3b60109ac1c91025d512707a3242a8}{}\index{mapping.\+h@{mapping.\+h}!C\+P\+E@{C\+P\+E}}
+\index{C\+P\+E@{C\+P\+E}!mapping.\+h@{mapping.\+h}}
+\subsubsection[{C\+P\+E}]{\setlength{\rightskip}{0pt plus 5cm}int C\+P\+E}\label{mapping_8h_a1d3b60109ac1c91025d512707a3242a8}
+\hypertarget{mapping_8h_a67e8e45768f76b984a60fcff2b7c51aa}{}\index{mapping.\+h@{mapping.\+h}!N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E@{N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}}
+\index{N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E@{N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}!mapping.\+h@{mapping.\+h}}
+\subsubsection[{N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}]{\setlength{\rightskip}{0pt plus 5cm}int N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}\label{mapping_8h_a67e8e45768f76b984a60fcff2b7c51aa}
+
+
+Number of neurons per core. 
+
+/name Sim\+Params 
+
+Definition at line \hyperlink{model__main_8h_source_l00024}{24} of file \hyperlink{model__main_8h_source}{model\+\_\+main.\+h}.
+
+\hypertarget{mapping_8h_a929a1afa1773005b4881bea7869fdb60}{}\index{mapping.\+h@{mapping.\+h}!nkp\+\_\+per\+\_\+pe@{nkp\+\_\+per\+\_\+pe}}
+\index{nkp\+\_\+per\+\_\+pe@{nkp\+\_\+per\+\_\+pe}!mapping.\+h@{mapping.\+h}}
+\subsubsection[{nkp\+\_\+per\+\_\+pe}]{\setlength{\rightskip}{0pt plus 5cm}int nkp\+\_\+per\+\_\+pe}\label{mapping_8h_a929a1afa1773005b4881bea7869fdb60}
+\hypertarget{mapping_8h_afe9ee9518533aa222adff4a27ff09281}{}\index{mapping.\+h@{mapping.\+h}!nlp\+\_\+per\+\_\+kp@{nlp\+\_\+per\+\_\+kp}}
+\index{nlp\+\_\+per\+\_\+kp@{nlp\+\_\+per\+\_\+kp}!mapping.\+h@{mapping.\+h}}
+\subsubsection[{nlp\+\_\+per\+\_\+kp}]{\setlength{\rightskip}{0pt plus 5cm}int nlp\+\_\+per\+\_\+kp}\label{mapping_8h_afe9ee9518533aa222adff4a27ff09281}
+\hypertarget{mapping_8h_a076b99099b46431255982b2bb8ce06fb}{}\index{mapping.\+h@{mapping.\+h}!S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E@{S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}}
+\index{S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E@{S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}!mapping.\+h@{mapping.\+h}}
+\subsubsection[{S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}]{\setlength{\rightskip}{0pt plus 5cm}int S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}\label{mapping_8h_a076b99099b46431255982b2bb8ce06fb}
+
+
+Number of synapses per core. 
+
+Number of synapses per core.
+
+Calculated value, needs to be neurons $\ast$ axons 
+
+Definition at line \hyperlink{model__main_8h_source_l00026}{26} of file \hyperlink{model__main_8h_source}{model\+\_\+main.\+h}.
+

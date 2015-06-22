@@ -1,6 +1,7 @@
 var searchData=
 [
   ['_5fidt',['_idT',['../assist_8h.html#a3f7a6e6a1210b6d9d7a42177dcb9634b',1,'assist.h']]],
+  ['_5frandt',['_randT',['../assist_8h.html#a520ac495f188eb0bc5645cffa3c4328b',1,'assist.h']]],
   ['_5fregidt',['_regIDT',['../assist_8h.html#abd3130ec511af0cc7768768554bd36a0',1,'assist.h']]],
   ['_5fstatt',['_statT',['../assist_8h.html#ad77e6fc5a9b03d46e7c97b7c4b92e89f',1,'assist.h']]],
   ['_5fthresht',['_threshT',['../assist_8h.html#a5537d30256d443ce07efd3d879a4a720',1,'assist.h']]],

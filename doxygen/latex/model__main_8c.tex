@@ -1,35 +1,513 @@
-\hypertarget{model__main_8c}{}\section{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/model\+\_\+main.c File Reference}
-\label{model__main_8c}\index{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/model\+\_\+main.\+c@{/\+Users/\+Mark/\+Development/\+True\+North/tnt\+\_\+benchmark/model\+\_\+main.\+c}}
+\hypertarget{model__main_8c}{}\section{/home/mplagge/development/tnt\+\_\+benchmark/model\+\_\+main.c File Reference}
+\label{model__main_8c}\index{/home/mplagge/development/tnt\+\_\+benchmark/model\+\_\+main.\+c@{/home/mplagge/development/tnt\+\_\+benchmark/model\+\_\+main.\+c}}
 {\ttfamily \#include \char`\"{}model\+\_\+main.\+h\char`\"{}}\\*
 Include dependency graph for model\+\_\+main.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=338pt]{model__main_8c__incl}
+\includegraphics[width=350pt]{model__main_8c__incl}
 \end{center}
 \end{figure}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \hyperlink{model__main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+void \hyperlink{model__main_8c_a614c89653e656c2b0436bed7f2c8de3e}{create\+L\+Ps} ()
+\begin{DoxyCompactList}\small\item\em create\+L\+Ps will create the L\+Ps needed for the simulation on this P\+E. \end{DoxyCompactList}\item 
+int \hyperlink{model__main_8c_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\item 
+void \hyperlink{model__main_8c_a8022723eba89664cca80e179b80a2b37}{neuron\+\_\+init} (\hyperlink{structneuron_state}{neuron\+State} $\ast$s, tw\+\_\+lp $\ast$lp)
+\begin{DoxyCompactList}\small\item\em neuron\+\_\+init Neuron lp initialization. \end{DoxyCompactList}\item 
+void \hyperlink{model__main_8c_a801f93205937969fea2eff0bf2e76de9}{set\+Synapse\+Weight} (\hyperlink{structneuron_state}{neuron\+State} $\ast$s, tw\+\_\+lp $\ast$lp, int synapse\+I\+D)
+\begin{DoxyCompactList}\small\item\em set\+Synapse\+Weight is called from {\itshape neuron\+\_\+init} and sets up the weights of a neuron. \end{DoxyCompactList}\item 
+void \hyperlink{model__main_8c_a9309446aa05714b141a3d3caae4254db}{neuron\+\_\+event} (\hyperlink{structneuron_state}{neuron\+State} $\ast$s, tw\+\_\+bf $\ast$C\+V, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$M, tw\+\_\+lp $\ast$lp)
+\item 
+void \hyperlink{model__main_8c_a5f7d6a6aca030b5db84292b873816fa0}{neuron\+\_\+reverse} (\hyperlink{structneuron_state}{neuron\+State} $\ast$s, tw\+\_\+bf $\ast$C\+V, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$M\+C\+V, tw\+\_\+lp $\ast$lp)
+\item 
+void \hyperlink{model__main_8c_acac9e41bea7d1d0911a0220de60a37b0}{neuron\+\_\+final} (\hyperlink{structneuron_state}{neuron\+State} $\ast$s, tw\+\_\+lp $\ast$lp)
+\item 
+void \hyperlink{model__main_8c_a579d8e5af0b1c0a80c8e83b7a534f873}{synapse\+\_\+init} (\hyperlink{structsynapse_state}{synapse\+State} $\ast$s, tw\+\_\+lp $\ast$lp)
+\item 
+void \hyperlink{model__main_8c_a4b3ee4a7c010a99b7952de6ee58717c1}{synapse\+\_\+event} (\hyperlink{structsynapse_state}{synapse\+State} $\ast$s, tw\+\_\+bf $\ast$C\+V, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$M, tw\+\_\+lp $\ast$lp)
+\item 
+void \hyperlink{model__main_8c_a4a4d6985a03804162eb0a71bbdbc0cc2}{synapse\+\_\+reverse} (\hyperlink{structsynapse_state}{synapse\+State} $\ast$s, tw\+\_\+bf $\ast$C\+V, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$M, tw\+\_\+lp $\ast$lp)
+\item 
+void \hyperlink{model__main_8c_a3d695e7995cce87a03d6407d801e043d}{synapse\+\_\+final} (\hyperlink{structsynapse_state}{synapse\+State} $\ast$s, tw\+\_\+lp $\ast$lp)
+\item 
+void \hyperlink{model__main_8c_aa1b78ccf8fb2ff34c960d4c55576c714}{axon\+\_\+init} (\hyperlink{structaxon_state}{axon\+State} $\ast$s, tw\+\_\+lp $\ast$lp)
+\item 
+void \hyperlink{model__main_8c_a8fae0a84a982a733de15203fd551e6db}{axon\+\_\+event} (\hyperlink{structaxon_state}{axon\+State} $\ast$s, tw\+\_\+bf $\ast$C\+V, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$M, tw\+\_\+lp $\ast$lp)
+\item 
+void \hyperlink{model__main_8c_a76fff63b340bdcd9b63c490e67797178}{axon\+\_\+reverse} (\hyperlink{structaxon_state}{axon\+State} $\ast$s, tw\+\_\+bf $\ast$C\+V, \hyperlink{struct_msg___data}{Msg\+\_\+\+Data} $\ast$M, tw\+\_\+lp $\ast$lp)
+\item 
+void \hyperlink{model__main_8c_a9f5c1071ccef11cdc8027264fca860c7}{axon\+\_\+final} (\hyperlink{structaxon_state}{axon\+State} $\ast$s, tw\+\_\+lp $\ast$lp)
+\item 
+void \hyperlink{model__main_8c_a9397f1f0e189cd7dac262423993811e4}{mapping} (tw\+\_\+lp gid)
+\begin{DoxyCompactList}\small\item\em mapping -\/ the initial mapping function, either assigns a simple mapping or uses one of the more complex custom mapping functions. \end{DoxyCompactList}\item 
+void \hyperlink{model__main_8c_a7a8df3f99e1d582c6c136b16d6e34d13}{pre\+\_\+run} ()
+\begin{DoxyCompactList}\small\item\em pre\+\_\+run Not used -\/ placeholder function for compatibility. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+tw\+\_\+lptype \hyperlink{model__main_8c_a6acf8f296294224aa8201bdea5aba47e}{model\+\_\+lps} \mbox{[}$\,$\mbox{]}
 \end{DoxyCompactItemize}
 
 
 \subsection{Function Documentation}
-\hypertarget{model__main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!main@{main}}
-\index{main@{main}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
-\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\hypertarget{model__main_8c_a8fae0a84a982a733de15203fd551e6db}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!axon\+\_\+event@{axon\+\_\+event}}
+\index{axon\+\_\+event@{axon\+\_\+event}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{axon\+\_\+event}]{\setlength{\rightskip}{0pt plus 5cm}void axon\+\_\+event (
+\begin{DoxyParamCaption}
+\item[{{\bf axon\+State} $\ast$}]{s, }
+\item[{tw\+\_\+bf $\ast$}]{C\+V, }
+\item[{{\bf Msg\+\_\+\+Data} $\ast$}]{M, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_a8fae0a84a982a733de15203fd551e6db}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00148}{148} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+\begin{DoxyCode}
+00149 \{
+00150 
+00151 \}
+\end{DoxyCode}
+\hypertarget{model__main_8c_a9f5c1071ccef11cdc8027264fca860c7}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!axon\+\_\+final@{axon\+\_\+final}}
+\index{axon\+\_\+final@{axon\+\_\+final}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{axon\+\_\+final}]{\setlength{\rightskip}{0pt plus 5cm}void axon\+\_\+final (
+\begin{DoxyParamCaption}
+\item[{{\bf axon\+State} $\ast$}]{s, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_a9f5c1071ccef11cdc8027264fca860c7}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00160}{160} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+\begin{DoxyCode}
+00161 \{
+00162 
+00163 \}
+\end{DoxyCode}
+\hypertarget{model__main_8c_aa1b78ccf8fb2ff34c960d4c55576c714}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!axon\+\_\+init@{axon\+\_\+init}}
+\index{axon\+\_\+init@{axon\+\_\+init}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{axon\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void axon\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf axon\+State} $\ast$}]{s, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_aa1b78ccf8fb2ff34c960d4c55576c714}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00143}{143} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+\begin{DoxyCode}
+00144 \{
+00145 
+00146 \}
+\end{DoxyCode}
+\hypertarget{model__main_8c_a76fff63b340bdcd9b63c490e67797178}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!axon\+\_\+reverse@{axon\+\_\+reverse}}
+\index{axon\+\_\+reverse@{axon\+\_\+reverse}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{axon\+\_\+reverse}]{\setlength{\rightskip}{0pt plus 5cm}void axon\+\_\+reverse (
+\begin{DoxyParamCaption}
+\item[{{\bf axon\+State} $\ast$}]{s, }
+\item[{tw\+\_\+bf $\ast$}]{C\+V, }
+\item[{{\bf Msg\+\_\+\+Data} $\ast$}]{M, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_a76fff63b340bdcd9b63c490e67797178}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00154}{154} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+\begin{DoxyCode}
+00155 \{
+00156 
+00157 \}
+\end{DoxyCode}
+\hypertarget{model__main_8c_a614c89653e656c2b0436bed7f2c8de3e}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!create\+L\+Ps@{create\+L\+Ps}}
+\index{create\+L\+Ps@{create\+L\+Ps}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{create\+L\+Ps}]{\setlength{\rightskip}{0pt plus 5cm}void create\+L\+Ps (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}\label{model__main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}
+)}\label{model__main_8c_a614c89653e656c2b0436bed7f2c8de3e}
+
+
+create\+L\+Ps will create the L\+Ps needed for the simulation on this P\+E. 
+
+create\+L\+Ps currently assigns a core\textquotesingle{}s worth of L\+Ps to the P\+E. \begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000004}{Todo}]need to create better mapping. \end{DoxyRefDesc}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00046}{46} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+
+References \hyperlink{model__main_8h_source_l00028}{A\+X\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}, \hyperlink{model__main_8h_source_l00063}{C\+O\+R\+E\+\_\+\+S\+I\+Z\+E}, \hyperlink{model__main_8h_source_l00024}{N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}, and \hyperlink{model__main_8h_source_l00026}{S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}.
+
+
+
+Referenced by \hyperlink{model__main_8c_source_l00073}{main()}.
+
+
+\begin{DoxyCode}
+00046                  \{
+00047   tw\_define\_lps(g\_tw\_nlp, \textcolor{keyword}{sizeof}(\hyperlink{struct_msg___data}{Msg\_Data}), 0);
+00048     \textcolor{keywordtype}{int} neurons = 0;
+00049     \textcolor{keywordtype}{int} synapses = 0;
+00050     \textcolor{keywordtype}{int} axons = 0;
+00051     \textcolor{keywordtype}{int} soff = \hyperlink{assist_8h_a519a06367b2b3f793c56d3ab78f5b2ef}{AXONS\_IN\_CORE} + \hyperlink{assist_8h_a076b99099b46431255982b2bb8ce06fb}{SYNAPSES\_IN\_CORE};
+00052     \textcolor{keywordtype}{int} noff = \hyperlink{assist_8h_ad39b86a0b748731175572436f6672264}{CORE\_SIZE} - \hyperlink{assist_8h_a67e8e45768f76b984a60fcff2b7c51aa}{NEURONS\_IN\_CORE};
+00053   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < g\_tw\_nlp; i++) \{
+00054       \textcolor{keywordflow}{if}(i < \hyperlink{assist_8h_a519a06367b2b3f793c56d3ab78f5b2ef}{AXONS\_IN\_CORE})\{
+00055               \textcolor{comment}{//tw\_lp\_settype(i, &model\_lps[2]);}
+00056           axons++;
+00057       \}
+00058       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (i < soff) \{
+00059               \textcolor{comment}{//tw\_lp\_settype(i, &model\_lps[1]);}
+00060           synapses++;
+00061 
+00062 
+00063       \}
+00064       \textcolor{keywordflow}{else} \{
+00065               \textcolor{comment}{//tw\_lp\_settype(i, &model\_lps[0]);}
+00066           neurons ++;
+00067 
+00068       \}
+00069   \}
+00070     printf(\textcolor{stringliteral}{"A %i, S %i, N %i"}, axons, synapses, neurons);
+00071 \}
+\end{DoxyCode}
+\hypertarget{model__main_8c_a0ddf1224851353fc92bfbff6f499fa97}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!main@{main}}
+\index{main@{main}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_a0ddf1224851353fc92bfbff6f499fa97}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00073}{73} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+
+References \hyperlink{model__main_8h_source_l00028}{A\+X\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}, \hyperlink{model__main_8h_source_l00063}{C\+O\+R\+E\+\_\+\+S\+I\+Z\+E}, \hyperlink{model__main_8c_source_l00046}{create\+L\+Ps()}, \hyperlink{model__main_8h_source_l00024}{N\+E\+U\+R\+O\+N\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}, and \hyperlink{model__main_8h_source_l00026}{S\+Y\+N\+A\+P\+S\+E\+S\+\_\+\+I\+N\+\_\+\+C\+O\+R\+E}.
+
+
+\begin{DoxyCode}
+00073                                  \{
+00074   \textcolor{comment}{//set up core sizes.}
+00075   \hyperlink{assist_8h_a076b99099b46431255982b2bb8ce06fb}{SYNAPSES\_IN\_CORE} = \hyperlink{assist_8h_a67e8e45768f76b984a60fcff2b7c51aa}{NEURONS\_IN\_CORE} * 
+      \hyperlink{assist_8h_a519a06367b2b3f793c56d3ab78f5b2ef}{AXONS\_IN\_CORE};
+00076   \hyperlink{assist_8h_ad39b86a0b748731175572436f6672264}{CORE\_SIZE} = \hyperlink{assist_8h_a076b99099b46431255982b2bb8ce06fb}{SYNAPSES\_IN\_CORE} + \hyperlink{assist_8h_a67e8e45768f76b984a60fcff2b7c51aa}{NEURONS\_IN\_CORE} + 
+      \hyperlink{assist_8h_a519a06367b2b3f793c56d3ab78f5b2ef}{AXONS\_IN\_CORE};
+00077   g\_tw\_nlp = \hyperlink{assist_8h_ad39b86a0b748731175572436f6672264}{CORE\_SIZE};
+00078 
+00079   tw\_init(&argc, &argv);
+00080 
+00081     \hyperlink{model__main_8c_a614c89653e656c2b0436bed7f2c8de3e}{createLPs}();
+00082   \textcolor{keywordflow}{return} 0;
+00083 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=215pt]{model__main_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{model__main_8c_a9397f1f0e189cd7dac262423993811e4}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!mapping@{mapping}}
+\index{mapping@{mapping}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{mapping}]{\setlength{\rightskip}{0pt plus 5cm}void mapping (
+\begin{DoxyParamCaption}
+\item[{tw\+\_\+lp}]{gid}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_a9397f1f0e189cd7dac262423993811e4}
+
+
+mapping -\/ the initial mapping function, either assigns a simple mapping or uses one of the more complex custom mapping functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gid} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00169}{169} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+\begin{DoxyCode}
+00170 \{
+00171 
+00172 \}
+\end{DoxyCode}
+\hypertarget{model__main_8c_a9309446aa05714b141a3d3caae4254db}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!neuron\+\_\+event@{neuron\+\_\+event}}
+\index{neuron\+\_\+event@{neuron\+\_\+event}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{neuron\+\_\+event}]{\setlength{\rightskip}{0pt plus 5cm}void neuron\+\_\+event (
+\begin{DoxyParamCaption}
+\item[{{\bf neuron\+State} $\ast$}]{s, }
+\item[{tw\+\_\+bf $\ast$}]{C\+V, }
+\item[{{\bf Msg\+\_\+\+Data} $\ast$}]{M, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_a9309446aa05714b141a3d3caae4254db}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00100}{100} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+\begin{DoxyCode}
+00101 \{
+00102 
+00103 \}
+\end{DoxyCode}
+\hypertarget{model__main_8c_acac9e41bea7d1d0911a0220de60a37b0}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!neuron\+\_\+final@{neuron\+\_\+final}}
+\index{neuron\+\_\+final@{neuron\+\_\+final}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{neuron\+\_\+final}]{\setlength{\rightskip}{0pt plus 5cm}void neuron\+\_\+final (
+\begin{DoxyParamCaption}
+\item[{{\bf neuron\+State} $\ast$}]{s, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_acac9e41bea7d1d0911a0220de60a37b0}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00113}{113} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+\begin{DoxyCode}
+00114 \{
+00115 
+00116 \}
+\end{DoxyCode}
+\hypertarget{model__main_8c_a8022723eba89664cca80e179b80a2b37}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!neuron\+\_\+init@{neuron\+\_\+init}}
+\index{neuron\+\_\+init@{neuron\+\_\+init}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{neuron\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void neuron\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf neuron\+State} $\ast$}]{s, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_a8022723eba89664cca80e179b80a2b37}
+
+
+neuron\+\_\+init Neuron lp initialization. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & \\
+\hline
+{\em lp} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00089}{89} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+\begin{DoxyCode}
+00090 \{
+00091 
+00092 \}
+\end{DoxyCode}
+\hypertarget{model__main_8c_a5f7d6a6aca030b5db84292b873816fa0}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!neuron\+\_\+reverse@{neuron\+\_\+reverse}}
+\index{neuron\+\_\+reverse@{neuron\+\_\+reverse}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{neuron\+\_\+reverse}]{\setlength{\rightskip}{0pt plus 5cm}void neuron\+\_\+reverse (
+\begin{DoxyParamCaption}
+\item[{{\bf neuron\+State} $\ast$}]{s, }
+\item[{tw\+\_\+bf $\ast$}]{C\+V, }
+\item[{{\bf Msg\+\_\+\+Data} $\ast$}]{M\+C\+V, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_a5f7d6a6aca030b5db84292b873816fa0}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00107}{107} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+\begin{DoxyCode}
+00108 \{
+00109 
+00110 \}
+\end{DoxyCode}
+\hypertarget{model__main_8c_a7a8df3f99e1d582c6c136b16d6e34d13}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!pre\+\_\+run@{pre\+\_\+run}}
+\index{pre\+\_\+run@{pre\+\_\+run}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{pre\+\_\+run}]{\setlength{\rightskip}{0pt plus 5cm}void pre\+\_\+run (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_a7a8df3f99e1d582c6c136b16d6e34d13}
+
+
+pre\+\_\+run Not used -\/ placeholder function for compatibility. 
+
+In future revisions, this is where file I\+O will occur. 
+
+Definition at line \hyperlink{model__main_8c_source_l00175}{175} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+\begin{DoxyCode}
+00176 \{
+00177 
+00178 \}
+\end{DoxyCode}
+\hypertarget{model__main_8c_a801f93205937969fea2eff0bf2e76de9}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!set\+Synapse\+Weight@{set\+Synapse\+Weight}}
+\index{set\+Synapse\+Weight@{set\+Synapse\+Weight}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{set\+Synapse\+Weight}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Synapse\+Weight (
+\begin{DoxyParamCaption}
+\item[{{\bf neuron\+State} $\ast$}]{s, }
+\item[{tw\+\_\+lp $\ast$}]{lp, }
+\item[{int}]{synapse\+I\+D}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_a801f93205937969fea2eff0bf2e76de9}
+
+
+set\+Synapse\+Weight is called from {\itshape neuron\+\_\+init} and sets up the weights of a neuron. 
+
+Keeping it as a seperate function. Eventually will read in file map data. 
+\begin{DoxyParams}{Parameters}
+{\em s} & \\
+\hline
+{\em lp} & \\
+\hline
+{\em synapse\+I\+D} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00094}{94} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+\begin{DoxyCode}
+00095 \{
+00096 
+00097 \}
+\end{DoxyCode}
+\hypertarget{model__main_8c_a4b3ee4a7c010a99b7952de6ee58717c1}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!synapse\+\_\+event@{synapse\+\_\+event}}
+\index{synapse\+\_\+event@{synapse\+\_\+event}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{synapse\+\_\+event}]{\setlength{\rightskip}{0pt plus 5cm}void synapse\+\_\+event (
+\begin{DoxyParamCaption}
+\item[{{\bf synapse\+State} $\ast$}]{s, }
+\item[{tw\+\_\+bf $\ast$}]{C\+V, }
+\item[{{\bf Msg\+\_\+\+Data} $\ast$}]{M, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_a4b3ee4a7c010a99b7952de6ee58717c1}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00125}{125} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+\begin{DoxyCode}
+00126 \{
+00127 
+00128 \}
+\end{DoxyCode}
+\hypertarget{model__main_8c_a3d695e7995cce87a03d6407d801e043d}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!synapse\+\_\+final@{synapse\+\_\+final}}
+\index{synapse\+\_\+final@{synapse\+\_\+final}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{synapse\+\_\+final}]{\setlength{\rightskip}{0pt plus 5cm}void synapse\+\_\+final (
+\begin{DoxyParamCaption}
+\item[{{\bf synapse\+State} $\ast$}]{s, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_a3d695e7995cce87a03d6407d801e043d}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00137}{137} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+\begin{DoxyCode}
+00138 \{
+00139 
+00140 \}
+\end{DoxyCode}
+\hypertarget{model__main_8c_a579d8e5af0b1c0a80c8e83b7a534f873}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!synapse\+\_\+init@{synapse\+\_\+init}}
+\index{synapse\+\_\+init@{synapse\+\_\+init}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{synapse\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void synapse\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf synapse\+State} $\ast$}]{s, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_a579d8e5af0b1c0a80c8e83b7a534f873}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00119}{119} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+\begin{DoxyCode}
+00120 \{
+00121 
+00122 \}
+\end{DoxyCode}
+\hypertarget{model__main_8c_a4a4d6985a03804162eb0a71bbdbc0cc2}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!synapse\+\_\+reverse@{synapse\+\_\+reverse}}
+\index{synapse\+\_\+reverse@{synapse\+\_\+reverse}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{synapse\+\_\+reverse}]{\setlength{\rightskip}{0pt plus 5cm}void synapse\+\_\+reverse (
+\begin{DoxyParamCaption}
+\item[{{\bf synapse\+State} $\ast$}]{s, }
+\item[{tw\+\_\+bf $\ast$}]{C\+V, }
+\item[{{\bf Msg\+\_\+\+Data} $\ast$}]{M, }
+\item[{tw\+\_\+lp $\ast$}]{lp}
+\end{DoxyParamCaption}
+)}\label{model__main_8c_a4a4d6985a03804162eb0a71bbdbc0cc2}
+
+
+Definition at line \hyperlink{model__main_8c_source_l00131}{131} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
+
+
+\begin{DoxyCode}
+00132 \{
+00133 
+00134 \}
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\hypertarget{model__main_8c_a6acf8f296294224aa8201bdea5aba47e}{}\index{model\+\_\+main.\+c@{model\+\_\+main.\+c}!model\+\_\+lps@{model\+\_\+lps}}
+\index{model\+\_\+lps@{model\+\_\+lps}!model\+\_\+main.\+c@{model\+\_\+main.\+c}}
+\subsubsection[{model\+\_\+lps}]{\setlength{\rightskip}{0pt plus 5cm}tw\+\_\+lptype model\+\_\+lps\mbox{[}$\,$\mbox{]}}\label{model__main_8c_a6acf8f296294224aa8201bdea5aba47e}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{\{
+
+                             (init\_f)\hyperlink{model__main_8c_a8022723eba89664cca80e179b80a2b37}{neuron\_init},
+                             (pre\_run\_f)\hyperlink{model__main_8c_a7a8df3f99e1d582c6c136b16d6e34d13}{pre\_run},
+                             (event\_f)\hyperlink{model__main_8c_a9309446aa05714b141a3d3caae4254db}{neuron\_event},
+                             (revent\_f)\hyperlink{model__main_8c_a5f7d6a6aca030b5db84292b873816fa0}{neuron\_reverse},
+                             (final\_f)\hyperlink{model__main_8c_acac9e41bea7d1d0911a0220de60a37b0}{neuron\_final},
+                             (map\_f)\hyperlink{model__main_8c_a9397f1f0e189cd7dac262423993811e4}{mapping},
+                             sizeof(\hyperlink{structneuron_state}{neuronState})\},
+                         \{
+
+                             (init\_f)\hyperlink{model__main_8c_a579d8e5af0b1c0a80c8e83b7a534f873}{synapse\_init},
+                             (pre\_run\_f)\hyperlink{model__main_8c_a7a8df3f99e1d582c6c136b16d6e34d13}{pre\_run},
+                             (event\_f)\hyperlink{model__main_8c_a4b3ee4a7c010a99b7952de6ee58717c1}{synapse\_event},
+                             (revent\_f)\hyperlink{model__main_8c_a4a4d6985a03804162eb0a71bbdbc0cc2}{synapse\_reverse},
+                             (final\_f)\hyperlink{model__main_8c_a3d695e7995cce87a03d6407d801e043d}{synapse\_final},
+                             (map\_f)mapping,
+                             sizeof(\hyperlink{structsynapse_state}{synapseState})\},
+
+                         \{(init\_f)\hyperlink{model__main_8c_aa1b78ccf8fb2ff34c960d4c55576c714}{axon\_init},
+                          (pre\_run\_f)\hyperlink{model__main_8c_a7a8df3f99e1d582c6c136b16d6e34d13}{pre\_run},
+                          (event\_f)\hyperlink{model__main_8c_a8fae0a84a982a733de15203fd551e6db}{axon\_event},
+                          (revent\_f)\hyperlink{model__main_8c_a76fff63b340bdcd9b63c490e67797178}{axon\_reverse},
+                          (final\_f)\hyperlink{model__main_8c_a9f5c1071ccef11cdc8027264fca860c7}{axon\_final},
+                          (map\_f)mapping,
+                          sizeof(\hyperlink{structaxon_state}{axonState})\},
+
+                         \{0\}
+
+\}
+\end{DoxyCode}
 
 
 Definition at line \hyperlink{model__main_8c_source_l00011}{11} of file \hyperlink{model__main_8c_source}{model\+\_\+main.\+c}.
 
-
-\begin{DoxyCode}
-00011            \{
-00012     \textcolor{keywordflow}{return} 0;
-00013 \}
-\end{DoxyCode}

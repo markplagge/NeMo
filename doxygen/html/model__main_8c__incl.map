@@ -1,4 +1,9 @@
-<map id="/Users/Mark/Development/TrueNorth/tnt_benchmark/model_main.c" name="/Users/Mark/Development/TrueNorth/tnt_benchmark/model_main.c">
-<area shape="rect" id="node2" href="$model__main_8h.html" title="model_main.h" alt="" coords="142,105,247,131"/>
-<area shape="rect" id="node4" href="$assist_8h.html" title="assist.h" alt="" coords="126,179,193,204"/>
+<map id="/home/mplagge/development/tnt_benchmark/model_main.c" name="/home/mplagge/development/tnt_benchmark/model_main.c">
+<area shape="rect" id="node2" href="$model__main_8h.html" title="model_main.h" alt="" coords="402,95,504,121"/>
+<area shape="rect" id="node4" href="$assist_8h.html" title="assist.h" alt="" coords="518,319,586,345"/>
+<area shape="rect" id="node8" href="$axon_8h.html" title="models/axon.h" alt="" coords="277,169,384,196"/>
+<area shape="rect" id="node10" href="$neuron_8h.html" title="models/neuron.h" alt="" coords="538,169,656,196"/>
+<area shape="rect" id="node12" href="$synapse_8h.html" title="models/synapse.h" alt="" coords="29,244,157,271"/>
+<area shape="rect" id="node9" href="$input__simulator_8h.html" title="../input_simulator.h" alt="" coords="232,244,365,271"/>
+<area shape="rect" id="node11" href="$mapping_8h.html" title="../mapping.h" alt="" coords="592,244,687,271"/>
 </map>

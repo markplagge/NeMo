@@ -1,4 +1,5 @@
-<map id="/Users/Mark/Development/TrueNorth/tnt_benchmark/models/axon.c" name="/Users/Mark/Development/TrueNorth/tnt_benchmark/models/axon.c">
-<area shape="rect" id="node2" href="$axon_8h.html" title="axon.h" alt="" coords="63,105,124,131"/>
-<area shape="rect" id="node4" href="$assist_8h.html" title="../assist.h" alt="" coords="93,179,171,204"/>
+<map id="/home/mplagge/development/tnt_benchmark/models/axon.c" name="/home/mplagge/development/tnt_benchmark/models/axon.c">
+<area shape="rect" id="node2" href="$axon_8h.html" title="axon.h" alt="" coords="75,95,137,121"/>
+<area shape="rect" id="node4" href="$assist_8h.html" title="../assist.h" alt="" coords="163,244,243,271"/>
+<area shape="rect" id="node8" href="$input__simulator_8h.html" title="../input_simulator.h" alt="" coords="143,169,277,196"/>
 </map>
