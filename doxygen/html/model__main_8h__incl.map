@@ -1,8 +1,0 @@
-<map id="/home/mplagge/development/tnt_benchmark/model_main.h" name="/home/mplagge/development/tnt_benchmark/model_main.h">
-<area shape="rect" id="node3" href="$assist_8h.html" title="assist.h" alt="" coords="518,244,586,271"/>
-<area shape="rect" id="node7" href="$axon_8h.html" title="models/axon.h" alt="" coords="277,95,384,121"/>
-<area shape="rect" id="node9" href="$neuron_8h.html" title="models/neuron.h" alt="" coords="538,95,656,121"/>
-<area shape="rect" id="node11" href="$synapse_8h.html" title="models/synapse.h" alt="" coords="29,169,157,196"/>
-<area shape="rect" id="node8" href="$input__simulator_8h.html" title="../input_simulator.h" alt="" coords="232,169,365,196"/>
-<area shape="rect" id="node10" href="$mapping_8h.html" title="../mapping.h" alt="" coords="592,169,687,196"/>
-</map>
