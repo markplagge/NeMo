@@ -143,6 +143,7 @@ void scatterMap(){
 	}
 	printf("\n\n\ntotal lps %i", simSize);
 	//create GID arrays for each LP:
+	MPI_Barrier(MPI_COMM_WORLD);
 	myGIDs = (tw_lpid *)malloc(sizeof(tw_lpid)* LPsPerPE);
 	MPI_Scatter(gidArray, LPsPerPE, MPI_UINT64_T, myGIDs, LPsPerPE, MPI_UINT64_T, 0, MPI_COMM_WORLD);
 		//now all GIDs have been seeded to the sim.
