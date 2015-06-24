@@ -121,7 +121,7 @@ void scatterMap(){
 	tw_lpid *gePEMap = (tw_lpid*) calloc(sizeof(tw_lpid), tw_nnodes());
 
 	if(g_tw_mynode == 0) {
-		gidArray = (tw_lpid*) calloc(sizeof(tw_lpid), simSize);
+		gidArray = (tw_lpid*) malloc(sizeof(tw_lpid)* simSize);
 			//Create mappings:
 		uint16_t i = AXONS_IN_CORE;
 		uint16_t j = NEURONS_IN_CORE;
