@@ -31,7 +31,7 @@ int SYNAPSES_IN_CORE = 0;
 /** Number of axions per core. Generally is set to 1-1 with neurons in core */
 int AXONS_IN_CORE = 256;
 /* Given number of cores in simulation */
-int CORES_IN_SIM = 2;
+unsigned int CORES_IN_SIM = 2;
 
 /// Memory Tuning
 int eventAlloc = 2;
@@ -114,6 +114,8 @@ const tw_optdef app_opt[]= {
     TWOPT_UINT("th_max", THRESHOLD_MAX, "maximum threshold for neurons"),
     TWOPT_UINT("wt_min", SYNAPSE_WEIGHT_MIN, "minimum synapse weight"),
     TWOPT_UINT("wt_max", SYNAPSE_WEIGHT_MAX, "maximum synapse weight"),
+	TWOPT_GROUP("Sim Size Params"),
+	TWOPT_UINT("cores", CORE_SIZE, "number of cores in simulation"),
     {TWOPT_END()}
 
   };

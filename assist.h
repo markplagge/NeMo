@@ -79,7 +79,7 @@ typedef struct Ms{
 /** @{
  * /name SimParams */
 extern int NEURONS_IN_CORE;
-extern int CORES_IN_SIM;
+extern unsigned int CORES_IN_SIM;
 extern int AXONS_IN_CORE;
 extern int SYNAPSES_IN_CORE;
 
