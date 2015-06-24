@@ -31,7 +31,7 @@ int SYNAPSES_IN_CORE = 0;
 /** Number of axions per core. Generally is set to 1-1 with neurons in core */
 int AXONS_IN_CORE = 256;
 /* Given number of cores in simulation */
-int CORES_IN_SIM = 4096;
+int CORES_IN_SIM = 2;
 
 /// Memory Tuning
 int eventAlloc = 2;
