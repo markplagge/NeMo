@@ -151,7 +151,7 @@ void scatterMap(){
 	while (ct <= tw_nnodes() ){
 
 		MPI_Barrier(MPI_COMM_WORLD);
-	if(g_tw_mynode == ct) {
+	if(g_tw_mynode == ct && simSize < 1024) {
 		printf("LPs/PE %i", LPsPerPE);
 		printf("PEID #%li HAS \n CORE\ti\tj\n",g_tw_mynode);
 		int i;

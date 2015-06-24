@@ -25,13 +25,13 @@
 /**
  *  Number of neurons per core.
  */
-int NEURONS_IN_CORE = 8;
+int NEURONS_IN_CORE = 256;
 /** number of synapses per core. Calculated value, needs to be neurons * axons */
 int SYNAPSES_IN_CORE = 0;
 /** Number of axions per core. Generally is set to 1-1 with neurons in core */
-int AXONS_IN_CORE = 8;
+int AXONS_IN_CORE = 256;
 /* Given number of cores in simulation */
-int CORES_IN_SIM = 1;
+int CORES_IN_SIM = 4096;
 
 /// Memory Tuning
 int eventAlloc = 2;
