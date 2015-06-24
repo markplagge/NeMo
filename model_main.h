@@ -115,7 +115,7 @@ const tw_optdef app_opt[]= {
     TWOPT_UINT("wt_min", SYNAPSE_WEIGHT_MIN, "minimum synapse weight"),
     TWOPT_UINT("wt_max", SYNAPSE_WEIGHT_MAX, "maximum synapse weight"),
 	TWOPT_GROUP("Sim Size Params"),
-	TWOPT_UINT("cores", CORE_SIZE, "number of cores in simulation"),
+	TWOPT_UINT("cores", CORES_IN_SIM, "number of cores in simulation"),
     {TWOPT_END()}
 
   };
