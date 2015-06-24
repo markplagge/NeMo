@@ -15,6 +15,10 @@
 
 #define lc 0
 #define co 1
+#define ISIDE(x) ((uint16_t*)&x)[0]
+#define JSIDE(x) ((uint16_t*)&x)[1]
+#define CORE(x) ((uint32_t*)&x)[1]
+#define LOCAL(x) ((uint32_t*)&x)[0]
 
 
 extern int NEURONS_IN_CORE ;
@@ -22,12 +26,15 @@ extern int NEURONS_IN_CORE ;
  *  Number of synapses per core.
  */
 extern int SYNAPSES_IN_CORE;
-
 extern int CORE_SIZE;
+extern int NUM_VP_X;
+extern int NUM_VP_Y;
+extern int VP_PER_PROC;
+int lpsPerPE;
+ 
 
-extern int nlp_per_kp;
-extern int nkp_per_pe;
-
+tw_lpid *myGIDs;
+tw_lpid *gePEMap;
 
 /**
  * @brief CORE_LP_OFFSET - Manages the offset. Calculated based on the size of a core,
@@ -45,7 +52,11 @@ extern int CPE;
  *
  *  @return <#return value description#>
  */
-tw_peid lpToPeMap(tw_peid gid);
+tw_peid lpToPeMap(tw_lpid gid);
+
+_idT peToCoreMap(tw_peid pe);
+
+
 /**
  *  @brief  Setup mapping per PE
  */
@@ -53,7 +64,7 @@ void mappingSetup();
 
 
 /**
- *  @brief  Given a global ID, return a LP.
+ *  @brief  Given a global ID, return an LP.
  *
  *  @param gid <#gid description#>
  *
@@ -83,13 +94,39 @@ long getCoreFromPE(tw_peid gid);
  */
 long getCoreLocalFromGID(tw_lpid gid);
 
-tw_lpid globalID(_idT core, _idT local);
+tw_lpid globalID(_idT core, uint16_t i, uint16_t j);
+tw_lpid getGlobalFromID(_idT core, _idT local);
+	//neurons are stored at at i = 256, j 0-265
+tw_lpid getNeuronGlobal(_idT core, uint16_t neuron);
+	//axons are stored at i = 0, j = 0-256
+tw_lpid getAxonGlobal(_idT core, uint16_t axon);
 
-tw_lpid getNeuronID(_idT core, _idT neuron);
+tw_lpid getSynapseGlobal(_idT core, _idT synapse);
+/**
+ *  @brief  Get synapse from synapse should be called from a synapse - it returns the next logical synapse GID, or aborts if the synpase is at the end of the grid.
+ *
+ *  @param synapse current synaspe
+ *
+ *  @return returns a synapse gid.
+ */
+tw_lpid getSynapseFromSynapse(tw_lpid synapse);
+/**
+ *  @brief  get neuron from synapse gives the GID of the neuron a synapse should send a message to.
+ *
 
-tw_lpid getSynapse(_idT core, _idT i, _idT j);
+ *  @param synapse the synapse
+ *
+ *  @return a neuron's gid
+ */
+tw_lpid getNeuronFromSynapse(tw_lpid synapse);
 
-tw_lpid getSyapseFromSynapse(_idT core, _idT synapse);
-tw_lpid getNeuronFromSynapse(_idT core, _idT synapse);
+tw_lpid getSynapseFromAxon(tw_lpid axon);
+void scatterMap();
+/**
+ *  @brief  Based on the PCS grid mapping idea, this takes the 3-D structure of the TN architecture,  where neurons, synapses, and axons are X & Y, and cores are Z, and maps the proper LP types out.
+ */
+void tn_cube_mapping();
+
+
 
 #endif /* defined(__ROSS_TOP__mapping__) */

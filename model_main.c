@@ -15,7 +15,7 @@ tw_lptype model_lps[] = {{
                              (event_f)neuron_event,
                              (revent_f)neuron_reverse,
                              (final_f)neuron_final,
-                             (map_f)mapping,
+                             (map_f)lpToPeMap,
                              sizeof(neuronState)},
                          {
 
@@ -24,7 +24,7 @@ tw_lptype model_lps[] = {{
                              (event_f)synapse_event,
                              (revent_f)synapse_reverse,
                              (final_f)synapse_final,
-                             (map_f)mapping,
+                             (map_f)lpToPeMap,
                              sizeof(synapseState)},
 
                          {(init_f)axon_init,
@@ -32,12 +32,62 @@ tw_lptype model_lps[] = {{
                           (event_f)axon_event,
                           (revent_f)axon_reverse,
                           (final_f)axon_final,
-                          (map_f)mapping,
+                          (map_f)lpToPeMap,
                           sizeof(axonState)},
 
                          {0}
 
 };
+double compute_average(double *array, int num_elements) {
+	double sum = 0;
+	for(int i = 0; i < num_elements; i ++){
+		sum+= array[i];
+
+	}
+	return sum / num_elements;
+}
+double *create_rand_nums(int num_elements) {
+	double *rand_nums = (double *)malloc(sizeof(double) * num_elements);
+		//assert(rand_nums != NULL);
+	int i;
+	for (i = 0; i < num_elements; i++) {
+		rand_nums[i] = (rand() / (double)RAND_MAX);
+	}
+	return rand_nums;
+}
+int main(int argc, char *argv[]) {
+  //set up core sizes.
+	SYNAPSES_IN_CORE = NEURONS_IN_CORE * AXONS_IN_CORE;
+	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
+	tw_opt_add(app_opt);
+
+	tw_init(&argc, &argv);
+	/** g_tw_nlp set here to CORE_SIZE.
+	 * @todo check accuracy of this
+	 * */
+
+
+	g_tw_events_per_pe = CORE_SIZE * eventAlloc;
+  ///@todo enable custom mapping with these smaller LPs.
+
+	g_tw_mapping = LINEAR;
+	g_tw_lp_types = model_lps;
+
+  ///@todo do we need a custom lookahedad parameter?
+
+		//MPI TESTING
+	scatterMap();
+	createLPs();
+
+
+
+
+	tw_run();
+	tw_end();
+
+	return 0;
+}
+
 
 ///
 /// \details createLPs currently assigns a core's worth of LPs to the PE.
@@ -49,7 +99,7 @@ void createLPs() {
 	int synapses = 0;
 	int axons = 0;
 	int soff = AXONS_IN_CORE + SYNAPSES_IN_CORE;
-	int noff = CORE_SIZE - NEURONS_IN_CORE;
+		//int noff = CORE_SIZE - NEURONS_IN_CORE;
   for (int i = 0; i < g_tw_nlp; i++) {
 	  if(i < AXONS_IN_CORE){
 			  tw_lp_settype(i, &model_lps[2]);
@@ -58,8 +108,6 @@ void createLPs() {
 	  else if (i < soff) {
 			  tw_lp_settype(i, &model_lps[1]);
 		  synapses++;
-
-
 	  }
 	  else {
 			  tw_lp_settype(i, &model_lps[0]);
@@ -67,33 +115,9 @@ void createLPs() {
 
 	  }
   }
-        printf("Created %i axons, %i synapses,  %i neurons", axons, synapses, neurons);
+		//printf("Created %i axons, %i synapses,  %i neurons", axons, synapses, neurons);
 }
 
-int main(int argc, char *argv[]) {
-  //set up core sizes.
-  SYNAPSES_IN_CORE = NEURONS_IN_CORE * AXONS_IN_CORE;
-  CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
-  tw_opt_add(app_opt);
-
-    tw_init(&argc, &argv);
-  /** g_tw_nlp set here to CORE_SIZE.
-   * @todo check accuracy of this
-   * */
-
-
-  g_tw_events_per_pe = CORE_SIZE * eventAlloc;
-  ///@todo enable custom mapping with these smaller LPs.
-
-  g_tw_mapping = LINEAR;
-  g_tw_lp_types = model_lps;
-
-  ///@todo do we need a custom lookahedad parameter?
-  createLPs();
-  tw_run();
-   tw_end();
-  return 0;
-}
 
 
 //neuron gen function helpers
@@ -150,7 +174,7 @@ void neuron_init(neuronState *s, tw_lp *lp)
        s->doLeak = linearLeak;
        s->doLeakReverse = revLinearLeak;
        //destinations. again using
-       int calls;
+       unsigned int calls;
        s->leakRateProb = tw_rand_normal_sd(lp->rng,0,10,&calls);
        s->leakWeightProbSelect =  false;
        s->leakReversalFlag = tw_rand_integer(lp->rng, 0,1);
@@ -159,7 +183,7 @@ void neuron_init(neuronState *s, tw_lp *lp)
        s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM);
        s->dendriteLocal = tw_rand_integer(lp->rng, 0, AXONS_IN_CORE);
 
-       s->dendriteGlobalDest = globalID(s->dendriteCore, s->dendriteLocal);
+       s->dendriteGlobalDest = getAxonGlobal(s->dendriteCore, s->dendriteLocal);
 
     }
 
@@ -191,17 +215,17 @@ void neuron_final(neuronState *s, tw_lp *lp)
 }
 
 //synapse function
-long curSyn = 0;
+
 void synapse_init(synapseState *s, tw_lp *lp)
 {
-  s->destNeuron = getNeuronFromSynapse(getCoreFromGID(lp->gid),curSyn);
+  s->destNeuron = getNeuronFromSynapse(lp->gid);
   s->destSynapse = 0;
-   s->mySynapseNum= curSyn;
-  curSyn++;
+	int16_t local = LOCAL(lp->gid);
+	s->mySynapseNum = JSIDE(local);
+
   //@todo make this a matrix map - still have linear style of mapping!!!!!
-  if(curSyn == SYNAPSES_IN_CORE) {
-    s->destSynapse = getSyapseFromSynapse(getCoreFromGID(lp->gid), curSyn + 1);
-    curSyn++;
+  if(local == SYNAPSES_IN_CORE) {
+    s->destSynapse = getSynapseFromSynapse(lp->gid);
     }
   s->msgSent = 0;
 
@@ -214,7 +238,7 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
   long rc = lp->rng->count;
 
-  if(curSyn < SYNAPSES_IN_CORE){
+  if(s->destNeuron != 0){
       //generate event to send to next synapse
       s->msgSent ++;
       CV->c0  = 1;
@@ -266,9 +290,18 @@ _idT curAxon =0;
 void axon_init(axonState *s, tw_lp *lp)
 {
   s->sendMsgCount = 0;
-  _idT core = getCoreFromGID(lp->gid);
-  s->destSynapse = getSynapse(core,curAxon,0);
-  curAxon ++;
+	s->destSynapse = getSynapseFromAxon(lp->gid);
+
+
+
+
+
+	tw_event *axe = tw_event_new(s->destSynapse, getNextEventTime(lp), lp);
+	Msg_Data *data = (Msg_Data *) tw_event_data(axe);
+	data->eventType = AXON_OUT;
+
+
+		//tw_event_send(axe);
 }
 
 void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)

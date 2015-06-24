@@ -16,6 +16,7 @@
 #include "models/neuron.h"
 #include "models/synapse.h"
 #include "input_simulator.h"
+#include "mapping.h"
 #include <math.h>
 
 #include <stdbool.h>
@@ -24,13 +25,13 @@
 /**
  *  Number of neurons per core.
  */
-int NEURONS_IN_CORE = 256;
+int NEURONS_IN_CORE = 8;
 /** number of synapses per core. Calculated value, needs to be neurons * axons */
 int SYNAPSES_IN_CORE = 0;
 /** Number of axions per core. Generally is set to 1-1 with neurons in core */
-int AXONS_IN_CORE = 256;
-/* Calculated number of cores in simulation */
-int CORES_IN_SIM;
+int AXONS_IN_CORE = 8;
+/* Given number of cores in simulation */
+int CORES_IN_SIM = 1;
 
 /// Memory Tuning
 int eventAlloc = 2;
@@ -43,6 +44,7 @@ unsigned int GEN_FCT = 5;
 unsigned int GEN_OUTBOUND = 0;
 unsigned int GEN_SEL_MODE = 0;
 unsigned int SP_DBG = 0;
+extern tw_lpid* myGIDs;
 
 
 /**  Determines the maximum thresholds for a neuron to fire.
@@ -62,7 +64,7 @@ _voltT RESET_VOLTAGE_MAX = 100;
 _voltT RESET_VOLTAGE_MIN = -100;
 
 _threshT RAND_RANGE_MIN = 1;
-_threshT RAND_RANGE_MAX = _threshT_MAX;
+_threshT RAND_RANGE_MAX = 31;
 
 
 /**
@@ -129,12 +131,7 @@ void axon_init(axonState *s, tw_lp *lp);
 void axon_event(axonState *s, tw_bf *, Msg_Data *M, tw_lp *lp);
 void axon_reverse(axonState *, tw_bf *, Msg_Data *M, tw_lp *);
 void axon_final(axonState *s, tw_lp *lp);
-/**
- * @brief mapping - the initial mapping function, either assigns a simple mapping
- * or uses one of the more complex custom mapping functions.
- * @param gid
- */
-void mapping(tw_lp gid);
+
 
 
 #endif /* defined(__ROSS_TOP__model_main__) */

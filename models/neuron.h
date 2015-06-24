@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include "../assist.h"
-#include "../mapping.h"
+ 
 #include "ross.h"
 #include <stdbool.h>
 
@@ -199,7 +199,7 @@ typedef struct NeuronModel {
 */
 	    //Output locations:
 	_idT dendriteCore; //!< Local core of the remote dendrite
-	_idT dendriteLocal; //!< Local ID of the remote dendrite -- not LPID, but a local axon value (0-i)
+	uint16_t dendriteLocal; //!< Local ID of the remote dendrite -- not LPID, but a local axon value (0-i)
 	tw_lpid dendriteGlobalDest; //!< GID of the axon this neuron talks to. @todo: The dendriteCore and dendriteLocal values might not be needed anymroe.
 
 		//Leak functionality
