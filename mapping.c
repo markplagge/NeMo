@@ -27,6 +27,27 @@ long getCoreLocalFromGID(tw_lpid gid)
 }
 
 
+uint16_t iSize(){
+	return NEURONS_IN_CORE;
+}
+uint16_t jSize(){
+	return SYNAPSES_IN_CORE + 1;
+
+}
+uint16_t  jS(tw_lpid gid){
+	uint32_t lo = LOCAL(gid);
+	return (JSIDE(lo) * jSize());
+}
+uint16_t iS(tw_lpid gid) {
+	uint32_t lo = LOCAL(gid);
+	return ISIDE(lo);
+}
+uint16_t cS(tw_lpid gid) {
+	uint32_t core = CORE(gid);
+	return core * (CORE_SIZE + 1 );
+
+}
+
 tw_lpid globalID(id_t core, uint16_t i, uint16_t j)
 {
 
