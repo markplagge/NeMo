@@ -13,6 +13,7 @@
 #include "ross.h"
 #include "assist.h"
 
+
 #define lc 0
 #define co 1
 #define ISIDE(x) ((uint16_t*)&x)[0]
@@ -21,6 +22,8 @@
 #define LOCAL(x) ((uint32_t*)&x)[0]
 
 #define _gridIDT uint16_t
+
+
 
 extern int NEURONS_IN_CORE ;
 /**
@@ -33,10 +36,16 @@ extern int NUM_VP_X;
 extern int NUM_VP_Y;
 extern int VP_PER_PROC;
 extern unsigned int LPS_PER_PE;
+extern unsigned int LP_PER_KP;
+extern unsigned int nkp_per_pe;
+	//extern tw_lptype model_lps[];
 	//extern unsigned int SIM_SIZE;
-
+extern tw_lptype model_lps[];
 tw_lpid *myGIDs;
 tw_lpid *gePEMap;
+
+tw_lpid lpTypeMapper(tw_lpid gid);
+
 
 /**
  * @brief CORE_LP_OFFSET - Manages the offset. Calculated based on the size of a core,
@@ -126,6 +135,8 @@ tw_lpid getSynapseFromSynapse(tw_lpid synapse);
 tw_lpid getNeuronFromSynapse(tw_lpid synapse);
 
 tw_lpid getSynapseFromAxon(tw_lpid axon);
+
+void nlMap();
 void scatterMap();
 /**
  *  @brief  Based on the PCS grid mapping idea, this takes the 3-D structure of the TN architecture,  where neurons, synapses, and axons are X & Y, and cores are Z, and maps the proper LP types out.
@@ -145,5 +156,6 @@ _gridIDT jSizeOffset();
  */
 _idT combVal(tw_lpid gid);
 
+bool dontSkip(tw_lpid gid);
 
 #endif /* defined(__ROSS_TOP__mapping__) */

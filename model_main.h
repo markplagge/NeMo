@@ -20,16 +20,18 @@
 #include <math.h>
 
 #include <stdbool.h>
-
+extern int n_created ;
+extern int s_created ;
+extern int a_created ;
         // Variable holders for command lne params & external variables
 /**
  *  Number of neurons per core.
  */
-int NEURONS_IN_CORE = 9;
+int NEURONS_IN_CORE = 1;
 /** number of synapses per core. Calculated value, needs to be neurons * axons */
 int SYNAPSES_IN_CORE = 0;
 /** Number of axions per core. Generally is set to 1-1 with neurons in core */
-int AXONS_IN_CORE = 9;
+int AXONS_IN_CORE = 1;
 /* Given number of cores in simulation */
 unsigned int CORES_IN_SIM = 1;
 
@@ -46,10 +48,11 @@ unsigned int GEN_SEL_MODE = 0;
 unsigned int SP_DBG = 0;
 unsigned int LPS_PER_PE;
 unsigned int SIM_SIZE;
+unsigned int LP_PER_KP = 2;
 
 extern tw_lpid* myGIDs;
 
-
+	//tw_lptype model_lps[];
 /**  Determines the maximum thresholds for a neuron to fire.
  */
 _threshT THRESHOLD_MAX = 100;

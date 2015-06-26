@@ -48,8 +48,9 @@ _gridIDT cVal(tw_lpid gid) {
 	return core * (CORE_SIZE + 1 );
 
 }
-
-
+tw_lpid nodeOffset(){
+	return LPS_PER_PE * g_tw_mynode;
+}
 
 tw_lpid globalID(id_t core, uint16_t i, uint16_t j)
 {
@@ -103,8 +104,82 @@ tw_lpid getNeuronFromSynapse(tw_lpid synapse){
 }
 tw_lpid getSynapseFromAxon(tw_lpid axon){
 	_idT local = LOCAL(axon);
-	return globalID(CORE(axon), ISIDE(local), 1);
+	return globalID(CORE(axon), 1, JSIDE(local));
 }
+#undef VERIFY_MAPPING
+#define VERIFY_MAPPING 1
+int n_created = 0;
+int s_created = 0;
+int a_created = 0;
+void nlMap() {
+
+
+}
+void linearMap(){
+	tw_pe   *pe;
+
+	int  nlp_per_kp;
+	int  lpid;
+	int  kpid;
+	int  i;
+	int  j;
+
+		// may end up wasting last KP, but guaranteed each KP has == nLPs
+	nlp_per_kp = (int)ceil((double) g_tw_nlp / (double) g_tw_nkp);
+
+	if(!nlp_per_kp) {
+		tw_error(TW_LOC, "Not enough KPs defined: %d", g_tw_nkp);
+	}
+
+	g_tw_lp_offset = g_tw_mynode * g_tw_nlp;
+
+#if VERIFY_MAPPING
+	printf("NODE %d: nlp %lld, offset %lld\n", g_tw_mynode, g_tw_nlp, g_tw_lp_offset);
+#endif
+
+	for(kpid = 0, lpid = 0, pe = NULL; (pe = tw_pe_next(pe)); ) {
+#if VERIFY_MAPPING
+		printf("\tPE %d\n", pe->id);
+#endif
+
+		for(i = 0; i < nkp_per_pe; i++, kpid++) {
+			tw_kp_onpe(kpid, pe);
+
+#if VERIFY_MAPPING
+			printf("\t\tKP %d", kpid);
+#endif
+
+			for(j = 0; j < nlp_per_kp && lpid < g_tw_nlp; j++, lpid++) {
+				tw_lpid offLPID = lpid+g_tw_lp_offset;
+
+					//tw_lp_onpe(lpid, pe, localToGlobal(g_tw_lp_offset+lpid));
+				tw_lp_onpe(lpid, pe, g_tw_lp_offset+lpid);
+				tw_lp_onkp(g_tw_lp[lpid], g_tw_kp[kpid]);
+
+#if VERIFY_MAPPING
+				if(0 == j % 20) {
+					printf("\n\t\t\t");
+				}
+				printf("%lld ", lpid+g_tw_lp_offset);
+#endif
+			}
+
+#if VERIFY_MAPPING
+			printf("\n");
+#endif
+		}
+	}
+
+	if(!g_tw_lp[g_tw_nlp-1]) {
+		tw_error(TW_LOC, "Not all LPs defined! (g_tw_nlp=%d)", g_tw_nlp);
+	}
+
+	if(g_tw_lp[g_tw_nlp-1]->gid != g_tw_lp_offset + g_tw_nlp - 1) {
+		tw_error(TW_LOC, "LPs not sequentially enumerated!");
+	}
+}
+
+
 /**
  *  @details Since grid mapping works on PCS, here this is grid mapping with neurons.
  *	We have an X,Y,Z setup, where Z is a core. There may be 1 or more cores running
@@ -112,9 +187,135 @@ tw_lpid getSynapseFromAxon(tw_lpid axon){
  */
 void tn_cube_mapping(){
 	uint16_t x , y;
-	tw_lpid lpid, kpid;
-	tw_lpid numElementsPerKP, vpPerProc;
+	tw_lpid lpid = 0, kpid;
+		//tw_lpid numElementsPerKP, vpPerProc;
 	int	numSynPerPE, numNerPerPe, numAxPerPE;
+	int nlp_per_kp;
+	tw_pe* pe;
+	/**
+	 *  @todo add more dynamic KP assignment
+	 */
+
+	nlp_per_kp = (int)ceil((double) g_tw_nlp / (double) g_tw_nkp);
+
+	if (!nlp_per_kp) {
+		tw_error(TW_LOC, "Not enough KPs defined: %d", g_tw_nkp);
+	}
+
+
+	g_tw_lp_offset = nodeOffset();
+
+#if VERIFY_MAPPING
+	printf("NODE %d: nlp %lld, offset %lld\n", g_tw_mynode, g_tw_nlp,
+		   g_tw_lp_offset);
+#endif
+
+	for (kpid = 0, lpid = nodeOffset(), pe = NULL; (pe = tw_pe_next(pe));){
+#if VERIFY_MAPPING
+		printf("\tPE %d\n", pe->id);
+#endif
+
+
+		for(int i = 0; i < nkp_per_pe;i++, kpid++){
+			tw_kp_onpe(kpid, pe);
+#if VERIFY_MAPPING
+			printf("\t\tKP %d", kpid);
+#endif
+
+			for(int j = 0; j < nlp_per_kp && lpid < g_tw_nlp; j ++){
+
+				tw_lpid lpGlobal = lpid;
+				if(!dontSkip(lpid)) {
+					lpGlobal = lpid + 1;
+				}
+					 lpGlobal = localToGlobal(lpGlobal);
+					tw_lp_onpe(lpid, pe, lpGlobal);
+					tw_lp_onkp(g_tw_lp[lpid], g_tw_kp[kpid]);
+#if VERIFY_MAPPING
+					if (0 == j % 20) {
+						printf("\n\t\t\t");
+					}
+				int lvc = LOCAL(g_tw_lp[lpid]->gid);
+					printf("%lld-%i,%i,%i ", lpid + g_tw_lp_offset, CORE(g_tw_lp[lpid]->gid), ISIDE(lvc), JSIDE(lvc));
+#endif
+				
+				lpid ++;
+#if VERIFY_MAPPING
+				if (0 == j % 20) {
+					printf("\n\t\t\t");
+				}
+				printf("%lld ", lpid + g_tw_lp_offset);
+#endif
+			}
+
+		}
+#if VERIFY_MAPPING
+		printf("\n Created \n");
+
+#endif
+
+	}
+	if (!g_tw_lp[g_tw_nlp - 1]) {
+		tw_error(TW_LOC, "Not all LPs defined! (g_tw_nlp=%d)", g_tw_nlp);
+	}
+
+//	for (int i = 0; i < LPS_PER_PE; i ++) {
+//		lpid = localToGlobal(i);
+//		if(dontSkip(lpid)){
+//				//valid LP
+//			kpid = i/LP_PER_KP;
+//			if(kpid >= g_tw_nkp) {
+//				tw_error(TW_LOC, "Attempting to mapping a KPid (%llu) for Global LPid %llu that is beyond g_tw_nkp (%llu)\n",
+//						 kpid, lpid, g_tw_nkp );
+//			}
+//
+//			tw_lp_onpe(i, g_tw_pe[0], lpid);
+//			if(g_tw_kp[kpid] == NULL){
+//				tw_kp_onpe(kpid, g_tw_pe[0]);
+//			}
+//
+//			tw_lp_onkp(tw_getlp(i),g_tw_kp[0]);
+//				//tw_lp_settype(i, &model_lps[lpTypeMapper(tw_getlp(i)->gid)]);
+//			
+//
+//		}
+//
+//	}
+//		//tw_lp_setup_types();
+}
+
+#undef VERIFY_MAPPING
+#define VERIFY_MAPPING 1
+
+
+tw_lpid lpTypeMapper(tw_lpid gid){
+	int neu = 0;
+	int syn = 1;
+	int ax = 2;
+	_idT loc = LOCAL(gid);
+	int b_ax = 0;
+	int e_ax = AXONS_IN_CORE;
+	int b_n  = 1;
+	int e_n  = NEURONS_IN_CORE;
+
+	_gridIDT i = ISIDE(loc);
+	_gridIDT j = JSIDE(loc);
+	if(i == 0){
+		a_created ++;
+		return ax;
+	}
+	else if(i == NEURONS_IN_CORE -1){
+		n_created ++;
+		return neu;
+	}
+	else {
+		s_created ++;
+
+		return syn;
+	}
+
+
+}
 //
 //	uint16_t myPEi, myPEj;
 //	_idT myPECore;
@@ -135,12 +336,13 @@ void tn_cube_mapping(){
 	
 
 
-}
+
+
 bool dontSkip(tw_lpid gid){
 	_idT loc = LOCAL(gid);
 	_idT jside = JSIDE(loc);
 	_idT iside = ISIDE(loc);
-	if(JSIDE(loc) == 0 && ISIDE(loc) == (NEURONS_IN_CORE - 1))
+	if(JSIDE(loc) == 0 && ISIDE(loc) == (NEURONS_IN_CORE ))
 		return false;
 	return true;
 }
@@ -152,8 +354,7 @@ void scatterMap(){
 	tw_lpid *gidArray = NULL;
 
 	gidArray = (tw_lpid*) calloc(sizeof(tw_lpid),SIM_SIZE);
-			//Create mappings:
-
+		//Create mappings:
 			//use modulus and a single loop for this
 	int i;
 	for(i = 0; i < LPS_PER_PE; i ++ ) {
@@ -168,13 +369,13 @@ void scatterMap(){
 	}
 
 
-	printf("\n\n\ntotal lps %i - actual is %i", SIM_SIZE, i);
+	printf("\n\n\ntotal lps %i - actual is %i\n PEs per LP is %i  - g_npe: %i", SIM_SIZE, i, LPS_PER_PE, g_tw_npe);
 	//create GID arrays for each LP:
 
-	myGIDs = (tw_lpid *)malloc(sizeof(tw_lpid)* LPS_PER_PE);
+		//myGIDs = (tw_lpid *)malloc(sizeof(tw_lpid)* LPS_PER_PE);
 		//wait for alloc to happen.
 	MPI_Barrier(MPI_COMM_WORLD);
-	MPI_Scatter(gidArray, LPS_PER_PE, MPI_UINT64_T, myGIDs, LPS_PER_PE, MPI_UINT64_T, 0, MPI_COMM_WORLD);
+		//MPI_Scatter(gidArray, LPS_PER_PE, MPI_UINT64_T, myGIDs, LPS_PER_PE, MPI_UINT64_T, 0, MPI_COMM_WORLD);
 		//now all GIDs have been seeded to the sim.
 
 	int ct = 0;
@@ -189,10 +390,10 @@ void scatterMap(){
 
 		for( i = 0; i < LPS_PER_PE; i ++) {
 
-			_idT loc = LOCAL(myGIDs[i]);
-			tw_peid pe = getPEFromGID(myGIDs[i]);;
+			_idT loc = LOCAL(gidArray[i]);
+			tw_peid pe = getPEFromGID(gidArray[i]);;
 
-			printf("\t%i\t%i\t%i\t%llu\n",CORE(myGIDs[i]), ISIDE(loc), JSIDE(loc),globalToLocalID(myGIDs[i]));
+			printf("\t%i\t%i\t%i\t%llu\n",CORE(gidArray[i]), ISIDE(loc), JSIDE(loc),globalToLocalID(gidArray[i]));
 			if(pe != g_tw_mynode)
 				printf("ERROR - calced PE %i is not my PE %i \n", pe, g_tw_mynode);
 
@@ -228,6 +429,7 @@ tw_lp* globalToLP(tw_lpid gid){
 
 	return g_tw_lp[globalToLocalID(gid)];
 }
+
 tw_lpid globalToLocalID(tw_lpid gid) {
 	_idT cc = combVal(gid);
 	tw_lpid peoff = g_tw_mynode *  LPS_PER_PE;
@@ -244,8 +446,12 @@ _idT combVal(tw_lpid gid){
 }
 
 tw_lpid localToGlobal(tw_lpid local){
-	_gridIDT localJ = local / jSizeOffset();
-	_gridIDT localI = local % iSizeOffset();
-	_idT core = (localI * jSizeOffset() ) / CORE_SIZE;
+
+	local = local + nodeOffset();
+
+	_gridIDT localJ = local % jSizeOffset();
+	_gridIDT localI = local / iSizeOffset();
+	_idT core = (localJ * jSizeOffset() ) / CORE_SIZE;
+		//localJ = (localJ * jSizeOffset()) % CORE_SIZE;
 	return globalID(core,localI, localJ);
 }

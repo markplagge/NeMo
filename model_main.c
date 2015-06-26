@@ -8,7 +8,7 @@
 
 #include "model_main.h"
 
-tw_lptype model_lps[] = {{
+ tw_lptype model_lps[] = {{
 
                              (init_f)neuron_init,
                              (pre_run_f)pre_run,
@@ -35,6 +35,14 @@ tw_lptype model_lps[] = {{
                           (map_f)getPEFromGID,
                           sizeof(axonState)},
 
+	 {(init_f)axon_init,
+		 (pre_run_f)NULL,
+		 (event_f)NULL,
+		 (revent_f)NULL,
+		 (final_f)NULL,
+		 (map_f)NULL,
+		 sizeof(short)},
+
                          {0}
 
 };
@@ -60,32 +68,43 @@ int main(int argc, char *argv[]) {
 	SYNAPSES_IN_CORE = (NEURONS_IN_CORE * AXONS_IN_CORE);
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE  + AXONS_IN_CORE;
 	SIM_SIZE = CORE_SIZE * CORES_IN_SIM;
-	g_tw_nlp = SIM_SIZE;
-	LPS_PER_PE = SIM_SIZE / g_tw_npe;
+
+
+
 	tw_opt_add(app_opt);
 
 	tw_init(&argc, &argv);
 	/** g_tw_nlp set here to CORE_SIZE.
 	 * @todo check accuracy of this
 	 * */
-
+	LPS_PER_PE = SIM_SIZE / tw_nnodes();
+	LP_PER_KP = LPS_PER_PE / g_tw_nkp;
 
 	g_tw_events_per_pe = CORE_SIZE * eventAlloc;
   ///@todo enable custom mapping with these smaller LPs.
 
 	g_tw_mapping = LINEAR;
 	g_tw_lp_types = model_lps;
+	g_tw_lp_typemap = &lpTypeMapper;
+	g_tw_custom_initial_mapping = &nlMap;
+	g_tw_custom_lp_global_to_local_map = &globalToLP;
+
+
+	g_tw_nlp = SIM_SIZE - 1;
+
+	tw_define_lps(LPS_PER_PE, sizeof(Msg_Data), 0);
+	tw_lp_setup_types();
 
   ///@todo do we need a custom lookahedad parameter?
 
 		//MPI TESTING
 
-	scatterMap();
-	createLPs();
+		//scatterMap();
+		//createLPs();
 
 
 
-
+	printf("\nCreated %i ax, %i ne, %i se", a_created, n_created, s_created);
 	tw_run();
 	tw_end();
 
@@ -190,6 +209,7 @@ void neuron_init(neuronState *s, tw_lp *lp)
        s->dendriteGlobalDest = getAxonGlobal(s->dendriteCore, s->dendriteLocal);
 
     }
+	printf("Neuron %i checking in with GID %llu and dest %llu \n",s->myLocalID, lp->gid, s->dendriteGlobalDest);
 
 }
 
@@ -225,13 +245,14 @@ void synapse_init(synapseState *s, tw_lp *lp)
   s->destNeuron = getNeuronFromSynapse(lp->gid);
   s->destSynapse = 0;
 	int16_t local = LOCAL(lp->gid);
-	s->mySynapseNum = JSIDE(local);
+	s->mySynapseNum = ISIDE(local);
 
   //@todo make this a matrix map - still have linear style of mapping!!!!!
   if(local == SYNAPSES_IN_CORE) {
     s->destSynapse = getSynapseFromSynapse(lp->gid);
     }
   s->msgSent = 0;
+	printf("Synapse %i,%i checking in with GID %llu and n-dest %llu, s-dest %llu \n",s->mySynapseNum, JSIDE(local),lp->gid, s->destNeuron,s->destSynapse);
 
 
 
@@ -295,7 +316,9 @@ void axon_init(axonState *s, tw_lp *lp)
 {
   s->sendMsgCount = 0;
 	s->destSynapse = getSynapseFromAxon(lp->gid);
+	_idT l = LOCAL(lp->gid);
 
+		//tw_printf(TW_LOC, "Axon %i sending message to GID %llu", JSIDE(l), s->destSynapse );
 
 
 
@@ -304,7 +327,7 @@ void axon_init(axonState *s, tw_lp *lp)
 	Msg_Data *data = (Msg_Data *) tw_event_data(axe);
 	data->eventType = AXON_OUT;
 
-
+	printf("Axon %i checking in with gid %llu and dest synapse %llu\n ", JSIDE(l), lp->gid, s->destSynapse);
 		//tw_event_send(axe);
 }
 

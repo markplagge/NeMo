@@ -15,7 +15,7 @@
 #include "ross.h"
 
 /*Type definitions for the nuron simulation */
-
+#define VERIFY_MAPPING 1
 #define _idT uint32_t //!<ID type - local id type for bit shifts and ID cases.
 #define _voltT int_fast32_t //!<Voltage data type (membrane potential)
 #define _weightT int_fast32_t //!<Weight/probability type
@@ -97,6 +97,9 @@ extern tw_stime BIG_TICK_ERR; //!< Tick error - tw_stime can be this much under 
 extern int NUM_VP_X;
 extern int NUM_VP_Y;
 extern unsigned int LPS_PER_PE;
+extern unsigned int SIM_SIZE;
+extern unsigned int LP_PER_KP;
+
 /*@}*/
 
 
