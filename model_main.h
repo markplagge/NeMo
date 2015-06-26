@@ -31,7 +31,7 @@ int SYNAPSES_IN_CORE = 0;
 /** Number of axions per core. Generally is set to 1-1 with neurons in core */
 int AXONS_IN_CORE = 9;
 /* Given number of cores in simulation */
-unsigned int CORES_IN_SIM = 2;
+unsigned int CORES_IN_SIM = 1;
 
 /// Memory Tuning
 int eventAlloc = 2;
@@ -44,6 +44,9 @@ unsigned int GEN_FCT = 5;
 unsigned int GEN_OUTBOUND = 0;
 unsigned int GEN_SEL_MODE = 0;
 unsigned int SP_DBG = 0;
+unsigned int LPS_PER_PE;
+unsigned int SIM_SIZE;
+
 extern tw_lpid* myGIDs;
 
 

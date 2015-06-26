@@ -14,7 +14,7 @@
 #include <stdbool.h>
 #include "ross.h"
 
-/***Type definitions for the nuron simulation */
+/*Type definitions for the nuron simulation */
 
 #define _idT uint32_t //!<ID type - local id type for bit shifts and ID cases.
 #define _voltT int_fast32_t //!<Voltage data type (membrane potential)
@@ -29,6 +29,10 @@
  *	coreIDs and localIDs. It must be half the bit size of tw_lpid. 
  */
 #define _regIDT uint32_t
+	/** _gidIDT is the other half of the local id - since each big local id
+	 *	is composed of a i and a j side, this holds the two values. */
+
+#define _gridIDT uint16_t
 
 /* Global Macros */
 
@@ -92,6 +96,7 @@ extern tw_stime BIG_TICK_ERR; //!< Tick error - tw_stime can be this much under 
 /** @{ /name Mapping */
 extern int NUM_VP_X;
 extern int NUM_VP_Y;
+extern unsigned int LPS_PER_PE;
 /*@}*/
 
 

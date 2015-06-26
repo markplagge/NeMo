@@ -27,26 +27,29 @@ long getCoreLocalFromGID(tw_lpid gid)
 }
 
 
-uint16_t iSize(){
+_gridIDT iSizeOffset(){
 	return NEURONS_IN_CORE;
 }
-uint16_t jSize(){
-	return SYNAPSES_IN_CORE + 1;
+_gridIDT jSizeOffset(){
+	return AXONS_IN_CORE;
 
 }
-uint16_t  jS(tw_lpid gid){
+
+_gridIDT  jVal(tw_lpid gid){
 	uint32_t lo = LOCAL(gid);
-	return (JSIDE(lo) * jSize());
+	return (JSIDE(lo)) * jSizeOffset();
 }
-uint16_t iS(tw_lpid gid) {
+_gridIDT iVal(tw_lpid gid) {
 	uint32_t lo = LOCAL(gid);
-	return ISIDE(lo);
+	return (ISIDE(lo));
 }
-uint16_t cS(tw_lpid gid) {
+_gridIDT cVal(tw_lpid gid) {
 	uint32_t core = CORE(gid);
 	return core * (CORE_SIZE + 1 );
 
 }
+
+
 
 tw_lpid globalID(id_t core, uint16_t i, uint16_t j)
 {
@@ -64,7 +67,7 @@ tw_lpid globalID(id_t core, uint16_t i, uint16_t j)
 
 
 tw_lpid getGlobalFromID(_idT core, _idT local){
-	return  0; //globalID(core, LCID(local), LCID(local));
+	return globalID(core, ISIDE(local), JSIDE(local));
 }//neurons are stored at i = 256, j 1-256;
 tw_lpid getNeuronGlobal(_idT core, uint16_t neuron)
 {
@@ -84,7 +87,7 @@ tw_lpid getAxonGlobal(_idT core, uint16_t axon)
  */
 tw_lpid getSynapseFromSynapse(tw_lpid synapse){
 	_idT local = LOCAL(synapse);
-	uint16_t j = JSIDE(local);
+	_gridIDT j = JSIDE(local);
 	j++;
 	if(j > NEURONS_IN_CORE)
 		abort();
@@ -93,7 +96,7 @@ tw_lpid getSynapseFromSynapse(tw_lpid synapse){
 }
 tw_lpid getNeuronFromSynapse(tw_lpid synapse){
 	_idT local = LOCAL(synapse);
-	uint16_t j = JSIDE(local);
+	_gridIDT j = JSIDE(local);
 
 	return globalID(CORE(synapse), AXONS_IN_CORE, j);
 
@@ -133,78 +136,116 @@ void tn_cube_mapping(){
 
 
 }
+bool dontSkip(tw_lpid gid){
+	_idT loc = LOCAL(gid);
+	_idT jside = JSIDE(loc);
+	_idT iside = ISIDE(loc);
+	if(JSIDE(loc) == 0 && ISIDE(loc) == (NEURONS_IN_CORE - 1))
+		return false;
+	return true;
+}
 void scatterMap(){
-	int simSize = CORE_SIZE * CORES_IN_SIM;
-	int LPsPerPE = simSize / tw_nnodes();
+
+		//int LPsPerPE = SIM_SIZE / tw_nnodes();
 
 		//Create the 1-D table
 	tw_lpid *gidArray = NULL;
-	tw_lpid *gePEMap = (tw_lpid*) calloc(sizeof(tw_lpid), tw_nnodes());
 
-	if(g_tw_mynode == 0) {
-		gidArray = (tw_lpid*) malloc(sizeof(tw_lpid)* simSize);
+	gidArray = (tw_lpid*) calloc(sizeof(tw_lpid),SIM_SIZE);
 			//Create mappings:
-		uint16_t i = AXONS_IN_CORE;
-		uint16_t j = NEURONS_IN_CORE;
-		uint32_t c = CORES_IN_SIM;
-		int actual = 0;
-		for (uint32_t z = 0; z < c; z ++) {
-			for (uint16_t x = 0; x <= j; x ++) {
-					//x and j are horizontal.
-				for(uint16_t y = 0; y <= i; y ++){
-					if(y > 0 || x != NEURONS_IN_CORE)
-						{
-						gidArray[actual] = globalID(z, y, x);
-						actual ++;
-						}
-				}
-			}
-		}
 
+			//use modulus and a single loop for this
+	int i;
+	for(i = 0; i < LPS_PER_PE; i ++ ) {
+
+		tw_lpid id = localToGlobal(i);
+		if(dontSkip(id)){
+			gidArray[i] = id;
+		}
+		else{
+			printf("\nskipped\n");
+		}
 	}
-	printf("\n\n\ntotal lps %i", simSize);
+
+
+	printf("\n\n\ntotal lps %i - actual is %i", SIM_SIZE, i);
 	//create GID arrays for each LP:
 
-	myGIDs = (tw_lpid *)malloc(sizeof(tw_lpid)* LPsPerPE);
+	myGIDs = (tw_lpid *)malloc(sizeof(tw_lpid)* LPS_PER_PE);
 		//wait for alloc to happen.
 	MPI_Barrier(MPI_COMM_WORLD);
-	MPI_Scatter(gidArray, LPsPerPE, MPI_UINT64_T, myGIDs, LPsPerPE, MPI_UINT64_T, 0, MPI_COMM_WORLD);
+	MPI_Scatter(gidArray, LPS_PER_PE, MPI_UINT64_T, myGIDs, LPS_PER_PE, MPI_UINT64_T, 0, MPI_COMM_WORLD);
 		//now all GIDs have been seeded to the sim.
 
 	int ct = 0;
+
 	while (ct <= tw_nnodes() ){
 
 		MPI_Barrier(MPI_COMM_WORLD);
-	if(g_tw_mynode == ct && simSize < 1024) {
-		printf("LPs/PE %i", LPsPerPE);
-		printf("PEID #%li HAS \n CORE\ti\tj\n",g_tw_mynode);
+	if(g_tw_mynode == ct && SIM_SIZE < 1024) {
+		printf("LPs/PE %i", LPS_PER_PE);
+		printf("PEID #%li HAS \n CORE\ti\tj\tlocal\n",g_tw_mynode);
 		int i;
 
-		for( i = 0; i < LPsPerPE; i ++) {
-			int32_t loc = LOCAL(myGIDs[i]);
-			printf("%i\t%i\t%i\n",CORE(myGIDs[i]), ISIDE(loc), JSIDE(loc));
+		for( i = 0; i < LPS_PER_PE; i ++) {
+
+			_idT loc = LOCAL(myGIDs[i]);
+			tw_peid pe = getPEFromGID(myGIDs[i]);;
+
+			printf("\t%i\t%i\t%i\t%llu\n",CORE(myGIDs[i]), ISIDE(loc), JSIDE(loc),globalToLocalID(myGIDs[i]));
+			if(pe != g_tw_mynode)
+				printf("ERROR - calced PE %i is not my PE %i \n", pe, g_tw_mynode);
+
+
 		}
-		for( i = 0; i < LPsPerPE; i ++)
-			printf("%llu\n", myGIDs[i]);
-		printf("for a total of %i elements\n\n", i);
+			printf("for a total of %i elements\n\n", i);
 
 	}
 
 		ct++;
 	}
+
+
 	if(g_tw_mynode == 0){ //free the memory after doing things
 		free(gidArray);
 	}
 
+
 }
 
 
-tw_peid lpToPeMap(tw_lpid gid) {
+tw_peid getPEFromGID(tw_lpid gid) {
 		//Given a gid return a PE.
-	id_t core = CORE(gid);
-	id_t loc = LOCAL(gid);
-	uint16_t i = ISIDE(loc);
-	uint16_t j = JSIDE(loc);
+	_idT cc = combVal(gid); ///@todo why does this go to one after dividing?
+	_idT res = cc / LPS_PER_PE;
+
+	return (tw_peid)res;
 		//i and j are limited by the number of axons and neurons.
 	
+}
+
+tw_lp* globalToLP(tw_lpid gid){
+
+	return g_tw_lp[globalToLocalID(gid)];
+}
+tw_lpid globalToLocalID(tw_lpid gid) {
+	_idT cc = combVal(gid);
+	tw_lpid peoff = g_tw_mynode *  LPS_PER_PE;
+	return cc - peoff;
+
+
+}
+_idT combVal(tw_lpid gid){
+	_idT i = iVal(gid);
+	_idT c = cVal(gid);
+	_idT j = jVal(gid);
+
+	return i   + c + j;
+}
+
+tw_lpid localToGlobal(tw_lpid local){
+	_gridIDT localJ = local / jSizeOffset();
+	_gridIDT localI = local % iSizeOffset();
+	_idT core = (localI * jSizeOffset() ) / CORE_SIZE;
+	return globalID(core,localI, localJ);
 }

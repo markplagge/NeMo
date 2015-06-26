@@ -15,7 +15,7 @@ tw_lptype model_lps[] = {{
                              (event_f)neuron_event,
                              (revent_f)neuron_reverse,
                              (final_f)neuron_final,
-                             (map_f)lpToPeMap,
+                             (map_f)getPEFromGID,
                              sizeof(neuronState)},
                          {
 
@@ -24,7 +24,7 @@ tw_lptype model_lps[] = {{
                              (event_f)synapse_event,
                              (revent_f)synapse_reverse,
                              (final_f)synapse_final,
-                             (map_f)lpToPeMap,
+                             (map_f)getPEFromGID,
                              sizeof(synapseState)},
 
                          {(init_f)axon_init,
@@ -32,7 +32,7 @@ tw_lptype model_lps[] = {{
                           (event_f)axon_event,
                           (revent_f)axon_reverse,
                           (final_f)axon_final,
-                          (map_f)lpToPeMap,
+                          (map_f)getPEFromGID,
                           sizeof(axonState)},
 
                          {0}
@@ -57,8 +57,11 @@ double *create_rand_nums(int num_elements) {
 }
 int main(int argc, char *argv[]) {
   //set up core sizes.
-	SYNAPSES_IN_CORE = NEURONS_IN_CORE * AXONS_IN_CORE;
-	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
+	SYNAPSES_IN_CORE = (NEURONS_IN_CORE * AXONS_IN_CORE);
+	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE  + AXONS_IN_CORE;
+	SIM_SIZE = CORE_SIZE * CORES_IN_SIM;
+	g_tw_nlp = SIM_SIZE;
+	LPS_PER_PE = SIM_SIZE / g_tw_npe;
 	tw_opt_add(app_opt);
 
 	tw_init(&argc, &argv);
@@ -76,6 +79,7 @@ int main(int argc, char *argv[]) {
   ///@todo do we need a custom lookahedad parameter?
 
 		//MPI TESTING
+
 	scatterMap();
 	createLPs();
 

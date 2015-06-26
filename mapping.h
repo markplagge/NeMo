@@ -20,6 +20,7 @@
 #define CORE(x) ((uint32_t*)&x)[1]
 #define LOCAL(x) ((uint32_t*)&x)[0]
 
+#define _gridIDT uint16_t
 
 extern int NEURONS_IN_CORE ;
 /**
@@ -27,11 +28,12 @@ extern int NEURONS_IN_CORE ;
  */
 extern int SYNAPSES_IN_CORE;
 extern int CORE_SIZE;
+extern unsigned int SIM_SIZE;
 extern int NUM_VP_X;
 extern int NUM_VP_Y;
 extern int VP_PER_PROC;
-int lpsPerPE;
- 
+extern unsigned int LPS_PER_PE;
+	//extern unsigned int SIM_SIZE;
 
 tw_lpid *myGIDs;
 tw_lpid *gePEMap;
@@ -52,7 +54,8 @@ extern int CPE;
  *
  *  @return <#return value description#>
  */
-tw_peid lpToPeMap(tw_lpid gid);
+tw_peid getPEFromGID(tw_lpid gid);
+
 
 _idT peToCoreMap(tw_peid pe);
 
@@ -62,7 +65,7 @@ _idT peToCoreMap(tw_peid pe);
  */
 void mappingSetup();
 
-
+tw_lpid localToGlobal(tw_lpid local);
 /**
  *  @brief  Given a global ID, return an LP.
  *
@@ -70,7 +73,9 @@ void mappingSetup();
  *
  *  @return <#return value description#>
  */
-tw_lp * globalToLocal(tw_lpid gid);
+tw_lp * globalToLP(tw_lpid gid);
+
+tw_lpid globalToLocalID(tw_lpid gid);
 
 /**
  * @brief getCoreFromGID returns the coreID when given an LP's globalID.
@@ -127,6 +132,18 @@ void scatterMap();
  */
 void tn_cube_mapping();
 
+
+_gridIDT iSizeOffset();
+_gridIDT jSizeOffset();
+
+/**
+ *  @brief  returns the decimal sum of the i,j, and core values from a gid.
+ *
+ *  @param gid <#gid description#>
+ *
+ *  @return <#return value description#>
+ */
+_idT combVal(tw_lpid gid);
 
 
 #endif /* defined(__ROSS_TOP__mapping__) */
