@@ -12,18 +12,25 @@
 
 long getCoreFromGID(tw_lpid gid)
 {
+	if(tnMapping == CUST_LINEAR) {
 	return CORE(gid);
+	}
+	else if (tnMapping == LLINEAR)
+		return gid / CORE_SIZE;
+	return 0;
 
-}
-long getCoreFromPE(tw_peid gid)
-{
-  return 0;
 }
 
 
 long getCoreLocalFromGID(tw_lpid gid)
 {
-	return LOCAL(gid);
+	if(tnMapping == CUST_LINEAR) {
+		return LOCAL(gid);
+	}
+	else{
+		tw_lpid off = lCoreOffset(gid);
+		return gid - off;
+	}
 }
 
 
@@ -46,6 +53,21 @@ _gridIDT iVal(tw_lpid gid) {
 _gridIDT cVal(tw_lpid gid) {
 	uint32_t core = CORE(gid);
 	return core * (CORE_SIZE + 1 );
+
+}
+
+tw_lpid lGetCoreFromGID(tw_lpid gid){
+	return gid/CORE_SIZE;
+}
+/**
+ *  @brief  Linear mapping core gid offset
+ *
+ *  @param gid current GID
+ *
+ *  @return returns the number of lps before this core.
+ */
+tw_lpid lCoreOffset(tw_lpid gid){
+	return lGetCoreFromGID(gid) * CORE_SIZE;
 
 }
 tw_lpid nodeOffset(){
@@ -286,6 +308,64 @@ void tn_cube_mapping(){
 
 #undef VERIFY_MAPPING
 #define VERIFY_MAPPING 1
+
+tw_lpid tn_linear_map(tw_lpid gid) {
+	printf("\n\n GID IS %i", gid);
+	gid -= lCoreOffset(gid);
+	if(gid <  AXONS_IN_CORE){
+		return AXON;
+	}
+	else{
+		gid -= AXONS_IN_CORE;
+		if (gid < SYNAPSES_IN_CORE){
+			return SYNAPSE;
+		}
+
+	}
+	return NEURON;
+}
+
+
+tw_peid lGidToPE(tw_lpid gid){
+	return (tw_peid) gid / g_tw_nlp;
+
+}
+tw_lpid lGetSynFromAxon(tw_lpid axeGID){
+	tw_lpid synAt = lCoreOffset(axeGID) + CORE_SIZE;
+	synAt -= NEURONS_IN_CORE + SYNAPSES_IN_CORE;
+	tw_lpid adj = axeGID % AXONS_IN_CORE;
+
+	return synAt + (AXONS_IN_CORE * adj);
+		//return AXONS_IN_CORE + (axeGID * AXONS_IN_CORE);
+}
+
+tw_lpid lGetNextSynFromSyn(tw_lpid synGID){
+	tw_lpid nextSyn = synGID + 1;
+	if(nextSyn % AXONS_IN_CORE)
+		return nextSyn;
+	return 0;
+}
+tw_lpid lGetNeuronFromSyn(tw_lpid synGID){
+	tw_lpid neuAt =lCoreOffset(synGID) + CORE_SIZE;
+	neuAt -= NEURONS_IN_CORE;
+	tw_lpid adj = (synGID - lCoreOffset(synGID)) / NEURONS_IN_CORE;
+	neuAt += (adj - 1) * 1;
+	return neuAt;
+}
+tw_lpid lGetAxonFromNeu(_idT core, _idT axeNum){
+	tw_lpid coreOff = core * CORE_SIZE;
+	return axeNum + coreOff;
+}
+
+tw_lpid lGetSynNumLocal(tw_lpid gid){
+	return (gid - lCoreOffset(gid) - AXONS_IN_CORE);
+}
+tw_lpid lGetAxeNumLocal(tw_lpid gid){
+	return (gid - lCoreOffset(gid));
+}
+tw_lpid lgetNeuNumLocal(tw_lpid gid){
+	return (gid - lCoreOffset(gid));
+}
 
 
 tw_lpid lpTypeMapper(tw_lpid gid){

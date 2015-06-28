@@ -27,11 +27,11 @@ extern int a_created ;
 /**
  *  Number of neurons per core.
  */
-int NEURONS_IN_CORE = 1;
+int NEURONS_IN_CORE = 256;
 /** number of synapses per core. Calculated value, needs to be neurons * axons */
 int SYNAPSES_IN_CORE = 0;
 /** Number of axions per core. Generally is set to 1-1 with neurons in core */
-int AXONS_IN_CORE = 1;
+int AXONS_IN_CORE = 256;
 /* Given number of cores in simulation */
 unsigned int CORES_IN_SIM = 1;
 
@@ -52,6 +52,8 @@ unsigned int LP_PER_KP = 2;
 
 extern tw_lpid* myGIDs;
 
+/* Mapping values */
+mapTypes tnMapping;
 	//tw_lptype model_lps[];
 /**  Determines the maximum thresholds for a neuron to fire.
  */

@@ -16,6 +16,15 @@
 
 /*Type definitions for the nuron simulation */
 #define VERIFY_MAPPING 1
+
+/** Mapping def */
+typedef enum CustomMapTypes{
+	LLINEAR,
+	SCATTER,
+	CUST_LINEAR
+} mapTypes;
+extern mapTypes tnMapping;
+
 #define _idT uint32_t //!<ID type - local id type for bit shifts and ID cases.
 #define _voltT int_fast32_t //!<Voltage data type (membrane potential)
 #define _weightT int_fast32_t //!<Weight/probability type
@@ -68,6 +77,12 @@ enum evtType {
 	NEURON_HEARTBEAT, //!< Neuron heartbeat messages - for big clock syncronization.
 	GEN_HEARTBEAT //!< Signal generator messages -- used to simulate input for benchmarking.
 };
+enum lpTypeVals {
+	AXON = 2,
+	SYNAPSE = 1,
+	NEURON = 0
+};
+
 /* Message structures */
 
 /**

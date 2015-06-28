@@ -34,15 +34,6 @@
                           (final_f)axon_final,
                           (map_f)getPEFromGID,
                           sizeof(axonState)},
-
-	 {(init_f)axon_init,
-		 (pre_run_f)NULL,
-		 (event_f)NULL,
-		 (revent_f)NULL,
-		 (final_f)NULL,
-		 (map_f)NULL,
-		 sizeof(short)},
-
                          {0}
 
 };
@@ -68,7 +59,7 @@ int main(int argc, char *argv[]) {
 	SYNAPSES_IN_CORE = (NEURONS_IN_CORE * AXONS_IN_CORE);
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE  + AXONS_IN_CORE;
 	SIM_SIZE = CORE_SIZE * CORES_IN_SIM;
-
+	tnMapping = LLINEAR;
 
 
 	tw_opt_add(app_opt);
@@ -83,11 +74,21 @@ int main(int argc, char *argv[]) {
 	g_tw_events_per_pe = CORE_SIZE * eventAlloc;
   ///@todo enable custom mapping with these smaller LPs.
 
+
+	if(tnMapping == LLINEAR){
 	g_tw_mapping = LINEAR;
 	g_tw_lp_types = model_lps;
-	g_tw_lp_typemap = &lpTypeMapper;
-	g_tw_custom_initial_mapping = &nlMap;
-	g_tw_custom_lp_global_to_local_map = &globalToLP;
+	g_tw_lp_typemap = &tn_linear_map;
+			//g_tw_custom_initial_mapping = &nlMap;
+			//g_tw_custom_lp_global_to_local_map = &globalToLP;
+	}
+	else if (tnMapping == CUST_LINEAR){
+		g_tw_mapping = LINEAR;
+		g_tw_lp_types = model_lps;
+		g_tw_lp_typemap = &lpTypeMapper;
+		g_tw_custom_initial_mapping = &nlMap;
+		g_tw_custom_lp_global_to_local_map = &globalToLP;
+	}
 
 
 	g_tw_nlp = SIM_SIZE - 1;
@@ -150,8 +151,15 @@ void createLPs() {
 void neuron_init(neuronState *s, tw_lp *lp)
 {
   memset(s,0,sizeof(neuronState));
-  s->myCoreID = getCoreFromGID(lp->id);
-  s->myLocalID = getCoreLocalFromGID(lp->id);
+	if(tnMapping == LLINEAR){
+		s->myCoreID = getCoreFromGID(lp->gid);
+		s->myLocalID = lgetNeuNumLocal(lp->gid);
+	}
+	else{
+	s->myCoreID = getCoreFromGID(lp->gid);
+
+	s->myLocalID = getCoreLocalFromGID(lp->gid);
+	}
 
   if(GEN_ON){ //probabilistic generated mapping
        s->threshold = tw_rand_integer(lp->rng,THRESHOLD_MIN, THRESHOLD_MAX);
@@ -203,10 +211,15 @@ void neuron_init(neuronState *s, tw_lp *lp)
        s->leakReversalFlag = tw_rand_integer(lp->rng, 0,1);
 
        //randomized output dendrites:
-       s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM);
-       s->dendriteLocal = tw_rand_integer(lp->rng, 0, AXONS_IN_CORE);
+       s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
+       s->dendriteLocal = tw_rand_integer(lp->rng, 0, AXONS_IN_CORE - 1);
 
+	  if(tnMapping == LLINEAR) {
+		  s->dendriteGlobalDest = lGetAxonFromNeu(s->dendriteCore, s->dendriteLocal);
+	  }
+	  else {
        s->dendriteGlobalDest = getAxonGlobal(s->dendriteCore, s->dendriteLocal);
+	  }
 
     }
 	printf("Neuron %i checking in with GID %llu and dest %llu \n",s->myLocalID, lp->gid, s->dendriteGlobalDest);
@@ -221,6 +234,7 @@ void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID)
 
 void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
+		//printf("Neuron recvd msg\n");
   neuronReceiveMessage(s,tw_now(lp),M,lp);
 
 }
@@ -229,6 +243,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 
 void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp)
 {
+		printf("neuron reverse \n");
   neuornReverseState(s,CV, MCV, lp);
 }
 
@@ -242,17 +257,30 @@ void neuron_final(neuronState *s, tw_lp *lp)
 
 void synapse_init(synapseState *s, tw_lp *lp)
 {
-  s->destNeuron = getNeuronFromSynapse(lp->gid);
-  s->destSynapse = 0;
+	if(tnMapping == LLINEAR){
+		s->destNeuron = lGetNeuronFromSyn(lp->gid);
+		s->destSynapse =0;
+		s->destSynapse = lGetNextSynFromSyn(lp->gid);
+		s->mySynapseNum = lGetSynNumLocal(lp->gid);
+
+	}
+	/**
+	 *  @todo Fix this - there are some logic errors here.
+	 */
+	else{
+		s->destNeuron = getNeuronFromSynapse(lp->gid);
+		s->destSynapse = 0;
 	int16_t local = LOCAL(lp->gid);
-	s->mySynapseNum = ISIDE(local);
+		s->mySynapseNum = ISIDE(local);
 
   //@todo make this a matrix map - still have linear style of mapping!!!!!
-  if(local == SYNAPSES_IN_CORE) {
+  if(ISIDE(local) == NEURONS_IN_CORE) {
     s->destSynapse = getSynapseFromSynapse(lp->gid);
     }
+	}
+
   s->msgSent = 0;
-	printf("Synapse %i,%i checking in with GID %llu and n-dest %llu, s-dest %llu \n",s->mySynapseNum, JSIDE(local),lp->gid, s->destNeuron,s->destSynapse);
+	printf("Synapse %i,%i checking in with GID %llu and n-dest %llu, s-dest %llu \n",s->mySynapseNum, s->mySynapseNum,lp->gid, s->destNeuron,s->destSynapse);
 
 
 
@@ -262,7 +290,7 @@ void synapse_init(synapseState *s, tw_lp *lp)
 void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
   long rc = lp->rng->count;
-
+		//printf("Synapse rcvd msg\n");
   if(s->destNeuron != 0){
       //generate event to send to next synapse
       s->msgSent ++;
@@ -294,6 +322,7 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 
 void synapse_reverse(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
+	printf("Synape reverse \n");
   long count = M->rndCallCount;
   while (count--) {
       tw_rand_reverse_unif(lp->rng);
@@ -315,6 +344,10 @@ _idT curAxon =0;
 void axon_init(axonState *s, tw_lp *lp)
 {
   s->sendMsgCount = 0;
+	if(tnMapping == LLINEAR){
+		s->destSynapse = lGetSynFromAxon(lp->gid);
+	}
+	else{
 	s->destSynapse = getSynapseFromAxon(lp->gid);
 	_idT l = LOCAL(lp->gid);
 
@@ -322,13 +355,14 @@ void axon_init(axonState *s, tw_lp *lp)
 
 
 
+	printf("Axon %i checking in with gid %llu and dest synapse %llu\n ", JSIDE(l), lp->gid, s->destSynapse);
 
-	tw_event *axe = tw_event_new(s->destSynapse, getNextEventTime(lp), lp);
+	}
+	tw_event *axe = tw_event_new(lp->gid, getNextEventTime(lp), lp);
 	Msg_Data *data = (Msg_Data *) tw_event_data(axe);
 	data->eventType = AXON_OUT;
-
-	printf("Axon %i checking in with gid %llu and dest synapse %llu\n ", JSIDE(l), lp->gid, s->destSynapse);
-		//tw_event_send(axe);
+	tw_event_send(axe);
+	printf("Axon %i checking in with with dest synapse %llu\n", lp->gid, s->destSynapse);
 }
 
 void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
@@ -347,6 +381,7 @@ void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 
 void axon_reverse(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
+	printf("axe reverse \n");
   s->sendMsgCount --;
   long count = M->rndCallCount;
   while (count--) {
@@ -362,13 +397,6 @@ void axon_final(axonState *s, tw_lp *lp)
 }
 
 
-
-
-
-void mapping(tw_lp gid)
-{
-
-}
 
 
 void pre_run()

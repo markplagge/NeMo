@@ -41,6 +41,8 @@ extern unsigned int nkp_per_pe;
 	//extern tw_lptype model_lps[];
 	//extern unsigned int SIM_SIZE;
 extern tw_lptype model_lps[];
+
+extern mapTypes tnMapping;
 tw_lpid *myGIDs;
 tw_lpid *gePEMap;
 
@@ -142,8 +144,25 @@ void scatterMap();
  *  @brief  Based on the PCS grid mapping idea, this takes the 3-D structure of the TN architecture,  where neurons, synapses, and axons are X & Y, and cores are Z, and maps the proper LP types out.
  */
 void tn_cube_mapping();
+/**
+ *  @brief  Type mapping based on standard linear map.
+ *
+ *  @param gid current GID
+ *
+ *  @return int for the type array
+ */
+tw_lpid tn_linear_map(tw_lpid gid);
 
+tw_peid lGidToPE(tw_lpid gid);
 
+tw_lpid lGetSynFromAxon(tw_lpid axeGID);
+tw_lpid lGetNextSynFromSyn(tw_lpid synGID);
+tw_lpid lGetNeuronFromSyn(tw_lpid synGID);
+tw_lpid lGetAxonFromNeu(_idT core, _idT axeNum);
+tw_lpid lCoreOffset(tw_lpid gid);
+tw_lpid lGetSynNumLocal(tw_lpid gid);
+tw_lpid lGetAxeNumLocal(tw_lpid gid);
+tw_lpid lgetNeuNumLocal(tw_lpid gid);
 _gridIDT iSizeOffset();
 _gridIDT jSizeOffset();
 
