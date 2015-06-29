@@ -27,11 +27,11 @@ extern int a_created ;
 /**
  *  Number of neurons per core.
  */
-int NEURONS_IN_CORE = 256;
+int NEURONS_IN_CORE = 4;
 /** number of synapses per core. Calculated value, needs to be neurons * axons */
 int SYNAPSES_IN_CORE = 0;
 /** Number of axions per core. Generally is set to 1-1 with neurons in core */
-int AXONS_IN_CORE = 256;
+int AXONS_IN_CORE = 4;
 /* Given number of cores in simulation */
 unsigned int CORES_IN_SIM = 1;
 
@@ -49,6 +49,8 @@ unsigned int SP_DBG = 0;
 unsigned int LPS_PER_PE;
 unsigned int SIM_SIZE;
 unsigned int LP_PER_KP = 2;
+unsigned int LH_VAL = 0;
+
 
 extern tw_lpid* myGIDs;
 
@@ -124,6 +126,8 @@ const tw_optdef app_opt[]= {
     TWOPT_UINT("wt_max", SYNAPSE_WEIGHT_MAX, "maximum synapse weight"),
 	TWOPT_GROUP("Sim Size Params"),
 	TWOPT_UINT("cores", CORES_IN_SIM, "number of cores in simulation"),
+    TWOPT_GROUP("Sim tuning"),
+  TWOPT_UINT("lh", LH_VAL, "Lookahead setting"),
     {TWOPT_END()}
 
   };

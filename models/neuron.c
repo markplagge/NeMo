@@ -120,7 +120,7 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
   if (g_tw_synchronization_protocol == OPTIMISTIC ||
       g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
     // Only do this in OPTIMISTIC mode
-	//tw_snapshot(lp, lp->type->state_sz);
+         //tw_snapshot(lp, lp->type->state_sz);
   }
         //random fn call state management.
         unsigned long startCount = lp->rng->count;
@@ -190,10 +190,11 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 	  //delta_size = tw_snapshot_delta(lp, lp->type->state_sz);
 
 	  //removed average. Code comes lifted from  dphold.c
+	  }
 
 	  m->rndCallCount= lp->rng->count - startCount;
 
-	}
+
 
 
 
@@ -218,6 +219,7 @@ void nSpike(neuronState *st, tw_stime time, tw_lp *lp){
 
 
 void sendHeartbeat(neuronState *st, tw_lp *lp, tw_stime time){
+  //printf("Heartbeat sent\n");
 
 		//random fn call state management.
 	unsigned long startCount = lp->rng->count;
@@ -283,23 +285,26 @@ void  neuornReverseState(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp) {
 
 		//reverse function.
     long count = m->rndCallCount;
-		//tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
+    if (g_tw_synchronization_protocol == OPTIMISTIC ||
+        g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
+//    tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
 	/** @todo - check this for correctness and switch from delta encoding. */
-  if(m->eventType == SYNAPSE_OUT)
-		s->receivedSynapseMsgs --;
-	else
-		s->SOPSCount --;
+      }
+  if(m->eventType == SYNAPSE_OUT){
+                s->receivedSynapseMsgs --;
+    }else{
+      s->SOPSCount --;
+    }
 
 	if(s->firedLast == true){
 		s->fireCount --;
 	}
 
-		//s->membranePot  = s->savedMembranePot;
-		//s->lastActiveTime = s->savedLastActiveTime;
-		//s->lastLeakTime = s->savedLastLeakTime;
+	s->membranePot  = s->savedMembranePot;
+	s->lastActiveTime = s->savedLastActiveTime;
+	s->lastLeakTime = s->savedLastLeakTime;
 
-	// This should be the FIRST thing to do in your reverse event handler
-	//
+
 	while (count--) {
 	    tw_rand_reverse_unif(lp->rng);
 	}
