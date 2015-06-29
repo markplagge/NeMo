@@ -60,6 +60,7 @@ tw_stime getNextBigTick(tw_stime now) {
         tw_stime nbtd = nextTickTime-now;
         //nbtd += g_tw_clock_rate;
         return nbtd;
+        //return 2;
 
 		//Need to figure this out - not accurate until this is done:
 
