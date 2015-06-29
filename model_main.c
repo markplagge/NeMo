@@ -61,16 +61,17 @@ double *create_rand_nums(int num_elements) {
   return rand_nums;
 }
 int main(int argc, char *argv[]) {
+
+
+  tw_opt_add(app_opt);
+
+  tw_init(&argc, &argv);
   // set up core sizes.
   AXONS_IN_CORE = NEURONS_IN_CORE;
   SYNAPSES_IN_CORE = (NEURONS_IN_CORE * AXONS_IN_CORE);
   CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
   SIM_SIZE = CORE_SIZE * CORES_IN_SIM;
   tnMapping = LLINEAR;
-
-  tw_opt_add(app_opt);
-
-  tw_init(&argc, &argv);
   /** g_tw_nlp set here to CORE_SIZE.
    * @todo check accuracy of this
    * */
