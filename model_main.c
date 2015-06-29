@@ -97,6 +97,11 @@ int main(int argc, char *argv[]) {
   g_tw_lookahead = LH_VAL;
   //g_tw_clock_rate = CL_VAL;
   // g_tw_nlp = SIM_SIZE - 1;
+  if(LH_VAL > 1.0){
+       tw_error(TW_LOC, "Lookahead > 1.0 .. needs to be less\n");
+    }
+  g_tw_memory_nqueues = 16; // give at least 16 memory queue event
+
 
   tw_define_lps(LPS_PER_PE, sizeof(Msg_Data), 0);
   tw_lp_setup_types();

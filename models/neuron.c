@@ -45,10 +45,10 @@ void revLinearLeak(void *neuron, tw_stime now){
 
 
 /** @}*/
-/** @name ResetFunctions  
+/** @name ResetFunctions
  Reset function defs. Neuron reset functions will
  change the neuron state without saving the previous state. All voltage state saving
- must be handled in the neuron event function neuronReceiveMessage(). 
+ must be handled in the neuron event function neuronReceiveMessage().
  @todo: Check that reverse reset functions are needed, since previous voltage is stored in the neuron.
  * @{ */
 
@@ -91,11 +91,11 @@ void resetNone(void *neuronState){
 }
 void reverseResetNone(void *neuronState) {
 }
-	/** @} */
+        /** @} */
 
-/** @name NeuronFunctions 
+/** @name NeuronFunctions
 * Main neuron functions and behaviors
-*  @{ 
+*  @{
  */
 
 /**
@@ -112,18 +112,20 @@ void reverseResetNone(void *neuronState) {
  */
 void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp){
 
-  //Delta encoding - used for now until reverse event computation can be checked for accuracy.
   long delta_size;
 
 
-  // This should be the FIRST thing to do in your event handler
-  if (g_tw_synchronization_protocol == OPTIMISTIC ||
-      g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
-    // Only do this in OPTIMISTIC mode
-         //tw_snapshot(lp, lp->type->state_sz);
-  }
+
+
         //random fn call state management.
         unsigned long startCount = lp->rng->count;
+        //Delta encoding - used for now until reverse event computation can be checked for accuracy.
+
+        if (g_tw_synchronization_protocol == OPTIMISTIC ||
+            g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
+          // Only do this in OPTIMISTIC mode
+               //tw_snapshot(lp, lp->type->state_sz);
+        }
 
 	//state management
 	bool willFire = false;
@@ -137,7 +139,7 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 
 	switch (m->eventType) {
   case SYNAPSE_OUT:
-			integrateSynapse(m->localID, st, lp);
+                        integrateSynapse(m->localID, st, lp);
 
 				//next, we will check if a heartbeat message should be sent
 			if(st->receivedSynapseMsgs == 0) {
@@ -169,8 +171,8 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 			break;
 
   default:
-				//Error condition - non-valid input.
-			break;
+                                //Error condition - non-valid input.
+                        break;
 	}
 
 		//store the random calls in the message:
@@ -263,7 +265,7 @@ void integrateSynapse(_idT synapseID,neuronState *st, tw_lp *lp) {
  *	pseudorandom number during the threshold, fire, reset functions, or does it resuse them? It
  *	looks like re-use, so that's what I'm doing here.
  */
-void neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFire){
+void  neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFire){
 	if(willFire){ // neuron will/did fire:
 		st->doReset(st);
 	} else if (st->membranePot < -1 * (st->negativeThreshold * st->negThresReset + (st->negativeThreshold + st->drawnRandomNumber))){
@@ -283,13 +285,11 @@ void neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFir
 }
 void  neuornReverseState(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp) {
 
-		//reverse function.
+                //reverse function.
     long count = m->rndCallCount;
-    if (g_tw_synchronization_protocol == OPTIMISTIC ||
-        g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
-//    tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
-	/** @todo - check this for correctness and switch from delta encoding. */
-      }
+    //tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
+
+    /** @todo - check this for correctness and switch from delta encoding. */
   if(m->eventType == SYNAPSE_OUT){
                 s->receivedSynapseMsgs --;
     }else{
