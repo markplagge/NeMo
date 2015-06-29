@@ -126,6 +126,7 @@ const tw_optdef app_opt[]= {
     TWOPT_UINT("wt_max", SYNAPSE_WEIGHT_MAX, "maximum synapse weight"),
 	TWOPT_GROUP("Sim Size Params"),
 	TWOPT_UINT("cores", CORES_IN_SIM, "number of cores in simulation"),
+	TWOPT_UINT("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
     TWOPT_GROUP("Sim tuning"),
   TWOPT_UINT("lh", LH_VAL, "Lookahead setting"),
     {TWOPT_END()}
