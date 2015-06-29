@@ -120,7 +120,7 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
   if (g_tw_synchronization_protocol == OPTIMISTIC ||
       g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
     // Only do this in OPTIMISTIC mode
-    tw_snapshot(lp, lp->type->state_sz);
+	//tw_snapshot(lp, lp->type->state_sz);
   }
         //random fn call state management.
         unsigned long startCount = lp->rng->count;
@@ -187,7 +187,7 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 	    g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
 
 
-	  delta_size = tw_snapshot_delta(lp, lp->type->state_sz);
+	  //delta_size = tw_snapshot_delta(lp, lp->type->state_sz);
 
 	  //removed average. Code comes lifted from  dphold.c
 
@@ -218,13 +218,15 @@ void nSpike(neuronState *st, tw_stime time, tw_lp *lp){
 
 
 void sendHeartbeat(neuronState *st, tw_lp *lp, tw_stime time){
-		//heartbeat message gen:
+
+		//random fn call state management.
+	unsigned long startCount = lp->rng->count;
 	tw_stime nextHeartbeat = getNextBigTick(time);
 	tw_event *newEvent = tw_event_new(lp->gid, nextHeartbeat, lp);
 	Msg_Data *data = (Msg_Data *) tw_event_data(newEvent);
 	data->eventType = NEURON_HEARTBEAT;
 	data->localID = st->myLocalID;
-	tw_event_send(newEvent);
+		tw_event_send(newEvent);
 
 
 }
@@ -278,10 +280,12 @@ void neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFir
 
 }
 void  neuornReverseState(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp) {
+
 		//reverse function.
     long count = m->rndCallCount;
-    /** @todo - check this for correctness and switch from delta encoding. *//*
-  if(M->eventType == SYNAPSE_OUT)
+		//tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
+	/** @todo - check this for correctness and switch from delta encoding. */
+  if(m->eventType == SYNAPSE_OUT)
 		s->receivedSynapseMsgs --;
 	else
 		s->SOPSCount --;
@@ -290,12 +294,12 @@ void  neuornReverseState(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp) {
 		s->fireCount --;
 	}
 
-	s->membranePot  = s->savedMembranePot;
-	s->lastActiveTime = s->savedLastActiveTime;
-	s->lastLeakTime = s->savedLastLeakTime;*/
+		//s->membranePot  = s->savedMembranePot;
+		//s->lastActiveTime = s->savedLastActiveTime;
+		//s->lastLeakTime = s->savedLastLeakTime;
 
 	// This should be the FIRST thing to do in your reverse event handler
-	tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
+	//
 	while (count--) {
 	    tw_rand_reverse_unif(lp->rng);
 	}

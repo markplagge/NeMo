@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
 	LPS_PER_PE = SIM_SIZE / tw_nnodes();
 	LP_PER_KP = LPS_PER_PE / g_tw_nkp;
 
-	g_tw_events_per_pe = CORE_SIZE * eventAlloc;
+	g_tw_events_per_pe = g_tw_nlp * eventAlloc + 2048;
   ///@todo enable custom mapping with these smaller LPs.
 
 
@@ -79,6 +79,7 @@ int main(int argc, char *argv[]) {
 	g_tw_mapping = LINEAR;
 	g_tw_lp_types = model_lps;
 	g_tw_lp_typemap = &tn_linear_map;
+		g_tw_lookahead = 0;
 			//g_tw_custom_initial_mapping = &nlMap;
 			//g_tw_custom_lp_global_to_local_map = &globalToLP;
 	}
