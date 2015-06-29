@@ -221,11 +221,18 @@ void nSpike(neuronState *st, tw_stime time, tw_lp *lp){
 
 
 void sendHeartbeat(neuronState *st, tw_lp *lp, tw_stime time){
-  //printf("Heartbeat sent\n");
 
-		//random fn call state management.
+
+                //random fn call state management.
+  //printf("heartbeat sent \n");
 	unsigned long startCount = lp->rng->count;
 	tw_stime nextHeartbeat = getNextBigTick(time);
+	///@todo Verify this
+	int offset = CORE_SIZE - NEURONS_IN_CORE;
+	nextHeartbeat = st->myLocalID - offset;
+
+	nextHeartbeat =  NEURONS_IN_CORE;// / g_tw_clock_rate;
+
 	tw_event *newEvent = tw_event_new(lp->gid, nextHeartbeat, lp);
 	Msg_Data *data = (Msg_Data *) tw_event_data(newEvent);
 	data->eventType = NEURON_HEARTBEAT;

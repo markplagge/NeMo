@@ -117,7 +117,19 @@ int main(int argc, char *argv[]) {
 
   printf("\nCreated %i ax, %i ne, %i se", a_created, n_created, s_created);
   tw_run();
+  //Stats Collection
+  _statT totalSOPS = 0;
+  MPI_Reduce(&neuronSOPS, &totalSOPS, 1, MPI_UNSIGNED_LONG_LONG,MPI_SUM,0,MPI_COMM_WORLD);
+
   tw_end();
+
+  if(g_tw_mynode == 0){ // master node for outputting stats.
+
+      printf("\n ------ TN Benchmark Stats ------- \n");
+      printf("Total SOPS(integrate and/or fire): %llu\n", totalSOPS);
+      printf("This PE's SOPS: %llu\n", neuronSOPS);
+    }
+
 
   return 0;
 }
@@ -204,7 +216,7 @@ void neuron_init(neuronState *s, tw_lp *lp) {
     for (int i = 0; i < SYNAPSES_IN_CORE; i++) {
       s->synapticWeightProbSelect[i] = stochasticThreshold;
       s->synapticWeightProb[i] =
-          tw_rand_integer(lp->rng, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
+          tw_rand_integer(lp->rng, (0 - SYNAPSE_WEIGHT_MIN), SYNAPSE_WEIGHT_MAX);
     }
     ///@todo add more leak functions
     s->doLeak = linearLeak;
@@ -242,7 +254,11 @@ void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp) {
   neuornReverseState(s, CV, MCV, lp);
 }
 
-void neuron_final(neuronState *s, tw_lp *lp) {}
+void neuron_final(neuronState *s, tw_lp *lp) {
+  neuronSOPS += s->SOPSCount;
+  printf("neuron %i has %i SOPS \n", lp->gid, s->SOPSCount);
+
+}
 
 // synapse function
 
@@ -278,6 +294,7 @@ void synapse_init(synapseState *s, tw_lp *lp) {
 
 void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
   long rc = lp->rng->count;
+  *(int *) CV = (int) 0;
   // printf("Synapse rcvd msg\n");
   if (s->destNeuron != 0) {
     // generate event to send to next synapse

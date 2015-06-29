@@ -51,6 +51,8 @@ unsigned int SIM_SIZE;
 unsigned int LP_PER_KP = 2;
 unsigned int LH_VAL = 0;
 
+ _statT neuronSOPS = 0;
+
 
 extern tw_lpid* myGIDs;
 
@@ -82,7 +84,7 @@ _threshT RAND_RANGE_MAX = 31;
  *	These parameters adjust the input weight given to each synapse. */
 int32_t SYNAPSE_WEIGHT_MAX = 10;
 /** Minimum synapse weight. @see SYNAPSE_WEIGHT_MAX */
-int32_t SYNAPSE_WEIGHT_MIN = -10;
+int32_t SYNAPSE_WEIGHT_MIN = 10;
 tw_stime PER_SYNAPSE_DET_P = .50;
 
 
@@ -123,7 +125,8 @@ const tw_optdef app_opt[]= {
   TWOPT_UINT("th_min", THRESHOLD_MIN, "minimum threshold for neurons"),
     TWOPT_UINT("th_max", THRESHOLD_MAX, "maximum threshold for neurons"),
     TWOPT_UINT("wt_min", SYNAPSE_WEIGHT_MIN, "minimum synapse weight"),
-    TWOPT_UINT("wt_max", SYNAPSE_WEIGHT_MAX, "maximum synapse weight"),
+    TWOPT_UINT("wt_max", SYNAPSE_WEIGHT_MAX, "maximum synapse weight -- is treated as 0-val"),
+
 	TWOPT_GROUP("Sim Size Params"),
 	TWOPT_UINT("cores", CORES_IN_SIM, "number of cores in simulation"),
 	TWOPT_UINT("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
