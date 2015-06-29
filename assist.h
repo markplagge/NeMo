@@ -35,7 +35,7 @@ extern mapTypes tnMapping;
 
 #define _statT int_fast64_t //!<Counter data type for stats
 /** _regIDT is a "regional id" type. This variable type is for storing
- *	coreIDs and localIDs. It must be half the bit size of tw_lpid. 
+ *	coreIDs and localIDs. It must be half the bit size of tw_lpid.
  */
 #define _regIDT uint32_t
 	/** _gidIDT is the other half of the local id - since each big local id
@@ -151,7 +151,7 @@ extern int32_t SYNAPSE_WEIGHT_MIN;
  */
 tw_stime getNextEventTime(tw_lp *lp);
 /**
- *  @brief  Given a tw_stime, returns the current big tick.  
+ *  @brief  Given a tw_stime, returns the current big tick.
  *
  *  @param now current time
  *

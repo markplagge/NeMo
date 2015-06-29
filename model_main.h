@@ -50,8 +50,10 @@ unsigned int LPS_PER_PE;
 unsigned int SIM_SIZE;
 unsigned int LP_PER_KP = 2;
 unsigned int LH_VAL = 0;
+bool DEBUG_MODE = 0;
 
  _statT neuronSOPS = 0;
+ _statT synapseEvents = 0;
 
 
 extern tw_lpid* myGIDs;
@@ -61,13 +63,13 @@ mapTypes tnMapping;
 	//tw_lptype model_lps[];
 /**  Determines the maximum thresholds for a neuron to fire.
  */
-_threshT THRESHOLD_MAX = 100;
+_threshT THRESHOLD_MAX = 2;
 
  _threshT NEG_THRESHOLD_MAX = 100;
 /**
  *  Minimum threshold. @see THRESHOLD_MAX
  */
-_threshT THRESHOLD_MIN = 10;
+_threshT THRESHOLD_MIN = 1;
 
 _threshT NEG_THRESHOLD_MIN = 1;
 
@@ -84,7 +86,7 @@ _threshT RAND_RANGE_MAX = 31;
  *	These parameters adjust the input weight given to each synapse. */
 int32_t SYNAPSE_WEIGHT_MAX = 10;
 /** Minimum synapse weight. @see SYNAPSE_WEIGHT_MAX */
-int32_t SYNAPSE_WEIGHT_MIN = 10;
+int32_t SYNAPSE_WEIGHT_MIN = 1;
 tw_stime PER_SYNAPSE_DET_P = .50;
 
 
@@ -132,6 +134,7 @@ const tw_optdef app_opt[]= {
 	TWOPT_UINT("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
     TWOPT_GROUP("Sim tuning"),
   TWOPT_UINT("lh", LH_VAL, "Lookahead setting"),
+  TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
     {TWOPT_END()}
 
   };

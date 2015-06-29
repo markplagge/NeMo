@@ -7,7 +7,7 @@
 //
 
 #include "assist.h"
-	#include <math.h>
+        #include <math.h>
 ///number of simulation ticks per big tick (determined by the g_tw_clock_rate param)
 tw_stime littleTick = 0;
 tw_stime bigTickRate = 0;
@@ -16,9 +16,10 @@ tw_stime bigTickRate = 0;
  */
 tw_stime getNextEventTime(tw_lp *lp){
 
-	tw_stime r =tw_rand_unif(lp->rng) / 100;
+        //tw_stime r =tw_rand_unif(lp->rng);
 
-	return r;
+  tw_stime r = tw_rand_exponential(lp->rng, 1)/10;
+        return r;
 
 }
 /**
@@ -48,10 +49,11 @@ tw_stime getCurrentBigTick(tw_stime now){
 
 
 }
-	//@todo This does not work - need to whiteboard it to figure out the conversion.
+        //@todo This does not work - need to whiteboard it to figure out the conversion.
 tw_stime getNextBigTick(tw_stime now) {
   if(littleTick == 0 ){
-      littleTick = g_tw_clock_rate / (SYNAPSES_IN_CORE + 1);
+      //littleTick = g_tw_clock_rate / (SYNAPSES_IN_CORE + 1);
+      littleTick = SYNAPSES_IN_CORE  + 1;
     }
   if(bigTickRate == 0){
       bigTickRate = ceill(littleTick) + 1;
@@ -62,6 +64,6 @@ tw_stime getNextBigTick(tw_stime now) {
         return nbtd;
         //return 2;
 
-		//Need to figure this out - not accurate until this is done:
+                //Need to figure this out - not accurate until this is done:
 
 }

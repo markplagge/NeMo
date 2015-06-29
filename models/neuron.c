@@ -124,7 +124,7 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
         if (g_tw_synchronization_protocol == OPTIMISTIC ||
             g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
           // Only do this in OPTIMISTIC mode
-               //tw_snapshot(lp, lp->type->state_sz);
+               tw_snapshot(lp, lp->type->state_sz);
         }
 
 	//state management
@@ -189,7 +189,7 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 	    g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
 
 
-	  //delta_size = tw_snapshot_delta(lp, lp->type->state_sz);
+	 // delta_size = tw_snapshot_delta(lp, lp->type->state_sz);
 
 	  //removed average. Code comes lifted from  dphold.c
 	  }
@@ -203,9 +203,9 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 }
 
 bool neuronShouldFire(neuronState *st, tw_lp *lp){
-		//check negative threshold values:
+                //check negative threshold values:
 
-	return st->membranePot >= st->threshold + st->drawnRandomNumber;
+        return st->membranePot >= st->threshold + (st->drawnRandomNumber & st->thresholdPRNMask);
 }
 
 void nSpike(neuronState *st, tw_stime time, tw_lp *lp){
@@ -237,7 +237,8 @@ void sendHeartbeat(neuronState *st, tw_lp *lp, tw_stime time){
 	Msg_Data *data = (Msg_Data *) tw_event_data(newEvent);
 	data->eventType = NEURON_HEARTBEAT;
 	data->localID = st->myLocalID;
-		tw_event_send(newEvent);
+
+	tw_event_send(newEvent);
 
 
 }
@@ -299,7 +300,7 @@ void  neuornReverseState(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp) {
     /** @todo - check this for correctness and switch from delta encoding. */
   if(m->eventType == SYNAPSE_OUT){
                 s->receivedSynapseMsgs --;
-    }else{
+    }else if(m->eventType == NEURON_HEARTBEAT){
       s->SOPSCount --;
     }
 

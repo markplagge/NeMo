@@ -341,16 +341,23 @@ tw_lpid lGetSynFromAxon(tw_lpid axeGID){
 
 tw_lpid lGetNextSynFromSyn(tw_lpid synGID){
 	tw_lpid nextSyn = synGID + 1;
-	if(nextSyn % AXONS_IN_CORE)
+	if(nextSyn % (AXONS_IN_CORE ))
 		return nextSyn;
 	return 0;
 }
 tw_lpid lGetNeuronFromSyn(tw_lpid synGID){
 	tw_lpid neuAt =lCoreOffset(synGID) + CORE_SIZE;
 	neuAt -= NEURONS_IN_CORE;
-	tw_lpid adj = (synGID - lCoreOffset(synGID)) / NEURONS_IN_CORE;
+	tw_lpid adj = (synGID - lCoreOffset(synGID)) % NEURONS_IN_CORE;
 	neuAt += (adj - 1) * 1;
-	return neuAt;
+
+	long rowID = (lCoreOffset(synGID) - AXONS_IN_CORE)/ NEURONS_IN_CORE;
+
+	long offset = rowID * NEURONS_IN_CORE;
+
+
+
+	return neuAt + 1;
 }
 tw_lpid lGetAxonFromNeu(_idT core, _idT axeNum){
 	tw_lpid coreOff = core * CORE_SIZE;
