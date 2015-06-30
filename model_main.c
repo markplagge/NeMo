@@ -137,7 +137,7 @@ int main(int argc, char *argv[]) {
 
 ///
 /// \details createLPs currently assigns a core's worth of LPs to the PE.
-/// @todo need to create better mapping.
+/// @todo need to create better mappingassert(lp->pe->delta_buffer[0] && "increase --buddy_size argument!");.
 ///
 void createLPs() {
   tw_define_lps(CORE_SIZE, sizeof(Msg_Data), 0);
@@ -189,10 +189,10 @@ void neuron_init(neuronState *s, tw_lp *lp) {
     resetSel =  0;
 
     bool stochasticThreshold = tw_rand_poisson(lp->rng, 1) > 3;
-    s->synapticWeightProb =
-        tw_calloc(TW_LOC, "Neuron", sizeof(_weightT), SYNAPSES_IN_CORE);
-    s->synapticWeightProbSelect =
-        tw_calloc(TW_LOC, "Neuron", sizeof(bool), SYNAPSES_IN_CORE);
+    //s->synapticWeightProb =
+    //    tw_calloc(TW_LOC, "Neuron", sizeof(_weightT), SYNAPSES_IN_CORE);
+    //s->synapticWeightProbSelect =
+    //    tw_calloc(TW_LOC, "Neuron", sizeof(bool), SYNAPSES_IN_CORE);
     // select a reset & stochastic reset mode:
     switch (resetSel) {
       case 0:
@@ -263,22 +263,22 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
   if (g_tw_synchronization_protocol == OPTIMISTIC ||
       g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)
     tw_snapshot_delta(lp,  lp->type->state_sz);
-    printf("Neuron recvd msg\n");
+
 }
 
 void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp) {
-   printf("neuron reverse \n");
 
-//  if (g_tw_synchronization_protocol == OPTIMISTIC ||
-//      g_tw_synchronization_protocol == OPTIMISTIC_DEBUG){
-//    tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy,
-//                      lp->pe->cur_event->delta_size);
-//    long count = MCV->rndCallCount;
-//    while (count--) {
-//      tw_rand_reverse_unif(lp->rng);
-//      }
 
-//    } else
+  if (g_tw_synchronization_protocol == OPTIMISTIC ||
+      g_tw_synchronization_protocol == OPTIMISTIC_DEBUG){
+    tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy,
+                      lp->pe->cur_event->delta_size);
+    long count = MCV->rndCallCount;
+    while (count--) {
+      tw_rand_reverse_unif(lp->rng);
+      }
+
+    } else
     {
       neuornReverseState(s, CV, MCV, lp);
     }

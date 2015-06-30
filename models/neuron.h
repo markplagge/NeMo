@@ -14,6 +14,7 @@
  
 #include "ross.h"
 #include <stdbool.h>
+#define ARRSIZE 65537
 
 /** typedef NeuronFireMode
  * Just in case there are multiple fire modes, this enum exists to differentiate
@@ -186,11 +187,11 @@ typedef struct NeuronModel {
 	reverseResetDel reverseReset; //!< Neuron reverse reset function.
 	/**@}*/
 		//Weight parameters
-	_weightT *synapticWeightProb; /**< In this simulation, each synappse can have a unique weight. In the paper, there is a limit of four different "types" of synapse behavior per neruon. For an accurate sim, there can only be four different values in this array.
+	_weightT synapticWeightProb[ARRSIZE]; /**< In this simulation, each synappse can have a unique weight. In the paper, there is a limit of four different "types" of synapse behavior per neruon. For an accurate sim, there can only be four different values in this array.
 		Since this is an array, this simulator has the potential to have more power than the actual TrueNorth hardware architecture.
 		The paper defines this as \f$S_j^{G_i}\f$ */
 
-	bool *synapticWeightProbSelect; /**< An array determining if each synapse is handled stochastically or deterministically.
+	bool synapticWeightProbSelect[ARRSIZE]; /**< An array determining if each synapse is handled stochastically or deterministically.
 	 * Since the actual hardware has 4 synapse types, this setup has more power than the actual
 	 *  TrueNorth architecture.
 	 * To ensure model <-> hardware accuracy, at most four different modes should be used per neuron,
