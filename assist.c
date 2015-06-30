@@ -36,16 +36,17 @@ tw_stime getCurrentBigTick(tw_stime now){
       littleTick = g_tw_clock_rate / (SYNAPSES_IN_CORE + 1);
     }
   if(bigTickRate == 0){
-      bigTickRate = ceill(littleTick) + 1;
+      bigTickRate = ceill(littleTick);
     }
 
 
 	//long double vtr = 0;
 	//long long rem = modfl(ctick, &vtr);
 	//Rem is current tick, vtr is offset.
-	tw_stime rem = bigTickRate - now;
+	double rounded =-floor(now);
+	tw_stime rem = ((unsigned long)rounded % (unsigned long)bigTickRate) * bigTickRate ;
 
-	return floorl(rem);
+	return rem;
 
 
 }
@@ -56,14 +57,52 @@ tw_stime getNextBigTick(tw_stime now) {
       littleTick = SYNAPSES_IN_CORE  + 1;
     }
   if(bigTickRate == 0){
-      bigTickRate = ceill(littleTick) + 1;
+      bigTickRate = ceill(littleTick);
     }
-        tw_stime nextTickTime = getCurrentBigTick(now) + g_tw_clock_rate;
-        tw_stime nbtd = nextTickTime-now;
+       //tw_stime nextTickTime = getCurrentBigTick(now) + g_tw_clock_rate;
+        tw_stime inter;
+        tw_stime nbtd = bigTickRate-modf(now,&inter);
         //nbtd += g_tw_clock_rate;
         return nbtd;
         //return 2;
 
                 //Need to figure this out - not accurate until this is done:
+
+}
+
+
+int testTiming(){
+//test timing with the model params:
+  tw_lp* rap = tw_getlp(0);
+  //Pretend all axons get a message first:
+  int tester = 0;
+  printf("%i synapses in core\n", SYNAPSES_IN_CORE);
+  while (tester < 4){
+
+  tw_stime axonSendTime[AXONS_IN_CORE];
+  for(int i = 0; i < AXONS_IN_CORE; i ++) {
+       int adj = tester * SYNAPSES_IN_CORE;
+      axonSendTime[i] = getNextEventTime(rap) + adj;
+    }
+
+  //next, check the first synapse layer:
+  tw_stime firstNeuronOutTime[AXONS_IN_CORE];
+  for(int i = 0; i < AXONS_IN_CORE; i ++) {
+      firstNeuronOutTime[i] = getNextBigTick(axonSendTime[i]);
+    }
+
+
+  //See if this round of big ticks makes sense:
+
+  printf( "Axons in core: %i - Synapses in Core %i. \n",AXONS_IN_CORE, NEURONS_IN_CORE);
+for(int i = 0; i < AXONS_IN_CORE; i ++){
+    printf("Ax/Ne %i Sends from %f -> Neuron @ %f\n", i, axonSendTime[i],firstNeuronOutTime[i]);
+  }
+printf("\n");
+printf("Current big tick from little tick %f is %f\n", axonSendTime[0],getCurrentBigTick(axonSendTime[0]));
+tester ++;
+
+    }
+exit(0);
 
 }

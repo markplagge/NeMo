@@ -119,15 +119,7 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 
         //random fn call state management.
         unsigned long startCount = lp->rng->count;
-        //Delta encoding - used for now until reverse event computation can be checked for accuracy.
-
-        if (g_tw_synchronization_protocol == OPTIMISTIC ||
-            g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
-          // Only do this in OPTIMISTIC mode
-               tw_snapshot(lp, lp->type->state_sz);
-        }
-
-	//state management
+        //state management
 	bool willFire = false;
 	st->firedLast = false;
 		//save the previous state of the neuron:
@@ -153,7 +145,7 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 		case NEURON_HEARTBEAT:
 			st->receivedSynapseMsgs = 0;
 				//set up drawn random number for the heartbeat.
-			if(st->thresholdPRNMask != 0)
+			//if(st->thresholdPRNMask != 0)
 				st->drawnRandomNumber = tw_rand_ulong(lp->rng, 0, ULONG_MAX) & st->thresholdPRNMask;
 
 				//Currently operates - leak->fire->(reset)
@@ -179,22 +171,7 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 
 
 	st->rcvdMsgCount ++;
-
-
-	//Delta Encoding
-	///@todo remove this to enhance performance, once reverse computation is correct.
-	// This should be the LAST thing you do in your event handler
-	// (Take care to cover all possible exits!)
-	if (g_tw_synchronization_protocol == OPTIMISTIC ||
-	    g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
-
-
-	 // delta_size = tw_snapshot_delta(lp, lp->type->state_sz);
-
-	  //removed average. Code comes lifted from  dphold.c
-	  }
-
-	  m->rndCallCount= lp->rng->count - startCount;
+	m->rndCallCount= lp->rng->count - startCount;
 
 
 
@@ -225,14 +202,8 @@ void sendHeartbeat(neuronState *st, tw_lp *lp, tw_stime time){
 
                 //random fn call state management.
   //printf("heartbeat sent \n");
-	unsigned long startCount = lp->rng->count;
+
 	tw_stime nextHeartbeat = getNextBigTick(time);
-	///@todo Verify this
-	int offset = CORE_SIZE - NEURONS_IN_CORE;
-	nextHeartbeat = st->myLocalID - offset;
-
-	nextHeartbeat =  NEURONS_IN_CORE;// / g_tw_clock_rate;
-
 	tw_event *newEvent = tw_event_new(lp->gid, nextHeartbeat, lp);
 	Msg_Data *data = (Msg_Data *) tw_event_data(newEvent);
 	data->eventType = NEURON_HEARTBEAT;
@@ -295,7 +266,6 @@ void  neuornReverseState(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp) {
 
                 //reverse function.
     long count = m->rndCallCount;
-    //tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
 
     /** @todo - check this for correctness and switch from delta encoding. */
   if(m->eventType == SYNAPSE_OUT){

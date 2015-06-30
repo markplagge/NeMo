@@ -114,12 +114,14 @@ int main(int argc, char *argv[]) {
   // createLPs();
 
   // printf("\nCreated %i ax, %i ne, %i se", a_created, n_created, s_created);
+  //testTiming();
   tw_run();
-  // Stats Collection
+  // Stats Collection ************************************************************************************88
   _statT totalSOPS = 0;
+  _statT totalSynapses= 0;
   MPI_Reduce(&neuronSOPS, &totalSOPS, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0,
              MPI_COMM_WORLD);
-
+  MPI_Reduce(&synapseEvents, &totalSynapses, 1,MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
   tw_end();
 
   if (g_tw_mynode == 0) {  // master node for outputting stats.
@@ -127,7 +129,7 @@ int main(int argc, char *argv[]) {
     printf("\n ------ TN Benchmark Stats ------- \n");
     printf("Total SOPS(integrate and/or fire): %llu\n", totalSOPS);
     printf("This PE's SOPS: %llu\n", neuronSOPS);
-    printf("Total Synapse MSGs sent: %llu\n", synapseEvents);
+    printf("Total Synapse MSGs sent: %llu\n", totalSynapses);
   }
 
   return 0;
@@ -164,7 +166,7 @@ void createLPs() {
 
 // neuron functions
 void neuron_init(neuronState *s, tw_lp *lp) {
-  // memset(s, 0, sizeof(neuronState));
+   memset(s, 0, sizeof(neuronState));
   if (tnMapping == LLINEAR) {
     s->myCoreID = getCoreFromGID(lp->gid);
     s->myLocalID = lgetNeuNumLocal(lp->gid);
@@ -249,32 +251,39 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID) {}
 
 void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
-  // printf("Neuron recvd msg\n");
-  if (g_tw_synchronization_protocol == OPTIMISTIC ||
+
+ if (g_tw_synchronization_protocol == OPTIMISTIC ||
       g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)
     tw_snapshot(lp, lp->type->state_sz);
+
+
 
   neuronReceiveMessage(s, tw_now(lp), M, lp);
 
   if (g_tw_synchronization_protocol == OPTIMISTIC ||
       g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)
-    tw_snapshot_delta(lp, lp->type->state_sz);
+    tw_snapshot_delta(lp,  lp->type->state_sz);
+    printf("Neuron recvd msg\n");
 }
 
 void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp) {
-  // printf("neuron reverse \n");
+   printf("neuron reverse \n");
 
-  if (g_tw_synchronization_protocol == OPTIMISTIC ||
-      g_tw_synchronization_protocol == OPTIMISTIC_DEBUG){
-    tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy,
-                      lp->pe->cur_event->delta_size);
-    } else {
+//  if (g_tw_synchronization_protocol == OPTIMISTIC ||
+//      g_tw_synchronization_protocol == OPTIMISTIC_DEBUG){
+//    tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy,
+//                      lp->pe->cur_event->delta_size);
+//    long count = MCV->rndCallCount;
+//    while (count--) {
+//      tw_rand_reverse_unif(lp->rng);
+//      }
+
+//    } else
+    {
       neuornReverseState(s, CV, MCV, lp);
     }
-  long count = MCV->rndCallCount;
-  while (count--) {
-    tw_rand_reverse_unif(lp->rng);
-  }
+
+
 }
 
 void neuron_final(neuronState *s, tw_lp *lp) {
@@ -311,8 +320,8 @@ void synapse_init(synapseState *s, tw_lp *lp) {
   if (DEBUG_MODE)
     printf(
         "Synapse %i checking in with GID %llu and n-dest %llu, s-dest %llu on "
-        "PE % i\n",
-        s->mySynapseNum, lp->gid, s->destNeuron, s->destSynapse, lp->pe->id);
+        "PE %i , CPE %i\n",
+        s->mySynapseNum, lp->gid, s->destNeuron, s->destSynapse, lp->pe->id,lGidToPE(lp->gid));
 }
 
 void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
@@ -343,6 +352,9 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
   data->eventType = SYNAPSE_OUT;
   data->localID = s->mySynapseNum;
   tw_event_send(axe);
+  if(DEBUG_MODE){
+      printf("Synapse received and sent message - sGID %i - sDestSyn %i - sDestNeu %i\n", lp->gid, s->destSynapse, s->destNeuron);
+    }
   M->rndCallCount = lp->rng->count - rc;
 }
 
@@ -373,7 +385,7 @@ void axon_init(axonState *s, tw_lp *lp) {
     // tw_printf(TW_LOC, "Axon %i sending message to GID %llu", JSIDE(l),
     // s->destSynapse );
     if (DEBUG_MODE)
-      printf("Axon %i checking in with gid %llu and dest synapse %llu\n ",
+      printf("Axon %i checking in (custom) with gid %llu and dest synapse %llu\n ",
              JSIDE(l), lp->gid, s->destSynapse);
   }
   tw_stime r = getNextEventTime(lp);
@@ -384,14 +396,11 @@ void axon_init(axonState *s, tw_lp *lp) {
   if (DEBUG_MODE)
     printf("Axon %i checking in with with dest synapse %llu\n", lp->gid,
            s->destSynapse);
-  printf("message ready at %f",r);
+  //printf("message ready at %f",r);
 }
 
 void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
   // send a message to the attached synapse
-  if (g_tw_synchronization_protocol == OPTIMISTIC ||
-      g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)
-    tw_snapshot(lp, lp->type->state_sz);
 
   long rc = lp->rng->count;
   tw_event *axe = tw_event_new(s->destSynapse, getNextEventTime(lp), lp);
@@ -401,16 +410,16 @@ void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 
   tw_event_send(axe);
   M->rndCallCount = lp->rng->count - rc;
-  if (g_tw_synchronization_protocol == OPTIMISTIC ||
-      g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)
-    tw_snapshot_delta(lp, lp->type->state_sz);
+
 }
 
 void axon_reverse(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
-  // printf("axe reverse \n");
-  // s->sendMsgCount--;
-  tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy,
-                      lp->pe->cur_event->delta_size);
+  if(DEBUG_MODE){
+  printf("axe reverse \n");
+    }
+   s->sendMsgCount--;
+
+  //tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy,lp->pe->cur_event->delta_size);
   long count = M->rndCallCount;
   while (count--) {
     tw_rand_reverse_unif(lp->rng);

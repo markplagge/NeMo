@@ -168,5 +168,6 @@ tw_stime getCurrentBigTick(tw_stime now);
  */
 tw_stime getNextBigTick(tw_stime now);
 
+int testTiming();
 
 #endif /* defined(__ROSS_TOP__assist__) */
