@@ -181,8 +181,9 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 
 bool neuronShouldFire(neuronState *st, tw_lp *lp){
                 //check negative threshold values:
+  return  2 > tw_rand_pareto(lp->rng,2,3) ? true:false;
 
-        return st->membranePot >= st->threshold + (st->drawnRandomNumber & st->thresholdPRNMask);
+  //      return st->membranePot >= st->threshold + (st->drawnRandomNumber & st->thresholdPRNMask);
 }
 
 void nSpike(neuronState *st, tw_stime time, tw_lp *lp){

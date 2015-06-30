@@ -97,9 +97,6 @@ int main(int argc, char *argv[]) {
   g_tw_lookahead = LH_VAL;
   // g_tw_clock_rate = CL_VAL;
   // g_tw_nlp = SIM_SIZE - 1;
-  if (LH_VAL > 5.0) {
-    tw_error(TW_LOC, "Lookahead > 5.0 .. needs to be less\n");
-  }
 
   g_tw_memory_nqueues = 16;  // give at least 16 memory queue event
 
