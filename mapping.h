@@ -144,27 +144,79 @@ void scatterMap();
  *  @brief  Based on the PCS grid mapping idea, this takes the 3-D structure of the TN architecture,  where neurons, synapses, and axons are X & Y, and cores are Z, and maps the proper LP types out.
  */
 void tn_cube_mapping();
+_gridIDT iSizeOffset();
+_gridIDT jSizeOffset();
+
+/* *****linear mapping functions */
 /**
  *  @brief  Type mapping based on standard linear map.
  *
  *  @param gid current GID
  *
- *  @return int for the type array
- */
+ *  @return int for the type array */
+
 tw_lpid tn_linear_map(tw_lpid gid);
-
+/**
+ * @brief returns a PE from a given GID. Based on the standard linear mapping function
+ */
 tw_peid lGidToPE(tw_lpid gid);
-
+/**
+ * @brief lGetSynFromAxon returns the gid of a synapse that a particular axon should be communicating with.
+ * Since axons
+ * @param axeGID
+ * @return gid of a synapse
+ */
 tw_lpid lGetSynFromAxon(tw_lpid axeGID);
+/**
+ * @brief lGetNextSynFromSyn gives the next synapse a synapse should communicate with.
+ * @param synGID
+ * @return A synapse GID, or 0 if the synapse is the last in the row.
+ */
 tw_lpid lGetNextSynFromSyn(tw_lpid synGID);
+/**
+ * @brief lGetNeuronFromSyn returns the neuron a synapse should communicate with.
+ * @param synGID
+ * @return a neuron GID
+ */
 tw_lpid lGetNeuronFromSyn(tw_lpid synGID);
+/**
+ * @brief lGetAxonFromNeu Given a core and an axon number (the value 𝑗 from the paper).
+ * @param core Axon's core.
+ * @param axeNum Axon's number (𝑗)
+ * @return
+ */
 tw_lpid lGetAxonFromNeu(_idT core, _idT axeNum);
+/**
+ * @brief lCoreOffset returns the core offset. Core 0 is 0, core 1 is CORE_SIZE * 1, and so on.
+ * @param gid
+ * @return
+ */
 tw_lpid lCoreOffset(tw_lpid gid);
+/**
+ * @brief lGetSynNumLocal - returns the "local id" of a synapse, the 𝑖,𝑗 of the
+ *  synapse, but mapped to a single dimension. \f$ S_{i,j} \rightarrow S_{i + j} \f$
+ * @param gid synapse global ID
+ * @return local ID.
+ */
+
 tw_lpid lGetSynNumLocal(tw_lpid gid);
+
+/**
+ * @brief lGetSynNumLocal returns the "local id" of a neuron. Since neurons are
+ * last in linear mapping, neuron 0 on core 0 has a GID of AXONS + SYNAPSES. Each
+ * core adds a value to the original GID, but not the local id.
+ * @param gid
+ * @return
+ */
 tw_lpid lGetAxeNumLocal(tw_lpid gid);
-tw_lpid lgetNeuNumLocal(tw_lpid gid);
-_gridIDT iSizeOffset();
-_gridIDT jSizeOffset();
+
+tw_lpid lGetNeuNumLocal(tw_lpid gid);
+/**
+ * @brief Based on the LP GID, gives the core number.
+ * @param gid
+ * @return
+ */
+tw_lpid lGetCoreFromGID(tw_lpid gid);
 
 /**
  *  @brief  returns the decimal sum of the i,j, and core values from a gid.

@@ -20,25 +20,43 @@ void revNoLeak(void *neuron, tw_stime now) {
   // do nothing!!
 }
 /**
- *  @details LinearLeak is the standard linear leak function from the paper. Using the leakRate parameter inside \link NeuronModel the neuron state \endlink, this follows a simple linear function, reducing the membrane potential by a fixed rate per tick.
+ *  @details LinearLeak is the standard linear leak function from the paper.
+ * Using the leakRate parameter inside \link NeuronModel the neuron state
+ * \endlink, this follows a simple linear function,
+ * reducing the membrane potential by a fixed rate per tick.
+ * This calculates based on the previous time a neuron leaked (on the big tick),
+ * and uses the difference to calculate how much to leak.
  *
-
  *	@see NeuronModel
  */
 void linearLeak(void *neuron, tw_stime now) {
 	neuronState *s = (neuronState *)neuron;
 	tw_stime bigTick = getCurrentBigTick(now);
+
 	tw_stime delta = bigTick - s->lastLeakTime;
 
-		//s->membranePot -= s->leakRate * delta;
-	s->lastLeakTime = now;
+
+	//if the leak is probabilistic:
+	if(s->leakWeightProbSelect){
+	    while(delta > 0){
+		stochasticIntegrate(s->leakRateProb,s);
+	      }
+	  }
+	else {
+	     short int omega = (1 - s->leakReversalFlag) + s->leakReversalFlag *SGN(s->membranePot);
+	     s->membranePot += omega * s->leakRateProb;
+
+	  }
+
+
+	s->lastLeakTime = bigTick;
 }
 
 void revLinearLeak(void *neuron, tw_stime now){
 	neuronState *s = (neuronState *)neuron;
 	tw_stime delta = s->lastLeakTime - now;
 
-		//s->membranePot += s->leakRate * delta;
+	//s->membranePot += s->leakRate * delta;
 	s->lastLeakTime = now;
 }
 
@@ -106,17 +124,13 @@ void reverseResetNone(void *neuronState) {
  *    - If the count changes from zero to one, the function creates and queues a heartbeat event for the next big-tick.
  *  - If the event is a heartbeat, the neuron will leak, potentially fire, and reset.
  *
- *  Big-Tick events are sent at time \f$𝒯_{bigTick} - ε\f$, so that the the event will arrive at the next bit-tick time.
+ *  Big-Tick events are sent at time \f$𝒯_{bigTick} + ε\f$, so that the the event will arrive at the next bit-tick time.
  * @todo remove delta encoding
  *
  */
 void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp){
 
   long delta_size;
-
-
-
-
         //random fn call state management.
         unsigned long startCount = lp->rng->count;
         //state management
@@ -130,7 +144,7 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 
 
 	switch (m->eventType) {
-  case SYNAPSE_OUT:
+	  case SYNAPSE_OUT:
                         integrateSynapse(m->localID, st, lp);
 
 				//next, we will check if a heartbeat message should be sent
@@ -141,14 +155,14 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 
 
 			break;
-
-		case NEURON_HEARTBEAT:
+	  case NEURON_HEARTBEAT:
 			st->receivedSynapseMsgs = 0;
 				//set up drawn random number for the heartbeat.
 			//if(st->thresholdPRNMask != 0)
-				st->drawnRandomNumber = tw_rand_ulong(lp->rng, 0, ULONG_MAX) & st->thresholdPRNMask;
+			st->drawnRandomNumber = tw_rand_ulong(lp->rng, 0, ULONG_MAX) & st->thresholdPRNMask;
 
 				//Currently operates - leak->fire->(reset)
+
 			st->doLeak(st, time);
 			willFire = neuronShouldFire(st,lp);
 			if(willFire){
@@ -161,11 +175,10 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 			st->SOPSCount ++;
 			st->lastActiveTime = tw_now(lp);
 			break;
-
-  default:
+	  default:
                                 //Error condition - non-valid input.
                         break;
-	}
+        }
 
 		//store the random calls in the message:
 
@@ -178,12 +191,52 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 
 
 }
+//neuron is in basic firing mode with delta encoding.
+void neuronReceiveMessageBasic(neuronState *st, tw_stime time, Msg_Data *m, tw_lp *lp){
+    switch (m->eventType) {
+        //random fn call state management.
+        unsigned long startCount = lp->rng->count;
+        //state management
+        bool willFire = false;
+        st->firedLast = false;
+      case SYNAPSE_OUT:
+                    //basic integrate function:
+            st->membranePot += st->synapticWeightProb[m->localID];
+
+                            //next, we will check if a heartbeat message should be sent
+                    if(st->receivedSynapseMsgs == 0) {
+                            sendHeartbeat(st, lp, time);
+                    }
+                    st->receivedSynapseMsgs ++;
+
+
+                    break;
+        case NEURON_HEARTBEAT:
+                      st->receivedSynapseMsgs = 0;
+                      willFire = st->membranePot >= st->threshold;
+                      if(willFire){
+                              nSpike(st, time, lp);
+                              st->fireCount ++;
+                              st->membranePot = 0;
+                      }
+
+
+                      //stats collection
+                      st->SOPSCount ++;
+                      st->lastActiveTime = tw_now(lp);
+                      break;
+        default:
+                              //Error condition - non-valid input.
+                      break;
+      }
+
+}
 
 bool neuronShouldFire(neuronState *st, tw_lp *lp){
                 //check negative threshold values:
-  return  2 > tw_rand_pareto(lp->rng,2,3) ? true:false;
+  return st->membranePot >= st->threshold + (st->drawnRandomNumber & st->thresholdPRNMask);
 
-  //      return st->membranePot >= st->threshold + (st->drawnRandomNumber & st->thresholdPRNMask);
+
 }
 
 void nSpike(neuronState *st, tw_stime time, tw_lp *lp){
@@ -221,7 +274,7 @@ void sendHeartbeat(neuronState *st, tw_lp *lp, tw_stime time){
  * @param st
  * @param lp
  */
-void stochasticIntegrate(_weightT weight, neuronState *st, tw_lp *lp){
+void stochasticIntegrate(_weightT weight, neuronState *st){
 
 	long drawnRandom = st->drawnRandomNumber;
 	if (BINCOMP(weight, drawnRandom)){
@@ -233,7 +286,7 @@ void stochasticIntegrate(_weightT weight, neuronState *st, tw_lp *lp){
 void integrateSynapse(_idT synapseID,neuronState *st, tw_lp *lp) {
 
 	if(st->synapticWeightProbSelect[synapseID] == true) {
-		stochasticIntegrate(st->synapticWeightProb[synapseID], st, lp);
+		stochasticIntegrate(st->synapticWeightProb[synapseID], st);
 	} else { //det. mode integrate:
 		_voltT adjustedWeight = st->synapticWeightProb[synapseID];
 		st->membranePot += adjustedWeight;

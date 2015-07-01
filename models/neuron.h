@@ -155,12 +155,12 @@ typedef struct NeuronModel {
 	_voltT savedMembranePot; //!< previous state membrane potential
 	_threshT threshold; //!< neuron's threshold value 𝛼
 	_threshT negativeThreshold; //!< neuron's negative threshold, 𝛽
-	_threshT thresholdPRNMask; /**!< The neuron's random threshold mask - used for randomized thresholds ( \f$M_j\f$ ).
+	uint16_t thresholdPRNMask; /**!< The neuron's random threshold mask - used for randomized thresholds ( \f$M_j\f$ ).
 				     *	In the TN hardware this is defined as a ones maks of configurable width, starting at the
 				     * least significant bit. The mask scales the range of the random drawn number (PRN) of the model,
 				     * here defined as @link drawnRandomNumber @endlink. used as a scale for the random values. */
 
-	_randT drawnRandomNumber; //!<When activated, neurons draw a new random number. Reset after every big-tick as needed.
+	uint16_t drawnRandomNumber; //!<When activated, neurons draw a new random number. Reset after every big-tick as needed.
 
 	_voltT resetVoltage; //!< Reset voltage for reset params, \f$R\f$.
 	tw_stime lastActiveTime; /**< last time the neuron fired - used for calculating leak and reverse functions. Should be a whole number (or very close) since big-ticks happen on whole numbers. */
@@ -245,6 +245,8 @@ void neuornReverseState(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp);
  */
 void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,
 						  tw_lp *lp);
+void neuronReceiveMessageBasic(neuronState *st, tw_stime time, Msg_Data *m,
+			       tw_lp *lp);
 /** neuronFire manages a firing event. Firing events occur when a synchro message is received, so these calculations are done on big-ticks only. */
 void nSpike(neuronState *st, tw_stime time, tw_lp *lp);
 
@@ -287,9 +289,8 @@ void neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFir
  *
  *  @param weight weight of selected leak or synapse
  *  @param st     the neuron state
- *  @param lp     lp for range functions.
  */
-void stochasticIntegrate(_weightT weight, neuronState *st, tw_lp *lp);
+void stochasticIntegrate(_weightT weight, neuronState *st);
 
 
 

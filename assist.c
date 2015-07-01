@@ -22,6 +22,15 @@ tw_stime getNextEventTime(tw_lp *lp){
         return r;
 
 }
+void setBigLittleTick(){
+
+      littleTick =  (NEURONS_IN_CORE + 1);// /g_tw_clock_rate;
+
+
+      bigTickRate = ceill(littleTick);
+
+}
+
 /**
  *  @details  If the time is in-between
  *  big ticks, this rounds down to the last big tick. There is a bit of a fuzz for
@@ -32,19 +41,20 @@ tw_stime getNextEventTime(tw_lp *lp){
 
  */
 tw_stime getCurrentBigTick(tw_stime now){
-  if(littleTick == 0 ){
-      littleTick = g_tw_clock_rate / (SYNAPSES_IN_CORE + 1);
-    }
-  if(bigTickRate == 0){
-      bigTickRate = ceill(littleTick);
-    }
+  if(littleTick == 0 || bigTickRate == 0)
+    setBigLittleTick();
+
 
 
 	//long double vtr = 0;
 	//long long rem = modfl(ctick, &vtr);
 	//Rem is current tick, vtr is offset.
 	double rounded =-floor(now);
-	tw_stime rem = ((unsigned long)rounded % (unsigned long)bigTickRate) * bigTickRate ;
+	double tmp;
+	long tt = rounded;
+	tt = abs(tt);
+
+	tw_stime rem = (tt / (unsigned long)bigTickRate) ;//* bigTickRate ;
 
 	return rem;
 
@@ -52,13 +62,9 @@ tw_stime getCurrentBigTick(tw_stime now){
 }
         //@todo This does not work - need to whiteboard it to figure out the conversion.
 tw_stime getNextBigTick(tw_stime now) {
-  if(littleTick == 0 ){
-      //littleTick = g_tw_clock_rate / (SYNAPSES_IN_CORE + 1);
-      littleTick = SYNAPSES_IN_CORE  + 1;
-    }
-  if(bigTickRate == 0){
-      bigTickRate = ceill(littleTick);
-    }
+  if(littleTick == 0 || bigTickRate == 0)
+    setBigLittleTick();
+
        //tw_stime nextTickTime = getCurrentBigTick(now) + g_tw_clock_rate;
         tw_stime inter;
         tw_stime nbtd = bigTickRate-modf(now,&inter);

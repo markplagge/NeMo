@@ -27,13 +27,13 @@ extern int a_created ;
 /**
  *  Number of neurons per core.
  */
-int NEURONS_IN_CORE = 4;
+int NEURONS_IN_CORE = 6;
 /** number of synapses per core. Calculated value, needs to be neurons * axons */
 int SYNAPSES_IN_CORE = 0;
 /** Number of axions per core. Generally is set to 1-1 with neurons in core */
-int AXONS_IN_CORE = 4;
+int AXONS_IN_CORE = 6;
 /* Given number of cores in simulation */
-unsigned int CORES_IN_SIM = 2;
+unsigned int CORES_IN_SIM = 1;
 
 /// Memory Tuning
 int eventAlloc = 2;
@@ -80,13 +80,14 @@ _voltT RESET_VOLTAGE_MIN = -100;
 _threshT RAND_RANGE_MIN = 1;
 _threshT RAND_RANGE_MAX = 31;
 
-
+bool BASIC_SOPS = true;
 /**
  *	Each neuron is connected to the synapses (inputs) within the core it is running in.
  *	These parameters adjust the input weight given to each synapse. */
 int32_t SYNAPSE_WEIGHT_MAX = 10;
 /** Minimum synapse weight. @see SYNAPSE_WEIGHT_MAX */
 int32_t SYNAPSE_WEIGHT_MIN = 1;
+
 tw_stime PER_SYNAPSE_DET_P = .50;
 
 

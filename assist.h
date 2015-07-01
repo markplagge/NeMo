@@ -27,7 +27,7 @@ extern mapTypes tnMapping;
 
 #define _idT uint32_t //!<ID type - local id type for bit shifts and ID cases.
 #define _voltT int_fast32_t //!<Voltage data type (membrane potential)
-#define _weightT uint16_t //!<Weight/probability type
+#define _weightT int_fast32_t //!<Weight/probability type
 #define _threshT uint_fast32_t //!<threshold data type - In the paper, this is two unsigned values and a reversal flag.
 #define _threshT_MAX UINT_FAST32_MAX
 
