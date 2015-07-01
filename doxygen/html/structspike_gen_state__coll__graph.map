@@ -1,4 +1,0 @@
-<map id="spikeGenState" name="spikeGenState">
-<area shape="rect" id="node2" href="$structselected_spikes.html" title="selectedSpikes" alt="" coords="5,5,116,31"/>
-<area shape="rect" id="node3" href="$structrandom_spikes.html" title="Struct that genreates spikes randomly. " alt="" coords="141,5,247,31"/>
-</map>

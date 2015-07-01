@@ -1,149 +1,173 @@
-/*
- * File:   assist.h
- * Author: Mark Plagge -- plaggm
- *
- *  Contains helper functions, used in the model.
- *  Functions here should be too generic to include
- *  in neuron/synapse
- * Contains all of the global defs as well
- * When this project gets bigger, some serious rewrites will be needed.
- * As of now, these values are pretty arbitrary..
+//
+//  assist.h
+//  ROSS_TOP
+//
+//  Created by Mark Plagge on 6/17/15.
+//
+//
 
+#ifndef __ROSS_TOP__assist__
+#define __ROSS_TOP__assist__
 
- * Created on February 28, 2015, 4:24 PM
- */
-/** Parameter Defs:
- * Neurons in Core
- * Max Syapse Weight
- * Threshold Max
- * Parameters for tuning neurons.
- * */
-// replaced with global vars:
-/*
- #define NEURONS_IN_CORE 	4
- //#define SYNAPSES_IN_CORE	128
- #define SYNAPSES_IN_CORE	NEURONS_IN_CORE * 3 //our sim is 1:1 atm.
- #define CORES_PER_PE 	        1
- #define CORE_SIZE		NEURONS_IN_CORE + SYNAPSES_IN_CORE
-
- //maximum neuron threshold value:
- #define THRESHOLD_MAX 		50
- #define THRESHOLD_MIN 		1
- #define SYNAPSE_WEIGHT_MAX 	100
- // some params:
- #define DENDRITE_MIN 		1
- #define DENDRITE_MAX 		128
- #define DENDRITE_W_MIN 		1
- #define DENDRITE_W_MAX 		100
- */
-
-#ifndef ASSIST_H
-#define ASSIST_H
-
-#include "ross.h"
-#include <stdbool.h>
-#include <sys/types.h>
+#include <stdio.h>
 #include <inttypes.h>
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <stdbool.h>
+#include "ross.h"
 
-#ifndef uint
-#define uint unsigned int
-#endif
-//Helper macros:
-#define round(x) ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
+/*Type definitions for the nuron simulation */
+#define VERIFY_MAPPING 1
 
-extern int NEURONS_IN_CORE;
-extern int SYNAPSES_IN_CORE;
-extern int CORES_PER_PE;
-extern int CORE_SIZE;
-extern int THRESHOLD_MAX;
-extern int THRESHOLD_MIN;
-extern int SYNAPSE_WEIGHT_MAX;
-extern int SYNAPSE_WEIGHT_MIN;
-extern int DENDRITE_MIN;
-extern int DENDRITE_MAX;
-extern int DENDRITE_W_MIN;
-extern int DENDRITE_W_MAX;
-extern float CLOCK_SPEED;
+/** Mapping def */
+typedef enum CustomMapTypes{
+	LLINEAR,
+	SCATTER,
+	CUST_LINEAR
+} mapTypes;
+extern mapTypes tnMapping;
 
-extern bool isFile;
-// TODO: Remove this and use integegrated ROSS settings.
-extern int events_per_pe;  // settings for ROSS?
-extern int exec_memory;
-extern int clock_rate;  // might want to use this.
-// TODO: Add a rollback calculation:
-extern tw_stime lookahead;
-extern tw_stime end_time;
+#define _idT uint32_t //!<ID type - local id type for bit shifts and ID cases.
+#define _voltT int_fast32_t //!<Voltage data type (membrane potential)
+#define _weightT int_fast32_t //!<Weight/probability type
+#define _threshT uint_fast32_t //!<threshold data type - In the paper, this is two unsigned values and a reversal flag.
+#define _threshT_MAX UINT_FAST32_MAX
 
-// debug toggle:
-extern int DEBUG_MODE;
+#define _randT int_fast32_t //!< Random value storage for neurons.
 
-// Variable Size defs (for tweakability)
+#define _statT int_fast64_t //!<Counter data type for stats
+/** _regIDT is a "regional id" type. This variable type is for storing
+ *	coreIDs and localIDs. It must be half the bit size of tw_lpid.
+ */
+#define _regIDT uint32_t
+	/** _gidIDT is the other half of the local id - since each big local id
+	 *	is composed of a i and a j side, this holds the two values. */
 
-#define _idType int_fast32_t  //  unsigned int
-// neuron specific type redefs - for potentially integrating weird bit length
-// variable sizes or what not:
-#define _neVoltType int_fast32_t
-#define _neStatType int_fast64_t
-/** stat_t is a type for storing statistics from the running sim. */
-#define stat_t uint_fast64_t
-/** regid_t is a "regional id" type. This variable type is for storing
- *	coreIDs and localIDs. It must be half the bit size of tw_lpid. @todo: add
- *	macro to adjust the bit width. */
-#define regid_t uint32_t
+#define _gridIDT uint16_t
 
+/* Global Macros */
 
-
-// hard coded sim paramaters:
-
-#define END 1000
-#define GVT_INT 16
-// some helpful macros:
+/** IABS is an integer absolute value function */
 #define IABS(a) (((a) < 0) ? (-a) : (a))
-#define REMZ(a) (((a) < 0) ? (0) : (a))
-#define TIME_CEIL (0)
+	/** Faster version  of IABS (no branching) but needs types. @todo this
+	 method will be faster on BGQ, but need to make sure that it works properly */
+	//uint_fast64_t ab(int_fast64_t in){
+	//int_fast64_t const mask = in >> sizeof(int_fast64_t) * CHAR_BIT - 1;
+	//return (in ^ mask) - mask;
+	//
+	//}
 
-long getTotalNeurons();
-long getTotalSynapses();
+	/** RZER is a floor function - values below zero round up to zero */
+#define RZER(a) (((a) < 0) ? (0) : (a))
 
-/// Message information:
-/** State items */
+	//Kronecker delta
+	//#define KDLTA(x) (((a) == 0) ? (1) : (0))
+#define DT(x) !x //!<Kronecker Delta function.
 
-enum events { NEURON = 1, SYNAPSE = 2, INIT = 3, SPKGN = 4, NEU_WAIT = 5 };
+#define SGN(x) (x > 0) - (x < 0) //!< Signum function
 
-// synapse message - message from a synapse to a neuron
-typedef struct {
-} SynapseMessage;
-// neuron message - message from a neuron to a synapse (via virtual dendrite)
-typedef struct {
-} NeuronMessage;
-
-// Message Data and informational content.
-typedef struct {
-  tw_lpid sender;
-  _idType senderLocalID;
-  _idType destCore;
-  _idType destLocalID;
-  _idType sourceCore;
-    _idType partial;
-  enum events type;
-  /** This saves the old state of the neuron, before firing, so that roll back
-   * functions will occur. */
-  _neVoltType prevVoltage;
-  bool genDidFireLast;
-  uint rndCallCount;
+#define BINCOMP(s,p) IABS(s) >= p //!< binary comparison for conditional stochastic evaluation
 
 
-} Msg_Data;
+/* simulation structs. @todo: Maybe move these into main? */
+/** evtType is a message/event identifier flag */
+enum evtType {
+	AXON_OUT, //!< Message originates from an axon
+	AXON_HEARTBEAT, //!< Axon heartbeat message - big clock synchronization.
+	SYNAPSE_OUT, //!< Message originates from a synapse
+	NEURON_OUT, //!< Message originates from a neuron, and is going to an axion.
+	NEURON_HEARTBEAT, //!< Neuron heartbeat messages - for big clock syncronization.
+	GEN_HEARTBEAT //!< Signal generator messages -- used to simulate input for benchmarking.
+};
+enum lpTypeVals {
+	AXON = 2,
+	SYNAPSE = 1,
+	NEURON = 0
+};
 
-// ts function for events - just so I can see what works best.
-tw_stime getNextEventTime(tw_lp* lp);
+/* Message structures */
+
+/**
+  Msg_Data is the main message struct.
+  */
+typedef struct Ms{
+	enum evtType eventType;
+	unsigned long rndCallCount;
+	_idT localID; //!< Sender's local (within a core) id - used for weight lookups.
+}Msg_Data;
+
+/* ***** Global variable defs */
+/** @{
+ * /name SimParams */
+extern int NEURONS_IN_CORE;
+extern unsigned int CORES_IN_SIM;
+extern int AXONS_IN_CORE;
+extern int SYNAPSES_IN_CORE;
+
+extern int CORE_SIZE;
+extern tw_stime BIG_TICK_ERR; //!< Tick error - tw_stime can be this much under the next big tick and register as a big-tick.
 
 
-	#ifdef __cplusplus
-}
-#endif
+/**  @} */
 
-#endif /* ASSIST_H */
+/** @{ /name Mapping */
+extern int NUM_VP_X;
+extern int NUM_VP_Y;
+extern unsigned int LPS_PER_PE;
+extern unsigned int SIM_SIZE;
+extern unsigned int LP_PER_KP;
+
+/*@}*/
+
+
+/** @{
+ * /name inputSimParams */
+extern unsigned int GEN_ON;
+extern bool GEN_RND;
+extern unsigned int RND_MODE;
+extern unsigned int GEN_PROB;
+extern unsigned int GEN_FCT;
+extern unsigned int GEN_OUTBOUND;
+extern unsigned int GEN_SEL_MODE;
+extern unsigned int SP_DBG;
+
+
+/**  @} */
+/** @{
+ * /name neuronParams */
+extern _threshT THRESHOLD_MAX;
+extern _threshT THRESHOLD_MIN;
+extern int32_t SYNAPSE_WEIGHT_MAX;
+extern int32_t SYNAPSE_WEIGHT_MIN;
+/**  @} */
+
+/**
+ *  Gets the next event time, based on a random function. Moved here to allow for
+ *	easier abstraciton, and random function replacement.
+ *
+ *
+ *  @param lp Reference to the current LP so that the function can see the RNG
+ *
+ *  @return a tw_stime value, such that \f$ 0 < t < 1 \f$. A delta for the next
+ *  time slice.
+ */
+tw_stime getNextEventTime(tw_lp *lp);
+/**
+ *  @brief  Given a tw_stime, returns the current big tick.
+ *
+ *  @param now current time
+ *
+ *  @return the current big tick time.
+ */
+tw_stime getCurrentBigTick(tw_stime now);
+
+/**
+ *  @brief  Given a tw_stime, returns the next big-tick that will happen
+ *
+ *  @param now Right now!
+ *
+ *  @return Next big tick time.
+ */
+tw_stime getNextBigTick(tw_stime now);
+
+int testTiming();
+
+#endif /* defined(__ROSS_TOP__assist__) */
