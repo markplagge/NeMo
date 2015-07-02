@@ -57,9 +57,12 @@ double *create_rand_nums(int num_elements) {
 }
 
 int main(int argc, char *argv[]) {
+	
 	tw_opt_add(app_opt);
-
 	tw_init(&argc, &argv);
+
+		//Some init messages:
+
 	// set up core sizes.
 	AXONS_IN_CORE = NEURONS_IN_CORE;
 	SYNAPSES_IN_CORE = (NEURONS_IN_CORE * AXONS_IN_CORE);
@@ -106,11 +109,9 @@ int main(int argc, char *argv[]) {
 	// createLPs();
 
 	// printf("\nCreated %i ax, %i ne, %i se", a_created, n_created, s_created);
-	if(DEBUG_MODE)
-	  printf("Timing - Big tick occurs at %f\n", getNextBigTick(0));
-
-
-	testTiming();
+	if(g_tw_mynode == 0)
+		displayModelSettings();
+		//testTiming();
 
 
 	tw_run();
@@ -173,7 +174,7 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 		s->myLocalID = getCoreLocalFromGID(lp->gid);
 	}
 	//BASIC SOPS SETUP - FOR STRICT BENCHMARK
-	if(BASIC_SOPS) {
+	if(BASIC_SOP) {
 	    s->threshold = s->threshold = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
 	    for (int i = 0; i < SYNAPSES_IN_CORE; i++) {
 		    //See if this neuron is negative:
@@ -263,17 +264,17 @@ void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID) { }
 
 void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 
-	if (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
+	if (BASIC_SOP && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
 		tw_snapshot(lp, lp->type->state_sz);
 	}
 
-	if(BASIC_SOPS){
+	if(BASIC_SOP){
 	    neuronReceiveMessageBasic(s,tw_now(lp),M,lp);
 	  }else {
 	neuronReceiveMessage(s, tw_now(lp), M, lp);
 	  }
 
-	if (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
+	if (BASIC_SOP && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
 		tw_snapshot_delta(lp, lp->type->state_sz);
 	}
 
@@ -282,7 +283,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp) {
 
 
-	if (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
+	if (BASIC_SOP && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
 		tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
 		long count = MCV->rndCallCount;
 		while (count--) {
@@ -441,4 +442,22 @@ void axon_reverse(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 
 void axon_final(axonState *s, tw_lp *lp) { }
 
-void pre_run() { }
+void pre_run() {
+
+}
+void displayModelSettings(){
+
+	for (int i = 0; i < 30; i ++) {
+		printf("*");
+	}
+	printf("\n");
+	char * sopMode = BASIC_SOP ? "simplified Neuron Model" : "normal TN Neuron Model";
+	printf("* \tNeurons set to %s.\n", sopMode);
+
+		printf("* \tTiming - Big tick occurs at %f\n", getNextBigTick(0));
+
+	for (int i = 0; i < 30; i ++) {
+		printf("*");
+	}
+	printf("\n");
+}

@@ -11,20 +11,29 @@
 ///number of simulation ticks per big tick (determined by the g_tw_clock_rate param)
 tw_stime littleTick = 0;
 tw_stime bigTickRate = 0;
+const long  TIME_RES = .00001;
 /**
  *  Gets the next small-tick event time.
  */
 tw_stime getNextEventTime(tw_lp *lp){
 
-        //tw_stime r =tw_rand_unif(lp->rng);
+		tw_stime r =tw_rand_unif(lp->rng);
 
-  tw_stime r = tw_rand_exponential(lp->rng, 1)/10;
+
+		//tw_stime r = tw_rand_normal_sd(lp->rng, 1, 1,&lp->rng->count);
+		//tw_stime r = tw_rand_exponential(lp->rng, 1.5) ;
+		//tw_stime r = tw_rand_binomial(lp->rng, 100, .5);
+
+	r *= TIME_RES;
+
+
         return r;
 
 }
 void setBigLittleTick(){
 
-      littleTick =  (NEURONS_IN_CORE + 1);// /g_tw_clock_rate;
+
+      littleTick =  TIME_RES;// /g_tw_clock_rate;
 
 
       bigTickRate = ceill(littleTick);
@@ -45,33 +54,17 @@ tw_stime getCurrentBigTick(tw_stime now){
     setBigLittleTick();
 
 
-
-	//long double vtr = 0;
-	//long long rem = modfl(ctick, &vtr);
-	//Rem is current tick, vtr is offset.
-	double rounded =-floor(now);
-	double tmp;
-	long tt = rounded;
-	tt = abs(tt);
-
-	tw_stime rem = (tt / (unsigned long)bigTickRate) ;//* bigTickRate ;
-
-	return rem;
+	return floor(now);
+	
 
 
 }
         //@todo This does not work - need to whiteboard it to figure out the conversion.
-tw_stime getNextBigTick(tw_stime now) {
+tw_stime getNextBigTick(tw_stime nextEventTime) {
   if(littleTick == 0 || bigTickRate == 0)
     setBigLittleTick();
 
-       //tw_stime nextTickTime = getCurrentBigTick(now) + g_tw_clock_rate;
-        tw_stime inter;
-        tw_stime nbtd = bigTickRate-modf(now,&inter);
-        //nbtd += g_tw_clock_rate;
-        return nbtd;
-        //return 2;
-
+	return 1 + nextEventTime;
                 //Need to figure this out - not accurate until this is done:
 
 }
@@ -83,16 +76,20 @@ int testTiming(){
   //Pretend all axons get a message first:
   int tester = 0;
   printf("%i synapses in core\n", SYNAPSES_IN_CORE);
-  while (tester < 4){
+	tw_stime *firstNeuronOutTime;//[AXONS_IN_CORE];
+	firstNeuronOutTime = calloc(sizeof(tw_stime), AXONS_IN_CORE);
+	tw_stime *axonSendTime;
+	axonSendTime = calloc(sizeof(tw_stime), AXONS_IN_CORE);
 
-  tw_stime axonSendTime[AXONS_IN_CORE];
+  while (tester < 1024){
+
+
   for(int i = 0; i < AXONS_IN_CORE; i ++) {
-       int adj = tester * SYNAPSES_IN_CORE;
-      axonSendTime[i] = getNextEventTime(rap) + adj;
+      axonSendTime[i] = getNextEventTime(rap) + firstNeuronOutTime[i];
     }
 
   //next, check the first synapse layer:
-  tw_stime firstNeuronOutTime[AXONS_IN_CORE];
+
   for(int i = 0; i < AXONS_IN_CORE; i ++) {
       firstNeuronOutTime[i] = getNextBigTick(axonSendTime[i]);
     }
@@ -102,6 +99,9 @@ int testTiming(){
 
   printf( "Axons in core: %i - Synapses in Core %i. \n",AXONS_IN_CORE, NEURONS_IN_CORE);
 for(int i = 0; i < AXONS_IN_CORE; i ++){
+	double xv = axonSendTime[i];
+	if (xv  < 0)
+		printf("Less than zero\n");
     printf("Ax/Ne %i Sends from %f -> Neuron @ %f\n", i, axonSendTime[i],firstNeuronOutTime[i]);
   }
 printf("\n");

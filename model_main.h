@@ -24,6 +24,7 @@ extern int n_created ;
 extern int s_created ;
 extern int a_created ;
         // Variable holders for command lne params & external variables
+
 /**
  *  Number of neurons per core.
  */
@@ -51,6 +52,7 @@ unsigned int SIM_SIZE;
 unsigned int LP_PER_KP = 2;
 unsigned int LH_VAL = 0;
 bool DEBUG_MODE = 0;
+bool BASIC_SOP = false;
 
  _statT neuronSOPS = 0;
  _statT synapseEvents = 0;
@@ -80,7 +82,8 @@ _voltT RESET_VOLTAGE_MIN = -100;
 _threshT RAND_RANGE_MIN = 1;
 _threshT RAND_RANGE_MAX = 31;
 
-bool BASIC_SOPS = true;
+
+
 /**
  *	Each neuron is connected to the synapses (inputs) within the core it is running in.
  *	These parameters adjust the input weight given to each synapse. */
@@ -136,6 +139,7 @@ const tw_optdef app_opt[]= {
     TWOPT_GROUP("Sim tuning"),
   TWOPT_UINT("lh", LH_VAL, "Lookahead setting"),
   TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
+	TWOPT_FLAG("simple", BASIC_SOP, "Simple SOPS measurement (simpified neuron model)"),
     {TWOPT_END()}
 
   };
@@ -154,6 +158,14 @@ void axon_event(axonState *s, tw_bf *, Msg_Data *M, tw_lp *lp);
 void axon_reverse(axonState *, tw_bf *, Msg_Data *M, tw_lp *);
 void axon_final(axonState *s, tw_lp *lp);
 
-
+/**
+ * @brief An assist function that displays the model 
+ * configuration before a run.
+ * @details With debug mode off, this displays all of the important config
+ * info. With debug mode on, this displays the mapping and initial values 
+ * of all the axons, neurons, and synapses, along with more detailed
+ * information. Only displays on the primary node.
+ */
+void displayModelSettings();
 
 #endif /* defined(__ROSS_TOP__model_main__) */

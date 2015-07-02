@@ -33,7 +33,7 @@ extern mapTypes tnMapping;
 
 #define _randT int_fast32_t //!< Random value storage for neurons.
 
-#define _statT int_fast64_t //!<Counter data type for stats
+#define _statT uint64_t //!<Counter data type for stats
 /** _regIDT is a "regional id" type. This variable type is for storing
  *	coreIDs and localIDs. It must be half the bit size of tw_lpid.
  */
@@ -66,6 +66,7 @@ extern mapTypes tnMapping;
 
 #define BINCOMP(s,p) IABS(s) >= p //!< binary comparison for conditional stochastic evaluation
 
+	/** Defines the time resolution. Run the sim at 1ghz */
 
 /* simulation structs. @todo: Maybe move these into main? */
 /** evtType is a message/event identifier flag */
@@ -92,6 +93,9 @@ typedef struct Ms{
 	enum evtType eventType;
 	unsigned long rndCallCount;
 	_idT localID; //!< Sender's local (within a core) id - used for weight lookups.
+	_voltT neuronVoltage;
+	tw_stime neuronLastActiveTime;
+	tw_stime neuronLastLeakTime;
 }Msg_Data;
 
 /* ***** Global variable defs */
@@ -166,7 +170,7 @@ tw_stime getCurrentBigTick(tw_stime now);
  *
  *  @return Next big tick time.
  */
-tw_stime getNextBigTick(tw_stime now);
+tw_stime getNextBigTick(tw_stime nextEventTime);
 
 int testTiming();
 

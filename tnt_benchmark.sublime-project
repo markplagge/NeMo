@@ -1,0 +1,25 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+	"SublimeLinter":
+{
+    "linters":
+    {
+        "clang": {
+            "extra_flags": "-Wall -I${project_folder}/ -I/Users/Mark/mpich-install/include -L/Users/Mark/mpich-install/lib -lmpi -lpmpi -L/Users/Mark/mpich-install/lib -L/Users/Mark/mpich-install/lib/pkgconfig",
+            "include_dirs": [
+                "/Users/Mark/mpich-install/lib",
+                "/Users/Mark/mpich-install/lib/pkgconfig",
+                "/Users/Mark/mpich-install/",
+                "/Users/Mark/Development/TrueNorth/ROSS/core/",
+                "/Users/Mark/Development/TrueNorth/ROSS/"
+            ]
+        }
+    }
+},
+
+}

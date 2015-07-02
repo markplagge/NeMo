@@ -137,9 +137,12 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 	bool willFire = false;
 	st->firedLast = false;
 		//save the previous state of the neuron:
-	st->savedLastLeakTime = st->lastLeakTime;
-	st->savedLastActiveTime = st->lastActiveTime;
-	st->savedMembranePot = st->membranePot;
+		//st->savedLastLeakTime = st->lastLeakTime;
+		//st->savedLastActiveTime = st->lastActiveTime;
+		//st->savedMembranePot = st->membranePot;
+	m->neuronVoltage = st->membranePot;
+	m->neuronLastLeakTime = st->lastLeakTime;
+	m->neuronLastActiveTime = st->lastActiveTime;
 
 
 
@@ -193,9 +196,10 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 }
 //neuron is in basic firing mode with delta encoding.
 void neuronReceiveMessageBasic(neuronState *st, tw_stime time, Msg_Data *m, tw_lp *lp){
+	 unsigned long startCount = lp->rng->count;
     switch (m->eventType) {
         //random fn call state management.
-        unsigned long startCount = lp->rng->count;
+
         //state management
         bool willFire = false;
         st->firedLast = false;
@@ -229,6 +233,8 @@ void neuronReceiveMessageBasic(neuronState *st, tw_stime time, Msg_Data *m, tw_l
                               //Error condition - non-valid input.
                       break;
       }
+	st->rcvdMsgCount ++;
+	m->rndCallCount= lp->rng->count - startCount;
 
 }
 
@@ -240,7 +246,7 @@ bool neuronShouldFire(neuronState *st, tw_lp *lp){
 }
 
 void nSpike(neuronState *st, tw_stime time, tw_lp *lp){
-	tw_stime nextHeartbeat = getNextBigTick(time);
+	tw_stime nextHeartbeat = getNextBigTick(getNextEventTime(lp));
 	tw_event *newEvent = tw_event_new(st->dendriteGlobalDest, nextHeartbeat, lp);
 	Msg_Data *data = (Msg_Data *) tw_event_data(newEvent);
 	data->eventType = NEURON_OUT;
@@ -257,7 +263,7 @@ void sendHeartbeat(neuronState *st, tw_lp *lp, tw_stime time){
                 //random fn call state management.
   //printf("heartbeat sent \n");
 
-	tw_stime nextHeartbeat = getNextBigTick(time);
+	tw_stime nextHeartbeat = getNextBigTick(getNextEventTime(lp));
 	tw_event *newEvent = tw_event_new(lp->gid, nextHeartbeat, lp);
 	Msg_Data *data = (Msg_Data *) tw_event_data(newEvent);
 	data->eventType = NEURON_HEARTBEAT;
@@ -306,7 +312,7 @@ void  neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFi
 		_threshT B = st->negativeThreshold;
 		int K = st->negThresReset;
 		int G = st->resetMode;
-		_randT n = st->drawnRandomNumber;
+		_randT n = st->drawnRandomNumber & st->thresholdPRNMask;
 		_voltT R = st->resetVoltage;
 		_voltT V = st->membranePot;
 		st->membranePot = (-(B*K) + (-(DT(G)) * R +
@@ -332,10 +338,9 @@ void  neuornReverseState(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp) {
 		s->fireCount --;
 	}
 
-	s->membranePot  = s->savedMembranePot;
-	s->lastActiveTime = s->savedLastActiveTime;
-	s->lastLeakTime = s->savedLastLeakTime;
-
+	s->membranePot = m->neuronVoltage ;
+	s->lastLeakTime =  m->neuronLastLeakTime;
+	s->lastActiveTime = m->neuronLastActiveTime;
 
 	while (count--) {
 	    tw_rand_reverse_unif(lp->rng);
