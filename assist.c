@@ -11,16 +11,16 @@
 ///number of simulation ticks per big tick (determined by the g_tw_clock_rate param)
 tw_stime littleTick = 0;
 tw_stime bigTickRate = 0;
-const long  TIME_RES = .1;
+const long double  TIME_RES = .000001;
 /**
  *  Gets the next small-tick event time.
  */
 tw_stime getNextEventTime(tw_lp *lp){
 
-		//tw_stime r =tw_rand_unif(lp->rng);
+		long double r =tw_rand_unif(lp->rng);
 
 
-		tw_stime r = tw_rand_normal_sd(lp->rng, 10, 1,&lp->rng->count);
+		//tw_stime r = tw_rand_normal_sd(lp->rng, 10, 1,&lp->rng->count);
 		//tw_stime r = tw_rand_exponential(lp->rng, 1.5) ;
 		//tw_stime r = tw_rand_binomial(lp->rng, 100, .5);
 

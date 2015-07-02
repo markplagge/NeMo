@@ -187,7 +187,7 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 
 
 	st->rcvdMsgCount ++;
-	m->rndCallCount= lp->rng->count - startCount;
+	m->rndCallCount=   lp->rng->count - startCount;
 
 
 

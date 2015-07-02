@@ -229,6 +229,9 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 		}
 
 		for (int i = 0; i < SYNAPSES_IN_CORE; i++) {
+			/**
+			 *  @todo  Enable per neuron probability selection.
+			 */
 			s->synapticWeightProbSelect[i] = stochasticThreshold;
 			//See if this neuron is negative:
 			int_fast32_t synMinWeight =  tw_rand_poisson(lp->rng, 1) > 3? - SYNAPSE_WEIGHT_MIN : SYNAPSE_WEIGHT_MIN;
@@ -264,9 +267,9 @@ void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID) { }
 
 void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 
-	if (BASIC_SOP && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
-		tw_snapshot(lp, lp->type->state_sz);
-	}
+//	if (BASIC_SOP && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
+//		tw_snapshot(lp, lp->type->state_sz);
+//	}
 
 	if(BASIC_SOP){
 	    neuronReceiveMessageBasic(s,tw_now(lp),M,lp);
@@ -274,25 +277,25 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 	neuronReceiveMessage(s, tw_now(lp), M, lp);
 	  }
 
-	if (BASIC_SOP && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
-		tw_snapshot_delta(lp, lp->type->state_sz);
-	}
+//	if (BASIC_SOP && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
+//		tw_snapshot_delta(lp, lp->type->state_sz);
+//	}
 
 }
 
 void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp) {
 
 
-	if (BASIC_SOP && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
-		tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
-		long count = MCV->rndCallCount;
-		while (count--) {
-			tw_rand_reverse_unif(lp->rng);
-		}
-
-	} else {
+//	if (BASIC_SOP && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
+//		tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
+//		long count = MCV->rndCallCount;
+//		while (count--) {
+//			tw_rand_reverse_unif(lp->rng);
+//		}
+//
+//	} else {
 		neuornReverseState(s, CV, MCV, lp);
-	}
+		//}
 
 
 }
@@ -350,7 +353,6 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 		data->localID = lp->gid;
 
 		tw_event_send(axe);
-		M->rndCallCount = lp->rng->count - rc;
 	}
 
 	// generate event to send to neuron.
@@ -367,7 +369,7 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 		printf("Synapse received and sent message - sGID %i - sDestSyn %i - sDestNeu %i\n", lp->gid, s->destSynapse,
 		       s->destNeuron);
 	}
-	M->rndCallCount = lp->rng->count - rc;
+	M->rndCallCount =  lp->rng->count - rc;
 }
 
 void synapse_reverse(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
