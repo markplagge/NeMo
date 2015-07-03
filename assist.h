@@ -16,15 +16,6 @@
 
 /*Type definitions for the nuron simulation */
 #define VERIFY_MAPPING 1
-
-/** Mapping def */
-typedef enum CustomMapTypes{
-	LLINEAR,
-	SCATTER,
-	CUST_LINEAR
-} mapTypes;
-extern mapTypes tnMapping;
-
 #define _idT uint32_t //!<ID type - local id type for bit shifts and ID cases.
 #define _voltT int_fast32_t //!<Voltage data type (membrane potential)
 #define _weightT int_fast32_t //!<Weight/probability type
@@ -83,6 +74,18 @@ enum lpTypeVals {
 	SYNAPSE = 1,
 	NEURON = 0
 };
+/** Mapping def */
+typedef enum CustomMapTypes{
+	LLINEAR,
+	SCATTER,
+	CUST_LINEAR
+} mapTypes;
+typedef enum TimeRandomSel {
+	RND_UNF = 0,
+	RND_NORM_BASED = 1,
+	RND_EXP = 2,
+	RND_BIN = 3
+} timeRandomSel;
 
 /* Message structures */
 
@@ -105,7 +108,7 @@ extern int NEURONS_IN_CORE;
 extern unsigned int CORES_IN_SIM;
 extern int AXONS_IN_CORE;
 extern int SYNAPSES_IN_CORE;
-
+extern mapTypes tnMapping;
 extern int CORE_SIZE;
 extern tw_stime BIG_TICK_ERR; //!< Tick error - tw_stime can be this much under the next big tick and register as a big-tick.
 
@@ -142,6 +145,14 @@ extern _threshT THRESHOLD_MIN;
 extern int32_t SYNAPSE_WEIGHT_MAX;
 extern int32_t SYNAPSE_WEIGHT_MIN;
 /**  @} */
+
+/** @{ */
+
+extern tw_stime littleTick;
+
+extern tw_stime CLOCK_RANDOM_ADJ;
+extern timeRandomSel CLOCK_RND_MODE;
+/** @}
 
 /**
  *  Gets the next event time, based on a random function. Moved here to allow for

@@ -57,6 +57,13 @@ bool BASIC_SOP = false;
  _statT neuronSOPS = 0;
  _statT synapseEvents = 0;
 
+/** littleTick is the resolution of little ticks 
+* (events between neuron fire events) */
+tw_stime littleTick = .001;
+/** changes random time parameter */
+tw_stime CLOCK_RANDOM_ADJ = 1.0;
+/** selects different random modes:*/
+timeRandomSel CLOCK_RND_MODE = 0;
 
 extern tw_lpid* myGIDs;
 
@@ -140,6 +147,9 @@ const tw_optdef app_opt[]= {
   TWOPT_UINT("lh", LH_VAL, "Lookahead setting"),
   TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
 	TWOPT_FLAG("simple", BASIC_SOP, "Simple SOPS measurement (simpified neuron model)"),
+  TWOPT_STIME("lt", littleTick, "Little tick rate"),
+  TWOPT_STIME("rv", CLOCK_RANDOM_ADJ, "Clock random generator mode"),
+  TWOPT_UINT("rm", CLOCK_RND_MODE, "Clock random mode selector.\n\t\t0 = uniform, 1 = normal, 2 = exponential, 3 = binomal"),
     {TWOPT_END()}
 
   };
