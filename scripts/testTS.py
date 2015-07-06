@@ -66,12 +66,12 @@ rMod = [1,2,3,"0.1",".01"]
 
 littleTickRange = ["0.00001", "0.0001", "0.001", "0.01", "0.1"]
 
-simEnd = "50000"
+simEnd = "1000"
 
 clockRates = [1, 10, 100, 1000]
 
 
-cmd = "../../builds/models/tnt_benchmark/tnt_benchmark --neurons=128 "
+cmd = "../../builds/models/tnt_benchmark/tnt_benchmark --neurons=256 "
 
 processes = []
 results = []
