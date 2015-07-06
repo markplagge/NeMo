@@ -28,6 +28,7 @@ tw_stime getNextEventTime(tw_lp *lp) {
   break;
   case RND_EXP:
   r = tw_rand_exponential(lp->rng, CLOCK_RANDOM_ADJ) ;
+		  break;
   default:
   r = tw_rand_binomial(lp->rng, 100, CLOCK_RANDOM_ADJ);
   lp->rng->count += ct;
