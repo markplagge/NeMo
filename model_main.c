@@ -55,7 +55,7 @@ double *create_rand_nums(int num_elements) {
 	}
 	return rand_nums;
 }
-void timeCheck() {
+void statsOut() {
     tw_pe* me = g_tw_pe[0];
     tw_statistics s;
         tw_pe	*pe;
@@ -135,7 +135,11 @@ void timeCheck() {
             return;
 
         fprintf(stderr, "%i", s.s_pe_event_ties);
-        printf("\n\n %i", s.s_pe_event_ties);
+		//printf("\n\n %i", s.s_pe_event_ties);
+		//tabular data:
+		//NP  - CORES - Neurons per core - Net Events - Rollbacks - Running Time	- SOP
+	printf("\n\n");
+	printf("%lu\t%i\t%i\t%llu\t%llu\t%f\t%llu\t",g_tw_npe, CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time,totalSOPS);
 
 
 }
@@ -199,18 +203,18 @@ int main(int argc, char *argv[]) {
 
 	tw_run();
 	// Stats Collection ************************************************************************************88
-	_statT totalSOPS = 0;
-	_statT totalSynapses = 0;
+	 totalSOPS = 0;
+	totalSynapses = 0;
 	MPI_Reduce(&neuronSOPS, &totalSOPS, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
 	MPI_Reduce(&synapseEvents, &totalSynapses, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
-	timeCheck();
+	statsOut();
 	tw_end();
 
 	if (g_tw_mynode == 0) {  // master node for outputting stats.
 
 		printf("\n ------ TN Benchmark Stats ------- \n");
 		printf("Total SOPS(integrate and/or fire): %llu\n", totalSOPS);
-		printf("This PE's SOPS: %llu\n", neuronSOPS);
+		printf("This PE's SOP: %llu\n", neuronSOPS);
 		printf("Total Synapse MSGs sent: %llu\n", totalSynapses);
 
 	}
@@ -352,9 +356,9 @@ void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID) { }
 
 void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 
-//	if (BASIC_SOP && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
-//		tw_snapshot(lp, lp->type->state_sz);
-//	}
+	if (TW_DELTA && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
+		tw_snapshot(lp, lp->type->state_sz);
+	}
 
 	if(BASIC_SOP){
 	    neuronReceiveMessageBasic(s,tw_now(lp),M,lp);
@@ -362,25 +366,25 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 	neuronReceiveMessage(s, tw_now(lp), M, lp);
 	  }
 
-//	if (BASIC_SOP && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
-//		tw_snapshot_delta(lp, lp->type->state_sz);
-//	}
+	if (BASIC_SOP && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
+		tw_snapshot_delta(lp, lp->type->state_sz);
+	}
 
 }
 
 void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp) {
 
 
-//	if (BASIC_SOP && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
-//		tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
-//		long count = MCV->rndCallCount;
-//		while (count--) {
-//			tw_rand_reverse_unif(lp->rng);
-//		}
-//
-//	} else {
+	if (TW_DELTA && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
+		tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
+		long count = MCV->rndCallCount;
+		while (count--) {
+			tw_rand_reverse_unif(lp->rng);
+		}
+
+	} else {
 		neuornReverseState(s, CV, MCV, lp);
-		//}
+		}
 
 
 }

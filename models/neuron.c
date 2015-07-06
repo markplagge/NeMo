@@ -197,6 +197,9 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 //neuron is in basic firing mode with delta encoding.
 void neuronReceiveMessageBasic(neuronState *st, tw_stime time, Msg_Data *m, tw_lp *lp){
 	 unsigned long startCount = lp->rng->count;
+	m->neuronVoltage = st->membranePot; //save the state.
+	m->neuronLastActiveTime = tw_now(lp); //simple mode does not use the last time
+	m->neuronLastLeakTime = tw_now(lp); //but I save them here so the normal reverse function will work.
     switch (m->eventType) {
         //random fn call state management.
 

@@ -53,6 +53,7 @@ unsigned int LP_PER_KP = 2;
 unsigned int LH_VAL = 0;
 bool DEBUG_MODE = 0;
 bool BASIC_SOP = false;
+bool TW_DELTA = false;
 
  _statT neuronSOPS = 0;
  _statT synapseEvents = 0;
@@ -90,7 +91,8 @@ _threshT RAND_RANGE_MIN = 1;
 _threshT RAND_RANGE_MAX = 31;
 
 
-
+_statT totalSOPS;
+_statT totalSynapses;
 /**
  *	Each neuron is connected to the synapses (inputs) within the core it is running in.
  *	These parameters adjust the input weight given to each synapse. */
@@ -146,6 +148,7 @@ const tw_optdef app_opt[]= {
     TWOPT_GROUP("Sim tuning"),
   TWOPT_UINT("lh", LH_VAL, "Lookahead setting"),
   TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
+	TWOPT_FLAG("delta", TW_DELTA, "Use delta encoding for some states"),
 	TWOPT_FLAG("simple", BASIC_SOP, "Simple SOPS measurement (simpified neuron model)"),
   TWOPT_STIME("lt", littleTick, "Little tick rate"),
   TWOPT_STIME("rv", CLOCK_RANDOM_ADJ, "Clock random generator mode"),
