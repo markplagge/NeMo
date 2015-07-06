@@ -89,6 +89,7 @@ typedef enum TimeRandomSel {
 
 /* Message structures */
 
+
 /**
   Msg_Data is the main message struct.
   */
@@ -99,6 +100,8 @@ typedef struct Ms{
 	_voltT neuronVoltage;
 	tw_stime neuronLastActiveTime;
 	tw_stime neuronLastLeakTime;
+
+	_idT axonID; //!< Axon ID for neuron value lookups.
 }Msg_Data;
 
 /* ***** Global variable defs */

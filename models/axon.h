@@ -16,6 +16,7 @@
 typedef struct AxonState {
 	_statT sendMsgCount;
 	tw_lpid destSynapse;
+	_idT axonID;
 
 	inputSimulatorState *sim;
 }axonState;

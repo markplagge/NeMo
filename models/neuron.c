@@ -148,7 +148,7 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 
 	switch (m->eventType) {
 	  case SYNAPSE_OUT:
-                        integrateSynapse(m->localID, st, lp);
+                        integrateSynapseFast(m->axonID, st, lp);
 
 				//next, we will check if a heartbeat message should be sent
 			if(st->receivedSynapseMsgs == 0) {
@@ -208,7 +208,7 @@ void neuronReceiveMessageBasic(neuronState *st, tw_stime time, Msg_Data *m, tw_l
         st->firedLast = false;
       case SYNAPSE_OUT:
                     //basic integrate function:
-            st->membranePot += st->synapticWeightProb[m->localID];
+			integrateSynapseFast(m->axonID, st, lp);
 
                             //next, we will check if a heartbeat message should be sent
                     if(st->receivedSynapseMsgs == 0) {
@@ -292,17 +292,19 @@ void stochasticIntegrate(_weightT weight, neuronState *st){
 }
 
 
-void integrateSynapse(_idT synapseID,neuronState *st, tw_lp *lp) {
-
-	if(st->synapticWeightProbSelect[synapseID] == true) {
-		stochasticIntegrate(st->synapticWeightProb[synapseID], st);
-	} else { //det. mode integrate:
-		_voltT adjustedWeight = st->synapticWeightProb[synapseID];
-		st->membranePot += adjustedWeight;
+	//non huge array method of integration.
+void integrateSynapseFast(_idT axonID, neuronState *st, tw_lp *lp) {
+	_voltT adjWt = st->axonWeightProb[st->weightSelect[axonID]];
+	if(st->axonProbSelect[st->weightSelect[axonID]]){
+		stochasticIntegrate(adjWt, st);
+	} else {
+		st->membranePot += adjWt;
 	}
 
 
+
 }
+
 /** @todo There is potentially an issue here - does the TrueNorth architecture draw a new
  *	pseudorandom number during the threshold, fire, reset functions, or does it resuse them? It
  *	looks like re-use, so that's what I'm doing here.

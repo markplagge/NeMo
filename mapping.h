@@ -202,12 +202,9 @@ tw_lpid lCoreOffset(tw_lpid gid);
 tw_lpid lGetSynNumLocal(tw_lpid gid);
 
 /**
- * @brief lGetSynNumLocal returns the "local id" of a neuron. Since neurons are
- * last in linear mapping, neuron 0 on core 0 has a GID of AXONS + SYNAPSES. Each
- * core adds a value to the original GID, but not the local id.
- * @param gid
- * @return
+ @brief returns the axon local id (for the neurons)
  */
+
 tw_lpid lGetAxeNumLocal(tw_lpid gid);
 
 tw_lpid lGetNeuNumLocal(tw_lpid gid);
@@ -217,6 +214,9 @@ tw_lpid lGetNeuNumLocal(tw_lpid gid);
  * @return
  */
 tw_lpid lGetCoreFromGID(tw_lpid gid);
+
+	//
+
 
 /**
  *  @brief  returns the decimal sum of the i,j, and core values from a gid.

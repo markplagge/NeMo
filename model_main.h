@@ -51,6 +51,7 @@ unsigned int LPS_PER_PE;
 unsigned int SIM_SIZE;
 unsigned int LP_PER_KP = 2;
 unsigned int LH_VAL = 0;
+unsigned int RAND_WT_PROB = 2;
 bool DEBUG_MODE = 0;
 bool BASIC_SOP = false;
 bool TW_DELTA = false;
@@ -96,9 +97,9 @@ _statT totalSynapses;
 /**
  *	Each neuron is connected to the synapses (inputs) within the core it is running in.
  *	These parameters adjust the input weight given to each synapse. */
-int32_t SYNAPSE_WEIGHT_MAX = 10;
+int32_t SYNAPSE_WEIGHT_MAX = 50;
 /** Minimum synapse weight. @see SYNAPSE_WEIGHT_MAX */
-int32_t SYNAPSE_WEIGHT_MIN = 1;
+int32_t SYNAPSE_WEIGHT_MIN = 5;
 
 tw_stime PER_SYNAPSE_DET_P = .50;
 
@@ -139,8 +140,9 @@ const tw_optdef app_opt[]= {
   TWOPT_GROUP("Randomized Neuron Parameters"),
   TWOPT_UINT("th_min", THRESHOLD_MIN, "minimum threshold for neurons"),
     TWOPT_UINT("th_max", THRESHOLD_MAX, "maximum threshold for neurons"),
-    TWOPT_UINT("wt_min", SYNAPSE_WEIGHT_MIN, "minimum synapse weight"),
-    TWOPT_UINT("wt_max", SYNAPSE_WEIGHT_MAX, "maximum synapse weight -- is treated as 0-val"),
+    TWOPT_UINT("wt_min", SYNAPSE_WEIGHT_MIN, "minimum synapse weight -- is treated as 0-val"),
+    TWOPT_UINT("wt_max", SYNAPSE_WEIGHT_MAX, "maximum synapse weight"),
+	TWOPT_UINT("rdn_p", RAND_WT_PROB, "given a λ of 1, if the value is greater than this a neuron will assign a stochastic value to an axon type."),
 
 	TWOPT_GROUP("Sim Size Params"),
 	TWOPT_UINT("cores", CORES_IN_SIM, "number of cores in simulation"),

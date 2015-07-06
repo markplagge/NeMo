@@ -269,7 +269,17 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 		    //See if this neuron is negative:
 		    int_fast32_t synMinWeight =  tw_rand_poisson(lp->rng, 1) > 2? - SYNAPSE_WEIGHT_MIN : SYNAPSE_WEIGHT_MIN;
 
-		    s->synapticWeightProb[i] = tw_rand_integer(lp->rng, synMinWeight , SYNAPSE_WEIGHT_MAX);
+
+			for (int i = 0; i < AXONS_IN_CORE; i ++) {
+				s->weightSelect[i] = tw_rand_integer(lp->rng, 0, 3);
+			}
+				//set up type weights:
+			for (int i = 0; i < 4; i ++) {
+
+				s->axonWeightProb[i] = tw_rand_integer(lp->rng, -SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
+				s->axonProbSelect[i] = tw_rand_poisson(lp->rng, 1) > RAND_WT_PROB;
+			}
+
 	    }
 
 	    s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
@@ -287,10 +297,6 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 		s->resetVoltage = tw_rand_integer(lp->rng, RESET_VOLTAGE_MIN, RESET_VOLTAGE_MAX);
 		// Randomized selection - calls to various random functions.
 		short resetSel = tw_rand_integer(lp->rng, 0, 2);
-
-		///@todo resetSel right now is set to always be 0. Stochastic resets are not very good ATM.
-		//resetSel = 0;
-
 		bool stochasticThreshold = tw_rand_poisson(lp->rng, 1) > 3;
 		//s->synapticWeightProb =
 		//    tw_calloc(TW_LOC, "Neuron", sizeof(_weightT), SYNAPSES_IN_CORE);
@@ -317,16 +323,29 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 			if (s->thresholdPRNMask == -1) { abort(); }
 		}
 
-		for (int i = 0; i < SYNAPSES_IN_CORE; i++) {
-			/**
-			 *  @todo  Enable per neuron probability selection.
-			 */
-			s->synapticWeightProbSelect[i] = stochasticThreshold;
-			//See if this neuron is negative:
-			int_fast32_t synMinWeight =  tw_rand_poisson(lp->rng, 1) > 3? - SYNAPSE_WEIGHT_MIN : SYNAPSE_WEIGHT_MIN;
 
-			s->synapticWeightProb[i] = tw_rand_integer(lp->rng, synMinWeight , SYNAPSE_WEIGHT_MAX);
-		}
+		  for (int i = 0; i < AXONS_IN_CORE; i ++) {
+			  s->weightSelect[i] = tw_rand_integer(lp->rng, 0, 3);
+		  }
+			  //set up type weights:
+		  for (int i = 0; i < 4; i ++) {
+
+			  s->axonWeightProb[i] = tw_rand_integer(lp->rng, -SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
+			  s->axonProbSelect[i] = tw_rand_poisson(lp->rng, 1) > RAND_WT_PROB;
+		  }
+
+			  //old looop
+//		for (int i = 0; i < SYNAPSES_IN_CORE; i++) {
+//			/**
+//			 *  @todo  Enable per neuron probability selection.
+//			 */
+//
+//			s->synapticWeightProbSelect[i] = stochasticThreshold;
+//			//See if this neuron is negative:
+//			int_fast32_t synMinWeight =  tw_rand_poisson(lp->rng, 1) > 3? - SYNAPSE_WEIGHT_MIN : SYNAPSE_WEIGHT_MIN;
+//
+//			s->synapticWeightProb[i] = tw_rand_integer(lp->rng, synMinWeight , SYNAPSE_WEIGHT_MAX);
+//		}
 
 		s->doLeak = linearLeak;
 		s->doLeakReverse = revLinearLeak;
@@ -440,6 +459,7 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 		Msg_Data *data = (Msg_Data *) tw_event_data(axe);
 		data->eventType = SYNAPSE_OUT;
 		data->localID = lp->gid;
+		data->axonID = M->axonID;
 
 		tw_event_send(axe);
 	}
@@ -453,6 +473,8 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 	Msg_Data *data = (Msg_Data *) tw_event_data(axe);
 	data->eventType = SYNAPSE_OUT;
 	data->localID = s->mySynapseNum;
+	data->axonID = M->axonID;
+
 	tw_event_send(axe);
 	if (DEBUG_MODE) {
 		printf("Synapse received and sent message - sGID %i - sDestSyn %i - sDestNeu %i\n", lp->gid, s->destSynapse,
@@ -482,6 +504,7 @@ void axon_init(axonState *s, tw_lp *lp) {
 	s->sendMsgCount = 0;
 	if (tnMapping == LLINEAR) {
 		s->destSynapse = lGetSynFromAxon(lp->gid);
+		s->axonID = lGetAxeNumLocal(lp->gid);
 	} else {
 		s->destSynapse = getSynapseFromAxon(lp->gid);
 		_idT l = LOCAL(lp->gid);
@@ -497,6 +520,7 @@ void axon_init(axonState *s, tw_lp *lp) {
 	tw_event *axe = tw_event_new(lp->gid, r, lp);
 	Msg_Data *data = (Msg_Data *) tw_event_data(axe);
 	data->eventType = AXON_OUT;
+	data->axonID = s->axonID;
 	tw_event_send(axe);
 	if (DEBUG_MODE) {
 		printf("Axon %i checking in with with dest synapse %llu\n", lp->gid, s->destSynapse);
@@ -512,6 +536,7 @@ void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 	Msg_Data *data = (Msg_Data *) tw_event_data(axe);
 	data->localID = lp->gid;
 	data->eventType = AXON_OUT;
+	data->axonID = s->axonID;
 
 	tw_event_send(axe);
 	M->rndCallCount = lp->rng->count - rc;

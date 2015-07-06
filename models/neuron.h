@@ -187,17 +187,24 @@ typedef struct NeuronModel {
 	reverseResetDel reverseReset; //!< Neuron reverse reset function.
 	/**@}*/
 		//Weight parameters
-	_weightT synapticWeightProb[ARRSIZE]; /**< In this simulation, each synappse can have a unique weight. In the paper, there is a limit of four different "types" of synapse behavior per neruon. For an accurate sim, there can only be four different values in this array.
+		//_weightT synapticWeightProb[ARRSIZE];
+	/**< In this simulation, each synappse can have a unique weight. In the paper, there is a limit of four different "types" of synapse behavior per neruon. For an accurate sim, there can only be four different values in this array.
 		Since this is an array, this simulator has the potential to have more power than the actual TrueNorth hardware architecture.
 		The paper defines this as \f$S_j^{G_i}\f$ */
 
-	bool synapticWeightProbSelect[ARRSIZE]; /**< An array determining if each synapse is handled stochastically or deterministically.
+		//bool synapticWeightProbSelect[ARRSIZE];
+	/**< An array determining if each synapse is handled stochastically or deterministically.
 	 * Since the actual hardware has 4 synapse types, this setup has more power than the actual
 	 *  TrueNorth architecture.
 	 * To ensure model <-> hardware accuracy, at most four different modes should be used per neuron,
 	 *  so that synapses are handled as one of four possible types.
 		The paper defines this as \f$b_j^{G_i}\f$
 */
+
+	_weightT axonWeightProb[4];
+	bool axonProbSelect[4];
+	unsigned char weightSelect[256];
+
 	    //Output locations:
 	_idT dendriteCore; //!< Local core of the remote dendrite
 	uint16_t dendriteLocal; //!< Local ID of the remote dendrite -- not LPID, but a local axon value (0-i)
@@ -257,6 +264,8 @@ void nSpike(neuronState *st, tw_stime time, tw_lp *lp);
  *  @param synapseID localID of the synapse sending the message.
  */
 void integrateSynapse(_idT synapseID,neuronState *st, tw_lp *lp);
+
+void integrateSynapseFast(_idT axonID, neuronState *st, tw_lp *lp);
 
 /**
  *  @brief  Function that sends a heartbeat message to this neuron.
