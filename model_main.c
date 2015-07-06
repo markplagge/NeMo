@@ -134,13 +134,14 @@ void statsOut() {
         if (!tw_ismaster())
             return;
 
-        fprintf(stderr, "%i", s.s_pe_event_ties);
+		//fprintf(stderr, "%i", s.s_pe_event_ties);
 		//printf("\n\n %i", s.s_pe_event_ties);
 		//tabular data:
 		//NP  - CORES - Neurons per core - Net Events - Rollbacks - Running Time	- SOP
 	printf("\n\n");
-	printf("%lu\t%i\t%i\t%llu\t%llu\t%f\t%llu\t\n",tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time,totalSOPS);
 
+	printf("%u\t%i\t%i\t%llu\t%llu\t%f\t%llu\t\n",tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time,totalSOPS);
+	fprintf(stderr, "%u\t%i\t%i\t%llu\t%llu\t%f\t%llu\t\n",tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time,totalSOPS);
 
 }
 int main(int argc, char *argv[]) {
