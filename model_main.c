@@ -139,7 +139,7 @@ void statsOut() {
 		//tabular data:
 		//NP  - CORES - Neurons per core - Net Events - Rollbacks - Running Time	- SOP
 	printf("\n\n");
-	printf("%lu\t%i\t%i\t%llu\t%llu\t%f\t%llu\t",tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time,totalSOPS);
+	printf("%lu\t%i\t%i\t%llu\t%llu\t%f\t%llu\t\n",tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time,totalSOPS);
 
 
 }
