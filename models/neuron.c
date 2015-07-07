@@ -40,6 +40,7 @@ void linearLeak(void *neuron, tw_stime now) {
 	if(s->leakWeightProbSelect){
 	    while(delta > 0){
 		stochasticIntegrate(s->leakRateProb,s);
+		delta --;
 	      }
 	  }
 	else {

@@ -155,7 +155,7 @@ extern tw_stime littleTick;
 
 extern tw_stime CLOCK_RANDOM_ADJ;
 extern timeRandomSel CLOCK_RND_MODE;
-/** @}
+/** @} */
 
 /**
  *  Gets the next event time, based on a random function. Moved here to allow for

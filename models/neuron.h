@@ -132,7 +132,6 @@ void reverseResetNormal(void *neuronState);
 void reverseResetNone(void *neuronState);
 
 
-
 /**
 * This struct maintains the state of an individual neuron.The neuron struct
 *contains the parameters needed to maintain

@@ -1,4 +1,4 @@
-﻿//
+//
 //  mapping.h
 //  ROSS_TOP
 //
@@ -193,7 +193,7 @@ tw_lpid lGetAxonFromNeu(_idT core, _idT axeNum);
  */
 tw_lpid lCoreOffset(tw_lpid gid);
 /**
- * @brief lGetSynNumLocal - returns the "local id" of a synapse, the 𝑖,𝑗 of the
+ * @brief lGetSynNumLocal - returns the "local id" of a synapse, the i,j of the
  *  synapse, but mapped to a single dimension. \f$ S_{i,j} \rightarrow S_{i + j} \f$
  * @param gid synapse global ID
  * @return local ID.
