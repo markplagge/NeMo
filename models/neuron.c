@@ -54,7 +54,7 @@ void linearLeak(void *neuron, tw_stime now) {
 
 void revLinearLeak(void *neuron, tw_stime now){
 	neuronState *s = (neuronState *)neuron;
-	tw_stime delta = s->lastLeakTime - now;
+		//tw_stime delta = s->lastLeakTime - now;
 
 	//s->membranePot += s->leakRate * delta;
 	s->lastLeakTime = now;
