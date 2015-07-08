@@ -139,9 +139,15 @@ void statsOut() {
 		//tabular data:
 		//NP  - CORES - Neurons per core - Net Events - Rollbacks - Running Time	- SOP
 	printf("\n\n");
-
-	printf("%u\t%i\t%i\t%llu\t%llu\t%f\t%llu\t\n",tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time,totalSOPS);
-	fprintf(stderr, "%u\t%i\t%i\t%llu\t%llu\t%f\t%llu\t\n",tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time,totalSOPS);
+	printf("Nodes\tCORES\tNeurons/Core\tNet Events\tRollbacks\tRun Time\tTotal SOP\tThreshold Min\tThreshold Max"
+			       "\tNegativeThresholdMin\tNegativeThresholdMax\tSynapse Weight Min\tSynapse Weight Max\n");
+	printf("%u\t%i\t%i\t%llu\t%llu\t%f\t%llu\t",tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time,totalSOPS);
+	printf("%u\t%u\t%u\t%u\t%u\t%u\n",THRESHOLD_MIN,THRESHOLD_MAX,NEG_THRESHOLD_MIN,NEG_THRESHOLD_MAX,SYNAPSE_WEIGHT_MIN,SYNAPSE_WEIGHT_MAX);
+	if(BULK_MODE) {
+		fprintf(stderr, "%u\t%i\t%i\t%llu\t%llu\t%f\t%llu\t%u\t%u\t%u\t%u\t%u\t%u\n", tw_nnodes(), CORES_IN_SIM,
+		        NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS, THRESHOLD_MIN, THRESHOLD_MAX,
+		        NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
+	}
 
 }
 int main(int argc, char *argv[]) {
@@ -310,7 +316,8 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 		        break;
 			case 1:s->doReset = resetLinear;
 		        s->reverseReset = reverseResetLinear;
-			default:stochasticThreshold = true;
+			default:
+				stochasticThreshold = true;
 		        s->doReset = resetNone;
 		        s->reverseReset = reverseResetNone;
 		        break;
@@ -322,6 +329,7 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 			_threshT param = tw_rand_ulong(lp->rng, RAND_RANGE_MIN, RAND_RANGE_MAX);
 			s->thresholdPRNMask = (param >= sizeInBits ? -1 : (1 << param) - 1);
 			if (s->thresholdPRNMask == -1) { abort(); }
+
 		}
 
 
@@ -332,7 +340,7 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 		  for (int i = 0; i < 4; i ++) {
 
 			  s->axonWeightProb[i] = tw_rand_integer(lp->rng, -SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
-			  s->axonProbSelect[i] = tw_rand_poisson(lp->rng, 1) > RAND_WT_PROB;
+			  s->axonProbSelect[i] = RAND_WT_PROB < tw_rand_poisson(lp->rng, 1);
 		  }
 
 			  //old looop
@@ -350,14 +358,18 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 
 		s->doLeak = linearLeak;
 		s->doLeakReverse = revLinearLeak;
+
 		// destinations. again using
 		unsigned int calls;
 		s->leakRateProb = tw_rand_normal_sd(lp->rng, 0, 10, &calls);
 		///@todo Start using stochastic leak functions.
-		s->leakWeightProbSelect = false;
+		s->leakWeightProbSelect = RAND_WT_PROB < tw_rand_poisson(lp->rng, 1);;
 		s->leakReversalFlag = tw_rand_integer(lp->rng, 0, 1);
 
 		// randomized output dendrites:
+		/** @note This random setup will create neurons that have an even chance of getting an axon inside thier own core
+		 * vs an external core. The paper actually capped this value at something like 20%. @todo - make this match the
+		 * paper if performance is slow. */
 		s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
 		s->dendriteLocal = tw_rand_integer(lp->rng, 0, AXONS_IN_CORE - 1);
 

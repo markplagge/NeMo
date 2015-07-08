@@ -55,7 +55,7 @@ unsigned int RAND_WT_PROB = 2;
 bool DEBUG_MODE = 0;
 bool BASIC_SOP = false;
 bool TW_DELTA = false;
-
+bool BULK_MODE = false;
  _statT neuronSOPS = 0;
  _statT synapseEvents = 0;
 
@@ -154,7 +154,8 @@ const tw_optdef app_opt[]= {
 	TWOPT_FLAG("simple", BASIC_SOP, "Simple SOPS measurement (simpified neuron model)"),
   TWOPT_STIME("lt", littleTick, "Little tick rate"),
   TWOPT_STIME("rv", CLOCK_RANDOM_ADJ, "Clock random generator mode"),
-  TWOPT_UINT("rm", CLOCK_RND_MODE, "Clock random mode selector.\n\t\t0 = uniform, 1 = normal, 2 = exponential, 3 = binomal"),
+  TWOPT_UINT("rm",CLOCK_RND_MODE, "Clock random mode selector.\n\t\t0 = uniform, 1 = normal, 2 = exponential, 3 = binomal"),
+  TWOPT_FLAG("bulk",BULK_MODE,"Is this sim running in bulk mode (called from script?)"),
     {TWOPT_END()}
 
   };
