@@ -1,4 +1,4 @@
-﻿//
+//
 //  mapping.c
 //  ROSS_TOP
 //

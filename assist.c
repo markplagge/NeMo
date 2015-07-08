@@ -18,7 +18,7 @@ tw_stime getNextEventTime(tw_lp *lp) {
 
   tw_stime bigTickRate = 0;
   tw_stime r; 
-  int ct = 0;
+  unsigned int ct = 0;
   switch(CLOCK_RND_MODE) {
     case RND_UNF:
   r =tw_rand_unif(lp->rng);
@@ -59,7 +59,7 @@ tw_stime getCurrentBigTick(tw_stime now){
   return floor(now);
 
 }
-        //@todo This does not work - need to whiteboard it to figure out the conversion.
+        //@todo Seems to work just fine - but need to double check.
 tw_stime getNextBigTick(tw_stime nextEventTime) {
   if(littleTick == 0 || bigTickRate == 0)
     setBigLittleTick();

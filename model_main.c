@@ -142,7 +142,12 @@ void statsOut() {
 	printf("Nodes\tCORES\tNeurons/Core\tNet Events\tRollbacks\tRun Time\tTotal SOP\tThreshold Min\tThreshold Max"
 			       "\tNegativeThresholdMin\tNegativeThresholdMax\tSynapse Weight Min\tSynapse Weight Max\n");
 	printf("%u\t%i\t%i\t%llu\t%llu\t%f\t%llu\t",tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time,totalSOPS);
-	printf("%u\t%u\t%u\t%u\t%u\t%u\n",THRESHOLD_MIN,THRESHOLD_MAX,NEG_THRESHOLD_MIN,NEG_THRESHOLD_MAX,SYNAPSE_WEIGHT_MIN,SYNAPSE_WEIGHT_MAX);
+	printf("%u\t\t"
+	       "%u\t\t"
+	       "%u\t\t"
+	       "%u\t\t"
+	       "%u\t\t"
+	       "%u\n",THRESHOLD_MIN,THRESHOLD_MAX,NEG_THRESHOLD_MIN,NEG_THRESHOLD_MAX,SYNAPSE_WEIGHT_MIN,SYNAPSE_WEIGHT_MAX);
 	if(BULK_MODE) {
 		fprintf(stderr, "%u\t%i\t%i\t%llu\t%llu\t%f\t%llu\t%u\t%u\t%u\t%u\t%u\t%u\n", tw_nnodes(), CORES_IN_SIM,
 		        NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS, THRESHOLD_MIN, THRESHOLD_MAX,
