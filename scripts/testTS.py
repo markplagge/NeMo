@@ -71,7 +71,7 @@ simEnd = "1000"
 clockRates = [1, 10, 100, 1000]
 
 
-cmd = "../../builds/models/tnt_benchmark/tnt_benchmark --neurons=256 "
+cmd = "../../builds/models/tnt_benchmark/tnt_benchmark --bulk --neurons=256 "
 
 processes = []
 results = []
