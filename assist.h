@@ -24,7 +24,7 @@
 
 #define _randT int32_t //!< Random value storage for neurons.
 
-#define _statT uint64_t //!<Counter data type for stats
+#define _statT unsigned long long //!<Counter data type for stats
 /** _regIDT is a "regional id" type. This variable type is for storing
  *	coreIDs and localIDs. It must be half the bit size of tw_lpid.
  */
