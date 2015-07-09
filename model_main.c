@@ -134,24 +134,26 @@ void statsOut() {
         if (!tw_ismaster())
             return;
 
-		//fprintf(stderr, "%i", s.s_pe_event_ties);
+		//
 		//printf("\n\n %i", s.s_pe_event_ties);
 		//tabular data:
 		//NP  - CORES - Neurons per core - Net Events - Rollbacks - Running Time	- SOP
 	printf("\n\n");
 	printf("Nodes\tCORES\tNeurons/Core\tNet Events\tRollbacks\tRun Time\tTotal SOP\tThreshold Min\tThreshold Max"
-			       "\tNegativeThresholdMin\tNegativeThresholdMax\tSynapse Weight Min\tSynapse Weight Max\n");
-	printf("%u\t%i\t%i\t%llu\t%llu\t%f\t%llu\t",tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time,totalSOPS);
-	printf("%u\t\t"
-	       "%u\t\t"
-	       "%u\t\t"
-	       "%u\t\t"
-	       "%u\t\t"
-	       "%u\n",THRESHOLD_MIN,THRESHOLD_MAX,NEG_THRESHOLD_MIN,NEG_THRESHOLD_MAX,SYNAPSE_WEIGHT_MIN,SYNAPSE_WEIGHT_MAX);
+			       "\tNegativeThresholdMin\tNegativeThresholdMax\tSynapse Weight Min\tSynapse Weight Max\tEvtTies");
+	printf("%lu\t%i\t%i\t%llu\t%llu\t%f\t%llu\t",tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time,totalSOPS);
+	printf("%lu\t\t"
+	       "%lu\t\t"
+	       "%lu\t\t"
+	       "%lu\t\t"
+	       "%lu\t\t"
+	       "%lu\t"
+	       "%lu\n",THRESHOLD_MIN,THRESHOLD_MAX,NEG_THRESHOLD_MIN,NEG_THRESHOLD_MAX,SYNAPSE_WEIGHT_MIN,SYNAPSE_WEIGHT_MAX,s.s_pe_event_ties);
 	if(BULK_MODE) {
 		fprintf(stderr, "%u\t%i\t%i\t%llu\t%llu\t%f\t%llu\t%u\t%u\t%u\t%u\t%u\t%u\n", tw_nnodes(), CORES_IN_SIM,
 		        NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS, THRESHOLD_MIN, THRESHOLD_MAX,
 		        NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
+		fprintf(stderr, "%i", s.s_pe_event_ties);
 	}
 
 }
