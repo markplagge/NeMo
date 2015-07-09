@@ -15,31 +15,34 @@ tw_stime bigTickRate = 0;
  *  Gets the next small-tick event time.
  */
 tw_stime getNextEventTime(tw_lp *lp) {
+  if(bigTickRate == 0)
+    setBigLittleTick();
 
   tw_stime bigTickRate = 0;
   tw_stime r; 
   unsigned int ct = 0;
   switch(CLOCK_RND_MODE) {
     case RND_UNF:
-  r =tw_rand_unif(lp->rng);
+  r = littleTick * (double)tw_rand_unif(lp->rng);
   break;
   case RND_NORM_BASED:
   r = tw_rand_normal_sd(lp->rng, CLOCK_RANDOM_ADJ, 20,&ct);
   break;
   case RND_EXP:
-  r = tw_rand_exponential(lp->rng, CLOCK_RANDOM_ADJ) ;
+  //Taken from the dragonfly sim - CLOCK_RAND_ADJ is eqv. to the mean from the other sim.
+  r = 0.1 + tw_rand_exponential(lp->rng, CLOCK_RANDOM_ADJ/100) ;
 		  break;
   default:
   r = tw_rand_binomial(lp->rng, 100, CLOCK_RANDOM_ADJ);
   lp->rng->count += ct;
 
 }
-  r *= littleTick;
+  //r *= littleTick;
   return r;
 }
 void setBigLittleTick() {
-  
-  bigTickRate = ceill(littleTick);
+  littleTick = .001;
+  bigTickRate = ceill(littleTick) + 10;
 }
 
 /**
@@ -64,7 +67,7 @@ tw_stime getNextBigTick(tw_stime nextEventTime) {
   if(littleTick == 0 || bigTickRate == 0)
     setBigLittleTick();
 
-  return 10 + nextEventTime;
+  return bigTickRate + nextEventTime;
                 //Need to figure this out - not accurate until this is done:
 
 }
