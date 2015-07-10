@@ -10,7 +10,10 @@
         #include <math.h>
 ///Big-tick offset - this is the delta for big ticks (neuron events)
 tw_stime bigTickRate = 0;
-
+void setBigLittleTick() {
+  littleTick = .001;
+  bigTickRate = ceill(littleTick) + 10;
+}
 /**
  *  Gets the next small-tick event time.
  */
@@ -40,10 +43,7 @@ tw_stime getNextEventTime(tw_lp *lp) {
   //r *= littleTick;
   return r;
 }
-void setBigLittleTick() {
-  littleTick = .001;
-  bigTickRate = ceill(littleTick) + 10;
-}
+
 
 /**
  *  @details  If the time is in-between
