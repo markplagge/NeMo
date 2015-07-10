@@ -65,7 +65,7 @@ tw_stime littleTick = .001;
 /** changes random time parameter */
 tw_stime CLOCK_RANDOM_ADJ = 1.0;
 /** selects different random modes:*/
-timeRandomSel CLOCK_RND_MODE = 0;
+timeRandomSel CLOCK_RND_MODE = RND_EXP;
 
 extern tw_lpid* myGIDs;
 
