@@ -152,8 +152,7 @@ const tw_optdef app_opt[]= {
   TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
 	TWOPT_FLAG("delta", TW_DELTA, "Use delta encoding for some states"),
 	TWOPT_FLAG("simple", BASIC_SOP, "Simple SOPS measurement (simpified neuron model)"),
-  TWOPT_STIME("lt", littleTick, "Little tick rate"),
-  TWOPT_STIME("rv", CLOCK_RANDOM_ADJ, "Clock random generator mode"),
+  TWOPT_STIME("rv", CLOCK_RANDOM_ADJ, "Clock random generator modifier"),
   TWOPT_UINT("rm",CLOCK_RND_MODE, "Clock random mode selector.\n\t\t0 = uniform, 1 = normal, 2 = exponential, 3 = binomal"),
   TWOPT_FLAG("bulk",BULK_MODE,"Is this sim running in bulk mode (called from script?)"),
     {TWOPT_END()}

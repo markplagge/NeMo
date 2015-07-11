@@ -141,19 +141,19 @@ void statsOut() {
 	printf("\n\n");
 	printf("Nodes\tCORES\tNeurons/Core\tNet Events\tRollbacks\tRun Time\tTotal SOP\tThreshold Min\tThreshold Max"
 			       "\tNegativeThresholdMin\tNegativeThresholdMax\tSynapse Weight Min\tSynapse Weight Max\tEvtTies");
-	printf("%lu\t%i\t%i\t%llu\t%llu\t%f\t%llu\t",tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time,totalSOPS);
-	printf("%lu\t\t"
-	       "%lu\t\t"
-	       "%lu\t\t"
-	       "%lu\t\t"
-	       "%lu\t\t"
-	       "%lu\t"
-	       "%lu\n",THRESHOLD_MIN,THRESHOLD_MAX,NEG_THRESHOLD_MIN,NEG_THRESHOLD_MAX,SYNAPSE_WEIGHT_MIN,SYNAPSE_WEIGHT_MAX,s.s_pe_event_ties);
+	printf("%u\t%i\t%i\t%llu\t%llu\t%f\t%llu\t",tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time,totalSOPS);
+	printf("%u\t\t"
+	       "%u\t\t"
+	       "%u\t\t"
+	       "%u\t\t"
+	       "%d\t\t"
+	       "%d\t"
+	       "%llu\n",THRESHOLD_MIN,THRESHOLD_MAX,NEG_THRESHOLD_MIN,NEG_THRESHOLD_MAX,SYNAPSE_WEIGHT_MIN,SYNAPSE_WEIGHT_MAX,s.s_pe_event_ties);
 	if(BULK_MODE) {
 		fprintf(stderr, "%u\t%i\t%i\t%llu\t%llu\t%f\t%llu\t%u\t%u\t%u\t%u\t%u\t%u\n", tw_nnodes(), CORES_IN_SIM,
 		        NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS, THRESHOLD_MIN, THRESHOLD_MAX,
 		        NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
-		fprintf(stderr, "%i", s.s_pe_event_ties);
+		fprintf(stderr, "%llu", s.s_pe_event_ties);
 	}
 
 }
@@ -318,10 +318,12 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 		//    tw_calloc(TW_LOC, "Neuron", sizeof(bool), SYNAPSES_IN_CORE);
 		// select a reset & stochastic reset mode:
 		switch (resetSel) {
-			case 0:s->doReset = resetNormal;
+			case 0:
+				s->doReset = resetNormal;
 		        s->reverseReset = reverseResetNormal;
 		        break;
-			case 1:s->doReset = resetLinear;
+			case 1:
+				s->doReset = resetLinear;
 		        s->reverseReset = reverseResetLinear;
 			default:
 				stochasticThreshold = true;
@@ -345,7 +347,7 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 		  }
 			  //set up type weights:
 		  for (int i = 0; i < 4; i ++) {
-
+			  
 			  s->axonWeightProb[i] = tw_rand_integer(lp->rng, -SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
 			  s->axonProbSelect[i] = RAND_WT_PROB < tw_rand_poisson(lp->rng, 1);
 		  }
@@ -461,7 +463,7 @@ void synapse_init(synapseState *s, tw_lp *lp) {
 	s->msgSent = 0;
 	if (DEBUG_MODE) {
 		printf("Synapse %i checking in with GID %llu and n-dest %llu, s-dest %llu on "
-				       "PE %i , CPE %i\n", s->mySynapseNum, lp->gid, s->destNeuron, s->destSynapse, lp->pe->id,
+				       "PE %lu , CPE %lu\n", s->mySynapseNum, lp->gid, s->destNeuron, s->destSynapse, lp->pe->id,
 		       lGidToPE(lp->gid));
 	}
 }
@@ -497,7 +499,7 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 
 	tw_event_send(axe);
 	if (DEBUG_MODE) {
-		printf("Synapse received and sent message - sGID %i - sDestSyn %i - sDestNeu %i\n", lp->gid, s->destSynapse,
+		printf("Synapse received and sent message - sGID %llu - sDestSyn %llu - sDestNeu %llu\n", lp->gid, s->destSynapse,
 		       s->destNeuron);
 	}
 	M->rndCallCount =  lp->rng->count - rc;
@@ -543,7 +545,7 @@ void axon_init(axonState *s, tw_lp *lp) {
 	data->axonID = s->axonID;
 	tw_event_send(axe);
 	if (DEBUG_MODE) {
-		printf("Axon %i checking in with with dest synapse %llu\n", lp->gid, s->destSynapse);
+		printf("Axon %llu checking in with with dest synapse %llu\n", lp->gid, s->destSynapse);
 	}
 	//printf("message ready at %f",r);
 }
