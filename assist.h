@@ -184,7 +184,7 @@ tw_stime getCurrentBigTick(tw_stime now);
  *
  *  @return Next big tick time.
  */
-tw_stime getNextBigTick(tw_stime nextEventTime);
+tw_stime getNextBigTick(tw_lp *lp);
 
 int testTiming();
 

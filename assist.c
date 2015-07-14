@@ -12,7 +12,7 @@
 tw_stime bigTickRate = 0;
 void setBigLittleTick() {
   littleTick = .00001;
-  bigTickRate = ceill(littleTick) + 10;
+  bigTickRate = ceill(littleTick) + 265;
 }
 /**
  *  Gets the next small-tick event time.
@@ -72,11 +72,11 @@ tw_stime getCurrentBigTick(tw_stime now){
 
 }
         //@todo Seems to work just fine - but need to double check.
-tw_stime getNextBigTick(tw_stime nextEventTime) {
+tw_stime getNextBigTick(tw_lp *lp) {
   if(littleTick == 0 || bigTickRate == 0)
     setBigLittleTick();
 
-  return bigTickRate + nextEventTime;
+  return tw_rand_exponential(lp->rng, bigTickRate);
                 //Need to figure this out - not accurate until this is done:
 
 }
@@ -100,7 +100,7 @@ int testTiming() {
     // next, check the first synapse layer:
 
     for (int i = 0; i < AXONS_IN_CORE; i++) {
-      firstNeuronOutTime[i] = getNextBigTick(axonSendTime[i]);
+      firstNeuronOutTime[i] = getNextBigTick(rap);
     }
 
     // See if this round of big ticks makes sense:

@@ -487,7 +487,7 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 	}
 
 	// generate event to send to neuron.
-	rc = lp->rng->count;
+
 	s->msgSent++;
 	CV->c1 = 1;
 	rc = lp->rng->count;
@@ -592,7 +592,7 @@ void displayModelSettings(){
 	char * sopMode = BASIC_SOP ? "simplified Neuron Model" : "normal TN Neuron Model";
 	printf("* \tNeurons set to %s.\n", sopMode);
 
-		printf("* \tTiming - Big tick occurs at %f\n", getNextBigTick(0));
+		//printf("* \tTiming - Big tick occurs at %f\n", getNextBigTick(0));
 
 	for (int i = 0; i < 30; i ++) {
 		printf("*");

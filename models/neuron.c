@@ -250,7 +250,7 @@ bool neuronShouldFire(neuronState *st, tw_lp *lp){
 }
 
 void nSpike(neuronState *st, tw_stime time, tw_lp *lp){
-	tw_stime nextHeartbeat = getNextBigTick(getNextEventTime(lp));
+	tw_stime nextHeartbeat = getNextBigTick(lp);
 	tw_event *newEvent = tw_event_new(st->dendriteGlobalDest, nextHeartbeat, lp);
 	Msg_Data *data = (Msg_Data *) tw_event_data(newEvent);
 	data->eventType = NEURON_OUT;
@@ -267,7 +267,7 @@ void sendHeartbeat(neuronState *st, tw_lp *lp, tw_stime time){
                 //random fn call state management.
   //printf("heartbeat sent \n");
 
-	tw_stime nextHeartbeat = getNextBigTick(getNextEventTime(lp));
+	tw_stime nextHeartbeat = getNextBigTick(lp);
 	tw_event *newEvent = tw_event_new(lp->gid, nextHeartbeat, lp);
 	Msg_Data *data = (Msg_Data *) tw_event_data(newEvent);
 	data->eventType = NEURON_HEARTBEAT;
