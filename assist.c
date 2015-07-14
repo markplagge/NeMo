@@ -34,10 +34,14 @@ tw_stime getNextEventTime(tw_lp *lp) {
   case RND_EXP:
   //Taken from the dragonfly sim - CLOCK_RAND_ADJ is eqv. to the mean from the other sim.
   r = 0.1 + tw_rand_exponential(lp->rng, CLOCK_RANDOM_ADJ/100) ;
-		  break;
+          lp->rng->count += ct;
+
+          break;
   default:
-  r = tw_rand_binomial(lp->rng, 100, CLOCK_RANDOM_ADJ);
-  lp->rng->count += ct;
+  // tw_rand_binomial(lp->rng, 100, CLOCK_RANDOM_ADJ);
+    r = tw_rand_integer(lp->rng, INT32_MIN, INT32_MAX);
+          break;
+
 
 }
   //r *= littleTick;
