@@ -11,7 +11,7 @@
 ///Big-tick offset - this is the delta for big ticks (neuron events)
 tw_stime bigTickRate = 0;
 void setBigLittleTick() {
-  littleTick = .001;
+  littleTick = .00001;
   bigTickRate = ceill(littleTick) + 10;
 }
 /**
@@ -22,27 +22,27 @@ tw_stime getNextEventTime(tw_lp *lp) {
     setBigLittleTick();
 
   tw_stime bigTickRate = 0;
-  tw_stime r;
+  tw_stime r; 
   unsigned int ct = 0;
   switch(CLOCK_RND_MODE) {
     case RND_UNF:
-  r = littleTick * (tw_stime)tw_rand_unif(lp->rng);
+  r = littleTick * (double)tw_rand_unif(lp->rng);
   break;
   case RND_NORM_BASED:
-  r = (tw_stime) tw_rand_normal_sd(lp->rng, CLOCK_RANDOM_ADJ, 20,&ct);
+  r = tw_rand_normal_sd(lp->rng, CLOCK_RANDOM_ADJ, 20,&ct);
   break;
   case RND_EXP:
   //Taken from the dragonfly sim - CLOCK_RAND_ADJ is eqv. to the mean from the other sim.
-  r = 0.1 + (tw_stime)tw_rand_exponential(lp->rng, CLOCK_RANDOM_ADJ/100) ;
+
+  r = (long double)lp->gid * ( 1 / (g_tw_nlp  * tw_nnodes())) + tw_rand_exponential(lp->rng, CLOCK_RANDOM_ADJ/1000) ;
           lp->rng->count += ct;
-          r=r*.01;
 
           break;
   default:
   // tw_rand_binomial(lp->rng, 100, CLOCK_RANDOM_ADJ);
-    r = (tw_stime)tw_rand_integer(lp->rng, 1, INT32_MAX);
+    r = (double)tw_rand_integer(lp->rng, INT32_MIN, INT32_MAX);
           r = r / 100000000000;
-          r += (tw_stime)(lp->gid / 100000000000);
+          r += lp->gid / 100000000000;
           break;
 
   }
