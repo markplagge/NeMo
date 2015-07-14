@@ -39,11 +39,12 @@ tw_stime getNextEventTime(tw_lp *lp) {
           break;
   default:
   // tw_rand_binomial(lp->rng, 100, CLOCK_RANDOM_ADJ);
-    r = tw_rand_integer(lp->rng, INT32_MIN, INT32_MAX);
+    r = (double)tw_rand_integer(lp->rng, INT32_MIN, INT32_MAX);
+          r = r / 100000000000;
+          r += lp->gid / 100000000000;s
           break;
 
-
-}
+  }
   //r *= littleTick;
   return r;
 }
