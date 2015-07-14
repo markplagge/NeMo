@@ -30,12 +30,15 @@ tw_stime getNextEventTime(tw_lp *lp) {
   break;
   case RND_NORM_BASED:
   r = tw_rand_normal_sd(lp->rng, CLOCK_RANDOM_ADJ, 20,&ct);
-  break;
+        lp->rng->count += ct;
+
+        break;
   case RND_EXP:
   //Taken from the dragonfly sim - CLOCK_RAND_ADJ is eqv. to the mean from the other sim.
 
-  r = (long double)lp->gid * ( 1 / (g_tw_nlp  * tw_nnodes())) + tw_rand_exponential(lp->rng, CLOCK_RANDOM_ADJ/1000) ;
-          lp->rng->count += ct;
+      r = tw_rand_exponential(lp->rng, CLOCK_RANDOM_ADJ);
+        //r +=  lp-gid / (g_tw_nlp * tw_nnodes());
+
 
           break;
   default:
