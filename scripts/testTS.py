@@ -60,18 +60,19 @@ def runSim(cmd, args):
         col = subprocess.Popen([cmd + args], shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE).communicate()
         return (args, col[1],col[0])
 
-rRange = [0, 1,  2, 3]
+#rRange = [0, 1,  2, 3]
+rRange = [2]
 
-rMod = [1,2,3,"0.1",".01"]
+rMod = [1,2,".01"]
 
-littleTickRange = ["0.00001", "0.0001", "0.001", "0.01", "0.1"]
+littleTickRange = ["0.00001", "0.0001",  "0.01", "0.1"]
 
-simEnd = "1000"
+simEnd = "500"
 
-clockRates = [1, 10, 100, 1000]
+clockRates = [ 10, 100, 1000]
 
 
-cmd = "../../builds/models/tnt_benchmark/tnt_benchmark --bulk --neurons=256 "
+cmd = "mpirun -np=8 ../../builds/models/tnt_benchmark/tnt_benchmark --bulk --neurons=256 --cores=4096 --sync=3"
 
 processes = []
 results = []
@@ -83,8 +84,8 @@ for rmode in rRange:
     for littleTick in littleTickRange:
         for clock in clockRates:
             for modd in rMod:
-                args = " --clock-rate=%s --end=%s --lt=%s --rm=%s --extramem=20000000 --rv=%s" % (clock, simEnd, littleTick, rmode,modd)
-                if threading.active_count() < 40:
+                args = " --clock-rate=%s --end=%s --lt=%s --rm=%s --extramem=15000000 --rv=%s" % (clock, simEnd, littleTick, rmode,modd)
+                if threading.active_count() <=5:
                     current = current + 1
                     total = total + 1
                     th = (ThreadWorker(runSim))
@@ -94,7 +95,7 @@ for rmode in rRange:
 
                 else:
 
-                    while threading.active_count() >= 32:
+                    while threading.active_count() >=3:
                         pass
                     th = (ThreadWorker(runSim))
                     th.start((cmd,args),)
@@ -108,10 +109,17 @@ for proc in processes:
     while(proc.status() ==1):
         pass
     if("0" in proc.get_results()[1]):
-        print("Proc ran with no colls")
+        print ("Proc %s  ran with no colls" %ct)
         print (proc.get_results()[0])
+	
+    else:
+	print("Proc %s ran with colls:" % ct)
+	print(proc.get_results()[1])
+	print(proc.get_results()[0])
     if("increase" in proc.get_results()[2]):
         print ("Memory error -- ")
         print (proc.get_results()[0])
-
+    ct = ct  + 1
+print ("Total non-collided %s" % ct)
+print ("Total run:")
 print (total)
