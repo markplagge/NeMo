@@ -229,12 +229,12 @@ void linearMap() {
 	g_tw_lp_offset = g_tw_mynode * g_tw_nlp;
 
 #if VERIFY_MAPPING
-	printf("NODE %d: nlp %lld, offset %lld\n", g_tw_mynode, g_tw_nlp, g_tw_lp_offset);
+	printf("NODE %ld: nlp %lld, offset %lld\n", g_tw_mynode, g_tw_nlp, g_tw_lp_offset);
 #endif
 
 	for (kpid = 0, lpid = 0, pe = NULL; (pe = tw_pe_next(pe));) {
 #if VERIFY_MAPPING
-		printf("\tPE %d\n", pe->id);
+		printf("\tPE %lu\n", pe->id);
 #endif
 
 		for (i = 0; i < nkp_per_pe; i++, kpid++) {
