@@ -131,7 +131,7 @@ void reverseResetNone(void *neuronState) {
  */
 void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp){
 
-  long delta_size;
+
         //random fn call state management.
         unsigned long startCount = lp->rng->count;
         //state management
@@ -328,7 +328,7 @@ void  neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFi
 	}
 
 }
-void  neuornReverseState(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp) {
+void  neuronReverseState(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp) {
 
                 //reverse function.
     long count = m->rndCallCount;

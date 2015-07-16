@@ -57,7 +57,7 @@ tw_lpid lGetNeuronFromSyn(tw_lpid synGID) {
 
 	long rowID = (lCoreOffset(synGID) - AXONS_IN_CORE) / NEURONS_IN_CORE;
 
-	long offset = rowID * NEURONS_IN_CORE;
+		//long offset = rowID * NEURONS_IN_CORE;
 
 
 	return neuAt + 1;
@@ -284,7 +284,7 @@ void tn_cube_mapping() {
 	uint16_t x, y;
 	tw_lpid lpid = 0, kpid;
 	//tw_lpid numElementsPerKP, vpPerProc;
-	int numSynPerPE, numNerPerPe, numAxPerPE;
+	//int numSynPerPE, numNerPerPe, numAxPerPE;
 	int nlp_per_kp;
 	tw_pe *pe;
 	/**
@@ -402,10 +402,10 @@ tw_lpid lpTypeMapper(tw_lpid gid) {
 	int syn = 1;
 	int ax = 2;
 	_idT loc = LOCAL(gid);
-	int b_ax = 0;
-	int e_ax = AXONS_IN_CORE;
-	int b_n = 1;
-	int e_n = NEURONS_IN_CORE;
+		//int b_ax = 0;
+		//int e_ax = AXONS_IN_CORE;
+		//int b_n = 1;
+		//int e_n = NEURONS_IN_CORE;
 
 	_gridIDT i = ISIDE(loc);
 	_gridIDT j = JSIDE(loc);
@@ -477,7 +477,7 @@ void scatterMap() {
 	}
 
 
-	printf("\n\n\ntotal lps %i - actual is %i\n PEs per LP is %i  - g_npe: %i", SIM_SIZE, i, LPS_PER_PE, g_tw_npe);
+	printf("\n\n\ntotal lps %i - actual is %i\n PEs per LP is %i  - g_npe: %lu", SIM_SIZE, i, LPS_PER_PE, g_tw_npe);
 	//create GID arrays for each LP:
 
 	//myGIDs = (tw_lpid *)malloc(sizeof(tw_lpid)* LPS_PER_PE);
@@ -503,7 +503,7 @@ void scatterMap() {
 
 				printf("\t%i\t%i\t%i\t%llu\n", CORE(gidArray[i]), ISIDE(loc), JSIDE(loc), globalToLocalID(gidArray[i]));
 				if (pe != g_tw_mynode) {
-					printf("ERROR - calced PE %i is not my PE %i \n", pe, g_tw_mynode);
+					printf("ERROR - calced PE %lu is not my PE %li \n", pe, g_tw_mynode);
 				}
 
 

@@ -238,7 +238,7 @@ typedef struct NeuronModel {
  * @param m the rollback message
  * @param lp the lp
  */
-void neuornReverseState(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp);
+void neuronReverseState(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp);
 
 /**
  *  @brief  handles incomming synapse messages. In this model, the neurons send messages to axons during "big tick" intervals.
