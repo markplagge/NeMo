@@ -142,7 +142,7 @@ tw_lpid nodeOffset() {
 	return LPS_PER_PE * g_tw_mynode;
 }
 
-tw_lpid globalID(id_t core, uint16_t i, uint16_t j) {
+tw_lpid globalID(_idT core, uint16_t i, uint16_t j) {
 
 	tw_lpid returnVal = 0; //(tw_lpid)calloc(sizeof(tw_lpid) ,1);
 	// returnVal = (tw_lpid)core << 32 | (tw_lpid) local;

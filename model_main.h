@@ -50,7 +50,7 @@ unsigned int SP_DBG = 0;
 unsigned int LPS_PER_PE;
 unsigned int SIM_SIZE;
 unsigned int LP_PER_KP = 2;
-unsigned int LH_VAL = 0;
+tw_stime LH_VAL = 0;
 unsigned int RAND_WT_PROB = 2;
 bool DEBUG_MODE = 0;
 bool BASIC_SOP = false;
@@ -148,7 +148,7 @@ const tw_optdef app_opt[]= {
 	TWOPT_UINT("cores", CORES_IN_SIM, "number of cores in simulation"),
 	TWOPT_UINT("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
     TWOPT_GROUP("Sim tuning"),
-  TWOPT_UINT("lh", LH_VAL, "Lookahead setting"),
+  TWOPT_STIME("lh", LH_VAL, "Lookahead setting"),
   TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
 	TWOPT_FLAG("delta", TW_DELTA, "Use delta encoding for some states"),
 	TWOPT_FLAG("simple", BASIC_SOP, "Simple SOPS measurement (simpified neuron model)"),

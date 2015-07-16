@@ -140,7 +140,7 @@ void statsOut() {
 		//NP  - CORES - Neurons per core - Net Events - Rollbacks - Running Time	- SOP
 	printf("\n\n");
 	printf("Nodes\tCORES\tNeurons/Core\tNet Events\tRollbacks\tRun Time\tTotal SOP\tThreshold Min\tThreshold Max"
-			       "\tNegativeThresholdMin\tNegativeThresholdMax\tSynapse Weight Min\tSynapse Weight Max\tEvtTies");
+			       "\tNegativeThresholdMin\tNegativeThresholdMax\tSynapse Weight Min\tSynapse Weight Max\tEvtTies\n");
 	printf("%u\t%i\t%i\t%llu\t%llu\t%f\t%llu\t",tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time,totalSOPS);
 	printf("%u\t\t"
 	       "%u\t\t"
@@ -176,7 +176,7 @@ int main(int argc, char *argv[]) {
 	LPS_PER_PE = SIM_SIZE / tw_nnodes();
 	LP_PER_KP = LPS_PER_PE / g_tw_nkp;
 
-	g_tw_events_per_pe = g_tw_nlp * eventAlloc + 2048;
+	g_tw_events_per_pe = g_tw_nlp * eventAlloc + 4048;
 	///@todo enable custom mapping with these smaller LPs.
 
 	if (tnMapping == LLINEAR) {
@@ -198,7 +198,7 @@ int main(int argc, char *argv[]) {
 	// g_tw_clock_rate = CL_VAL;
 	// g_tw_nlp = SIM_SIZE - 1;
 
-	//g_tw_memory_nqueues = 16;  // give at least 16 memory queue event
+	//g_tw_memory_nqueues = 128;  // give at least 16 memory queue event
 
 	tw_define_lps(LPS_PER_PE, sizeof(Msg_Data), 0);
 	tw_lp_setup_types();
@@ -278,6 +278,7 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 	}
 	//BASIC SOPS SETUP - FOR STRICT BENCHMARK
 	if(BASIC_SOP) {
+		TW_DELTA = true;
 	    s->threshold = s->threshold = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
 	    for (int i = 0; i < SYNAPSES_IN_CORE; i++) {
 		    //See if this neuron is negative:
@@ -318,15 +319,12 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 		//    tw_calloc(TW_LOC, "Neuron", sizeof(bool), SYNAPSES_IN_CORE);
 		// select a reset & stochastic reset mode:
 		switch (resetSel) {
-			case 0:
-				s->doReset = resetNormal;
+			case 0: s->doReset = resetNormal;
 		        s->reverseReset = reverseResetNormal;
 		        break;
-			case 1:
-				s->doReset = resetLinear;
+			case 1: s->doReset = resetLinear;
 		        s->reverseReset = reverseResetLinear;
-			default:
-				stochasticThreshold = true;
+			default: stochasticThreshold = true;
 		        s->doReset = resetNone;
 		        s->reverseReset = reverseResetNone;
 		        break;
@@ -342,17 +340,17 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 		}
 
 
-		  for (int i = 0; i < AXONS_IN_CORE; i ++) {
-			  s->weightSelect[i] = tw_rand_integer(lp->rng, 0, 3);
-		  }
-			  //set up type weights:
-		  for (int i = 0; i < 4; i ++) {
-			  
-			  s->axonWeightProb[i] = tw_rand_integer(lp->rng, -SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
-			  s->axonProbSelect[i] = RAND_WT_PROB < tw_rand_poisson(lp->rng, 1);
-		  }
+		for (int i = 0; i < AXONS_IN_CORE; i++) {
+			s->weightSelect[i] = tw_rand_integer(lp->rng, 0, 3);
+		}
+		//set up type weights:
+		for (int i = 0; i < 4; i++) {
 
-			  //old looop
+			s->axonWeightProb[i] = tw_rand_integer(lp->rng, -SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
+			s->axonProbSelect[i] = RAND_WT_PROB < tw_rand_poisson(lp->rng, 1);
+		}
+
+		//old looop
 //		for (int i = 0; i < SYNAPSES_IN_CORE; i++) {
 //			/**
 //			 *  @todo  Enable per neuron probability selection.
@@ -364,6 +362,7 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 //
 //			s->synapticWeightProb[i] = tw_rand_integer(lp->rng, synMinWeight , SYNAPSE_WEIGHT_MAX);
 //		}
+	}
 
 		s->doLeak = linearLeak;
 		s->doLeakReverse = revLinearLeak;
@@ -387,7 +386,6 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 		} else {
 			s->dendriteGlobalDest = getAxonGlobal(s->dendriteCore, s->dendriteLocal);
 		}
-	}
 	if (DEBUG_MODE) {
 		printf("Neuron %i checking in with GID %llu and dest %llu \n", s->myLocalID, lp->gid, s->dendriteGlobalDest);
 	}
@@ -397,8 +395,11 @@ void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID) { }
 
 void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 
-	if (TW_DELTA && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
-		tw_snapshot(lp, lp->type->state_sz);
+	long start_count = lp->rng->count;
+	if (TW_DELTA || BASIC_SOP) {
+		if (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
+			tw_snapshot(lp, lp->type->state_sz);
+		}
 	}
 
 	if(BASIC_SOP){
@@ -406,27 +407,36 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 	  }else {
 	neuronReceiveMessage(s, tw_now(lp), M, lp);
 	  }
-
-	if (BASIC_SOP && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
-		tw_snapshot_delta(lp, lp->type->state_sz);
+	if (TW_DELTA || BASIC_SOP) {
+		if ((g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
+			tw_snapshot_delta(lp, lp->type->state_sz);
+		}
 	}
+	M->rndCallCount = lp->rng->count - start_count;
+
 
 }
 
 void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp) {
 
 
-	if (TW_DELTA && (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
-		tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
-		long count = MCV->rndCallCount;
-		while (count--) {
-			tw_rand_reverse_unif(lp->rng);
-		}
+	if (TW_DELTA||BASIC_SOP) {
+		if (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
+			tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
 
+
+		} else {
+			neuronReverseState(s, CV, MCV, lp);
+		}
 	} else {
-		neuornReverseState(s, CV, MCV, lp);
-		}
+		neuronReverseState(s, CV, MCV, lp);
+	}
 
+	long count = MCV->rndCallCount;
+	while (count--) {
+		tw_rand_reverse_unif(lp->rng);
+	}
+	printf("Neuron Reverse\n");
 
 }
 
@@ -485,9 +495,7 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 
 		tw_event_send(axe);
 	}
-
 	// generate event to send to neuron.
-
 	s->msgSent++;
 	CV->c1 = 1;
 	rc = lp->rng->count;
@@ -496,7 +504,6 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 	data->eventType = SYNAPSE_OUT;
 	data->localID = s->mySynapseNum;
 	data->axonID = M->axonID;
-
 	tw_event_send(axe);
 	if (DEBUG_MODE) {
 		printf("Synapse received and sent message - sGID %llu - sDestSyn %llu - sDestNeu %llu\n", lp->gid, s->destSynapse,
@@ -554,6 +561,7 @@ void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
 	// send a message to the attached synapse
 
 	long rc = lp->rng->count;
+
 	tw_event *axe = tw_event_new(s->destSynapse, getNextEventTime(lp), lp);
 	Msg_Data *data = (Msg_Data *) tw_event_data(axe);
 	data->localID = lp->gid;
@@ -591,6 +599,10 @@ void displayModelSettings(){
 	printf("\n");
 	char * sopMode = BASIC_SOP ? "simplified Neuron Model" : "normal TN Neuron Model";
 	printf("* \tNeurons set to %s.\n", sopMode);
+	printf("* \t %i Neurons per core, %i cores in sim.\n",NEURONS_IN_CORE,CORES_IN_SIM);
+	printf("* \t Neuron stats:\n");
+	//printf("%-10s", "title");
+
 
 		//printf("* \tTiming - Big tick occurs at %f\n", getNextBigTick(0));
 
@@ -599,3 +611,4 @@ void displayModelSettings(){
 	}
 	printf("\n");
 }
+
