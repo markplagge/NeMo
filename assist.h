@@ -16,9 +16,9 @@
 
 /*Type definitions for the nuron simulation */
 #define VERIFY_MAPPING 1
-#define _idT uint32_t //!<ID type - local id type for bit shifts and ID cases.
+#define _idT uint64_t //!<ID type - local id type for bit shifts and ID cases.
 #define _voltT int_fast32_t //!<Voltage data type (membrane potential)
-#define _weightT int32_t //!<Weight/probability type
+#define _weightT int64_t //!<Weight/probability type
 #define _threshT uint_fast32_t //!<threshold data type - In the paper, this is two unsigned values and a reversal flag.
 #define _threshT_MAX UINT_FAST32_MAX
 
