@@ -13,12 +13,18 @@
  * must be handled in the neuron event function neuronReceiveMessage().
  * @{
  */
-void noLeak(void *neuron, tw_stime now) {
-  // do nothing!!
+void noLeak(void *neuron, tw_stime now)
+{
+	// do nothing!!
 }
-void revNoLeak(void *neuron, tw_stime now) {
-  // do nothing!!
+
+
+void revNoLeak(void *neuron, tw_stime now)
+{
+	// do nothing!!
 }
+
+
 /**
  *  @details LinearLeak is the standard linear leak function from the paper.
  * Using the leakRate parameter inside \link NeuronModel the neuron state
@@ -29,7 +35,8 @@ void revNoLeak(void *neuron, tw_stime now) {
  *
  *	@see NeuronModel
  */
-void linearLeak(void *neuron, tw_stime now) {
+void linearLeak(void *neuron, tw_stime now)
+{
 	neuronState *s = (neuronState *)neuron;
 	tw_stime bigTick = getCurrentBigTick(now);
 
@@ -37,84 +44,97 @@ void linearLeak(void *neuron, tw_stime now) {
 
 
 	//if the leak is probabilistic:
-	if(s->leakWeightProbSelect){
-	    while(delta > 0){
-		stochasticIntegrate(s->leakRateProb,s);
-		delta --;
-	      }
-	  }
-	else {
-	     short int omega = (1 - s->leakReversalFlag) + s->leakReversalFlag *SGN(s->membranePot);
-	     s->membranePot += omega * s->leakRateProb;
-
-	  }
+	if (s->leakWeightProbSelect) {
+		while (delta > 0)
+		{
+			stochasticIntegrate(s->leakRateProb, s);
+			delta--;
+		}
+	}else    {
+		short int omega = (1 - s->leakReversalFlag) + s->leakReversalFlag *SGN(s->membranePot);
+		s->membranePot += omega * s->leakRateProb;
+	}
 
 
 	s->lastLeakTime = bigTick;
 }
 
-void revLinearLeak(void *neuron, tw_stime now){
+
+void revLinearLeak(void *neuron, tw_stime now)
+{
 	neuronState *s = (neuronState *)neuron;
-		//tw_stime delta = s->lastLeakTime - now;
+
+	//tw_stime delta = s->lastLeakTime - now;
 
 	//s->membranePot += s->leakRate * delta;
 	s->lastLeakTime = now;
 }
 
 
-
 /** @}*/
+
 /** @name ResetFunctions
- Reset function defs. Neuron reset functions will
- change the neuron state without saving the previous state. All voltage state saving
- must be handled in the neuron event function neuronReceiveMessage().
- @todo: Check that reverse reset functions are needed, since previous voltage is stored in the neuron.
+ * Reset function defs. Neuron reset functions will
+ * change the neuron state without saving the previous state. All voltage state saving
+ * must be handled in the neuron event function neuronReceiveMessage().
+ * @todo: Check that reverse reset functions are needed, since previous voltage is stored in the neuron.
  * @{ */
-
-
-void resetNormal(void *neuronState) {
+void resetNormal(void *neuronState)
+{
 	struct NeuronModel *s = (struct NeuronModel *)neuronState;
+
 	s->membranePot = s->resetVoltage; // set current voltage to \f$R\f$.
 }
+
 
 /**
  *  @details Linear reset mode - ignores \f$R\f$, and sets the membrane potential
  *  to the difference between the threshold and the potential.
  *
  */
-void resetLinear(void *neuronState) {
+void resetLinear(void *neuronState)
+{
 	struct NeuronModel *s = (struct NeuronModel *)neuronState;
-    s->membranePot = s->membranePot - s->threshold;
+
+	s->membranePot = s->membranePot - s->threshold;
 }
+
 
 /// @todo This might not be needed, since we are saving voltage state.
 /// \brief reverseResetLinear
 /// \param neuronState
 ///
-void reverseResetLinear(void *neuronState){
-
+void reverseResetLinear(void *neuronState)
+{
 	struct NeuronModel *s = (struct NeuronModel *)neuronState;
-	_voltT resetParam = (_voltT) s->resetVoltage
-	    ;
+	_voltT resetParam = (_voltT)s->resetVoltage
+	;
+
 	s->membranePot = s->membranePot + resetParam;
 }
 
 
 /** @todo: Check that this is the proper way to handle reset zero function */
-void reverseResetNormal(void *neuronState){
-
+void reverseResetNormal(void *neuronState)
+{
 }
 
 
-void resetNone(void *neuronState){
+void resetNone(void *neuronState)
+{
 }
-void reverseResetNone(void *neuronState) {
+
+
+void reverseResetNone(void *neuronState)
+{
 }
-        /** @} */
+
+
+/** @} */
 
 /** @name NeuronFunctions
-* Main neuron functions and behaviors
-*  @{
+ * Main neuron functions and behaviors
+ *  @{
  */
 
 /**
@@ -129,129 +149,135 @@ void reverseResetNone(void *neuronState) {
  * @todo remove delta encoding
  *
  */
-void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp){
-
-
-  
-        //state management
+void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m, tw_lp *lp)
+{
+	//state management
 	bool willFire = false;
+
 	st->firedLast = false;
-		//save the previous state of the neuron:
-		//st->savedLastLeakTime = st->lastLeakTime;
-		//st->savedLastActiveTime = st->lastActiveTime;
-		//st->savedMembranePot = st->membranePot;
+	//save the previous state of the neuron:
+	//st->savedLastLeakTime = st->lastLeakTime;
+	//st->savedLastActiveTime = st->lastActiveTime;
+	//st->savedMembranePot = st->membranePot;
 	m->neuronVoltage = st->membranePot;
 	m->neuronLastLeakTime = st->lastLeakTime;
 	m->neuronLastActiveTime = st->lastActiveTime;
 
 
 
-	switch (m->eventType) {
-	  case SYNAPSE_OUT:
-                        integrateSynapseFast(m->axonID, st, lp);
+	switch (m->eventType)
+	{
+	case SYNAPSE_OUT:
+		integrateSynapseFast(m->axonID, st, lp);
 
-				//next, we will check if a heartbeat message should be sent
-			if(st->receivedSynapseMsgs == 0) {
-				sendHeartbeat(st, lp, time);
-			}
-			st->receivedSynapseMsgs ++;
-
-
-			break;
-	  case NEURON_HEARTBEAT:
-			st->receivedSynapseMsgs = 0;
-				//set up drawn random number for the heartbeat.
-			//if(st->thresholdPRNMask != 0)
-			st->drawnRandomNumber = tw_rand_ulong(lp->rng, 0, ULONG_MAX) & st->thresholdPRNMask;
-
-				//Currently operates - leak->fire->(reset)
-
-			st->doLeak(st, time);
-			willFire = neuronShouldFire(st,lp);
-			if(willFire){
-				nSpike(st, time, lp);
-				st->fireCount ++;
-			}
-
-			neuronPostIntegrate(st, time, lp, willFire);
-			//stats collection
-			st->SOPSCount ++;
-			st->lastActiveTime = tw_now(lp);
-			break;
-	  default:
-                                //Error condition - non-valid input.
-                        break;
-        }
-
-		//store the random calls in the message:
+		//next, we will check if a heartbeat message should be sent
+		if (st->receivedSynapseMsgs == 0) {
+			sendHeartbeat(st, lp, time);
+		}
+		st->receivedSynapseMsgs++;
 
 
-	st->rcvdMsgCount ++;
+		break;
+
+	case NEURON_HEARTBEAT:
+		st->receivedSynapseMsgs = 0;
+		//set up drawn random number for the heartbeat.
+		//if(st->thresholdPRNMask != 0)
+		st->drawnRandomNumber = tw_rand_ulong(lp->rng, 0, ULONG_MAX) & st->thresholdPRNMask;
+
+		//Currently operates - leak->fire->(reset)
+
+		st->doLeak(st, time);
+		willFire = neuronShouldFire(st, lp);
+		if (willFire) {
+			nSpike(st, time, lp);
+			st->fireCount++;
+		}
+
+		neuronPostIntegrate(st, time, lp, willFire);
+		//stats collection
+		st->SOPSCount++;
+		st->lastActiveTime = tw_now(lp);
+		break;
+
+	default:
+		//Error condition - non-valid input.
+		break;
+	}
+
+	//store the random calls in the message:
 
 
-
-
-
-
+	st->rcvdMsgCount++;
 }
+
+
 //neuron is in basic firing mode with delta encoding.
-void neuronReceiveMessageBasic(neuronState *st, tw_stime time, Msg_Data *m, tw_lp *lp){
-	 unsigned long startCount = lp->rng->count;
-	m->neuronVoltage = st->membranePot; //save the state.
-	m->neuronLastActiveTime = tw_now(lp); //simple mode does not use the last time
-	m->neuronLastLeakTime = tw_now(lp); //but I save them here so the normal reverse function will work.
-    switch (m->eventType) {
-        //random fn call state management.
+void neuronReceiveMessageBasic(neuronState *st, tw_stime time, Msg_Data *m, tw_lp *lp)
+{
+	unsigned long startCount = lp->rng->count;
 
-        //state management
-        bool willFire = false;
-        st->firedLast = false;
-      case SYNAPSE_OUT:
-                    //basic integrate function:
-			integrateSynapseFast(m->axonID, st, lp);
+	m->neuronVoltage = st->membranePot;     //save the state.
+	m->neuronLastActiveTime = tw_now(lp);   //simple mode does not use the last time
+	m->neuronLastLeakTime = tw_now(lp);     //but I save them here so the normal reverse function will work.
+	switch (m->eventType)
+	{
+		//random fn call state management.
 
-                            //next, we will check if a heartbeat message should be sent
-                    if(st->receivedSynapseMsgs == 0) {
-                            sendHeartbeat(st, lp, time);
-                    }
-                    st->receivedSynapseMsgs ++;
+		//state management
+		bool willFire = false;
+		st->firedLast = false;
 
+	case SYNAPSE_OUT:
+		//basic integrate function:
+		integrateSynapseFast(m->axonID, st, lp);
 
-                    break;
-        case NEURON_HEARTBEAT:
-                      st->receivedSynapseMsgs = 0;
-                      willFire = st->membranePot >= st->threshold;
-                      if(willFire){
-                              nSpike(st, time, lp);
-                              st->fireCount ++;
-                              st->membranePot = 0;
-                      }
+		//next, we will check if a heartbeat message should be sent
+		if (st->receivedSynapseMsgs == 0) {
+			sendHeartbeat(st, lp, time);
+		}
+		st->receivedSynapseMsgs++;
 
 
-                      //stats collection
-                      st->SOPSCount ++;
-                      st->lastActiveTime = tw_now(lp);
-                      break;
-        default:
-                              //Error condition - non-valid input.
-                      break;
-      }
-	st->rcvdMsgCount ++;
-	m->rndCallCount= lp->rng->count - startCount;
+		break;
 
+	case NEURON_HEARTBEAT:
+		st->receivedSynapseMsgs = 0;
+		willFire = st->membranePot >= st->threshold;
+		if (willFire) {
+			nSpike(st, time, lp);
+			st->fireCount++;
+			st->membranePot = 0;
+		}
+
+
+		//stats collection
+		st->SOPSCount++;
+		st->lastActiveTime = tw_now(lp);
+		break;
+
+	default:
+		//Error condition - non-valid input.
+		break;
+	}
+	st->rcvdMsgCount++;
+	m->rndCallCount = lp->rng->count - startCount;
 }
 
-bool neuronShouldFire(neuronState *st, tw_lp *lp){
-                //check negative threshold values:
-  return st->membranePot >= st->threshold + (st->drawnRandomNumber & st->thresholdPRNMask);
 
-
+bool neuronShouldFire(neuronState *st, tw_lp *lp)
+{
+	//check negative threshold values:
+	return (st->membranePot >= st->threshold + (st->drawnRandomNumber & st->thresholdPRNMask));
 }
 
-void nSpike(neuronState *st, tw_stime time, tw_lp *lp){
+
+void nSpike(neuronState *st, tw_stime time, tw_lp *lp)
+{
 	tw_stime nextHeartbeat = getNextBigTick(lp);
 	tw_event *newEvent = tw_event_new(st->dendriteGlobalDest, nextHeartbeat, lp);
-	Msg_Data *data = (Msg_Data *) tw_event_data(newEvent);
+	Msg_Data *data = (Msg_Data *)tw_event_data(newEvent);
+
 	data->eventType = NEURON_OUT;
 	data->localID = st->myLocalID;
 	tw_event_send(newEvent);
@@ -259,23 +285,22 @@ void nSpike(neuronState *st, tw_stime time, tw_lp *lp){
 }
 
 
-
-void sendHeartbeat(neuronState *st, tw_lp *lp, tw_stime time){
-
-
-                //random fn call state management.
-  //printf("heartbeat sent \n");
+void sendHeartbeat(neuronState *st, tw_lp *lp, tw_stime time)
+{
+	//random fn call state management.
+	//printf("heartbeat sent \n");
 
 	tw_stime nextHeartbeat = getNextBigTick(lp);
 	tw_event *newEvent = tw_event_new(lp->gid, nextHeartbeat, lp);
-	Msg_Data *data = (Msg_Data *) tw_event_data(newEvent);
+	Msg_Data *data = (Msg_Data *)tw_event_data(newEvent);
+
 	data->eventType = NEURON_HEARTBEAT;
 	data->localID = st->myLocalID;
 
 	tw_event_send(newEvent);
-
-
 }
+
+
 /**
  * @details From the Cassidy 2013 paper, page 4, Part D. This function covers the
  * stochastic synaptic and leak integration functions defined in the paper.
@@ -283,37 +308,39 @@ void sendHeartbeat(neuronState *st, tw_lp *lp, tw_stime time){
  * @param st
  * @param lp
  */
-void stochasticIntegrate(_weightT weight, neuronState *st){
-
+void stochasticIntegrate(_weightT weight, neuronState *st)
+{
 	long drawnRandom = st->drawnRandomNumber;
-	if (BINCOMP(weight, drawnRandom)){
+
+	if (BINCOMP(weight, drawnRandom)) {
 		st->membranePot += SGN(weight);
 	}
 }
 
 
-	//non huge array method of integration.
-void integrateSynapseFast(_idT axonID, neuronState *st, tw_lp *lp) {
+//non huge array method of integration.
+void integrateSynapseFast(_idT axonID, neuronState *st, tw_lp *lp)
+{
 	_voltT adjWt = st->axonWeightProb[st->weightSelect[axonID]];
-	if(st->axonProbSelect[st->weightSelect[axonID]]){
+
+	if (st->axonProbSelect[st->weightSelect[axonID]]) {
 		stochasticIntegrate(adjWt, st);
 	} else {
 		st->membranePot += adjWt;
 	}
-
-
-
 }
+
 
 /** @todo There is potentially an issue here - does the TrueNorth architecture draw a new
  *	pseudorandom number during the threshold, fire, reset functions, or does it resuse them? It
  *	looks like re-use, so that's what I'm doing here.
  */
-void  neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFire){
-	if(willFire){ // neuron will/did fire:
+void neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFire)
+{
+	if (willFire) { // neuron will/did fire:
 		st->doReset(st);
-	} else if (st->membranePot < -1 * (st->negativeThreshold * st->negThresReset + (st->negativeThreshold + st->drawnRandomNumber))){
-			//sanity variables for the formulaic reset/bounce instead of calling functions:
+	} else if (st->membranePot < -1 * (st->negativeThreshold * st->negThresReset + (st->negativeThreshold + st->drawnRandomNumber))) {
+		//sanity variables for the formulaic reset/bounce instead of calling functions:
 		_threshT B = st->negativeThreshold;
 		int K = st->negThresReset;
 		int G = st->resetMode;
@@ -321,37 +348,38 @@ void  neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFi
 		_voltT R = st->resetVoltage;
 		_voltT V = st->membranePot;
 		st->membranePot = (-(B*K) + (-(DT(G)) * R +
-					     DT(G-1) * (V + (B + n)) +
-					     DT(G-2) * V) * (1-K));
+		    DT(G-1) * (V + (B + n)) +
+		    DT(G-2) * V) * (1-K));
+	}
+}
 
+
+void neuronReverseState(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp)
+{
+	//reverse function.
+	long count = m->rndCallCount;
+
+	/** @todo - check this for correctness and switch from delta encoding. */
+	if (m->eventType == SYNAPSE_OUT) {
+		s->receivedSynapseMsgs--;
+	}else if (m->eventType == NEURON_HEARTBEAT) {
+		s->SOPSCount--;
 	}
 
-}
-void  neuronReverseState(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp) {
-
-                //reverse function.
-    long count = m->rndCallCount;
-
-    /** @todo - check this for correctness and switch from delta encoding. */
-  if(m->eventType == SYNAPSE_OUT){
-                s->receivedSynapseMsgs --;
-    }else if(m->eventType == NEURON_HEARTBEAT){
-      s->SOPSCount --;
-    }
-
-	if(s->firedLast == true){
-		s->fireCount --;
+	if (s->firedLast == true) {
+		s->fireCount--;
 		s->firedLast = false;
 	}
 
-	s->membranePot = m->neuronVoltage ;
-	s->lastLeakTime =  m->neuronLastLeakTime;
+	s->membranePot = m->neuronVoltage;
+	s->lastLeakTime = m->neuronLastLeakTime;
 	s->lastActiveTime = m->neuronLastActiveTime;
 
-	while (count--) {
-	    tw_rand_reverse_unif(lp->rng);
+	while (count--)
+	{
+		tw_rand_reverse_unif(lp->rng);
 	}
-
-
 }
+
+
 /** @} */

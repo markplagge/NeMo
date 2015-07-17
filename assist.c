@@ -7,50 +7,58 @@
 //
 
 #include "assist.h"
-        #include <math.h>
+#include <math.h>
 ///Big-tick offset - this is the delta for big ticks (neuron events)
 tw_stime bigTickRate = 0;
-void setBigLittleTick() {
-  littleTick = .00001;
-  bigTickRate = ceill(littleTick) + 256;
+void setBigLittleTick()
+{
+	littleTick = .00001;
+	bigTickRate = ceill(littleTick) + 256;
 }
+
+
 /**
  *  Gets the next small-tick event time.
  */
-tw_stime getNextEventTime(tw_lp *lp) {
-  if(bigTickRate == 0)
-    setBigLittleTick();
+tw_stime getNextEventTime(tw_lp *lp)
+{
+	if (bigTickRate == 0) {
+		setBigLittleTick();
+	}
 
-  tw_stime bigTickRate = 0;
-  tw_stime r; 
-  unsigned int ct = 0;
-  switch(CLOCK_RND_MODE) {
-    case RND_UNF:
-  r = (double)tw_rand_unif(lp->rng);
-  break;
-  case RND_NORM_BASED:
-  r = tw_rand_normal_sd(lp->rng, CLOCK_RANDOM_ADJ, 20,&ct);
-        lp->rng->count += ct;
+	tw_stime bigTickRate = 0;
+	tw_stime r;
+	unsigned int ct = 0;
+	switch (CLOCK_RND_MODE)
+	{
+	case RND_UNF:
+		r = (double)tw_rand_unif(lp->rng);
+		break;
 
-        break;
-  case RND_EXP:
-  //Taken from the dragonfly sim - CLOCK_RAND_ADJ is eqv. to the mean from the other sim.
+	case RND_NORM_BASED:
+		r = tw_rand_normal_sd(lp->rng, CLOCK_RANDOM_ADJ, 20, &ct);
+		lp->rng->count += ct;
 
-      r = tw_rand_exponential(lp->rng, CLOCK_RANDOM_ADJ);
-        //r +=  lp-gid / (g_tw_nlp * tw_nnodes());
+		break;
+
+	case RND_EXP:
+		//Taken from the dragonfly sim - CLOCK_RAND_ADJ is eqv. to the mean from the other sim.
+
+		r = tw_rand_exponential(lp->rng, CLOCK_RANDOM_ADJ);
+		//r +=  lp-gid / (g_tw_nlp * tw_nnodes());
 
 
-          break;
-  default:
-  // tw_rand_binomial(lp->rng, 100, CLOCK_RANDOM_ADJ);
-    r = (double)tw_rand_integer(lp->rng, INT32_MIN, INT32_MAX);
-          r = r / 100000000000;
-          r += lp->gid / 100000000000;
-          break;
+		break;
 
-  }
-  //r *= littleTick;
-  return r;
+	default:
+		// tw_rand_binomial(lp->rng, 100, CLOCK_RANDOM_ADJ);
+		r = (double)tw_rand_integer(lp->rng, INT32_MIN, INT32_MAX);
+		r = r / 100000000000;
+		r += lp->gid / 100000000000;
+		break;
+	}
+	//r *= littleTick;
+	return (r);
 }
 
 
@@ -61,65 +69,78 @@ tw_stime getNextEventTime(tw_lp *lp) {
  *  of the next big tick, that will be returned instead. Sane parameters would
  *  probably be around .000001. @todo: Implement & determine if ε needs to be added
  *  to the return value.
-
+ *
  */
-tw_stime getCurrentBigTick(tw_stime now){
-  if(littleTick == 0 || bigTickRate == 0)
-    setBigLittleTick();
-
-
-  return floor(now);
-
-}
-        //@todo Seems to work just fine - but need to double check.
-tw_stime getNextBigTick(tw_lp *lp) {
-  if(littleTick == 0 || bigTickRate == 0)
-    setBigLittleTick();
-
-	if(CLOCK_RND_MODE == RND_UNF){
-		return tw_rand_unif(lp->rng) + 256;
+tw_stime getCurrentBigTick(tw_stime now)
+{
+	if ((littleTick == 0) || (bigTickRate == 0)) {
+		setBigLittleTick();
 	}
-  return tw_rand_exponential(lp->rng, bigTickRate);
-                //Need to figure this out - not accurate until this is done:
 
+
+	return (floor(now));
 }
 
-int testTiming() {
-  // test timing with the model params:
-  tw_lp *rap = tw_getlp(0);
-  // Pretend all axons get a message first:
-  int tester = 0;
-  printf("%i synapses in core\n", SYNAPSES_IN_CORE);
-  tw_stime *firstNeuronOutTime;  //[AXONS_IN_CORE];
-  firstNeuronOutTime = calloc(sizeof(tw_stime), AXONS_IN_CORE);
-  tw_stime *axonSendTime;
-  axonSendTime = calloc(sizeof(tw_stime), AXONS_IN_CORE);
 
-  while (tester < 1024) {
-    for (int i = 0; i < AXONS_IN_CORE; i++) {
-      axonSendTime[i] = getNextEventTime(rap) + firstNeuronOutTime[i];
-    }
+//@todo Seems to work just fine - but need to double check.
+tw_stime getNextBigTick(tw_lp *lp)
+{
+	if ((littleTick == 0) || (bigTickRate == 0)) {
+		setBigLittleTick();
+	}
 
-    // next, check the first synapse layer:
+	if (CLOCK_RND_MODE == RND_UNF) {
+		return (tw_rand_unif(lp->rng) + 256);
+	}
+	return (tw_rand_exponential(lp->rng, bigTickRate));
+	//Need to figure this out - not accurate until this is done:
+}
 
-    for (int i = 0; i < AXONS_IN_CORE; i++) {
-      firstNeuronOutTime[i] = getNextBigTick(rap);
-    }
 
-    // See if this round of big ticks makes sense:
+int testTiming()
+{
+	// test timing with the model params:
+	tw_lp *rap = tw_getlp(0);
+	// Pretend all axons get a message first:
+	int tester = 0;
 
-    printf("Axons in core: %i - Synapses in Core %i. \n", AXONS_IN_CORE,
-           NEURONS_IN_CORE);
-    for (int i = 0; i < AXONS_IN_CORE; i++) {
-      double xv = axonSendTime[i];
-      if (xv < 0) printf("Less than zero\n");
-      printf("Ax/Ne %i Sends from %f -> Neuron @ %f\n", i, axonSendTime[i],
-             firstNeuronOutTime[i]);
-    }
-    printf("\n");
-    printf("Current big tick from little tick %f is %f\n", axonSendTime[0],
-           getCurrentBigTick(axonSendTime[0]));
-    tester++;
-  }
-  exit(0);
+	printf("%i synapses in core\n", SYNAPSES_IN_CORE);
+	tw_stime *firstNeuronOutTime; //[AXONS_IN_CORE];
+	firstNeuronOutTime = calloc(sizeof(tw_stime), AXONS_IN_CORE);
+	tw_stime *axonSendTime;
+	axonSendTime = calloc(sizeof(tw_stime), AXONS_IN_CORE);
+
+	while (tester < 1024)
+	{
+		for (int i = 0; i < AXONS_IN_CORE; i++)
+		{
+			axonSendTime[i] = getNextEventTime(rap) + firstNeuronOutTime[i];
+		}
+
+		// next, check the first synapse layer:
+
+		for (int i = 0; i < AXONS_IN_CORE; i++)
+		{
+			firstNeuronOutTime[i] = getNextBigTick(rap);
+		}
+
+		// See if this round of big ticks makes sense:
+
+		printf("Axons in core: %i - Synapses in Core %i. \n", AXONS_IN_CORE,
+		    NEURONS_IN_CORE);
+		for (int i = 0; i < AXONS_IN_CORE; i++)
+		{
+			double xv = axonSendTime[i];
+			if (xv < 0) {
+				printf("Less than zero\n");
+			}
+			printf("Ax/Ne %i Sends from %f -> Neuron @ %f\n", i, axonSendTime[i],
+			    firstNeuronOutTime[i]);
+		}
+		printf("\n");
+		printf("Current big tick from little tick %f is %f\n", axonSendTime[0],
+		    getCurrentBigTick(axonSendTime[0]));
+		tester++;
+	}
+	exit(0);
 }
