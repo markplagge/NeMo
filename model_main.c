@@ -158,6 +158,12 @@ void statsOut() {
 
 }
 int main(int argc, char *argv[]) {
+
+	char input[1];
+	int x = 1;
+	while (x){
+		
+	}
 	
 	tw_opt_add(app_opt);
 	tw_init(&argc, &argv);
@@ -176,7 +182,7 @@ int main(int argc, char *argv[]) {
 	LPS_PER_PE = SIM_SIZE / tw_nnodes();
 	LP_PER_KP = LPS_PER_PE / g_tw_nkp;
 
-	g_tw_events_per_pe = g_tw_nlp * eventAlloc + 4048;
+	g_tw_events_per_pe = eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
 	///@todo enable custom mapping with these smaller LPs.
 
 	if (tnMapping == LLINEAR) {
@@ -198,7 +204,7 @@ int main(int argc, char *argv[]) {
 	// g_tw_clock_rate = CL_VAL;
 	// g_tw_nlp = SIM_SIZE - 1;
 
-	//g_tw_memory_nqueues = 128;  // give at least 16 memory queue event
+	g_tw_memory_nqueues = 128;  // give at least 16 memory queue event
 
 	tw_define_lps(LPS_PER_PE, sizeof(Msg_Data), 0);
 	tw_lp_setup_types();
@@ -436,7 +442,7 @@ void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp) {
 	while (count--) {
 		tw_rand_reverse_unif(lp->rng);
 	}
-	printf("Neuron Reverse\n");
+		//printf("Neuron Reverse\n");
 
 }
 

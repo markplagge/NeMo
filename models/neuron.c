@@ -132,8 +132,7 @@ void reverseResetNone(void *neuronState) {
 void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp){
 
 
-        //random fn call state management.
-        unsigned long startCount = lp->rng->count;
+  
         //state management
 	bool willFire = false;
 	st->firedLast = false;
@@ -188,7 +187,7 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m,tw_lp *lp)
 
 
 	st->rcvdMsgCount ++;
-	m->rndCallCount=   lp->rng->count - startCount;
+
 
 
 
@@ -342,6 +341,7 @@ void  neuronReverseState(neuronState *s, tw_bf *CV,Msg_Data *m,tw_lp *lp) {
 
 	if(s->firedLast == true){
 		s->fireCount --;
+		s->firedLast = false;
 	}
 
 	s->membranePot = m->neuronVoltage ;

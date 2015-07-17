@@ -12,7 +12,7 @@
 tw_stime bigTickRate = 0;
 void setBigLittleTick() {
   littleTick = .00001;
-  bigTickRate = ceill(littleTick) + 265;
+  bigTickRate = ceill(littleTick) + 256;
 }
 /**
  *  Gets the next small-tick event time.
@@ -26,7 +26,7 @@ tw_stime getNextEventTime(tw_lp *lp) {
   unsigned int ct = 0;
   switch(CLOCK_RND_MODE) {
     case RND_UNF:
-  r = littleTick * (double)tw_rand_unif(lp->rng);
+  r = (double)tw_rand_unif(lp->rng);
   break;
   case RND_NORM_BASED:
   r = tw_rand_normal_sd(lp->rng, CLOCK_RANDOM_ADJ, 20,&ct);
@@ -76,6 +76,9 @@ tw_stime getNextBigTick(tw_lp *lp) {
   if(littleTick == 0 || bigTickRate == 0)
     setBigLittleTick();
 
+	if(CLOCK_RND_MODE == RND_UNF){
+		return tw_rand_unif(lp->rng) + 256;
+	}
   return tw_rand_exponential(lp->rng, bigTickRate);
                 //Need to figure this out - not accurate until this is done:
 
