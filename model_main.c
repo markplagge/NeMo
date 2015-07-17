@@ -52,31 +52,87 @@ tw_lptype model_lps[] = {
 	sizeof(axonState) },
 			  { 0 } };
 
-double compute_average(double *array, int num_elements)
+int main(int argc, char *argv[])
 {
-	double sum = 0;
 
-	for (int i = 0; i < num_elements; i++)
-	{
-		sum += array[i];
+
+
+	tw_opt_add(app_opt);
+	tw_init(&argc, &argv);
+
+	//Some init messages:
+
+	// set up core sizes.
+	AXONS_IN_CORE = NEURONS_IN_CORE;
+	SYNAPSES_IN_CORE = (NEURONS_IN_CORE * AXONS_IN_CORE);
+	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
+	SIM_SIZE = CORE_SIZE * CORES_IN_SIM;
+	tnMapping = LLINEAR;
+
+	/** g_tw_nlp set here to CORE_SIZE.
+	 * @todo check accuracy of this
+	 * */
+	LPS_PER_PE = SIM_SIZE / tw_nnodes();
+	LP_PER_KP = LPS_PER_PE / g_tw_nkp;
+
+	g_tw_events_per_pe = eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
+	///@todo enable custom mapping with these smaller LPs.
+
+	if (tnMapping == LLINEAR) {
+		g_tw_mapping = LINEAR;
+		g_tw_lp_types = model_lps;
+		g_tw_lp_typemap = &tn_linear_map;
+
+		// g_tw_custom_initial_mapping = &nlMap;
+		// g_tw_custom_lp_global_to_local_map = &globalToLP;
+	} else if (tnMapping == CUST_LINEAR) {
+		g_tw_mapping = LINEAR;
+		g_tw_lp_types = model_lps;
+		g_tw_lp_typemap = &lpTypeMapper;
+		g_tw_custom_initial_mapping = &nlMap;
+		g_tw_custom_lp_global_to_local_map = &globalToLP;
 	}
-	return (sum / num_elements);
-}
+
+	g_tw_lookahead = LH_VAL;
+	// g_tw_clock_rate = CL_VAL;
+	// g_tw_nlp = SIM_SIZE - 1;
+
+	g_tw_memory_nqueues = 128;  // give at least 16 memory queue event
+
+	tw_define_lps(LPS_PER_PE, sizeof(Msg_Data), 0);
+	tw_lp_setup_types();
+
+	///@todo do we need a custom lookahedad parameter?
 
 
-double *create_rand_nums(int num_elements)
-{
-	double *rand_nums = (double *)malloc(sizeof(double) * num_elements);
-	// assert(rand_nums != NULL);
-	int i;
+	// scatterMap();
+	// createLPs();
 
-	for (i = 0; i < num_elements; i++)
-	{
-		rand_nums[i] = (rand() / (double)RAND_MAX);
+	// printf("\nCreated %i ax, %i ne, %i se", a_created, n_created, s_created);
+	if (g_tw_mynode == 0) {
+		displayModelSettings();
 	}
-	return (rand_nums);
-}
+	//testTiming();
 
+
+	tw_run();
+	// Stats Collection ************************************************************************************88
+	totalSOPS = 0;
+	totalSynapses = 0;
+	MPI_Reduce(&neuronSOPS, &totalSOPS, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+	MPI_Reduce(&synapseEvents, &totalSynapses, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+	statsOut();
+	tw_end();
+
+	if (g_tw_mynode == 0) {  // master node for outputting stats.
+		printf("\n ------ TN Benchmark Stats ------- \n");
+		printf("Total SOPS(integrate and/or fire): %llu\n", totalSOPS);
+		printf("This PE's SOP: %llu\n", neuronSOPS);
+		printf("Total Synapse MSGs sent: %llu\n", totalSynapses);
+	}
+
+	return (0);
+}
 
 void statsOut()
 {
@@ -85,6 +141,7 @@ void statsOut()
 	tw_pe *pe;
 	tw_kp *kp;
 	tw_lp *lp = NULL;
+
 
 	int i;
 
@@ -186,91 +243,7 @@ void statsOut()
 }
 
 
-int main(int argc, char *argv[])
-{
-	char input[1];
-	int x = 1;
 
-	while (x)
-	{
-	}
-
-	tw_opt_add(app_opt);
-	tw_init(&argc, &argv);
-
-	//Some init messages:
-
-	// set up core sizes.
-	AXONS_IN_CORE = NEURONS_IN_CORE;
-	SYNAPSES_IN_CORE = (NEURONS_IN_CORE * AXONS_IN_CORE);
-	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
-	SIM_SIZE = CORE_SIZE * CORES_IN_SIM;
-	tnMapping = LLINEAR;
-
-	/** g_tw_nlp set here to CORE_SIZE.
-	 * @todo check accuracy of this
-	 * */
-	LPS_PER_PE = SIM_SIZE / tw_nnodes();
-	LP_PER_KP = LPS_PER_PE / g_tw_nkp;
-
-	g_tw_events_per_pe = eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
-	///@todo enable custom mapping with these smaller LPs.
-
-	if (tnMapping == LLINEAR) {
-		g_tw_mapping = LINEAR;
-		g_tw_lp_types = model_lps;
-		g_tw_lp_typemap = &tn_linear_map;
-
-		// g_tw_custom_initial_mapping = &nlMap;
-		// g_tw_custom_lp_global_to_local_map = &globalToLP;
-	} else if (tnMapping == CUST_LINEAR) {
-		g_tw_mapping = LINEAR;
-		g_tw_lp_types = model_lps;
-		g_tw_lp_typemap = &lpTypeMapper;
-		g_tw_custom_initial_mapping = &nlMap;
-		g_tw_custom_lp_global_to_local_map = &globalToLP;
-	}
-
-	g_tw_lookahead = LH_VAL;
-	// g_tw_clock_rate = CL_VAL;
-	// g_tw_nlp = SIM_SIZE - 1;
-
-	g_tw_memory_nqueues = 128;  // give at least 16 memory queue event
-
-	tw_define_lps(LPS_PER_PE, sizeof(Msg_Data), 0);
-	tw_lp_setup_types();
-
-	///@todo do we need a custom lookahedad parameter?
-
-
-	// scatterMap();
-	// createLPs();
-
-	// printf("\nCreated %i ax, %i ne, %i se", a_created, n_created, s_created);
-	if (g_tw_mynode == 0) {
-		displayModelSettings();
-	}
-	//testTiming();
-
-
-	tw_run();
-	// Stats Collection ************************************************************************************88
-	totalSOPS = 0;
-	totalSynapses = 0;
-	MPI_Reduce(&neuronSOPS, &totalSOPS, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
-	MPI_Reduce(&synapseEvents, &totalSynapses, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
-	statsOut();
-	tw_end();
-
-	if (g_tw_mynode == 0) {  // master node for outputting stats.
-		printf("\n ------ TN Benchmark Stats ------- \n");
-		printf("Total SOPS(integrate and/or fire): %llu\n", totalSOPS);
-		printf("This PE's SOP: %llu\n", neuronSOPS);
-		printf("Total Synapse MSGs sent: %llu\n", totalSynapses);
-	}
-
-	return (0);
-}
 
 
 ///
@@ -308,7 +281,7 @@ void createLPs()
 // neuron functions
 void neuron_init(neuronState *s, tw_lp *lp)
 {
-	memset(s, 0, sizeof(neuronState));
+	//memset(s, 0, sizeof(neuronState));
 	if (tnMapping == LLINEAR) {
 		s->myCoreID = getCoreFromGID(lp->gid);
 		s->myLocalID = lGetNeuNumLocal(lp->gid);
@@ -450,18 +423,20 @@ void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID)
 void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
 	long start_count = lp->rng->count;
-
+	//if delta is on or basic mode is on, take a snapshot for delta encoding
 	if (TW_DELTA || BASIC_SOP) {
 		if ((g_tw_synchronization_protocol == OPTIMISTIC) || (g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
 			tw_snapshot(lp, lp->type->state_sz);
 		}
 	}
-
+	//basic mode removes leak and stochastic reverse threshold functions.
 	if (BASIC_SOP) {
 		neuronReceiveMessageBasic(s, tw_now(lp), M, lp);
 	}else {
 		neuronReceiveMessage(s, tw_now(lp), M, lp);
 	}
+
+	//again, only take the delta in basic neuron mode or in delta mode.
 	if (TW_DELTA || BASIC_SOP) {
 		if (((g_tw_synchronization_protocol == OPTIMISTIC) || (g_tw_synchronization_protocol == OPTIMISTIC_DEBUG))) {
 			tw_snapshot_delta(lp, lp->type->state_sz);
@@ -474,15 +449,17 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp)
 {
 	if (TW_DELTA || BASIC_SOP) {
+		//If we are using delta encoding, use that to roll back the state.For now, all BASIC_SOP sims use delta encoding!
 		if ((g_tw_synchronization_protocol == OPTIMISTIC) || (g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
 			tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
-		} else {
-			neuronReverseState(s, CV, MCV, lp);
 		}
-	} else {
-		neuronReverseState(s, CV, MCV, lp);
+
+	}
+	else { //ReverseState is needed when not using delta encoding. Since basic mode implies delta, this only runs when delta is off and neurons are in normal sim mode.
+		neuronReverseState(s,CV,MCV,lp);
 	}
 
+	//Roll Back random calls
 	long count = MCV->rndCallCount;
 	while (count--)
 	{
@@ -538,13 +515,12 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
 	long rc = lp->rng->count;
 
-	*(int *)CV = (int)0;
+	//*(int *)CV = (int)0;
 	// printf("Synapse rcvd msg\n");
 	if (s->destSynapse != 0) {
 		// generate event to send to next synapse
 		s->msgSent++;
-		CV->c0 = 1;
-		long rc = lp->rng->count;
+		//CV->c0 = 1;
 		tw_event *axe = tw_event_new(s->destSynapse, getNextEventTime(lp), lp);
 		Msg_Data *data = (Msg_Data *)tw_event_data(axe);
 		data->eventType = SYNAPSE_OUT;
@@ -555,7 +531,7 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	}
 	// generate event to send to neuron.
 	s->msgSent++;
-	CV->c1 = 1;
+	//CV->c1 = 1;
 	rc = lp->rng->count;
 	tw_event *axe = tw_event_new(s->destNeuron, getNextEventTime(lp), lp);
 	Msg_Data *data = (Msg_Data *)tw_event_data(axe);
@@ -573,19 +549,17 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 
 void synapse_reverse(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
-	// printf("Synape reverse \n");
-	long count = M->rndCallCount;
+	if(s->destSynapse != 0){
+		s->msgSent --;
+	}
+	s->msgSent --;
 
+	long count = M->rndCallCount;
 	while (count--)
 	{
 		tw_rand_reverse_unif(lp->rng);
 	}
-	if (CV->c0) {
-		s->msgSent--;
-	}
-	if (CV->c1) {
-		s->msgSent--;
-	}
+
 }
 
 
@@ -642,6 +616,7 @@ void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	data->axonID = s->axonID;
 
 	tw_event_send(axe);
+	s->sendMsgCount ++;
 	M->rndCallCount = lp->rng->count - rc;
 }
 

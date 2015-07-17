@@ -69,7 +69,7 @@ littleTickRange = ["0.00001", "0.0001",  "0.01", "0.1"]
 
 simEnd = "500"
 
-clockRates = [ 10, 100, 1000]
+
 
 
 cmd = "mpirun -np=8 ../../builds/models/tnt_benchmark/tnt_benchmark --bulk --neurons=256 --cores=4096 --sync=3"
@@ -82,9 +82,8 @@ current = 0
 total = 0
 for rmode in rRange:
     for littleTick in littleTickRange:
-        for clock in clockRates:
             for modd in rMod:
-                args = " --clock-rate=%s --end=%s --lt=%s --rm=%s --extramem=15000000 --rv=%s" % (clock, simEnd, littleTick, rmode,modd)
+                args = " --end=%s --lt=%s --rm=%s --extramem=15000000 --rv=%s" % ( simEnd, littleTick, rmode,modd)
                 if threading.active_count() <=5:
                     current = current + 1
                     total = total + 1

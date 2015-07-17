@@ -220,17 +220,18 @@ void neuronReceiveMessageBasic(neuronState *st, tw_stime time, Msg_Data *m, tw_l
 	m->neuronVoltage = st->membranePot;     //save the state.
 	m->neuronLastActiveTime = tw_now(lp);   //simple mode does not use the last time
 	m->neuronLastLeakTime = tw_now(lp);     //but I save them here so the normal reverse function will work.
+	//random fn call state management.
+
+	//state management
+	bool willFire = false;
+	st->firedLast = false;
+
 	switch (m->eventType)
 	{
-		//random fn call state management.
-
-		//state management
-		bool willFire = false;
-		st->firedLast = false;
-
 	case SYNAPSE_OUT:
 		//basic integrate function:
-		integrateSynapseFast(m->axonID, st, lp);
+		//integrateSynapseFast(m->axonID, st, lp);
+		st->membranePot += 100;
 
 		//next, we will check if a heartbeat message should be sent
 		if (st->receivedSynapseMsgs == 0) {
@@ -258,6 +259,7 @@ void neuronReceiveMessageBasic(neuronState *st, tw_stime time, Msg_Data *m, tw_l
 
 	default:
 		//Error condition - non-valid input.
+		abort();
 		break;
 	}
 	st->rcvdMsgCount++;

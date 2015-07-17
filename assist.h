@@ -84,7 +84,8 @@ typedef enum TimeRandomSel {
 	RND_UNF = 0,
 	RND_NORM_BASED = 1,
 	RND_EXP = 2,
-	RND_BIN = 3
+	RND_BIN = 3,
+	RND_DMB = 4
 } timeRandomSel;
 
 /* Message structures */

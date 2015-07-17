@@ -41,15 +41,15 @@ int eventAlloc = 2;
 unsigned int GEN_ON = 1;///< Is the input generator enabled?
 
 bool GEN_RND = 1; //!< Generator random mode flag
-unsigned int RND_MODE = 0;
-unsigned int GEN_PROB = 50;
-unsigned int GEN_FCT = 5;
-unsigned int GEN_OUTBOUND = 0;
-unsigned int GEN_SEL_MODE = 0;
-unsigned int SP_DBG = 0;
+//unsigned int RND_MODE = 0;
+//unsigned int GEN_PROB = 50;
+//unsigned int GEN_FCT = 5;
+//unsigned int GEN_OUTBOUND = 0;
+//unsigned int GEN_SEL_MODE = 0;
+//unsigned int SP_DBG = 0;
 unsigned int LPS_PER_PE;
 unsigned int SIM_SIZE;
-unsigned int LP_PER_KP = 2;
+unsigned int LP_PER_KP;
 tw_stime LH_VAL = 0;
 unsigned int RAND_WT_PROB = 2;
 bool DEBUG_MODE = 0;
@@ -94,6 +94,9 @@ _threshT RAND_RANGE_MAX = 31;
 
 _statT totalSOPS;
 _statT totalSynapses;
+
+void statsOut();
+
 /**
  *	Each neuron is connected to the synapses (inputs) within the core it is running in.
  *	These parameters adjust the input weight given to each synapse. */
@@ -153,7 +156,7 @@ const tw_optdef app_opt[]= {
 	TWOPT_FLAG("delta", TW_DELTA, "Use delta encoding for some states"),
 	TWOPT_FLAG("simple", BASIC_SOP, "Simple SOPS measurement (simpified neuron model)"),
   TWOPT_STIME("rv", CLOCK_RANDOM_ADJ, "Clock random generator modifier"),
-  TWOPT_UINT("rm",CLOCK_RND_MODE, "Clock random mode selector.\n\t\t0 = uniform, 1 = normal, 2 = exponential, 3 = binomal"),
+  TWOPT_UINT("rm",CLOCK_RND_MODE, "Clock random mode selector.\n\t\t0 = uniform, 1 = normal, 2 = exponential, 3 = binomal, 4 = simplistic"),
   TWOPT_FLAG("bulk",BULK_MODE,"Is this sim running in bulk mode (called from script?)"),
     {TWOPT_END()}
 
