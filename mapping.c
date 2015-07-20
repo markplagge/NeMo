@@ -93,7 +93,9 @@ tw_lpid lGetAxeNumLocal(tw_lpid gid)
 
 tw_lpid lGetNeuNumLocal(tw_lpid gid)
 {
-	return (gid - lCoreOffset(gid));
+	//return (gid - lCoreOffset(gid));
+	tw_lpid neuronStart = (SYNAPSES_IN_CORE + AXONS_IN_CORE);
+	return gid-lCoreOffset(gid) - neuronStart;
 }
 
 

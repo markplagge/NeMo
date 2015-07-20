@@ -26,7 +26,7 @@ tw_stime getNextEventTime(tw_lp *lp) {
   unsigned int ct = 0;
   switch(CLOCK_RND_MODE) {
     case RND_UNF:
-  r =littleTick * (double)tw_rand_unif(lp->rng);
+  r  = littleTick* (double)tw_rand_unif(lp->rng);
   break;
   case RND_NORM_BASED:
   r = tw_rand_normal_sd(lp->rng, CLOCK_RANDOM_ADJ, 20,&ct);
@@ -74,22 +74,32 @@ tw_stime getCurrentBigTick(tw_stime now){
   return floor(now);
 
 }
-        //@todo  Logic error here - the first neuron needs to send an event at t+255, the next at t+254, until the last neuron sends a message at t.
-        tw_stime getNextBigTick(tw_lp *lp) {
+
+        tw_stime getNextBigTick(tw_lp *lp, int neuronID) {
   if(littleTick == 0 || bigTickRate == 0)
     setBigLittleTick();
-          switch(CLOCK_RND_MODE) {
+
+          int nTick = NEURONS_IN_CORE - neuronID;
+           // printf(" A random value exp wuith nTick%i =  %f\n",nTick,tw_rand_exponential(lp->rng,nTick));
+            //double testVal = tw_rand_binomial(lp->rng,CORE_SIZE,1/nTick);
+            //printf(" A random value BINOM wuith nTick%i =  %f\n",nTick,testVal);
+
+
+
+            switch(CLOCK_RND_MODE) {
             case RND_UNF:
             case RND_DMB:
-                  return getNextEventTime(lp) + 255;
+                  return getNextEventTime(lp) + nTick;
             break;
             case RND_EXP:
-              return tw_rand_exponential(lp->rng, 255/100);
+              return tw_rand_exponential(lp->rng, nTick);
             break;
+            default:
+              return tw_rand_exponential(lp->rng, nTick);
 
           }
 
-  return tw_rand_exponential(lp->rng, 100);
+
                 //Need to figure this out - not accurate until this is done:
 
 }
@@ -113,7 +123,7 @@ int testTiming() {
     // next, check the first synapse layer:
 
     for (int i = 0; i < AXONS_IN_CORE; i++) {
-      firstNeuronOutTime[i] = getNextBigTick(rap);
+      firstNeuronOutTime[i] = getNextBigTick(rap, i);
     }
 
     // See if this round of big ticks makes sense:

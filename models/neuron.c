@@ -183,7 +183,7 @@ void neuronReceiveMessage(neuronState *st, tw_stime time, Msg_Data *m, tw_lp *lp
 		st->receivedSynapseMsgs = 0;
 		//set up drawn random number for the heartbeat.
 		//if(st->thresholdPRNMask != 0)
-		st->drawnRandomNumber = tw_rand_ulong(lp->rng, 0, ULONG_MAX) & st->thresholdPRNMask;
+		st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, INT32_MAX) & st->thresholdPRNMask;
 
 		//Currently operates - leak->fire->(reset)
 
@@ -276,7 +276,7 @@ bool neuronShouldFire(neuronState *st, tw_lp *lp)
 
 void nSpike(neuronState *st, tw_stime time, tw_lp *lp)
 {
-	tw_stime nextHeartbeat = getNextBigTick(lp);
+	tw_stime nextHeartbeat = getNextBigTick(lp,st->myLocalID);
 	tw_event *newEvent = tw_event_new(st->dendriteGlobalDest, nextHeartbeat, lp);
 	Msg_Data *data = (Msg_Data *)tw_event_data(newEvent);
 
@@ -292,7 +292,7 @@ void sendHeartbeat(neuronState *st, tw_lp *lp, tw_stime time)
 	//random fn call state management.
 	//printf("heartbeat sent \n");
 
-	tw_stime nextHeartbeat = getNextBigTick(lp);
+	tw_stime nextHeartbeat = getNextBigTick(lp, st->myLocalID);
 	tw_event *newEvent = tw_event_new(lp->gid, nextHeartbeat, lp);
 	Msg_Data *data = (Msg_Data *)tw_event_data(newEvent);
 

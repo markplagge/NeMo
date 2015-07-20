@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 	LPS_PER_PE = SIM_SIZE / tw_nnodes();
 	LP_PER_KP = LPS_PER_PE / g_tw_nkp;
 
-	g_tw_events_per_pe = eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
+	g_tw_events_per_pe = 32;//eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
 	///@todo enable custom mapping with these smaller LPs.
 
 	if (tnMapping == LLINEAR) {
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 	// g_tw_clock_rate = CL_VAL;
 	// g_tw_nlp = SIM_SIZE - 1;
 
-	g_tw_memory_nqueues = 128;  // give at least 16 memory queue event
+	g_tw_memory_nqueues = 16;  // give at least 16 memory queue event
 
 	tw_define_lps(LPS_PER_PE, sizeof(Msg_Data), 0);
 	tw_lp_setup_types();
@@ -219,29 +219,30 @@ void statsOut()
 		return;
 	}
 
+
+
 	//
 	//printf("\n\n %i", s.s_pe_event_ties);
 	//tabular data:
 	//NP  - CORES - Neurons per core - Net Events - Rollbacks - Running Time	- SOP
 	printf("\n\n");
-	printf("Nodes\tCORES\tNeurons/Core\tNet Events\tRollbacks\tRun Time\tTotal SOP\tThreshold Min\tThreshold Max"
-	    "\tNegativeThresholdMin\tNegativeThresholdMax\tSynapse Weight Min\tSynapse Weight Max\tEvtTies\n");
-	printf("%u\t%i\t%i\t%llu\t%llu\t%f\t%llu\t", tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS);
-	printf("%u\t\t"
-	    "%u\t\t"
-	    "%u\t\t"
-	    "%u\t\t"
-	    "%d\t\t"
-	    "%d\t"
+	printf("Nodes,CORES,Neurons/Core,Net Events,Rollbacks,Run Time,Total SOP,Threshold Min,Threshold Max"
+	    ",NegativeThresholdMin,NegativeThresholdMax,Synapse Weight Min,Synapse Weight Max,EvtTies\n");
+	printf("%u,%i,%i,%llu,%llu,%f,%llu,", tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS);
+	printf("%u,"
+	    "%u,"
+	    "%u,"
+	    "%u,"
+	    "%d,"
+	    "%d,"
 	    "%llu\n", THRESHOLD_MIN, THRESHOLD_MAX, NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX, s.s_pe_event_ties);
 	if (BULK_MODE) {
-		fprintf(stderr, "%u\t%i\t%i\t%llu\t%llu\t%f\t%llu\t%u\t%u\t%u\t%u\t%u\t%u\n", tw_nnodes(), CORES_IN_SIM,
+		fprintf(stderr, "%u,%i,%i,%llu,%llu,%f,%llu,%u,%u,%u,%u,%u,%u,", tw_nnodes(), CORES_IN_SIM,
 		    NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS, THRESHOLD_MIN, THRESHOLD_MAX,
 		    NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
 		fprintf(stderr, "%llu", s.s_pe_event_ties);
 	}
 }
-
 
 
 
@@ -292,7 +293,7 @@ void neuron_init(neuronState *s, tw_lp *lp)
 	}
 	//BASIC SOPS SETUP - FOR STRICT BENCHMARK
 	if (BASIC_SOP) {
-		TW_DELTA = true;
+
 		s->threshold = s->threshold = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
 		for (int i = 0; i < SYNAPSES_IN_CORE; i++)
 		{
@@ -424,10 +425,10 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
 	long start_count = lp->rng->count;
 	//if delta is on or basic mode is on, take a snapshot for delta encoding
-	if (TW_DELTA || BASIC_SOP) {
-		if ((g_tw_synchronization_protocol == OPTIMISTIC) || (g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
-			tw_snapshot(lp, lp->type->state_sz);
-		}
+	if (TW_DELTA &&
+	    (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
+		tw_snapshot(lp, lp->type->state_sz);
+		printf("Neuron snapshot saved");
 	}
 	//basic mode removes leak and stochastic reverse threshold functions.
 	if (BASIC_SOP) {
@@ -437,10 +438,9 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	}
 
 	//again, only take the delta in basic neuron mode or in delta mode.
-	if (TW_DELTA || BASIC_SOP) {
-		if (((g_tw_synchronization_protocol == OPTIMISTIC) || (g_tw_synchronization_protocol == OPTIMISTIC_DEBUG))) {
-			tw_snapshot_delta(lp, lp->type->state_sz);
-		}
+	if (TW_DELTA &&
+			(g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
+		tw_snapshot_delta(lp, lp->type->state_sz);
 	}
 	M->rndCallCount = lp->rng->count - start_count;
 }
@@ -448,11 +448,10 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 
 void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp)
 {
-	if (TW_DELTA || BASIC_SOP) {
-		//If we are using delta encoding, use that to roll back the state.For now, all BASIC_SOP sims use delta encoding!
-		if ((g_tw_synchronization_protocol == OPTIMISTIC) || (g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
+	if (TW_DELTA &&
+			    (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
 			tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
-		}
+
 
 	}
 	else { //ReverseState is needed when not using delta encoding. Since basic mode implies delta, this only runs when delta is off and neurons are in normal sim mode.
@@ -465,7 +464,7 @@ void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp)
 	{
 		tw_rand_reverse_unif(lp->rng);
 	}
-	//printf("Neuron Reverse\n");
+
 }
 
 
@@ -532,7 +531,7 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	// generate event to send to neuron.
 	s->msgSent++;
 	//CV->c1 = 1;
-	rc = lp->rng->count;
+
 	tw_event *axe = tw_event_new(s->destNeuron, getNextEventTime(lp), lp);
 	Msg_Data *data = (Msg_Data *)tw_event_data(axe);
 	data->eventType = SYNAPSE_OUT;

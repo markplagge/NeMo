@@ -185,8 +185,8 @@ tw_stime getCurrentBigTick(tw_stime now);
  *
  *  @return Next big tick time.
  */
-tw_stime getNextBigTick(tw_lp *lp);
+tw_stime getNextBigTick(tw_lp *lp, int neuronID);
 
-int testTiming();
+		int testTiming();
 
 #endif /* defined(__ROSS_TOP__assist__) */

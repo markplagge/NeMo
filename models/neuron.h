@@ -151,7 +151,7 @@ typedef struct NeuronModel {
 	/**@{*/
 		//Proper state information
 	_voltT membranePot; //!< current "voltage" of neuron, \f$V_j(t)\f$. Since this is PDES, \a t is implicit
-	_voltT savedMembranePot; //!< previous state membrane potential
+
 	_threshT threshold; //!< neuron's threshold value 𝛼
 	_threshT negativeThreshold; //!< neuron's negative threshold, 𝛽
 	uint16_t thresholdPRNMask; /**!< The neuron's random threshold mask - used for randomized thresholds ( \f$M_j\f$ ).
@@ -202,7 +202,7 @@ typedef struct NeuronModel {
 
 	_weightT axonWeightProb[4];
 	bool axonProbSelect[4];
-	unsigned char weightSelect[256];
+	int weightSelect[256];
 
 	    //Output locations:
 	_idT dendriteCore; //!< Local core of the remote dendrite
