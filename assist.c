@@ -80,17 +80,15 @@ tw_stime getCurrentBigTick(tw_stime now){
     setBigLittleTick();
 
           tw_lpid nTick = NEURONS_IN_CORE - neuronID;
-			nTick *= 100;
-
-
-
-
-
+			nTick *= 10;
             switch(CLOCK_RND_MODE) {
             case RND_UNF:
-            case RND_DMB:
+
                   return getNextEventTime(lp) + nTick;
             break;
+              case RND_DMB:
+                return tw_rand_unif(lp->rng) + nTick;
+              break;
             case RND_EXP:
               return tw_rand_exponential(lp->rng, nTick);
             break;
