@@ -42,7 +42,7 @@ tw_stime getNextEventTime(tw_lp *lp) {
 
           break;
     case RND_DMB:
-      r = tw_rand_exponential(lp->rng, .100);
+      r = tw_rand_unif(lp->rng);
           break;
   default:
   // tw_rand_binomial(lp->rng, 100, CLOCK_RANDOM_ADJ);
@@ -80,9 +80,9 @@ tw_stime getCurrentBigTick(tw_stime now){
     setBigLittleTick();
 
           tw_lpid nTick = NEURONS_IN_CORE - neuronID;
-           // printf(" A random value exp wuith nTick%i =  %f\n",nTick,tw_rand_exponential(lp->rng,nTick));
-            //double testVal = tw_rand_binomial(lp->rng,CORE_SIZE,1/nTick);
-            //printf(" A random value BINOM wuith nTick%i =  %f\n",nTick,testVal);
+			nTick *= 100;
+
+
 
 
 

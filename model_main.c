@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
 	if (g_tw_mynode == 0) {
 		displayModelSettings();
 	}
-	//testTiming();
+		//testTiming();
 
 
 	tw_run();
