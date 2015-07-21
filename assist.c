@@ -21,7 +21,7 @@ tw_stime getNextEventTime(tw_lp *lp) {
   if(bigTickRate == 0)
     setBigLittleTick();
 
-  tw_stime bigTickRate = 0;
+
   tw_stime r; 
   unsigned int ct = 0;
   switch(CLOCK_RND_MODE) {
@@ -75,11 +75,11 @@ tw_stime getCurrentBigTick(tw_stime now){
 
 }
 
-        tw_stime getNextBigTick(tw_lp *lp, int neuronID) {
+        tw_stime getNextBigTick(tw_lp *lp, tw_lpid neuronID) {
   if(littleTick == 0 || bigTickRate == 0)
     setBigLittleTick();
 
-          int nTick = NEURONS_IN_CORE - neuronID;
+          tw_lpid nTick = NEURONS_IN_CORE - neuronID;
            // printf(" A random value exp wuith nTick%i =  %f\n",nTick,tw_rand_exponential(lp->rng,nTick));
             //double testVal = tw_rand_binomial(lp->rng,CORE_SIZE,1/nTick);
             //printf(" A random value BINOM wuith nTick%i =  %f\n",nTick,testVal);

@@ -357,7 +357,7 @@ void tn_cube_mapping()
 	for (kpid = 0, lpid = nodeOffset(), pe = NULL; (pe = tw_pe_next(pe)); )
 	{
 #if VERIFY_MAPPING
-		printf("\tPE %d\n", pe->id);
+		printf("\tPE %lu\n", pe->id);
 #endif
 
 
@@ -365,7 +365,7 @@ void tn_cube_mapping()
 		{
 			tw_kp_onpe(kpid, pe);
 #if VERIFY_MAPPING
-			printf("\t\tKP %d", kpid);
+			printf("\t\tKP %llu", kpid);
 #endif
 
 			for (int j = 0; j < nlp_per_kp && lpid < g_tw_nlp; j++)

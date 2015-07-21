@@ -17,7 +17,7 @@
 /*Type definitions for the nuron simulation */
 #define VERIFY_MAPPING 1
 #define _idT uint64_t //!<ID type - local id type for bit shifts and ID cases.
-#define _voltT int_fast32_t //!<Voltage data type (membrane potential)
+#define _voltT int64_t //!<Voltage data type (membrane potential)
 #define _weightT int64_t //!<Weight/probability type
 #define _threshT uint_fast32_t //!<threshold data type - In the paper, this is two unsigned values and a reversal flag.
 #define _threshT_MAX UINT_FAST32_MAX
@@ -40,7 +40,7 @@
 #define IABS(a) (((a) < 0) ? (-a) : (a))
 	/** Faster version  of IABS (no branching) but needs types. @todo this
 	 method will be faster on BGQ, but need to make sure that it works properly */
-	//uint_fast64_t ab(int_fast64_t in){
+	//uint_fast64_t IABS(int_fast64_t in){
 	//int_fast64_t const mask = in >> sizeof(int_fast64_t) * CHAR_BIT - 1;
 	//return (in ^ mask) - mask;
 	//
@@ -185,7 +185,7 @@ tw_stime getCurrentBigTick(tw_stime now);
  *
  *  @return Next big tick time.
  */
-tw_stime getNextBigTick(tw_lp *lp, int neuronID);
+tw_stime getNextBigTick(tw_lp *lp, tw_lpid neuronID);
 
 		int testTiming();
 
