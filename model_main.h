@@ -56,8 +56,8 @@ bool DEBUG_MODE = 0;
 bool BASIC_SOP = false;
 bool TW_DELTA = false;
 bool BULK_MODE = false;
- _statT neuronSOPS = 0;
- _statT synapseEvents = 0;
+ stat_type neuronSOPS = 0;
+ stat_type synapseEvents = 0;
 
 /** littleTick is the resolution of little ticks 
 * (events between neuron fire events) */
@@ -74,26 +74,27 @@ mapTypes tnMapping;
 	//tw_lptype model_lps[];
 /**  Determines the maximum thresholds for a neuron to fire.
  */
-_threshT THRESHOLD_MAX = 2;
+thresh_type THRESHOLD_MAX = 2;
 
- _threshT NEG_THRESHOLD_MAX = 100;
+ thresh_type NEG_THRESHOLD_MAX = 100;
 /**
  *  Minimum threshold. @see THRESHOLD_MAX
  */
-_threshT THRESHOLD_MIN = 1;
+thresh_type THRESHOLD_MIN = 1;
 
-_threshT NEG_THRESHOLD_MIN = 1;
-
-
-_voltT RESET_VOLTAGE_MAX = 100;
-_voltT RESET_VOLTAGE_MIN = -100;
-
-_threshT RAND_RANGE_MIN = 1;
-_threshT RAND_RANGE_MAX = 31;
+thresh_type NEG_THRESHOLD_MIN = 1;
+int NEG_THRESH_SIGN = -1;
 
 
-_statT totalSOPS;
-_statT totalSynapses;
+volt_type RESET_VOLTAGE_MAX = 100;
+volt_type RESET_VOLTAGE_MIN = -100;
+
+thresh_type RAND_RANGE_MIN = 1;
+thresh_type RAND_RANGE_MAX = 31;
+
+
+stat_type totalSOPS;
+stat_type totalSynapses;
 
 void statsOut();
 

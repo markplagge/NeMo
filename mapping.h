@@ -49,6 +49,7 @@ tw_lpid *gePEMap;
 tw_lpid lpTypeMapper(tw_lpid gid);
 
 
+
 /**
  * @brief CORE_LP_OFFSET - Manages the offset. Calculated based on the size of a core,
  * and the CPE vale, the number of PEs required to simulate a single core.
@@ -68,7 +69,7 @@ extern int CPE;
 tw_peid getPEFromGID(tw_lpid gid);
 
 
-_idT peToCoreMap(tw_peid pe);
+id_type peToCoreMap(tw_peid pe);
 
 
 /**
@@ -110,14 +111,14 @@ long getCoreFromPE(tw_peid gid);
  */
 long getCoreLocalFromGID(tw_lpid gid);
 
-tw_lpid globalID(_idT core, uint16_t i, uint16_t j);
-tw_lpid getGlobalFromID(_idT core, _idT local);
+tw_lpid globalID(id_type core, uint16_t i, uint16_t j);
+tw_lpid getGlobalFromID(id_type core, id_type local);
 	//neurons are stored at at i = 256, j 0-265
-tw_lpid getNeuronGlobal(_idT core, uint16_t neuron);
+tw_lpid getNeuronGlobal(id_type core, uint16_t neuron);
 	//axons are stored at i = 0, j = 0-256
-tw_lpid getAxonGlobal(_idT core, uint16_t axon);
+tw_lpid getAxonGlobal(id_type core, uint16_t axon);
 
-tw_lpid getSynapseGlobal(_idT core, _idT synapse);
+tw_lpid getSynapseGlobal(id_type core, id_type synapse);
 /**
  *  @brief  Get synapse from synapse should be called from a synapse - it returns the next logical synapse GID, or aborts if the synpase is at the end of the grid.
  *
@@ -185,7 +186,7 @@ tw_lpid lGetNeuronFromSyn(tw_lpid synGID);
  * @param axeNum Axon's number (𝑗)
  * @return
  */
-tw_lpid lGetAxonFromNeu(_idT core, _idT axeNum);
+tw_lpid lGetAxonFromNeu(id_type core, id_type axeNum);
 /**
  * @brief lCoreOffset returns the core offset. Core 0 is 0, core 1 is CORE_SIZE * 1, and so on.
  * @param gid
@@ -225,7 +226,7 @@ tw_lpid lGetCoreFromGID(tw_lpid gid);
  *
  *  @return <#return value description#>
  */
-_idT combVal(tw_lpid gid);
+id_type combVal(tw_lpid gid);
 
 bool dontSkip(tw_lpid gid);
 

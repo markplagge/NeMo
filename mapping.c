@@ -71,7 +71,7 @@ tw_lpid lGetNeuronFromSyn(tw_lpid synGID)
 }
 
 
-tw_lpid lGetAxonFromNeu(_idT core, _idT axeNum)
+tw_lpid lGetAxonFromNeu(id_type core, id_type axeNum)
 {
 	tw_lpid coreOff = core * CORE_SIZE;
 
@@ -175,7 +175,7 @@ tw_lpid nodeOffset()
 }
 
 
-tw_lpid globalID(_idT core, uint16_t i, uint16_t j)
+tw_lpid globalID(id_type core, uint16_t i, uint16_t j)
 {
 	tw_lpid returnVal = 0; //(tw_lpid)calloc(sizeof(tw_lpid) ,1);
 	// returnVal = (tw_lpid)core << 32 | (tw_lpid) local;
@@ -189,20 +189,20 @@ tw_lpid globalID(_idT core, uint16_t i, uint16_t j)
 }
 
 
-tw_lpid getGlobalFromID(_idT core, _idT local)
+tw_lpid getGlobalFromID(id_type core, id_type local)
 {
 	return (globalID(core, ISIDE(local), JSIDE(local)));
 }
 
 
 //neurons are stored at i = 256, j 1-256;
-tw_lpid getNeuronGlobal(_idT core, uint16_t neuron)
+tw_lpid getNeuronGlobal(id_type core, uint16_t neuron)
 {
 	return (globalID(core, NEURONS_IN_CORE, neuron));
 }
 
 
-tw_lpid getAxonGlobal(_idT core, uint16_t axon)
+tw_lpid getAxonGlobal(id_type core, uint16_t axon)
 {
 	return (globalID(core, axon, 0));
 }
@@ -215,7 +215,7 @@ tw_lpid getAxonGlobal(_idT core, uint16_t axon)
  */
 tw_lpid getSynapseFromSynapse(tw_lpid synapse)
 {
-	_idT local = LOCAL(synapse);
+	id_type local = LOCAL(synapse);
 	_gridIDT j = JSIDE(local);
 
 	j++;
@@ -228,7 +228,7 @@ tw_lpid getSynapseFromSynapse(tw_lpid synapse)
 
 tw_lpid getNeuronFromSynapse(tw_lpid synapse)
 {
-	_idT local = LOCAL(synapse);
+	id_type local = LOCAL(synapse);
 	_gridIDT j = JSIDE(local);
 
 	return (globalID(CORE(synapse), AXONS_IN_CORE, j));
@@ -237,7 +237,7 @@ tw_lpid getNeuronFromSynapse(tw_lpid synapse)
 
 tw_lpid getSynapseFromAxon(tw_lpid axon)
 {
-	_idT local = LOCAL(axon);
+	id_type local = LOCAL(axon);
 
 	return (globalID(CORE(axon), 1, JSIDE(local)));
 }
@@ -451,7 +451,7 @@ tw_lpid lpTypeMapper(tw_lpid gid)
 	int neu = 0;
 	int syn = 1;
 	int ax = 2;
-	_idT loc = LOCAL(gid);
+	id_type loc = LOCAL(gid);
 	//int b_ax = 0;
 	//int e_ax = AXONS_IN_CORE;
 	//int b_n = 1;
@@ -476,7 +476,7 @@ tw_lpid lpTypeMapper(tw_lpid gid)
 
 //
 //	uint16_t myPEi, myPEj;
-//	_idT myPECore;
+//	id_type myPECore;
 //
 //	tw_lpid local_lp_count;
 //	tw_lpid local_kp_count;
@@ -496,9 +496,9 @@ tw_lpid lpTypeMapper(tw_lpid gid)
 
 bool dontSkip(tw_lpid gid)
 {
-	_idT loc = LOCAL(gid);
-	_idT jside = JSIDE(loc);
-	_idT iside = ISIDE(loc);
+	id_type loc = LOCAL(gid);
+	id_type jside = JSIDE(loc);
+	id_type iside = ISIDE(loc);
 
 	if ((JSIDE(loc) == 0) && (ISIDE(loc) == (NEURONS_IN_CORE))) {
 		return (false);
@@ -550,7 +550,7 @@ void scatterMap()
 
 			for (i = 0; i < LPS_PER_PE; i++)
 			{
-				_idT loc = LOCAL(gidArray[i]);
+				id_type loc = LOCAL(gidArray[i]);
 				tw_peid pe = getPEFromGID(gidArray[i]);
 
 				printf("\t%i\t%i\t%i\t%llu\n", CORE(gidArray[i]), ISIDE(loc), JSIDE(loc), globalToLocalID(gidArray[i]));
@@ -574,8 +574,8 @@ void scatterMap()
 tw_peid getPEFromGID(tw_lpid gid)
 {
 	//Given a gid return a PE.
-	_idT cc = combVal(gid); ///@todo why does this go to one after dividing?
-	_idT res = cc / LPS_PER_PE;
+	id_type cc = combVal(gid); ///@todo why does this go to one after dividing?
+	id_type res = cc / LPS_PER_PE;
 
 	return ((tw_peid)res);
 	//i and j are limited by the number of axons and neurons.
@@ -590,18 +590,18 @@ tw_lp *globalToLP(tw_lpid gid)
 
 tw_lpid globalToLocalID(tw_lpid gid)
 {
-	_idT cc = combVal(gid);
+	id_type cc = combVal(gid);
 	tw_lpid peoff = g_tw_mynode * LPS_PER_PE;
 
 	return (cc - peoff);
 }
 
 
-_idT combVal(tw_lpid gid)
+id_type combVal(tw_lpid gid)
 {
-	_idT i = iVal(gid);
-	_idT c = cVal(gid);
-	_idT j = jVal(gid);
+	id_type i = iVal(gid);
+	id_type c = cVal(gid);
+	id_type j = jVal(gid);
 
 	return (i + c + j);
 }
@@ -613,7 +613,7 @@ tw_lpid localToGlobal(tw_lpid local)
 
 	_gridIDT localJ = local % jSizeOffset();
 	_gridIDT localI = local / iSizeOffset();
-	_idT core = (localJ * jSizeOffset()) / CORE_SIZE;
+	id_type core = (localJ * jSizeOffset()) / CORE_SIZE;
 	//localJ = (localJ * jSizeOffset()) % CORE_SIZE;
 	return (globalID(core, localI, localJ));
 }

@@ -16,23 +16,37 @@
 
 /*Type definitions for the nuron simulation */
 #define VERIFY_MAPPING 1
-#define _idT uint64_t //!<ID type - local id type for bit shifts and ID cases.
-#define _voltT int64_t //!<Voltage data type (membrane potential)
-#define _weightT int64_t //!<Weight/probability type
-#define _threshT uint_fast32_t //!<threshold data type - In the paper, this is two unsigned values and a reversal flag.
-#define _threshT_MAX UINT_FAST32_MAX
+//#define _idT uint64_t //!<ID type - local id type for bit shifts and ID cases.
+//#define _voltT int64_t //!<Voltage data type (membrane potential)
+//#define _weightT int64_t //!<Weight/probability type
+//#define _threshT uint_fast32_t //!<threshold data type - In the paper, this is two unsigned values and a reversal flag.
 
-#define _randT int32_t //!< Random value storage for neurons.
+////
+//#define _randT int32_t //!< Random value storage for neurons.
 
-#define _statT uint64_t //!<Counter data type for stats
+//#define _statT uint64_t //!<Counter data type for stats
 /** _regIDT is a "regional id" type. This variable type is for storing
  *	coreIDs and localIDs. It must be half the bit size of tw_lpid.
  */
-#define _regIDT uint32_t
+//#define _regIDT uint32_t
 	/** _gidIDT is the other half of the local id - since each big local id
 	 *	is composed of a i and a j side, this holds the two values. */
 
-#define _gridIDT uint16_t
+//#define _gridIDT uint16_t
+
+
+
+//Proper Typdefs:
+typedef uint64_t id_type;
+typedef int64_t volt_type;
+typedef int64_t weight_type;
+typedef uint_fast32_t thresh_type;
+typedef int32_t rand_type;
+typedef uint64_t stat_type;
+typedef uint32_t regID_type;
+typedef uint16_t gridID_type;
+
+
 
 /* Global Macros */
 
@@ -90,20 +104,43 @@ typedef enum TimeRandomSel {
 
 /* Message structures */
 
-
+typedef uint8_t s;
 /**
   Msg_Data is the main message struct.
   */
 typedef struct Ms{
 	enum evtType eventType;
 	unsigned long rndCallCount;
-	_idT localID; //!< Sender's local (within a core) id - used for weight lookups.
-	_voltT neuronVoltage;
+	id_type localID; //!< Sender's local (within a core) id - used for weight lookups.
+	volt_type neuronVoltage;
 	tw_stime neuronLastActiveTime;
 	tw_stime neuronLastLeakTime;
 
-	_idT axonID; //!< Axon ID for neuron value lookups.
+	id_type axonID; //!< Axon ID for neuron value lookups.
 }Msg_Data;
+
+
+/* Global Mapping / ID structures  - used instead of bitfields for IDs.*/
+typedef union {
+    struct {
+        unsigned long id:30;
+    };
+    uint32_t raw;
+}localID;
+typedef union {
+    struct {
+        unsigned short axType:4;
+    };
+    uint8_t raw;
+}axType;
+typedef union {
+    struct  {
+        unsigned int atype:4;
+        unsigned long core:30;
+        unsigned long local:30;
+    };
+    uint64_t raw;
+}GlobalID;
 
 /* ***** Global variable defs */
 /** @{
@@ -144,8 +181,8 @@ extern unsigned int SP_DBG;
 /**  @} */
 /** @{
  * /name neuronParams */
-extern _threshT THRESHOLD_MAX;
-extern _threshT THRESHOLD_MIN;
+extern thresh_type THRESHOLD_MAX;
+extern thresh_type THRESHOLD_MIN;
 extern int32_t SYNAPSE_WEIGHT_MAX;
 extern int32_t SYNAPSE_WEIGHT_MIN;
 /**  @} */

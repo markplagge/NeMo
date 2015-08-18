@@ -53,7 +53,7 @@ tw_stime getNextEventTime(tw_lp *lp) {
   }
   //r *= littleTick;
 
-  return r;
+  return r + 1;
 }
 
 
@@ -79,24 +79,30 @@ tw_stime getCurrentBigTick(tw_stime now){
   if(littleTick == 0 || bigTickRate == 0)
     setBigLittleTick();
 
-          tw_lpid nTick = NEURONS_IN_CORE - neuronID;
-			nTick *= 10;
-            switch(CLOCK_RND_MODE) {
-            case RND_UNF:
-
-                  return getNextEventTime(lp) + nTick;
-            break;
-              case RND_DMB:
-                return tw_rand_unif(lp->rng) + nTick;
-              break;
-            case RND_EXP:
-              return tw_rand_exponential(lp->rng, nTick);
-            break;
-            default:
-              return tw_rand_exponential(lp->rng, nTick);
-
-          }
-
+            
+          //tw_lpid nTick = NEURONS_IN_CORE - neuronID;
+            //a big tick happens at a whole number + a jitter.
+            //so we generate a jitter, and add one to it.
+            
+            return tw_rand_unif(lp->rng) + 10;
+            
+//			nTick *= 10;
+//            switch(CLOCK_RND_MODE) {
+//            case RND_UNF:
+//
+//                  return getNextEventTime(lp) + nTick;
+//            break;
+//              case RND_DMB:
+//                return tw_rand_unif(lp->rng) + nTick;
+//              break;
+//            case RND_EXP:
+//              return tw_rand_exponential(lp->rng, nTick);
+//            break;
+//            default:
+//              return tw_rand_exponential(lp->rng, nTick);
+//
+//          }
+//
 
                 //Need to figure this out - not accurate until this is done:
 

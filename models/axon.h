@@ -14,9 +14,9 @@
 #include "../input_simulator.h"
 
 typedef struct AxonState {
-	_statT sendMsgCount;
+	stat_type sendMsgCount;
 	tw_lpid destSynapse;
-	_idT axonID;
+	id_type axonID;
 
 	inputSimulatorState *sim;
 }axonState;

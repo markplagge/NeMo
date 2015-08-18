@@ -18,7 +18,7 @@ typedef struct SynapseState {
 	tw_lpid destSynapse;
 	tw_lpid destNeuron;
 	id_t mySynapseNum;
-	_statT msgSent;
+	stat_type msgSent;
 	
 
 }synapseState;
