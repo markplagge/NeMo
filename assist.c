@@ -84,7 +84,7 @@ tw_stime getCurrentBigTick(tw_stime now){
             //a big tick happens at a whole number + a jitter.
             //so we generate a jitter, and add one to it.
             
-            return tw_rand_unif(lp->rng) + 10;
+            return tw_rand_unif(lp->rng) + NEURONS_IN_CORE;
             
 //			nTick *= 10;
 //            switch(CLOCK_RND_MODE) {
