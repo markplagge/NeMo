@@ -18,6 +18,8 @@ SET(model_srcs
 	input_simulator.h
 	mapping.h
 	mapping.c
+	clMapping.h
+	clMapping.c
 	model_main.h
 	model_main.c
 

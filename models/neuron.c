@@ -107,7 +107,7 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
     //state management
     bool willFire = false;
     //Next big tick:
-    
+    return ;
     
     
     //save the previous state of the neuron:
@@ -142,16 +142,17 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
             //Currently operates - leak->fire->(reset)
             st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
 
-            numericLeakCalc(st, tw_now(lp));
+           // numericLeakCalc(st, tw_now(lp));
             willFire = neuronShouldFire(st, lp);
             if (willFire) {
                 
                 fire(st,lp);
                 st->fireCount++;
+                st->membranePotential = 0;
             }
             st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
 
-            neuronPostIntegrate(st, tw_now(lp), lp, willFire);
+//            neuronPostIntegrate(st, tw_now(lp), lp, willFire);
             //stats collection
             st->SOPSCount++;
             st->lastActiveTime = tw_now(lp);
@@ -329,7 +330,7 @@ void sendHeartbeat(neuronState *st, tw_stime time, void *lp) {
     tw_lp *l = (tw_lp *) lp;
     
 
-    tw_event *newEvent = tw_event_new(l->gid, getNextBigTick(l, st), l);
+    tw_event *newEvent = tw_event_new(l->gid, getNextBigTick(l, st->myLocalID), l);
     Msg_Data *data = (Msg_Data *)tw_event_data(newEvent);
     data->localID = st->myLocalID;
     
@@ -343,7 +344,7 @@ bool neuronShouldFire(neuronState *st, void *lp)
     
 	//check negative threshold values:
     volt_type threshold = st->posThreshold;
-	return (st->membranePotential >= threshold + (st->drawnRandomNumber & st->thresholdPRNMask));
+    return (st->membranePotential >= threshold);// + (st->drawnRandomNumber));
 }
 
 

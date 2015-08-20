@@ -16,7 +16,8 @@
 #include "models/neuron.h"
 #include "models/synapse.h"
 #include "input_simulator.h"
-#include "mapping.h"
+//#include "mapping.h"
+#include "clMapping.h"
 #include <math.h>
 
 #include <stdbool.h>
@@ -28,11 +29,11 @@ extern int a_created ;
 /**
  *  Number of neurons per core.
  */
-int NEURONS_IN_CORE = 6;
+int NEURONS_IN_CORE = 3;
 /** number of synapses per core. Calculated value, needs to be neurons * axons */
-int SYNAPSES_IN_CORE = 0;
+int SYNAPSES_IN_CORE;
 /** Number of axions per core. Generally is set to 1-1 with neurons in core */
-int AXONS_IN_CORE = 6;
+int AXONS_IN_CORE;
 /* Given number of cores in simulation */
 unsigned int CORES_IN_SIM = 1;
 
@@ -59,6 +60,8 @@ bool BULK_MODE = false;
  stat_type neuronSOPS = 0;
  stat_type synapseEvents = 0;
 
+
+stat_type fireCount;
 /** littleTick is the resolution of little ticks 
 * (events between neuron fire events) */
 tw_stime littleTick = .001;
@@ -76,21 +79,22 @@ mapTypes tnMapping;
  */
 thresh_type THRESHOLD_MAX = 2;
 
- thresh_type NEG_THRESHOLD_MAX = 100;
+ thresh_type NEG_THRESHOLD_MAX = 2;
 /**
  *  Minimum threshold. @see THRESHOLD_MAX
  */
 thresh_type THRESHOLD_MIN = 1;
 
 thresh_type NEG_THRESHOLD_MIN = 1;
+
 int NEG_THRESH_SIGN = -1;
 
 
-volt_type RESET_VOLTAGE_MAX = 100;
-volt_type RESET_VOLTAGE_MIN = -100;
+volt_type RESET_VOLTAGE_MAX = 1;
+volt_type RESET_VOLTAGE_MIN = -1;
 
 thresh_type RAND_RANGE_MIN = 1;
-thresh_type RAND_RANGE_MAX = 31;
+thresh_type RAND_RANGE_MAX = 10;
 
 
 stat_type totalSOPS;
@@ -101,9 +105,9 @@ void statsOut();
 /**
  *	Each neuron is connected to the synapses (inputs) within the core it is running in.
  *	These parameters adjust the input weight given to each synapse. */
-int32_t SYNAPSE_WEIGHT_MAX = 50;
+int32_t SYNAPSE_WEIGHT_MAX = 1;
 /** Minimum synapse weight. @see SYNAPSE_WEIGHT_MAX */
-int32_t SYNAPSE_WEIGHT_MIN = 5;
+int32_t SYNAPSE_WEIGHT_MIN = 0;
 
 tw_stime PER_SYNAPSE_DET_P = .50;
 

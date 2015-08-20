@@ -33,14 +33,14 @@ tw_lptype model_lps[] = {
 	(event_f)neuron_event,
 	(revent_f)neuron_reverse,
 	(final_f)neuron_final,
-	(map_f)lGidToPE, sizeof(neuronState)
+	(map_f)clMapper, sizeof(neuronState)
 	},
 	{
 	(init_f)synapse_init, (pre_run_f)pre_run,
 	(event_f)synapse_event,
 	(revent_f)synapse_reverse,
 	(final_f)synapse_final,
-	(map_f)lGidToPE, sizeof(synapseState)
+	(map_f)clMapper, sizeof(synapseState)
 	},
 	{
 	(init_f)axon_init,
@@ -48,7 +48,7 @@ tw_lptype model_lps[] = {
 	(event_f)axon_event,
 	(revent_f)axon_reverse,
 	(final_f)axon_final,
-	(map_f)lGidToPE,
+	(map_f)clMapper,
 	sizeof(axonState) },
 			  { 0 } };
 
@@ -78,20 +78,23 @@ int main(int argc, char *argv[])
 	g_tw_events_per_pe = 32;//eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
 	///@todo enable custom mapping with these smaller LPs.
 
-	if (tnMapping == LLINEAR) {
-		g_tw_mapping = LINEAR;
-		g_tw_lp_types = model_lps;
-		g_tw_lp_typemap = &tn_linear_map;
-
+	//if (tnMapping == LLINEAR) {
+    g_tw_mapping = CUSTOM;
+    g_tw_lp_types = model_lps;
+		//g_tw_lp_typemap = &tn_linear_map;
+    g_tw_lp_typemap = &clLpTypeMapper;
+    
+    g_tw_custom_initial_mapping = &clMap;
+    g_tw_custom_lp_global_to_local_map = &clLocalFromGlobal;
 		// g_tw_custom_initial_mapping = &nlMap;
 		// g_tw_custom_lp_global_to_local_map = &globalToLP;
-	} else if (tnMapping == CUST_LINEAR) {
+	/*} else if (tnMapping == CUST_LINEAR) {
 		g_tw_mapping = LINEAR;
 		g_tw_lp_types = model_lps;
 		g_tw_lp_typemap = &lpTypeMapper;
 		g_tw_custom_initial_mapping = &nlMap;
 		g_tw_custom_lp_global_to_local_map = &globalToLP;
-	}
+	}*/
 
 	g_tw_lookahead = LH_VAL;
 	// g_tw_clock_rate = CL_VAL;
@@ -119,14 +122,18 @@ int main(int argc, char *argv[])
 	// Stats Collection ************************************************************************************88
 	totalSOPS = 0;
 	totalSynapses = 0;
+    stat_type totalNFire = 0;
 	MPI_Reduce(&neuronSOPS, &totalSOPS, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
 	MPI_Reduce(&synapseEvents, &totalSynapses, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+    MPI_Reduce(&fireCount, &totalNFire, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+    
 	statsOut();
 	tw_end();
 
 	if (g_tw_mynode == 0) {  // master node for outputting stats.
 		printf("\n ------ TN Benchmark Stats ------- \n");
 		printf("Total SOPS(integrate and/or fire): %llu\n", totalSOPS);
+        printf("Total spikes fired by all neurons: %llu\n", totalNFire);
 		printf("This PE's SOP: %llu\n", neuronSOPS);
 		printf("Total Synapse MSGs sent: %llu\n", totalSynapses);
 	}
@@ -311,13 +318,18 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
     for(int i = 0; i < NEURONS_IN_CORE; i ++) {
         //s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
         //s->axonTypesp[i] = 1; ///! Set axon types to one, since we are just testing performance.
-        G_i[i] = 0;
+        G_i[i] = tw_rand_integer(lp->rng, 0, 3);
         synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
         
     }
     
     for(int i = 0; i < 4; i ++){
-        sigma[i] = 1;
+        //int ri = tw_rand_integer(lp->rng, -1, 0);
+        unsigned int mk = tw_rand_integer(lp->rng, 0, 1);
+        
+        //sigma[i] = (!ri * 1) + (-1 & ri))
+        sigma[i] = (mk ^ (mk - 1)) * 1;
+        
         S[i] = 1;
         b[i] = 0;
     }
@@ -346,13 +358,14 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
      s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
      s->dendriteLocal = tw_rand_integer(lp->rng, 0, AXONS_IN_CORE - 1);
      
-     if (tnMapping == LLINEAR) {
-     s->dendriteGlobalDest = lGetAxonFromNeu(s->dendriteCore, s->dendriteLocal);
-     } else {
-     s->dendriteGlobalDest = getAxonGlobal(s->dendriteCore, s->dendriteLocal);
-     }
+//     if (tnMapping == LLINEAR) {
+         s->dendriteGlobalDest = clGetAxonFromNeuron(s->dendriteCore, s->dendriteLocal);//lGetAxonFromNeu(s->dendriteCore, s->dendriteLocal);
+//     }
+//     else {
+//     s->dendriteGlobalDest = getAxonGlobal(s->dendriteCore, s->dendriteLocal);
+//     }
      if (DEBUG_MODE) {
-     printf("Neuron %i checking in with GID %llu and dest %llu \n", s->myLocalID, lp->gid, s->dendriteGlobalDest);
+     printf("Neuron %llu checking in with GID %llu and dest %llu \n", s->myLocalID, lp->gid, s->dendriteGlobalDest);
      }
     
     
@@ -429,6 +442,7 @@ void neuron_final(neuronState *s, tw_lp *lp)
 {
 	neuronSOPS += s->SOPSCount;
 	//printf("neuron %i has %i SOPS \n", lp->gid, s->SOPSCount);
+    fireCount += s->fireCount;
 }
 
 
@@ -436,34 +450,37 @@ void neuron_final(neuronState *s, tw_lp *lp)
 
 void synapse_init(synapseState *s, tw_lp *lp)
 {
-	if (tnMapping == LLINEAR) {
-		s->destNeuron = lGetNeuronFromSyn(lp->gid);
+	//if (tnMapping == LLINEAR) {
+		s->destNeuron = clGetNeuronFromSynapse(lp->gid);
 		s->destSynapse = 0;
-		s->destSynapse = lGetNextSynFromSyn(lp->gid);
-		s->mySynapseNum = lGetSynNumLocal(lp->gid);
-	}
+		s->destSynapse = clGetSynapseFromSynapse(lp->gid);
+//		s->mySynapseNum = clGetSynapseFromSynapse\(lp->gid);
+    GlobalID g;
+    g.raw = lp->gid;
+    s->mySynapseNum = g.local;
+	//}
 
 	/**
 	 *  @todo Fix this - there are some logic errors here.
 	 */
-	else {
-		s->destNeuron = getNeuronFromSynapse(lp->gid);
-		s->destSynapse = 0;
-		int16_t local = LOCAL(lp->gid);
-		s->mySynapseNum = ISIDE(local);
-
-		//@todo make this a matrix map - still have linear style of mapping!!!!!
-		if (ISIDE(local) == NEURONS_IN_CORE) {
-			s->destSynapse = getSynapseFromSynapse(lp->gid);
-		}
-	}
+//	else {
+//		s->destNeuron = getNeuronFromSynapse(lp->gid);
+//		s->destSynapse = 0;
+//		int16_t local = LOCAL(lp->gid);
+//		s->mySynapseNum = ISIDE(local);
+//
+//		//@todo make this a matrix map - still have linear style of mapping!!!!!
+//		if (ISIDE(local) == NEURONS_IN_CORE) {
+//			s->destSynapse = getSynapseFromSynapse(lp->gid);
+//		}
+//	}
 
 	s->msgSent = 0;
-	if (DEBUG_MODE) {
-		printf("Synapse %i checking in with GID %llu and n-dest %llu, s-dest %llu on "
-		    "PE %lu , CPE %lu\n", s->mySynapseNum, lp->gid, s->destNeuron, s->destSynapse, lp->pe->id,
-		    lGidToPE(lp->gid));
-	}
+//	if (DEBUG_MODE) {
+//		printf("Synapse %i checking in with GID %llu and n-dest %llu, s-dest %llu on "
+//		    "PE %lu , CPE %lu\n", s->mySynapseNum, lp->gid, s->destNeuron, s->destSynapse, lp->pe->id,
+//		    lGidToPE(lp->gid));
+//	}
 }
 
 
@@ -531,21 +548,25 @@ id_type curAxon = 0;
 
 void axon_init(axonState *s, tw_lp *lp)
 {
-	s->sendMsgCount = 0;
-	if (tnMapping == LLINEAR) {
-		s->destSynapse = lGetSynFromAxon(lp->gid);
-		s->axonID = lGetAxeNumLocal(lp->gid);
-	} else {
-		s->destSynapse = getSynapseFromAxon(lp->gid);
-		id_type l = LOCAL(lp->gid);
-
-		// tw_printf(TW_LOC, "Axon %i sending message to GID %llu", JSIDE(l),
-		// s->destSynapse );
-		if (DEBUG_MODE) {
-			printf("Axon %i checking in (custom) with gid %llu and dest synapse %llu\n ", JSIDE(l), lp->gid,
-			    s->destSynapse);
-		}
-	}
+//	s->sendMsgCount = 0;
+//	if (tnMapping == LLINEAR) {
+		s->destSynapse = clgetSynapseFromAxon(lp->gid);
+    GlobalID g;
+    g.raw = lp->gid;
+    s->axonID = g.local;
+    
+    //		s->axonID = lGetAxeNumLocal(lp->gid);
+//	} else {
+//		s->destSynapse = getSynapseFromAxon(lp->gid);
+//		id_type l = LOCAL(lp->gid);
+//
+//		// tw_printf(TW_LOC, "Axon %i sending message to GID %llu", JSIDE(l),
+//		// s->destSynapse );
+//		if (DEBUG_MODE) {
+//			printf("Axon %i checking in (custom) with gid %llu and dest synapse %llu\n ", JSIDE(l), lp->gid,
+//			    s->destSynapse);
+//		}
+//	}
 	tw_stime r = getNextEventTime(lp);
 	tw_event *axe = tw_event_new(lp->gid, r, lp);
 	Msg_Data *data = (Msg_Data *)tw_event_data(axe);
