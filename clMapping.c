@@ -18,10 +18,53 @@ tw_peid clMapper(tw_lpid gid) {
     
 }
 
+unsigned long long initGIDForPE() {
+    long myPE = g_tw_mynode;
+    static long long currentLP = 0;
+    static long long currentCore = 0;
+    
+    
+    //replace this with TW code:
+    GlobalID g;
+    int coresPerPE = CORES_IN_SIM /(tw_nnodes() * g_tw_npe);
+    long coreOffset = (myPE * coresPerPE);
+    
+    
+    
+    if (currentLP == CORE_SIZE) {
+        currentCore ++;
+        currentLP = 0;
+    }
+    
+    if((currentCore + coreOffset) == coresPerPE + coreOffset){
+        return -1; //done.
+    }
+    
+    if(currentLP < AXONS_IN_CORE){
+        g.atype = AXON;
+        g.local = currentLP;
+    } else if(currentLP < AXONS_IN_CORE + SYNAPSES_IN_CORE) {
+        g.atype = SYNAPSE;
+        g.local = currentLP - AXONS_IN_CORE;
+    }
+    else{
+        g.atype = NEURON;
+        g.local = currentLP - (SYNAPSES_IN_CORE + AXONS_IN_CORE);
+    }
+    currentLP ++;
+    g.core = currentCore;
+    return g.raw;
+}
+
+
 void clMap(){
     
     tw_pe *pe;
-    
+    if(CORES_IN_SIM % (tw_nnodes() * g_tw_npe)) //even number of cores per PE.
+        tw_error(TW_LOC, "Must run at least one core per PE");
+    int currentLocal = 0;
+    int currentCore = -1;
+    int ctype = -1;
     unsigned int nlp_per_pe = CORE_SIZE;
     int lpid;
     int kpid;
@@ -34,14 +77,21 @@ void clMap(){
     }
     
     GlobalID globStr;
-    globStr.raw = 0;
-    globStr.core =
     
-    g_tw_lp_offset = g_tw_mynode;
+    globStr.raw = 0;
+    globStr.core = (g_tw_mynode * (CORES_IN_SIM / (g_tw_npe*tw_nnodes())));
+    g_tw_mynode = globStr.raw;
     
 #if VERIFY_MAPPING
+    char * coreVals = calloc(9090, sizeof(char));
+    int incro;
     printf("NODE %ld: nlp %lld, offset %lld\n", g_tw_mynode, g_tw_nlp, g_tw_lp_offset);
 #endif
+    
+    
+    //We loop through each core first:
+    unsigned long coreID = -1;
+    
     
     for (kpid = 0, lpid = 0, pe = NULL; (pe = tw_pe_next(pe)); )
     {
@@ -57,27 +107,46 @@ void clMap(){
             printf("\t\tKP %d", kpid);
 #endif
             
+            
+            
             for (j = 0; j < nlp_per_kp && lpid < g_tw_nlp; j++, lpid++)
             {
-                tw_lpid offLPID = lpid + g_tw_lp_offset;
-                
-                if(lpid < AXONS_IN_CORE){
-                    globStr.atype = AXON;
-                    globStr.local = lpid;
-                } else if(lpid < AXONS_IN_CORE + SYNAPSES_IN_CORE) {
-                    globStr.atype = SYNAPSE;
-                    globStr.local = lpid - AXONS_IN_CORE;
-                }
-                else{
-                    globStr.atype = NEURON;
-                    globStr.local = lpid - (SYNAPSES_IN_CORE + AXONS_IN_CORE);
-                }
-                
+                globStr.raw = initGIDForPE();
+                coreID = globStr.core;
                 //tw_lp_onpe(lpid, pe, localToGlobal(g_tw_lp_offset+lpid));
+                //tw_lp_onpe(lpid, pe, globStr.raw);
                 tw_lp_onpe(lpid, pe, globStr.raw);
                 tw_lp_onkp(g_tw_lp[lpid], g_tw_kp[kpid]);
                 
 #if VERIFY_MAPPING
+                
+                    GlobalID gvb;
+                    gvb.raw = globStr.raw;
+                    if(currentCore != gvb.core){
+                       // printf("\nCore: %i\n", gvb.core);
+                        sprintf(coreVals, "%s\nCore:%i\n",coreVals, gvb.core);
+                        currentCore = gvb.core;
+                    }
+                    if(ctype != gvb.atype || (gvb.local == AXONS_IN_CORE - 1 || gvb.local == SYNAPSES_IN_CORE -1 )){
+                        char * msg;
+                        switch (gvb.atype) {
+                            case AXON:
+                                msg = "AXON";
+                                break;
+                            case SYNAPSE:
+                                msg = "SYNAPSE";
+                                break;
+                            default:
+                                msg = "NEURON";
+                                break;
+                        }
+                        
+                        sprintf(coreVals,"%s%s,%i\n",coreVals,msg,gvb.local);
+                        ctype = gvb.atype;
+                    }
+                   // gidg = initGIDForPE();
+                
+
                 if (0 == j % 20) {
                     printf("\n\t\t\t");
                 }
@@ -87,6 +156,7 @@ void clMap(){
             
 #if VERIFY_MAPPING
             printf("\n");
+            printf("%s\n", coreVals);
 #endif
         }
     }
@@ -112,6 +182,7 @@ tw_lpid clgetSynapseFromAxon(tw_lpid gid) {
     //Axons talk to the next row of synapses. there are NERUONS_IN_CORE synapses in a core per row.
     
     GlobalID axID;
+    axID.raw = gid;
     GlobalID syID;
     syID.core = axID.core;
     syID.atype = SYNAPSE;
@@ -134,10 +205,11 @@ tw_lpid clGetNeuronFromSynapse(tw_lpid gid){
     opID.raw = gid;
     
     GlobalID nID;
+    nID.raw = 0;
     nID.atype = NEURON;
     nID.core = opID.core;
     nID.local = (opID.local % NEURONS_IN_CORE);
-    return nID.local;
+    return nID.raw;
 }
 
 tw_lpid clGetAxonFromNeuron(id_type core, id_type local){
@@ -148,7 +220,7 @@ tw_lpid clGetAxonFromNeuron(id_type core, id_type local){
     return aID.raw;
     
 }
-tw_lpid clLocalFromGlobal(tw_lpid gid) {
+tw_lp * clLocalFromGlobal(tw_lpid gid) {
     GlobalID g;
     g.raw = gid;
     unsigned long loc = g.local;
@@ -159,5 +231,5 @@ tw_lpid clLocalFromGlobal(tw_lpid gid) {
     else if(g.atype == NEURON) {
         loc += SYNAPSES_IN_CORE + AXONS_IN_CORE;
     }
-    return loc;
+    return g_tw_lp[loc];
 }

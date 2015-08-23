@@ -107,7 +107,6 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
     //state management
     bool willFire = false;
     //Next big tick:
-    return ;
     
     
     //save the previous state of the neuron:

@@ -27,6 +27,21 @@
 
 //};
 tw_lptype model_lps[] = {
+    {
+        (init_f)axon_init,
+        (pre_run_f)pre_run,
+        (event_f)axon_event,
+        (revent_f)axon_reverse,
+        (final_f)axon_final,
+        (map_f)clMapper,
+        sizeof(axonState) },
+    {
+        (init_f)synapse_init, (pre_run_f)pre_run,
+        (event_f)synapse_event,
+        (revent_f)synapse_reverse,
+        (final_f)synapse_final,
+        (map_f)clMapper, sizeof(synapseState)
+    },
 	{
 	(init_f)neuron_init,
 	(pre_run_f)pre_run,
@@ -34,22 +49,8 @@ tw_lptype model_lps[] = {
 	(revent_f)neuron_reverse,
 	(final_f)neuron_final,
 	(map_f)clMapper, sizeof(neuronState)
-	},
-	{
-	(init_f)synapse_init, (pre_run_f)pre_run,
-	(event_f)synapse_event,
-	(revent_f)synapse_reverse,
-	(final_f)synapse_final,
-	(map_f)clMapper, sizeof(synapseState)
-	},
-	{
-	(init_f)axon_init,
-	(pre_run_f)pre_run,
-	(event_f)axon_event,
-	(revent_f)axon_reverse,
-	(final_f)axon_final,
-	(map_f)clMapper,
-	sizeof(axonState) },
+	}
+	,
 			  { 0 } };
 
 int main(int argc, char *argv[])
@@ -75,7 +76,7 @@ int main(int argc, char *argv[])
 	LPS_PER_PE = SIM_SIZE / tw_nnodes();
 	LP_PER_KP = LPS_PER_PE / g_tw_nkp;
 
-	g_tw_events_per_pe = 32;//eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
+	g_tw_events_per_pe = 5024;//eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
 	///@todo enable custom mapping with these smaller LPs.
 
 	//if (tnMapping == LLINEAR) {
@@ -86,17 +87,15 @@ int main(int argc, char *argv[])
     
     g_tw_custom_initial_mapping = &clMap;
     g_tw_custom_lp_global_to_local_map = &clLocalFromGlobal;
-		// g_tw_custom_initial_mapping = &nlMap;
-		// g_tw_custom_lp_global_to_local_map = &globalToLP;
-	/*} else if (tnMapping == CUST_LINEAR) {
-		g_tw_mapping = LINEAR;
-		g_tw_lp_types = model_lps;
-		g_tw_lp_typemap = &lpTypeMapper;
-		g_tw_custom_initial_mapping = &nlMap;
-		g_tw_custom_lp_global_to_local_map = &globalToLP;
-	}*/
+		// g_tw_1types = model_lps;
+		//g_tw_lp_typemap = &lpTypeMapper;
+    g_tw_lp_typemap = &clLpTypeMapper;
+    g_tw_custom_initial_mapping = &clMap;
+    g_tw_custom_lp_global_to_local_map = &clLocalFromGlobal;
+    
+	}
 
-	g_tw_lookahead = LH_VAL;
+	g_tw_lookahead = .5;
 	// g_tw_clock_rate = CL_VAL;
 	// g_tw_nlp = SIM_SIZE - 1;
 
@@ -488,7 +487,8 @@ void synapse_init(synapseState *s, tw_lp *lp)
 void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
 	long rc = lp->rng->count;
-
+    s->destNeuron = clGetNeuronFromSynapse(lp->gid);
+    s->destSynapse = clGetSynapseFromSynapse(lp->gid);
 	//*(int *)CV = (int)0;
 	// printf("Synapse rcvd msg\n");
 	if (s->destSynapse != 0) {
@@ -567,6 +567,7 @@ void axon_init(axonState *s, tw_lp *lp)
 //			    s->destSynapse);
 //		}
 //	}
+    
 	tw_stime r = getNextEventTime(lp);
 	tw_event *axe = tw_event_new(lp->gid, r, lp);
 	Msg_Data *data = (Msg_Data *)tw_event_data(axe);

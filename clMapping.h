@@ -22,7 +22,7 @@ tw_lpid clgetSynapseFromAxon(tw_lpid gid) ;
 tw_lpid clGetSynapseFromSynapse(tw_lpid gid) ;
 tw_lpid clGetNeuronFromSynapse(tw_lpid gid) ;
 tw_lpid clGetAxonFromNeuron(id_type core, id_type local);
-tw_lpid clLocalFromGlobal(tw_lpid gid);
+tw_lp * clLocalFromGlobal(tw_lpid gid);
 //okay - custom mapping:
 void clMap();
 

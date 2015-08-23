@@ -84,9 +84,9 @@ enum evtType {
 	GEN_HEARTBEAT //!< Signal generator messages -- used to simulate input for benchmarking.
 };
 enum lpTypeVals {
-	AXON = 2,
+	AXON = 0,
 	SYNAPSE = 1,
-	NEURON = 0
+	NEURON = 2
 };
 /** Mapping def */
 typedef enum CustomMapTypes{
