@@ -55,70 +55,66 @@ tw_lptype model_lps[] = {
 
 int main(int argc, char *argv[])
 {
-
-
-
+ 
 	tw_opt_add(app_opt);
 	tw_init(&argc, &argv);
 
-	//Some init messages:
-
-	// set up core sizes.
+//	// set up core sizes.
 	AXONS_IN_CORE = NEURONS_IN_CORE;
 	SYNAPSES_IN_CORE = (NEURONS_IN_CORE * AXONS_IN_CORE);
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
-	SIM_SIZE = CORE_SIZE * CORES_IN_SIM;
+	SIM_SIZE = (CORE_SIZE * CORES_IN_SIM) / g_tw_npe;
 	tnMapping = LLINEAR;
-
+//
 	/** g_tw_nlp set here to CORE_SIZE.
 	 * @todo check accuracy of this
 	 * */
 	LPS_PER_PE = SIM_SIZE / tw_nnodes();
 	LP_PER_KP = LPS_PER_PE / g_tw_nkp;
-
+//
 	g_tw_events_per_pe = 5024;//eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
-	///@todo enable custom mapping with these smaller LPs.
-
-	//if (tnMapping == LLINEAR) {
+//	///@todo enable custom mapping with these smaller LPs.
+//
+//	//if (tnMapping == LLINEAR) {
     g_tw_mapping = CUSTOM;
     g_tw_lp_types = model_lps;
 		//g_tw_lp_typemap = &tn_linear_map;
-    g_tw_lp_typemap = &clLpTypeMapper;
-    
+   g_tw_lp_typemap = &clLpTypeMapper;
+//    
     g_tw_custom_initial_mapping = &clMap;
     g_tw_custom_lp_global_to_local_map = &clLocalFromGlobal;
-		// g_tw_1types = model_lps;
-		//g_tw_lp_typemap = &lpTypeMapper;
+//		// g_tw_1types = model_lps;
+//		//g_tw_lp_typemap = &lpTypeMapper;
     g_tw_lp_typemap = &clLpTypeMapper;
     g_tw_custom_initial_mapping = &clMap;
     g_tw_custom_lp_global_to_local_map = &clLocalFromGlobal;
-    
-	}
-
-	g_tw_lookahead = .5;
-	// g_tw_clock_rate = CL_VAL;
-	// g_tw_nlp = SIM_SIZE - 1;
-
-	g_tw_memory_nqueues = 16;  // give at least 16 memory queue event
-
+//    
+//	}
+//
+    g_tw_lookahead = .5;
+//	// g_tw_clock_rate = CL_VAL;
+    g_tw_nlp = SIM_SIZE - 1;
+//
+//	g_tw_memory_nqueues = 16;  // give at least 16 memory queue event
+//
 	tw_define_lps(LPS_PER_PE, sizeof(Msg_Data), 0);
-	tw_lp_setup_types();
-
-	///@todo do we need a custom lookahedad parameter?
-
-
-	// scatterMap();
-	// createLPs();
-
-	// printf("\nCreated %i ax, %i ne, %i se", a_created, n_created, s_created);
+    tw_lp_setup_types();
+//
+//	///@todo do we need a custom lookahedad parameter?
+//
+//
+//	// scatterMap();
+//	// createLPs();
+//
+//	// printf("\nCreated %i ax, %i ne, %i se", a_created, n_created, s_created);
 	if (g_tw_mynode == 0) {
 		displayModelSettings();
 	}
-		//testTiming();
-
-
+//		//testTiming();
+//
+//
 	tw_run();
-	// Stats Collection ************************************************************************************88
+//	// Stats Collection ************************************************************************************88
 	totalSOPS = 0;
 	totalSynapses = 0;
     stat_type totalNFire = 0;
@@ -128,7 +124,7 @@ int main(int argc, char *argv[])
     
 	statsOut();
 	tw_end();
-
+//
 	if (g_tw_mynode == 0) {  // master node for outputting stats.
 		printf("\n ------ TN Benchmark Stats ------- \n");
 		printf("Total SOPS(integrate and/or fire): %llu\n", totalSOPS);
@@ -136,7 +132,7 @@ int main(int argc, char *argv[])
 		printf("This PE's SOP: %llu\n", neuronSOPS);
 		printf("Total Synapse MSGs sent: %llu\n", totalSynapses);
 	}
-
+//
 	return (0);
 }
 
