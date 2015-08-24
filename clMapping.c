@@ -14,7 +14,9 @@ tw_peid clMapper(tw_lpid gid) {
     
     GlobalID g;
     g.raw = gid;
-    return (tw_peid) g.core;
+    int coreOff =  CORES_IN_SIM /(tw_nnodes() * g_tw_npe);
+    
+    return (tw_peid) g.core % coreOff;
     
 }
 
