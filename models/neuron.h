@@ -148,7 +148,7 @@ void  initNeuron(id_type coreID, id_type nID,
                  bool synapticConnectivity[],
                  short G_i[], int sigma[4], int S[4], bool b[4], bool epsilon,
                  short sigma_l, short lambda, bool c, uint32_t alpha,
-                 uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa, neuronState *n, int signalDelay, uint64_t destGlobalID);
+                 uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa, neuronState *n, int signalDelay, uint64_t destGlobalID, int destAxonID);
 /**
  *  @brief  handles incomming synapse messages. In this model, the neurons send messages to axons during "big tick" intervals.
  This is done through an event sent upon receipt of the first synapse message of the current big-tick.
@@ -166,13 +166,6 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *M, tw_lp *lp);
  */
 void integrate(id_type synapseID,neuronState *st, void *lp);
 
-/**
- *  @brief  Function that sends a heartbeat message to this neuron.
- *
- *  @param lp   <#lp description#>
- *  @param time
- */
-void sendHeartbeat(neuronState *st,  tw_stime time ,void *lp) ;
 
 /**
  *  @brief  Checks to see if a neuron should fire. @todo check to see if this is needed, since it looks like just a simple if statement is in order.
@@ -209,5 +202,6 @@ void fire(neuronState *st, void *lp);
 void setNeuronDest(int signalDelay, uint64_t gid, neuronState *n);
 
 void neuronReverseState(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp);
+void sendHeartbeat(neuronState *st, tw_stime time, void *lp);
 
 #endif /* defined(__ROSS_TOP__neuron__) */

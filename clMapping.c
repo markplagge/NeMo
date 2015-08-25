@@ -21,7 +21,8 @@ tw_peid clMapper(tw_lpid gid) {
 }
 
 unsigned long long initGIDForPE() {
-    long myPE = g_tw_mynode;
+    long myPE;
+    MPI_Comm_rank(MPI_COMM_WORLD, &myPE);
     static long long currentLP = 0;
     static long long currentCore = 0;
     
@@ -29,16 +30,22 @@ unsigned long long initGIDForPE() {
     //replace this with TW code:
     GlobalID g;
     int coresPerPE = CORES_IN_SIM /(tw_nnodes() * g_tw_npe);
+
     long coreOffset = (myPE * coresPerPE);
-    
-    
-    
+
+
+
+    if(currentCore < coreOffset){
+        currentCore = coreOffset;
+    }
     if (currentLP == CORE_SIZE) {
         currentCore ++;
         currentLP = 0;
     }
-    
+    printf("\n\n\n ************************************  PE %i at at core %i - COREOFFSET: %i \n", myPE, currentCore,coreOffset);
+
     if((currentCore + coreOffset) == coresPerPE + coreOffset){
+
         return -1; //done.
     }
     
@@ -156,17 +163,17 @@ void clMap(){
 #endif
             }
             
-#if VERIFY_MAPPING
-            printf("\n");
-            printf("%s\n", coreVals);
-#endif
+
         }
     }
     
     if (!g_tw_lp[g_tw_nlp - 1]) {
         tw_error(TW_LOC, "Not all LPs defined! (g_tw_nlp=%d)", g_tw_nlp);
     }
-    
+#if VERIFY_MAPPING
+    printf("\n");
+    printf("%s\n", coreVals);
+#endif
    // if (g_tw_lp[g_tw_nlp - 1]->gid != g_tw_lp_offset + g_tw_nlp - 1) {
    //     tw_error(TW_LOC, "LPs not sequentially enumerated!");
    // }

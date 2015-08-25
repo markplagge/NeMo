@@ -16,7 +16,7 @@ void initNeuron(id_type coreID, id_type nID,
                 int S[4], bool b[4], bool epsilon,
                 short sigma_l, short lambda, bool c, uint32_t alpha,
                 uint32_t beta, short TM, short VR, short sigmaVR, short gamma,
-                bool kappa, neuronState *n, int signalDelay, uint64_t destGlobalID)
+                bool kappa, neuronState *n, int signalDelay, uint64_t destGlobalID,int destAxonID)
 {
     
     for(int i = 0; i < 4; i ++) {
@@ -45,7 +45,8 @@ void initNeuron(id_type coreID, id_type nID,
     n->kappa = kappa;
     n->omega = 0;
     
-    
+
+
     //! @TODO: perhaps calculate if a neuron is self firing or not.
     n->firedLast = false;
     n->heartbeatOut = false;
@@ -280,6 +281,7 @@ void reverseResetNormal(void *neuronState)
 
 void resetNone(void *neuronState)
 {
+
 }
 
 

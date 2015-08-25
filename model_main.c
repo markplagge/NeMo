@@ -344,7 +344,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
     dest.atype = AXON;
     
     
-    initNeuron(core, nid, synapticConnectivity, G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta, TM, VR, sigmaVR, gamma, kappa, s, signalDelay, dest.raw);
+    initNeuron(core, nid, synapticConnectivity, G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta, TM, VR, sigmaVR, gamma, kappa, s, signalDelay, dest.raw,dest.local);
     
     
     /**@note This random setup will create neurons that have an even chance of getting an axon inside thier own core
