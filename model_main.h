@@ -16,8 +16,8 @@
 #include "models/neuron.h"
 #include "models/synapse.h"
 #include "input_simulator.h"
-//#include "mapping.h"
-#include "clMapping.h"
+#include "mapping.h"
+//#include "clMapping.h"
 #include <math.h>
 
 #include <stdbool.h>

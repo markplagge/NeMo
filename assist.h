@@ -121,18 +121,7 @@ typedef struct Ms{
 
 
 /* Global Mapping / ID structures  - used instead of bitfields for IDs.*/
-typedef union {
-    struct {
-        unsigned long id:30;
-    };
-    uint32_t raw;
-}localID;
-typedef union {
-    struct {
-        unsigned short axType:4;
-    };
-    uint8_t raw;
-}axType;
+
 typedef union {
     struct  {
         unsigned int atype:4;
@@ -152,7 +141,6 @@ extern int SYNAPSES_IN_CORE;
 extern mapTypes tnMapping;
 extern int CORE_SIZE;
 extern tw_stime BIG_TICK_ERR; //!< Tick error - tw_stime can be this much under the next big tick and register as a big-tick.
-
 
 /**  @} */
 

@@ -33,14 +33,14 @@ tw_lptype model_lps[] = {
         (event_f)axon_event,
         (revent_f)axon_reverse,
         (final_f)axon_final,
-        (map_f)clMapper,
+        (map_f)lGidToPE,
         sizeof(axonState) },
     {
         (init_f)synapse_init, (pre_run_f)pre_run,
         (event_f)synapse_event,
         (revent_f)synapse_reverse,
         (final_f)synapse_final,
-        (map_f)clMapper, sizeof(synapseState)
+        (map_f)lGidToPE, sizeof(synapseState)
     },
 	{
 	(init_f)neuron_init,
@@ -48,7 +48,7 @@ tw_lptype model_lps[] = {
 	(event_f)neuron_event,
 	(revent_f)neuron_reverse,
 	(final_f)neuron_final,
-	(map_f)clMapper, sizeof(neuronState)
+	(map_f)lGidToPE, sizeof(neuronState)
 	}
 	,
 			  { 0 } };
@@ -63,9 +63,14 @@ int main(int argc, char *argv[])
 	AXONS_IN_CORE = NEURONS_IN_CORE;
 	SYNAPSES_IN_CORE = (NEURONS_IN_CORE * AXONS_IN_CORE);
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
-	SIM_SIZE = (CORE_SIZE * CORES_IN_SIM) / g_tw_npe;
+	SIM_SIZE = (CORE_SIZE * CORES_IN_SIM) / tw_nnodes();
 	tnMapping = LLINEAR;
-//
+	printf("sim_size is %zu\n", SIM_SIZE);
+
+	unsigned  long long x = 0;
+
+
+
 	/** g_tw_nlp set here to CORE_SIZE.
 	 * @todo check accuracy of this
 	 * */
@@ -74,20 +79,24 @@ int main(int argc, char *argv[])
 //
 	g_tw_events_per_pe = 5024;//eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
 //	///@todo enable custom mapping with these smaller LPs.
-//
-//	//if (tnMapping == LLINEAR) {
-    g_tw_mapping = CUSTOM;
-    g_tw_lp_types = model_lps;
+
+	g_tw_lp_typemap = &tn_linear_map;
+	g_tw_lp_types = model_lps;
+
+
+	//if (tnMapping == LLINEAR) {
+    //g_tw_mapping = CUSTOM;
+    //g_tw_lp_types = model_lps;
 		//g_tw_lp_typemap = &tn_linear_map;
-   g_tw_lp_typemap = &clLpTypeMapper;
-//    
-    g_tw_custom_initial_mapping = &clMap;
-    g_tw_custom_lp_global_to_local_map = &clLocalFromGlobal;
-//		// g_tw_1types = model_lps;
-//		//g_tw_lp_typemap = &lpTypeMapper;
-    g_tw_lp_typemap = &clLpTypeMapper;
-    g_tw_custom_initial_mapping = &clMap;
-    g_tw_custom_lp_global_to_local_map = &clLocalFromGlobal;
+   //g_tw_lp_typemap = &clLpTypeMapper;
+
+    //g_tw_custom_initial_mapping = &clMap;
+    //g_tw_custom_lp_global_to_local_map = &clLocalFromGlobal;
+	// g_tw_1types = model_lps;
+	//g_tw_lp_typemap = &lpTypeMapper;
+    //g_tw_lp_typemap = &clLpTypeMapper;
+    //g_tw_custom_initial_mapping = &clMap;
+    //g_tw_custom_lp_global_to_local_map = &clLocalFromGlobal;
 //    
 //	}
 //
@@ -127,10 +136,10 @@ int main(int argc, char *argv[])
 //
 	if (g_tw_mynode == 0) {  // master node for outputting stats.
 		printf("\n ------ TN Benchmark Stats ------- \n");
-		printf("Total SOPS(integrate and/or fire): %llu\n", totalSOPS);
-        printf("Total spikes fired by all neurons: %llu\n", totalNFire);
-		printf("This PE's SOP: %llu\n", neuronSOPS);
-		printf("Total Synapse MSGs sent: %llu\n", totalSynapses);
+		printf("Total SOPS(integrate and/or fire): %zu\n", totalSOPS);
+        printf("Total spikes fired by all neurons: %zu\n", totalNFire);
+		printf("This PE's SOP: %zu\n", neuronSOPS);
+		printf("Total Synapse MSGs sent: %zu\n", totalSynapses);
 	}
 //
 	return (0);
@@ -230,16 +239,16 @@ void statsOut()
 	printf("\n\n");
 	printf("Nodes,CORES,Neurons/Core,Net Events,Rollbacks,Run Time,Total SOP,Threshold Min,Threshold Max"
 	    ",NegativeThresholdMin,NegativeThresholdMax,Synapse Weight Min,Synapse Weight Max,EvtTies\n");
-	printf("%u,%i,%i,%llu,%llu,%f,%llu,", tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS);
-	printf("%u,"
-	    "%u,"
-	    "%u,"
-	    "%u,"
+	printf("%u,%i,%i,%llu,%zu,%f,%zu,", tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS);
+	printf("%zu,"
+	    "%zu,"
+	    "%zu,"
+	    "%zu,"
 	    "%d,"
 	    "%d,"
 	    "%llu\n", THRESHOLD_MIN, THRESHOLD_MAX, NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX, s.s_pe_event_ties);
 	if (BULK_MODE) {
-		fprintf(stderr, "%u,%i,%i,%llu,%llu,%f,%llu,%u,%u,%u,%u,%u,%u,", tw_nnodes(), CORES_IN_SIM,
+		fprintf(stderr, "%u,%i,%i,%llu,%zu,%f,%zu,%zu,%zu,%zu,%zu,%u,%u,", tw_nnodes(), CORES_IN_SIM,
 		    NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS, THRESHOLD_MIN, THRESHOLD_MAX,
 		    NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
 		fprintf(stderr, "%llu", s.s_pe_event_ties);
@@ -261,7 +270,7 @@ void createLPs()
 	int axons = 0;
 	int soff = AXONS_IN_CORE + SYNAPSES_IN_CORE;
 	// int noff = CORE_SIZE - NEURONS_IN_CORE;
-	for (int i = 0; i < g_tw_nlp; i++)
+	for (tw_lpid i = 0; i < g_tw_nlp; i++)
 	{
 		if (i < AXONS_IN_CORE) {
 			tw_lp_settype(i, &model_lps[2]);
@@ -333,19 +342,17 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
     weight_type beta = tw_rand_integer(lp->rng, (NEG_THRESH_SIGN * NEG_THRESHOLD_MIN), NEG_THRESHOLD_MAX);
     
     
-    GlobalID g;
-    g.raw = lp->gid;
-    id_type core = g.core;
-    id_type nid = g.local;
+//    GlobalID g;
+//    g.raw = lp->gid;
+//    id_type core = g.core;
+//    id_type nid = g.local;
     
-    GlobalID dest;
-    dest.core = tw_rand_integer(lp->rng, 0, CORES_IN_SIM);
-    dest.local = tw_rand_integer(lp->rng, 0, NEURONS_IN_CORE);
-    dest.atype = AXON;
+
+
     
     
-    initNeuron(core, nid, synapticConnectivity, G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta, TM, VR, sigmaVR, gamma, kappa, s, signalDelay, dest.raw,dest.local);
-    
+    initNeuron(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid), synapticConnectivity, G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta, TM, VR, sigmaVR, gamma, kappa, s, signalDelay,0,0); //we re-define the destination axons here, rather than use the constructor.
+
     
     /**@note This random setup will create neurons that have an even chance of getting an axon inside thier own core
      * vs an external core. The paper actually capped this value at something like 20%. @todo - make this match the
@@ -354,7 +361,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
      s->dendriteLocal = tw_rand_integer(lp->rng, 0, AXONS_IN_CORE - 1);
      
 //     if (tnMapping == LLINEAR) {
-         s->dendriteGlobalDest = clGetAxonFromNeuron(s->dendriteCore, s->dendriteLocal);//lGetAxonFromNeu(s->dendriteCore, s->dendriteLocal);
+         s->dendriteGlobalDest = lGetAxonFromNeu(s->dendriteCore, s->dendriteLocal);
 //     }
 //     else {
 //     s->dendriteGlobalDest = getAxonGlobal(s->dendriteCore, s->dendriteLocal);
@@ -390,10 +397,10 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 		tw_snapshot(lp, lp->type->state_sz);
 		printf("Neuron snapshot saved");
 	}
-    
+
     neuronReceiveMessage(s, M, lp);
-    
-    
+
+
 	//basic mode removes leak and stochastic reverse threshold functions.
 //	if (BASIC_SOP) {
 //		neuronReceiveMessageBasic(s, tw_now(lp), M, lp);
@@ -445,14 +452,19 @@ void neuron_final(neuronState *s, tw_lp *lp)
 
 void synapse_init(synapseState *s, tw_lp *lp)
 {
+	s->destNeuron = lGetNeuronFromSyn(lp->gid);
+	s->destSynapse = lGetNextSynFromSyn(lp->gid);
+	s->mySynapseNum = lGetSynNumLocal(lp->gid);
 	//if (tnMapping == LLINEAR) {
-		s->destNeuron = clGetNeuronFromSynapse(lp->gid);
-		s->destSynapse = 0;
-		s->destSynapse = clGetSynapseFromSynapse(lp->gid);
+		//s->destNeuron = clGetNeuronFromSynapse(lp->gid);
+		//s->destSynapse = 0;
+		//s->destSynapse = clGetSynapseFromSynapse(lp->gid);
 //		s->mySynapseNum = clGetSynapseFromSynapse\(lp->gid);
-    GlobalID g;
-    g.raw = lp->gid;
-    s->mySynapseNum = g.local;
+
+    //GlobalID g;
+    //g.raw = lp->gid;
+    //s->mySynapseNum = g.local;
+
 	//}
 
 	/**
@@ -483,8 +495,10 @@ void synapse_init(synapseState *s, tw_lp *lp)
 void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
 	long rc = lp->rng->count;
-    s->destNeuron = clGetNeuronFromSynapse(lp->gid);
-    s->destSynapse = clGetSynapseFromSynapse(lp->gid);
+    //s->destNeuron = clGetNeuronFromSynapse(lp->gid);
+    //s->destSynapse = clGetSynapseFromSynapse(lp->gid);
+	//s->destNeuron = lGetNeuronFromSyn(lp->gid);
+	//s->destSynapse = lGetNextSynFromSyn(lp->gid);
 	//*(int *)CV = (int)0;
 	// printf("Synapse rcvd msg\n");
 	if (s->destSynapse != 0) {
@@ -544,12 +558,16 @@ id_type curAxon = 0;
 
 void axon_init(axonState *s, tw_lp *lp)
 {
-//	s->sendMsgCount = 0;
-//	if (tnMapping == LLINEAR) {
-		s->destSynapse = clgetSynapseFromAxon(lp->gid);
-    GlobalID g;
-    g.raw = lp->gid;
-    s->axonID = g.local;
+	s->sendMsgCount = 0;
+	s->axonID = lGetAxeNumLocal(lp->gid);
+	s->destSynapse = lGetSynFromAxon(lp->gid);
+
+
+	//if (tnMapping == LLINEAR) {
+	//	s->destSynapse = clgetSynapseFromAxon(lp->gid);
+    //GlobalID g;
+    //g.raw = lp->gid;
+    //s->axonID = g.local;
     
     //		s->axonID = lGetAxeNumLocal(lp->gid);
 //	} else {
@@ -563,7 +581,7 @@ void axon_init(axonState *s, tw_lp *lp)
 //			    s->destSynapse);
 //		}
 //	}
-    
+    //printf("Axon GIDVAL:(%i,%i), INTVAL(%i),  init message sending to gid %i ...\n",g.local, g.core, s->axonID,lp->gid);
 	tw_stime r = getNextEventTime(lp);
 	tw_event *axe = tw_event_new(lp->gid, r, lp);
 	Msg_Data *data = (Msg_Data *)tw_event_data(axe);
@@ -571,7 +589,8 @@ void axon_init(axonState *s, tw_lp *lp)
 	data->axonID = s->axonID;
 	tw_event_send(axe);
 	if (DEBUG_MODE) {
-		printf("Axon %llu checking in with with dest synapse %llu\n", lp->gid, s->destSynapse);
+
+		printf("Axon %zu checking in with dest synapse %zu\n", lp->gid, s->destSynapse);
 	}
 	//printf("message ready at %f",r);
 }
@@ -589,7 +608,7 @@ void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	data->localID = lp->gid;
 	data->eventType = AXON_OUT;
 	data->axonID = s->axonID;
-
+	printf("Axon sending message to synapse %zu\n", s->destSynapse);
 	tw_event_send(axe);
 	s->sendMsgCount ++;
 	M->rndCallCount = lp->rng->count - rc;
