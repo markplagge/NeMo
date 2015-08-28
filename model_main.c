@@ -608,7 +608,7 @@ void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	data->localID = lp->gid;
 	data->eventType = AXON_OUT;
 	data->axonID = s->axonID;
-	printf("Axon sending message to synapse %zu\n", s->destSynapse);
+	//printf("Axon sending message to synapse %zu\n", s->destSynapse);
 	tw_event_send(axe);
 	s->sendMsgCount ++;
 	M->rndCallCount = lp->rng->count - rc;
