@@ -63,9 +63,9 @@ int main(int argc, char *argv[])
 	AXONS_IN_CORE = NEURONS_IN_CORE;
 	SYNAPSES_IN_CORE = (NEURONS_IN_CORE * AXONS_IN_CORE);
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
-	SIM_SIZE = (CORE_SIZE * CORES_IN_SIM) / tw_nnodes();
+	SIM_SIZE = (CORE_SIZE * CORES_IN_SIM);// / tw_nnodes();
 	tnMapping = LLINEAR;
-	printf("sim_size is %zu\n", SIM_SIZE);
+	printf("sim_size is %u\n", SIM_SIZE);
 
 	unsigned  long long x = 0;
 
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
 //
     g_tw_lookahead = .5;
 //	// g_tw_clock_rate = CL_VAL;
-    g_tw_nlp = SIM_SIZE - 1;
+    g_tw_nlp = LPS_PER_PE;
 //
 //	g_tw_memory_nqueues = 16;  // give at least 16 memory queue event
 //

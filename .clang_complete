@@ -1,0 +1,10 @@
+-I/Users/Mark/Development/TrueNorth/ROSS/
+-I/Users/Mark/Development/TrueNorth/ROSS/clock
+-I/Users/Mark/Development/TrueNorth/ROSS/cmake
+-I/Users/Mark/Development/TrueNorth/ROSS/gvt
+-I/Users/Mark/Development/TrueNorth/ROSS/queue
+-I/Users/Mark/Development/TrueNorth/ROSS/IO
+-I/Users/Mark/Development/TrueNorth/ROSS/conf
+-I/Users/Mark/Development/TrueNorth/ROSS/core
+-I/Users/Mark/Development/TrueNorth/tnt_benchmark/models
+-I/Users/Mark/mpich-install/include

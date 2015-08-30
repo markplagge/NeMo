@@ -167,7 +167,7 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
             break;
         default:
             //Error condition - non-valid input.
-            tw_error(TW_LOC, 169, "Neuron (%i,%i) received invalid message type, %i \n ", st->myCoreID,st->myLocalID, m->eventType);
+            tw_error(TW_LOC, "Neuron (%i,%i) received invalid message type, %i \n ", st->myCoreID,st->myLocalID, m->eventType);
             break;
     }
 }
