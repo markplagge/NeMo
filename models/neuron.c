@@ -74,13 +74,21 @@ void initNeuron(id_type coreID, id_type nID,
 
 
 void setNeuronDest(int signalDelay, uint64_t gid, neuronState *n) {
+
     n->delayVal = signalDelay;
     n->dendriteGlobalDest = gid;
+	if(tnMapping != LLINEAR){
     GlobalID g;
     g.raw = gid;
     n->dendriteCore = g.core;
-    n->dendriteLocal = g.local;
-    
+		n->dendriteLocal = g.local; }
+	else
+		{
+			//must be manually set by another init function for now.
+		n->dendriteCore = 0;
+		n->dendriteLocal = 0;
+		}
+
     
 }
 
