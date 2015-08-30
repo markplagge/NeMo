@@ -29,7 +29,7 @@ extern int a_created ;
 /**
  *  Number of neurons per core.
  */
-int NEURONS_IN_CORE = 3;
+int NEURONS_IN_CORE = 256;
 /** number of synapses per core. Calculated value, needs to be neurons * axons */
 int SYNAPSES_IN_CORE;
 /** Number of axions per core. Generally is set to 1-1 with neurons in core */

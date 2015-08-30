@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 //    
 //	}
 //
-    g_tw_lookahead = .5;
+    g_tw_lookahead = LH_VAL;
 //	// g_tw_clock_rate = CL_VAL;
     g_tw_nlp = LPS_PER_PE;
 //
@@ -324,10 +324,13 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
         //s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
         //s->axonTypesp[i] = 1; ///! Set axon types to one, since we are just testing performance.
         G_i[i] = tw_rand_integer(lp->rng, 0, 3);
-        synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
+		synapticConnectivity[i] = 0;
+
+			//synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
         
     }
-    
+	synapticConnectivity[lGetNeuNumLocal(lp->gid)] = 1;
+
     for(int i = 0; i < 4; i ++){
         //int ri = tw_rand_integer(lp->rng, -1, 0);
         unsigned int mk = tw_rand_integer(lp->rng, 0, 1);
@@ -396,7 +399,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	if (TW_DELTA &&
 	    (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
 		tw_snapshot(lp, lp->type->state_sz);
-		printf("Neuron snapshot saved");
+			//printf("Neuron snapshot saved");
 	}
 
     neuronReceiveMessage(s, M, lp);
@@ -420,10 +423,10 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 
 void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp)
 {
-	if (TW_DELTA &&
-			    (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
-			tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
+	long count = MCV->rndCallCount;
 
+	if (TW_DELTA) {
+			tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
 
 	}
 	else { //ReverseState is needed when not using delta encoding. Since basic mode implies delta, this only runs when delta is off and neurons are in normal sim mode.
@@ -432,8 +435,7 @@ void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp)
 	}
 
 	//Roll Back random calls
-	long count = MCV->rndCallCount;
-	while (count--)
+		while (count--)
 	{
 		tw_rand_reverse_unif(lp->rng);
 	}
