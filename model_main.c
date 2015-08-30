@@ -57,6 +57,7 @@ int main(int argc, char *argv[])
 {
  
 	tw_opt_add(app_opt);
+	g_tw_gvt_interval = 512;
 	tw_init(&argc, &argv);
 
 //	// set up core sizes.
@@ -77,7 +78,7 @@ int main(int argc, char *argv[])
 	LPS_PER_PE = SIM_SIZE / tw_nnodes();
 	LP_PER_KP = LPS_PER_PE / g_tw_nkp;
 //
-	g_tw_events_per_pe = 5024;//eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
+	g_tw_events_per_pe = CORE_SIZE + 1024;//eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
 //	///@todo enable custom mapping with these smaller LPs.
 
 	g_tw_lp_typemap = &tn_linear_map;
