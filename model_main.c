@@ -66,6 +66,7 @@ int main(int argc, char *argv[])
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
 	SIM_SIZE = (CORE_SIZE * CORES_IN_SIM);// / tw_nnodes();
 	tnMapping = LLINEAR;
+
 	/** g_tw_nlp set here to CORE_SIZE.
 	 * @todo check accuracy of this
 	 * */
