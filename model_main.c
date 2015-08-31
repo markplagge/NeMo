@@ -66,19 +66,13 @@ int main(int argc, char *argv[])
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
 	SIM_SIZE = (CORE_SIZE * CORES_IN_SIM);// / tw_nnodes();
 	tnMapping = LLINEAR;
-	printf("sim_size is %u\n", SIM_SIZE);
-
-	unsigned  long long x = 0;
-
-
-
 	/** g_tw_nlp set here to CORE_SIZE.
 	 * @todo check accuracy of this
 	 * */
 	LPS_PER_PE = SIM_SIZE / tw_nnodes();
 	LP_PER_KP = LPS_PER_PE / g_tw_nkp;
 //
-	g_tw_events_per_pe = CORE_SIZE + 1024;//eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
+	g_tw_events_per_pe = SIM_SIZE;//eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
 //	///@todo enable custom mapping with these smaller LPs.
 
 	g_tw_lp_typemap = &tn_linear_map;
@@ -112,7 +106,7 @@ int main(int argc, char *argv[])
 //
 //	///@todo do we need a custom lookahedad parameter?
 //
-//
+//sim_size is
 //	// scatterMap();
 //	// createLPs();
 //
@@ -141,6 +135,7 @@ int main(int argc, char *argv[])
         printf("Total spikes fired by all neurons: %zu\n", totalNFire);
 		printf("This PE's SOP: %zu\n", neuronSOPS);
 		printf("Total Synapse MSGs sent: %zu\n", totalSynapses);
+
 	}
 //
 	return (0);
@@ -650,11 +645,15 @@ void displayModelSettings()
 	{
 		printf("*");
 	}
+	double cores_per_node = CORES_IN_SIM / tw_nnodes() ;
 	printf("\n");
 	char *sopMode = BASIC_SOP ? "simplified Neuron Model" : "normal TN Neuron Model";
 	printf("* \tNeurons set to %s.\n", sopMode);
 	printf("* \t %i Neurons per core, %i cores in sim.\n", NEURONS_IN_CORE, CORES_IN_SIM);
+	printf("* \t %zd cores per PE, giving %zu LPs per pe.\n", cores_per_node, g_tw_nlp);
 	printf("* \t Neuron stats:\n");
+	printf("* \tCalculated sim_size is %u\n", SIM_SIZE);
+
 	//printf("%-10s", "title");
 
 
