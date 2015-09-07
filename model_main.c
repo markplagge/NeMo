@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 	LPS_PER_PE = SIM_SIZE / tw_nnodes();
 	LP_PER_KP = LPS_PER_PE / g_tw_nkp;
 //
-	g_tw_events_per_pe = SIM_SIZE/2;//eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
+	g_tw_events_per_pe = LPS_PER_PE + 50000;//eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
 //	///@todo enable custom mapping with these smaller LPs.
 
 	g_tw_lp_typemap = &tn_linear_map;
@@ -651,7 +651,7 @@ void displayModelSettings()
 	char *sopMode = BASIC_SOP ? "simplified Neuron Model" : "normal TN Neuron Model";
 	printf("* \tNeurons set to %s.\n", sopMode);
 	printf("* \t %i Neurons per core, %i cores in sim.\n", NEURONS_IN_CORE, CORES_IN_SIM);
-	printf("* \t %zd cores per PE, giving %zu LPs per pe.\n", cores_per_node, g_tw_nlp);
+	printf("* \t %llu cores per PE, giving %zu LPs per pe.\n", cores_per_node, g_tw_nlp);
 	printf("* \t Neuron stats:\n");
 	printf("* \tCalculated sim_size is %u\n", SIM_SIZE);
 

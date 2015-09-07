@@ -1,14 +1,12 @@
 require("open3")
 clockRate = 1000
-np = [16,32]
+np = [8,16,32]
 neurons = 256
-cores = 32
-endts=500
-lt=0.01
-rm=0
-extramem=8000
+cores = 4096
+endts=1000
 rv=1
 sync=3
+extramem=10
 
 
 results = Array.new
@@ -21,10 +19,10 @@ if(ARGV[1])
 	cores=ARGV[1]
 end
 puts ""
-ctr = 10
+ctr = 1 
 while ctr != 0 do
   for nps in np
-    cmd = "mpirun --np=#{nps} #{benchmarkLoc} --sync=3 --neurons=#{neurons} --cores=#{cores} --end=#{endts} --lt=#{lt} --rm=#{rm} --extramem=#{extramem} --rv=#{rv}"
+    cmd = "mpirun --np=#{nps} #{benchmarkLoc} --sync=3 --neurons=#{neurons} --cores=#{cores} --end=#{endts} --extramem=#{extramem}" 
     puts cmd
     stdout, stderr, status = Open3.capture3(cmd)
     results.push(stderr)
