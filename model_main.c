@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
 //
 //	g_tw_memory_nqueues = 16;  // give at least 16 memory queue event
 //
-	tw_define_lps(LPS_PER_PE, sizeof(Msg_Data), 0);
+	tw_define_lps(LPS_PER_PE, sizeof(Msg_Data));
     tw_lp_setup_types();
 //
 //	///@todo do we need a custom lookahedad parameter?
@@ -261,7 +261,7 @@ void statsOut()
 ///
 void createLPs()
 {
-	tw_define_lps(CORE_SIZE, sizeof(Msg_Data), 0);
+	//tw_define_lps(CORE_SIZE, sizeof(Msg_Data));
 	int neurons = 0;
 	int synapses = 0;
 	int axons = 0;
