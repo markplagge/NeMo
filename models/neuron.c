@@ -128,7 +128,7 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
     
     //TODO: remove this after testing.
     m->stateSaveZone = tw_calloc(TW_LOC, "neuron", sizeof(neuronState), 1);
-    memcpy(m->stateSaveZone,st,sizeof(&st));
+    memcpy(m->stateSaveZone,st,sizeof(*st));
     
     
     switch (m->eventType)
@@ -390,7 +390,7 @@ void stochasticIntegrate(weight_type weight, neuronState *st)
     //long drawnRandom = st->drawnRandomNumber;
     //long randV = st->drawnRandomNumber & st->thresholdPRNMask;
 	/**@TODO Enable threshold PRN masking! */
-    long rv = st->drawnRandomNumber;
+    //long rv = st->drawnRandomNumber;
     if (BINCOMP(weight, st->drawnRandomNumber)) {
 		st->membranePotential += 1;
 	}
@@ -442,7 +442,7 @@ void neuronReverseState(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp)
 	/** @todo - check this for correctness and switch from delta encoding. */
     //TERRIBLE DEBUGGING CODE REMOVE BEFORE ANYONE SEES:
     
-    memcpy(s, m->stateSaveZone, sizeof(&s));
+    memcpy(s, m->stateSaveZone, sizeof(*s));
     
     //	if (m->eventType == SYNAPSE_OUT) {
 //		s->receivedSynapseMsgs--;
