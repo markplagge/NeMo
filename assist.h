@@ -14,6 +14,9 @@
 #include <stdbool.h>
 #include "ross.h"
 
+
+
+
 /*Type definitions for the nuron simulation */
 #define VERIFY_MAPPING 1
 //#define _idT uint64_t //!<ID type - local id type for bit shifts and ID cases.
@@ -104,6 +107,10 @@ typedef enum TimeRandomSel {
 
 /* Message structures */
 
+//reverse computation debug uglyness here:
+
+
+
 typedef uint8_t s;
 /**
   Msg_Data is the main message struct.
@@ -117,6 +124,12 @@ typedef struct Ms{
 	tw_stime neuronLastLeakTime;
 
 	id_type axonID; //!< Axon ID for neuron value lookups.
+    //debugging reverse computation:
+    
+    ///debugging ugly style - remove before showing anyone your code.
+    void * stateSaveZone;
+    
+    
 }Msg_Data;
 
 

@@ -458,7 +458,7 @@ tw_lpid lpTypeMapper(tw_lpid gid)
 	//int e_n = NEURONS_IN_CORE;
 
 	_gridIDT i = ISIDE(loc);
-	_gridIDT j = JSIDE(loc);
+		_gridIDT j = JSIDE(loc);
 
 	if (i == 0) {
 		a_created++;

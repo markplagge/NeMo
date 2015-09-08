@@ -21,6 +21,8 @@
 #include <math.h>
 
 #include <stdbool.h>
+
+
 extern int n_created ;
 extern int s_created ;
 extern int a_created ;

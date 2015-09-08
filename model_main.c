@@ -621,7 +621,7 @@ void axon_reverse(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	}
 	s->sendMsgCount--;
 
-	//tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy,lp->pe->cur_event->delta_size);
+	
 	long count = M->rndCallCount;
 	while (count--)
 	{
