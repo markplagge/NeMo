@@ -15,6 +15,11 @@
 #include "ross.h"
 
 
+#ifndef __ROSS_TOP__neuron__
+struct NeuronModel;
+#endif
+
+
 
 
 /*Type definitions for the nuron simulation */
@@ -115,22 +120,33 @@ typedef uint8_t s;
 /**
   Msg_Data is the main message struct.
   */
-typedef struct Ms{
-	enum evtType eventType;
-	unsigned long rndCallCount;
-	id_type localID; //!< Sender's local (within a core) id - used for weight lookups.
-	volt_type neuronVoltage;
-	tw_stime neuronLastActiveTime;
-	tw_stime neuronLastLeakTime;
 
-	id_type axonID; //!< Axon ID for neuron value lookups.
+typedef struct Ms{
+    enum evtType eventType;
+    unsigned long rndCallCount;
+    
+    id_type localID; //!< Sender's local (within a core) id - used for weight lookups.
+    volt_type neuronVoltage;
+    tw_stime neuronLastActiveTime;
+    tw_stime neuronLastLeakTime;
+    
+    //neuron state saving extra params:
+    unsigned long long neuronRcvMsgs;
+    uint16_t neuronDrawnRandom;
+    
+    id_type axonID; //!< Axon ID for neuron value lookups.
     //debugging reverse computation:
     
     ///debugging ugly style - remove before showing anyone your code.
-    void * stateSaveZone;
+    //void * stateSaveZone;
+    struct NeuronModel *nm;
     
     
 }Msg_Data;
+
+
+
+
 
 
 /* Global Mapping / ID structures  - used instead of bitfields for IDs.*/

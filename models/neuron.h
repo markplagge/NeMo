@@ -23,6 +23,8 @@ extern int AXONS_IN_CORE;
 extern int SYNAPSES_IN_CORE;
 
 
+
+
 /** ResetFunDel - This is a function that handles different reset rate
 * calculations. It takes the state of the neuron, and applies
 * 	various reset functions to the neuron's voltage. Some reset functions
@@ -63,7 +65,7 @@ typedef struct NeuronModel {
     bool firedLast;
     bool heartbeatOut;
     bool isSelfFiring;
-    long long receivedSynapseMsgs;
+    unsigned long long receivedSynapseMsgs;
     
     /*@} */
      /*@{ @name location Information */

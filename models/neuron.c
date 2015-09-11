@@ -125,10 +125,13 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
     m->neuronVoltage = st->membranePotential;
     m->neuronLastLeakTime = st->lastLeakTime;
     m->neuronLastActiveTime = st->lastActiveTime;
+    m->neuronRcvMsgs = st->receivedSynapseMsgs;
+    m->neuronDrawnRandom = st->drawnRandomNumber;
+    //memcpy(m->nm, st, sizeof(neuronState));
     
     //TODO: remove this after testing.
-    m->stateSaveZone = tw_calloc(TW_LOC, "neuron", sizeof(neuronState), 1);
-    memcpy(m->stateSaveZone,st,sizeof(*st));
+    //m->stateSaveZone = tw_calloc(TW_LOC, "neuron", sizeof(neuronState), 1);
+    //memcpy(m->stateSaveZone,st,sizeof(*st));
     
     
     switch (m->eventType)
@@ -441,24 +444,25 @@ void neuronReverseState(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp)
 
 	/** @todo - check this for correctness and switch from delta encoding. */
     //TERRIBLE DEBUGGING CODE REMOVE BEFORE ANYONE SEES:
-    
-    memcpy(s, m->stateSaveZone, sizeof(*s));
-    
-    //	if (m->eventType == SYNAPSE_OUT) {
-//		s->receivedSynapseMsgs--;
-//	}else if (m->eventType == NEURON_HEARTBEAT) {
-//		s->SOPSCount--;
-//	}
-//
-//	if (s->firedLast == true) {
-//		s->fireCount--;
-//		s->firedLast = false;
-//	}
-//
-//	s->membranePotential = m->neuronVoltage;
-//	s->lastLeakTime = m->neuronLastLeakTime;
-//	s->lastActiveTime = m->neuronLastActiveTime;
-//
+    //memcpy(s, m->stateSaveZone, sizeof(*s));
+    /*
+    if (m->eventType == NEURON_HEARTBEAT) {
+		s->SOPSCount--;
+	}
+
+	if (s->firedLast == true) {
+		s->fireCount--;
+		s->firedLast = false;
+	}
+     */
+
+	s->membranePotential = m->neuronVoltage;
+	s->lastLeakTime = m->neuronLastLeakTime;
+	s->lastActiveTime = m->neuronLastActiveTime;
+    s->receivedSynapseMsgs = m->neuronRcvMsgs;
+    s->drawnRandomNumber = m->neuronDrawnRandom;
+    s = m->nm;
+
 	//while (count--)
 	//{
 	//	tw_rand_reverse_unif(lp->rng);

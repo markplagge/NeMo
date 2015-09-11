@@ -27,6 +27,6 @@ typedef struct AxonState {
  *  @param M  message
  *  @param lp lp
  */
-void axonReceiveMessage(axonState *st, Msg_Data *M, tw_lp *lp);
-void axonReverseState(axonState *st, Msg_Data *M, tw_lp *lp);
+//void axonReceiveMessage(axonState *st, Msg_Data *M, tw_lp *lp);
+//void axonReverseState(axonState *st, Msg_Data *M, tw_lp *lp);
 #endif /* defined(__ROSS_TOP__axon__) */
