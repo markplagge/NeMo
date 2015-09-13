@@ -66,6 +66,7 @@ int main(int argc, char *argv[])
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
 	SIM_SIZE = (CORE_SIZE * CORES_IN_SIM);// / tw_nnodes();
 	tnMapping = LLINEAR;
+	
 
 	/** g_tw_nlp set here to CORE_SIZE.
 	 * @todo check accuracy of this
@@ -300,7 +301,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 
     bool epsilon = 0;
     bool sigma_l = 0;
-    short lambda = 1;
+    short lambda = -1;
     bool c = false;
     short TM = 0;
 
@@ -390,11 +391,12 @@ void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID)
 
 void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
+
 	long start_count = lp->rng->count;
 	//if delta is on or basic mode is on, take a snapshot for delta encoding
 	if (TW_DELTA &&
 	    (g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
-		tw_snapshot(lp, lp->type->state_sz);
+			tw_snapshot(lp, lp->type->state_sz );
 			//printf("Neuron snapshot saved");
 	}
 
@@ -411,7 +413,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	//again, only take the delta in basic neuron mode or in delta mode.
 	if (TW_DELTA &&
 			(g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
-		tw_snapshot_delta(lp, lp->type->state_sz);
+			//tw_snapshot_delta(lp, lp->type->state_sz);
 	}
 	M->rndCallCount = lp->rng->count - start_count;
 }
@@ -422,7 +424,7 @@ void neuron_reverse(neuronState *s, tw_bf *CV, Msg_Data *MCV, tw_lp *lp)
 	long count = MCV->rndCallCount;
 
 	if (TW_DELTA) {
-			tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
+			//tw_snapshot_restore(lp, lp->type->state_sz, lp->pe->cur_event->delta_buddy, lp->pe->cur_event->delta_size);
 
 	}
 	else { //ReverseState is needed when not using delta encoding. Since basic mode implies delta, this only runs when delta is off and neurons are in normal sim mode.
@@ -502,7 +504,7 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	// printf("Synapse rcvd msg\n");
 	if (s->destSynapse != 0) {
 		// generate event to send to next synapse
-		s->msgSent++;
+		//s->msgSent++;
 		//CV->c0 = 1;
 		tw_event *axe = tw_event_new(s->destSynapse, getNextEventTime(lp), lp);
 		Msg_Data *data = (Msg_Data *)tw_event_data(axe);
@@ -532,10 +534,9 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 
 void synapse_reverse(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
-	if(s->destSynapse != 0){
-		s->msgSent --;
-	}
 	s->msgSent --;
+
+		//s->msgSent --;
 
 	long count = M->rndCallCount;
 	while (count--)

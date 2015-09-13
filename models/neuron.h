@@ -205,5 +205,6 @@ void setNeuronDest(int signalDelay, uint64_t gid, neuronState *n);
 
 void neuronReverseState(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp);
 void sendHeartbeat(neuronState *st, tw_stime time, void *lp);
+void linearLeak(neuronState *neuron, tw_stime now);
 
 #endif /* defined(__ROSS_TOP__neuron__) */

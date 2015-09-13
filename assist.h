@@ -129,6 +129,7 @@ typedef struct Ms{
     volt_type neuronVoltage;
     tw_stime neuronLastActiveTime;
     tw_stime neuronLastLeakTime;
+	unsigned long long neuronFireCount;
     
     //neuron state saving extra params:
     unsigned long long neuronRcvMsgs;
@@ -139,7 +140,7 @@ typedef struct Ms{
     
     ///debugging ugly style - remove before showing anyone your code.
     //void * stateSaveZone;
-    struct NeuronModel *nm;
+
     
     
 }Msg_Data;

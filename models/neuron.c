@@ -127,6 +127,8 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
     m->neuronLastActiveTime = st->lastActiveTime;
     m->neuronRcvMsgs = st->receivedSynapseMsgs;
     m->neuronDrawnRandom = st->drawnRandomNumber;
+	m->neuronFireCount = st->fireCount;
+
     //memcpy(m->nm, st, sizeof(neuronState));
     
     //TODO: remove this after testing.
@@ -138,9 +140,9 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
     {
         case SYNAPSE_OUT:
             st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
-            integrate(m->axonID, st, lp);
+			integrate(m->axonID, st, lp);
             //next, we will check if a heartbeat message should be sent
-            if (st->heartbeatOut == false || st->receivedSynapseMsgs == 0) {
+            if (st->heartbeatOut == false && st->receivedSynapseMsgs == 0) {
                 tw_stime time = getNextBigTick(lp, st->myLocalID);
                 sendHeartbeat(st, time,lp);
                 st->heartbeatOut = true;
@@ -157,22 +159,24 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
             //Currently operates - leak->fire->(reset)
             st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
 
-           // numericLeakCalc(st, tw_now(lp));
-            willFire = neuronShouldFire(st, lp);
+			//numericLeakCalc(st, tw_now(lp));
+		linearLeak( st, tw_now(lp));
+
+		willFire = neuronShouldFire(st, lp);
             if (willFire) {
-                
+//                
                 fire(st,lp);
                 st->fireCount++;
                 st->membranePotential = 0;
             }
-            st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
+			//st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
 
 //            neuronPostIntegrate(st, tw_now(lp), lp, willFire);
             //stats collection
             st->SOPSCount++;
             st->lastActiveTime = tw_now(lp);
             
-            st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
+			//st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
 
             if(st->isSelfFiring){
                 tw_stime time = getNextBigTick(lp, st->myLocalID);
@@ -214,7 +218,7 @@ void revNoLeak(void *neuron, tw_stime now)
  *
  *	@see NeuronModel
  */
-void linearLeak(void *neuron, tw_stime now)
+void linearLeak(neuronState *neuron, tw_stime now)
 {
 	neuronState *s = (neuronState *)neuron;
 	tw_stime bigTick = getCurrentBigTick(now);
@@ -339,6 +343,10 @@ void integrate(id_type synapseID, neuronState *st, void *lp){
     {
         st->membranePotential += weight;
     }
+	if(g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)
+		{
+		st->membranePotential = st->posThreshold;
+		}
     
 }
 
@@ -425,8 +433,8 @@ void neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFir
 	} else if (st->membranePotential < -1 * (st->negThreshold * st->resetVoltage + (st->negThreshold + st->drawnRandomNumber))) {
 		//sanity variables for the formulaic reset/bounce instead of calling functions:
 		thresh_type B = st->negThreshold;
-		int K = st->resetVoltage;
-		int G = st->resetMode;
+		long long K = st->resetVoltage;
+		long long G = st->resetMode;
 		rand_type n = st->drawnRandomNumber;
 		volt_type R = st->resetVoltage;
 		volt_type V = st->membranePotential;
@@ -445,23 +453,24 @@ void neuronReverseState(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp)
 	/** @todo - check this for correctness and switch from delta encoding. */
     //TERRIBLE DEBUGGING CODE REMOVE BEFORE ANYONE SEES:
     //memcpy(s, m->stateSaveZone, sizeof(*s));
-    /*
+
     if (m->eventType == NEURON_HEARTBEAT) {
 		s->SOPSCount--;
 	}
 
-	if (s->firedLast == true) {
-		s->fireCount--;
-		s->firedLast = false;
-	}
-     */
+//	if (s->firedLast == true) {
+//		s->fireCount--;
+//		s->firedLast = false;
+//	}
+
 
 	s->membranePotential = m->neuronVoltage;
 	s->lastLeakTime = m->neuronLastLeakTime;
 	s->lastActiveTime = m->neuronLastActiveTime;
     s->receivedSynapseMsgs = m->neuronRcvMsgs;
-    s->drawnRandomNumber = m->neuronDrawnRandom;
-    s = m->nm;
+		//s->drawnRandomNumber = m->neuronDrawnRandom;
+	s->fireCount = m->neuronFireCount;
+		//s = m->nm;
 
 	//while (count--)
 	//{
