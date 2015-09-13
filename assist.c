@@ -18,8 +18,9 @@ void setBigLittleTick() {
  *  Gets the next small-tick event time.
  */
 tw_stime getNextEventTime(tw_lp *lp) {
-//  if(bigTickRate == 0)
-//    setBigLittleTick();
+
+	if(bigTickRate == 0)
+		setBigLittleTick();
 //
 //
 //  tw_stime r; 
