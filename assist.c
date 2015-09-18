@@ -10,6 +10,7 @@
 
 ///Big-tick offset - this is the delta for big ticks (neuron events)
 tw_stime bigTickRate = 0;
+
 void setBigLittleTick() {
   littleTick = .001;
 	bigTickRate = 1;//ceill(littleTick) + 1;
@@ -20,41 +21,7 @@ void setBigLittleTick() {
 tw_stime getNextEventTime(tw_lp *lp) {
 
 	if(bigTickRate == 0)
-		setBigLittleTick();
-//
-//
-//  tw_stime r; 
-//  unsigned int ct = 0;
-//  switch(CLOCK_RND_MODE) {
-//    case RND_UNF:
-//  r  = littleTick* (double)tw_rand_unif(lp->rng);
-//  break;
-//  case RND_NORM_BASED:
-//  r = tw_rand_normal_sd(lp->rng, CLOCK_RANDOM_ADJ, 20,&ct);
-//        lp->rng->count += ct;
-//
-//        break;
-//  case RND_EXP:
-//  //Taken from the dragonfly sim - CLOCK_RAND_ADJ is eqv. to the mean from the other sim.
-//
-//      r = tw_rand_exponential(lp->rng, CLOCK_RANDOM_ADJ);
-//        //r +=  lp-gid / (g_tw_nlp * tw_nnodes());
-//
-//
-//          break;
-//    case RND_DMB:
-//      r = tw_rand_unif(lp->rng);
-//          break;
-//  default:
-//  // tw_rand_binomial(lp->rng, 100, CLOCK_RANDOM_ADJ);
-//    r = (double)tw_rand_integer(lp->rng, INT32_MIN, INT32_MAX);
-//          r = r * littleTick;  
-//          break;
-//
-//  }
-//  //r *= littleTick;
-//
-//  return r + 1;
+        setBigLittleTick();
     
     return (tw_rand_unif(lp->rng) / 1000)  + littleTick;
 }
@@ -65,15 +32,13 @@ tw_stime getNextEventTime(tw_lp *lp) {
  *  big ticks, this rounds down to the last big tick. There is a bit of a fuzz for
  *  times close to the next big tick so if the current time is within  ::BIG_TICK_ERR
  *  of the next big tick, that will be returned instead. Sane parameters would
- *  probably be around .000001. @todo: Implement & determine if ε needs to be added
+ *  probably be around .001. @todo: Implement & determine if ε needs to be added
  *  to the return value.
 
  */
 tw_stime getCurrentBigTick(tw_stime now){
   if(littleTick == 0 || bigTickRate == 0)
     setBigLittleTick();
-
-
   return floor(now);
 
 }
@@ -83,33 +48,9 @@ tw_stime getNextBigTick(tw_lp *lp, tw_lpid neuronID) {
 
     if(littleTick == 0 || bigTickRate == 0)
         setBigLittleTick();
-
+    
+    return (tw_rand_unif(lp->rng) / 1000) + bigTickRate;
             
-          //tw_lpid nTick = NEURONS_IN_CORE - neuronID;
-            //a big tick happens at a whole number + a jitter.
-            //so we generate a jitter, and add one to it.
-            
-            return (tw_rand_unif(lp->rng) / 1000) + bigTickRate;
-            
-//			nTick *= 10;
-//            switch(CLOCK_RND_MODE) {
-//            case RND_UNF:
-//
-//                  return getNextEventTime(lp) + nTick;
-//            break;
-//              case RND_DMB:
-//                return tw_rand_unif(lp->rng) + nTick;
-//              break;
-//            case RND_EXP:
-//              return tw_rand_exponential(lp->rng, nTick);
-//            break;
-//            default:
-//              return tw_rand_exponential(lp->rng, nTick);
-//
-//          }
-//
-
-                //Need to figure this out - not accurate until this is done:
 
 }
 

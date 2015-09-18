@@ -79,6 +79,11 @@ typedef uint16_t gridID_type;
 
 #define BINCOMP(s,p) IABS(s) >= p //!< binary comparison for conditional stochastic evaluation
 
+
+#define SWAP(TYPE, X, Y) \
+do { TYPE temp=X; X=Y; Y=temp;} while(0)
+
+
 	/** Defines the time resolution. Run the sim at 1ghz */
 
 /* simulation structs. @todo: Maybe move these into main? */
@@ -129,10 +134,10 @@ typedef struct Ms{
     volt_type neuronVoltage;
     tw_stime neuronLastActiveTime;
     tw_stime neuronLastLeakTime;
-	unsigned long long neuronFireCount;
+	stat_type neuronFireCount;
     
     //neuron state saving extra params:
-    unsigned long long neuronRcvMsgs;
+    stat_type neuronRcvMsgs;
     uint16_t neuronDrawnRandom;
     
     id_type axonID; //!< Axon ID for neuron value lookups.
@@ -243,5 +248,6 @@ tw_stime getCurrentBigTick(tw_stime now);
 tw_stime getNextBigTick(tw_lp *lp, tw_lpid neuronID);
 
 		int testTiming();
+
 
 #endif /* defined(__ROSS_TOP__assist__) */

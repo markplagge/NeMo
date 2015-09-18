@@ -129,6 +129,16 @@ void rtHeartbeat(neuronState *s, tw_lp *lp) {
 void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
 {
     
+    
+    memcpy(&m->neuronVoltage, &st->membranePotential, sizeof(st->membranePotential));
+    //m->neuronVoltage = st->membranePotential;
+    memcpy(&m->neuronLastLeakTime, &st->lastLeakTime,sizeof(st->lastLeakTime));
+    m->neuronRcvMsgs = st->receivedSynapseMsgs;
+    m->neuronDrawnRandom = st->drawnRandomNumber;
+	m->neuronFireCount = st->fireCount;
+    
+    
+    
     //testing reverse code:
     if(m->eventType == SYNAPSE_OUT){
         rtSynapse(st, lp);
@@ -144,18 +154,8 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
     //state management
     bool willFire = false;
     //Next big tick:
+
     
-    
-    //save the previous state of the neuron:
-    //st->savedLastLeakTime = st->lastLeakTime;
-    //st->savedLastActiveTime = st->lastActiveTime;
-    //st->savedMembranePot = st->membranePot;
-    m->neuronVoltage = st->membranePotential;
-    m->neuronLastLeakTime = st->lastLeakTime;
-    m->neuronLastActiveTime = st->lastActiveTime;
-    m->neuronRcvMsgs = st->receivedSynapseMsgs;
-    m->neuronDrawnRandom = st->drawnRandomNumber;
-	m->neuronFireCount = st->fireCount;
 
     //memcpy(m->nm, st, sizeof(neuronState));
     
@@ -189,20 +189,25 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
 
 		willFire = neuronShouldFire(st, lp);
             if (willFire) {
-//                
                 fire(st,lp);
                 st->fireCount++;
                 st->membranePotential = 0;
             }
-			//st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
 
-//            neuronPostIntegrate(st, tw_now(lp), lp, willFire);
+            neuronPostIntegrate(st, tw_now(lp), lp, willFire);
             //stats collection
             st->SOPSCount++;
             st->lastActiveTime = tw_now(lp);
             
-			//st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
-
+            //do we still have more than the threshold volts left? if so,
+            //send a heartbeat out that will ensure the neuron fires again.
+            if(neuronShouldFire(st, lp)){
+                st->heartbeatOut = true;
+                tw_stime time = getNextBigTick(lp, st->myLocalID);
+                sendHeartbeat(st, time, lp);
+                
+            }
+            
             if(st->isSelfFiring){
                 tw_stime time = getNextBigTick(lp, st->myLocalID);
                 sendHeartbeat(st, time, lp);
@@ -215,6 +220,43 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
             break;
     }
 }
+
+
+void neuronReverseState(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp)
+{
+    //reverse function.
+    //long count = m->rndCallCount;
+    
+    /** @todo - check this for correctness and switch from delta encoding. */
+    //TERRIBLE DEBUGGING CODE REMOVE BEFORE ANYONE SEES:
+    //memcpy(s, m->stateSaveZone, sizeof(*s));
+    
+    if (m->eventType == NEURON_HEARTBEAT) {
+        s->SOPSCount--;
+    }
+    
+    //	if (s->firedLast == true) {
+    //		s->fireCount--;
+    //		s->firedLast = false;
+    //	}
+    
+    SWAP(volt_type, s->membranePotential, m->neuronVoltage);
+    //s->membranePotential = m->neuronVoltage;
+    SWAP(tw_stime, s->lastLeakTime, m->neuronLastLeakTime);
+    //s->lastLeakTime = m->neuronLastLeakTime;
+    //s->lastActiveTime = m->neuronLastActiveTime;
+    SWAP(stat_type, s->receivedSynapseMsgs, m->neuronRcvMsgs);
+    //s->drawnRandomNumber = m->neuronDrawnRandom;
+    s->fireCount = m->neuronFireCount;
+    //s = m->nm;
+    
+    //while (count--)
+    //{
+    //	tw_rand_reverse_unif(lp->rng);
+    //}
+}
+
+
 
 /** @name LeakFunctions
  * Neuron functions that manage leaks. All voltage state saving
@@ -368,22 +410,13 @@ void integrate(id_type synapseID, neuronState *st, void *lp){
     {
         st->membranePotential += weight;
     }
-	if(g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)
-		{
-		st->membranePotential = st->posThreshold;
-		}
-    
 }
 
 void sendHeartbeat(neuronState *st, tw_stime time, void *lp) {
     tw_lp *l = (tw_lp *) lp;
-    
-
     tw_event *newEvent = tw_event_new(l->gid, getNextBigTick(l, st->myLocalID), l);
     Msg_Data *data = (Msg_Data *)tw_event_data(newEvent);
     data->localID = st->myLocalID;
-    
-    
     data->eventType=NEURON_HEARTBEAT;
     tw_event_send(newEvent);
 
@@ -401,7 +434,7 @@ bool neuronShouldFire(neuronState *st, void *lp)
 void fire(neuronState *st, void *l)
 {
     tw_lp * lp = (tw_lp *) l;
-	tw_stime nextHeartbeat = getNextBigTick(lp,st->myLocalID) + st->delayVal;
+    tw_stime nextHeartbeat = getNextBigTick(lp,st->myLocalID);
 	tw_event *newEvent = tw_event_new(st->dendriteGlobalDest, nextHeartbeat, lp);
 	Msg_Data *data = (Msg_Data *)tw_event_data(newEvent);
 
@@ -470,46 +503,15 @@ void neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFir
 }
 
 
-void neuronReverseState(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp)
-{
-	//reverse function.
-	//long count = m->rndCallCount;
-
-	/** @todo - check this for correctness and switch from delta encoding. */
-    //TERRIBLE DEBUGGING CODE REMOVE BEFORE ANYONE SEES:
-    //memcpy(s, m->stateSaveZone, sizeof(*s));
-
-    if (m->eventType == NEURON_HEARTBEAT) {
-		s->SOPSCount--;
-	}
-
-//	if (s->firedLast == true) {
-//		s->fireCount--;
-//		s->firedLast = false;
-//	}
-
-
-	s->membranePotential = m->neuronVoltage;
-	s->lastLeakTime = m->neuronLastLeakTime;
-	s->lastActiveTime = m->neuronLastActiveTime;
-    s->receivedSynapseMsgs = m->neuronRcvMsgs;
-		//s->drawnRandomNumber = m->neuronDrawnRandom;
-	s->fireCount = m->neuronFireCount;
-		//s = m->nm;
-
-	//while (count--)
-	//{
-	//	tw_rand_reverse_unif(lp->rng);
-	//}
-}
 
 void numericLeakCalc(neuronState *st, tw_stime now) {
     
     
     
     uint64_t omega = st->sigma_l * (1 - st->epsilon) + SGN(st->membranePotential)*st->sigma_l * st->epsilon;
+    double toff =  now - st->lastLeakTime;
     
-    st->membranePotential = st->membranePotential + (omega * ((1 - st->c) * st->lambda) + (st->c * BINCOMP(st->lambda, st->drawnRandomNumber)) );
+    st->membranePotential += toff * (omega * ((1 - st->c) * st->lambda) + (st->c * BINCOMP(st->lambda, st->drawnRandomNumber)));
 }
 
 /** @} */
