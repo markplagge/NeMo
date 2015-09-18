@@ -111,8 +111,36 @@ void setNeuronDest(int signalDelay, uint64_t gid, neuronState *n) {
  *
  *
  */
+void rtSynapse(neuronState *s, tw_lp *lp) {
+    s->membranePotential ++;
+    if(s->heartbeatOut == false){
+        s->heartbeatOut = true;
+        tw_stime time = getNextBigTick(lp, s->myLocalID);
+        sendHeartbeat(s, time, lp);
+    }
+    
+}
+
+void rtHeartbeat(neuronState *s, tw_lp *lp) {
+    s->heartbeatOut = false;
+    s->membranePotential = 0;
+    fire(s, lp);
+}
 void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
 {
+    
+    //testing reverse code:
+    if(m->eventType == SYNAPSE_OUT){
+        rtSynapse(st, lp);
+        return;
+    }
+    else
+    {
+        rtHeartbeat(st, lp);
+        return;
+    }
+    
+    
     //state management
     bool willFire = false;
     //Next big tick:
@@ -148,9 +176,6 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
                 st->heartbeatOut = true;
             }
             st->receivedSynapseMsgs++;
-            
-            
-            
             break;
             
         case NEURON_HEARTBEAT:

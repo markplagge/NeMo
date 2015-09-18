@@ -11,7 +11,7 @@
 ///Big-tick offset - this is the delta for big ticks (neuron events)
 tw_stime bigTickRate = 0;
 void setBigLittleTick() {
-  littleTick = .1;
+  littleTick = .001;
 	bigTickRate = 1;//ceill(littleTick) + 1;
 }
 /**
@@ -56,7 +56,7 @@ tw_stime getNextEventTime(tw_lp *lp) {
 //
 //  return r + 1;
     
-    return tw_rand_unif(lp->rng) + littleTick;
+    return (tw_rand_unif(lp->rng) / 1000)  + littleTick;
 }
 
 
@@ -89,7 +89,7 @@ tw_stime getNextBigTick(tw_lp *lp, tw_lpid neuronID) {
             //a big tick happens at a whole number + a jitter.
             //so we generate a jitter, and add one to it.
             
-            return tw_rand_unif(lp->rng) + bigTickRate;
+            return (tw_rand_unif(lp->rng) / 1000) + bigTickRate;
             
 //			nTick *= 10;
 //            switch(CLOCK_RND_MODE) {

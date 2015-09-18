@@ -491,10 +491,27 @@ void synapse_init(synapseState *s, tw_lp *lp)
 //	}
 }
 
+void testSynapse(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp) {
+    if (s->destSynapse != 0) {
+        // generate event to send to next synapse
+        //s->msgSent++;
+        //CV->c0 = 1;
+        tw_event *axe = tw_event_new(s->destSynapse, getNextEventTime(lp), lp);
+        Msg_Data *data = (Msg_Data *)tw_event_data(axe);
+        data->eventType = SYNAPSE_OUT;
+        data->localID = lp->gid;
+        data->axonID = M->axonID;
+        
+        tw_event_send(axe);
+    }
 
+    
+}
 
 void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
+    //testSynapse(s, CV, M, lp);
+    
 	long rc = lp->rng->count;
     //s->destNeuron = clGetNeuronFromSynapse(lp->gid);
     //s->destSynapse = clGetSynapseFromSynapse(lp->gid);
