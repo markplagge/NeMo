@@ -99,9 +99,7 @@ typedef struct NeuronModel {
                                * here defined as @link drawnRandomNumber @endlink. used as a scale for the random values. */
     uint16_t drawnRandomNumber; //!<When activated, neurons draw a new random number. Reset after every big-tick as needed.
     short thresholdMaskBits; //!< TM, or the number of bits for the random number. Use this to generate the thresholdPRN mask;
-    
     short largestRandomValue;
-    
     /*@} */
     
     /*@{ @name Timing Parameters */
@@ -135,12 +133,9 @@ typedef struct NeuronModel {
     stat_type fireCount; //!< count of this neuron's output
     stat_type rcvdMsgCount; //!<  The number of synaptic messages received.
     stat_type SOPSCount; //!<  A count for SOPS calculation
-    
     // a helper boolean:
     bool canGenerateSpontaniousSpikes;
-    
     /**@}*/
-    
     
 }neuronState;
 

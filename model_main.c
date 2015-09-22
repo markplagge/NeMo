@@ -413,7 +413,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	//again, only take the delta in basic neuron mode or in delta mode.
 	if (TW_DELTA &&
 			(g_tw_synchronization_protocol == OPTIMISTIC || g_tw_synchronization_protocol == OPTIMISTIC_DEBUG)) {
-			//tw_snapshot_delta(lp, lp->type->state_sz);
+			tw_snapshot_delta(lp, lp->type->state_sz);
 	}
 	M->rndCallCount = lp->rng->count - start_count;
 }
