@@ -140,16 +140,16 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
     
     
     //testing reverse code:
-    if(m->eventType == SYNAPSE_OUT){
-        rtSynapse(st, lp);
-        return;
-    }
-    else
-    {
-        rtHeartbeat(st, lp);
-        return;
-    }
-    
+//    if(m->eventType == SYNAPSE_OUT){
+//        rtSynapse(st, lp);
+//        return;
+//    }
+//    else
+//    {
+//        rtHeartbeat(st, lp);
+//        return;
+//    }
+
     
     //state management
     bool willFire = false;
