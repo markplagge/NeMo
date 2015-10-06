@@ -669,7 +669,7 @@ void displayModelSettings()
 	char *sopMode = BASIC_SOP ? "simplified Neuron Model" : "normal TN Neuron Model";
 	printf("* \tNeurons set to %s.\n", sopMode);
 	printf("* \t %i Neurons per core, %i cores in sim.\n", NEURONS_IN_CORE, CORES_IN_SIM);
-	printf("* \t %llu cores per PE, giving %zu LPs per pe.\n", cores_per_node, g_tw_nlp);
+	printf("* \t %f cores per PE, giving %llu LPs per pe.\n", cores_per_node, g_tw_nlp);
 	printf("* \t Neuron stats:\n");
 	printf("* \tCalculated sim_size is %u\n", SIM_SIZE);
 
