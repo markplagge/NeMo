@@ -121,26 +121,13 @@ int main(int argc, char *argv[])
 //
 	tw_run();
 //	// Stats Collection ************************************************************************************88
-	totalSOPS = 0;
-	totalSynapses = 0;
-    stat_type totalNFire = 0;
-	MPI_Reduce(&neuronSOPS, &totalSOPS, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
-	MPI_Reduce(&synapseEvents, &totalSynapses, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
-    MPI_Reduce(&fireCount, &totalNFire, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+	
 
 	statsOut();
 	tw_end();
 //
-	if (g_tw_mynode == 0) {  // master node for outputting stats.
-		printf("\n ------ TN Benchmark Stats ------- \n");
-		printf("Total SOPS(integrate and/or fire): %zu\n", totalSOPS);
-        printf("Total spikes fired by all neurons: %zu\n", totalNFire);
-		printf("This PE's SOP: %zu\n", neuronSOPS);
-		printf("Total Synapse MSGs sent: %zu\n", totalSynapses);
-
-	}
-//
-	return (0);
+	
+    return (0);
 }
 
 void statsOut()
@@ -237,7 +224,7 @@ void statsOut()
 	printf("\n\n");
 	printf("Nodes,CORES,Neurons/Core,Net Events,Rollbacks,Run Time,Total SOP,Threshold Min,Threshold Max"
 	    ",NegativeThresholdMin,NegativeThresholdMax,Synapse Weight Min,Synapse Weight Max,EvtTies\n");
-	printf("%u,%i,%i,%llu,%zu,%f,%zu,", tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS);
+	printf("%u,%i,%i,%llu,%llu,%f,%llu,", tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS);
 	printf("%zu,"
 	    "%zu,"
 	    "%zu,"
@@ -251,10 +238,55 @@ void statsOut()
 		    NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
 		fprintf(stderr, "%llu", s.s_pe_event_ties);
 	}
+    
+    //Neuron Specific Stats:
+    totalSOPS = 0;
+    totalSynapses = 0;
+    stat_type totalNFire = 0;
+    MPI_Reduce(&neuronSOPS, &totalSOPS, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+    MPI_Reduce(&synapseEvents, &totalSynapses, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+    MPI_Reduce(&fireCount, &totalNFire, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+    if (g_tw_mynode == 0) {  // master node for outputting stats.
+        printf("\n ------ TN Benchmark Stats ------- \n");
+        printf("Total SOP(integrate and/or fire) operations: %llu\n", totalSOPS);
+        printf("Total spikes fired by all neurons: %llu\n", totalNFire);
+        printf("This PE's SOP: %llu\n", neuronSOPS);
+        printf("Total Synapse MSGs sent: %llu\n", totalSynapses);
+        
+        //save these stats for records:
+        
+        struct supernStats *m = calloc(sizeof(struct supernStats), 1);
+        m->neuronSpikes =totalNFire;
+        m->npe = g_tw_npe;
+        m->runtime = s.s_max_run_time;
+        m->totalTime = s.s_total;
+        m->SOP = totalSOPS;
+        m->totalSynapseMsgs = totalSynapses;
+        //Generate a unique CSV file name. Based on Cores, NPE, and the time.
+        tw_wtime t;
+        tw_wall_now(&t);
+        
+        char* output;
+        asprintf(&output, "snb_run_%lun%lu%icores.csv",t.tv_sec,g_tw_npe,CORES_IN_SIM);
+        write_csv(m, output);
+    }
+    //
+
 }
 
 
-
+int write_csv(struct supernStats *stats, char const *fileName){
+    FILE *f = fopen(fileName, "w");
+    if (f == NULL) return -1;
+    fprintf(f,"\"npe\",\"total_sop\",\"neuron_spikes\",\"total_synapse_msgs\",\"runtime\",\"totaltime\"\n");
+   fprintf(f, "%u,%llu,%llu,%llu,%f,%f \n", stats->npe, stats->SOP,
+           stats->neuronSpikes, stats->totalSynapseMsgs,
+           stats->runtime, stats->totalTime);
+    
+    
+    fclose(f);
+    return 0;
+}
 
 ///
 /// \details createLPs currently assigns a core's worth of LPs to the PE.

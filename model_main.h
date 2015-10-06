@@ -102,8 +102,22 @@ thresh_type RAND_RANGE_MAX = 10;
 stat_type totalSOPS;
 stat_type totalSynapses;
 
-void statsOut();
+//Stats & Stats related byproducts (including stats structs)
+struct supernStats {
+    unsigned int npe;
+    unsigned long long SOP;
+    unsigned long long neuronSpikes;
+    unsigned long long totalSynapseMsgs;
+    tw_stime runtime;
+    tw_stime totalTime;
+    
+    
+};
 
+void statsOut();
+int write_csv(struct supernStats *stats, char const *fileName);
+
+//
 /**
  *	Each neuron is connected to the synapses (inputs) within the core it is running in.
  *	These parameters adjust the input weight given to each synapse. */
