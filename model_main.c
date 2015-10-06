@@ -400,7 +400,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 			//printf("Neuron snapshot saved");
 	}
 
-    neuronReceiveMessage(s, M, lp);
+    neuronReceiveMessage(s, M, lp,CV);
 
 
 	//basic mode removes leak and stochastic reverse threshold functions.

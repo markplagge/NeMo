@@ -71,6 +71,9 @@ void initNeuron(id_type coreID, id_type nID,
     
 }
 
+void writeLPState(tw_lp *lp){
+    
+}
 
 
 void setNeuronDest(int signalDelay, uint64_t gid, neuronState *n) {
@@ -126,18 +129,20 @@ void rtHeartbeat(neuronState *s, tw_lp *lp) {
     s->membranePotential = 0;
     fire(s, lp);
 }
-void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
+void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
 {
     
     
-    memcpy(&m->neuronVoltage, &st->membranePotential, sizeof(st->membranePotential));
-    //m->neuronVoltage = st->membranePotential;
-    memcpy(&m->neuronLastLeakTime, &st->lastLeakTime,sizeof(st->lastLeakTime));
-    m->neuronRcvMsgs = st->receivedSynapseMsgs;
+    //memcpy(&m->neuronVoltage, &st->membranePotential, sizeof(st->membranePotential));
+    m->neuronVoltage = st->membranePotential;
+    //memcpy(&m->neuronLastLeakTime, &st->lastLeakTime,sizeof(st->lastLeakTime));
+    m->neuronLastLeakTime =st->lastLeakTime;
+    //m->neuronRcvMsgs = st->receivedSynapseMsgs;
     m->neuronDrawnRandom = st->drawnRandomNumber;
 	m->neuronFireCount = st->fireCount;
     
-    
+    bf->c14 = st->heartbeatOut; //C14 indicates the old heartbeat state.
+
     
     //testing reverse code:
 //    if(m->eventType == SYNAPSE_OUT){
@@ -170,33 +175,40 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
             st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
 			integrate(m->axonID, st, lp);
             //next, we will check if a heartbeat message should be sent
-            if (st->heartbeatOut == false && st->receivedSynapseMsgs == 0) {
+            if (st->heartbeatOut == false) {
                 tw_stime time = getNextBigTick(lp, st->myLocalID);
                 sendHeartbeat(st, time,lp);
                 st->heartbeatOut = true;
+                //set message flag indicating that the heartbeat msg has been sent
+                bf->c13 = 1; //C13 indicates that the heartbeatout flag has been changed.
+                
             }
-            st->receivedSynapseMsgs++;
+            
             break;
             
         case NEURON_HEARTBEAT:
-            st->receivedSynapseMsgs = 0;
             st->heartbeatOut = false;
+            //set message flag indicating that the heartbeat msg has been sent
+            bf->c13 = 1; //C13 indicates that the heartbeatout flag has been changed.
+            
             //Currently operates - leak->fire->(reset)
             st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
 
 			//numericLeakCalc(st, tw_now(lp));
-		linearLeak( st, tw_now(lp));
+            linearLeak( st, tw_now(lp));
 
-		willFire = neuronShouldFire(st, lp);
+            willFire = neuronShouldFire(st, lp);
             if (willFire) {
                 fire(st,lp);
                 st->fireCount++;
+                //TODO: Fix this shit:
                 st->membranePotential = 0;
             }
 
             neuronPostIntegrate(st, tw_now(lp), lp, willFire);
             //stats collection
             st->SOPSCount++;
+            
             st->lastActiveTime = tw_now(lp);
             
             //do we still have more than the threshold volts left? if so,
@@ -205,6 +217,8 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
                 st->heartbeatOut = true;
                 tw_stime time = getNextBigTick(lp, st->myLocalID);
                 sendHeartbeat(st, time, lp);
+                //set message flag indicating that the heartbeat msg has been sent
+                bf->c13 = 1; //C13 indicates that the heartbeatout flag has been changed.
                 
             }
             
@@ -212,6 +226,8 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
                 tw_stime time = getNextBigTick(lp, st->myLocalID);
                 sendHeartbeat(st, time, lp);
                 st->heartbeatOut = true;
+                //set message flag indicating that the heartbeat msg has been sent
+                bf->c13 = 1; //C13 indicates that the heartbeatout flag has been changed.
             }
             break;
         default:
@@ -224,8 +240,7 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp)
 
 void neuronReverseState(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp)
 {
-    //reverse function.
-    //long count = m->rndCallCount;
+
     
     /** @todo - check this for correctness and switch from delta encoding. */
     //TERRIBLE DEBUGGING CODE REMOVE BEFORE ANYONE SEES:
@@ -235,25 +250,23 @@ void neuronReverseState(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp)
         s->SOPSCount--;
     }
     
-    //	if (s->firedLast == true) {
-    //		s->fireCount--;
-    //		s->firedLast = false;
-    //	}
-    
-    SWAP(volt_type, s->membranePotential, m->neuronVoltage);
-    //s->membranePotential = m->neuronVoltage;
-    SWAP(tw_stime, s->lastLeakTime, m->neuronLastLeakTime);
-    //s->lastLeakTime = m->neuronLastLeakTime;
-    //s->lastActiveTime = m->neuronLastActiveTime;
-    SWAP(stat_type, s->receivedSynapseMsgs, m->neuronRcvMsgs);
-    //s->drawnRandomNumber = m->neuronDrawnRandom;
+    	if (s->firedLast == true) {
+    		s->fireCount--;
+    		s->firedLast = false;
+    	}
+ 
+    s->membranePotential = m->neuronVoltage;
+    s->lastLeakTime = m->neuronLastLeakTime;
+    s->lastActiveTime = m->neuronLastActiveTime;
+    s->drawnRandomNumber = m->neuronDrawnRandom;
     s->fireCount = m->neuronFireCount;
-    //s = m->nm;
     
-    //while (count--)
-    //{
-    //	tw_rand_reverse_unif(lp->rng);
-    //}
+    //check for heartbeat rollback:
+    if(CV->c13 == 1){
+        s->heartbeatOut = CV->c14;
+    }
+    
+    
 }
 
 

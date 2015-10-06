@@ -155,7 +155,7 @@ void  initNeuron(id_type coreID, id_type nID,
  *  @param m    event message data
  *  @param lp   lp.
  */
-void neuronReceiveMessage(neuronState *st, Msg_Data *M, tw_lp *lp);
+void neuronReceiveMessage(neuronState *st, Msg_Data *M, tw_lp *lp, tw_bf *bf);
 /**
  *  @brief  function that adds a synapse's value to the current neuron's membrane potential.
  *
