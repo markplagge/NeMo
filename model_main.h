@@ -114,7 +114,8 @@ struct supernStats {
     
 };
 
-void statsOut();
+tw_statistics statsOut();
+int csv_model_stats(tw_statistics s);
 int write_csv(struct supernStats *stats, char const *fileName);
 
 //

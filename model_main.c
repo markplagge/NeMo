@@ -122,15 +122,73 @@ int main(int argc, char *argv[])
 	tw_run();
 //	// Stats Collection ************************************************************************************88
 	
-
-	statsOut();
+    tw_statistics s = statsOut();
+    csv_model_stats(s);
+    
 	tw_end();
 //
 	
     return (0);
 }
+int csv_model_stats(tw_statistics s){
+    
+    //
+    //printf("\n\n %i", s.s_pe_event_ties);
+    //tabular data:
+    //NP  - CORES - Neurons per core - Net Events - Rollbacks - Running Time	- SOP
+    
+    //Neuron Specific Stats:
+    totalSOPS = 0;
+    totalSynapses = 0;
+    stat_type totalNFire = 0;
+    MPI_Reduce(&neuronSOPS, &totalSOPS, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+    MPI_Reduce(&synapseEvents, &totalSynapses, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+    MPI_Reduce(&fireCount, &totalNFire, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+    if (g_tw_mynode == 0) {  // master node for outputting stats.
+        printf("\n ------ TN Benchmark Stats ------- \n");
+        printf("Total SOP(integrate and/or fire) operations: %llu\n", totalSOPS);
+        printf("Total spikes fired by all neurons: %llu\n", totalNFire);
+        printf("This PE's SOP: %llu\n", neuronSOPS);
+        printf("Total Synapse MSGs sent: %llu\n", totalSynapses);
+        printf("\n\n");
+        printf("Nodes,CORES,Neurons/Core,Net Events,Rollbacks,Run Time,Total SOP,Threshold Min,Threshold Max"
+               ",NegativeThresholdMin,NegativeThresholdMax,Synapse Weight Min,Synapse Weight Max,EvtTies\n");
+        printf("%u,%i,%i,%llu,%llu,%f,%llu,", tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS);
+        printf("%zu,"
+               "%zu,"
+               "%zu,"
+               "%zu,"
+               "%d,"
+               "%d,"
+               "%llu\n", THRESHOLD_MIN, THRESHOLD_MAX, NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX, s.s_pe_event_ties);
+        if (BULK_MODE) {
+            fprintf(stderr, "%u,%i,%i,%llu,%zu,%f,%zu,%zu,%zu,%zu,%zu,%u,%u,", tw_nnodes(), CORES_IN_SIM,
+                    NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS, THRESHOLD_MIN, THRESHOLD_MAX,
+                    NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
+            fprintf(stderr, "%llu", s.s_pe_event_ties);
+        }
 
-void statsOut()
+        //save these stats for records:
+        
+        struct supernStats *m = calloc(sizeof(struct supernStats), 1);
+        m->neuronSpikes =totalNFire;
+        m->npe = g_tw_npe;
+        m->runtime = s.s_max_run_time;
+        m->totalTime = s.s_total;
+        m->SOP = totalSOPS;
+        m->totalSynapseMsgs = totalSynapses;
+        //Generate a unique CSV file name. Based on Cores, NPE, and the time.
+        tw_wtime t;
+        tw_wall_now(&t);
+        
+        char* output;
+        asprintf(&output, "snb_run_%lu_np%lu_cores%i.csv",t.tv_sec,g_tw_npe,CORES_IN_SIM);
+       return  write_csv(m, output);
+    }
+    return -1;
+
+}
+tw_statistics statsOut()
 {
 	tw_pe *me = g_tw_pe[0];
 	tw_statistics s;
@@ -144,11 +202,11 @@ void statsOut()
 	size_t m_alloc, m_waste;
 
 	if (me != g_tw_pe[0]) {
-		return;
+		return s;
 	}
 
 	if (0 == g_tw_sim_started) {
-		return;
+		return s;
 	}
 
 	tw_calloc_stats(&m_alloc, &m_waste);
@@ -211,66 +269,10 @@ void statsOut()
 
 	s = *(tw_net_statistics(me, &s));
 
-	if (!tw_ismaster()) {
-		return;
-	}
+	
 
-
-
-	//
-	//printf("\n\n %i", s.s_pe_event_ties);
-	//tabular data:
-	//NP  - CORES - Neurons per core - Net Events - Rollbacks - Running Time	- SOP
-	printf("\n\n");
-	printf("Nodes,CORES,Neurons/Core,Net Events,Rollbacks,Run Time,Total SOP,Threshold Min,Threshold Max"
-	    ",NegativeThresholdMin,NegativeThresholdMax,Synapse Weight Min,Synapse Weight Max,EvtTies\n");
-	printf("%u,%i,%i,%llu,%llu,%f,%llu,", tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS);
-	printf("%zu,"
-	    "%zu,"
-	    "%zu,"
-	    "%zu,"
-	    "%d,"
-	    "%d,"
-	    "%llu\n", THRESHOLD_MIN, THRESHOLD_MAX, NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX, s.s_pe_event_ties);
-	if (BULK_MODE) {
-		fprintf(stderr, "%u,%i,%i,%llu,%zu,%f,%zu,%zu,%zu,%zu,%zu,%u,%u,", tw_nnodes(), CORES_IN_SIM,
-		    NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS, THRESHOLD_MIN, THRESHOLD_MAX,
-		    NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
-		fprintf(stderr, "%llu", s.s_pe_event_ties);
-	}
-    
-    //Neuron Specific Stats:
-    totalSOPS = 0;
-    totalSynapses = 0;
-    stat_type totalNFire = 0;
-    MPI_Reduce(&neuronSOPS, &totalSOPS, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
-    MPI_Reduce(&synapseEvents, &totalSynapses, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
-    MPI_Reduce(&fireCount, &totalNFire, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
-    if (g_tw_mynode == 0) {  // master node for outputting stats.
-        printf("\n ------ TN Benchmark Stats ------- \n");
-        printf("Total SOP(integrate and/or fire) operations: %llu\n", totalSOPS);
-        printf("Total spikes fired by all neurons: %llu\n", totalNFire);
-        printf("This PE's SOP: %llu\n", neuronSOPS);
-        printf("Total Synapse MSGs sent: %llu\n", totalSynapses);
-        
-        //save these stats for records:
-        
-        struct supernStats *m = calloc(sizeof(struct supernStats), 1);
-        m->neuronSpikes =totalNFire;
-        m->npe = g_tw_npe;
-        m->runtime = s.s_max_run_time;
-        m->totalTime = s.s_total;
-        m->SOP = totalSOPS;
-        m->totalSynapseMsgs = totalSynapses;
-        //Generate a unique CSV file name. Based on Cores, NPE, and the time.
-        tw_wtime t;
-        tw_wall_now(&t);
-        
-        char* output;
-        asprintf(&output, "snb_run_%lun%lu%icores.csv",t.tv_sec,g_tw_npe,CORES_IN_SIM);
-        write_csv(m, output);
-    }
     //
+    return s;
 
 }
 
@@ -278,7 +280,7 @@ void statsOut()
 int write_csv(struct supernStats *stats, char const *fileName){
     FILE *f = fopen(fileName, "w");
     if (f == NULL) return -1;
-    fprintf(f,"\"npe\",\"total_sop\",\"neuron_spikes\",\"total_synapse_msgs\",\"runtime\",\"totaltime\"\n");
+    fprintf(f,"\"npe\",\"total_sop\",\"neuron_spikes\",\"total_synapse_msgs\",\"runtime\",\"total\"\n");
    fprintf(f, "%u,%llu,%llu,%llu,%f,%f \n", stats->npe, stats->SOP,
            stats->neuronSpikes, stats->totalSynapseMsgs,
            stats->runtime, stats->totalTime);
