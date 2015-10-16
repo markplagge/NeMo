@@ -18,9 +18,13 @@
 #include "input_simulator.h"
 #include "mapping.h"
 //#include "clMapping.h"
+#include "neuron_out_stats.h"
 #include <math.h>
 
 #include <stdbool.h>
+
+#define nlog s->log 
+#define newlog (neuEvtLog*)malloc(sizeof(neuEvtLog));
 
 
 extern int n_created ;

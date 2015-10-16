@@ -10,7 +10,7 @@
 #define __ROSS_TOP__neuron__
 
 #include "../assist.h"
- 
+#include "../neuron_out_stats.h"
 #include "ross.h"
 #include <stdbool.h>
 
@@ -135,6 +135,9 @@ typedef struct NeuronModel {
     stat_type SOPSCount; //!<  A count for SOPS calculation
     // a helper boolean:
     bool canGenerateSpontaniousSpikes;
+    
+    neuEvtLog *log;//!< a log of spikes.
+    
     /**@}*/
     
 }neuronState;
@@ -155,7 +158,7 @@ void  initNeuron(id_type coreID, id_type nID,
  *  @param m    event message data
  *  @param lp   lp.
  */
-void neuronReceiveMessage(neuronState *st, Msg_Data *M, tw_lp *lp, tw_bf *bf);
+bool neuronReceiveMessage(neuronState *st, Msg_Data *M, tw_lp *lp, tw_bf *bf);
 /**
  *  @brief  function that adds a synapse's value to the current neuron's membrane potential.
  *

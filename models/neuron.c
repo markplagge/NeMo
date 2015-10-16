@@ -129,7 +129,7 @@ void rtHeartbeat(neuronState *s, tw_lp *lp) {
     s->membranePotential = 0;
     fire(s, lp);
 }
-void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
+bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
 {
     
     
@@ -203,6 +203,7 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
                 st->fireCount++;
                 //TODO: Fix this shit:
                 st->membranePotential = 0;
+                
             }
 
             neuronPostIntegrate(st, tw_now(lp), lp, willFire);
@@ -235,7 +236,9 @@ void neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
             tw_error(TW_LOC, "Neuron (%i,%i) received invalid message type, %i \n ", st->myCoreID,st->myLocalID, m->eventType);
             break;
     }
+    return willFire;
 }
+
 
 
 void neuronReverseState(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp)

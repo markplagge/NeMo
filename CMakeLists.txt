@@ -20,6 +20,8 @@ SET(model_srcs
 	mapping.c
 	clMapping.h
 	clMapping.c
+	neuron_out_stats.h
+	neuron_out_stats.c
 	model_main.h
 	model_main.c
 

@@ -55,7 +55,8 @@ tw_lptype model_lps[] = {
 
 int main(int argc, char *argv[])
 {
-
+    
+  
 	tw_opt_add(app_opt);
 	g_tw_gvt_interval = 512;
 	tw_init(&argc, &argv);
@@ -422,10 +423,18 @@ void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID)
 {
 }
 
-
+void nlset(neuEvtLog * log, neuronState *s, tw_lp *lp) {
+     log->cbt = getCurrentBigTick(tw_now(lp));
+     log->cid = s->myCoreID;
+    log->nid = s->myLocalID;
+    log->timestamp = tw_now(lp);
+}
+//!Validation variable -
+///!@TODO: Move this to a better location. Only using this for sequential sim atm.
 void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
-
+    
+    
 	long start_count = lp->rng->count;
 	//if delta is on or basic mode is on, take a snapshot for delta encoding
 	if (TW_DELTA &&
@@ -434,7 +443,22 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 			//printf("Neuron snapshot saved");
 	}
 
-    neuronReceiveMessage(s, M, lp,CV);
+
+    bool fired = neuronReceiveMessage(s, M, lp,CV);
+    fired = (g_tw_synchronization_protocol == SEQUENTIAL || g_tw_synchronization_protocol==CONSERVATIVE) && fired;
+    if(fired == true){
+            if (nlog == NULL) {
+                nlog = newlog
+                nlset(nlog, s,lp);
+            }
+            else {
+            
+                neuEvtLog *x = newlog
+                nlset(x,s,lp);
+                addEntry(x, nlog, getCurrentBigTick(tw_now(lp)));
+            }
+        }
+    
 
 
 	//basic mode removes leak and stochastic reverse threshold functions.
@@ -480,6 +504,13 @@ void neuron_final(neuronState *s, tw_lp *lp)
 	neuronSOPS += s->SOPSCount;
 	//printf("neuron %i has %i SOPS \n", lp->gid, s->SOPSCount);
     fireCount += s->fireCount;
+    if(g_tw_synchronization_protocol == SEQUENTIAL && nlog != NULL){
+        char* fn =calloc(1024, sizeof(char));
+        neuEvtLog *lg = nlog;
+        sprintf(fn, "neuron_seq_%llu-%llu.csv",s->myCoreID,s->myLocalID);
+        saveLog(nlog, "seq_neuron_spike_log.csv");
+        //saveLog(nlog, fn);
+    }
 }
 
 
