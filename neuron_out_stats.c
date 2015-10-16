@@ -82,9 +82,9 @@ void testCSV() {
     log2.cid = c2;
     log1.nid = id1;
     log2.nid = id2;
-    ct = (uint16_t)random() / 1000;
+    ct = 0.0000222222222222222222222222222222;
     log1.timestamp = ct;
-    ct = (uint16_t)random() / 1000;
+
     log2.timestamp = ct;
     
     
@@ -101,9 +101,9 @@ void testCSV() {
         nl1->nid = id1;
         nl2->nid = id2;
         
-        ct = (long double)i + (long double)((uint16_t)random()) /100000.0;
+        ct ++;
         nl1->timestamp = ct;
-        ct = i + ((uint16_t)random()) /100000.0;
+        
         nl2->timestamp = ct;
         
         addEntry(nl1,&log1, i);
