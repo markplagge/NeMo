@@ -320,6 +320,61 @@ void createLPs()
 	// neurons);
 }
 
+void createDisconnectedNeuron(neuronState *s, tw_lp *lp){
+    bool synapticConnectivity[NEURONS_IN_CORE];
+    short G_i[NEURONS_IN_CORE];
+    int sigma[4];
+    int S[4];
+    bool b[4];
+    
+    bool epsilon = 0;
+    bool sigma_l = 0;
+    short lambda = 0;
+    bool c = false;
+    short TM = 0;
+    
+    short VR = 0;
+    
+    short sigmaVR = 1;
+    short gamma = 0;
+    
+    bool kappa = false;
+    
+    int signalDelay = 0;
+    //per synapse weight / connectivity gen:
+    for(int i = 0; i < NEURONS_IN_CORE; i ++) {
+        //s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
+        s->axonTypes[i] = 0;
+        G_i[i] = 0; //tw_rand_integer(lp->rng, 0, 0);
+        synapticConnectivity[i] = 0;
+        
+        //synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
+        
+    }
+    weight_type alpha = 0;
+    weight_type beta = 0;
+    S[0] = 0;
+    b[0] = 0;
+    sigma[0] = 0;
+    initNeuron(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid), synapticConnectivity, G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta, TM, VR, sigmaVR, gamma, kappa, s, signalDelay,0,0);
+    s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
+    s->dendriteLocal = tw_rand_integer(lp->rng, 0, AXONS_IN_CORE - 1);
+    
+    //     if (tnMapping == LLINEAR) {
+    s->dendriteGlobalDest = lGetAxonFromNeu(s->dendriteCore, s->dendriteLocal);
+    //     }
+    //     else {
+    //     s->dendriteGlobalDest = getAxonGlobal(s->dendriteCore, s->dendriteLocal);
+    //     }
+    if (DEBUG_MODE) {
+        printf("Neuron %llu checking in with GID %llu and dest %llu \n", s->myLocalID, lp->gid, s->dendriteGlobalDest);
+    }
+
+    
+
+
+}
+void createTonicNeuron(neuronState *s, tw_lp *lp);
 
 // neuron gen function helpers
 void createSimpleNeuron(neuronState *s, tw_lp *lp){
@@ -409,9 +464,15 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 
 }
 // neuron functions
+bool annouced = false;
 void neuron_init(neuronState *s, tw_lp *lp) {
-
-    createSimpleNeuron(s, lp);
+    if(! annouced)
+        printf("Creating neurons\n");
+    
+    
+    //createSimpleNeuron(s, lp);
+    createDisconnectedNeuron(s, lp);
+    annouced = true;
 
 
 

@@ -33,7 +33,7 @@ int depthCounter(neuEvtLog *log){
 void addEntry(neuEvtLog *newE, neuEvtLog* log, int cbt){
     //debugger:
     
-    int depth = depthCounter(log);
+    //int depth = depthCounter(log);
     
         
     //log->next = newE;
