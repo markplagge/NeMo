@@ -9,11 +9,33 @@
 #include "neuron_out_stats.h"
 
 
+int write_csv_dyn(csvRow rows[], char* headers[], int numCols, int numRows, char const *fileName) {
+	FILE *f = fopen(fileName, "w");
+	if (f == NULL) return -1;
+		//write headers of CSV File:
+	for(int head = 0; head < numCols; head ++) {
+		fprintf(f,"\"%s\",", headers[head]);
+	}
+	fprintf(f,"\n");
+
+	for(int row = 0; row < numRows; row ++) {
+			//row by row here
+		csvRow *roww = &rows[row];
+		do{
+				//column
+			fprintf(f, "\"%s\",",roww->data);
+		}while((roww = roww->next) != NULL);
+		fprintf(f, "\n");
+	}
+	fclose(f);
+	return 0;
+}
+
 
 neuEvtLog *getLast(neuEvtLog *log) {
     if(log == NULL)
         return NULL;
-    else if(log->next == NULL || log->next->timestamp || ! log->next)
+    else if(log->next == NULL )
         return log;
     else
     {

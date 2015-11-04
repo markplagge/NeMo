@@ -184,7 +184,10 @@ int csv_model_stats(tw_statistics s){
         
         char* output;
         asprintf(&output, "snb_run_%lu_np%lu_cores%i.csv",t.tv_sec,g_tw_npe,CORES_IN_SIM);
-       return  write_csv(m, output);
+
+       int rv =   write_csv(m, output);
+		free(m);
+		return rv;
     }
     return -1;
 
@@ -290,6 +293,7 @@ int write_csv(struct supernStats *stats, char const *fileName){
     fclose(f);
     return 0;
 }
+
 
 ///
 /// \details createLPs currently assigns a core's worth of LPs to the PE.
@@ -485,10 +489,12 @@ void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID)
 }
 
 void nlset(neuEvtLog * log, neuronState *s, tw_lp *lp) {
+	log = calloc(sizeof(log), 1);
      log->cbt = getCurrentBigTick(tw_now(lp));
      log->cid = s->myCoreID;
     log->nid = s->myLocalID;
     log->timestamp = tw_now(lp);
+	log->next = NULL;
 }
 //!Validation variable -
 ///!@TODO: Move this to a better location. Only using this for sequential sim atm.
@@ -507,7 +513,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 
     bool fired = neuronReceiveMessage(s, M, lp,CV);
     fired = (g_tw_synchronization_protocol == SEQUENTIAL || g_tw_synchronization_protocol==CONSERVATIVE) && fired;
-    if(fired == true){
+    if(fired == true && DEBUG_MODE == true){
             if (nlog == NULL) {
                 nlog = newlog
                 nlset(nlog, s,lp);
