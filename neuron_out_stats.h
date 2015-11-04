@@ -21,10 +21,16 @@ typedef struct NELE{
     unsigned long cbt;
     struct NELE *next;
 }neuEvtLog;
+typedef struct CsvRow {
+	char* data;
+	struct CsvRow *next;
+
+}csvRow;
 
 void addEntry(neuEvtLog *newE, neuEvtLog* log, int cbt);
 
 int saveLog(neuEvtLog* log, char* fileName);
+int write_csv_dyn(csvRow rows[], char* headers[], int numCols, int numRows, char const *fileName);
 
 
 void testCSV();
