@@ -371,7 +371,7 @@ void createDisconnectedNeuron(neuronState *s, tw_lp *lp){
     //     s->dendriteGlobalDest = getAxonGlobal(s->dendriteCore, s->dendriteLocal);
     //     }
     if (DEBUG_MODE) {
-        printf("Neuron %llu checking in with GID %llu and dest %llu \n", s->myLocalID, lp->gid, s->dendriteGlobalDest);
+        printf("Disc.Neuron %llu checking in with GID %llu and dest %llu \n", s->myLocalID, lp->gid, s->dendriteGlobalDest);
     }
 
     
@@ -673,10 +673,6 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	data->localID = s->mySynapseNum;
 	data->axonID = M->axonID;
 	tw_event_send(axe);
-	if (DEBUG_MODE) {
-		printf("Synapse received and sent message - sGID %llu - sDestSyn %llu - sDestNeu %llu\n", lp->gid, s->destSynapse,
-		    s->destNeuron);
-	}
 	M->rndCallCount = lp->rng->count - rc;
 }
 
@@ -817,139 +813,3 @@ void displayModelSettings()
 	printf("\n");
 }
 
-/* Old Neuron Init Function
- void neuron_init(neuronState *s, tw_lp *lp)
- {
-	//memset(s, 0, sizeof(neuronState));
-	if (tnMapping == LLINEAR) {
- s->myCoreID = getCoreFromGID(lp->gid);
- s->myLocalID = lGetNeuNumLocal(lp->gid);
-	} else {
- s->myCoreID = getCoreFromGID(lp->gid);
-
- s->myLocalID = getCoreLocalFromGID(lp->gid);
-	}
-	//BASIC SOPS SETUP - FOR STRICT BENCHMARK
-	if (BASIC_SOP) {
-
- s->threshold = s->threshold = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
- for (int i = 0; i < SYNAPSES_IN_CORE; i++)
- {
- //See if this neuron is negative:
- int_fast32_t synMinWeight = tw_rand_poisson(lp->rng, 1) > 2 ? -SYNAPSE_WEIGHT_MIN : SYNAPSE_WEIGHT_MIN;
-
-
- for (int i = 0; i < AXONS_IN_CORE; i++)
- {
- s->weightSelect[i] = tw_rand_integer(lp->rng, 0, 3);
- }
- //set up type weights:
- for (int i = 0; i < 4; i++)
- {
- s->axonWeightProb[i] = tw_rand_integer(lp->rng, -SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
- s->axonProbSelect[i] = tw_rand_poisson(lp->rng, 1) > RAND_WT_PROB;
- }
- }
-
- s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
- s->dendriteLocal = tw_rand_integer(lp->rng, 0, AXONS_IN_CORE - 1);
-
- if (tnMapping == LLINEAR) {
- s->dendriteGlobalDest = lGetAxonFromNeu(s->dendriteCore, s->dendriteLocal);
- } else {
- s->dendriteGlobalDest = getAxonGlobal(s->dendriteCore, s->dendriteLocal);
- }
-	}else if (GEN_ON) {    // probabilistic generated mapping
- s->threshold = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
- s->negativeThreshold = tw_rand_integer(lp->rng, NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX);
- s->resetVoltage = tw_rand_integer(lp->rng, RESET_VOLTAGE_MIN, RESET_VOLTAGE_MAX);
- // Randomized selection - calls to various random functions.
- short resetSel = tw_rand_integer(lp->rng, 0, 2);
- bool stochasticThreshold = tw_rand_poisson(lp->rng, 1) > 3;
- //s->synapticWeightProb =
- //    tw_calloc(TW_LOC, "Neuron", sizeof(_weightT), SYNAPSES_IN_CORE);
- //s->synapticWeightProbSelect =
- //    tw_calloc(TW_LOC, "Neuron", sizeof(bool), SYNAPSES_IN_CORE);
- // select a reset & stochastic reset mode:
- switch (resetSel)
- {
- case 0:
- s->doReset = resetNormal;
- s->reverseReset = reverseResetNormal;
- break;
-
- case 1:
- s->doReset = resetLinear;
- s->reverseReset = reverseResetLinear;
-
- default:
- stochasticThreshold = true;
- s->doReset = resetNone;
- s->reverseReset = reverseResetNone;
- break;
- }
- if (stochasticThreshold == true) {
- // random here as well:
- int sizeInBits = sizeof(s->thresholdPRNMask) * 8;  //  assuming 8 bits per byte;
- ///@todo add a variable size to the number of bytes in the range.
- _threshT param = tw_rand_ulong(lp->rng, RAND_RANGE_MIN, RAND_RANGE_MAX);
- s->thresholdPRNMask = (param >= sizeInBits ? -1 : (1 << param) - 1);
- if (s->thresholdPRNMask == -1) {
- abort();
- }
- }
-
-
- for (int i = 0; i < AXONS_IN_CORE; i++)
- {
- s->weightSelect[i] = tw_rand_integer(lp->rng, 0, 3);
- }
- //set up type weights:
- for (int i = 0; i < 4; i++)
- {
- s->axonWeightProb[i] = tw_rand_integer(lp->rng, -SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
- s->axonProbSelect[i] = RAND_WT_PROB < tw_rand_poisson(lp->rng, 1);
- }
-
- //old looop
- //		for (int i = 0; i < SYNAPSES_IN_CORE; i++) {
- //			/**
- //			 *  @todo  Enable per neuron probability selection.
- //
-//
-//			s->synapticWeightProbSelect[i] = stochasticThreshold;
-//			//See if this neuron is negative:
-//			int_fast32_t synMinWeight =  tw_rand_poisson(lp->rng, 1) > 3? - SYNAPSE_WEIGHT_MIN : SYNAPSE_WEIGHT_MIN;
-//
-//			s->synapticWeightProb[i] = tw_rand_integer(lp->rng, synMinWeight , SYNAPSE_WEIGHT_MAX);
-//		}
-}
-
-s->doLeak = linearLeak;
-s->doLeakReverse = revLinearLeak;
-
-// destinations. again using
-unsigned int calls;
-s->leakRateProb = tw_rand_normal_sd(lp->rng, 0, 10, &calls);
-///@todo Start using stochastic leak functions.
-s->leakWeightProbSelect = RAND_WT_PROB < tw_rand_poisson(lp->rng, 1);
-s->leakReversalFlag = tw_rand_integer(lp->rng, 0, 1);
-
-// randomized output dendrites:
-
-/** @note This random setup will create neurons that have an even chance of getting an axon inside thier own core
- * vs an external core. The paper actually capped this value at something like 20%. @todo - make this match the
- * paper if performance is slow. *
-s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
-s->dendriteLocal = tw_rand_integer(lp->rng, 0, AXONS_IN_CORE - 1);
-
-if (tnMapping == LLINEAR) {
-    s->dendriteGlobalDest = lGetAxonFromNeu(s->dendriteCore, s->dendriteLocal);
-} else {
-    s->dendriteGlobalDest = getAxonGlobal(s->dendriteCore, s->dendriteLocal);
-}
-if (DEBUG_MODE) {
-    printf("Neuron %i checking in with GID %llu and dest %llu \n", s->myLocalID, lp->gid, s->dendriteGlobalDest);
-}
-}
-*/

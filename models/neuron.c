@@ -236,6 +236,9 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
             tw_error(TW_LOC, "Neuron (%i,%i) received invalid message type, %i \n ", st->myCoreID,st->myLocalID, m->eventType);
             break;
     }
+    //TODO: Remove this
+    
+        
     return willFire;
 }
 
@@ -419,7 +422,16 @@ void integrate(id_type synapseID, neuronState *st, void *lp){
     tw_lp *l = (tw_lp *) lp;
     weight_type weight = st->synapticWeight[st->axonTypes[synapseID]] * st->synapticConnectivity[synapseID];
     
+    
+    
+    //!!!! DEBUG CHECK FOR WEIGHT ISSUES:
+    weight = 0;
+    //!!! REMOVE previous FOR PRODUCTION
+    
+    
+    
     if(st->weightSelection[ st->axonTypes[synapseID]]){ //zero if this is normal, else
+        printf("!! STOCH INT !! \n");
         stochasticIntegrate(weight, st);
     }
     else
