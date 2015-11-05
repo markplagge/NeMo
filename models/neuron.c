@@ -69,6 +69,11 @@ void initNeuron(id_type coreID, id_type nID,
     }
     //just using this rather than bit shadowing.
     
+    n->log = NULL;
+    
+    //Check to see if we are a self-firing neuron. If so, we need to send heartbeats every big tick.
+    n->isSelfFiring = false; //!@TODO: Add logic to support self-firing (spontanious) neurons
+    
 }
 
 void writeLPState(tw_lp *lp){
@@ -177,10 +182,12 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
             //next, we will check if a heartbeat message should be sent
             if (st->heartbeatOut == false) {
                 tw_stime time = getNextBigTick(lp, st->myLocalID);
-                sendHeartbeat(st, time,lp);
                 st->heartbeatOut = true;
-                //set message flag indicating that the heartbeat msg has been sent
                 bf->c13 = 1; //C13 indicates that the heartbeatout flag has been changed.
+                sendHeartbeat(st, time,lp);
+                
+                //set message flag indicating that the heartbeat msg has been sent
+                
                 
             }
             
@@ -194,8 +201,8 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
             //Currently operates - leak->fire->(reset)
             st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
 
-			//numericLeakCalc(st, tw_now(lp));
-            linearLeak( st, tw_now(lp));
+			numericLeakCalc(st, tw_now(lp));
+            //linearLeak( st, tw_now(lp));
 
             willFire = neuronShouldFire(st, lp);
             if (willFire) {
@@ -324,7 +331,11 @@ void linearLeak(neuronState *neuron, tw_stime now)
 	}
 
 	s->lastLeakTime = bigTick;
+    
 }
+
+
+
 
 
 void revLinearLeak(void *neuron, tw_stime now)
@@ -419,9 +430,11 @@ void reverseResetNone(void *neuronState)
 
 
 void integrate(id_type synapseID, neuronState *st, void *lp){
-    tw_lp *l = (tw_lp *) lp;
-    weight_type weight = st->synapticWeight[st->axonTypes[synapseID]] * st->synapticConnectivity[synapseID];
+    //tw_lp *l = (tw_lp *) lp;
+    weight_type weight = st->synapticWeight[st->axonTypes[synapseID]] & st->synapticConnectivity[synapseID];
     
+    if(weight > 0)
+        printf("WEIGHT LARGER THAN ZERO!");
     
     
     //!!!! DEBUG CHECK FOR WEIGHT ISSUES:
@@ -431,7 +444,7 @@ void integrate(id_type synapseID, neuronState *st, void *lp){
     
     
     if(st->weightSelection[ st->axonTypes[synapseID]]){ //zero if this is normal, else
-        printf("!! STOCH INT !! \n");
+        
         stochasticIntegrate(weight, st);
     }
     else
@@ -447,6 +460,9 @@ void sendHeartbeat(neuronState *st, tw_stime time, void *lp) {
     data->localID = st->myLocalID;
     data->eventType=NEURON_HEARTBEAT;
     tw_event_send(newEvent);
+    if(st->heartbeatOut == false) {
+        tw_error(TW_LOC, 455, "Error - neuron sent heartbeat without setting HB to true\n");
+    }
 
 }
 bool neuronShouldFire(neuronState *st, void *lp)
@@ -534,12 +550,16 @@ void neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFir
 
 void numericLeakCalc(neuronState *st, tw_stime now) {
     
-    
-    
-    uint64_t omega = st->sigma_l * (1 - st->epsilon) + SGN(st->membranePotential)*st->sigma_l * st->epsilon;
-    double toff =  now - st->lastLeakTime;
-    
-    st->membranePotential += toff * (omega * ((1 - st->c) * st->lambda) + (st->c * BINCOMP(st->lambda, st->drawnRandomNumber)));
+    //calculate current time since last leak --- LEAK IS TERRIBLE FOR THIS:
+    uint_fast32_t numberOfBigTicksSinceLastLeak = getCurrentBigTick(now) - getCurrentBigTick(st->lastLeakTime);
+    //then run the leak function until we've caught up:
+    for(;numberOfBigTicksSinceLastLeak > 0; numberOfBigTicksSinceLastLeak --) {
+        uint64_t omega = st->sigma_l * (1 - st->epsilon) + SGN(st->membranePotential)*st->sigma_l * st->epsilon;
+        st->membranePotential = st->membranePotential +
+                                    (omega * ((1 - st->c) * st->lambda)) +
+                                     (st->c * BINCOMP(st->lambda, st->drawnRandomNumber));
+    }
+    st->lastLeakTime = now;
 }
 
 /** @} */

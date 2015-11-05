@@ -85,9 +85,9 @@ typedef struct NeuronModel {
     
     /*@{ @name Weight & Threshold Parameters */
     volt_type membranePotential; //!< current "voltage" of neuron, \f$V_j(t)\f$. Since this is PDES, \a t is implicit
-    uint32_t synapticConnectivity[256]; //!< is there a connection between axon i and neuron j?
+    bool synapticConnectivity[256]; //!< is there a connection between axon i and neuron j?
     
-    char axonTypes[256];
+    uint8_t axonTypes[256];
     
     short synapticWeight[4];
     short weightSelection[4];
@@ -113,7 +113,7 @@ typedef struct NeuronModel {
     
     bool epsilon; //!<epsilon function - leak reversal flag. from the paper this changes the function of the leak from always directly being integrated (false), or having the leak directly integrated when membrane potential is above zero, and the sign is reversed when the membrane potential is below zero.
     
-    short sigma_l; //!< sigma param - leak sign
+    short sigma_l; //!< leak sign bit - eqiv. to σ
     short lambda; //!< leak weight - \f$𝜆\f$ Leak tuning parameter - the leak rate applied to the current leak function.
     bool c; //!< leak weight selection. If true, this is a stochastic leak function and the \a leakRateProb value is a probability, otherwise it is a leak rate.
     

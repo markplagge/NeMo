@@ -24,7 +24,7 @@
 #include <stdbool.h>
 
 #define nlog s->log 
-#define newlog (neuEvtLog*)malloc(sizeof(neuEvtLog));
+#define newlog (neuEvtLog*)calloc(sizeof(neuEvtLog),1);
 
 
 extern int n_created ;

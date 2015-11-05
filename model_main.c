@@ -155,15 +155,15 @@ int csv_model_stats(tw_statistics s){
         printf("Nodes,CORES,Neurons/Core,Net Events,Rollbacks,Run Time,Total SOP,Threshold Min,Threshold Max"
                ",NegativeThresholdMin,NegativeThresholdMax,Synapse Weight Min,Synapse Weight Max,EvtTies\n");
         printf("%u,%i,%i,%llu,%llu,%f,%llu,", tw_nnodes(), CORES_IN_SIM, NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS);
-        printf("%zu,"
-               "%zu,"
-               "%zu,"
-               "%zu,"
+        printf("%u,"
+               "%u,"
+               "%u,"
+               "%u,"
                "%d,"
                "%d,"
                "%llu\n", THRESHOLD_MIN, THRESHOLD_MAX, NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX, s.s_pe_event_ties);
         if (BULK_MODE) {
-            fprintf(stderr, "%u,%i,%i,%llu,%zu,%f,%zu,%zu,%zu,%zu,%zu,%u,%u,", tw_nnodes(), CORES_IN_SIM,
+            fprintf(stderr, "%u,%i,%i,%llu,%llu,%f,%llu,%u,%u,%u,%u,%u,%u,", tw_nnodes(), CORES_IN_SIM,
                     NEURONS_IN_CORE, s.s_net_events, s.s_rollback, s.s_max_run_time, totalSOPS, THRESHOLD_MIN, THRESHOLD_MAX,
                     NEG_THRESHOLD_MIN, NEG_THRESHOLD_MAX, SYNAPSE_WEIGHT_MIN, SYNAPSE_WEIGHT_MAX);
             fprintf(stderr, "%llu", s.s_pe_event_ties);
@@ -488,13 +488,14 @@ void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID)
 {
 }
 
-void nlset(neuEvtLog * log, neuronState *s, tw_lp *lp) {
-	log = calloc(sizeof(log), 1);
-     log->cbt = getCurrentBigTick(tw_now(lp));
-     log->cid = s->myCoreID;
+neuEvtLog * nlset(neuronState *s, tw_lp *lp) {
+    neuEvtLog * log = (neuEvtLog *) calloc(sizeof(neuEvtLog), 1);
+    log->cbt = getCurrentBigTick(tw_now(lp));
+    log->cid = s->myCoreID;
     log->nid = s->myLocalID;
     log->timestamp = tw_now(lp);
 	log->next = NULL;
+    return log;
 }
 //!Validation variable -
 ///!@TODO: Move this to a better location. Only using this for sequential sim atm.
@@ -513,16 +514,12 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 
     bool fired = neuronReceiveMessage(s, M, lp,CV);
     fired = (g_tw_synchronization_protocol == SEQUENTIAL || g_tw_synchronization_protocol==CONSERVATIVE) && fired;
-    if(fired == true && DEBUG_MODE == true){
+    if(DEBUG_MODE == true && fired == true){
             if (nlog == NULL) {
-                nlog = newlog
-                nlset(nlog, s,lp);
+                nlog = nlset(s, lp);
             }
             else {
-            
-                neuEvtLog *x = newlog
-                nlset(x,s,lp);
-                addEntry(x, nlog, getCurrentBigTick(tw_now(lp)));
+                addEntry(nlset(s,lp), nlog, getCurrentBigTick(tw_now(lp)));
             }
         }
     
@@ -571,10 +568,7 @@ void neuron_final(neuronState *s, tw_lp *lp)
 	neuronSOPS += s->SOPSCount;
 	//printf("neuron %i has %i SOPS \n", lp->gid, s->SOPSCount);
     fireCount += s->fireCount;
-    if(g_tw_synchronization_protocol == SEQUENTIAL && nlog != NULL){
-        char* fn =calloc(1024, sizeof(char));
-        neuEvtLog *lg = nlog;
-        sprintf(fn, "neuron_seq_%llu-%llu.csv",s->myCoreID,s->myLocalID);
+    if(DEBUG_MODE && nlog != NULL){
         saveLog(nlog, "seq_neuron_spike_log.csv");
         //saveLog(nlog, fn);
     }
@@ -735,7 +729,7 @@ void axon_init(axonState *s, tw_lp *lp)
 	tw_event_send(axe);
 	if (DEBUG_MODE) {
 
-		printf("Axon %zu checking in with dest synapse %zu\n", lp->gid, s->destSynapse);
+		printf("Axon %llu checking in with dest synapse %llu\n", lp->gid, s->destSynapse);
 	}
 	//printf("message ready at %f",r);
 }

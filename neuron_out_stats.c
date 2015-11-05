@@ -40,7 +40,7 @@ neuEvtLog *getLast(neuEvtLog *log) {
     else
     {
 
-         getLast(log->next);
+         return getLast(log->next);
     }
 }
 int depthCounter(neuEvtLog *log){
@@ -52,7 +52,7 @@ int depthCounter(neuEvtLog *log){
     }while(c != NULL);
     return counter;
 }
-void addEntry(neuEvtLog *newE, neuEvtLog* log, int cbt){
+void addEntry(neuEvtLog *newE, neuEvtLog *log, int cbt){
     //debugger:
     
     //int depth = depthCounter(log);
