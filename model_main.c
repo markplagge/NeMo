@@ -355,8 +355,8 @@ void createDisconnectedNeuron(neuronState *s, tw_lp *lp){
         //synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
         
     }
-    weight_type alpha = 0;
-    weight_type beta = 0;
+    weight_type alpha = 50;
+    weight_type beta = -1;
     S[0] = 0;
     b[0] = 0;
     sigma[0] = 0;
