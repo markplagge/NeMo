@@ -52,16 +52,20 @@ int depthCounter(neuEvtLog *log){
     }while(c != NULL);
     return counter;
 }
-void addEntry(neuEvtLog *newE, neuEvtLog *log, int cbt){
+void addEntry(neuEvtLog *newE, neuEvtLog *log, int currentBigTick){
     //debugger:
     
     //int depth = depthCounter(log);
     
         
     //log->next = newE;
-    newE->cbt = cbt;
-    neuEvtLog *end = getLast(log);
-    end->next = newE;
+    newE->cbt = currentBigTick;
+    //neuEvtLog *end = getLast(log); no longer putting the list of items at the end, putting in front.
+    //end->next = newE;
+    newE->next = log;
+    log = newE;
+    
+    
 }
 
 int saveLog(neuEvtLog* log, char* fileName) {

@@ -126,7 +126,8 @@ typedef struct NeuronModel {
     bool kappa; //!<Kappa or negative reset mode. From the paper's ,\f$𝜅_j\f$, negative threshold setting to reset or saturate
     short omega; //!<temporary leak direction variable
     
-    uint32_t PRNSeedValue; //!< pseudo random number generator seed.
+   
+    uint32_t PRNSeedValue; //!< pseudo random number generator seed. @TODO: Add PRNSeedValues to the neurons to improve TN compatibility.
     
     /**@}*/
     /**@{*/
@@ -195,6 +196,15 @@ void stochasticIntegrate(weight_type weight, neuronState *st);
 
 void setNeuronDest(int signalDelay, uint64_t globalID, neuronState *n);
 
+/**
+ *  @brief NumericLeakCalc - uses formula from the TrueNorth paper to calculate leak. 
+ *  @details Will run $n$ times, where $n$ is the number of big-ticks that have occured since
+ *  the last integrate. Handles stochastic and regular integrations.
+ *
+ *  @TODO: self-firing neurons will not properly send messages currently - if the leak is divergent, the flag needs to be set upon neuron init.
+ *  @TODO: does not take into consideration thresholds. Positive thresholds would fall under self-firing neurons, but negative thresholds should be reset.
+ *  @TODO: test leaking functions
+ */
 void numericLeakCalc(neuronState *st, tw_stime now);
 
 void fire(neuronState *st, void *lp);

@@ -462,7 +462,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 //     s->dendriteGlobalDest = getAxonGlobal(s->dendriteCore, s->dendriteLocal);
 //     }
      if (DEBUG_MODE) {
-     printf("Neuron %llu checking in with GID %llu and dest %llu \n", s->myLocalID, lp->gid, s->dendriteGlobalDest);
+     printf("Neuron %hu checking in with GID %llu and dest %llu \n", s->myLocalID, lp->gid, s->dendriteGlobalDest);
      }
 
 
