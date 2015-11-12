@@ -325,25 +325,24 @@ void createLPs()
 }
 
 void createDisconnectedNeuron(neuronState *s, tw_lp *lp){
-    bool synapticConnectivity[NEURONS_IN_CORE];
-    short G_i[NEURONS_IN_CORE];
-    int sigma[4];
-    int S[4];
-    bool b[4];
-    
-    bool epsilon = 0;
-    bool sigma_l = 0;
-    short lambda = 0;
-    bool c = false;
-    short TM = 0;
-    
-    short VR = 0;
-    
-    short sigmaVR = 1;
-    short gamma = 0;
-    
-    bool kappa = false;
-    
+	bool synapticConnectivity[NEURONS_IN_CORE];
+	short G_i[NEURONS_IN_CORE];
+	int sigma[4];
+	int S[4];
+	bool b[4];
+
+	bool epsilon = 0;
+	bool sigma_l = 0;
+	short lambda = 0;
+	bool c = false;
+	short TM = 0;
+
+	short VR = 0;
+
+	short sigmaVR = 1;
+	short gamma = 0;
+
+	bool kappa = false;
     int signalDelay = 0;
     //per synapse weight / connectivity gen:
     for(int i = 0; i < NEURONS_IN_CORE; i ++) {
@@ -378,7 +377,6 @@ void createDisconnectedNeuron(neuronState *s, tw_lp *lp){
 
 
 }
-void createTonicNeuron(neuronState *s, tw_lp *lp);
 
 // neuron gen function helpers
 void createSimpleNeuron(neuronState *s, tw_lp *lp){
