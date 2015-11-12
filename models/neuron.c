@@ -143,13 +143,14 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
 
     //memcpy(m->nm, st, sizeof(neuronState));
 
-    //TODO: remove this after testing.
+    ///@TODO: remove this after testing.
     //m->stateSaveZone = tw_calloc(TW_LOC, "neuron", sizeof(neuronState), 1);
     //memcpy(m->stateSaveZone,st,sizeof(*st));
 
 
     switch (m->eventType)
     {
+      /// @TODO: possibly need to aggregate inputs on the same channel? If validation isn't working check this.
         case SYNAPSE_OUT:
             st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
 			      integrate(m->axonID, st, lp);
@@ -526,7 +527,7 @@ void numericLeakCalc(neuronState *st, tw_stime now) {
         st->membranePotential = st->membranePotential +
                                     (omega * ((1 - st->c) * st->lambda)) +
                                      (st->c & (BINCOMP(st->lambda, st->drawnRandomNumber)));
-                                    
+
     }
     st->lastLeakTime = now;
 }
