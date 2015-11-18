@@ -138,7 +138,7 @@ typedef struct NeuronModel {
     bool canGenerateSpontaniousSpikes;
     
     neuEvtLog *log;//!< a log of spikes.
-    
+    char* neuronTypeDesc; //!< a debug tool, contains a text desc of the neuron.
     /**@}*/
     
 }neuronState;

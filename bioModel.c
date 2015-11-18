@@ -34,7 +34,10 @@ void crPhasic(neuronState *s, tw_lp *lp){
     s->synapticWeight[1]= 20;
     s->synapticWeight[2]= 0;
     s->synapticWeight[3]= 0;
-
+    sigma[0] = 1;
+    sigma[1] = 1;
+    sigma[2] = 1;
+    sigma[3] = 1;
     int signalDelay = 1;
     
     for (int i = 0; i < NEURONS_IN_CORE; i ++) {
@@ -51,6 +54,7 @@ void crPhasic(neuronState *s, tw_lp *lp){
                G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta,
                TM, VR, sigmaVR, gamma, kappa, s, signalDelay, lGetCoreFromGID(lp->gid),
                lGetNeuNumLocal(lp->gid));
+    s->neuronTypeDesc = "PHASIC";
 
 
 }

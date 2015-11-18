@@ -65,7 +65,7 @@ bool DEBUG_MODE = 0;
 bool BASIC_SOP = false;
 bool TW_DELTA = false;
 bool BULK_MODE = false;
-bool MONO_VAL = false;
+bool PHAS_VAL = false;
  stat_type neuronSOPS = 0;
  stat_type synapseEvents = 0;
 
@@ -189,7 +189,7 @@ const tw_optdef app_opt[]= {
   TWOPT_FLAG("bulk",BULK_MODE,"Is this sim running in bulk mode (called from script?)"),
 	TWOPT_GROUP("Debug options"),
 	 TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
-	TWOPT_FLAG("mval", MONO_VAL, "Monotonic Neuron Validation"),
+    TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
     {TWOPT_END()}
 
   };
