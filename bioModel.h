@@ -40,4 +40,4 @@ void crBioLoopback(neuronState *s, tw_lp *lp);
 bool *identityConnectivity(int localID);
 bool *zeroIDMatrix(int n, int m);
 
-#endif /* bioModel_h */
+#endif /*  bioModel_h */

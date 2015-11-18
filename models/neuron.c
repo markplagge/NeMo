@@ -325,30 +325,88 @@ void revLinearLeak(void *neuron, tw_stime now)
 /** @}*/
 
 /** @name ResetFunctions
+ * @details
  * Reset function defs. Neuron reset functions will
  * change the neuron state without saving the previous state. All voltage state saving
  * must be handled in the neuron event function neuronReceiveMessage().
+ * These functions operate based on the table presented in \cite Cass13_1000 .
+ * Currently, there are three functions, one for linear reset (resetLinear()),
+ * "normal" reset (resetNormal()), and non-reset (resetNone()).
+ 
+ From the paper:
+ | \f$𝛾_j\f$ | \f$𝜘_j\f$| Reset Mode               |     Positive Reset     |     Negative Reset    |
+ |----|----|--------------------------|:----------------------:|:---------------------:|
+ | 0  | 0  | normal                   |          \f$R_j\f$         |         \f$-R_j\f$        |
+ | 0  | 1  | normal - neg saturation  |          \f$R_j\f$         |       \f$-𝛽_j\f$        |
+ | 1  | 0  | Linear                   | \f$V_j - (𝛼_j  + 𝜂_j)\f$ | \f$V_j + (𝛽_j + 𝜂_j)\f$ |
+ | 1  | 1  | linear -neg saturation   |  \f$V_j - (𝛼_j,+ 𝜂_j)\f$ |        \f$-𝛽_j\f$        |
+ | 2  | 0  | non-reset                |          \f$V_j\f$         |         \f$V_j\f$         |
+ | 2  | 1  | non-reset net saturation |          \f$V_j\f$         |        \f$-𝛽_j\f$        |
+ 
  * @todo: Check that reverse reset functions are needed, since previous voltage is stored in the neuron.
  * @{ */
+
+/**
+ * negative saturation reset function (common to all reset modes, called if
+ * 𝛾 is true. Simply sets the value of the membrane potential to $-𝛽_j$.
+**/
+void negThresholdReset(neuronState *s) {
+    s->membranePotential = -s->negThreshold;
+}
+/**
+
+ *  @details Normal reset function.
+ */
 void resetNormal(void *neuronState)
 {
 	struct NeuronModel *s = (struct NeuronModel *)neuronState;
-
-	s->membranePotential = s->resetVoltage; // set current voltage to \f$R\f$.
+    if(s->membranePotential < s->negThreshold){
+        if(s->kappa)
+            negThresholdReset(s);
+        else
+            s->membranePotential = -(s->resetVoltage);
+    }
+    else {
+        s->membranePotential = s->resetVoltage; // set current voltage to \f$R\f$.
+    }
 }
 
 
 /**
  *  @details Linear reset mode - ignores \f$R\f$, and sets the membrane potential
- *  to the difference between the threshold and the potential.
- *
+ *  to the difference between the threshold and the potential. *
  */
 void resetLinear(void *neuronState)
 {
 	struct NeuronModel *s = (struct NeuronModel *)neuronState;
 
-	s->membranePotential = s->membranePotential - s->resetVoltage;
+    if(s->membranePotential < s->negThreshold){
+        if(s->kappa)
+            negThresholdReset(s);
+        else{
+            s->membranePotential = s->membranePotential -
+                (s->posThreshold + s->drawnRandomNumber);
+        }
+    }else{
+        s->membranePotential = s->membranePotential -
+            (s->negThreshold + s->drawnRandomNumber);
+    }
+        
 }
+/**
+ *  @details non-reset handler function - does non-reset style reset. Interestingly,
+ *  even non-reset functions follow the negative saturation parameter from the paper. 
+ */
+void resetNone(void *neuronState)
+{
+    struct NeuronModel *s = (struct NeuronModel *)neuronState;
+
+    if(s->kappa && s->membranePotential < s->negThreshold){
+        negThresholdReset(s);
+    }
+    
+}
+
 
 
 /// @todo This might not be needed, since we are saving voltage state.
@@ -370,10 +428,7 @@ void reverseResetNormal(void *neuronState)
 }
 
 
-void resetNone(void *neuronState)
-{
 
-}
 
 
 void reverseResetNone(void *neuronState)

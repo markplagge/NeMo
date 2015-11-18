@@ -16,14 +16,14 @@ void crPhasic(neuronState *s, tw_lp *lp){
 	bool b[4];
 	bool epsilon = 0;
 	bool sigma_l = 0;
-	short lambda = 0;
+	short lambda = 2;
 	bool c = false;
 	short TM = 0;
 	short VR = 0;
 	short sigmaVR = 1;
 	short gamma = 0;
-	bool kappa = false;
-    int weights[4];
+	bool kappa = true;
+    
     int alpha = 2;
     int beta = 10;
     S[0] = 4;
@@ -36,14 +36,17 @@ void crPhasic(neuronState *s, tw_lp *lp){
     s->synapticWeight[3]= 0;
 
     int signalDelay = 1;
+    
+    for (int i = 0; i < NEURONS_IN_CORE; i ++) {
+        synapticConnectivity[i] = 0;
+        G_i[i] = 0;
+    }
+    //! According to the paper, there is one input, of type 0.
+    
+    synapticConnectivity[0] = 1;
+    
 
-	
-
-	s->synapticConnectivity[0] = 1;
-		//s->synapticConnectivity[1] = 1;
-
-	s->axonTypes[0] = 0;
-		//	s->axonTypes[1] = 0;
+    
     initNeuron(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid), synapticConnectivity,
                G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta,
                TM, VR, sigmaVR, gamma, kappa, s, signalDelay, lGetCoreFromGID(lp->gid),
