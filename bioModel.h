@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include "models/neuron.h"
 #include "ross.h"
+#include "models/axon.h"
 
 void crTonic(neuronState *s, tw_lp *lp);
 void crPhasic(neuronState *s, tw_lp *lp);

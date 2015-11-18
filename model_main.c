@@ -414,7 +414,6 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 
         S[i] = 1;
         b[i] = 0;
-        
     }
 
     weight_type alpha = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
@@ -434,7 +433,6 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 //     else {
 //     s->dendriteGlobalDest = getAxonGlobal(s->dendriteCore, s->dendriteLocal);
 //     }
-    s->neuronTypeDesc = "SIMPLE";
 
 
 
@@ -449,7 +447,7 @@ bool annouced = false;
 
 bool pc = false;
 void neuron_init(neuronState *s, tw_lp *lp) {
-    s->neuronTypeDesc = "UNK";
+    s->neuronTypeDesc = "SIMPLE";
     if(DEBUG_MODE && ! annouced)
         printf("Creating neurons\n");
     
@@ -472,8 +470,7 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 
 
     if (DEBUG_MODE) {
-        printf("Neuron type %s, #%hu checking in with GID %llu and dest %llu \n",
-               s->neuronTypeDesc,s->myLocalID, lp->gid, s->dendriteGlobalDest);
+        printf("Neuron %hu checking in with GID %llu and dest %llu \n", s->myLocalID, lp->gid, s->dendriteGlobalDest);
     }
 }
 
