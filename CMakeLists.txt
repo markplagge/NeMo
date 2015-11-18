@@ -16,6 +16,8 @@ SET(model_srcs
 	models/synapse.h
 	input_simulator.c
 	input_simulator.h
+    bioModel.h
+    bioModel.c
 	mapping.h
 	mapping.c
 	clMapping.h
