@@ -19,6 +19,8 @@ typedef struct AxonState {
 	id_type axonID;
 
 	inputSimulatorState *sim;
+
+	char* axtype;
 }axonState;
 /**
  *  @brief  Handles a message sent to an Axon.

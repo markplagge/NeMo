@@ -8,6 +8,8 @@
 
 #include "bioModel.h"
 #include "mapping.h"
+
+
 void crPhasic(neuronState *s, tw_lp *lp){
     bool synapticConnectivity[NEURONS_IN_CORE];
 	short G_i[NEURONS_IN_CORE];
@@ -42,8 +44,12 @@ void crPhasic(neuronState *s, tw_lp *lp){
     
     for (int i = 0; i < NEURONS_IN_CORE; i ++) {
         synapticConnectivity[i] = 0;
-        G_i[i] = 0;
+        G_i[i] = 3;
+		
     }
+	G_i[0] = 0;
+
+
     //! According to the paper, there is one input, of type 0.
     
     synapticConnectivity[0] = 1;
@@ -58,10 +64,26 @@ void crPhasic(neuronState *s, tw_lp *lp){
 
 
 }
+void crPhasicAxon(axonState *s, tw_lp *lp){
+	s->axtype = "ax_phasic";
+	s->sendMsgCount = 0;
+	s->axonID = lGetAxeNumLocal(lp->gid);
+	s->destSynapse = lGetSynFromAxon(lp->gid);
+		//Queue up events for the phasic spiker
+	for (int i = 1; i < g_tw_ts_end; i ++) {
+		tw_stime evtTime = i + tw_rand_unif(lp->rng);
+		tw_event *axe = tw_event_new(lp->gid, evtTime, lp);
+		Msg_Data *data = (Msg_Data *)tw_event_data(axe);
+		data->eventType = AXON_OUT;
+		data->axonID = s->axonID;
+		tw_event_send(axe);
+	}
 
+}
 
 
 void crBioLoopback(neuronState *s, tw_lp *lp){
     
     
 }
+

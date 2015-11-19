@@ -87,7 +87,7 @@ typedef struct NeuronModel {
     volt_type membranePotential; //!< current "voltage" of neuron, \f$V_j(t)\f$. Since this is PDES, \a t is implicit
     bool synapticConnectivity[256]; //!< is there a connection between axon i and neuron j?
     
-    uint8_t axonTypes[256];
+    int axonTypes[256];
     
     short synapticWeight[4];
     short weightSelection[4];

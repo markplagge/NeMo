@@ -184,7 +184,7 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
                 fire(st,lp);
                 st->fireCount++;
                 //TODO: Fix this shit:
-                st->membranePotential = 0;
+					//st->membranePotential = 0;
 
             }
 
@@ -385,11 +385,11 @@ void resetLinear(void *neuronState)
             negThresholdReset(s);
         else{
             s->membranePotential = s->membranePotential -
-                (s->posThreshold + s->drawnRandomNumber);
+                (s->negThreshold+ s->drawnRandomNumber);
         }
     }else{
         s->membranePotential = s->membranePotential -
-            (s->negThreshold + s->drawnRandomNumber);
+            (s->posThreshold  + s->drawnRandomNumber);
     }
         
 }
@@ -449,10 +449,12 @@ void reverseResetNone(void *neuronState)
 
 void integrate(id_type synapseID, neuronState *st, void *lp){
     //tw_lp *l = (tw_lp *) lp;
-    weight_type weight = st->synapticWeight[st->axonTypes[synapseID]] & st->synapticConnectivity[synapseID];
+	int at = st->axonTypes[synapseID];
+	weight_type stw = st->synapticWeight[at];
+		//weight_type weight = st->synapticWeight[st->axonTypes[synapseID]] & st->synapticConnectivity[synapseID];
+	weight_type weight = stw *  st->synapticConnectivity[synapseID];
 
-    if(weight > 0)
-        printf("WEIGHT LARGER THAN ZERO!\n");
+
 
 
     //!!!! DEBUG CHECK FOR WEIGHT ISSUES:

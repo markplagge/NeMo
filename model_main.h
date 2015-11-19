@@ -66,9 +66,10 @@ bool BASIC_SOP = false;
 bool TW_DELTA = false;
 bool BULK_MODE = false;
 bool PHAS_VAL = false;
+bool DEPOLAR_VAL = false;
  stat_type neuronSOPS = 0;
  stat_type synapseEvents = 0;
-
+bool validation;
 
 stat_type fireCount;
 /** littleTick is the resolution of little ticks 

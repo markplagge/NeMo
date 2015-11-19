@@ -69,6 +69,7 @@ void addEntry(neuEvtLog *newE, neuEvtLog *log, int currentBigTick){
 }
 
 int saveLog(neuEvtLog* log, char* fileName) {
+	static bool headersWritten = false;
     FILE * outfile;
 
     outfile = fopen(fileName, "a");
@@ -77,6 +78,10 @@ int saveLog(neuEvtLog* log, char* fileName) {
         return -2;
     }
     neuEvtLog *i = log;
+	if(!headersWritten){
+		fprintf(outfile, "timestamp,coreID, neruonID, currentBigTick\n");
+		headersWritten = true;
+	}
     do{
         fprintf(outfile, "%Lf,%lu,%lu,%lu\n",i->timestamp,i->cid, i->nid, i->cbt);
         i = i->next;
@@ -86,7 +91,21 @@ int saveLog(neuEvtLog* log, char* fileName) {
     
     return errno;
 }
+void saveValidationData(int neuronID, int coreID, long double timestamp, int membranePot){
+	static bool headersWritten = false;
+	FILE  * outfile;
+	char * fn = calloc(sizeof(char), 1024);
+	sprintf(fn, "%i_%i-voltage-record.csv",neuronID,coreID);
+	outfile = fopen(fn, "a");
+	if(!headersWritten){
+		fprintf(outfile, "timestamp,neuronID,coreID,membranePot\n");
+		headersWritten = true;
+	}
 
+	fprintf(outfile, "%Lf,%i,%i,%i\n",timestamp,neuronID,coreID,membranePot);
+	fclose(outfile);
+
+}
 void testCSV() {
     int id1 = 0;
     int id2 = 1;
