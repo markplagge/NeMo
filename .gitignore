@@ -1,4 +1,6 @@
-
+*.aux
+*.svg
+/doxygen/*
 *.tex
 
 *.md5
