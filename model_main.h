@@ -21,10 +21,12 @@
 #include "neuron_out_stats.h"
 #include <math.h>
 
+#include "bioModel.h"
+
 #include <stdbool.h>
 
 #define nlog s->log 
-#define newlog (neuEvtLog*)malloc(sizeof(neuEvtLog));
+#define newlog (neuEvtLog*)calloc(sizeof(neuEvtLog),1);
 
 
 extern int n_created ;
@@ -63,9 +65,11 @@ bool DEBUG_MODE = 0;
 bool BASIC_SOP = false;
 bool TW_DELTA = false;
 bool BULK_MODE = false;
+bool PHAS_VAL = false;
+bool DEPOLAR_VAL = false;
  stat_type neuronSOPS = 0;
  stat_type synapseEvents = 0;
-
+bool validation;
 
 stat_type fireCount;
 /** littleTick is the resolution of little ticks 
@@ -186,6 +190,7 @@ const tw_optdef app_opt[]= {
   TWOPT_FLAG("bulk",BULK_MODE,"Is this sim running in bulk mode (called from script?)"),
 	TWOPT_GROUP("Debug options"),
 	 TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
+    TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
     {TWOPT_END()}
 
   };

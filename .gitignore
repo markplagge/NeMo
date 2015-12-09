@@ -1,4 +1,6 @@
-
+*.aux
+*.svg
+/doxygen/*
 *.tex
 
 *.md5
@@ -14,3 +16,5 @@
 *.js
 
 *.xml
+
+*.swp

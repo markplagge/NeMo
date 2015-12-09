@@ -85,9 +85,9 @@ typedef struct NeuronModel {
     
     /*@{ @name Weight & Threshold Parameters */
     volt_type membranePotential; //!< current "voltage" of neuron, \f$V_j(t)\f$. Since this is PDES, \a t is implicit
-    uint32_t synapticConnectivity[256]; //!< is there a connection between axon i and neuron j?
+    bool synapticConnectivity[256]; //!< is there a connection between axon i and neuron j?
     
-    char axonTypes[256];
+    int axonTypes[256];
     
     short synapticWeight[4];
     short weightSelection[4];
@@ -113,7 +113,7 @@ typedef struct NeuronModel {
     
     bool epsilon; //!<epsilon function - leak reversal flag. from the paper this changes the function of the leak from always directly being integrated (false), or having the leak directly integrated when membrane potential is above zero, and the sign is reversed when the membrane potential is below zero.
     
-    short sigma_l; //!< sigma param - leak sign
+    short sigma_l; //!< leak sign bit - eqiv. to σ
     short lambda; //!< leak weight - \f$𝜆\f$ Leak tuning parameter - the leak rate applied to the current leak function.
     bool c; //!< leak weight selection. If true, this is a stochastic leak function and the \a leakRateProb value is a probability, otherwise it is a leak rate.
     
@@ -126,7 +126,8 @@ typedef struct NeuronModel {
     bool kappa; //!<Kappa or negative reset mode. From the paper's ,\f$𝜅_j\f$, negative threshold setting to reset or saturate
     short omega; //!<temporary leak direction variable
     
-    uint32_t PRNSeedValue; //!< pseudo random number generator seed.
+   
+    uint32_t PRNSeedValue; //!< pseudo random number generator seed. @TODO: Add PRNSeedValues to the neurons to improve TN compatibility.
     
     /**@}*/
     /**@{*/
@@ -137,7 +138,7 @@ typedef struct NeuronModel {
     bool canGenerateSpontaniousSpikes;
     
     neuEvtLog *log;//!< a log of spikes.
-    
+    char* neuronTypeDesc; //!< a debug tool, contains a text desc of the neuron.
     /**@}*/
     
 }neuronState;
@@ -195,6 +196,15 @@ void stochasticIntegrate(weight_type weight, neuronState *st);
 
 void setNeuronDest(int signalDelay, uint64_t globalID, neuronState *n);
 
+/**
+ *  @brief NumericLeakCalc - uses formula from the TrueNorth paper to calculate leak. 
+ *  @details Will run $n$ times, where $n$ is the number of big-ticks that have occured since
+ *  the last integrate. Handles stochastic and regular integrations.
+ *
+ *  @TODO: self-firing neurons will not properly send messages currently - if the leak is divergent, the flag needs to be set upon neuron init.
+ *  @TODO: does not take into consideration thresholds. Positive thresholds would fall under self-firing neurons, but negative thresholds should be reset.
+ *  @TODO: test leaking functions
+ */
 void numericLeakCalc(neuronState *st, tw_stime now);
 
 void fire(neuronState *st, void *lp);
