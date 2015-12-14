@@ -66,7 +66,11 @@ bool BASIC_SOP = false;
 bool TW_DELTA = false;
 bool BULK_MODE = false;
 bool PHAS_VAL = false;
+bool TONIC_SPK_VAL = false;
+bool TONIC_BURST_VAL = false;
 bool DEPOLAR_VAL = false;
+bool SAVE_MEMBRANE_POTS = false;
+bool SAVE_SPIKE_EVTS = false;
  stat_type neuronSOPS = 0;
  stat_type synapseEvents = 0;
 bool validation;
@@ -190,7 +194,11 @@ const tw_optdef app_opt[]= {
   TWOPT_FLAG("bulk",BULK_MODE,"Is this sim running in bulk mode (called from script?)"),
 	TWOPT_GROUP("Debug options"),
 	 TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
+    TWOPT_FLAG("svm", SAVE_MEMBRANE_POTS, "Save neuron membrane potential values (enabled by default when running a validation model"),
+    TWOPT_FLAG("svs", SAVE_SPIKE_EVTS, "Save neuron spike event times and info"),
+    
     TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
+    TWOPT_FLAG("tonb",TONIC_BURST_VAL, "Tonic bursting Neuron Validation"),
     {TWOPT_END()}
 
   };

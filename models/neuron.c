@@ -9,7 +9,7 @@
 #include "neuron.h"
 
 
-/** Constructor / Init a new neuron */
+/** Constructor / Init a new neuron. assumes that the reset voltage is NOT encoded.*/
 void initNeuron(id_type coreID, id_type nID,
                 bool synapticConnectivity[NEURONS_IN_CORE],
                 short G_i[NEURONS_IN_CORE], int sigma[4],
@@ -42,6 +42,7 @@ void initNeuron(id_type coreID, id_type nID,
     //n->thresholdPRNMask = getBitMask(n->thresholdMaskBits);
     n->sigmaVR = sigmaVR;
     n->encodedResetVoltage = VR;
+    n->resetVoltage = VR * sigmaVR;
     n->resetMode = gamma;
     n->kappa = kappa;
     n->omega = 0;
@@ -75,6 +76,20 @@ void initNeuron(id_type coreID, id_type nID,
     //Check to see if we are a self-firing neuron. If so, we need to send heartbeats every big tick.
     n->isSelfFiring = false; //!@TODO: Add logic to support self-firing (spontanious) neurons
 
+}
+void initNeuronEncodedRV(id_type coreID, id_type nID,
+                         bool synapticConnectivity[NEURONS_IN_CORE],
+                         short G_i[NEURONS_IN_CORE], int sigma[4],
+                         int S[4], bool b[4], bool epsilon,
+                         short sigma_l, short lambda, bool c, uint32_t alpha,
+                         uint32_t beta, short TM, short VR, short sigmaVR, short gamma,
+                         bool kappa, neuronState *n, int signalDelay, uint64_t destGlobalID,int destAxonID) {
+    
+    initNeuron(coreID, nID, synapticConnectivity, G_i,  sigma, S, b, epsilon,
+               sigma_l, lambda, c, alpha, beta,  TM,  VR,  sigmaVR,  gamma,
+                kappa,  n,  signalDelay, destGlobalID, destAxonID);
+    n->resetVoltage = (n->sigmaVR * (pow(2, n->encodedResetVoltage)-1));
+    
 }
 
 void writeLPState(tw_lp *lp){

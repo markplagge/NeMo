@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
 		//		//testTiming();
 		//
 		//
-	validation = PHAS_VAL || DEPOLAR_VAL;
+	validation = PHAS_VAL || DEPOLAR_VAL || TONIC_BURST_VAL || TONIC_SPK_VAL;
 	tw_run();
 		//	// Stats Collection ************************************************************************************88
 
@@ -448,7 +448,10 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 bool annouced = false;
 
 bool pc = false;
+
+
 void neuron_init(neuronState *s, tw_lp *lp) {
+    static int pairedNeurons = 0;
 	s->neuronTypeDesc = "SIMPLE";
 	if(DEBUG_MODE && ! annouced)
 		printf("Creating neurons\n");
@@ -462,8 +465,12 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 			createDisconnectedNeuron(s, lp);
 		}
 
-	}
-	else{
+    } else if(TONIC_BURST_VAL) {
+        if(pairedNeurons < 2) {
+            crTonicBursting(s, lp);
+            pairedNeurons ++;
+        }
+    } else {
 		createSimpleNeuron(s, lp);
 	}
 		//createDisconnectedNeuron(s, lp);
@@ -507,8 +514,8 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 
 	bool fired = neuronReceiveMessage(s, M, lp,CV);
 	fired = (g_tw_synchronization_protocol == SEQUENTIAL || g_tw_synchronization_protocol==CONSERVATIVE) && fired;
-	if(DEBUG_MODE == true){
-		if (fired == true){
+
+		if (SAVE_SPIKE_EVTS && fired == true){
 			if (nlog == NULL) {
 				nlog = nlset(s, lp);
 			}
@@ -516,11 +523,11 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 				addEntry(nlset(s,lp), nlog, getCurrentBigTick(tw_now(lp)));
 			}
 		}
-		if (validation  && M->eventType == NEURON_HEARTBEAT) {
+		if ((validation || SAVE_MEMBRANE_POTS)  && M->eventType == NEURON_HEARTBEAT) {
 			if(s->neuronTypeDesc[0] == 'P' && s->neuronTypeDesc[1] == 'H')
 				saveValidationData(s->myLocalID, s->myCoreID, tw_now(lp), s->membranePotential);
 		}
-	}
+	
 
 
 
@@ -701,6 +708,8 @@ id_type curAxon = 0;
 int specAxons = 0;
 void axon_init(axonState *s, tw_lp *lp)
 {
+    //TODO: Maybe switch this to a switch/case later, since it's going to get
+    //big.
 	s->axtype = "NORM";
 	if(PHAS_VAL) {//one phasic axon:
 		if (specAxons == 0){
@@ -714,7 +723,16 @@ void axon_init(axonState *s, tw_lp *lp)
 			s->destSynapse = lGetSynFromAxon(lp->gid);
 		}
 
-	}
+    }else if(TONIC_BURST_VAL){
+        if (specAxons == 0) {
+            crPhasicAxon(s, lp);
+            specAxons ++;
+        } else {
+            s->sendMsgCount = 0;
+            s->axonID = lGetAxeNumLocal(lp->gid);
+            s->destSynapse = lGetSynFromAxon(lp->gid);
+        }
+    }
 	else {
 		s->sendMsgCount = 0;
 		s->axonID = lGetAxeNumLocal(lp->gid);
