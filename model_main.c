@@ -470,6 +470,9 @@ void neuron_init(neuronState *s, tw_lp *lp) {
             crTonicBursting(s, lp);
             pairedNeurons ++;
         }
+        else {
+            createDisconnectedNeuron(s, lp);
+        }
     } else {
 		createSimpleNeuron(s, lp);
 	}
