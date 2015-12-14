@@ -518,7 +518,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	bool fired = neuronReceiveMessage(s, M, lp,CV);
 	fired = (g_tw_synchronization_protocol == SEQUENTIAL || g_tw_synchronization_protocol==CONSERVATIVE) && fired;
 
-		if (SAVE_SPIKE_EVTS && fired == true){
+		if ((SAVE_SPIKE_EVTS || validation) && fired == true){
 			if (nlog == NULL) {
 				nlog = nlset(s, lp);
 			}
