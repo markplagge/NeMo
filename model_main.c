@@ -524,8 +524,9 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 			}
 		}
 		if ((validation || SAVE_MEMBRANE_POTS)  && M->eventType == NEURON_HEARTBEAT) {
-			if(s->neuronTypeDesc[0] == 'P' && s->neuronTypeDesc[1] == 'H')
-				saveValidationData(s->myLocalID, s->myCoreID, tw_now(lp), s->membranePotential);
+            
+			//if(s->neuronTypeDesc[0] == 'P' && s->neuronTypeDesc[1] == 'H')
+            saveValidationData(s->myLocalID, s->myCoreID, tw_now(lp), s->membranePotential);
 		}
 	
 
