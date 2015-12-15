@@ -53,6 +53,29 @@ tw_lptype model_lps[] = {
 	,
 	{ 0 } };
 
+
+
+void saveNetwork(neuronState *nglobal,tw_lpid gid){
+	static bool created = false;
+	char* filenamet = "net_node_rank-";
+	char* filename = calloc(sizeof(char),128); //magic number - max size of filename
+	sprintf(filename,"%s%i.csv",filenamet,g_tw_mynode);
+
+	if(created == false) {
+		FILE *f = fopen(filename,"w");
+		fprintf(f,"NeuronLocal,NeuronGID,AxonLocalID,AxonCore,AxonGID\n");
+		created = true;
+		fclose(f);
+	}
+	FILE *f = fopen(filename,"a");
+	neuronState *n = nglobal;
+	fprintf(f,"%i,%i,%i,%i,%i\n",n->myLocalID,gid,n->dendriteLocal,n->dendriteCore,n->dendriteGlobalDest);
+	fclose(f);
+
+
+
+
+}
 int main(int argc, char *argv[])
 {
 		///VALIDATION SETUP
@@ -122,6 +145,9 @@ int main(int argc, char *argv[])
 		//
 		//
 	validation = PHAS_VAL || DEPOLAR_VAL || TONIC_BURST_VAL || TONIC_SPK_VAL;
+
+
+
 	tw_run();
 		//	// Stats Collection ************************************************************************************88
 
@@ -284,7 +310,7 @@ tw_statistics statsOut()
 
 
 int write_csv(struct supernStats *stats, char const *fileName){
-	FILE *f = fopen(fileName, "w");
+	FILE *f = fopen(fileName, "a");
 	if (f == NULL) return -1;
 	fprintf(f,"\"npe\",\"total_sop\",\"neuron_spikes\",\"total_synapse_msgs\",\"runtime\",\"total\"\n");
 	fprintf(f, "%u,%llu,%llu,%llu,%f,%f \n", stats->npe, stats->SOP,
@@ -395,7 +421,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	short sigmaVR = 1;
 	short gamma = 0;
 	bool kappa = false;
-	int signalDelay = 0;
+	int signalDelay = tw_rand_integer(lp->rng, 0,5);
 
 
 		//per synapse weight / connectivity gen:
@@ -420,7 +446,10 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 
 	weight_type alpha = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
 	weight_type beta = tw_rand_integer(lp->rng, (NEG_THRESH_SIGN * NEG_THRESHOLD_MIN), NEG_THRESHOLD_MAX);
-	initNeuron(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid), synapticConnectivity, G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta, TM, VR, sigmaVR, gamma, kappa, s, signalDelay,0,0); //we re-define the destination axons here, rather than use the constructor.
+	initNeuronEncodedRV(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid), synapticConnectivity,
+			   G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta,
+			   TM, VR, sigmaVR, gamma, kappa, s, signalDelay,0,0);
+		//we re-define the destination axons here, rather than use the constructor.
 
 
 	/**@note This random setup will create neurons that have an even chance of getting an axon inside thier own core
@@ -428,9 +457,12 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	 * paper if performance is slow. * */
 	s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
 	s->dendriteLocal = tw_rand_integer(lp->rng, 0, AXONS_IN_CORE - 1);
-
 		//     if (tnMapping == LLINEAR) {
 	s->dendriteGlobalDest = lGetAxonFromNeu(s->dendriteCore, s->dendriteLocal);
+		if (lGetAxeNumLocal(s->dendriteGlobalDest) != lGetAxonFromNeu(s->dendriteCore,s->dendriteLocal))
+		{
+			tw_error(TW_LOC,438,"Invalid Axon Destination - neuron %i set gid %i",lp->gid,s->dendriteGlobalDest);
+		}
 		//     }
 		//     else {
 		//     s->dendriteGlobalDest = getAxonGlobal(s->dendriteCore, s->dendriteLocal);
@@ -484,6 +516,9 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 	if (DEBUG_MODE) {
 		printf("Neuron type %s, num: %hu checking in with GID %llu and dest %llu \n", s->neuronTypeDesc, s->myLocalID, lp->gid, s->dendriteGlobalDest);
 	}
+	if(SAVE_NEURON_OUTS) {
+		saveNetwork(s,lp->gid);
+	}
 }
 
 
@@ -515,8 +550,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	}
 
 
-	bool fired = neuronReceiveMessage(s, M, lp,CV);
-	fired = (g_tw_synchronization_protocol == SEQUENTIAL || g_tw_synchronization_protocol==CONSERVATIVE) && fired;
+	bool fired = neuronReceiveMessage(s, M, lp,CV);//#fired = (g_tw_synchronization_protocol == SEQUENTIAL || g_tw_synchronization_protocol==CONSERVATIVE) && fired;
 
 		if ((SAVE_SPIKE_EVTS || validation) && fired == true){
 			if (nlog == NULL) {
@@ -741,33 +775,33 @@ void axon_init(axonState *s, tw_lp *lp)
 		s->sendMsgCount = 0;
 		s->axonID = lGetAxeNumLocal(lp->gid);
 		s->destSynapse = lGetSynFromAxon(lp->gid);
-
-
-			//if (tnMapping == LLINEAR) {
-			//	s->destSynapse = clgetSynapseFromAxon(lp->gid);
-			//GlobalID g;
-			//g.raw = lp->gid;
-			//s->axonID = g.local;
-
-			//		s->axonID = lGetAxeNumLocal(lp->gid);
-			//	} else {
-			//		s->destSynapse = getSynapseFromAxon(lp->gid);
-			//		id_type l = LOCAL(lp->gid);
-			//
-			//		// tw_printf(TW_LOC, "Axon %i sending message to GID %llu", JSIDE(l),
-			//		// s->destSynapse );
-			//		if (DEBUG_MODE) {
-			//			printf("Axon %i checking in (custom) with gid %llu and dest synapse %llu\n ", JSIDE(l), lp->gid,
-			//			    s->destSynapse);
-			//		}
-			//	}
-			//printf("Axon GIDVAL:(%i,%i), INTVAL(%i),  init message sending to gid %i ...\n",g.local, g.core, s->axonID,lp->gid);
 		tw_stime r = getNextEventTime(lp);
 		tw_event *axe = tw_event_new(lp->gid, r, lp);
 		Msg_Data *data = (Msg_Data *)tw_event_data(axe);
 		data->eventType = AXON_OUT;
 		data->axonID = s->axonID;
 		tw_event_send(axe);
+
+			//if (tnMapping == LLINEAR) {
+		//	s->destSynapse = clgetSynapseFromAxon(lp->gid);
+		//GlobalID g;
+		//g.raw = lp->gid;
+		//s->axonID = g.local;
+
+		//		s->axonID = lGetAxeNumLocal(lp->gid);
+		//	} else {
+		//		s->destSynapse = getSynapseFromAxon(lp->gid);
+		//		id_type l = LOCAL(lp->gid);
+		//
+		//		// tw_printf(TW_LOC, "Axon %i sending message to GID %llu", JSIDE(l),
+		//		// s->destSynapse );
+		//		if (DEBUG_MODE) {
+		//			printf("Axon %i checking in (custom) with gid %llu and dest synapse %llu\n ", JSIDE(l), lp->gid,
+		//			    s->destSynapse);
+		//		}
+		//	}
+		//printf("Axon GIDVAL:(%i,%i), INTVAL(%i),  init message sending to gid %i ...\n",g.local, g.core, s->axonID,lp->gid);
+
 	}
 
 
