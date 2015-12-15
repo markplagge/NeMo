@@ -585,7 +585,13 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 			//printf("Neuron snapshot saved");
 	}
 
+	if ((validation || SAVE_MEMBRANE_POTS)  && M->eventType == NEURON_HEARTBEAT && s->neuronTypeDesc[0]!='D') {
 
+		//if(s->neuronTypeDesc[0] == 'P' && s->neuronTypeDesc[1] == 'H')
+		char* x = s->neuronTypeDesc;
+		int xu = 3;
+		saveValidationData(s->myLocalID, s->myCoreID, tw_now(lp), s->membranePotential);
+	}
 	bool fired = neuronReceiveMessage(s, M, lp,CV);//#fired = (g_tw_synchronization_protocol == SEQUENTIAL || g_tw_synchronization_protocol==CONSERVATIVE) && fired;
 
 		if ((SAVE_SPIKE_EVTS || validation) && fired == true){
@@ -596,13 +602,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 				addEntry(nlset(s,lp), nlog, getCurrentBigTick(tw_now(lp)));
 			}
 		}
-		if ((validation || SAVE_MEMBRANE_POTS)  && M->eventType == NEURON_HEARTBEAT && s->neuronTypeDesc[0]!='D') {
 
-			//if(s->neuronTypeDesc[0] == 'P' && s->neuronTypeDesc[1] == 'H')
-			char* x = s->neuronTypeDesc;
-			int xu = 3;
-            saveValidationData(s->myLocalID, s->myCoreID, tw_now(lp), s->membranePotential);
-		}
 	
 
 
@@ -651,7 +651,7 @@ void neuron_final(neuronState *s, tw_lp *lp)
 	neuronSOPS += s->SOPSCount;
 		//printf("neuron %i has %i SOPS \n", lp->gid, s->SOPSCount);
 	fireCount += s->fireCount;
-	if(DEBUG_MODE && nlog != NULL){
+	if(nlog != NULL){ //nlog should always be not null if we want debugging (the flag allows nlog to be created)
 		saveLog(nlog, "seq_neuron_spike_log.csv");
 			//saveLog(nlog, fn);
 	}
@@ -801,8 +801,8 @@ void axon_init(axonState *s, tw_lp *lp)
 
     }else if(TONIC_BURST_VAL){
 
-            crPhasicAxon(s, lp);
-            specAxons ++;
+		crTonicBurstingAxon(s, lp);
+		specAxons ++;
 
     }
 	else {
