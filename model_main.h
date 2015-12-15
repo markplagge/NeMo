@@ -56,9 +56,9 @@ bool GEN_RND = 1; //!< Generator random mode flag
 //unsigned int GEN_OUTBOUND = 0;
 //unsigned int GEN_SEL_MODE = 0;
 //unsigned int SP_DBG = 0;
-unsigned int LPS_PER_PE;
-unsigned int SIM_SIZE;
-unsigned int LP_PER_KP;
+unsigned long LPS_PER_PE;
+unsigned long SIM_SIZE;
+unsigned long LP_PER_KP;
 tw_stime LH_VAL = 0;
 unsigned int RAND_WT_PROB = 2;
 bool DEBUG_MODE = 0;

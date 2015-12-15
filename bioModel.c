@@ -13,8 +13,8 @@
 void crPhasic(neuronState *s, tw_lp *lp){
     bool synapticConnectivity[NEURONS_IN_CORE];
 	short G_i[NEURONS_IN_CORE];
-	int sigma[4];
-	int S[4];
+	short sigma[4];
+	short S[4];
 	bool b[4];
 	bool epsilon = 0;
 	bool sigma_l = 0;
@@ -86,8 +86,8 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
     for (int i = 0; i < NEURONS_IN_CORE; i ++) {
         G_i[i] = 2;
     }
-    int sigma[4] = {1,1,1,1};
-    int S_j[4] = {0,0,0,0};
+    short sigma[4] = {1,1,1,1};
+    short S_j[4] = {0,0,0,0};
     int st[4] = {0,0,0,0};
     bool B[4] = {0,0,0,0};
     // Keep track of the number of times we've run this
@@ -100,6 +100,7 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
         //TODO: Check to see if the synaptic mode is correct in the paper.
         G_i[0] = 0;
         G_i[1] = 1;
+		G_i[2] = 0;
 
         S_j[0] = 1;
         S_j[1] = 100;
@@ -115,6 +116,7 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
         int gamma = 0;
         synapticConnectivity[0] = 1;
         synapticConnectivity[1] = 1;
+
         
         sigma[0] = 1;
         sigma[1] = -1;
@@ -137,9 +139,10 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
     }else if ( created == 1) {
         
         //second neuron, synapse type 0 has weight 1
-        G_i[0] = 0;
-        S_j[0] = 1;
+        G_i[0] = 0; //axon 0 is type 0
+        S_j[0] = 1; //type 0 has weight of 1
         int epsilon = 1;
+
         int lambda = 0;
         int c = 0;
         uint32_t posThreshold = 6;
@@ -149,12 +152,12 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
         int kappa = 1;
         int gamma = 0;
         
-        synapticConnectivity[2] = 1;
+        synapticConnectivity[0] = 1;
         
         sigma[0] = 1;
         sigma[1] = 1;
-        sigma[2] = 2;
-        sigma[3] = 3;
+        sigma[2] = 1;
+        sigma[3] = 1;
         tw_lpid dest = lGetAxonFromNeu(lGetCoreFromGID(lp->gid), 1); //output to axon 1
         
         
@@ -173,18 +176,23 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
 
 }
 void crPhasicAxon(axonState *s, tw_lp *lp){
-	s->axtype = "ax_phasic";
-	s->sendMsgCount = 0;
-	s->axonID = lGetAxeNumLocal(lp->gid);
-	s->destSynapse = lGetSynFromAxon(lp->gid);
+	static int created = 0;
+
+		s->axtype = "ax_phasic";
+		s->sendMsgCount = 0;
+		s->axonID = lGetAxeNumLocal(lp->gid);
+		s->destSynapse = lGetSynFromAxon(lp->gid);
+	if (created == 0) {
 		//Queue up events for the phasic spiker
-	for (int i = 1000; i < g_tw_ts_end; i *= 2) {
-		tw_stime evtTime = i + tw_rand_unif(lp->rng);
-		tw_event *axe = tw_event_new(lp->gid, evtTime, lp);
-		Msg_Data *data = (Msg_Data *)tw_event_data(axe);
-		data->eventType = AXON_OUT;
-		data->axonID = s->axonID;
-		tw_event_send(axe);
+		for (int i = 10; i < g_tw_ts_end; i += 1) {
+			tw_stime evtTime = i + tw_rand_unif(lp->rng);
+			tw_event *axe = tw_event_new(lp->gid, evtTime, lp);
+			Msg_Data *data = (Msg_Data *) tw_event_data(axe);
+			data->eventType = AXON_OUT;
+			data->axonID = s->axonID;
+			tw_event_send(axe);
+		}
+		created ++;
 	}
 
 }

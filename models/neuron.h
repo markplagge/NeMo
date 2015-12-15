@@ -152,15 +152,15 @@ typedef struct NeuronModel {
  here as VR * sigmaVR for model compatibility */
 void  initNeuron(id_type coreID, id_type nID,
                  bool synapticConnectivity[],
-                 short G_i[], int sigma[4], int S[4], bool b[4], bool epsilon,
+                 short G_i[], short sigma[4], short S[4], bool b[4], bool epsilon,
                  short sigma_l, short lambda, bool c, uint32_t alpha,
                  uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa, neuronState *n, int signalDelay, uint64_t destGlobalID, int destAxonID);
 /** Creates a neuron using the encoded reset value method. Use this for more 
  complete compatability with TrueNorth */
 void initNeuronEncodedRV(id_type coreID, id_type nID,
                          bool synapticConnectivity[NEURONS_IN_CORE],
-                         short G_i[NEURONS_IN_CORE], int sigma[4],
-                         int S[4], bool b[4], bool epsilon,
+                         short G_i[NEURONS_IN_CORE], short sigma[4],
+                         short S[4], bool b[4], bool epsilon,
                          short sigma_l, short lambda, bool c, uint32_t alpha,
                          uint32_t beta, short TM, short VR, short sigmaVR, short gamma,
                          bool kappa, neuronState *n, int signalDelay, uint64_t destGlobalID,int destAxonID);

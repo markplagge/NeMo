@@ -12,8 +12,8 @@
 /** Constructor / Init a new neuron. assumes that the reset voltage is NOT encoded.*/
 void initNeuron(id_type coreID, id_type nID,
                 bool synapticConnectivity[NEURONS_IN_CORE],
-                short G_i[NEURONS_IN_CORE], int sigma[4],
-                int S[4], bool b[4], bool epsilon,
+                short G_i[NEURONS_IN_CORE], short sigma[4],
+                short S[4], bool b[4], bool epsilon,
                 short sigma_l, short lambda, bool c, uint32_t alpha,
                 uint32_t beta, short TM, short VR, short sigmaVR, short gamma,
                 bool kappa, neuronState *n, int signalDelay, uint64_t destGlobalID,int destAxonID)
@@ -67,7 +67,7 @@ void initNeuron(id_type coreID, id_type nID,
     //synaptic neuron setup:
     n->largestRandomValue = n->thresholdPRNMask;
     if(n->largestRandomValue > 256) {
-        tw_error(TW_LOC, 67, "Error - neuron (%i,%i) has a PRN Max greater than 256\n ", n->myCoreID, n->myLocalID);
+        tw_error(TW_LOC, "Error - neuron (%i,%i) has a PRN Max greater than 256\n ", n->myCoreID, n->myLocalID);
     }
     //just using this rather than bit shadowing.
 
@@ -79,8 +79,8 @@ void initNeuron(id_type coreID, id_type nID,
 }
 void initNeuronEncodedRV(id_type coreID, id_type nID,
                          bool synapticConnectivity[NEURONS_IN_CORE],
-                         short G_i[NEURONS_IN_CORE], int sigma[4],
-                         int S[4], bool b[4], bool epsilon,
+                         short G_i[NEURONS_IN_CORE], short sigma[4],
+                         short S[4], bool b[4], bool epsilon,
                          short sigma_l, short lambda, bool c, uint32_t alpha,
                          uint32_t beta, short TM, short VR, short sigmaVR, short gamma,
                          bool kappa, neuronState *n, int signalDelay, uint64_t destGlobalID,int destAxonID) {
@@ -262,7 +262,7 @@ void neuronReverseState(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp)
     s->lastLeakTime = m->neuronLastLeakTime;
     s->lastActiveTime = m->neuronLastActiveTime;
     s->drawnRandomNumber = m->neuronDrawnRandom;
-    s->fireCount = m->neuronFireCount;
+    //s->fireCount = m->neuronFireCount;
 
     //check for heartbeat rollback:
     if(CV->c13 == 1){
@@ -496,7 +496,7 @@ void sendHeartbeat(neuronState *st, tw_stime time, void *lp) {
     data->eventType=NEURON_HEARTBEAT;
     tw_event_send(newEvent);
     if(st->heartbeatOut == false) {
-        tw_error(TW_LOC, 455, "Error - neuron sent heartbeat without setting HB to true\n");
+        tw_error(TW_LOC, "Error - neuron sent heartbeat without setting HB to true\n");
     }
 
 }
