@@ -217,7 +217,7 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
                 sendHeartbeat(st, time, lp);
                 //set message flag indicating that the heartbeat msg has been sent
                 bf->c13 = 1; //C13 indicates that the heartbeatout flag has been changed.
-				printf("Neuron fired . \n");
+
 
             }
 
