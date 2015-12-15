@@ -21,8 +21,8 @@ void crPhasic(neuronState *s, tw_lp *lp){
 	short lambda = 2;
 	bool c = false;
 	short TM = 0;
-	short VR = 0;
-	short sigmaVR = 1;
+	short VR = -15;
+	short sigmaVR = -1;
 	short gamma = 0;
 	bool kappa = true;
     
@@ -80,7 +80,7 @@ void crPhasic(neuronState *s, tw_lp *lp){
  */
 void crTonicBursting(neuronState *s, tw_lp *lp){
     static int created = 0;
-    
+    s->isSelfFiring = true;
     short *G_i = calloc(sizeof(short), NEURONS_IN_CORE);
     bool *synapticConnectivity = calloc(sizeof(bool),NEURONS_IN_CORE);
     for (int i = 0; i < NEURONS_IN_CORE; i ++) {
@@ -200,6 +200,7 @@ void crTonBurstAxeEvent(axonState *s, tw_lp *lp, long i) {
 
 	tw_stime evtTime = i + tw_rand_unif(lp->rng);
 	tw_event *axe = tw_event_new(lp->gid, evtTime, lp);
+
 	Msg_Data *data = (Msg_Data *)tw_event_data(axe);
 	data->eventType = AXON_OUT;
 	data->axonID = s->axonID;
@@ -213,20 +214,18 @@ void crTonicBurstingAxon(axonState *s, tw_lp *lp){
 	s->sendMsgCount  = 0;
 	s->axonID = lGetAxeNumLocal(lp->gid);
 	s->destSynapse = lGetSynFromAxon(lp->gid);
-	if(num < 3) {
+	if(num < 1) {
 		s->axtype = "ax_tonic_bursting";
 
 		//Queue up events for the tonic bursting axon.
 		//Start at the first big tick
 		for (long i = 100; i < g_tw_ts_end; i += 100) {
 			//first 5 (500 ticks) iterations, run slowly, then speed up to once per tick
-			while (i > 500 && i < g_tw_ts_end) {
-				crTonBurstAxeEvent(s,lp,i);
-				i += 2;
-			}
+
 			crTonBurstAxeEvent(s,lp,i);
 
 		}
+
 		num ++;
 	}
 

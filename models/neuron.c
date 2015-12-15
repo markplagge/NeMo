@@ -162,6 +162,9 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
     //m->stateSaveZone = tw_calloc(TW_LOC, "neuron", sizeof(neuronState), 1);
     //memcpy(m->stateSaveZone,st,sizeof(*st));
 
+	char tp = st->neuronTypeDesc[0];
+	int x = st->myLocalID;
+;	int y = st->myLocalID;
 
     switch (m->eventType)
     {

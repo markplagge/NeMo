@@ -585,7 +585,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 			//printf("Neuron snapshot saved");
 	}
 
-	if ((validation || SAVE_MEMBRANE_POTS)  && M->eventType == NEURON_HEARTBEAT && s->neuronTypeDesc[0]!='D') {
+	if ((validation || SAVE_MEMBRANE_POTS)   && s->neuronTypeDesc[0]!='D') { //&& M->eventType == NEURON_HEARTBEAT
 
 		//if(s->neuronTypeDesc[0] == 'P' && s->neuronTypeDesc[1] == 'H')
 		char* x = s->neuronTypeDesc;
