@@ -63,7 +63,8 @@ void addEntry(neuEvtLog *newE, neuEvtLog *log, int currentBigTick){
     //neuEvtLog *end = getLast(log); no longer putting the list of items at the end, putting in front.
     //end->next = newE;
     newE->next = log;
-    log = newE;
+    //log = newE;
+    
     
     
 }

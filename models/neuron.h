@@ -66,7 +66,7 @@ void ringing(void *nsv, volt_type oldVoltage);
 /**
  * @brief numeric overflow & underflow check
  */
-void overUnderflowCheck(void *neuronState);
+bool overUnderflowCheck(void *neuronState);
 
 
 
@@ -200,6 +200,13 @@ void integrate(id_type synapseID,neuronState *st, void *lp);
  *  @return true if the neuron is ready to fire.
  */
 bool neuronShouldFire(neuronState *st, void *lp);
+
+/**
+ * @brief New firing system using underflow/overflow and reset. 
+ * @return true if neuron is ready to fire. Membrane potential is set regardless.
+ */
+bool fireFloorCelingReset(neuronState *ns, tw_lp *lp);
+
 
 /**
  *  @brief  Function that runs after integration & firing, for reset function and threshold bounce calls.

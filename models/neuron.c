@@ -194,34 +194,37 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
 			numericLeakCalc(st, tw_now(lp));
             //linearLeak( st, tw_now(lp));
             ringing(st, m->neuronVoltage);
-            willFire = neuronShouldFire(st, lp);
+            
+            //willFire = neuronShouldFire(st, lp); //removed and replaced with fireFloorCelingReset
+            willFire = fireFloorCelingReset(st, lp);
+            
             if (willFire) {
                 fire(st,lp);
                 st->fireCount++;
                 //TODO: Fix this shit:
 					//st->membranePotential = 0;
-
             }
 
-            neuronPostIntegrate(st, tw_now(lp), lp, willFire);
+            //neuronPostIntegrate(st, tw_now(lp), lp, willFire); //removed and replaced with fireFloorCelingReset
             //stats collection
             st->SOPSCount++;
-
             st->lastActiveTime = tw_now(lp);
 
+            
+//            if(neuronShouldFire(st, lp)){
+//                st->heartbeatOut = true;
+//                tw_stime time = getNextBigTick(lp, st->myLocalID);
+//                sendHeartbeat(st, time, lp);
+//                //set message flag indicating that the heartbeat msg has been sent
+//                bf->c13 = 1; //C13 indicates that the heartbeatout flag has been changed.
+//
+//
+//            }
             //do we still have more than the threshold volts left? if so,
             //send a heartbeat out that will ensure the neuron fires again.
-            if(neuronShouldFire(st, lp)){
-                st->heartbeatOut = true;
-                tw_stime time = getNextBigTick(lp, st->myLocalID);
-                sendHeartbeat(st, time, lp);
-                //set message flag indicating that the heartbeat msg has been sent
-                bf->c13 = 1; //C13 indicates that the heartbeatout flag has been changed.
-
-
-            }
-
-            if(st->isSelfFiring){
+            //Or if we are as self-firing neuron.
+            ///@TODO: Add detection of self-firing neuron state.
+            if(st->isSelfFiring || neuronShouldFire(st, lp)){
                 tw_stime time = getNextBigTick(lp, st->myLocalID);
                 sendHeartbeat(st, time, lp);
                 st->heartbeatOut = true;
@@ -508,6 +511,21 @@ void sendHeartbeat(neuronState *st, tw_stime time, void *lp) {
     }
 
 }
+
+bool overUnderflowCheck(void *ns){
+    neuronState *n = (neuronState *) ns;
+    
+    int ceiling = 393216;
+    int floor = -393216;
+    bool spike = false;
+    if(n->membranePotential > ceiling){
+        spike = true;
+        n->membranePotential = ceiling;
+    }else if(n->membranePotential < floor){
+        n->membranePotential = floor;
+    }
+    return spike;
+}
 bool neuronShouldFire(neuronState *st, void *lp)
 {
 
@@ -515,7 +533,68 @@ bool neuronShouldFire(neuronState *st, void *lp)
     volt_type threshold = st->posThreshold;
     return (st->membranePotential >= threshold);// + (st->drawnRandomNumber));
 }
-
+/**
+* Changes neuron state - only use when actually attempting to fire, do not use
+* to check if neuron should fire - use neuronShouldFire() for that.
+* Calls underflow/overflow check first, then checks voltage.
+* Then numerically calculates positive and negative reset voltages, and
+* sets them in the neuron state. Internally handles PRN draw and "masking".
+ */
+bool fireFloorCelingReset(neuronState *ns, tw_lp *lp){
+    bool shouldFire = false;
+     ///@TODO remove this line later for performacne - check that neuron init handles this properly.
+    ns->drawnRandomNumber = 0;
+    //Sanity variables - remove if we need that .01% performance increase:
+    volt_type Vrst = ns->resetVoltage;
+    volt_type alpha = ns->posThreshold;
+    volt_type beta = ns->negThreshold;
+    short gamma = ns->resetMode;
+    
+    
+    ///@TODO: might not need this random generator, if it is called in the event handler here
+    if(ns->c)
+        ns->drawnRandomNumber = (tw_rand_integer(lp->rng, 0, ns->largestRandomValue));
+    //check if neuron is overflowing/underflowing:
+    if(overUnderflowCheck((void*)ns)) {
+        return true;
+    }else if(ns->membranePotential >= ns->posThreshold + ns->drawnRandomNumber){
+        ns->membranePotential = ((DT(gamma))*Vrst +
+                                ((DT((gamma-1))) * (ns->membranePotential - (alpha + ns->drawnRandomNumber))) +
+                                ((DT((gamma-2))) * ns->membranePotential)
+                                 );
+        
+//        
+//        switch (ns->resetMode) {
+//            case 0:
+//                ns->membranePotential = ns->resetVoltage;
+//                break;
+//            case 1:
+//                ns->membranePotential = DT(𝛾)  *
+//                (ns->membranePotential - (ns->posThreshold + ns->drawnRandomNumber));
+//                break;
+//            case 2:
+//                //ns->membranePotential = DT * ns->membranePotential;
+//                break;
+//            default:
+//                tw_error(TW_LOC, "Error occured within neuron reset function - neuron had invalid reset mode %i", ns->resetMode);
+//                break;
+        
+        shouldFire = true;
+    }else if (ns->membranePotential <
+              (-1 * (beta * ns->kappa +
+                    (beta + ns->drawnRandomNumber) * (1 - ns->kappa)
+                     ))){
+        ns->membranePotential = (
+                                 ((-1*beta) * ns->kappa) + (
+                                 ((-1*(DT(gamma))) * Vrst) +
+                                 ((DT((gamma - 1))) * (ns->membranePotential + (beta + ns->drawnRandomNumber))) +
+                                 ((DT((gamma - 2))) * ns->membranePotential)) * (1 - ns->kappa)
+                                 );
+                                                    
+    }
+    return shouldFire;
+    
+}
 
 
 void fire(neuronState *st, void *l)

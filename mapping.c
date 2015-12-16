@@ -351,7 +351,7 @@ void tn_cube_mapping()
 	g_tw_lp_offset = nodeOffset();
 
 #if VERIFY_MAPPING
-	printf("NODE %d: nlp %lld, offset %lld\n", g_tw_mynode, g_tw_nlp, g_tw_lp_offset);
+	printf("NODE %ld: nlp %lld, offset %lld\n", g_tw_mynode, g_tw_nlp, g_tw_lp_offset);
 #endif
 
 	for (kpid = 0, lpid = nodeOffset(), pe = NULL; (pe = tw_pe_next(pe)); )
@@ -529,7 +529,7 @@ void scatterMap()
 	}
 
 
-	printf("\n\n\ntotal lps %i - actual is %i\n PEs per LP is %i  - g_npe: %lu", SIM_SIZE, i, LPS_PER_PE, g_tw_npe);
+	printf("\n\n\ntotal lps %lu - actual is %i\n PEs per LP is %i  - g_npe: %lu", SIM_SIZE, i, LPS_PER_PE, g_tw_npe);
 	//create GID arrays for each LP:
 
 	//myGIDs = (tw_lpid *)malloc(sizeof(tw_lpid)* LPS_PER_PE);
@@ -544,7 +544,7 @@ void scatterMap()
 	{
 		MPI_Barrier(MPI_COMM_WORLD);
 		if ((g_tw_mynode == ct) && (SIM_SIZE < 1024)) {
-			printf("LPs/PE %i", LPS_PER_PE);
+			printf("LPs/PE %lu", LPS_PER_PE);
 			printf("PEID #%li HAS \n CORE\ti\tj\tlocal\n", g_tw_mynode);
 			int i;
 

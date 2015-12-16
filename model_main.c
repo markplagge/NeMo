@@ -83,8 +83,7 @@ void saveNetwork(neuronState *nglobal,tw_lpid gid){
 	fclose(f);
 
 
-	tw_lpid  x;
-
+	
 
 
 	f = fopen(wtfn,"w");
@@ -466,10 +465,10 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	}
 	synapticConnectivity[lGetNeuNumLocal(lp->gid)] = 1;
 	for(int i = 0; i < 4; i ++){
-			//int ri = tw_rand_integer(lp->rng, -1, 0);
-		unsigned int mk = tw_rand_integer(lp->rng, 0, 1);
+		//int ri = tw_rand_integer(lp->rng, -1, 0);
+		//unsigned int mk = tw_rand_integer(lp->rng, 0, 1);
 
-			//sigma[i] = (!ri * 1) + (-1 & ri))
+		//sigma[i] = (!ri * 1) + (-1 & ri))
 		//sigma[i] = (mk ^ (mk - 1)) * 1;
 		sigma[i] = 1;
 		S[i] = 1;
@@ -588,8 +587,8 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	if ((validation || SAVE_MEMBRANE_POTS)   && s->neuronTypeDesc[0]!='D') { //&& M->eventType == NEURON_HEARTBEAT
 
 		//if(s->neuronTypeDesc[0] == 'P' && s->neuronTypeDesc[1] == 'H')
-		char* x = s->neuronTypeDesc;
-		int xu = 3;
+		//char* x = s->neuronTypeDesc;
+		//int xu = 3;
 		saveValidationData(s->myLocalID, s->myCoreID, tw_now(lp), s->membranePotential);
 	}
 	bool fired = neuronReceiveMessage(s, M, lp,CV);//#fired = (g_tw_synchronization_protocol == SEQUENTIAL || g_tw_synchronization_protocol==CONSERVATIVE) && fired;
