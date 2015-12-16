@@ -58,6 +58,16 @@ void resetLinear(void *neuronState);
  */
 void resetNone(void *neuronState);
 
+/**
+ *  @brief numeric ringing checks:
+ */
+void ringing(void *neuronState);
+
+/**
+ * @brief numeric overflow & underflow check
+ */
+void overUnderflowCheck(void *neuronState);
+
 
 
 typedef struct NeuronModel {

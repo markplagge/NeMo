@@ -162,9 +162,7 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
     //m->stateSaveZone = tw_calloc(TW_LOC, "neuron", sizeof(neuronState), 1);
     //memcpy(m->stateSaveZone,st,sizeof(*st));
 
-	char tp = st->neuronTypeDesc[0];
-	int x = st->myLocalID;
-;	int y = st->myLocalID;
+
 
     switch (m->eventType)
     {
@@ -183,7 +181,6 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
 
 
             }
-
             break;
 
         case NEURON_HEARTBEAT:
@@ -472,10 +469,6 @@ void integrate(id_type synapseID, neuronState *st, void *lp){
 	weight_type stw = st->synapticWeight[at];
 		//weight_type weight = st->synapticWeight[st->axonTypes[synapseID]] & st->synapticConnectivity[synapseID];
 	weight_type weight = stw *  st->synapticConnectivity[synapseID];
-
-
-
-
     //!!!! DEBUG CHECK FOR WEIGHT ISSUES:
     //weight = 0;
     //!!! REMOVE previous FOR PRODUCTION
@@ -571,7 +564,8 @@ void neuronPostIntegrate(neuronState *st, tw_stime time, tw_lp *lp, bool willFir
 
 	if (willFire) { // neuron will/did fire:
         st->doReset(st);
-	} else if (st->membranePotential < -1 * (st->negThreshold * st->resetVoltage + (st->negThreshold + st->drawnRandomNumber))) {
+	} else if (st->membranePotential < -1 * (st->negThreshold * st->resetVoltage +
+            (st->negThreshold + st->drawnRandomNumber))) {
 		//sanity variables for the formulaic reset/bounce instead of calling functions:
 		thresh_type B = st->negThreshold;
 		long long K = st->resetVoltage;
