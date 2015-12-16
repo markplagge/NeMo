@@ -9,7 +9,8 @@
 #include "neuron.h"
 
 
-/** Constructor / Init a new neuron. assumes that the reset voltage is NOT encoded.*/
+/** Constructor / Init a new neuron. assumes that the reset voltage is NOT encoded (i.e.,
+  * a reset value of -5 is allowed. Sets reset voltage sign from input reset voltage).*/
 void initNeuron(id_type coreID, id_type nID,
                 bool synapticConnectivity[NEURONS_IN_CORE],
                 short G_i[NEURONS_IN_CORE], short sigma[4],
@@ -40,19 +41,18 @@ void initNeuron(id_type coreID, id_type nID,
     n->negThreshold = beta;
     n->thresholdMaskBits = TM;
     //n->thresholdPRNMask = getBitMask(n->thresholdMaskBits);
-    n->sigmaVR = sigmaVR;
+    n->sigmaVR = SGN(VR);
     n->encodedResetVoltage = VR;
-    n->resetVoltage = VR * sigmaVR;
+    n->resetVoltage = VR; //* sigmaVR;
+    
     n->resetMode = gamma;
     n->kappa = kappa;
     n->omega = 0;
 
-
-
     //! @TODO: perhaps calculate if a neuron is self firing or not.
     n->firedLast = false;
     n->heartbeatOut = false;
-    n->isSelfFiring = false;
+    //n->isSelfFiring = false;
     n->receivedSynapseMsgs = 0;
 
     setNeuronDest(signalDelay, destGlobalID, n);
@@ -74,7 +74,7 @@ void initNeuron(id_type coreID, id_type nID,
     n->log = NULL;
 
     //Check to see if we are a self-firing neuron. If so, we need to send heartbeats every big tick.
-    n->isSelfFiring = false; //!@TODO: Add logic to support self-firing (spontanious) neurons
+    //n->isSelfFiring = false; //!@TODO: Add logic to support self-firing (spontanious) neurons
 
 }
 void initNeuronEncodedRV(id_type coreID, id_type nID,
@@ -88,6 +88,8 @@ void initNeuronEncodedRV(id_type coreID, id_type nID,
     initNeuron(coreID, nID, synapticConnectivity, G_i,  sigma, S, b, epsilon,
                sigma_l, lambda, c, alpha, beta,  TM,  VR,  sigmaVR,  gamma,
                 kappa,  n,  signalDelay, destGlobalID, destAxonID);
+    n->sigmaVR = sigmaVR;
+    n->encodedResetVoltage = VR;
     n->resetVoltage = (n->sigmaVR * (pow(2, n->encodedResetVoltage)-1));
     
 }
@@ -162,11 +164,13 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
     //m->stateSaveZone = tw_calloc(TW_LOC, "neuron", sizeof(neuronState), 1);
     //memcpy(m->stateSaveZone,st,sizeof(*st));
 
-
+    int num = st->myLocalID;
 
     switch (m->eventType)
     {
       /// @TODO: possibly need to aggregate inputs on the same channel? If validation isn't working check this.
+            
+
         case SYNAPSE_OUT:
             st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
 			      integrate(m->axonID, st, lp);
@@ -224,12 +228,12 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
             //send a heartbeat out that will ensure the neuron fires again.
             //Or if we are as self-firing neuron.
             ///@TODO: Add detection of self-firing neuron state.
-            if(st->isSelfFiring || neuronShouldFire(st, lp)){
+            if( neuronShouldFire(st, lp) && st->heartbeatOut == false ){
                 tw_stime time = getNextBigTick(lp, st->myLocalID);
-                sendHeartbeat(st, time, lp);
                 st->heartbeatOut = true;
                 //set message flag indicating that the heartbeat msg has been sent
                 bf->c13 = 1; //C13 indicates that the heartbeatout flag has been changed.
+                sendHeartbeat(st, time, lp);
             }
             break;
         default:
@@ -237,9 +241,14 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
             tw_error(TW_LOC, "Neuron (%i,%i) received invalid message type, %i \n ", st->myCoreID,st->myLocalID, m->eventType);
             break;
     }
-    //TODO: Remove this
-
-
+    //self-firing neuron (spont.)
+    if(st->isSelfFiring && st->heartbeatOut == false){
+        tw_stime time = getNextBigTick(lp, st->myLocalID);
+        st->heartbeatOut = true;
+        //set message flag indicating that the heartbeat msg has been sent
+        bf->c13 = 1; //C13 indicates that the heartbeatout flag has been changed.
+        sendHeartbeat(st, time, lp);
+    }
     return willFire;
 }
 
@@ -584,6 +593,7 @@ bool fireFloorCelingReset(neuronState *ns, tw_lp *lp){
               (-1 * (beta * ns->kappa +
                     (beta + ns->drawnRandomNumber) * (1 - ns->kappa)
                      ))){
+        volt_type x = ns->membranePotential;
         ns->membranePotential = (
                                  ((-1*beta) * ns->kappa) + (
                                  ((-1*(DT(gamma))) * Vrst) +

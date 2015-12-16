@@ -153,6 +153,7 @@ typedef struct NeuronModel {
     neuEvtLog *log;//!< a log of spikes.
     char* neuronTypeDesc; //!< a debug tool, contains a text desc of the neuron.
     /**@}*/
+    short outputNeuron;
     
 }neuronState;
 

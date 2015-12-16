@@ -219,9 +219,7 @@ void crTonicBurstingAxon(axonState *s, tw_lp *lp){
 
 		//Queue up events for the tonic bursting axon.
 		//Start at the first big tick
-		for (long i = 100; i < g_tw_ts_end; i += 100) {
-			//first 5 (500 ticks) iterations, run slowly, then speed up to once per tick
-
+		for (long i = 0; i < g_tw_ts_end; i += 1) {
 			crTonBurstAxeEvent(s,lp,i);
 
 		}
