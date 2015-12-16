@@ -61,7 +61,7 @@ void resetNone(void *neuronState);
 /**
  *  @brief numeric ringing checks:
  */
-void ringing(void *neuronState);
+void ringing(void *nsv, volt_type oldVoltage);
 
 /**
  * @brief numeric overflow & underflow check

@@ -193,7 +193,7 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
 
 			numericLeakCalc(st, tw_now(lp));
             //linearLeak( st, tw_now(lp));
-
+            ringing(st, m->neuronVoltage);
             willFire = neuronShouldFire(st, lp);
             if (willFire) {
                 fire(st,lp);
@@ -451,8 +451,19 @@ void reverseResetNone(void *neuronState)
 {
 }
 
+/** From Neuron Behavior Reference - checks to make sure that there is no "ringing".
+ The specs state that the leak stores the voltage in a temporary variable. Here,
+ we store the leak voltage in the membrane potential, and override it with a new value. */
+
+void ringing(void *nsv, volt_type oldVoltage ){
+    neuronState *ns = (neuronState *) nsv;
+    if(ns->epsilon && (SGN(ns->membranePotential) != SGN(oldVoltage))){
+        ns->membranePotential = 0;
+    }
+}
 
 /** @} */
+
 
 /** @name NeuronFunctions
  * Main neuron functions and behaviors
