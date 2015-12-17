@@ -45,7 +45,7 @@ struct NeuronModel;
 
 
 //Proper Typdefs:
-typedef uint16_t id_type;
+typedef uint64_t id_type;
 typedef int64_t volt_type;
 typedef int64_t weight_type;
 typedef uint_fast32_t thresh_type;
@@ -182,9 +182,9 @@ extern tw_stime BIG_TICK_ERR; //!< Tick error - tw_stime can be this much under 
 /** @{ /name Mapping */
 extern int NUM_VP_X;
 extern int NUM_VP_Y;
-extern unsigned int LPS_PER_PE;
-extern unsigned int SIM_SIZE;
-extern unsigned int LP_PER_KP;
+extern unsigned long LPS_PER_PE;
+extern unsigned long SIM_SIZE;
+extern unsigned long LP_PER_KP;
 
 /*@}*/
 

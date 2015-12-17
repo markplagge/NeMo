@@ -63,7 +63,7 @@ void crInhibitionInducedSpiker(neuronState *s, tw_lp *lp);
 void crInhibitionInducedBurst(neuronState *s, tw_lp *lp);
 
 void crPhasicAxon(axonState *s, tw_lp *lp);
-
+void crTonicBurstingAxon(axonState *s, tw_lp *lp);
 void crBioLoopback(neuronState *s, tw_lp *lp);
 bool *identityConnectivity(int localID);
 bool *zeroIDMatrix(int n, int m);

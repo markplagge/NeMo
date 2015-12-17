@@ -12,6 +12,7 @@
 #include "../assist.h"
 #include "../neuron_out_stats.h"
 #include "ross.h"
+#include <math.h>
 #include <stdbool.h>
 
 
@@ -57,6 +58,16 @@ void resetLinear(void *neuronState);
  */
 void resetNone(void *neuronState);
 
+/**
+ *  @brief numeric ringing checks:
+ */
+void ringing(void *nsv, volt_type oldVoltage);
+
+/**
+ * @brief numeric overflow & underflow check
+ */
+bool overUnderflowCheck(void *neuronState);
+
 
 
 typedef struct NeuronModel {
@@ -90,6 +101,8 @@ typedef struct NeuronModel {
     int axonTypes[256];
     
     short synapticWeight[4];
+    
+    /** stochastic weight mode selection. $b_j^{G_i}$ */
     short weightSelection[4];
     thresh_type posThreshold; //!< neuron's threshold value 𝛼
     thresh_type negThreshold; //!< neuron's negative threshold, 𝛽
@@ -140,16 +153,28 @@ typedef struct NeuronModel {
     neuEvtLog *log;//!< a log of spikes.
     char* neuronTypeDesc; //!< a debug tool, contains a text desc of the neuron.
     /**@}*/
+    short outputNeuron;
     
 }neuronState;
 
 /* ***Neuron functions */
 
+/** Creates a neuron using standard spiking parameters. Reset voltage is  calculated
+ here as VR * sigmaVR for model compatibility */
 void  initNeuron(id_type coreID, id_type nID,
                  bool synapticConnectivity[],
-                 short G_i[], int sigma[4], int S[4], bool b[4], bool epsilon,
+                 short G_i[], short sigma[4], short S[4], bool b[4], bool epsilon,
                  short sigma_l, short lambda, bool c, uint32_t alpha,
                  uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa, neuronState *n, int signalDelay, uint64_t destGlobalID, int destAxonID);
+/** Creates a neuron using the encoded reset value method. Use this for more 
+ complete compatability with TrueNorth */
+void initNeuronEncodedRV(id_type coreID, id_type nID,
+                         bool synapticConnectivity[NEURONS_IN_CORE],
+                         short G_i[NEURONS_IN_CORE], short sigma[4],
+                         short S[4], bool b[4], bool epsilon,
+                         short sigma_l, short lambda, bool c, uint32_t alpha,
+                         uint32_t beta, short TM, short VR, short sigmaVR, short gamma,
+                         bool kappa, neuronState *n, int signalDelay, uint64_t destGlobalID,int destAxonID);
 /**
  *  @brief  handles incomming synapse messages. In this model, the neurons send messages to axons during "big tick" intervals.
  This is done through an event sent upon receipt of the first synapse message of the current big-tick.
@@ -176,6 +201,13 @@ void integrate(id_type synapseID,neuronState *st, void *lp);
  *  @return true if the neuron is ready to fire.
  */
 bool neuronShouldFire(neuronState *st, void *lp);
+
+/**
+ * @brief New firing system using underflow/overflow and reset. 
+ * @return true if neuron is ready to fire. Membrane potential is set regardless.
+ */
+bool fireFloorCelingReset(neuronState *ns, tw_lp *lp);
+
 
 /**
  *  @brief  Function that runs after integration & firing, for reset function and threshold bounce calls.

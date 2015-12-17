@@ -31,12 +31,12 @@ extern int NEURONS_IN_CORE ;
  */
 extern int SYNAPSES_IN_CORE;
 extern int CORE_SIZE;
-extern unsigned int SIM_SIZE;
+extern unsigned long SIM_SIZE;
 extern int NUM_VP_X;
 extern int NUM_VP_Y;
 extern int VP_PER_PROC;
-extern unsigned int LPS_PER_PE;
-extern unsigned int LP_PER_KP;
+extern unsigned long LPS_PER_PE;
+extern unsigned long LP_PER_KP;
 extern unsigned int nkp_per_pe;
 	//extern tw_lptype model_lps[];
 	//extern unsigned int SIM_SIZE;
