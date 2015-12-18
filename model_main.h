@@ -174,6 +174,17 @@ void neuron_init(neuronState *s, tw_lp *lp);
  */
 
 //Command line options:
+int B_TH_MIN = 1;
+int B_TH_MAX = 100;
+int B_P_AX_WT_MAX = 100;
+int B_P_AX_WT_MIN = 0;
+int B_N_AX_WT_MAX = -10;
+bool B_LEAK_ON = true;
+int B_LEAK_WEIGHT = -10;
+int B_NEG_THRESHOLD = -10;
+tw_stime B_CROSSBAR_PROB = .5;
+tw_stime B_EXITE_PROB = .75;
+
 const tw_optdef app_opt[]= {
   TWOPT_GROUP("Randomized Neuron Parameters"),
   TWOPT_UINT("th_min", THRESHOLD_MIN, "minimum threshold for neurons"),
@@ -181,6 +192,7 @@ const tw_optdef app_opt[]= {
     TWOPT_UINT("wt_min", SYNAPSE_WEIGHT_MIN, "minimum synapse weight -- is treated as 0-val"),
     TWOPT_UINT("wt_max", SYNAPSE_WEIGHT_MAX, "maximum synapse weight"),
 	TWOPT_UINT("rdn_p", RAND_WT_PROB, "given a λ of 1, if the value is greater than this a neuron will assign a stochastic value to an axon type."),
+  TWOPT_GROUP("Benchmark neuron parameters (default run mode)"),
 
 	TWOPT_GROUP("Sim Size Params"),
 	TWOPT_UINT("cores", CORES_IN_SIM, "number of cores in simulation"),
@@ -228,5 +240,10 @@ void axon_final(axonState *s, tw_lp *lp);
  * information. Only displays on the primary node.
  */
 void displayModelSettings();
+/**
+ * @brief Creates a network of neurons with probabilistic thresholds and remote connections.
+ * */
+void createProbNeuron(neuronState *s, tw_lp *lp);
+void createProbAxon(neuronState *s, tw_lp *lp);
 
 #endif /* defined(__ROSS_TOP__model_main__) */

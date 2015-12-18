@@ -455,11 +455,14 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 
 
 		//per synapse weight / connectivity gen:
+		//each input axon has a 20% probability of connecting.
+		//each connected axon has a 75% chance of being an excitor
 	for(int i = 0; i < NEURONS_IN_CORE; i ++) {
 			//s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
 			//s->axonTypesp[i] = 1; ///! Set axon types to one, since we are just testing performance.
-		G_i[i] = 0; //tw_rand_integer(lp->rng, 0, 3);
-		synapticConnectivity[i] = 0;
+		G_i[i] = tw_rand_binomial(lp->rng,3,.25); //tw_rand_integer(lp->rng, 0, 3);
+		synapticConnectivity[i] = (bool) tw_rand_binomial(lp->rng,1,.2);
+
 
 			//synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1)
 	}
@@ -471,28 +474,44 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 		//sigma[i] = (!ri * 1) + (-1 & ri))
 		//sigma[i] = (mk ^ (mk - 1)) * 1;
 		sigma[i] = 1;
-		S[i] = 1;
+		//S[i] = 1;
 		b[i] = 0;
 	}
+		S[0] = (short) tw_rand_binomial(lp->rng,10,.5);
+		S[1] = (short) tw_rand_binomial(lp->rng,10,.6);
+		S[2] = ((short) tw_rand_binomial(lp->rng,5, .2) * -1);
+		S[3] = ((short) tw_rand_binomial(lp->rng,5, .1) * -1);
 
-	//weight_type alpha = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
+
+	weight_type alpha = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
 	//weight_type beta = tw_rand_integer(lp->rng, (NEG_THRESH_SIGN * NEG_THRESHOLD_MIN), NEG_THRESHOLD_MAX);
-		weight_type alpha = 1;
-		weight_type beta = 0;
+		//weight_type alpha = 1;
+		weight_type beta = -1;
 
 		initNeuronEncodedRV(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid), synapticConnectivity,
 			   G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta,
 			   TM, VR, sigmaVR, gamma, kappa, s, signalDelay,0,0);
 		//we re-define the destination axons here, rather than use the constructor.
 
+	float remoteCoreProbability = .11; //10% probability of off-core connection.	
+	
+	//This neuron's core is X. There is a 90% chance that my destination will be X - and a 10% chance it will be a different core.
+	if(tw_rand_unif(lp->rng) <= remoteCoreProbability){
+//		long dendriteCore = s->myCoreID;
+//		dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);	
+		s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
+	}else {
+		s->dendriteCore = s->myCoreID; //local connection.
+	}
 
 	/**@note This random setup will create neurons that have an even chance of getting an axon inside thier own core
 	 * vs an external core. The paper actually capped this value at something like 20%. @todo - make this match the
 	 * paper if performance is slow. * */
-	s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
+	//s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
 	s->dendriteLocal = tw_rand_integer(lp->rng, 0, AXONS_IN_CORE - 1);
 		//     if (tnMapping == LLINEAR) {
 	s->dendriteGlobalDest = lGetAxonFromNeu(s->dendriteCore, s->dendriteLocal);
+	
 		if (s->dendriteGlobalDest != lGetAxonFromNeu(s->dendriteCore,s->dendriteLocal))
 		{
 
@@ -919,3 +938,52 @@ void displayModelSettings()
 	printf("\n");
 }
 
+	/**
+	 * Creates a network that has an average weight set by B_TH_MIN and B_TH_MAX.
+	 * Neurons are simple reset type neurons - reset to 0.
+	 * Leak is off by default, controlled with B_LEAK_ON. Leak is negative for this sim.
+	 * Leak params are tuned by B_LEAK_WEIGHT.and B_LEAK_MAX and B_LEAK_MIN.
+	 * Negative reset threshold is set to B_NEG_THRESHOLD. Negative reset is set by
+	 * B_NEG_RESET_MODE
+	 * The first two axon types are exitor, the last two are suppresion.
+	 * Neuron types are assigned to a crossbar with a  chance of connection set by B_CROSSBAR_PROB.
+
+	 *
+	 * Default values should produce a fully connected network that has a 50% chance of connection to an axon,
+	 * a 75% chance of an axon being an excitor, an average wieght of 10, and an average threshold of 30, with leak
+	 * off and negative reset at -10.
+	 *
+	 */
+	void createProbNeuron(neuronState *s, tw_lp *lp) {
+		int thresholdMin = B_TH_MIN;
+		int thresholdMax = B_TH_MAX;
+
+		int posAxWeightMax = B_P_AX_WT_MAX;
+		int posAxWeightMin = B_P_AX_WT_MIN;
+
+		int negAxWeightMin = 0;
+		int negAxWeightMax = B_N_AX_WT_MAX;
+		//leak weight
+		int c = B_LEAK_WEIGHT * B_LEAK_ON;
+
+
+
+		int gamma = 0;
+		int kappa = 0;
+		short sigma[4];
+		bool b[4];
+		b[0] = 0;
+		b[1] = 0;
+		b[2] = 0;
+		b[3] = 0;
+
+		float remoteConnectionProb = .5;
+
+		//weight_type alpha = tw_rand_binomial()
+
+
+	}
+
+	void createProbAxon(neuronState *s, tw_lp *lp) {
+
+	}
