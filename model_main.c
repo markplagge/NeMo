@@ -453,6 +453,8 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	bool kappa = false;
 	int signalDelay = tw_rand_integer(lp->rng, 0,5);
 
+		int cc = 0;
+		int d = 0;
 
 		//per synapse weight / connectivity gen:
 		//each input axon has a 20% probability of connecting.
@@ -460,13 +462,20 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	for(int i = 0; i < NEURONS_IN_CORE; i ++) {
 			//s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
 			//s->axonTypesp[i] = 1; ///! Set axon types to one, since we are just testing performance.
-		G_i[i] = tw_rand_binomial(lp->rng,3,.25); //tw_rand_integer(lp->rng, 0, 3);
-		synapticConnectivity[i] = (bool) tw_rand_binomial(lp->rng,1,.2);
+		G_i[i] = tw_rand_integer(lp->rng, 0, 3); //tw_rand_binomial(lp->rng,3,.25);
+		synapticConnectivity[i] = (bool) tw_rand_binomial(lp->rng,1,.02);
+		if(synapticConnectivity[i] == 0) {
+			d ++;
+		} else {
+			cc ++;
+		}
+		//synapticConnectivity[i] = 0;
 
 
 			//synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1)
 	}
-	synapticConnectivity[lGetNeuNumLocal(lp->gid)] = 1;
+		//printf("connected %i, disconnected %i \n",cc,d);
+	//synapticConnectivity[lGetNeuNumLocal(lp->gid)] = 1;
 	for(int i = 0; i < 4; i ++){
 		//int ri = tw_rand_integer(lp->rng, -1, 0);
 		//unsigned int mk = tw_rand_integer(lp->rng, 0, 1);
@@ -478,9 +487,9 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 		b[i] = 0;
 	}
 		S[0] = (short) tw_rand_binomial(lp->rng,10,.5);
-		S[1] = (short) tw_rand_binomial(lp->rng,10,.6);
+	S[1] = 0;
 		S[2] = ((short) tw_rand_binomial(lp->rng,5, .2) * -1);
-		S[3] = ((short) tw_rand_binomial(lp->rng,5, .1) * -1);
+	S[3] = 0;
 
 
 	weight_type alpha = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
