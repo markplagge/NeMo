@@ -502,7 +502,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 			   TM, VR, sigmaVR, gamma, kappa, s, signalDelay,0,0);
 		//we re-define the destination axons here, rather than use the constructor.
 
-	float remoteCoreProbability = .9; //10% probability of off-core connection.
+	float remoteCoreProbability = .001; //10% probability of off-core connection.
 	
 	//This neuron's core is X. There is a 90% chance that my destination will be X - and a 10% chance it will be a different core.
 	if(tw_rand_unif(lp->rng) > remoteCoreProbability){
