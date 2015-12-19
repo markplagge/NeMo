@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
 
 
 	tw_opt_add(app_opt);
-	g_tw_gvt_interval = 512;
+	//g_tw_gvt_interval = 512;
 	tw_init(&argc, &argv);
 
 		//	// set up core sizes.
