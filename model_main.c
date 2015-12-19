@@ -505,7 +505,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	float remoteCoreProbability = .9; //10% probability of off-core connection.
 	
 	//This neuron's core is X. There is a 90% chance that my destination will be X - and a 10% chance it will be a different core.
-	if(tw_rand_unif(lp->rng) <= remoteCoreProbability){
+	if(tw_rand_unif(lp->rng) > remoteCoreProbability){
 //		long dendriteCore = s->myCoreID;
 //		dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);	
 		s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
