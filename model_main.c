@@ -444,38 +444,25 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	bool b[4];
 	bool epsilon = 0;
 	bool sigma_l = 0;
-	short lambda = 0;
+	short lambda = -1;
 	bool c = false;
 	short TM = 0;
 	short VR = 0;
 	short sigmaVR = 1;
 	short gamma = 0;
 	bool kappa = false;
-	int signalDelay = tw_rand_integer(lp->rng, 0,5);
+	int signalDelay = 1;//tw_rand_integer(lp->rng, 0,5);
 
-		int cc = 0;
-		int d = 0;
 
-		//per synapse weight / connectivity gen:
-		//each input axon has a 20% probability of connecting.
-		//each connected axon has a 75% chance of being an excitor
+
 	for(int i = 0; i < NEURONS_IN_CORE; i ++) {
 			//s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
-			//s->axonTypesp[i] = 1; ///! Set axon types to one, since we are just testing performance.
-		G_i[i] = tw_rand_integer(lp->rng, 0, 3); //tw_rand_binomial(lp->rng,3,.25);
-		synapticConnectivity[i] = (bool) tw_rand_binomial(lp->rng,1,.02);
-		if(synapticConnectivity[i] == 0) {
-			d ++;
-		} else {
-			cc ++;
-		}
-		//synapticConnectivity[i] = 0;
-
-
+		s->axonTypes[i] = 1;
+		synapticConnectivity[i] = 0;
 			//synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1)
 	}
-		//printf("connected %i, disconnected %i \n",cc,d);
-	//synapticConnectivity[lGetNeuNumLocal(lp->gid)] = 1;
+
+	synapticConnectivity[lGetNeuNumLocal(lp->gid)] = 1;
 	for(int i = 0; i < 4; i ++){
 		//int ri = tw_rand_integer(lp->rng, -1, 0);
 		//unsigned int mk = tw_rand_integer(lp->rng, 0, 1);
@@ -486,29 +473,29 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 		//S[i] = 1;
 		b[i] = 0;
 	}
-		S[0] = (short) tw_rand_binomial(lp->rng,10,.5);
+		S[0] = 3;//(short) tw_rand_binomial(lp->rng,10,.5);
 	S[1] = 0;
-		S[2] = ((short) tw_rand_binomial(lp->rng,5, .2) * -1);
+		S[2] = 0;//((short) tw_rand_binomial(lp->rng,5, .2) * -1);
 	S[3] = 0;
 
 
-	weight_type alpha = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
+	//weight_type alpha = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
 	//weight_type beta = tw_rand_integer(lp->rng, (NEG_THRESH_SIGN * NEG_THRESHOLD_MIN), NEG_THRESHOLD_MAX);
-		//weight_type alpha = 1;
-		weight_type beta = -1;
+	weight_type alpha = 1;
+	weight_type beta = -1;
 
-		initNeuronEncodedRV(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid), synapticConnectivity,
+		initNeuron(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid), synapticConnectivity,
 			   G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta,
 			   TM, VR, sigmaVR, gamma, kappa, s, signalDelay,0,0);
 		//we re-define the destination axons here, rather than use the constructor.
 
-	float remoteCoreProbability = .2; //10% probability of off-core connection.
+	float remoteCoreProbability = .2; //20% probability of off-core connection.
 	
 	//This neuron's core is X. There is a 90% chance that my destination will be X - and a 10% chance it will be a different core.
 	if(tw_rand_unif(lp->rng) > remoteCoreProbability){
 //		long dendriteCore = s->myCoreID;
 //		dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);	
-		s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
+		s->dendriteCore = (id_type) tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
 	}else {
 		s->dendriteCore = s->myCoreID; //local connection.
 	}
@@ -517,7 +504,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	 * vs an external core. The paper actually capped this value at something like 20%. @todo - make this match the
 	 * paper if performance is slow. * */
 	//s->dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
-	s->dendriteLocal = tw_rand_integer(lp->rng, 0, AXONS_IN_CORE - 1);
+	s->dendriteLocal = s->myLocalID;// tw_rand_integer(lp->rng, 0, AXONS_IN_CORE - 1);
 		//     if (tnMapping == LLINEAR) {
 	s->dendriteGlobalDest = lGetAxonFromNeu(s->dendriteCore, s->dendriteLocal);
 	
