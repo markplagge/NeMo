@@ -447,7 +447,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	short lambda = -1;
 	bool c = false;
 	short TM = 0;
-	short VR = 0;
+	short VR = 1;
 	short sigmaVR = 1;
 	short gamma = 0;
 	bool kappa = false;
@@ -464,6 +464,8 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	}
 
 	synapticConnectivity[lGetNeuNumLocal(lp->gid)] = 1;
+		G_i[lGetNeuNumLocal(lp->gid)] = 0; //set the 1->1 mapping type to 0
+		//(creates an "ident. matrix" of neurons.
 	for(int i = 0; i < 4; i ++){
 		//int ri = tw_rand_integer(lp->rng, -1, 0);
 		//unsigned int mk = tw_rand_integer(lp->rng, 0, 1);
@@ -474,7 +476,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 		S[i] = 1;
 		b[i] = 0;
 	}
-		S[0] = 3;//(short) tw_rand_binomial(lp->rng,10,.5);
+		S[0] = 2;//(short) tw_rand_binomial(lp->rng,10,.5);
 		S[1] = 0;
 		S[2] = 0;//((short) tw_rand_binomial(lp->rng,5, .2) * -1);
 		S[3] = 0;
@@ -485,15 +487,15 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	weight_type alpha = 1;
 	weight_type beta = -1;
 
-		initNeuron(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid), synapticConnectivity,
+		initNeuronEncodedRV(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid), synapticConnectivity,
 			   G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta,
 			   TM, VR, sigmaVR, gamma, kappa, s, signalDelay,0,0);
 		//we re-define the destination axons here, rather than use the constructor.
 
-	float remoteCoreProbability = .01; //20% probability of off-core connection.
+	float remoteCoreProbability = .905;
 	
-	//This neuron's core is X. There is a 90% chance that my destination will be X - and a 10% chance it will be a different core.
-	if(tw_rand_unif(lp->rng) > remoteCoreProbability){
+	//This neuron's core is X. There is a 90.5% chance that my destination will be X - and a 10% chance it will be a different core.
+	if(tw_rand_unif(lp->rng) < remoteCoreProbability){
 //		long dendriteCore = s->myCoreID;
 //		dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);	
 		s->dendriteCore =  tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
