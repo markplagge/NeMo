@@ -458,6 +458,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	for(int i = 0; i < NEURONS_IN_CORE; i ++) {
 			//s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
 		s->axonTypes[i] = 1;
+		G_i[i] = 1;
 		synapticConnectivity[i] = 0;
 			//synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1)
 	}
@@ -470,13 +471,13 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 		//sigma[i] = (!ri * 1) + (-1 & ri))
 		//sigma[i] = (mk ^ (mk - 1)) * 1;
 		sigma[i] = 1;
-		//S[i] = 1;
+		S[i] = 1;
 		b[i] = 0;
 	}
 		S[0] = 3;//(short) tw_rand_binomial(lp->rng,10,.5);
-	S[1] = 0;
+		S[1] = 0;
 		S[2] = 0;//((short) tw_rand_binomial(lp->rng,5, .2) * -1);
-	S[3] = 0;
+		S[3] = 0;
 
 
 	//weight_type alpha = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
@@ -489,13 +490,13 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 			   TM, VR, sigmaVR, gamma, kappa, s, signalDelay,0,0);
 		//we re-define the destination axons here, rather than use the constructor.
 
-	float remoteCoreProbability = .2; //20% probability of off-core connection.
+	float remoteCoreProbability = .01; //20% probability of off-core connection.
 	
 	//This neuron's core is X. There is a 90% chance that my destination will be X - and a 10% chance it will be a different core.
 	if(tw_rand_unif(lp->rng) > remoteCoreProbability){
 //		long dendriteCore = s->myCoreID;
 //		dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);	
-		s->dendriteCore = (id_type) tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
+		s->dendriteCore =  tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
 	}else {
 		s->dendriteCore = s->myCoreID; //local connection.
 	}
