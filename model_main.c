@@ -57,45 +57,48 @@ tw_lptype model_lps[] = {
 
 void saveNetwork(neuronState *nglobal,tw_lpid gid){
 	static bool created = false;
+    //copy-pasted code band-aid
+    neuronState *n = nglobal;
 
-	char* filenamet = "net_node_rank-";
+	char* filenamet = "neuron_output-rank-";
 
 	char* filename = calloc(sizeof(char),128); //magic number - max size of filename
 	sprintf(filename,"%s%li.csv",filenamet,g_tw_mynode);
 
-	char* wts = "weight_table_neuron-";
+	char* wts = "neuron_weight_table-rank-";
 	char* wtfn = calloc(sizeof(char), 256);
 
-	sprintf(wtfn,"%s%llu_core-%llu.csv",wts,nglobal->myLocalID,nglobal->myCoreID);
+	sprintf(wtfn,"%s%llu.csv",wts,g_tw_mynode);
 
 
 	if(created == false) {
-		FILE *f = fopen(filename,"w");
-		fprintf(f,"NeuronLocal,NeuronGID,AxonLocalID,AxonCore,AxonGID\n");
+		FILE *f = fopen("neuron_output_headers.csv","w");
+		fprintf(f,"Core,NeuronLocal,NeuronGID,AxonLocalID,AxonCore,AxonGID\n");
 		created = true;
 		fclose(f);
-
-
+        f = fopen("neuron_weight_table_headers.csv","w");
+        fprintf(f,"NeuronCORE,NeuronLocal,Axon(synapse)Local,Axon(synapse)Global,Connectivity,Weight");
+        fclose(f);
 	}
 	FILE *f = fopen(filename,"a");
-	neuronState *n = nglobal;
-	fprintf(f,"%llu,%lli,%i,%llu,%lli\n",n->myLocalID,gid,n->dendriteLocal,n->dendriteCore,n->dendriteGlobalDest);
+
+	fprintf(f,"%llu,%llu,%lli,%i,%llu,%lli\n",n->myCoreID,n->myLocalID,gid,n->dendriteLocal,n->dendriteCore,n->dendriteGlobalDest);
 	fclose(f);
 
 
 	
 
 
-	f = fopen(wtfn,"w");
+	f = fopen(wtfn,"a");
 
-	fprintf(f,"Neuron:%llu-%llu weight table\n",nglobal->myLocalID,nglobal->myCoreID);
-	fprintf(f,"Axon(synapse)Local,Axon(synapse)Global,Connectivity,Weight\n");
+	//fprintf(f,"Neuron:%llu-%llu weight table\n",nglobal->myLocalID,nglobal->myCoreID);
+	//fprintf(f,"Axon(synapse)Local,Axon(synapse)Global,Connectivity,Weight\n");
 	for(int axon = 0; axon < AXONS_IN_CORE; axon ++) {
 		tw_lpid axGID = lGetAxonFromNeu(nglobal->myCoreID,axon);
 		int conn = nglobal->synapticConnectivity[axon];
 		int weight = nglobal->axonTypes[axon];
 		weight = nglobal->synapticWeight[weight];
-		fprintf(f, "%i,%lli,%i,%i\n",axon,axGID,conn,weight );
+		fprintf(f, "%llu,%llu,%i,%lli,%i,%i\n",n->myCoreID,n->myLocalID,axon,axGID,conn,weight );
 
 	}
 	fclose(f);
@@ -129,8 +132,9 @@ int main(int argc, char *argv[])
 	LPS_PER_PE = SIM_SIZE / tw_nnodes();
 	LP_PER_KP = LPS_PER_PE / g_tw_nkp;
 		//
-	g_tw_events_per_pe = LPS_PER_PE + 50000;//eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
-											//	///@todo enable custom mapping with these smaller LPs.
+	//g_tw_events_per_pe = LPS_PER_PE + 50000;//eventAlloc * 9048;//g_tw_nlp * eventAlloc + 4048;
+	g_tw_events_per_pe = 65536;
+	//	///@todo enable custom mapping with these smaller LPs.
 
 	g_tw_lp_typemap = &tn_linear_map;
 	g_tw_lp_types = model_lps;
