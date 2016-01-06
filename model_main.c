@@ -53,57 +53,60 @@ tw_lptype model_lps[] = {
 	,
 	{ 0 } };
 
+void initFilesAndHandles() {
+    printf("Starting init.\n");
+    char* filenamet = "neuron_output-rank-";
 
+    char* filename = calloc(sizeof(char),128); //magic number - max size of filename
+    sprintf(filename,"%s%li.csv",filenamet,g_tw_mynode);
 
-void saveNetwork(neuronState *nglobal,tw_lpid gid){
-	static bool created = false;
-    //copy-pasted code band-aid
-    neuronState *n = nglobal;
+    char* wts = "neuron_weight_table-rank-";
+    char* wtfn = calloc(sizeof(char), 256);
 
-	char* filenamet = "neuron_output-rank-";
+    sprintf(wtfn,"%s%llu.csv",wts,g_tw_mynode);
+    printf("opening files for network record.\n");
+    neuronWT = fopen(wtfn,"w");
+    neuronOT = fopen(filename,"w");
+    printf("files opened.\n");
+    if (g_tw_mynode == 0){
+        FILE *f = fopen("neuron_output_headers.csv","w");
+        fprintf(f,"Core,NeuronLocal,NeuronGID,AxonLocalID,AxonCore,AxonGID\n");
 
-	char* filename = calloc(sizeof(char),128); //magic number - max size of filename
-	sprintf(filename,"%s%li.csv",filenamet,g_tw_mynode);
-
-	char* wts = "neuron_weight_table-rank-";
-	char* wtfn = calloc(sizeof(char), 256);
-
-	sprintf(wtfn,"%s%llu.csv",wts,g_tw_mynode);
-
-
-	if(created == false) {
-		FILE *f = fopen("neuron_output_headers.csv","w");
-		fprintf(f,"Core,NeuronLocal,NeuronGID,AxonLocalID,AxonCore,AxonGID\n");
-		created = true;
-		fclose(f);
+        fclose(f);
         f = fopen("neuron_weight_table_headers.csv","w");
         fprintf(f,"NeuronCORE,NeuronLocal,Axon(synapse)Local,Axon(synapse)Global,Connectivity,Weight");
         fclose(f);
-	}
-	FILE *f = fopen(filename,"a");
+    }
 
-	fprintf(f,"%llu,%llu,%lli,%i,%llu,%lli\n",n->myCoreID,n->myLocalID,gid,n->dendriteLocal,n->dendriteCore,n->dendriteGlobalDest);
-	fclose(f);
-
-
-	
+    free(wtfn);
+    free(filename);
 
 
-	f = fopen(wtfn,"a");
+}
+    void closeFiles() {
+        fclose(neuronOT);
+        fclose(neuronWT);
+    }
 
-	//fprintf(f,"Neuron:%llu-%llu weight table\n",nglobal->myLocalID,nglobal->myCoreID);
-	//fprintf(f,"Axon(synapse)Local,Axon(synapse)Global,Connectivity,Weight\n");
+
+void saveNetwork(neuronState *n,tw_lpid gid){
+
+    //copy-pasted code band-aid
+
+
+	fprintf(neuronOT,"%llu,%llu,%lli,%i,%llu,%lli\n",n->myCoreID,n->myLocalID,gid,n->dendriteLocal,n->dendriteCore,n->dendriteGlobalDest);
+	fflush(neuronOT);
+
+
 	for(int axon = 0; axon < AXONS_IN_CORE; axon ++) {
-		tw_lpid axGID = lGetAxonFromNeu(nglobal->myCoreID,axon);
-		int conn = nglobal->synapticConnectivity[axon];
-		int weight = nglobal->axonTypes[axon];
-		weight = nglobal->synapticWeight[weight];
-		fprintf(f, "%llu,%llu,%i,%lli,%i,%i\n",n->myCoreID,n->myLocalID,axon,axGID,conn,weight );
+		tw_lpid axGID = lGetAxonFromNeu(n->myCoreID,axon);
+		int conn = n->synapticConnectivity[axon];
+		int weight = n->axonTypes[axon];
+		weight = n->synapticWeight[weight];
+		fprintf(neuronWT, "%llu,%llu,%i,%lli,%i,%i\n",n->myCoreID,n->myLocalID,axon,axGID,conn,weight );
 
 	}
-	fclose(f);
-	free(wtfn);
-	free(filename);
+
 
 
 
@@ -113,11 +116,16 @@ int main(int argc, char *argv[])
 {
 		///VALIDATION SETUP
 
+    //set up files if we are saving the neural network information
+
 
 	tw_opt_add(app_opt);
+
 	//g_tw_gvt_interval = 512;
 	tw_init(&argc, &argv);
-
+    if(SAVE_NEURON_OUTS){
+        initFilesAndHandles();
+    }
 		//	// set up core sizes.
 	AXONS_IN_CORE = NEURONS_IN_CORE;
 	SYNAPSES_IN_CORE = (NEURONS_IN_CORE * AXONS_IN_CORE);
@@ -190,7 +198,9 @@ int main(int argc, char *argv[])
 
 	tw_end();
 		//
-
+    if(SAVE_NEURON_OUTS){
+        closeFiles();
+    }
 	return (0);
 }
 int csv_model_stats(tw_statistics s){

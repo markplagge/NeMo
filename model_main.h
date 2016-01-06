@@ -59,7 +59,7 @@ bool GEN_RND = 1; //!< Generator random mode flag
 unsigned long LPS_PER_PE;
 unsigned long SIM_SIZE;
 unsigned long LP_PER_KP;
-tw_stime LH_VAL = 0;
+tw_stime LH_VAL = 0.001;
 unsigned int RAND_WT_PROB = 2;
 bool DEBUG_MODE = 0;
 bool BASIC_SOP = false;
@@ -114,6 +114,11 @@ thresh_type RAND_RANGE_MAX = 10;
 
 stat_type totalSOPS;
 stat_type totalSynapses;
+
+
+FILE *neuronWT; //neuron weight table file handle
+FILE *neuronOT; //neuron output table file handle
+
 
 //Stats & Stats related byproducts (including stats structs)
 struct supernStats {
