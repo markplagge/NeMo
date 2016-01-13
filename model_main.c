@@ -586,12 +586,16 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 	if(SAVE_NEURON_OUTS) {
 		saveNetwork(s,lp->gid);
 	}
+    if ((validation || SAVE_MEMBRANE_POTS)   && s->neuronTypeDesc[0]!='D') { //&& M->eventType == NEURON_HEARTBEAT
+        
+        //if(s->neuronTypeDesc[0] == 'P' && s->neuronTypeDesc[1] == 'H')
+        //char* x = s->neuronTypeDesc;
+        //int xu = 3;
+        saveValidationData(s->myLocalID, s->myCoreID, tw_now(lp), s->membranePotential);
+    }
 }
 
 
-void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID)
-{
-}
 
 neuEvtLog * nlset(neuronState *s, tw_lp *lp) {
 	neuEvtLog * log = (neuEvtLog *) calloc(sizeof(neuEvtLog), 1);
@@ -878,7 +882,7 @@ void axon_init(axonState *s, tw_lp *lp)
 		//printf("message ready at %f",r);
 }
 
-
+bool saxe = false;
 void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
 		// send a message to the attached synapse
@@ -895,6 +899,23 @@ void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	tw_event_send(axe);
 	s->sendMsgCount ++;
 	M->rndCallCount = lp->rng->count - rc;
+    
+    /** @todo for performance, this if block should be removed from the code - it saves axon fire event data for building validation models */
+    
+    //if(s->axtype[3]=='t')
+    if(validation)
+    {
+        FILE *fz = fopen("axon_evts.csv", "a");
+        if(!saxe){
+            fprintf(fz, "time,axonLocal,axonCore,v\n");
+            saxe = true;
+        }
+        fprintf(fz, "%f,%llu,%llu,%llu\n",tw_now(lp),s->axonID,lGetCoreFromGID(lp->gid),s->axonID);
+        fclose(fz);
+        
+
+        
+    }
 }
 
 

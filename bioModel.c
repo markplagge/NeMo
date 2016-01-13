@@ -127,7 +127,7 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
         //Sigma_l is the reset voltage sign. Here it is positive,
         //so I'm passing a 1 in the constructor directly.
         
-        initNeuron(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid),
+        initNeuronEncodedRV(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid),
                    synapticConnectivity, G_i, sigma, S_j, B, epsilon,  1,
                    lambda, c, posThreshold, negThreshold, thresholdPRNMask,
                    resetVoltage, 1,
@@ -219,7 +219,7 @@ void crTonicBurstingAxon(axonState *s, tw_lp *lp){
 
 		//Queue up events for the tonic bursting axon.
 		//Start at the first big tick
-		for (long i = 0; i < g_tw_ts_end; i += 1) {
+		for (long i = 200; i < g_tw_ts_end; i += 20	) {
 			crTonBurstAxeEvent(s,lp,i);
 
 		}
