@@ -61,6 +61,9 @@ void crPhasic(neuronState *s, tw_lp *lp){
                TM, VR, sigmaVR, gamma, kappa, s, signalDelay, lGetCoreFromGID(lp->gid),
                lGetNeuNumLocal(lp->gid));
     s->neuronTypeDesc = "PHASIC";
+    s->isSelfFiring = "True";
+    //sendHeartbeat(s, 0, lp);
+    
 
 
 }
@@ -136,7 +139,7 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
         
         s->neuronTypeDesc = "TONIC_BURSTING_0";
         created ++;
-    
+        
     
     }else if ( created == 1) {
         
@@ -187,7 +190,7 @@ void crPhasicAxon(axonState *s, tw_lp *lp){
 		s->destSynapse = lGetSynFromAxon(lp->gid);
 	if (created == 0) {
 		//Queue up events for the phasic spiker
-		for (int i = 10; i < g_tw_ts_end; i += 1) {
+		for (int i = 100; i < g_tw_ts_end; i += 300) {
 			tw_stime evtTime = i + tw_rand_unif(lp->rng);
 			tw_event *axe = tw_event_new(lp->gid, evtTime, lp);
 			Msg_Data *data = (Msg_Data *) tw_event_data(axe);
