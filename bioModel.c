@@ -88,7 +88,7 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
     }
     short sigma[4] = {1,1,1,1};
     short S_j[4] = {0,0,0,0};
-    int st[4] = {0,0,0,0};
+    //int st[4] = {0,0,0,0};
     bool B[4] = {0,0,0,0};
     // Keep track of the number of times we've run this
     // two neurons needed.
@@ -101,6 +101,7 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
         G_i[0] = 0;
         G_i[1] = 1;
 		G_i[2] = 0;
+        G_i[3] = 0;
 
         S_j[0] = 1;
         S_j[1] = 100;
@@ -136,10 +137,11 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
         s->neuronTypeDesc = "TONIC_BURSTING_0";
         created ++;
     
+    
     }else if ( created == 1) {
         
         //second neuron, synapse type 0 has weight 1
-        G_i[0] = 0; //axon 0 is type 0
+        G_i[2] = 0; //axon 0 is type 0
         S_j[0] = 1; //type 0 has weight of 1
         int epsilon = 1;
 
@@ -152,7 +154,7 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
         int kappa = 1;
         int gamma = 0;
         
-        synapticConnectivity[0] = 1;
+        synapticConnectivity[2] = 1;
         
         sigma[0] = 1;
         sigma[1] = 1;
@@ -166,11 +168,12 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
                    synapticConnectivity, G_i, sigma, S_j, B, epsilon,  1,
                    lambda, c, posThreshold, negThreshold, thresholdPRNMask,
                    resetVoltage, 1,
-                   gamma, kappa, s, 0, dest, 2);
+                   gamma, kappa, s, 0, dest, 1);
         s->neuronTypeDesc = "TONIC_BURSTING_1";
         created ++;
 
     }
+    
     free (synapticConnectivity);
     free(G_i);
 
@@ -219,7 +222,7 @@ void crTonicBurstingAxon(axonState *s, tw_lp *lp){
 
 		//Queue up events for the tonic bursting axon.
 		//Start at the first big tick
-		for (long i = 200; i < g_tw_ts_end; i += 20	) {
+		for (long i = 100; i < g_tw_ts_end; i += 300) {
 			crTonBurstAxeEvent(s,lp,i);
 
 		}

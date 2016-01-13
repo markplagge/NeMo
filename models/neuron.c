@@ -63,7 +63,7 @@ void initNeuron(id_type coreID, id_type nID,
     }else {
         n->doReset = resetNone;
     }
-
+    
     //synaptic neuron setup:
     n->largestRandomValue = n->thresholdPRNMask;
     if(n->largestRandomValue > 256) {
@@ -72,6 +72,8 @@ void initNeuron(id_type coreID, id_type nID,
     //just using this rather than bit shadowing.
 
     n->log = NULL;
+    n->dendriteLocal = destAxonID;
+    n->dendriteGlobalDest = destGlobalID;
 
     //Check to see if we are a self-firing neuron. If so, we need to send heartbeats every big tick.
     //n->isSelfFiring = false; //!@TODO: Add logic to support self-firing (spontanious) neurons
@@ -594,6 +596,14 @@ bool fireFloorCelingReset(neuronState *ns, tw_lp *lp){
                     (beta + ns->drawnRandomNumber) * (1 - ns->kappa)
                      ))){
         volt_type x = ns->membranePotential;
+        //x = ((-1 * beta) * ns->kappa);
+        volt_type s1,s2,s3,s4;
+        s1 = (-1*beta) * ns->kappa;
+        s2 = (-1*(DT(gamma))) * Vrst;
+        s3 = (DT((gamma - 1)) * (ns->membranePotential + (beta + ns->drawnRandomNumber)));
+        s4 = (DT((gamma - 2)) * ns->membranePotential) * (1 - ns->kappa);
+        x = s1 + (s2 + s3 + s4);
+        
         ns->membranePotential = (
                                  ((-1*beta) * ns->kappa) + (
                                  ((-1*(DT(gamma))) * Vrst) +

@@ -611,7 +611,6 @@ neuEvtLog * nlset(neuronState *s, tw_lp *lp) {
 void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
 
-
 	long start_count = lp->rng->count;
 		//if delta is on or basic mode is on, take a snapshot for delta encoding
 	if (TW_DELTA &&
@@ -630,6 +629,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	bool fired = neuronReceiveMessage(s, M, lp,CV);//#fired = (g_tw_synchronization_protocol == SEQUENTIAL || g_tw_synchronization_protocol==CONSERVATIVE) && fired;
 
 		if ((SAVE_SPIKE_EVTS || validation) && fired == true){
+            printf("N%i -> AX%i\n", s->myLocalID, s->dendriteLocal);
 			if (nlog == NULL) {
 				nlog = nlset(s, lp);
 			}
@@ -703,6 +703,7 @@ void synapse_init(synapseState *s, tw_lp *lp)
 	s->destNeuron = lGetNeuronFromSyn(lp->gid);
 	s->destSynapse = lGetNextSynFromSyn(lp->gid);
 	s->mySynapseNum = lGetSynNumLocal(lp->gid);
+    
 		//if (tnMapping == LLINEAR) {
 		//s->destNeuron = clGetNeuronFromSynapse(lp->gid);
 		//s->destSynapse = 0;
@@ -775,6 +776,7 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 		data->eventType = SYNAPSE_OUT;
 		data->localID = lp->gid;
 		data->axonID = M->axonID;
+        
 
 		tw_event_send(axe);
 	}
@@ -787,6 +789,7 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	data->eventType = SYNAPSE_OUT;
 	data->localID = s->mySynapseNum;
 	data->axonID = M->axonID;
+    
 	tw_event_send(axe);
 	M->rndCallCount = lp->rng->count - rc;
 }
@@ -821,6 +824,7 @@ void axon_init(axonState *s, tw_lp *lp)
 {
     //TODO: Maybe switch this to a switch/case later, since it's going to get
     //big.
+
 	s->axtype = "NORM";
 	if(PHAS_VAL) {//one phasic axon:
 		if (specAxons == 0){
