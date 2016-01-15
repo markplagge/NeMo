@@ -28,7 +28,7 @@ void crPhasic(neuronState *s, tw_lp *lp){
     
     int alpha = 2;
     int beta = 10;
-    S[0] = 4;
+    S[0] = 5;
     S[1] = 20;
     S[2] = 0;
     S[3] = 0;
@@ -48,7 +48,10 @@ void crPhasic(neuronState *s, tw_lp *lp){
 		
     }
 	G_i[0] = 0;
-
+    b[0] = 0;
+    b[1] = 0;
+    b[2] = 0;
+    b[3] = 0;
 
     //! According to the paper, there is one input, of type 0.
     
@@ -62,6 +65,7 @@ void crPhasic(neuronState *s, tw_lp *lp){
                lGetNeuNumLocal(lp->gid));
     s->neuronTypeDesc = "PHASIC";
     s->isSelfFiring = "True";
+    
     //sendHeartbeat(s, 0, lp);
     
 
@@ -190,7 +194,9 @@ void crPhasicAxon(axonState *s, tw_lp *lp){
 		s->destSynapse = lGetSynFromAxon(lp->gid);
 	if (created == 0) {
 		//Queue up events for the phasic spiker
-		for (int i = 100; i < g_tw_ts_end; i += 300) {
+		//for (int i = 100; i < g_tw_ts_end; i += 300)
+        {
+            int i = 100;
 			tw_stime evtTime = i + tw_rand_unif(lp->rng);
 			tw_event *axe = tw_event_new(lp->gid, evtTime, lp);
 			Msg_Data *data = (Msg_Data *) tw_event_data(axe);
