@@ -54,14 +54,16 @@ def plotVoltages(voltList,fn="Neuron Membrane Potential",norm=False):
     print("Unscaled graphing")
     fig,ax = plt.subplots()
     plt.plot(t,v)
-    plt.title("phasic spiking")
+    #plt.title("phasic spiking")
 
-    ax.set_ylabel('Membrane Potential',color='b')
+    ax.set_ylabel('Membrane Potential')
     ax.set_xlabel("Simulation Ticks")
     ax.yaxis.set_major_formatter(plt.NullFormatter())
     ax.axes.get_yaxis().set_visible(False)
-    plt.show()
-
+    #plt.show()
+    sv = np.random.randint(0,1000)
+    print("Saving to dir  as " + str( os.path.curdir) + "/validation_chart_" + str(sv) + ".png")
+    plt.savefig("validation_chart_" + str(sv) + ".png",dpi=800,format="png")
 
     # times,values = pre_set_scale(voltList)
     # print("Graphing...")
@@ -90,10 +92,10 @@ def plotVoltsAxes(voltList, axonList,norm=False,clamp=False,log=False):
     axonData = []
     axds = ['bo','r*','yh']
     fig, ax = plt.subplots()
-    for temp in range(3):
-        dat = axonList[axonList['axonLocal'] == temp]
-        times = dat['time']
-        ax.plot(times,dat['v'],axds[temp],label="Axon #{0}".format(temp))
+    # for temp in range(3):
+    #     dat = axonList[axonList['axonLocal'] == temp]
+    #     times = dat['time']
+    #     ax.plot(times,dat['v'],axds[temp],label="Axon #{0}".format(temp))
 
 
     for extrm in axonData:
@@ -118,15 +120,19 @@ def plotVoltsAxes(voltList, axonList,norm=False,clamp=False,log=False):
     ax2 = ax.twinx()
 
     ax2.plot(times,volts)
-    ax2.set_ylabel('Membrane Potential',color='b')
+    ax2.set_ylabel('Membrane Potential')
+    ax2.yaxis.set_major_formatter(plt.NullFormatter())
+    ax2.axes.get_yaxis().set_visible(False)
+    ax.yaxis.set_major_formatter(plt.NullFormatter())
+    ax.axes.get_yaxis().set_visible(False)
     if log:
         ax2.set_yscale('log')
 
     sv = np.random.randint(0,1000)
 
     print("Saving to dir  as " + str( os.path.curdir) + "/validation_chart_" + str(sv) + ".png")
-    #plt.savefig("validation_chart_" + str(sv) + ".png",dpi=800,format="png")
-    plt.show()
+    plt.savefig("validation_chart_" + str(sv) + ".png",dpi=800,format="png")
+    #plt.show()
     plotVoltages(voltList)
     #plt.show()
 

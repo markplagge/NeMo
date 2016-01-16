@@ -25,10 +25,10 @@ void crPhasic(neuronState *s, tw_lp *lp){
 	short sigmaVR = -1;
 	short gamma = 0;
 	bool kappa = true;
-    
+
     int alpha = 2;
     int beta = 10;
-    S[0] = 5;
+    S[0] = 4 ;
     S[1] = 20;
     S[2] = 0;
     S[3] = 0;
@@ -41,11 +41,11 @@ void crPhasic(neuronState *s, tw_lp *lp){
     sigma[2] = 1;
     sigma[3] = 1;
     int signalDelay = 1;
-    
+
     for (int i = 0; i < NEURONS_IN_CORE; i ++) {
         synapticConnectivity[i] = 0;
         G_i[i] = 3;
-		
+
     }
 	G_i[0] = 0;
     b[0] = 0;
@@ -54,35 +54,35 @@ void crPhasic(neuronState *s, tw_lp *lp){
     b[3] = 0;
 
     //! According to the paper, there is one input, of type 0.
-    
-    synapticConnectivity[0] = 1;
-    
 
-    
+    synapticConnectivity[0] = 1;
+
+
+
     initNeuron(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid), synapticConnectivity,
                G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta,
                TM, VR, sigmaVR, gamma, kappa, s, signalDelay, lGetCoreFromGID(lp->gid),
                lGetNeuNumLocal(lp->gid));
     s->neuronTypeDesc = "PHASIC";
     s->isSelfFiring = "True";
-    
+
     //sendHeartbeat(s, 0, lp);
-    
+
 
 
 }
 /**
  crTonicBursting - Creates a tonic bursting set of neurons. Needs to be called
- twice, as the model requires two neurons. Combine this with the function 
+ twice, as the model requires two neurons. Combine this with the function
  crTonicBurstingAxon(). Once called twice, it will reset the internal counter,
  so multiple sets of these can be created.
- 
+
  Table of values:
  | j | Gi         | ε | λ | c | α  | β | M | R | κ | 𝛾 |
  |---|------------|---|---|---|----|---|---|---|---|----|
  | 0 | 1,-100,0,0 | 1 | 1 | 0 | 18 | 0 | 0 | 1 | 1 | 0  |
  | 1 | 1,0,0,0    | 1 | 0 | 0 | 6  | 0 | 0 | 0 | 1 | 0  |
- 
+
 
  */
 void crTonicBursting(neuronState *s, tw_lp *lp){
@@ -99,8 +99,8 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
     bool B[4] = {0,0,0,0};
     // Keep track of the number of times we've run this
     // two neurons needed.
-    
-    
+
+
     //j is zero, first neuron:
     if(created == 0) {
 
@@ -112,7 +112,7 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
 
         S_j[0] = 1;
         S_j[1] = 100;
-        
+
         int epsilon = 1;
         short lambda = 1;
         int c = 0;
@@ -125,28 +125,28 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
         synapticConnectivity[0] = 1;
         synapticConnectivity[1] = 1;
 
-        
+
         sigma[0] = 1;
         sigma[1] = -1;
         sigma[2] = 1;
         sigma[3] = 1;
         tw_lpid dest = lGetAxonFromNeu(lGetCoreFromGID(lp->gid), 2); //output to axon 2
-        
+
         //Sigma_l is the reset voltage sign. Here it is positive,
         //so I'm passing a 1 in the constructor directly.
-        
+
         initNeuronEncodedRV(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid),
                    synapticConnectivity, G_i, sigma, S_j, B, epsilon,  1,
                    lambda, c, posThreshold, negThreshold, thresholdPRNMask,
                    resetVoltage, 1,
                    gamma, kappa, s, 0, dest, 2);
-        
+
         s->neuronTypeDesc = "TONIC_BURSTING_0";
         created ++;
-        
-    
+
+
     }else if ( created == 1) {
-        
+
         //second neuron, synapse type 0 has weight 1
         G_i[2] = 0; //axon 0 is type 0
         S_j[0] = 1; //type 0 has weight of 1
@@ -160,17 +160,17 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
         int resetVoltage = 0;
         int kappa = 1;
         int gamma = 0;
-        
+
         synapticConnectivity[2] = 1;
-        
+
         sigma[0] = 1;
         sigma[1] = 1;
         sigma[2] = 1;
         sigma[3] = 1;
         tw_lpid dest = lGetAxonFromNeu(lGetCoreFromGID(lp->gid), 1); //output to axon 1
-        
-        
-        
+
+
+
         initNeuron(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid),
                    synapticConnectivity, G_i, sigma, S_j, B, epsilon,  1,
                    lambda, c, posThreshold, negThreshold, thresholdPRNMask,
@@ -180,7 +180,7 @@ void crTonicBursting(neuronState *s, tw_lp *lp){
         created ++;
 
     }
-    
+
     free (synapticConnectivity);
     free(G_i);
 
@@ -194,7 +194,7 @@ void crPhasicAxon(axonState *s, tw_lp *lp){
 		s->destSynapse = lGetSynFromAxon(lp->gid);
 	if (created == 0) {
 		//Queue up events for the phasic spiker
-		//for (int i = 100; i < g_tw_ts_end; i += 300)
+		for (int i = 100; i < g_tw_ts_end; i += 300)
         {
             int i = 100;
 			tw_stime evtTime = i + tw_rand_unif(lp->rng);
@@ -245,4 +245,3 @@ void crBioLoopback(neuronState *s, tw_lp *lp){
 
 
 }
-
