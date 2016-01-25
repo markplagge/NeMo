@@ -512,7 +512,8 @@ void integrate(id_type synapseID, neuronState *st, void *lp){
 
 void sendHeartbeat(neuronState *st, tw_stime time, void *lp) {
     tw_lp *l = (tw_lp *) lp;
-    tw_event *newEvent = tw_event_new(l->gid, getNextBigTick(l, st->myLocalID), l);
+    //tw_event *newEvent = tw_event_new(l->gid, getNextBigTick(l, st->myLocalID), l);
+    tw_event *newEvent = tw_event_new(l->gid, (0.1 + (tw_rand_unif(l->rng) / 1000)),l);
     Msg_Data *data = (Msg_Data *)tw_event_data(newEvent);
     data->localID = st->myLocalID;
     data->eventType=NEURON_HEARTBEAT;
