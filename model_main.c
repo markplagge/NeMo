@@ -629,13 +629,17 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	bool fired = neuronReceiveMessage(s, M, lp,CV);//#fired = (g_tw_synchronization_protocol == SEQUENTIAL || g_tw_synchronization_protocol==CONSERVATIVE) && fired;
 
 		if ((SAVE_SPIKE_EVTS || validation) && fired == true){
-            printf("N%i -> AX%i\n", s->myLocalID, s->dendriteLocal);
-			if (nlog == NULL) {
-				nlog = nlset(s, lp);
-			}
-			else {
-				addEntry(nlset(s,lp), nlog, getCurrentBigTick(tw_now(lp)));
-			}
+            //printf("N%i -> AX%i\n", s->myLocalID, s->dendriteLocal);
+            //fprintf(stderr, "%i,%i,%i,%i\n",s->myCoreID, s->myLocalID, s->dendriteLocal,s->dendriteCore);
+            fprintf(stderr, "%i,%i\n",s->dendriteLocal,s->dendriteCore);
+
+            
+//			if (nlog == NULL) {
+//				nlog = nlset(s, lp);
+//			}
+//			else {
+//				addEntry(nlset(s,lp), nlog, getCurrentBigTick(tw_now(lp)));
+//			}
 		}
 
 	

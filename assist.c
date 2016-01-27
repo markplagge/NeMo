@@ -12,7 +12,7 @@
 tw_stime bigTickRate = 0;
 
 void setBigLittleTick() {
-  littleTick = .0001;
+  littleTick = .001;
 	bigTickRate = 1;//ceill(littleTick) + 1;
 }
 /**
