@@ -72,36 +72,28 @@ bool overUnderflowCheck(void *neuronState);
 
 typedef struct NeuronModel {
     /*@{ #name RossInfo */
-    
     bool firedLast;
     bool heartbeatOut;
     bool isSelfFiring;
     unsigned long long receivedSynapseMsgs;
-    
     /*@} */
      /*@{ @name location Information */
     id_type myCoreID; //!< Neuron's coreID
     id_type myLocalID; //!< Neuron's local ID (from 0 - j-1);
-    
-    
     /*@} */
     /*@{ @name Signal Sending Parameters */
     unsigned char delayVal; //!<@todo: Need to fully implement this - this value is between 1 and 15, a "delay" of n timesteps of a neuron. -- outgoing delay //from BOOTCAMP!
     id_type dendriteCore; //!< Local core of the remote dendrite
     uint16_t dendriteLocal; //!< Local ID of the remote dendrite -- not LPID, but a local axon value (0-i)
     tw_lpid dendriteGlobalDest; //!< GID of the axon this neuron talks to. @todo: The dendriteCore and dendriteLocal values might not be needed anymroe.
-    
     /*@}*/
     
     
     /*@{ @name Weight & Threshold Parameters */
     volt_type membranePotential; //!< current "voltage" of neuron, \f$V_j(t)\f$. Since this is PDES, \a t is implicit
     bool synapticConnectivity[256]; //!< is there a connection between axon i and neuron j?
-    
     int axonTypes[256];
-    
     short synapticWeight[4];
-    
     /** stochastic weight mode selection. $b_j^{G_i}$ */
     short weightSelection[4];
     thresh_type posThreshold; //!< neuron's threshold value 𝛼
