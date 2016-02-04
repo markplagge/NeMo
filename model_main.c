@@ -119,6 +119,7 @@ int main(int argc, char *argv[])
     //set up files if we are saving the neural network information
 
 
+
 	tw_opt_add(app_opt);
 
 	//g_tw_gvt_interval = 512;
