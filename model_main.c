@@ -26,6 +26,10 @@
 	//    {0}
 
 	//};
+
+/** @TODO: move this to stats file, consolidate file outputs! */
+FILE *activ;
+
 tw_lptype model_lps[] = {
 	{
 	(init_f)axon_init,
@@ -63,7 +67,7 @@ void initFilesAndHandles() {
     char* wts = "neuron_weight_table-rank-";
     char* wtfn = calloc(sizeof(char), 256);
 
-    sprintf(wtfn,"%s%llu.csv",wts,g_tw_mynode);
+    sprintf(wtfn,"%s%ld.csv",wts,g_tw_mynode);
     printf("opening files for network record.\n");
     neuronWT = fopen(wtfn,"w");
     neuronOT = fopen(filename,"w");
@@ -86,6 +90,7 @@ void initFilesAndHandles() {
     void closeFiles() {
         fclose(neuronOT);
         fclose(neuronWT);
+        fclose(activ);
     }
 
 
@@ -202,6 +207,7 @@ int main(int argc, char *argv[])
     if(SAVE_NEURON_OUTS){
         closeFiles();
     }
+    
 	return (0);
 }
 int csv_model_stats(tw_statistics s){
@@ -353,7 +359,6 @@ tw_statistics statsOut()
 
 }
 
-
 int write_csv(struct supernStats *stats, char const *fileName){
 	FILE *f = fopen(fileName, "a");
 	if (f == NULL) return -1;
@@ -367,6 +372,25 @@ int write_csv(struct supernStats *stats, char const *fileName){
 	return 0;
 }
 
+// Save activity event (one file per object, could be done in batch too possibly)
+bool opened = false;
+
+void write_event(id_type local, id_type core, char id, tw_stime t, bool close){
+    if(opened == false){
+    activ = fopen("activitylog.csv","a");
+        opened = true;
+        printf("opened file\n");
+    }
+    
+    if (!close) {
+        fprintf(activ,"%c,%llu,%llu,%f\n",id,core,local,t);
+    }
+    if (close && opened)
+        fclose(activ);
+    
+    
+    
+}
 
 	///
 	/// \details createLPs currently assigns a core's worth of LPs to the PE.
@@ -632,8 +656,8 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 		if ((SAVE_SPIKE_EVTS || validation) && fired == true){
             //printf("N%i -> AX%i\n", s->myLocalID, s->dendriteLocal);
             //fprintf(stderr, "%i,%i,%i,%i\n",s->myCoreID, s->myLocalID, s->dendriteLocal,s->dendriteCore);
-            fprintf(stderr, "%i,%i\n",s->dendriteLocal,s->dendriteCore);
-
+            //fprintf(stderr, "%i,%llu\n",s->dendriteLocal,s->dendriteCore);
+            write_event(s->myLocalID, s->myCoreID, 'N', tw_now(lp), false);
             
 //			if (nlog == NULL) {
 //				nlog = nlset(s, lp);
@@ -912,7 +936,7 @@ void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
     /** @todo for performance, this if block should be removed from the code - it saves axon fire event data for building validation models */
     
     //if(s->axtype[3]=='t')
-    if(validation)
+    if(validation || SAVE_SPIKE_EVTS)
     {
         FILE *fz = fopen("axon_evts.csv", "a");
         if(!saxe){
