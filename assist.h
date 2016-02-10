@@ -51,7 +51,7 @@ typedef int64_t weight_type;
 typedef uint_fast32_t thresh_type;
 typedef int32_t rand_type;
 typedef uint64_t stat_type;
-typedef uint32_t regID_type;
+typedef uint_fast64_t regID_type;
 typedef uint16_t gridID_type;
 
 
@@ -129,25 +129,25 @@ typedef uint8_t s;
 typedef struct Ms{
     enum evtType eventType;
     unsigned long rndCallCount;
-    
+
     id_type localID; //!< Sender's local (within a core) id - used for weight lookups.
     volt_type neuronVoltage;
     tw_stime neuronLastActiveTime;
     tw_stime neuronLastLeakTime;
 	stat_type neuronFireCount;
-    
+
     //neuron state saving extra params:
     stat_type neuronRcvMsgs;
     uint16_t neuronDrawnRandom;
-    
+
     id_type axonID; //!< Axon ID for neuron value lookups.
     //debugging reverse computation:
-    
+
     ///debugging ugly style - remove before showing anyone your code.
     //void * stateSaveZone;
 
-    
-    
+
+
 }Msg_Data;
 
 
