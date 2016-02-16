@@ -68,6 +68,7 @@ bool BULK_MODE = false;
 bool PHAS_VAL = false;
 bool TONIC_SPK_VAL = false;
 bool TONIC_BURST_VAL = false;
+bool PHASIC_BURST_VAL = false;
 bool DEPOLAR_VAL = false;
 bool SAVE_MEMBRANE_POTS = false;
 bool SAVE_SPIKE_EVTS = false;
@@ -218,6 +219,7 @@ const tw_optdef app_opt[]= {
     
     TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
     TWOPT_FLAG("tonb",TONIC_BURST_VAL, "Tonic bursting Neuron Validation"),
+	TWOPT_FLAG("phb", PHASIC_BURST_VAL, "Phasic Bursting Neuron Validation"),
     {TWOPT_END()}
 
   };

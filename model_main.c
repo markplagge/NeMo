@@ -384,6 +384,7 @@ void write_event(id_type local, id_type core, char id, tw_stime t, bool close){
     
     if (!close) {
         fprintf(activ,"%c,%llu,%llu,%f\n",id,core,local,t);
+		printf("Wrote event to file\n");
     }
     if (close && opened)
         fclose(activ);
@@ -597,6 +598,12 @@ void neuron_init(neuronState *s, tw_lp *lp) {
         else {
             createDisconnectedNeuron(s, lp);
         }
+	} else if (PHASIC_BURST_VAL){
+		if (pairedNeurons < 2) {
+			crPhasicBursting(s, lp);
+			pairedNeurons ++;
+		}
+
     } else {
 		createSimpleNeuron(s, lp);
 	}
@@ -657,7 +664,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
             //printf("N%i -> AX%i\n", s->myLocalID, s->dendriteLocal);
             //fprintf(stderr, "%i,%i,%i,%i\n",s->myCoreID, s->myLocalID, s->dendriteLocal,s->dendriteCore);
             //fprintf(stderr, "%i,%llu\n",s->dendriteLocal,s->dendriteCore);
-            write_event(s->myLocalID, s->myCoreID, 'N', tw_now(lp), false);
+			//write_event(s->myLocalID, s->myCoreID, 'N', tw_now(lp), false);
             
 //			if (nlog == NULL) {
 //				nlog = nlset(s, lp);
@@ -872,7 +879,10 @@ void axon_init(axonState *s, tw_lp *lp)
 		crTonicBurstingAxon(s, lp);
 		specAxons ++;
 
-    }
+	}else if(PHASIC_BURST_VAL){
+		crTonicBurstingAxon(s, lp);
+		specAxons ++;
+	}
 	else {
 		s->sendMsgCount = 0;
 		s->axonID = lGetAxeNumLocal(lp->gid);

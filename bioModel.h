@@ -35,6 +35,7 @@ void crTonic(neuronState *s, tw_lp *lp);
  * @param lp lp
  *  */
 void crPhasic(neuronState *s, tw_lp *lp);
+void crPhasicBursting(neuronState *s, tw_lp *lp);
 void crTonicBursting(neuronState *s, tw_lp *lp);
 void crMixedMode(neuronState *s, tw_lp *lp);
 void crFrequencyAdaptation(neuronState *s, tw_lp *lp);
