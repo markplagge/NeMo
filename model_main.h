@@ -37,13 +37,13 @@ extern int a_created ;
 /**
  *  Number of neurons per core.
  */
-int NEURONS_IN_CORE = 256;
+id_type NEURONS_IN_CORE = 256;
 /** number of synapses per core. Calculated value, needs to be neurons * axons */
-int SYNAPSES_IN_CORE;
+id_type SYNAPSES_IN_CORE;
 /** Number of axions per core. Generally is set to 1-1 with neurons in core */
-int AXONS_IN_CORE;
+id_type AXONS_IN_CORE;
 /* Given number of cores in simulation */
-unsigned int CORES_IN_SIM = 1;
+id_type  CORES_IN_SIM = 1;
 
 /// Memory Tuning
 int eventAlloc = 2;
@@ -56,9 +56,9 @@ bool GEN_RND = 1; //!< Generator random mode flag
 //unsigned int GEN_OUTBOUND = 0;
 //unsigned int GEN_SEL_MODE = 0;
 //unsigned int SP_DBG = 0;
-unsigned long LPS_PER_PE;
-unsigned long SIM_SIZE;
-unsigned long LP_PER_KP;
+id_type LPS_PER_PE;
+id_type SIM_SIZE;
+id_type LP_PER_KP;
 tw_stime LH_VAL = 0.001;
 unsigned int RAND_WT_PROB = 2;
 bool DEBUG_MODE = 0;
@@ -77,7 +77,7 @@ bool SAVE_NEURON_OUTS = false;
  stat_type synapseEvents = 0;
 bool validation;
 
-stat_type fireCount;
+//stat_type fireCount;
 /** littleTick is the resolution of little ticks 
 * (events between neuron fire events) */
 tw_stime littleTick = .001;
@@ -150,7 +150,7 @@ tw_stime PER_SYNAPSE_DET_P = .50;
 
 	//Simulation Variables
 /**CORE_SIZE is equal to the number of axions * number of aneurons + num neurons + num axions */
-int CORE_SIZE;
+id_type CORE_SIZE;
 
 /* **** Model Main Function */
 /**

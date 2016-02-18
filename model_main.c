@@ -223,7 +223,7 @@ int csv_model_stats(tw_statistics s){
 	stat_type totalNFire = 0;
 	MPI_Reduce(&neuronSOPS, &totalSOPS, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
 	MPI_Reduce(&synapseEvents, &totalSynapses, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
-	MPI_Reduce(&fireCount, &totalNFire, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+	//MPI_Reduce(&fireCount, &totalNFire, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
 	if (g_tw_mynode == 0) {  // master node for outputting stats.
 		printf("\n ------ TN Benchmark Stats ------- \n");
 		printf("Total SOP(integrate and/or fire) operations: %llu\n", totalSOPS);
@@ -721,7 +721,7 @@ void neuron_final(neuronState *s, tw_lp *lp)
 {
 	neuronSOPS += s->SOPSCount;
 		//printf("neuron %i has %i SOPS \n", lp->gid, s->SOPSCount);
-	fireCount += s->fireCount;
+	//fireCount += s->fireCount;
 	if(nlog != NULL){ //nlog should always be not null if we want debugging (the flag allows nlog to be created)
 		saveLog(nlog, "seq_neuron_spike_log.csv");
 			//saveLog(nlog, fn);

@@ -134,7 +134,7 @@ typedef struct Ms{
     volt_type neuronVoltage;
     tw_stime neuronLastActiveTime;
     tw_stime neuronLastLeakTime;
-	stat_type neuronFireCount;
+	//stat_type neuronFireCount;
 
     //neuron state saving extra params:
     stat_type neuronRcvMsgs;
@@ -169,22 +169,22 @@ typedef union {
 /* ***** Global variable defs */
 /** @{
  * /name SimParams */
-extern int NEURONS_IN_CORE;
-extern unsigned int CORES_IN_SIM;
-extern int AXONS_IN_CORE;
-extern int SYNAPSES_IN_CORE;
+extern id_type NEURONS_IN_CORE;
+extern id_type CORES_IN_SIM;
+extern id_type AXONS_IN_CORE;
+extern id_type SYNAPSES_IN_CORE;
 extern mapTypes tnMapping;
-extern int CORE_SIZE;
+extern id_type CORE_SIZE;
 extern tw_stime BIG_TICK_ERR; //!< Tick error - tw_stime can be this much under the next big tick and register as a big-tick.
 
 /**  @} */
 
 /** @{ /name Mapping */
-extern int NUM_VP_X;
-extern int NUM_VP_Y;
-extern unsigned long LPS_PER_PE;
-extern unsigned long SIM_SIZE;
-extern unsigned long LP_PER_KP;
+extern id_type NUM_VP_X;
+extern id_type NUM_VP_Y;
+extern id_type LPS_PER_PE;
+extern id_type SIM_SIZE;
+extern id_type LP_PER_KP;
 
 /*@}*/
 

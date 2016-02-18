@@ -25,19 +25,19 @@
 
 
 
-extern int NEURONS_IN_CORE ;
+extern id_type NEURONS_IN_CORE ;
 /**
  *  Number of synapses per core.
  */
-extern int SYNAPSES_IN_CORE;
-extern int CORE_SIZE;
-extern unsigned long SIM_SIZE;
-extern int NUM_VP_X;
-extern int NUM_VP_Y;
-extern int VP_PER_PROC;
-extern unsigned long LPS_PER_PE;
-extern unsigned long LP_PER_KP;
-extern unsigned int nkp_per_pe;
+extern id_type SYNAPSES_IN_CORE;
+extern id_type CORE_SIZE;
+extern id_type SIM_SIZE;
+extern id_type NUM_VP_X;
+extern id_type NUM_VP_Y;
+extern id_type VP_PER_PROC;
+extern id_type LPS_PER_PE;
+extern id_type LP_PER_KP;
+extern id_type nkp_per_pe;
 	//extern tw_lptype model_lps[];
 	//extern unsigned int SIM_SIZE;
 extern tw_lptype model_lps[];

@@ -53,7 +53,7 @@ void initNeuron(id_type coreID, id_type nID,
     n->firedLast = false;
     n->heartbeatOut = false;
     //n->isSelfFiring = false;
-    n->receivedSynapseMsgs = 0;
+    //n->receivedSynapseMsgs = 0;
 
     setNeuronDest(signalDelay, destGlobalID, n);
     if (n->resetMode == 0) {
@@ -149,7 +149,7 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
     m->neuronLastLeakTime =st->lastLeakTime;
     //m->neuronRcvMsgs = st->receivedSynapseMsgs;
     m->neuronDrawnRandom = st->drawnRandomNumber;
-    m->neuronFireCount = st->fireCount;
+    //m->neuronFireCount = st->fireCount;
 
     bf->c14 = st->heartbeatOut; //C14 indicates the old heartbeat state.
 
@@ -206,7 +206,7 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
             
             if (willFire) {
                 fire(st,lp);
-                st->fireCount++;
+                //st->fireCount++;
                 //TODO: Fix this shit:
 					//st->membranePotential = 0;
             }
@@ -269,7 +269,7 @@ void neuronReverseState(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp)
     }
 
     	if (s->firedLast == true) {
-    		s->fireCount--;
+    		//s->fireCount--;
     		s->firedLast = false;
     	}
 

@@ -18,10 +18,10 @@
 
 
 //Externs:
-extern int NEURONS_IN_CORE;
-extern unsigned int CORES_IN_SIM;
-extern int AXONS_IN_CORE;
-extern int SYNAPSES_IN_CORE;
+extern id_type NEURONS_IN_CORE;
+extern id_type CORES_IN_SIM;
+extern id_type AXONS_IN_CORE;
+extern id_type SYNAPSES_IN_CORE;
 
 
 
@@ -75,11 +75,11 @@ typedef struct NeuronModel {
     bool firedLast;
     bool heartbeatOut;
     bool isSelfFiring;
-    unsigned long long receivedSynapseMsgs;
+    //unsigned long long receivedSynapseMsgs;
     /*@} */
      /*@{ @name location Information */
     id_type myCoreID; //!< Neuron's coreID
-    id_type myLocalID; //!< Neuron's local ID (from 0 - j-1);
+    unsigned int myLocalID; //!< Neuron's local ID (from 0 - j-1);
     /*@} */
     /*@{ @name Signal Sending Parameters */
     unsigned char delayVal; //!<@todo: Need to fully implement this - this value is between 1 and 15, a "delay" of n timesteps of a neuron. -- outgoing delay //from BOOTCAMP!
@@ -136,7 +136,7 @@ typedef struct NeuronModel {
     
     /**@}*/
     /**@{*/
-    stat_type fireCount; //!< count of this neuron's output
+    //stat_type fireCount; //!< count of this neuron's output
     stat_type rcvdMsgCount; //!<  The number of synaptic messages received.
     stat_type SOPSCount; //!<  A count for SOPS calculation
     // a helper boolean:
