@@ -113,8 +113,9 @@ void setNeuronDest(int signalDelay, uint64_t gid, neuronState *n) {
 	else
 		{
 			//must be manually set by another init function for now.
-		n->dendriteCore = 0;
-		n->dendriteLocal = 0;
+
+		n->dendriteCore = lGetCoreFromGID(gid);
+		n->dendriteLocal = lGetAxeNumLocal(gid);
 		}
 
 

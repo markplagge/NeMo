@@ -11,6 +11,7 @@
 
 #include "../assist.h"
 #include "../neuron_out_stats.h"
+#include "../mapping.h"
 #include "ross.h"
 #include <math.h>
 #include <stdbool.h>

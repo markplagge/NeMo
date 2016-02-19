@@ -576,6 +576,7 @@ bool pc = false;
 
 
 void neuron_init(neuronState *s, tw_lp *lp) {
+	
     static int pairedNeurons = 0;
 	s->neuronTypeDesc = "SIMPLE";
 	if(DEBUG_MODE && ! annouced)
