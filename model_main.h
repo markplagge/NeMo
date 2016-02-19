@@ -75,7 +75,6 @@ tw_stime CLOCK_RANDOM_ADJ = 1.0;
 /** selects different random modes:*/
 timeRandomSel CLOCK_RND_MODE = RND_EXP;
 
-extern tw_lpid* myGIDs;
 
 /* Mapping values */
 mapTypes tnMapping;
