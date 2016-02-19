@@ -64,7 +64,7 @@ void crPhasic(neuronState *s, tw_lp *lp){
                TM, VR, sigmaVR, gamma, kappa, s, signalDelay, lGetCoreFromGID(lp->gid),
                lGetNeuNumLocal(lp->gid));
     s->neuronTypeDesc = "PHASIC";
-    s->isSelfFiring = "True";
+    s->isSelfFiring = 1;
 
     //sendHeartbeat(s, 0, lp);
 
