@@ -34,17 +34,6 @@ extern int s_created ;
 extern int a_created ;
         // Variable holders for command lne params & external variables
 
-/**
- *  Number of neurons per core.
- */
-id_type NEURONS_IN_CORE = 256;
-/** number of synapses per core. Calculated value, needs to be neurons * axons */
-id_type SYNAPSES_IN_CORE;
-/** Number of axions per core. Generally is set to 1-1 with neurons in core */
-id_type AXONS_IN_CORE;
-/* Given number of cores in simulation */
-id_type  CORES_IN_SIM = 1;
-
 /// Memory Tuning
 int eventAlloc = 2;
 unsigned int GEN_ON = 1;///< Is the input generator enabled?
