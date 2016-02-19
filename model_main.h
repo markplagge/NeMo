@@ -189,7 +189,7 @@ const tw_optdef app_opt[]= {
   TWOPT_GROUP("Benchmark neuron parameters (default run mode)"),
 
 	TWOPT_GROUP("Sim Size Params"),
-	TWOPT_ULONGLONG("cores", (unsigned long long)CORES_IN_SIM, "number of cores in simulation"),
+	TWOPT_ULONGLONG("cores", CORES_IN_SIM, "number of cores in simulation"),
 	TWOPT_ULONGLONG("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
     TWOPT_GROUP("Sim tuning"),
   TWOPT_STIME("lh", LH_VAL, "Lookahead setting"),

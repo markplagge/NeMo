@@ -110,9 +110,12 @@ void saveNetwork(neuronState *n,tw_lpid gid){
 
     //copy-pasted code band-aid
 
-
-	fprintf(neuronOT,"%llu,%llu,%lli,%i,%llu,%lli\n",n->myCoreID,n->myLocalID,gid,n->dendriteLocal,n->dendriteCore,n->dendriteGlobalDest);
-	fflush(neuronOT);
+    static short wroteHdr = 0;
+    if (wroteHdr == 0) {
+        fprintf(neuronOT,"%llu,%llu,%lli,%i,%llu,%lli\n",n->myCoreID,n->myLocalID,gid,n->dendriteLocal,n->dendriteCore,n->dendriteGlobalDest);
+        fflush(neuronOT);
+        wroteHdr +=1;
+    }
 
 
 	for(int axon = 0; axon < AXONS_IN_CORE; axon ++) {
@@ -141,7 +144,7 @@ int main(int argc, char *argv[])
 
 	//g_tw_gvt_interval = 512;
 	tw_init(&argc, &argv);
-    if(SAVE_NEURON_OUTS){
+    if(SAVE_NEURON_OUTS || DEBUG_MODE){
         initFilesAndHandles();
     }
 		//	// set up core sizes.
@@ -210,16 +213,22 @@ int main(int argc, char *argv[])
 
 	tw_run();
 		//	// Stats Collection ************************************************************************************88
-
+    
+    
+    
 	tw_statistics s = statsOut();
 	csv_model_stats(s);
+    
 
+    
 	tw_end();
 		//
-    if(SAVE_NEURON_OUTS){
+    if(SAVE_NEURON_OUTS || DEBUG_MODE){
         closeFiles();
     }
     
+    
+
 	return (0);
 }
 int csv_model_stats(tw_statistics s){
@@ -499,7 +508,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	short lambda = -1;
 	bool c = false;
 	short TM = 0;
-	short VR = 1;
+	short VR = 0;
 	short sigmaVR = 1;
 	short gamma = 0;
 	bool kappa = false;
@@ -734,12 +743,13 @@ void neuron_final(neuronState *s, tw_lp *lp)
 	neuronSOPS += s->SOPSCount;
 		//printf("neuron %i has %i SOPS \n", lp->gid, s->SOPSCount);
 	//fireCount += s->fireCount;
-	if(nlog != NULL){ //nlog should always be not null if we want debugging (the flag allows nlog to be created)
-		saveLog(nlog, "seq_neuron_spike_log.csv");
+    //if(nlog != NULL){ //nlog should always be not null if we want debugging (the flag allows nlog to be created)
+	//	saveLog(nlog, "seq_neuron_spike_log.csv");
 			//saveLog(nlog, fn);
-	}
+//	}
 	if(DEBUG_MODE) {
-		printf("neuron num %llu was type %s\n", s->myLocalID, s->neuronTypeDesc);
+        saveNetwork(s, lp->gid);
+//		printf("neuron num %llu was type %s\n", s->myLocalID, s->neuronTypeDesc);
 	}
 }
 
