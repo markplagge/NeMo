@@ -46,7 +46,7 @@ struct NeuronModel;
 
 //Proper Typdefs:
 typedef uint64_t id_type;
-typedef int64_t volt_type;
+typedef int32_t volt_type;
 typedef int64_t weight_type;
 typedef uint32_t thresh_type;
 typedef int32_t rand_type;

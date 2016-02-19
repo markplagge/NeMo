@@ -208,8 +208,6 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
             if (willFire) {
                 fire(st,lp);
                 //st->fireCount++;
-                //TODO: Fix this shit:
-					//st->membranePotential = 0;
             }
 
             //neuronPostIntegrate(st, tw_now(lp), lp, willFire); //removed and replaced with fireFloorCelingReset

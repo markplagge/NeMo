@@ -501,7 +501,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	bool synapticConnectivity[NEURONS_IN_CORE];
 	short G_i[NEURONS_IN_CORE];
 	short sigma[4];
-	short S[4];
+    short S[4] = {[0]=3, [3]=2} ;
 	bool b[4];
 	bool epsilon = 0;
 	bool sigma_l = 0;
@@ -511,7 +511,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	short VR = 0;
 	short sigmaVR = 1;
 	short gamma = 0;
-	bool kappa = false;
+	bool kappa = 0;
 	int signalDelay = 1;//tw_rand_integer(lp->rng, 0,5);
 
 
@@ -519,13 +519,13 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	for(int i = 0; i < NEURONS_IN_CORE; i ++) {
 			//s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
 		s->axonTypes[i] = 1;
-		G_i[i] = 1;
+		G_i[i] = 0;
 		synapticConnectivity[i] = 0;
 			//synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1)
 	}
 
 	synapticConnectivity[lGetNeuNumLocal(lp->gid)] = 1;
-		G_i[lGetNeuNumLocal(lp->gid)] = 0; //set the 1->1 mapping type to 0
+    
 		//(creates an "ident. matrix" of neurons.
 	for(int i = 0; i < 4; i ++){
 		//int ri = tw_rand_integer(lp->rng, -1, 0);
@@ -534,14 +534,9 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 		//sigma[i] = (!ri * 1) + (-1 & ri))
 		//sigma[i] = (mk ^ (mk - 1)) * 1;
 		sigma[i] = 1;
-		S[i] = 1;
 		b[i] = 0;
 	}
-		S[0] = 2;//(short) tw_rand_binomial(lp->rng,10,.5);
-		S[1] = 0;
-		S[2] = 0;//((short) tw_rand_binomial(lp->rng,5, .2) * -1);
-		S[3] = 0;
-
+		
 
 	//weight_type alpha = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
 	//weight_type beta = tw_rand_integer(lp->rng, (NEG_THRESH_SIGN * NEG_THRESHOLD_MIN), NEG_THRESHOLD_MAX);
