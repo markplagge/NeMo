@@ -487,7 +487,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	short lambda = -1;
 	bool c = false;
 	short TM = 0;
-	short VR = 1;
+	short VR = 0;
 	short sigmaVR = 1;
 	short gamma = 0;
 	bool kappa = false;
@@ -517,9 +517,9 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 		b[i] = 0;
 	}
 		S[0] = 2;//(short) tw_rand_binomial(lp->rng,10,.5);
-		S[1] = 0;
-		S[2] = 0;//((short) tw_rand_binomial(lp->rng,5, .2) * -1);
-		S[3] = 0;
+		S[1] = 2;
+		S[2] = 2;//((short) tw_rand_binomial(lp->rng,5, .2) * -1);
+		S[3] = 2;
 
 
 	//weight_type alpha = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
