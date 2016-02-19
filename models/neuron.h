@@ -124,7 +124,7 @@ typedef struct NeuronModel {
     bool c; //!< leak weight selection. If true, this is a stochastic leak function and the \a leakRateProb value is a probability, otherwise it is a leak rate.
     
     resetFunDel doReset; //!< neuron reset function - has three possible values: normal, linear, non-reset: 𝛾
-    
+    //TODO - print address offsets fof structs for performance
     short int resetMode; //!< Reset mode selection. Valid options are 0,1,2 . Gamma or resetMode 𝛾
     volt_type resetVoltage; //!< Reset voltage for reset params, \f$R\f$.
     short sigmaVR; //!< reset voltage - reset voltage sign
@@ -133,7 +133,7 @@ typedef struct NeuronModel {
     short omega; //!<temporary leak direction variable
     
    
-    uint32_t PRNSeedValue; //!< pseudo random number generator seed. @TODO: Add PRNSeedValues to the neurons to improve TN compatibility.
+    //uint32_t PRNSeedValue; //!< pseudo random number generator seed. @TODO: Add PRNSeedValues to the neurons to improve TN compatibility.
     
     /**@}*/
     /**@{*/
