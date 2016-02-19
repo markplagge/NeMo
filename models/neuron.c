@@ -39,7 +39,7 @@ void initNeuron(id_type coreID, id_type nID,
     n->c = c;
     n->posThreshold = alpha;
     n->negThreshold = beta;
-    n->thresholdMaskBits = TM;
+    //n->thresholdMaskBits = TM;
     //n->thresholdPRNMask = getBitMask(n->thresholdMaskBits);
     n->sigmaVR = SGN(VR);
     n->encodedResetVoltage = VR;
