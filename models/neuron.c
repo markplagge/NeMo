@@ -76,7 +76,7 @@ void initNeuron(id_type coreID, id_type nID,
     n->dendriteGlobalDest = destGlobalID;
 
     //Check to see if we are a self-firing neuron. If so, we need to send heartbeats every big tick.
-    //n->isSelfFiring = false; //!@TODO: Add logic to support self-firing (spontanious) neurons
+    n->isSelfFiring = false; //!@TODO: Add logic to support self-firing (spontanious) neurons
 
 }
 void initNeuronEncodedRV(id_type coreID, id_type nID,
@@ -490,9 +490,16 @@ void ringing(void *nsv, volt_type oldVoltage ){
 void integrate(id_type synapseID, neuronState *st, void *lp){
     //tw_lp *l = (tw_lp *) lp;
 	int at = st->axonTypes[synapseID];
+	bool con = st->synapticConnectivity[synapseID];
+		//DEBUG CODE REMOVE FOR PRODUCTION:
+	id_type myid = st->myLocalID;
+
+
+	if (con == 0)
+		return;
+		//printf("id-%llu, sid-%llu, connect: %i\n",myid, synapseID,con);
 	weight_type stw = st->synapticWeight[at];
-		//weight_type weight = st->synapticWeight[st->axonTypes[synapseID]] & st->synapticConnectivity[synapseID];
-	weight_type weight = stw *  st->synapticConnectivity[synapseID];
+	weight_type weight = st->synapticWeight[st->axonTypes[synapseID]] & st->synapticConnectivity[synapseID];
     //!!!! DEBUG CHECK FOR WEIGHT ISSUES:
     //weight = 0;
     //!!! REMOVE previous FOR PRODUCTION
@@ -551,17 +558,23 @@ bool neuronShouldFire(neuronState *st, void *lp)
 * Then numerically calculates positive and negative reset voltages, and
 * sets them in the neuron state. Internally handles PRN draw and "masking".
  */
+	//debug macro:
+	#define Vj ns->membranePotential
 bool fireFloorCelingReset(neuronState *ns, tw_lp *lp){
     bool shouldFire = false;
      ///@TODO remove this line later for performacne - check that neuron init handles this properly.
     ns->drawnRandomNumber = 0;
     //Sanity variables - remove if we need that .01% performance increase:
     volt_type Vrst = ns->resetVoltage;
-    volt_type alpha = ns->posThreshold;
+	volt_type alpha = ns->posThreshold;
     volt_type beta = ns->negThreshold;
-    short gamma = ns->resetMode;
-    
-    
+		//DEBUG DELTA GAMMA
+//	short deltaGamma = DT(ns->resetMode);
+//	short dg1 = DT(ns->resetMode -1);
+//	short dg2 = DT(ns->resetMode -2);
+//	short tg2 = !(ns->resetMode -2);
+	short gamma = ns->resetMode;
+
     ///@TODO: might not need this random generator, if it is called in the event handler here
     if(ns->c)
         ns->drawnRandomNumber = (tw_rand_integer(lp->rng, 0, ns->largestRandomValue));
@@ -569,10 +582,16 @@ bool fireFloorCelingReset(neuronState *ns, tw_lp *lp){
     if(overUnderflowCheck((void*)ns)) {
         return true;
     }else if(ns->membranePotential >= ns->posThreshold + ns->drawnRandomNumber){
-        ns->membranePotential = ((DT(gamma))*Vrst +
+			//reset:
+		ns->membranePotential = ((DT(gamma))	* Vrst) +
+		((DT( gamma - 1 ))	* (Vj - (alpha + ns->drawnRandomNumber))) +
+		((DT(gamma - 2))	* Vj);
+
+				/*ns->membranePotential = ((DT(gamma))*Vrst +
                                 ((DT((gamma-1))) * (ns->membranePotential - (alpha + ns->drawnRandomNumber))) +
                                 ((DT((gamma-2))) * ns->membranePotential)
                                  );
+				 */
         
 //        
 //        switch (ns->resetMode) {
@@ -589,7 +608,7 @@ bool fireFloorCelingReset(neuronState *ns, tw_lp *lp){
 //            default:
 //                tw_error(TW_LOC, "Error occured within neuron reset function - neuron had invalid reset mode %i", ns->resetMode);
 //                break;
-        
+		volt_type mp = ns->membranePotential;
         shouldFire = true;
     }else if (ns->membranePotential <
               (-1 * (beta * ns->kappa +
@@ -620,7 +639,13 @@ bool fireFloorCelingReset(neuronState *ns, tw_lp *lp){
 void fire(neuronState *st, void *l)
 {
     tw_lp * lp = (tw_lp *) l;
-    tw_stime nextHeartbeat = getNextBigTick(lp,st->myLocalID);
+		//DEBUG
+//	tw_lpid outid = st->dendriteGlobalDest;
+//	tw_lp *destLP = tw_getlp(outid);
+//	printf("Sending message to %llu\n", destLP->gid);
+
+		//DEBUG
+	tw_stime nextHeartbeat = getNextBigTick(lp,st->myLocalID);
 	tw_event *newEvent = tw_event_new(st->dendriteGlobalDest, nextHeartbeat, lp);
 	Msg_Data *data = (Msg_Data *)tw_event_data(newEvent);
 

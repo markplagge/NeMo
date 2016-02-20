@@ -501,11 +501,11 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	bool synapticConnectivity[NEURONS_IN_CORE];
 	short G_i[NEURONS_IN_CORE];
 	short sigma[4];
-    short S[4] = {[0]=3, [3]=2} ;
+    short S[4] = {[0]=3} ;
 	bool b[4];
 	bool epsilon = 0;
 	bool sigma_l = 0;
-	short lambda = -1;
+	short lambda = 0;
 	bool c = false;
 	short TM = 0;
 	short VR = 0;
@@ -542,6 +542,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	//weight_type beta = tw_rand_integer(lp->rng, (NEG_THRESH_SIGN * NEG_THRESHOLD_MIN), NEG_THRESHOLD_MAX);
 	weight_type alpha = 1;
 	weight_type beta = -1;
+		//DEBUG LINE
 
 		initNeuronEncodedRV(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid), synapticConnectivity,
 			   G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta,
@@ -675,7 +676,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 		saveValidationData(s->myLocalID, s->myCoreID, tw_now(lp), s->membranePotential);
 	}
 	bool fired = neuronReceiveMessage(s, M, lp,CV);//#fired = (g_tw_synchronization_protocol == SEQUENTIAL || g_tw_synchronization_protocol==CONSERVATIVE) && fired;
-
+	
 		if ((SAVE_SPIKE_EVTS || validation) && fired == true){
             //printf("N%i -> AX%i\n", s->myLocalID, s->dendriteLocal);
             //fprintf(stderr, "%i,%i,%i,%i\n",s->myCoreID, s->myLocalID, s->dendriteLocal,s->dendriteCore);
@@ -946,6 +947,8 @@ bool saxe = false;
 void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
 		// send a message to the attached synapse
+
+	enum evtType mt = M->eventType;
 
 	long rc = lp->rng->count;
 

@@ -73,11 +73,11 @@ typedef uint16_t gridID_type;
 
 	//Kronecker delta
 	//#define KDLTA(x) (((a) == 0) ? (1) : (0))
-#define DT(x) !x //!<Kronecker Delta function.
+#define DT(x) !(x) //!<Kronecker Delta function.
 
-#define SGN(x) (x > 0) - (x < 0) //!< Signum function
+#define SGN(x) ((x) > 0) - ((x) < 0) //!< Signum function
 
-#define BINCOMP(s,p) IABS(s) >= p //!< binary comparison for conditional stochastic evaluation
+#define BINCOMP(s,p) IABS((s)) >= (p) //!< binary comparison for conditional stochastic evaluation
 
 
 #define SWAP(TYPE, X, Y) \
