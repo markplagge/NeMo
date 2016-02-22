@@ -25,26 +25,25 @@
 
 
 
-extern int NEURONS_IN_CORE ;
+extern id_type NEURONS_IN_CORE ;
 /**
  *  Number of synapses per core.
  */
-extern int SYNAPSES_IN_CORE;
-extern int CORE_SIZE;
-extern unsigned long SIM_SIZE;
-extern int NUM_VP_X;
-extern int NUM_VP_Y;
-extern int VP_PER_PROC;
-extern unsigned long LPS_PER_PE;
-extern unsigned long LP_PER_KP;
-extern unsigned int nkp_per_pe;
+extern id_type SYNAPSES_IN_CORE;
+extern id_type CORE_SIZE;
+extern id_type SIM_SIZE;
+extern id_type NUM_VP_X;
+extern id_type NUM_VP_Y;
+extern id_type VP_PER_PROC;
+extern id_type LPS_PER_PE;
+extern id_type LP_PER_KP;
+extern id_type nkp_per_pe;
 	//extern tw_lptype model_lps[];
 	//extern unsigned int SIM_SIZE;
 extern tw_lptype model_lps[];
 
 extern mapTypes tnMapping;
-tw_lpid *myGIDs;
-tw_lpid *gePEMap;
+
 
 tw_lpid lpTypeMapper(tw_lpid gid);
 
@@ -54,10 +53,11 @@ tw_lpid lpTypeMapper(tw_lpid gid);
  * @brief CORE_LP_OFFSET - Manages the offset. Calculated based on the size of a core,
  * and the CPE vale, the number of PEs required to simulate a single core.
  * For example, if core size is 128, and CPE is 2, then each PE will get 64 LPs.
- * TODO: Add a synapse and neuron balancing function.
+ * TODO: Add a synapse and neuron balancing function. 
+ * *REMOVED*
  */
-int CORE_LP_OFFSET;
-extern int CPE;
+//int CORE_LP_OFFSET;
+//extern int CPE;
 
 /**
  *  @brief  Custom Mapping - given a LP GID return a PE

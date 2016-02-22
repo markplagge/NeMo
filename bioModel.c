@@ -64,7 +64,7 @@ void crPhasic(neuronState *s, tw_lp *lp){
                TM, VR, sigmaVR, gamma, kappa, s, signalDelay, lGetCoreFromGID(lp->gid),
                lGetNeuNumLocal(lp->gid));
     s->neuronTypeDesc = "PHASIC";
-    s->isSelfFiring = "True";
+    s->isSelfFiring = 1;
 
     //sendHeartbeat(s, 0, lp);
 
@@ -239,6 +239,106 @@ void crTonicBurstingAxon(axonState *s, tw_lp *lp){
 		num ++;
 	}
 
+}
+
+void crPhasicBursting(neuronState *s, tw_lp *lp){
+ static int created = 0;
+	s->isSelfFiring = true;
+	short *G_i = calloc(sizeof(short), NEURONS_IN_CORE);
+	bool *synapticConnectivity = calloc(sizeof(bool),NEURONS_IN_CORE);
+	for (int i = 0; i < NEURONS_IN_CORE; i ++) {
+		G_i[i] = 2;
+	}
+	short sigma[4] = {1,1,1,1};
+	short S_j[4] = {0,0,0,0};
+		//int st[4] = {0,0,0,0};
+	bool B[4] = {0,0,0,0};
+		// Keep track of the number of times we've run this
+		// two neurons needed.
+
+
+		//j is zero, first neuron:
+	if(created == 0) {
+
+			//TODO: Check to see if the synaptic mode is correct in the paper.
+		G_i[0] = 0;
+		G_i[1] = 1;
+		G_i[2] = 2;
+		G_i[3] = 2;
+
+		S_j[0] = 1;
+		S_j[1] = 20;
+
+		int epsilon = 1;
+		short lambda = 1;
+		int c = 0;
+		uint32_t posThreshold = 18;
+		uint32_t negThreshold = 20;
+		int thresholdPRNMask = 0;
+		int resetVoltage = 1;
+		int kappa = 1;
+		int gamma = 0;
+		synapticConnectivity[0] = 1;
+		synapticConnectivity[1] = 1;
+
+
+		sigma[0] = 1;
+		sigma[1] = -1;
+		sigma[2] = 1;
+		sigma[3] = 1;
+		tw_lpid dest = lGetAxonFromNeu(lGetCoreFromGID(lp->gid), 2); //output to axon 2
+
+			//Sigma_l is the reset voltage sign. Here it is positive,
+			//so I'm passing a 1 in the constructor directly.
+
+		initNeuronEncodedRV(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid),
+							synapticConnectivity, G_i, sigma, S_j, B, epsilon,  1,
+							lambda, c, posThreshold, negThreshold, thresholdPRNMask,
+							resetVoltage, 1,
+							gamma, kappa, s, 0, dest, 2);
+
+		s->neuronTypeDesc = "TONIC_BURSTING_0";
+		created ++;
+
+
+	}else if ( created == 1) {
+
+			//second neuron, synapse type 0 has weight 1
+		G_i[2] = 0; //axon 0 is type 0
+		S_j[0] = 1; //type 0 has weight of 1
+		int epsilon = 1;
+
+		int lambda = 0;
+		int c = 0;
+		uint32_t posThreshold = 6;
+		uint32_t negThreshold = 0;
+		int thresholdPRNMask = 0;
+		int resetVoltage = 0;
+		int kappa = 1;
+		int gamma = 0;
+
+		synapticConnectivity[2] = 1;
+
+		sigma[0] = 1;
+		sigma[1] = 1;
+		sigma[2] = 1;
+		sigma[3] = 1;
+		tw_lpid dest = lGetAxonFromNeu(lGetCoreFromGID(lp->gid), 1); //output to axon 1
+
+
+
+		initNeuron(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid),
+				   synapticConnectivity, G_i, sigma, S_j, B, epsilon,  1,
+				   lambda, c, posThreshold, negThreshold, thresholdPRNMask,
+				   resetVoltage, 1,
+				   gamma, kappa, s, 0, dest, 1);
+		s->neuronTypeDesc = "TONIC_BURSTING_1";
+		created ++;
+
+	}
+
+	free (synapticConnectivity);
+	free(G_i);
 }
 
 void crBioLoopback(neuronState *s, tw_lp *lp){

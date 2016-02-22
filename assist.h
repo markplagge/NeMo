@@ -46,12 +46,12 @@ struct NeuronModel;
 
 //Proper Typdefs:
 typedef uint64_t id_type;
-typedef int64_t volt_type;
+typedef int32_t volt_type;
 typedef int64_t weight_type;
-typedef uint_fast32_t thresh_type;
+typedef uint32_t thresh_type;
 typedef int32_t rand_type;
 typedef uint64_t stat_type;
-typedef uint32_t regID_type;
+typedef uint64_t regID_type;
 typedef uint16_t gridID_type;
 
 
@@ -73,11 +73,11 @@ typedef uint16_t gridID_type;
 
 	//Kronecker delta
 	//#define KDLTA(x) (((a) == 0) ? (1) : (0))
-#define DT(x) !x //!<Kronecker Delta function.
+#define DT(x) !(x) //!<Kronecker Delta function.
 
-#define SGN(x) (x > 0) - (x < 0) //!< Signum function
+#define SGN(x) ((x) > 0) - ((x) < 0) //!< Signum function
 
-#define BINCOMP(s,p) IABS(s) >= p //!< binary comparison for conditional stochastic evaluation
+#define BINCOMP(s,p) IABS((s)) >= (p) //!< binary comparison for conditional stochastic evaluation
 
 
 #define SWAP(TYPE, X, Y) \
@@ -129,25 +129,25 @@ typedef uint8_t s;
 typedef struct Ms{
     enum evtType eventType;
     unsigned long rndCallCount;
-    
+
     id_type localID; //!< Sender's local (within a core) id - used for weight lookups.
     volt_type neuronVoltage;
     tw_stime neuronLastActiveTime;
     tw_stime neuronLastLeakTime;
-	stat_type neuronFireCount;
-    
+	//stat_type neuronFireCount;
+
     //neuron state saving extra params:
     stat_type neuronRcvMsgs;
     uint16_t neuronDrawnRandom;
-    
+
     id_type axonID; //!< Axon ID for neuron value lookups.
     //debugging reverse computation:
-    
+
     ///debugging ugly style - remove before showing anyone your code.
     //void * stateSaveZone;
 
-    
-    
+
+
 }Msg_Data;
 
 
@@ -169,22 +169,22 @@ typedef union {
 /* ***** Global variable defs */
 /** @{
  * /name SimParams */
-extern int NEURONS_IN_CORE;
-extern unsigned int CORES_IN_SIM;
-extern int AXONS_IN_CORE;
-extern int SYNAPSES_IN_CORE;
+extern id_type NEURONS_IN_CORE;
+extern id_type CORES_IN_SIM;
+extern id_type AXONS_IN_CORE;
+extern id_type SYNAPSES_IN_CORE;
 extern mapTypes tnMapping;
-extern int CORE_SIZE;
+extern id_type CORE_SIZE;
 extern tw_stime BIG_TICK_ERR; //!< Tick error - tw_stime can be this much under the next big tick and register as a big-tick.
 
 /**  @} */
 
 /** @{ /name Mapping */
-extern int NUM_VP_X;
-extern int NUM_VP_Y;
-extern unsigned long LPS_PER_PE;
-extern unsigned long SIM_SIZE;
-extern unsigned long LP_PER_KP;
+extern id_type NUM_VP_X;
+extern id_type NUM_VP_Y;
+extern id_type LPS_PER_PE;
+extern id_type SIM_SIZE;
+extern id_type LP_PER_KP;
 
 /*@}*/
 

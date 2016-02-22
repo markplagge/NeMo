@@ -6,13 +6,19 @@ INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11  ")
 
+#add_library( libs/cpptest.cpp)
 
 # Files you have included in your model
 SET(model_srcs
+
 	assist.c
 	assist.h
+	models/neuron_generic.h
+	models/neuron_generic.c
 	models/neuron.c
 	models/neuron.h
+	models/iz_neuron.h
+	models/iz_neuron.c
 	models/synapse.h
 	input_simulator.c
 	input_simulator.h

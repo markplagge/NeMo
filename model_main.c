@@ -8,7 +8,19 @@
 
 #include "model_main.h"
 
-	// tw_lptype model_lps[] = {
+/**
+ *  Number of neurons per core.
+ */
+id_type NEURONS_IN_CORE = 256;
+/** number of synapses per core. Calculated value, needs to be neurons * axons */
+id_type SYNAPSES_IN_CORE;
+/** Number of axions per core. Generally is set to 1-1 with neurons in core */
+id_type AXONS_IN_CORE;
+/* Given number of cores in simulation */
+id_type  CORES_IN_SIM = 1;
+
+
+// tw_lptype model_lps[] = {
 	//    {
 
 	//     (init_f)neuron_init, (pre_run_f)pre_run, (event_f)neuron_event,
@@ -26,6 +38,10 @@
 	//    {0}
 
 	//};
+
+/** @TODO: move this to stats file, consolidate file outputs! */
+FILE *activ;
+
 tw_lptype model_lps[] = {
 	{
 	(init_f)axon_init,
@@ -53,8 +69,12 @@ tw_lptype model_lps[] = {
 	,
 	{ 0 } };
 
+//STATS
+FILE *fz;
+
 void initFilesAndHandles() {
     printf("Starting init.\n");
+
     char* filenamet = "neuron_output-rank-";
 
     char* filename = calloc(sizeof(char),128); //magic number - max size of filename
@@ -63,11 +83,13 @@ void initFilesAndHandles() {
     char* wts = "neuron_weight_table-rank-";
     char* wtfn = calloc(sizeof(char), 256);
 
-    sprintf(wtfn,"%s%llu.csv",wts,g_tw_mynode);
+    sprintf(wtfn,"%s%ld.csv",wts,g_tw_mynode);
     printf("opening files for network record.\n");
     neuronWT = fopen(wtfn,"w");
     neuronOT = fopen(filename,"w");
     printf("files opened.\n");
+    sprintf(wtfn,"%s%ld.csv", "axon_evens_rank-",g_tw_mynode);
+    fz = fopen(wtfn, "w");
     if (g_tw_mynode == 0){
         FILE *f = fopen("neuron_output_headers.csv","w");
         fprintf(f,"Core,NeuronLocal,NeuronGID,AxonLocalID,AxonCore,AxonGID\n");
@@ -86,16 +108,24 @@ void initFilesAndHandles() {
     void closeFiles() {
         fclose(neuronOT);
         fclose(neuronWT);
+        fclose(activ);
+        fclose(fz);
     }
+void logAxonEvent(tw_lp *lp, axonState *s){
+    fprintf(fz, "%f,%llu,%llu,%llu\n",tw_now(lp),s->axonID,lGetCoreFromGID(lp->gid),s->axonID);
 
+}
 
 void saveNetwork(neuronState *n,tw_lpid gid){
 
     //copy-pasted code band-aid
 
-
-	fprintf(neuronOT,"%llu,%llu,%lli,%i,%llu,%lli\n",n->myCoreID,n->myLocalID,gid,n->dendriteLocal,n->dendriteCore,n->dendriteGlobalDest);
-	fflush(neuronOT);
+    static short wroteHdr = 0;
+    if (wroteHdr == 0) {
+        fprintf(neuronOT,"%llu,%llu,%lli,%i,%llu,%lli\n",n->myCoreID,n->myLocalID,gid,n->dendriteLocal,n->dendriteCore,n->dendriteGlobalDest);
+        fflush(neuronOT);
+        wroteHdr +=1;
+    }
 
 
 	for(int axon = 0; axon < AXONS_IN_CORE; axon ++) {
@@ -119,11 +149,12 @@ int main(int argc, char *argv[])
     //set up files if we are saving the neural network information
 
 
+
 	tw_opt_add(app_opt);
 
 	//g_tw_gvt_interval = 512;
 	tw_init(&argc, &argv);
-    if(SAVE_NEURON_OUTS){
+    if(SAVE_NEURON_OUTS || DEBUG_MODE || SAVE_SPIKE_EVTS){
         initFilesAndHandles();
     }
 		//	// set up core sizes.
@@ -192,15 +223,22 @@ int main(int argc, char *argv[])
 
 	tw_run();
 		//	// Stats Collection ************************************************************************************88
-
+    
+    
+    
 	tw_statistics s = statsOut();
 	csv_model_stats(s);
+    
 
+    
 	tw_end();
 		//
-    if(SAVE_NEURON_OUTS){
+    if(SAVE_NEURON_OUTS || DEBUG_MODE){
         closeFiles();
     }
+    
+    
+
 	return (0);
 }
 int csv_model_stats(tw_statistics s){
@@ -216,7 +254,7 @@ int csv_model_stats(tw_statistics s){
 	stat_type totalNFire = 0;
 	MPI_Reduce(&neuronSOPS, &totalSOPS, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
 	MPI_Reduce(&synapseEvents, &totalSynapses, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
-	MPI_Reduce(&fireCount, &totalNFire, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+	//MPI_Reduce(&fireCount, &totalNFire, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
 	if (g_tw_mynode == 0) {  // master node for outputting stats.
 		printf("\n ------ TN Benchmark Stats ------- \n");
 		printf("Total SOP(integrate and/or fire) operations: %llu\n", totalSOPS);
@@ -352,7 +390,6 @@ tw_statistics statsOut()
 
 }
 
-
 int write_csv(struct supernStats *stats, char const *fileName){
 	FILE *f = fopen(fileName, "a");
 	if (f == NULL) return -1;
@@ -366,6 +403,26 @@ int write_csv(struct supernStats *stats, char const *fileName){
 	return 0;
 }
 
+// Save activity event (one file per object, could be done in batch too possibly)
+bool opened = false;
+
+void write_event(id_type local, id_type core, char id, tw_stime t, bool close){
+    if(opened == false){
+    activ = fopen("activitylog.csv","a");
+        opened = true;
+        printf("opened file\n");
+    }
+    
+    if (!close) {
+        fprintf(activ,"%c,%llu,%llu,%f\n",id,core,local,t);
+		printf("Wrote event to file\n");
+    }
+    if (close && opened)
+        fclose(activ);
+    
+    
+    
+}
 
 	///
 	/// \details createLPs currently assigns a core's worth of LPs to the PE.
@@ -454,17 +511,17 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	bool synapticConnectivity[NEURONS_IN_CORE];
 	short G_i[NEURONS_IN_CORE];
 	short sigma[4];
-	short S[4];
+    short S[4] = {[0]=3} ;
 	bool b[4];
 	bool epsilon = 0;
 	bool sigma_l = 0;
-	short lambda = -1;
+	short lambda = 0;
 	bool c = false;
 	short TM = 0;
-	short VR = 1;
+	short VR = 0;
 	short sigmaVR = 1;
 	short gamma = 0;
-	bool kappa = false;
+	bool kappa = 0;
 	int signalDelay = 1;//tw_rand_integer(lp->rng, 0,5);
 
 
@@ -472,13 +529,13 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	for(int i = 0; i < NEURONS_IN_CORE; i ++) {
 			//s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
 		s->axonTypes[i] = 1;
-		G_i[i] = 1;
+		G_i[i] = 0;
 		synapticConnectivity[i] = 0;
 			//synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1)
 	}
 
 	synapticConnectivity[lGetNeuNumLocal(lp->gid)] = 1;
-		G_i[lGetNeuNumLocal(lp->gid)] = 0; //set the 1->1 mapping type to 0
+    
 		//(creates an "ident. matrix" of neurons.
 	for(int i = 0; i < 4; i ++){
 		//int ri = tw_rand_integer(lp->rng, -1, 0);
@@ -487,19 +544,15 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 		//sigma[i] = (!ri * 1) + (-1 & ri))
 		//sigma[i] = (mk ^ (mk - 1)) * 1;
 		sigma[i] = 1;
-		S[i] = 1;
 		b[i] = 0;
 	}
-		S[0] = 2;//(short) tw_rand_binomial(lp->rng,10,.5);
-		S[1] = 0;
-		S[2] = 0;//((short) tw_rand_binomial(lp->rng,5, .2) * -1);
-		S[3] = 0;
-
+		
 
 	//weight_type alpha = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
 	//weight_type beta = tw_rand_integer(lp->rng, (NEG_THRESH_SIGN * NEG_THRESHOLD_MIN), NEG_THRESHOLD_MAX);
 	weight_type alpha = 1;
 	weight_type beta = -1;
+		//DEBUG LINE
 
 		initNeuronEncodedRV(lGetCoreFromGID(lp->gid), lGetNeuNumLocal(lp->gid), synapticConnectivity,
 			   G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta,
@@ -572,6 +625,12 @@ void neuron_init(neuronState *s, tw_lp *lp) {
         else {
             createDisconnectedNeuron(s, lp);
         }
+	} else if (PHASIC_BURST_VAL){
+		if (pairedNeurons < 2) {
+			crPhasicBursting(s, lp);
+			pairedNeurons ++;
+		}
+
     } else {
 		createSimpleNeuron(s, lp);
 	}
@@ -627,12 +686,12 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 		saveValidationData(s->myLocalID, s->myCoreID, tw_now(lp), s->membranePotential);
 	}
 	bool fired = neuronReceiveMessage(s, M, lp,CV);//#fired = (g_tw_synchronization_protocol == SEQUENTIAL || g_tw_synchronization_protocol==CONSERVATIVE) && fired;
-
+	
 		if ((SAVE_SPIKE_EVTS || validation) && fired == true){
             //printf("N%i -> AX%i\n", s->myLocalID, s->dendriteLocal);
             //fprintf(stderr, "%i,%i,%i,%i\n",s->myCoreID, s->myLocalID, s->dendriteLocal,s->dendriteCore);
-            fprintf(stderr, "%i,%i\n",s->dendriteLocal,s->dendriteCore);
-
+            //fprintf(stderr, "%i,%llu\n",s->dendriteLocal,s->dendriteCore);
+			write_event(s->myLocalID, s->myCoreID, 'N', tw_now(lp), false);
             
 //			if (nlog == NULL) {
 //				nlog = nlset(s, lp);
@@ -689,13 +748,14 @@ void neuron_final(neuronState *s, tw_lp *lp)
 {
 	neuronSOPS += s->SOPSCount;
 		//printf("neuron %i has %i SOPS \n", lp->gid, s->SOPSCount);
-	fireCount += s->fireCount;
-	if(nlog != NULL){ //nlog should always be not null if we want debugging (the flag allows nlog to be created)
-		saveLog(nlog, "seq_neuron_spike_log.csv");
+	//fireCount += s->fireCount;
+    //if(nlog != NULL){ //nlog should always be not null if we want debugging (the flag allows nlog to be created)
+	//	saveLog(nlog, "seq_neuron_spike_log.csv");
 			//saveLog(nlog, fn);
-	}
+//	}
 	if(DEBUG_MODE) {
-		printf("neuron num %llu was type %s\n", s->myLocalID, s->neuronTypeDesc);
+        saveNetwork(s, lp->gid);
+//		printf("neuron num %llu was type %s\n", s->myLocalID, s->neuronTypeDesc);
 	}
 }
 
@@ -847,7 +907,10 @@ void axon_init(axonState *s, tw_lp *lp)
 		crTonicBurstingAxon(s, lp);
 		specAxons ++;
 
-    }
+	}else if(PHASIC_BURST_VAL){
+		crTonicBurstingAxon(s, lp);
+		specAxons ++;
+	}
 	else {
 		s->sendMsgCount = 0;
 		s->axonID = lGetAxeNumLocal(lp->gid);
@@ -890,10 +953,12 @@ void axon_init(axonState *s, tw_lp *lp)
 		//printf("message ready at %f",r);
 }
 
-bool saxe = false;
+
 void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
 		// send a message to the attached synapse
+
+	enum evtType mt = M->eventType;
 
 	long rc = lp->rng->count;
 
@@ -911,16 +976,9 @@ void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
     /** @todo for performance, this if block should be removed from the code - it saves axon fire event data for building validation models */
     
     //if(s->axtype[3]=='t')
-    if(validation)
+    if(validation || SAVE_SPIKE_EVTS)
     {
-        FILE *fz = fopen("axon_evts.csv", "a");
-        if(!saxe){
-            fprintf(fz, "time,axonLocal,axonCore,v\n");
-            saxe = true;
-        }
-        fprintf(fz, "%f,%llu,%llu,%llu\n",tw_now(lp),s->axonID,lGetCoreFromGID(lp->gid),s->axonID);
-        fclose(fz);
-        
+        logAxonEvent(lp, s);
 
         
     }
