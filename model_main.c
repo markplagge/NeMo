@@ -69,8 +69,12 @@ tw_lptype model_lps[] = {
 	,
 	{ 0 } };
 
+//STATS
+FILE *fz;
+
 void initFilesAndHandles() {
     printf("Starting init.\n");
+
     char* filenamet = "neuron_output-rank-";
 
     char* filename = calloc(sizeof(char),128); //magic number - max size of filename
@@ -84,6 +88,8 @@ void initFilesAndHandles() {
     neuronWT = fopen(wtfn,"w");
     neuronOT = fopen(filename,"w");
     printf("files opened.\n");
+    sprintf(wtfn,"%s%ld.csv", "axon_evens_rank-",g_tw_mynode);
+    fz = fopen(wtfn, "w");
     if (g_tw_mynode == 0){
         FILE *f = fopen("neuron_output_headers.csv","w");
         fprintf(f,"Core,NeuronLocal,NeuronGID,AxonLocalID,AxonCore,AxonGID\n");
@@ -103,8 +109,12 @@ void initFilesAndHandles() {
         fclose(neuronOT);
         fclose(neuronWT);
         fclose(activ);
+        fclose(fz);
     }
+void logAxonEvent(tw_lp *lp, axonState *s){
+    fprintf(fz, "%f,%llu,%llu,%llu\n",tw_now(lp),s->axonID,lGetCoreFromGID(lp->gid),s->axonID);
 
+}
 
 void saveNetwork(neuronState *n,tw_lpid gid){
 
@@ -144,7 +154,7 @@ int main(int argc, char *argv[])
 
 	//g_tw_gvt_interval = 512;
 	tw_init(&argc, &argv);
-    if(SAVE_NEURON_OUTS || DEBUG_MODE){
+    if(SAVE_NEURON_OUTS || DEBUG_MODE || SAVE_SPIKE_EVTS){
         initFilesAndHandles();
     }
 		//	// set up core sizes.
@@ -681,7 +691,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
             //printf("N%i -> AX%i\n", s->myLocalID, s->dendriteLocal);
             //fprintf(stderr, "%i,%i,%i,%i\n",s->myCoreID, s->myLocalID, s->dendriteLocal,s->dendriteCore);
             //fprintf(stderr, "%i,%llu\n",s->dendriteLocal,s->dendriteCore);
-			//write_event(s->myLocalID, s->myCoreID, 'N', tw_now(lp), false);
+			write_event(s->myLocalID, s->myCoreID, 'N', tw_now(lp), false);
             
 //			if (nlog == NULL) {
 //				nlog = nlset(s, lp);
@@ -943,7 +953,7 @@ void axon_init(axonState *s, tw_lp *lp)
 		//printf("message ready at %f",r);
 }
 
-bool saxe = false;
+
 void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 {
 		// send a message to the attached synapse
@@ -968,14 +978,7 @@ void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
     //if(s->axtype[3]=='t')
     if(validation || SAVE_SPIKE_EVTS)
     {
-        FILE *fz = fopen("axon_evts.csv", "a");
-        if(!saxe){
-            fprintf(fz, "time,axonLocal,axonCore,v\n");
-            saxe = true;
-        }
-        fprintf(fz, "%f,%llu,%llu,%llu\n",tw_now(lp),s->axonID,lGetCoreFromGID(lp->gid),s->axonID);
-        fclose(fz);
-        
+        logAxonEvent(lp, s);
 
         
     }
