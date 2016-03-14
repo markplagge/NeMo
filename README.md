@@ -1,6 +1,6 @@
 True North ROSS Simulation & Benchmark
 --------------------------------------
-This is the current version of the True North simulation running on top of ROSS. 
+This is the current version of the NeMo neuromorphic hardware simulation, running on top of ROSS. 
 Currently it is under significant development.
 Documentation will be available through the WIKI, 
 [github web page](http://markplagge.github.io/tnt_benchmark/) and through the official web site for the project.
