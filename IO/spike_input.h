@@ -11,4 +11,15 @@
 
 #include <stdio.h>
 
+
+/** struct that defines mapping - so that files can be split. */
+typedef struct IOMapInfo {
+    long cores_in_sim;
+    long cores_per_pe;
+    long neurons_in_core;
+}ioMapInfo;
+
+
+
+
 #endif /* spike_input_h */
