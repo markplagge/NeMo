@@ -44,7 +44,7 @@ void initNeuron(id_type coreID, id_type nID,
     n->sigmaVR = SGN(VR);
     n->encodedResetVoltage = VR;
     n->resetVoltage = VR; //* sigmaVR;
-    
+
     n->resetMode = gamma;
     n->kappa = kappa;
     n->omega = 0;
@@ -63,7 +63,7 @@ void initNeuron(id_type coreID, id_type nID,
     }else {
         n->doReset = resetNone;
     }
-    
+
     //synaptic neuron setup:
     n->largestRandomValue = n->thresholdPRNMask;
     if(n->largestRandomValue > 256) {
@@ -86,14 +86,14 @@ void initNeuronEncodedRV(id_type coreID, id_type nID,
                          short sigma_l, short lambda, bool c, uint32_t alpha,
                          uint32_t beta, short TM, short VR, short sigmaVR, short gamma,
                          bool kappa, neuronState *n, int signalDelay, uint64_t destGlobalID,int destAxonID) {
-    
+
     initNeuron(coreID, nID, synapticConnectivity, G_i,  sigma, S, b, epsilon,
                sigma_l, lambda, c, alpha, beta,  TM,  VR,  sigmaVR,  gamma,
                 kappa,  n,  signalDelay, destGlobalID, destAxonID);
     n->sigmaVR = sigmaVR;
     n->encodedResetVoltage = VR;
     n->resetVoltage = (n->sigmaVR * (pow(2, n->encodedResetVoltage)-1));
-    
+
 }
 
 void writeLPState(tw_lp *lp){
@@ -167,12 +167,14 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
     //m->stateSaveZone = tw_calloc(TW_LOC, "neuron", sizeof(neuronState), 1);
     //memcpy(m->stateSaveZone,st,sizeof(*st));
 
+
+    //@todo: see if this is used still and remove
     int num = st->myLocalID;
 
     switch (m->eventType)
     {
       /// @TODO: possibly need to aggregate inputs on the same channel? If validation isn't working check this.
-            
+
 
         case SYNAPSE_OUT:
             st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
@@ -198,13 +200,13 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
             //Currently operates - leak->fire->(reset)
             st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
 
-			numericLeakCalc(st, tw_now(lp));
+			      numericLeakCalc(st, tw_now(lp));
             //linearLeak( st, tw_now(lp));
             ringing(st, m->neuronVoltage);
-            
+
             //willFire = neuronShouldFire(st, lp); //removed and replaced with fireFloorCelingReset
             willFire = fireFloorCelingReset(st, lp);
-            
+
             if (willFire) {
                 fire(st,lp);
                 //st->fireCount++;
@@ -215,7 +217,7 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
             st->SOPSCount++;
             st->lastActiveTime = tw_now(lp);
 
-            
+
 //            if(neuronShouldFire(st, lp)){
 //                st->heartbeatOut = true;
 //                tw_stime time = getNextBigTick(lp, st->myLocalID);
@@ -229,6 +231,7 @@ bool neuronReceiveMessage(neuronState *st, Msg_Data *m, tw_lp *lp, tw_bf *bf)
             //send a heartbeat out that will ensure the neuron fires again.
             //Or if we are as self-firing neuron.
             ///@TODO: Add detection of self-firing neuron state.
+            ///@TODO: Ensure bf-c13 state validity here for reverse computations
             if( neuronShouldFire(st, lp) && st->heartbeatOut == false ){
                 tw_stime time = getNextBigTick(lp, st->myLocalID);
                 st->heartbeatOut = true;
@@ -262,7 +265,10 @@ void neuronReverseState(neuronState *s, tw_bf *CV, Msg_Data *m, tw_lp *lp)
     /** @todo - check this for correctness and switch from delta encoding. */
     //TERRIBLE DEBUGGING CODE REMOVE BEFORE ANYONE SEES:
     //memcpy(s, m->stateSaveZone, sizeof(*s));
-
+    /** @todo change this code to match structure
+    of forward computation. Follow forward event
+    state by state.
+    */
     if (m->eventType == NEURON_HEARTBEAT) {
         s->SOPSCount--;
     }
@@ -361,7 +367,7 @@ void revLinearLeak(void *neuron, tw_stime now)
  * These functions operate based on the table presented in \cite Cass13_1000 .
  * Currently, there are three functions, one for linear reset (resetLinear()),
  * "normal" reset (resetNormal()), and non-reset (resetNone()).
- 
+
  From the paper:
  | \f$𝛾_j\f$ | \f$𝜘_j\f$| Reset Mode               |     Positive Reset     |     Negative Reset    |
  |----|----|--------------------------|:----------------------:|:---------------------:|
@@ -371,7 +377,7 @@ void revLinearLeak(void *neuron, tw_stime now)
  | 1  | 1  | linear -neg saturation   |  \f$V_j - (𝛼_j,+ 𝜂_j)\f$ |        \f$-𝛽_j\f$        |
  | 2  | 0  | non-reset                |          \f$V_j\f$         |         \f$V_j\f$         |
  | 2  | 1  | non-reset net saturation |          \f$V_j\f$         |        \f$-𝛽_j\f$        |
- 
+
  * @todo: Check that reverse reset functions are needed, since previous voltage is stored in the neuron.
  * @{ */
 
@@ -420,11 +426,11 @@ void resetLinear(void *neuronState)
         s->membranePotential = s->membranePotential -
             (s->posThreshold  + s->drawnRandomNumber);
     }
-        
+
 }
 /**
  *  @details non-reset handler function - does non-reset style reset. Interestingly,
- *  even non-reset functions follow the negative saturation parameter from the paper. 
+ *  even non-reset functions follow the negative saturation parameter from the paper.
  */
 void resetNone(void *neuronState)
 {
@@ -433,7 +439,7 @@ void resetNone(void *neuronState)
     if(s->kappa && s->membranePotential < s->negThreshold){
         negThresholdReset(s);
     }
-    
+
 }
 
 
@@ -532,7 +538,7 @@ void sendHeartbeat(neuronState *st, tw_stime time, void *lp) {
 
 bool overUnderflowCheck(void *ns){
     neuronState *n = (neuronState *) ns;
-    
+
     int ceiling = 393216;
     int floor = -393216;
     bool spike = false;
@@ -592,8 +598,8 @@ bool fireFloorCelingReset(neuronState *ns, tw_lp *lp){
                                 ((DT((gamma-2))) * ns->membranePotential)
                                  );
 				 */
-        
-//        
+
+//
 //        switch (ns->resetMode) {
 //            case 0:
 //                ns->membranePotential = ns->resetVoltage;
@@ -622,17 +628,17 @@ bool fireFloorCelingReset(neuronState *ns, tw_lp *lp){
         s3 = (DT((gamma - 1)) * (ns->membranePotential + (beta + ns->drawnRandomNumber)));
         s4 = (DT((gamma - 2)) * ns->membranePotential) * (1 - ns->kappa);
         x = s1 + (s2 + s3 + s4);
-        
+
         ns->membranePotential = (
                                  ((-1*beta) * ns->kappa) + (
                                  ((-1*(DT(gamma))) * Vrst) +
                                  ((DT((gamma - 1))) * (ns->membranePotential + (beta + ns->drawnRandomNumber))) +
                                  ((DT((gamma - 2))) * ns->membranePotential)) * (1 - ns->kappa)
                                  );
-                                                    
+
     }
     return shouldFire;
-    
+
 }
 
 

@@ -142,6 +142,8 @@ void saveNetwork(neuronState *n,tw_lpid gid){
 
 
 }
+//@todo: add apriori info about crossbar connections to synapses
+//@todo: switch to single master synapse
 int main(int argc, char *argv[])
 {
 		///VALIDATION SETUP
@@ -223,21 +225,21 @@ int main(int argc, char *argv[])
 
 	tw_run();
 		//	// Stats Collection ************************************************************************************88
-    
-    
-    
+
+
+
 	tw_statistics s = statsOut();
 	csv_model_stats(s);
-    
 
-    
+
+
 	tw_end();
 		//
     if(SAVE_NEURON_OUTS || DEBUG_MODE){
         closeFiles();
     }
-    
-    
+
+
 
 	return (0);
 }
@@ -412,16 +414,16 @@ void write_event(id_type local, id_type core, char id, tw_stime t, bool close){
         opened = true;
         printf("opened file\n");
     }
-    
+
     if (!close) {
         fprintf(activ,"%c,%llu,%llu,%f\n",id,core,local,t);
 		printf("Wrote event to file\n");
     }
     if (close && opened)
         fclose(activ);
-    
-    
-    
+
+
+
 }
 
 	///
@@ -535,7 +537,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	}
 
 	synapticConnectivity[lGetNeuNumLocal(lp->gid)] = 1;
-    
+
 		//(creates an "ident. matrix" of neurons.
 	for(int i = 0; i < 4; i ++){
 		//int ri = tw_rand_integer(lp->rng, -1, 0);
@@ -546,7 +548,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 		sigma[i] = 1;
 		b[i] = 0;
 	}
-		
+
 
 	//weight_type alpha = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
 	//weight_type beta = tw_rand_integer(lp->rng, (NEG_THRESH_SIGN * NEG_THRESHOLD_MIN), NEG_THRESHOLD_MAX);
@@ -560,11 +562,11 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 		//we re-define the destination axons here, rather than use the constructor.
 
 	float remoteCoreProbability = .905;
-	
+
 	//This neuron's core is X. There is a 90.5% chance that my destination will be X - and a 10% chance it will be a different core.
 	if(tw_rand_unif(lp->rng) < remoteCoreProbability){
 //		long dendriteCore = s->myCoreID;
-//		dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);	
+//		dendriteCore = tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
 		s->dendriteCore =  tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
 	}else {
 		s->dendriteCore = s->myCoreID; //local connection.
@@ -577,7 +579,7 @@ void createSimpleNeuron(neuronState *s, tw_lp *lp){
 	s->dendriteLocal = s->myLocalID;// tw_rand_integer(lp->rng, 0, AXONS_IN_CORE - 1);
 		//     if (tnMapping == LLINEAR) {
 	s->dendriteGlobalDest = lGetAxonFromNeu(s->dendriteCore, s->dendriteLocal);
-	
+
 		if (s->dendriteGlobalDest != lGetAxonFromNeu(s->dendriteCore,s->dendriteLocal))
 		{
 
@@ -646,7 +648,7 @@ void neuron_init(neuronState *s, tw_lp *lp) {
 		saveNetwork(s,lp->gid);
 	}
     if ((validation || SAVE_MEMBRANE_POTS)   && s->neuronTypeDesc[0]!='D') { //&& M->eventType == NEURON_HEARTBEAT
-        
+
         //if(s->neuronTypeDesc[0] == 'P' && s->neuronTypeDesc[1] == 'H')
         //char* x = s->neuronTypeDesc;
         //int xu = 3;
@@ -686,13 +688,13 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 		saveValidationData(s->myLocalID, s->myCoreID, tw_now(lp), s->membranePotential);
 	}
 	bool fired = neuronReceiveMessage(s, M, lp,CV);//#fired = (g_tw_synchronization_protocol == SEQUENTIAL || g_tw_synchronization_protocol==CONSERVATIVE) && fired;
-	
+
 		if ((SAVE_SPIKE_EVTS || validation) && fired == true){
             //printf("N%i -> AX%i\n", s->myLocalID, s->dendriteLocal);
             //fprintf(stderr, "%i,%i,%i,%i\n",s->myCoreID, s->myLocalID, s->dendriteLocal,s->dendriteCore);
             //fprintf(stderr, "%i,%llu\n",s->dendriteLocal,s->dendriteCore);
 			write_event(s->myLocalID, s->myCoreID, 'N', tw_now(lp), false);
-            
+
 //			if (nlog == NULL) {
 //				nlog = nlset(s, lp);
 //			}
@@ -701,7 +703,7 @@ void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 //			}
 		}
 
-	
+
 
 
 
@@ -767,7 +769,7 @@ void synapse_init(synapseState *s, tw_lp *lp)
 	s->destNeuron = lGetNeuronFromSyn(lp->gid);
 	s->destSynapse = lGetNextSynFromSyn(lp->gid);
 	s->mySynapseNum = lGetSynNumLocal(lp->gid);
-    
+
 		//if (tnMapping == LLINEAR) {
 		//s->destNeuron = clGetNeuronFromSynapse(lp->gid);
 		//s->destSynapse = 0;
@@ -840,7 +842,7 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 		data->eventType = SYNAPSE_OUT;
 		data->localID = lp->gid;
 		data->axonID = M->axonID;
-        
+
 
 		tw_event_send(axe);
 	}
@@ -853,7 +855,7 @@ void synapse_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	data->eventType = SYNAPSE_OUT;
 	data->localID = s->mySynapseNum;
 	data->axonID = M->axonID;
-    
+
 	tw_event_send(axe);
 	M->rndCallCount = lp->rng->count - rc;
 }
@@ -972,15 +974,15 @@ void axon_event(axonState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp)
 	tw_event_send(axe);
 	s->sendMsgCount ++;
 	M->rndCallCount = lp->rng->count - rc;
-    
+
     /** @todo for performance, this if block should be removed from the code - it saves axon fire event data for building validation models */
-    
+
     //if(s->axtype[3]=='t')
     if(validation || SAVE_SPIKE_EVTS)
     {
         logAxonEvent(lp, s);
 
-        
+
     }
 }
 

@@ -88,7 +88,7 @@ typedef struct NeuronModel {
     id_type dendriteCore; //!< Local core of the remote dendrite
     tw_lpid dendriteGlobalDest; //!< GID of the axon this neuron talks to. @todo: The dendriteCore and dendriteLocal values might not be needed anymroe.
 
-    
+
     //32
     volt_type membranePotential; //!< current "voltage" of neuron, \f$V_j(t)\f$. Since this is PDES, \a t is implicit
     thresh_type posThreshold; //!< neuron's threshold value 𝛼
@@ -103,8 +103,8 @@ typedef struct NeuronModel {
                                * least significant bit. The mask scales the range of the random drawn number (PRN) of the model,
                                * here defined as @link drawnRandomNumber @endlink. used as a scale for the random values. */
     //short thresholdMaskBits; //!< TM, or the number of bits for the random number. Use this to generate the thresholdPRN mask;
-    
-    
+
+    //@TODO : Replace short with uint16_t for consistancy.
     //small
     short largestRandomValue;
     short lambda; //!< leak weight - \f$𝜆\f$ Leak tuning parameter - the leak rate applied to the current leak function.
@@ -113,11 +113,13 @@ typedef struct NeuronModel {
     short sigmaVR; //!< reset voltage - reset voltage sign
     short encodedResetVoltage; //!< encoded reset voltage - VR.
     short omega; //!<temporary leak direction variable
-    
+
     char* neuronTypeDesc; //!< a debug tool, contains a text desc of the neuron.
     char sigma_l; //!< leak sign bit - eqiv. to σ
     unsigned char delayVal; //!<@todo: Need to fully implement this - this value is between 1 and 15, a "delay" of n timesteps of a neuron. -- outgoing delay //from BOOTCAMP!
 
+    //@TODO - convert this to a bitfield for bools. Check ROSS BF implementation
+    
     bool firedLast;
     bool heartbeatOut;
     bool isSelfFiring;
@@ -127,27 +129,27 @@ typedef struct NeuronModel {
     bool canGenerateSpontaniousSpikes;
 
 
-    
-    
+
+
     char axonTypes[256];
     char synapticWeight[4];
     bool synapticConnectivity[256]; //!< is there a connection between axon i and neuron j?
     /** stochastic weight mode selection. $b_j^{G_i}$ */
     bool weightSelection[4];
 
-    
-    
-    
-  
-    
+
+
+
+
+
     //TODO - print address offsets fof structs for performance
-    
-   
+
+
     //uint32_t PRNSeedValue; //!< pseudo random number generator seed. @TODO: Add PRNSeedValues to the neurons to improve TN compatibility.
-    
 
 
-    
+
+
 }neuronState;
 
 /* ***Neuron functions */
@@ -159,7 +161,7 @@ void  initNeuron(id_type coreID, id_type nID,
                  short G_i[], short sigma[4], short S[4], bool b[4], bool epsilon,
                  short sigma_l, short lambda, bool c, uint32_t alpha,
                  uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa, neuronState *n, int signalDelay, uint64_t destGlobalID, int destAxonID);
-/** Creates a neuron using the encoded reset value method. Use this for more 
+/** Creates a neuron using the encoded reset value method. Use this for more
  complete compatability with TrueNorth */
 void initNeuronEncodedRV(id_type coreID, id_type nID,
                          bool synapticConnectivity[NEURONS_IN_CORE],
@@ -196,7 +198,7 @@ void integrate(id_type synapseID,neuronState *st, void *lp);
 bool neuronShouldFire(neuronState *st, void *lp);
 
 /**
- * @brief New firing system using underflow/overflow and reset. 
+ * @brief New firing system using underflow/overflow and reset.
  * @return true if neuron is ready to fire. Membrane potential is set regardless.
  */
 bool fireFloorCelingReset(neuronState *ns, tw_lp *lp);
@@ -222,7 +224,7 @@ void stochasticIntegrate(weight_type weight, neuronState *st);
 void setNeuronDest(int signalDelay, uint64_t globalID, neuronState *n);
 
 /**
- *  @brief NumericLeakCalc - uses formula from the TrueNorth paper to calculate leak. 
+ *  @brief NumericLeakCalc - uses formula from the TrueNorth paper to calculate leak.
  *  @details Will run $n$ times, where $n$ is the number of big-ticks that have occured since
  *  the last integrate. Handles stochastic and regular integrations.
  *
