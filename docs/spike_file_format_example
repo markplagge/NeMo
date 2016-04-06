@@ -1,0 +1,11 @@
+Spike File Format Example
+
+Format is CSV in the following format:
+CORE,AXON,TICKa...tickn
+For example, a file specifying ticks on core 0, axons 0 and 3, for ticks 0,2,5,6:
+0,0,0,2,5,6
+0,3,0,2,5,6
+
+The file must be sorted by core then by axon. 
+
+The base file should be named spikes.csv
