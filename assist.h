@@ -145,7 +145,7 @@ typedef struct Ms{
 
     ///debugging ugly style - remove before showing anyone your code.
     //void * stateSaveZone;
-
+    uint16_t synapseHeartbeatCounter;  //!< SuperSyapse LPs set this to the number of neurons that are left to send messages to.
 
 
 }Msg_Data;

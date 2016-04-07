@@ -8,6 +8,9 @@
 
 #ifndef __ROSS_TOP__model_main__
 #define __ROSS_TOP__model_main__
+#define nlog s->log
+#define newlog (neuEvtLog*)calloc(sizeof(neuEvtLog),1);
+
 
 #include <stdio.h>
 #include "assist.h"
@@ -25,14 +28,11 @@
 
 #include <stdbool.h>
 
-#define nlog s->log 
-#define newlog (neuEvtLog*)calloc(sizeof(neuEvtLog),1);
-
 
 extern int n_created ;
 extern int s_created ;
 extern int a_created ;
-        // Variable holders for command lne params & external variables
+// Variable holders for command lne params & external variables
 
 /// Memory Tuning
 int eventAlloc = 2;
@@ -48,7 +48,6 @@ bool GEN_RND = 1; //!< Generator random mode flag
 id_type LPS_PER_PE;
 id_type SIM_SIZE;
 id_type LP_PER_KP;
-tw_stime LH_VAL = 0.001;
 unsigned int RAND_WT_PROB = 2;
 bool DEBUG_MODE = 0;
 bool BASIC_SOP = false;
@@ -62,13 +61,13 @@ bool DEPOLAR_VAL = false;
 bool SAVE_MEMBRANE_POTS = false;
 bool SAVE_SPIKE_EVTS = false;
 bool SAVE_NEURON_OUTS = false;
- stat_type neuronSOPS = 0;
- stat_type synapseEvents = 0;
+stat_type neuronSOPS = 0;
+stat_type synapseEvents = 0;
 bool validation;
 
 //stat_type fireCount;
-/** littleTick is the resolution of little ticks 
-* (events between neuron fire events) */
+/** littleTick is the resolution of little ticks
+ * (events between neuron fire events) */
 tw_stime littleTick = .001;
 /** changes random time parameter */
 tw_stime CLOCK_RANDOM_ADJ = 1.0;
@@ -78,12 +77,12 @@ timeRandomSel CLOCK_RND_MODE = RND_EXP;
 
 /* Mapping values */
 mapTypes tnMapping;
-	//tw_lptype model_lps[];
+//tw_lptype model_lps[];
 /**  Determines the maximum thresholds for a neuron to fire.
- */
+*/
 thresh_type THRESHOLD_MAX = 2;
 
- thresh_type NEG_THRESHOLD_MAX = 2;
+thresh_type NEG_THRESHOLD_MAX = 2;
 /**
  *  Minimum threshold. @see THRESHOLD_MAX
  */
@@ -117,8 +116,8 @@ struct supernStats {
     unsigned long long totalSynapseMsgs;
     tw_stime runtime;
     tw_stime totalTime;
-    
-    
+
+
 };
 
 tw_statistics statsOut();
@@ -136,7 +135,7 @@ int32_t SYNAPSE_WEIGHT_MIN = 0;
 tw_stime PER_SYNAPSE_DET_P = .50;
 
 
-	//Simulation Variables
+//Simulation Variables
 /**CORE_SIZE is equal to the number of axions * number of aneurons + num neurons + num axions */
 id_type CORE_SIZE;
 
@@ -180,37 +179,37 @@ tw_stime B_CROSSBAR_PROB = .5;
 tw_stime B_EXITE_PROB = .75;
 
 const tw_optdef app_opt[]= {
-  TWOPT_GROUP("Randomized Neuron Parameters"),
-  TWOPT_UINT("th_min", THRESHOLD_MIN, "minimum threshold for neurons"),
+    TWOPT_GROUP("Randomized Neuron Parameters"),
+    TWOPT_UINT("th_min", THRESHOLD_MIN, "minimum threshold for neurons"),
     TWOPT_UINT("th_max", THRESHOLD_MAX, "maximum threshold for neurons"),
     TWOPT_UINT("wt_min", SYNAPSE_WEIGHT_MIN, "minimum synapse weight -- is treated as 0-val"),
     TWOPT_UINT("wt_max", SYNAPSE_WEIGHT_MAX, "maximum synapse weight"),
-	TWOPT_UINT("rdn_p", RAND_WT_PROB, "given a λ of 1, if the value is greater than this a neuron will assign a stochastic value to an axon type."),
-  TWOPT_GROUP("Benchmark neuron parameters (default run mode)"),
+    TWOPT_UINT("rdn_p", RAND_WT_PROB, "given a λ of 1, if the value is greater than this a neuron will assign a stochastic value to an axon type."),
+    TWOPT_GROUP("Benchmark neuron parameters (default run mode)"),
 
-	TWOPT_GROUP("Sim Size Params"),
-	TWOPT_ULONGLONG("cores", CORES_IN_SIM, "number of cores in simulation"),
-	TWOPT_ULONGLONG("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
+    TWOPT_GROUP("Sim Size Params"),
+    TWOPT_ULONGLONG("cores", CORES_IN_SIM, "number of cores in simulation"),
+    TWOPT_ULONGLONG("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
     TWOPT_GROUP("Sim tuning"),
-  TWOPT_STIME("lh", LH_VAL, "Lookahead setting"),
+    TWOPT_STIME("lh", LH_VAL, "Lookahead setting"),
 
-	TWOPT_FLAG("delta", TW_DELTA, "Use delta encoding for some states"),
-	TWOPT_FLAG("simple", BASIC_SOP, "Simple SOPS measurement (simpified neuron model)"),
-  TWOPT_STIME("rv", CLOCK_RANDOM_ADJ, "Clock random generator modifier"),
-  TWOPT_UINT("rm",CLOCK_RND_MODE, "Clock random mode selector.\n\t\t0 = uniform, 1 = normal, 2 = exponential, 3 = binomal, 4 = simplistic"),
-  TWOPT_FLAG("bulk",BULK_MODE,"Is this sim running in bulk mode (called from script?)"),
-	TWOPT_GROUP("Debug options"),
-	 TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
-  TWOPT_FLAG("network", SAVE_NEURON_OUTS, "Save neuron output axon IDs on creation"),
+    TWOPT_FLAG("delta", TW_DELTA, "Use delta encoding for some states"),
+    TWOPT_FLAG("simple", BASIC_SOP, "Simple SOPS measurement (simpified neuron model)"),
+    TWOPT_STIME("rv", CLOCK_RANDOM_ADJ, "Clock random generator modifier"),
+    TWOPT_UINT("rm",CLOCK_RND_MODE, "Clock random mode selector.\n\t\t0 = uniform, 1 = normal, 2 = exponential, 3 = binomal, 4 = simplistic"),
+    TWOPT_FLAG("bulk",BULK_MODE,"Is this sim running in bulk mode (called from script?)"),
+    TWOPT_GROUP("Debug options"),
+    TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
+    TWOPT_FLAG("network", SAVE_NEURON_OUTS, "Save neuron output axon IDs on creation"),
     TWOPT_FLAG("svm", SAVE_MEMBRANE_POTS, "Save neuron membrane potential values (enabled by default when running a validation model"),
     TWOPT_FLAG("svs", SAVE_SPIKE_EVTS, "Save neuron spike event times and info"),
-    
+
     TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
     TWOPT_FLAG("tonb",TONIC_BURST_VAL, "Tonic bursting Neuron Validation"),
-	TWOPT_FLAG("phb", PHASIC_BURST_VAL, "Phasic Bursting Neuron Validation"),
+    TWOPT_FLAG("phb", PHASIC_BURST_VAL, "Phasic Bursting Neuron Validation"),
     {TWOPT_END()}
 
-  };
+};
 void setSynapseWeight(neuronState *s, tw_lp *lp, int synapseID);
 void neuron_event(neuronState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp);
 void neuron_reverse(neuronState *, tw_bf *, Msg_Data *, tw_lp *);
@@ -227,10 +226,10 @@ void axon_reverse(axonState *, tw_bf *, Msg_Data *M, tw_lp *);
 void axon_final(axonState *s, tw_lp *lp);
 
 /**
- * @brief An assist function that displays the model 
+ * @brief An assist function that displays the model
  * configuration before a run.
  * @details With debug mode off, this displays all of the important config
- * info. With debug mode on, this displays the mapping and initial values 
+ * info. With debug mode on, this displays the mapping and initial values
  * of all the axons, neurons, and synapses, along with more detailed
  * information. Only displays on the primary node.
  */
