@@ -9,6 +9,7 @@
 #include "neuron.h"
 
 
+
 /** Constructor / Init a new neuron. assumes that the reset voltage is NOT encoded (i.e.,
   * a reset value of -5 is allowed. Sets reset voltage sign from input reset voltage).*/
 void initNeuron(id_type coreID, id_type nID,
