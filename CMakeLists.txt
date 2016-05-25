@@ -1,46 +1,53 @@
-INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR})
-## Must include binary dir for config.h
+cmake_minimum_required(VERSION 3.5)
+project(NeMo)
+if(${ROSS_SOURCE_DIR})
+    INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR})
+else()
+    INCLUDE_DIRECTORIES("../ROSS")
+    set(ROSS_SOURCE_DIR "../ROSS")
+endif()
 
-## If you will be using the ROSSIO library add this
-#INCLUDE_DIRECTORIES(${ROSSIO_SOURCE_DIR})
+## Model Version
+## Model Version
+LIST(APPEND CMAKE_MODULE_PATH "${ROSS_SOURCE_DIR}/cmake/")
+INCLUDE(GetGitRevisionDescription)
+GET_GIT_HEAD_REVISION(GIT_RESPEC_MODEL GIT_SHA1_MODEL)
+
+## Model Compile-Time Options (Will add more later)
+set(NeMo_NEURONS_IN_CORE 512 CACHE STRING "The number of neurons in each simulated core")
+
+## Build Configuration Header File
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
+#generated config files:
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/nemo_config.h.in ${CMAKE_CURRENT_BINARY_DIR}/model_config.h @ONLY)
+SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/nemo_config.h.in PROPERTIES GENERATED FALSE)
+SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_BINARY_DIR}/nemo_config.h PROPERTIES GENERATED TRUE)
+
+
+
+
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11  ")
-
-#add_library( libs/cpptest.cpp)
-
-# Files you have included in your model
-SET(model_srcs
-
-	assist.c
-	assist.h
-	models/neuron_generic.h
-	models/neuron_generic.c
-	models/neuron.c
-	models/neuron.h
-	models/iz_neuron.h
-	models/iz_neuron.c
-	models/synapse.h
-	input_simulator.c
-	input_simulator.h
-    bioModel.h
-    bioModel.c
-	mapping.h
-	mapping.c
-	clMapping.h
-	clMapping.c
-	neuron_out_stats.h
-	neuron_out_stats.c
-	model_main.h
-	model_main.c
-
-)
 
 
-# Main function (in this case) is found in model_main.c
+#Source Files:
+set(model_srcs
+        nemo_main.c
+        globals.h
+        neuro/synapse.h
+        neuro/neuron.c
+        neuro/neuron.h
+        neuro/neuron_models/tn_neuron.c
+        neuro/neuron_models/tn_neuron.h
+        mapping.c
+        mapping.h
+        bio_validation.c
+        IO/IOStack.c
+        IO/IOStack.h
+        nemo_config.h)
 
-ADD_EXECUTABLE(tnt_benchmark model_main.c ${model_srcs})
+
+ADD_EXECUTABLE(NeMo  ${model_srcs})
 
 
-TARGET_LINK_LIBRARIES(tnt_benchmark ROSS m)
-## Alternatively, use this command with ROSSIO
-#TARGET_LINK_LIBRARIES(sr-model ROSS ROSSIO m)
+TARGET_LINK_LIBRARIES(NeMo ROSS m)
