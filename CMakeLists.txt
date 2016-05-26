@@ -1,17 +1,12 @@
 cmake_minimum_required(VERSION 3.5)
 project(NeMo)
-if(${ROSS_SOURCE_DIR})
-    INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR})
-else()
-    INCLUDE_DIRECTORIES("../ROSS")
-    set(ROSS_SOURCE_DIR "../ROSS")
-endif()
+INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR})
 
 ## Model Version
 ## Model Version
 LIST(APPEND CMAKE_MODULE_PATH "${ROSS_SOURCE_DIR}/cmake/")
-INCLUDE(GetGitRevisionDescription)
-GET_GIT_HEAD_REVISION(GIT_RESPEC_MODEL GIT_SHA1_MODEL)
+#INCLUDE(GetGitRevisionDescription)
+#GET_GIT_HEAD_REVISION(GIT_RESPEC_MODEL GIT_SHA1_MODEL)
 
 ## Model Compile-Time Options (Will add more later)
 set(NeMo_NEURONS_IN_CORE 512 CACHE STRING "The number of neurons in each simulated core")
@@ -44,7 +39,7 @@ set(model_srcs
         bio_validation.c
         IO/IOStack.c
         IO/IOStack.h
-        nemo_config.h)
+        nemo_config.h nemo_main.h)
 
 
 ADD_EXECUTABLE(NeMo  ${model_srcs})
