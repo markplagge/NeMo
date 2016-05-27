@@ -1,0 +1,914 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"tran",
+				"transition_probability	statement"
+			],
+			[
+				"syna",
+				"synapseGID"
+			],
+			[
+				"for",
+				"forv	Vector For Loop"
+			],
+			[
+				"CORE",
+				"CORE_SIZE"
+			],
+			[
+				"neuron",
+				"NERUONS_PER_CORE"
+			],
+			[
+				"emiss",
+				"emissionProb"
+			],
+			[
+				"emi",
+				"emissionProb"
+			],
+			[
+				"trans",
+				"transmissionProb"
+			],
+			[
+				"bibliography",
+				"Bibliography"
+			],
+			[
+				"em",
+				"emph{text}	latex-document"
+			],
+			[
+				"end",
+				"end{figure*}	nemo.tex"
+			],
+			[
+				"subsce",
+				"subsection[short]{title}	latex-document"
+			],
+			[
+				"quad",
+				"qquad	tex"
+			],
+			[
+				"bigg",
+				"biggr	latex-mathsymbols"
+			],
+			[
+				"left",
+				"left[	latex-document"
+			],
+			[
+				"if",
+				"ifmain	if __name__ == '__main__'"
+			],
+			[
+				"RANDOM",
+				"timeRandomSel"
+			],
+			[
+				"LITTLE",
+				"littleTick"
+			],
+			[
+				"little",
+				"littleTick"
+			],
+			[
+				"g",
+				"g_tw_nlp"
+			],
+			[
+				"nlp",
+				"nlp_per_kp"
+			],
+			[
+				"Dynami",
+				"DynamicActorInstance"
+			],
+			[
+				"Actor",
+				"actorName"
+			],
+			[
+				"behavior",
+				"behavior"
+			],
+			[
+				"change",
+				"changeBehavior"
+			],
+			[
+				"beha",
+				"behaviorName"
+			],
+			[
+				"behav",
+				"behaviorBody"
+			],
+			[
+				"str",
+				"strAr"
+			],
+			[
+				"fo",
+				"for	for (…) {…} (Improved Native For-Loop)"
+			],
+			[
+				"behavio",
+				"behaviorArgs"
+			],
+			[
+				"bhavior",
+				"behaviorArgs"
+			],
+			[
+				"bh",
+				"behaviorName"
+			],
+			[
+				"Fil",
+				"file"
+			],
+			[
+				"wpsf",
+				"wpsf_get_setting"
+			],
+			[
+				"flag",
+				"FlagImageTool"
+			],
+			[
+				"va",
+				"val2"
+			],
+			[
+				"switch",
+				"switch  (keyword)"
+			],
+			[
+				"que",
+				"question_text"
+			],
+			[
+				"qes",
+				"question_text"
+			],
+			[
+				"stDi",
+				"stDist"
+			],
+			[
+				"subsys",
+				"subsysName  (variable)"
+			],
+			[
+				"u_app",
+				"u_app_name"
+			],
+			[
+				"match",
+				"matchAppSubsystem"
+			],
+			[
+				"u_sub",
+				"u_subsystem_name"
+			],
+			[
+				"sys",
+				"sys_id"
+			],
+			[
+				"rol",
+				"roleQ"
+			],
+			[
+				"u_sy",
+				"u_subsystem_name"
+			],
+			[
+				"u_",
+				"u_user_id"
+			],
+			[
+				"out",
+				"outageEnd"
+			],
+			[
+				"setU",
+				"setUTCMilliseconds  (function)"
+			],
+			[
+				"getU",
+				"getUTCHours  (function)"
+			],
+			[
+				"gett",
+				"getTimezoneOffset  (function)"
+			],
+			[
+				"Generate",
+				"GenerateSRecord"
+			],
+			[
+				"gene",
+				"GenerateRecord"
+			],
+			[
+				"QUE",
+				"queryAjax"
+			],
+			[
+				"outageStartBefore",
+				"outageStartBeforeOutageEnd"
+			],
+			[
+				"u_out",
+				"u_outage_start"
+			],
+			[
+				"start",
+				"start_date"
+			],
+			[
+				"plann",
+				"plannedEnd"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "nemo_main.c",
+			"settings":
+			{
+				"buffer_size": 309,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/JavaScript & Coffeescript Build Systems/xJs.sublime-build",
+					""
+				],
+				[
+					"Packages/JavaScript & Coffeescript Build Systems/xJs.sublime-build",
+					"Compile"
+				],
+				[
+					"Packages/JavaScript & Coffeescript Build Systems/xJs.sublime-build",
+					"Harmony"
+				]
+			],
+			[
+				"Packages/JavaScript & Coffeescript Build Systems/xJs.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/LaTeXing/LaTeX (TikZ).sublime-build",
+					""
+				],
+				[
+					"Packages/LaTeXing/LaTeX (TikZ).sublime-build",
+					"Clean up Files"
+				]
+			],
+			[
+				"Packages/LaTeXing/LaTeX (TikZ).sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/LaTeXing/LaTeX.sublime-build",
+					""
+				],
+				[
+					"Packages/LaTeXing/LaTeX.sublime-build",
+					"Clean up Files"
+				]
+			],
+			[
+				"Packages/LaTeXing/LaTeX.sublime-build",
+				"Clean up Files"
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "package",
+		"selected_items":
+		[
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"pacl",
+				"Package Control: List Packages"
+			],
+			[
+				"package remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"clangfo",
+				"Clang Format: Format Selection"
+			],
+			[
+				"clang",
+				"Clang Format: Format Selection"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"Snippet: loop",
+				"Snippet: loop { .. }"
+			],
+			[
+				"Snippet: ",
+				"Snippet: Prototype"
+			],
+			[
+				"Snippet: constru",
+				"Snippet: JS constructor pattern"
+			],
+			[
+				"Snippet: pr",
+				"Snippet: JS module pattern"
+			],
+			[
+				"ruby",
+				"Snippet: #!/usr/bin/env ruby -wKU"
+			],
+			[
+				"package in",
+				"Package Control: Install Package"
+			],
+			[
+				"remove ",
+				"Package Control: Remove Package"
+			],
+			[
+				"plugin",
+				"SublimeCodeIntel: Disable Plugin"
+			],
+			[
+				"package con",
+				"Package Control: Disable Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"Install",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"Package Control: Install Package"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			]
+		],
+		"width": 485.0
+	},
+	"console":
+	{
+		"height": 260.0,
+		"history":
+		[
+			"list",
+			"LIST",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) ",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/mplagge/development/NeMo"
+	],
+	"file_history":
+	[
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/C Improved/README.md",
+		"/Users/mplagge/Documents/motorcycle_work/working_copy_of_work",
+		"/Users/mplagge/Google Drive/BioInformatics Readings,Notes/weblinks.txt",
+		"/Users/mplagge/Google Drive/RPI Work/tn_work/Mapping Prototypes/linear_mapping_functions.c",
+		"/Users/mplagge/development/tnt_benchmark/models/neuron_generic.h",
+		"/Users/mplagge/Google Drive/RPI Work/bioinformatics/Assignment3/Assign3-661411867.py",
+		"/Users/mplagge/Documents/NeMo_Presentation/rvp/index.html",
+		"/Users/mplagge/Documents/PADS_2016/nemo.bbl",
+		"/Users/mplagge/Documents/PADS_2016/nemo.tex",
+		"/Users/mplagge/Documents/PADS_2016/papers.bib",
+		"/Users/mplagge/Documents/NeMo_Presentation/Outlines and Notes/slides_outline.md",
+		"/Users/mplagge/Documents/PADS_2016/nemo_compass_comps.tex",
+		"/Users/mplagge/Documents/PADS_2016/nemo-blx.bib",
+		"/Users/mplagge/Documents/PADS_2016/conclusions.tex",
+		"/Users/mplagge/Documents/PADS_2016/bibliography_work/mende.bib",
+		"/Users/mplagge/Documents/PADS_2016/bibliography_work/doe_seab.bib",
+		"/Users/mplagge/Documents/PADS_2016/introduction.tex",
+		"/Users/mplagge/Documents/PADS_2016/nemo-neuron-model.tex",
+		"/Users/mplagge/Documents/PADS_2016/related-work.tex",
+		"/Users/mplagge/Documents/PADS_2016/nemo-neuron-implementation.tex",
+		"/Users/mplagge/Documents/PADS_2016/results2.tex",
+		"/Users/mplagge/Documents/PADS_2016/result_img/time-analysis.tex",
+		"/Users/mplagge/Documents/PADS_2016/result_img/weak.tex",
+		"/Users/mplagge/Documents/PADS_2016/nemo-other-arch.tex",
+		"/Users/mplagge/Documents/PADS_2016/result_img/strong.tex",
+		"/Users/mplagge/Documents/PADS_2016/result_img/efficiency.tex",
+		"/Users/mplagge/Documents/PADS_2016/result_img/rollbacks.tex",
+		"/Users/mplagge/Documents/PADS_2016/nemo_p.sublime-project",
+		"/Users/mplagge/Documents/PADS_2016/abbrv_short.bst",
+		"/Users/mplagge/Documents/PADS_2016/results.tex",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/User/LaTeXing.sublime-settings",
+		"/Users/mplagge/Google Drive/RPI Work/tn_work/post-fix runs/runs/8k_runs/64-ranks-per_nemo_N64-R4096-SC8192-SM3.log",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/mplagge/Google Drive/RPI Work/tn_work/post-fix runs/runs/8k_runs/64-ranks-per_nemo_N16-R1024-SC8192-SM3.log",
+		"/Users/mplagge/Google Drive/RPI Work/tn_work/post-fix runs/runs/8k_runs/64-ranks-per_nemo_N128-R8192-SC8192-SM3.log",
+		"/Users/mplagge/Google Drive/RPI Work/tn_work/post-fix runs/runs/8k_runs/64-ranks-per_nemo_N32-R2048-SC8192-SM3.log",
+		"/Users/mplagge/Google Drive/RPI Work/tn_work/post-fix runs/runs/8k_runs/64RP-S5_nemo_N512-R8192-SC8192-SM3.log",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/LaTeXing/LaTeXing.sublime-settings",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/User/LaTeX.sublime-settings",
+		"/Users/Mark/Development/PADS_2016/diagrams/NeMoFlowDiagram.pdf",
+		"/Users/Mark/Development/PADS_2016/nemo-neuron-model.tex",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/Mark/Development/PADS_2016/nemo_p.sublime-project",
+		"/Users/Mark/Development/PADS_2016/nemo.tex",
+		"/Users/Mark/Development/PADS_2016/papers.bib",
+		"/Users/Mark/Library/Application Support/Sublime Text 3/Packages/LaTeXing/LaTeXing.sublime-settings",
+		"/Users/Mark/Library/Application Support/Sublime Text 3/Packages/User/LaTeXing.sublime-settings",
+		"/Users/Mark/Development/PADS_2016/nemo-neuron-implementation.tex",
+		"/Users/Mark/Development/PADS_2016/nemo.log",
+		"/Users/Mark/Downloads/iz.bib",
+		"/Users/Mark/Development/PADS_2016/diagrams/event_times_new.gv",
+		"/Users/Mark/Development/PADS_2016/diagrams/event_times.gv",
+		"/Users/Mark/Development/PADS_2016/diagrams/event_times_new1.gv",
+		"/Users/Mark/Development/PADS_2016/hrf/tb_num.eps_tex",
+		"/Users/Mark/Google Drive/RPI Work/tn_work/post-fix runs/runs/weak_exp/weak_less_nodes_nemo_N512-R16384-SC32768-SM3.log",
+		"/Users/Mark/Google Drive/RPI Work/tn_work/good_result_time_table.csv",
+		"/Users/Mark/Google Drive/RPI Work/Workbook1.csv",
+		"/Users/Mark/Google Drive/RPI Work/tn_work/post-fix runs/runs/weak_exp/weak_nemo_N512-R32768-SC32768-SM3.log",
+		"/Users/Mark/Google Drive/RPI Work/tn_work/result_parsing/rossParser/rossParser/out.gml",
+		"/Users/Mark/Google Drive/RPI Work/tn_work/post-fix runs/runs/weak_exp/weak_2x_nemo_N16-R1024-SC2048-SM3.log",
+		"/Users/Mark/Google Drive/RPI Work/tn_work/r_slurm/slurm_g.rb",
+		"/Users/Mark/Downloads/pypaxos/paxos.py",
+		"/Users/Mark/Downloads/pypaxos/README",
+		"/Users/Mark/Development/TrueNorth/tnt_benchmark/bioModel.h",
+		"/Users/Mark/Development/cltest.py",
+		"/Users/Mark/Development/curt.py",
+		"/Users/Mark/Development/curUI.py",
+		"/Users/Mark/Development/testUDP.py",
+		"/Users/Mark/Development/pyCalDist/model.py",
+		"/Users/Mark/Development/testCSV.c",
+		"/Users/Mark/Development/rubytest/async_socket.py",
+		"/Users/Mark/Library/Application Support/Sublime Text 3/Packages/User/untitled.sublime-build",
+		"/Users/Mark/Development/rubytest/rxTest",
+		"/Users/Mark/Development/rubytest/server_test.rb",
+		"/Users/Mark/Development/asyncio_chat.py",
+		"/Users/Mark/Dropbox/Research/RPI/Data Science/library.bib",
+		"/Volumes/CCI Landing Pad/barn/4k_full_scale.sh",
+		"/Volumes/CCI Landing Pad/barn/512_scale_full.sh",
+		"/Volumes/CCI Landing Pad/barn/s_scale_1024.sh",
+		"/Volumes/CCI Landing Pad/barn/s_scale_512.sh",
+		"/Users/Mark/Development/TrueNorth/tnt_benchmark/scripts/testTS.py",
+		"/Users/Mark/Development/TrueNorth/tnt_benchmark/model_main.h",
+		"/Volumes/Mastiff/development/rem/tnt_benchmark/scripts/bench.rb",
+		"/Volumes/Mastiff/development/rem/tnt_benchmark/test_ts.rb",
+		"/Volumes/Mastiff/development/rem/ROSS/models/tnt_benchmark/assist.h",
+		"/Volumes/Mastiff/development/rem/ROSS/models/tnt_benchmark/models/neuron.c",
+		"/Volumes/Mastiff/development/rem/ROSS/models/tnt_benchmark/assist.c",
+		"/Volumes/Mastiff/development/rem/ROSS/models/tnt_benchmark/model_main.c",
+		"/Volumes/Mastiff/development/rem/ROSS/core/ross-global.c",
+		"/Volumes/Mastiff/development/rem/tnt_benchmark/model_main.c",
+		"/Volumes/Mastiff/development/rem/ROSS/core/ross-extern.h",
+		"/Volumes/Mastiff/development/rem/tnt_benchmark/input_simulator.h",
+		"/Volumes/Mastiff/development/rem/tnt_benchmark/model_main.h",
+		"/Volumes/Mastiff/development/rem/tnt_benchmark/assist.c",
+		"/Users/Mark/Development/TrueNorth/ROSS/models/tnt_benchmark/assist.c",
+		"/Users/Mark/Development/TrueNorth/ROSS/models/tnt_benchmark/mapping.h",
+		"/Users/Mark/Development/TrueNorth/ROSS.sublime-project",
+		"/Users/Mark/Library/Application Support/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
+		"/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.c",
+		"/Users/Mark/Development/TrueNorth/tnt_benchmark/stats_collection.h",
+		"/Users/Mark/Development/TrueNorth/tnt_benchmark/stats_collection.c",
+		"/Users/Mark/Development/TrueNorth/tnt_benchmark/model_main.c",
+		"/Users/Mark/Development/logictest.js",
+		"/Users/Mark/Development/TrueNorth/tnt_main/models/neuron_model.c",
+		"/Users/Mark/Development/TrueNorth/ROSS/models/ROSS-Models/pcs/pcs.c",
+		"/Users/Mark/Development/TrueNorth/ROSS/models/ROSS-Models/civilian_power/dissim-main.h",
+		"/Users/Mark/Development/TrueNorth/ROSS/models/ROSS-Models/airport/airport.c",
+		"/Users/Mark/Development/TrueNorth/ROSS/models/ROSS-Models/torus/torus.c",
+		"/Users/Mark/Library/TeXworks/scripts/makeBold.py",
+		"/Volumes/Mastiff/development/current/models/ROSS-Models/srw/srw.c",
+		"/Volumes/Mastiff/development/current/models/tnt/model_driver.c",
+		"/Volumes/Mastiff/development/current/sources/ROSS/models/tnt/CMakeLists.txt",
+		"/Volumes/Mastiff/development/current/sources/ROSS/models/tnt/model_main.cpp",
+		"/Volumes/Mastiff/development/current/sources/ROSS/models/tnt/model_driver.cpp",
+		"/Volumes/Mastiff/development/current/sources/ROSS/models/tnt/model_driver.c~",
+		"/Users/Mark/Dropbox/Research/RPI/LatexAdditions/acronyms.tex",
+		"/Applications/Macnewbie/Dwarf Fortress/hack/scripts/source.rb",
+		"/Volumes/Mastiff/development/rossModels/SR-model/model_driver.c",
+		"/Users/Mark/Dropbox/Research/RPI/OperatingSystems/exams/q3.c",
+		"/Users/Mark/Dropbox/Research/RPI/OperatingSystems/exams/q2.c",
+		"/Users/Mark/Dropbox/Research/RPI/OperatingSystems/exams/q1.c",
+		"/Users/Mark/Downloads/mapgraph.0.3.2/Algorithms/BFS/bfs.cu",
+		"/Users/Mark/Dropbox/Research/RPI/Distributed Program/Salsa/DynamicActorFramework/build/classes/salsaTest/SalsaTools.rb",
+		"/Users/Mark/Dropbox/Research/RPI/Distributed Program/Salsa/DynamicActorFramework/src/salsaTest/mainTest.salsa",
+		"/Users/Mark/Dropbox/Research/RPI/Distributed Program/Salsa/part2/Chopstick.salsa",
+		"/Users/Mark/Dropbox/Research/RPI/Distributed Program/Salsa/part2/Chopstick.java",
+		"/Users/Mark/Development/rClient/test.txt",
+		"/Users/Mark/Dropbox/Research/RPI/Distributed Program/DistributedSystemsPaperEqs.xml"
+	],
+	"find":
+	{
+		"height": 26.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"main",
+			"BINCOMP",
+			"IABS",
+			"Lin",
+			"Fever",
+			"healthy",
+			"logp",
+			"blue gene",
+			"Neural Networks,",
+			"deep learning",
+			"preissl",
+			"carothers",
+			"carothers2002",
+			"carothers",
+			"principles ",
+			"principles of advanced and",
+			"workshop on pri",
+			" \\d\\d\\d\\d\\}",
+			" \\d\\d\\d\\d}",
+			" 20\\d\\d",
+			" 20",
+			"20",
+			"'0",
+			"IJCNN 2013",
+			"ICJNN",
+			"delalond",
+			"IJCNN\\s'\\d\\d",
+			"(\\{\\{)(.*)(\\}\\})",
+			"(\\{\\{)\\D*(\\}\\})",
+			"\\{\\{\\D*\\}\\}",
+			"\\{\\{\\s*\\}\\}",
+			"{{\\C}}",
+			"\\begin",
+			"7",
+			"design and tool",
+			"akopyan",
+			"International",
+			"ROSS'",
+			"ROSS",
+			"advances in neural",
+			"Appuswamy",
+			"bauer",
+			"spinnaker-project-2014",
+			"defcounter",
+			"bib",
+			"def\\shared",
+			"nscs",
+			"compass",
+			"fanout",
+			"*",
+			"using that little ",
+			"} ",
+			"chapter",
+			" \n",
+			"it's",
+			"its ",
+			"its",
+			"512",
+			"\\ref",
+			"Compass ",
+			"babel",
+			"bib",
+			"preissl",
+			"Preiss",
+			"table:time",
+			"inspired",
+			"kappa",
+			"figure",
+			"\\Cref{fig:flow_d}.",
+			"\\Cref{fig:flow_d}",
+			"R_j",
+			"TrueNorth model",
+			"\\newla",
+			"t_{current}",
+			"Hasler",
+			"bitwise",
+			"~",
+			"ROSS",
+			"NeMo",
+			"uber",
+			"Schmidh",
+			"thier",
+			"their",
+			"contin",
+			"cassidy",
+			" $-\\",
+			"the",
+			"cassidy",
+			"mende",
+			"mendel",
+			"mend",
+			"resonate-and-fire",
+			"resonate-and",
+			"Resonate-and-fire neurons",
+			"= ",
+			"seconds",
+			"gen",
+			"raise\\s\\w*,",
+			"except\\s\\w*,",
+			"except[*]",
+			"except[*],",
+			"except",
+			",",
+			"raise Calc",
+			"self.writer",
+			"influence",
+			"mean_intervAL",
+			"tick",
+			"little",
+			"littletick",
+			"littleTick",
+			"coll",
+			"ccolli",
+			"coll",
+			"clock",
+			"mylps",
+			"lp_lptype",
+			"g_tw_nlp",
+			"offset",
+			"g_tw_lp_offset",
+			"g_tw_lp_of",
+			"g_tw_lp",
+			"CellMapping_lp_to_pe",
+			"init_F",
+			"CellMapping_to_local_index",
+			"CellMapping_lp_to_pe",
+			"g_vp_per_proc",
+			"NUM_CELLS_X"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"Green",
+			"Red",
+			"The 2013 International Joint Conference on Neural Networks",
+			"{$2}",
+			"{\\1}",
+			"Int.",
+			"\\times",
+			"\\cref",
+			"{\\em Compass} ",
+			"Block ",
+			"TrueNorth neuron model",
+			"t",
+			"raise\\s\\w* as",
+			"daf",
+			"\"remBurstTime\"",
+			"\"rmwt\"",
+			"$wt",
+			"$",
+			"java.lang.System.out.println",
+			"current",
+			"source",
+			"this._",
+			"this.",
+			"record",
+			"gr.log",
+			"currentRecord",
+			"this.getParameter",
+			"-arch x86_64"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "nemo_main.c",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 309,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								309,
+								309
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C Improved/C Improved.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 312.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 94.0
+	},
+	"pinned_build_system": "Packages/C++/C++ Single File.sublime-build",
+	"project": "nemo.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"conclusions.tex"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 187.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 285.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

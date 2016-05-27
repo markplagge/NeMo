@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(NeMo)
 INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR})
-
+set( CMAKE_EXPORT_COMPILE_COMMANDS 1 )
 ## Model Version
 ## Model Version
 LIST(APPEND CMAKE_MODULE_PATH "${ROSS_SOURCE_DIR}/cmake/")
