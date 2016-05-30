@@ -4,6 +4,90 @@
 		"selected_items":
 		[
 			[
+				"null",
+				"NULL	[ID]"
+			],
+			[
+				"tw",
+				"tw_lpid"
+			],
+			[
+				"size",
+				"size_type"
+			],
+			[
+				"mapp",
+				"mapping.h	[File]"
+			],
+			[
+				"Mess",
+				"messageData"
+			],
+			[
+				"tn_",
+				"tn_neuron.h	[File]"
+			],
+			[
+				"switc",
+				"switch	[ID]"
+			],
+			[
+				"glo",
+				"globals.h	[File]"
+			],
+			[
+				"neuro_event",
+				"neuro_event_handlers.h	[File]"
+			],
+			[
+				"neuron",
+				"neuro_event_handler.h	[File]"
+			],
+			[
+				"tn",
+				"true_north_model	[ID]"
+			],
+			[
+				"reverseInt",
+				"reverseIntegrateDel	[ID]"
+			],
+			[
+				"reverse",
+				"reverseResetDel	[ID]"
+			],
+			[
+				"FILE",
+				"FILE_OUT"
+			],
+			[
+				"PHAS",
+				"PHASIC_BURST_VAL"
+			],
+			[
+				"SAVE",
+				"SAVE_MEMBRANE_POTS"
+			],
+			[
+				"SAVE_",
+				"SAVE_SPIKE_EVTS	[ID]"
+			],
+			[
+				"TW",
+				"TWOPT_FLAG"
+			],
+			[
+				"tw_",
+				"tw_	[ID]"
+			],
+			[
+				"v",
+				"value_n"
+			],
+			[
+				"st",
+				"struct	KeyWord"
+			],
+			[
 				"tran",
 				"transition_probability	statement"
 			],
@@ -18,10 +102,6 @@
 			[
 				"CORE",
 				"CORE_SIZE"
-			],
-			[
-				"neuron",
-				"NERUONS_PER_CORE"
 			],
 			[
 				"emiss",
@@ -243,14 +323,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "nemo_main.c",
-			"settings":
-			{
-				"buffer_size": 309,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -343,17 +415,73 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 392.0,
-		"last_filter": "package",
+		"height": 347.0,
+		"last_filter": "doxy",
 		"selected_items":
 		[
 			[
+				"doxy",
+				"DoxyDoxygen: Select Comments (interactive)..."
+			],
+			[
+				"dox",
+				"DoxyDoxygen: Comment Update Preserving Style"
+			],
+			[
+				"ycm",
+				"Ycmd: Show Error Panel"
+			],
+			[
 				"package",
-				"Package Control: Install Package"
+				"Package Control: Remove Package"
+			],
+			[
+				"ycmd",
+				"Ycmd: Restart ycmd server"
+			],
+			[
+				"package en",
+				"Package Control: Enable Package"
 			],
 			[
 				"install",
 				"Package Control: Install Package"
+			],
+			[
+				"list pac",
+				"Package Control: List Packages"
+			],
+			[
+				"install package",
+				"Package Control: Install Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"install pac",
+				"Package Control: Install Package"
+			],
+			[
+				"dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"package in",
+				"Package Control: Install Package"
+			],
+			[
+				"package l",
+				"Package Control: List Packages"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"clang",
+				"Set Syntax: ClangErrorPanel"
 			],
 			[
 				"pacl",
@@ -365,10 +493,6 @@
 			],
 			[
 				"clangfo",
-				"Clang Format: Format Selection"
-			],
-			[
-				"clang",
 				"Clang Format: Format Selection"
 			],
 			[
@@ -398,10 +522,6 @@
 			[
 				"ruby",
 				"Snippet: #!/usr/bin/env ruby -wKU"
-			],
-			[
-				"package in",
-				"Package Control: Install Package"
 			],
 			[
 				"remove ",
@@ -436,11 +556,11 @@
 				"Package Control: List Packages"
 			]
 		],
-		"width": 485.0
+		"width": 629.0
 	},
 	"console":
 	{
-		"height": 260.0,
+		"height": 383.0,
 		"history":
 		[
 			"list",
@@ -460,11 +580,70 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/mplagge/development/NeMo"
+		"/Users/mplagge/development/NeMo",
+		"/Users/mplagge/development/NeMo/neuro",
+		"/Users/mplagge/development/NeMo/neuro/neuron_models",
+		"/Users/mplagge/development/NeMo/scripts"
 	],
 	"file_history":
 	[
+		"/Users/mplagge/development/NeMo/globals.h",
+		"/Users/mplagge/development/NeMo/mapping.h",
+		"/Users/mplagge/development/ROSS/models/template-model/model.h",
+		"/Users/mplagge/development/ROSS/models/template-model/model_map.c",
+		"/Users/mplagge/development/ROSS/models/template-model/model_main.c",
+		"/Users/mplagge/development/ROSS/models/template-model/model_driver.c",
+		"/Users/mplagge/development/NeMo/nemo_main.c",
+		"/Users/mplagge/development/ROSS/models/ROSS-Models/airport/airport.c",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/DoxyDoxygen (evolution)/Doxy.sublime-settings",
+		"/Users/mplagge/development/NeMo/neuro/synapse.h",
+		"/Users/mplagge/development/NeMo/globals.c",
+		"/Users/mplagge/development/NeMo/nemo_main.h",
+		"/Users/mplagge/development/NeMo/neuro/neuro_event_handlers.c",
+		"/Users/mplagge/development/NeMo/neuro/neuro_event_handlers.h",
+		"/Users/mplagge/development/NeMo/neuro/neuron.h",
+		"/Users/mplagge/development/NeMo/neuro/neuron_models/tn_neuron.h",
+		"/Users/mplagge/development/NeMo/nemo_config.h.in",
+		"/Users/mplagge/development/NeMo/neuro/neuron.c",
+		"/Users/mplagge/development/NeMo/neuro/neuron_models/tn_neuron.c",
+		"/Users/mplagge/development/NeMo/nemo_config.h",
+		"/Users/mplagge/development/NeMo/tests.c",
+		"/Users/mplagge/development/NeMo/neuro/axon.h",
+		"/Users/mplagge/development/NeMo/bio_validation.c",
+		"/Users/mplagge/development/NeMo/bio_validation.h",
+		"/Users/mplagge/development/NeMo/neuro/neuro_event_handler.h",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/YcmdCompletion/YcmdCompletion.sublime-settings",
+		"/Users/mplagge/development/ycmd/ycmd/default_settings.json",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/mplagge/development/NeMo/.ycm_extra_conf.py",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/User/YcmdCompletion.sublime-settings",
+		"/Users/mplagge/development/NeMo/mapping.c",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/YcmdCompletion/Completion.py",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/YcmdCompletion/Default.sublime-commands",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Installed Packages/C++YouCompleteMe.sublime-package",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/C++YouCompleteMe/C++YouCompleteMe.sublime-settings",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/ClangAutoComplete/README.md",
+		"/Users/mplagge/development/NeMo/nemo.sublime-project",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/YcmdCompletion/README.md",
+		"/Users/mplagge/development/NeMo/CMakeLists.txt",
+		"/Users/mplagge/development/ROSS/CMakeLists.txt",
+		"/Users/mplagge/development/ycmd/ycmd/extra_conf_store.py",
+		"/Users/mplagge/development/ycmd/ycmd/user_options_store.py",
 		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/C Improved/README.md",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/C Improved/C Improved.sublime-settings",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/Anaconda/README.md",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/DoxyDoxygen (evolution)/Doxy.sublime-commands",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/DoxyDoc/DoxyDoc.sublime-settings",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/Clang-Complete/README.md",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/Clang-Complete/cc.sublime-settings",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/ClangAutoComplete/ClangAutoComplete.sublime-settings",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/User/DoxyDoc.sublime-settings",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/CMakeEditor/Default.sublime-keymap",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/ClangAutoComplete/Main.sublime-menu",
+		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/Clang-Complete/test/test_cc.c",
 		"/Users/mplagge/Documents/motorcycle_work/working_copy_of_work",
 		"/Users/mplagge/Google Drive/BioInformatics Readings,Notes/weblinks.txt",
 		"/Users/mplagge/Google Drive/RPI Work/tn_work/Mapping Prototypes/linear_mapping_functions.c",
@@ -496,7 +675,6 @@
 		"/Users/mplagge/Documents/PADS_2016/results.tex",
 		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/User/LaTeXing.sublime-settings",
 		"/Users/mplagge/Google Drive/RPI Work/tn_work/post-fix runs/runs/8k_runs/64-ranks-per_nemo_N64-R4096-SC8192-SM3.log",
-		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/mplagge/Google Drive/RPI Work/tn_work/post-fix runs/runs/8k_runs/64-ranks-per_nemo_N16-R1024-SC8192-SM3.log",
 		"/Users/mplagge/Google Drive/RPI Work/tn_work/post-fix runs/runs/8k_runs/64-ranks-per_nemo_N128-R8192-SC8192-SM3.log",
 		"/Users/mplagge/Google Drive/RPI Work/tn_work/post-fix runs/runs/8k_runs/64-ranks-per_nemo_N32-R2048-SC8192-SM3.log",
@@ -505,7 +683,6 @@
 		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/User/LaTeX.sublime-settings",
 		"/Users/Mark/Development/PADS_2016/diagrams/NeMoFlowDiagram.pdf",
 		"/Users/Mark/Development/PADS_2016/nemo-neuron-model.tex",
-		"/Users/mplagge/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
 		"/Users/Mark/Development/PADS_2016/nemo_p.sublime-project",
 		"/Users/Mark/Development/PADS_2016/nemo.tex",
 		"/Users/Mark/Development/PADS_2016/papers.bib",
@@ -537,71 +714,18 @@
 		"/Users/Mark/Development/rubytest/async_socket.py",
 		"/Users/Mark/Library/Application Support/Sublime Text 3/Packages/User/untitled.sublime-build",
 		"/Users/Mark/Development/rubytest/rxTest",
-		"/Users/Mark/Development/rubytest/server_test.rb",
-		"/Users/Mark/Development/asyncio_chat.py",
-		"/Users/Mark/Dropbox/Research/RPI/Data Science/library.bib",
-		"/Volumes/CCI Landing Pad/barn/4k_full_scale.sh",
-		"/Volumes/CCI Landing Pad/barn/512_scale_full.sh",
-		"/Volumes/CCI Landing Pad/barn/s_scale_1024.sh",
-		"/Volumes/CCI Landing Pad/barn/s_scale_512.sh",
-		"/Users/Mark/Development/TrueNorth/tnt_benchmark/scripts/testTS.py",
-		"/Users/Mark/Development/TrueNorth/tnt_benchmark/model_main.h",
-		"/Volumes/Mastiff/development/rem/tnt_benchmark/scripts/bench.rb",
-		"/Volumes/Mastiff/development/rem/tnt_benchmark/test_ts.rb",
-		"/Volumes/Mastiff/development/rem/ROSS/models/tnt_benchmark/assist.h",
-		"/Volumes/Mastiff/development/rem/ROSS/models/tnt_benchmark/models/neuron.c",
-		"/Volumes/Mastiff/development/rem/ROSS/models/tnt_benchmark/assist.c",
-		"/Volumes/Mastiff/development/rem/ROSS/models/tnt_benchmark/model_main.c",
-		"/Volumes/Mastiff/development/rem/ROSS/core/ross-global.c",
-		"/Volumes/Mastiff/development/rem/tnt_benchmark/model_main.c",
-		"/Volumes/Mastiff/development/rem/ROSS/core/ross-extern.h",
-		"/Volumes/Mastiff/development/rem/tnt_benchmark/input_simulator.h",
-		"/Volumes/Mastiff/development/rem/tnt_benchmark/model_main.h",
-		"/Volumes/Mastiff/development/rem/tnt_benchmark/assist.c",
-		"/Users/Mark/Development/TrueNorth/ROSS/models/tnt_benchmark/assist.c",
-		"/Users/Mark/Development/TrueNorth/ROSS/models/tnt_benchmark/mapping.h",
-		"/Users/Mark/Development/TrueNorth/ROSS.sublime-project",
-		"/Users/Mark/Library/Application Support/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
-		"/Users/Mark/Development/TrueNorth/tnt_benchmark/models/neuron.c",
-		"/Users/Mark/Development/TrueNorth/tnt_benchmark/stats_collection.h",
-		"/Users/Mark/Development/TrueNorth/tnt_benchmark/stats_collection.c",
-		"/Users/Mark/Development/TrueNorth/tnt_benchmark/model_main.c",
-		"/Users/Mark/Development/logictest.js",
-		"/Users/Mark/Development/TrueNorth/tnt_main/models/neuron_model.c",
-		"/Users/Mark/Development/TrueNorth/ROSS/models/ROSS-Models/pcs/pcs.c",
-		"/Users/Mark/Development/TrueNorth/ROSS/models/ROSS-Models/civilian_power/dissim-main.h",
-		"/Users/Mark/Development/TrueNorth/ROSS/models/ROSS-Models/airport/airport.c",
-		"/Users/Mark/Development/TrueNorth/ROSS/models/ROSS-Models/torus/torus.c",
-		"/Users/Mark/Library/TeXworks/scripts/makeBold.py",
-		"/Volumes/Mastiff/development/current/models/ROSS-Models/srw/srw.c",
-		"/Volumes/Mastiff/development/current/models/tnt/model_driver.c",
-		"/Volumes/Mastiff/development/current/sources/ROSS/models/tnt/CMakeLists.txt",
-		"/Volumes/Mastiff/development/current/sources/ROSS/models/tnt/model_main.cpp",
-		"/Volumes/Mastiff/development/current/sources/ROSS/models/tnt/model_driver.cpp",
-		"/Volumes/Mastiff/development/current/sources/ROSS/models/tnt/model_driver.c~",
-		"/Users/Mark/Dropbox/Research/RPI/LatexAdditions/acronyms.tex",
-		"/Applications/Macnewbie/Dwarf Fortress/hack/scripts/source.rb",
-		"/Volumes/Mastiff/development/rossModels/SR-model/model_driver.c",
-		"/Users/Mark/Dropbox/Research/RPI/OperatingSystems/exams/q3.c",
-		"/Users/Mark/Dropbox/Research/RPI/OperatingSystems/exams/q2.c",
-		"/Users/Mark/Dropbox/Research/RPI/OperatingSystems/exams/q1.c",
-		"/Users/Mark/Downloads/mapgraph.0.3.2/Algorithms/BFS/bfs.cu",
-		"/Users/Mark/Dropbox/Research/RPI/Distributed Program/Salsa/DynamicActorFramework/build/classes/salsaTest/SalsaTools.rb",
-		"/Users/Mark/Dropbox/Research/RPI/Distributed Program/Salsa/DynamicActorFramework/src/salsaTest/mainTest.salsa",
-		"/Users/Mark/Dropbox/Research/RPI/Distributed Program/Salsa/part2/Chopstick.salsa",
-		"/Users/Mark/Dropbox/Research/RPI/Distributed Program/Salsa/part2/Chopstick.java",
-		"/Users/Mark/Development/rClient/test.txt",
-		"/Users/Mark/Dropbox/Research/RPI/Distributed Program/DistributedSystemsPaperEqs.xml"
+		"/Users/Mark/Development/rubytest/server_test.rb"
 	],
 	"find":
 	{
-		"height": 26.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
 		"height": 93.0,
 		"where_history":
 		[
+			"/Users/mplagge/development/NeMo",
 			""
 		]
 	},
@@ -610,6 +734,13 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"$",
+			".c\"",
+			"core_size",
+			"auto_complete",
+			"complet",
+			"ctrl+",
+			"ctrl+sp",
 			"main",
 			"BINCOMP",
 			"IABS",
@@ -730,21 +861,15 @@
 			"g_tw_nlp",
 			"offset",
 			"g_tw_lp_offset",
-			"g_tw_lp_of",
-			"g_tw_lp",
-			"CellMapping_lp_to_pe",
-			"init_F",
-			"CellMapping_to_local_index",
-			"CellMapping_lp_to_pe",
-			"g_vp_per_proc",
-			"NUM_CELLS_X"
+			"g_tw_lp_of"
 		],
 		"highlight": false,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": true,
+		"regex": false,
 		"replace_history":
 		[
+			"\\f$",
 			"Green",
 			"Red",
 			"The 2013 International Joint Conference on Neural Networks",
@@ -783,37 +908,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "nemo_main.c",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 309,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								309,
-								309
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C Improved/C Improved.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -848,6 +944,18 @@
 		]
 	},
 	"menu_visible": true,
+	"output.CppYCM.4":
+	{
+		"height": 0.0
+	},
+	"output.cc":
+	{
+		"height": 118.0
+	},
+	"output.clang-errors":
+	{
+		"height": 118.0
+	},
 	"output.exec":
 	{
 		"height": 312.0
@@ -864,7 +972,7 @@
 	"project": "nemo.sublime-project",
 	"replace":
 	{
-		"height": 48.0
+		"height": 64.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -906,7 +1014,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 285.0,
+	"side_bar_width": 299.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

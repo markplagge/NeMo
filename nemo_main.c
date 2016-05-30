@@ -5,8 +5,9 @@
 #include <stdio.h>
 #include "nemo_main.h"
 
-/** { */
-/** @name globalinit */
+/** \addtogroup Globals 
+ * @{  */
+
 size_type CORES_IN_SIM = 1024; 
 size_type NEURONS_IN_CORE = 512;
 size_type AXONS_IN_CORE = 512;
@@ -41,9 +42,9 @@ bool FILE_IN = false;
  */
 FILE *outFile;
 
-/** } */
+/** @} */
 /**
- * app_opt - Application Options
+ * app_opt - Application Options. Manages the options for NeMo's run.
  */
 const tw_optdef app_opt[] = {
 	TWOPT_FLAG("rand_net", IS_RAND_NETWORK, "Generate a random network? Alternatively, you need to specify config files."),
@@ -65,6 +66,40 @@ const tw_optdef app_opt[] = {
 
 };
 
+
+/**
+ * model_lps - contains the LP type defs for NeMo
+ */
+tw_lptype model_lps[] = {
+	{
+
+        (init_f)axon_init,
+        (pre_run_f)NULL,
+        (event_f)axon_event,
+        (revent_f)axon_reverse,
+        (final_f)axon_final,
+        (map_f)getPEFromGID,
+        sizeof(axonState) },
+    {
+        (init_f)synapse_init, 
+        (pre_run_f)NULL,
+        (event_f)synapse_event,
+        (revent_f)synapse_reverse,
+        (final_f)NULL,
+        (map_f)getPEFromGID, 
+        sizeof(synapseState)
+    },
+    {
+        (init_f)neuron_init,
+        (pre_run_f)NULL,
+        (event_f)neuron_event,
+        (revent_f)neuron_reverse,
+        (final_f)NULL,
+        (map_f)getPEFromGID, 
+        sizeof(neuronState)
+    }
+    ,
+        { 0 } };
 
 /**
  * @brief      Initializes NeMo

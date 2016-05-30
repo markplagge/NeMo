@@ -9,7 +9,7 @@
 
 /**
  * @brief      lpTypeMapper maps a given GID to a lp type - neuron, synapse, axon, etc
- * Assumes neuromorphic hardware grid laout with $NxN$ - number of neurons == number of axons.
+ * Assumes neuromorphic hardware grid laout with \f$NxN\f$ - number of neurons == number of axons.
  * 
  * @param[in]  gid   The gid
  *
@@ -35,10 +35,10 @@ tw_peid getPEFromGID(tw_lpid gid);
  */
 id_type getCoreFromGID(tw_lpid gid);
 /**
- * @brief      Gets the local from gid. Local ID here is on a $0-s$ scale. $s$
+ * @brief      Gets the local from gid. Local ID here is on a \f$0-s\f$ scale. \f$s\f$
  * is the size of a core in the simulation. This is different from a local type
- * id. Local type IDs exist to allow reasoning about neurons and axons in a $0-n$
- * fashon, where $n$ is the number of neurons or axons in the sim. 
+ * id. Local type IDs exist to allow reasoning about neurons and axons in a \f$0-n\f$
+ * fashon, where \f$n\f$ is the number of neurons or axons in the sim. 
  *
  * @param[in]  gid   The gid
  *
@@ -47,15 +47,15 @@ id_type getCoreFromGID(tw_lpid gid);
 id_type getLocalFromGID(tw_lpid gid);
 
 /**
- * @brief      Gets the gid from local ids. Local id here is on a $0-s$ scale,
- * where $s$ is the total size of a core. This is not a local type based ID.
+ * @brief      Gets the gid from local ids. Local id here is on a \f$0-s\f$ scale,
+ * where \f$s\f$ is the total size of a core. This is not a local type based ID.
  * @related getGIDFromLocalIDs
  * @param[in]  core   The core
- * @param[in]  local  The local
+ * @param[in]  coreLocal  The core-wise local
  *
  * @return     The gid from local ids.
  */
-tw_lpid getGIDFromLocalIDs(id_type core, id_type local);
+tw_lpid getGIDFromLocalIDs(id_type core, id_type coreLocal);
 
 /**
  * @brief      Gets the neuron global value from a given neuron id. 

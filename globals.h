@@ -19,7 +19,7 @@
 
 
  
-/** Typedefs to ensure proper types for the neuron parameters/mapping calculations */
+/**@{ Typedefs to ensure proper types for the neuron parameters/mapping calculations */
 
 typedef int_fast16_t id_type; //!< id type is used for local mapping functions - there should be $n$ of them depending on @CORE_SIZE
 typedef int32_t volt_type; //!< volt_type stores voltage values for membrane potential calculations
@@ -29,6 +29,7 @@ typedef uint32_t thresh_type;//!< Type for weights internal to the neurons.
 typedef uint64_t size_type; //!< size_type holds sizes of the sim - core size, neurons per core, etc.
 
 typedef uint64_t stat_type;
+/**@}*/
 /*Global Macros */
 /** IABS is an integer absolute value function */
 
