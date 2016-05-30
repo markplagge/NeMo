@@ -11,7 +11,8 @@ size_type CORES_IN_SIM = 1024;
 size_type NEURONS_IN_CORE = 512;
 size_type AXONS_IN_CORE = 512;
 size_type SIM_SIZE = 1025;
-
+size_type SYNAPSES_IN_CORE = 0;
+size_type CORE_SIZE = 0;
 
 bool IS_RAND_NETWORK = true;
 bool BULK_MODE = false;
@@ -95,7 +96,10 @@ void init_nemo(){
 		//Init File Input Handles
 		//reconfigure cores_in_sim and neurons_in_sim based on loaded file.
 		//override default LP function pointers
+		
 	}
+
+	
 	AXONS_IN_CORE = NEURONS_IN_CORE;
 	SYNAPSES_IN_CORE = (NEURONS_IN_CORE * AXONS_IN_CORE);
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
@@ -108,9 +112,6 @@ void init_nemo(){
 
 	///EVENTS PER PE SETTING
 	g_tw_events_per_pe = 65536; //magic number 
-
-
-
 
 }
 

@@ -2,13 +2,20 @@
 // Created by Mark Plagge on 5/25/16.
 //
 
-#ifndef NEMO_GLOBALS_H
-#define NEMO_GLOBALS_H
+
+
+#ifndef __NEMO_GLOBALS_H__
+#define __NEMO_GLOBALS_H__
+
+
+
 #include <stdio.h>
 #include <inttypes.h>
 #include <stdbool.h>
 #include <limits.h>
+#include <math.h>
 #include "ross.h"
+
 
 
  
@@ -25,68 +32,26 @@ typedef uint64_t stat_type;
 /*Global Macros */
 /** IABS is an integer absolute value function */
 
-//#define IABS(a) (((a) < 0) ? (-a) : (a))
+#define IABS(a) (((a) < 0) ? (-a) : (a))
+
+#define SGN(x) ((x > 0) - (x < 0))
+
 
 /** Faster version  of IABS (no branching) but needs types. @todo this
  method will be faster on BGQ, but need to make sure that it works properly */
- weight_type IABS(weight_type in){
-    //int_fast64_t const mask = in >> sizeof(int_fast64_t) * CHAR_BIT - 1;
-    #ifdef HAVE_SIGN_EXTENDING_BITSHIFT
-    int const mask = v >> sizeof(int) * CHAR_BIT - 1;
-    #else
-    int const mask = -((unsigned)in >> sizeof(int) * CHAR_BIT - 1);
-    #endif
-    return (in ^ mask) - mask;
-}
+//  weight_type IABS(weight_type in){
+//     //int_fast64_t const mask = in >> sizeof(int_fast64_t) * CHAR_BIT - 1;
+//     #ifdef HAVE_SIGN_EXTENDING_BITSHIFT
+//     int const mask = v >> sizeof(int) * CHAR_BIT - 1;
+//     #else
+//     int const mask = -((unsigned)in >> sizeof(int) * CHAR_BIT - 1);
+//     #endif
+//     return (in ^ mask) - mask;
+// }
 //32bit X86 Assembler IABS:
-int iIABS(int vals){
+int iIABS(int vals);
 
-        int result;
-        asm ("movl  %[valI], %%eax;"
-                "cdq;"
-                "xor %%edx, %%eax;"
-                "sub %%edx, %%eax;"
-                "movl %%eax, %[resI];"
-        : [resI] "=r" (result)
-        : [valI] "r" (vals)
-        : "cc","%eax", "%ebx");
-        return result;
-
-
-}
-/* Global Variables */
-extern size_type  LPS_PER_PE;
-extern size_type  SIM_SIZE;
-extern size_type  LP_PER_KP;
-
-extern bool IS_RAND_NETWORK;
-extern size_type CORES_IN_SIM;
-extern size_type NEURONS_IN_CORE;
-extern size_type AXONS_IN_CORE;
-extern size_type SIM_SIZE;
-extern size_type CORE_SIZE;
-extern size_type SYNAPSES_IN_CORE;
-
-extern bool BULK_MODE;
-extern bool DEBUG_MODE;
-extern bool SAVE_MEMBRANE_POTS ;
-extern bool SAVE_SPIKE_EVTS ;
-extern bool SAVE_NEURON_OUTS;
-
-extern bool PHAS_VAL;
-extern bool TONIC_SPK_VAL;
-extern bool TONIC_BURST_VAL;
-extern bool PHASIC_BURST_VAL;
-extern bool VALIDATION;
-
-
-
-
-
-/* Global Timing Variables */
-extern tw_stime littleTick;
-extern tw_stime CLOCK_RANDOM_ADJ;
-
+/** @} */
 /** evtType is a message/event identifier flag */
 enum evtType {
     AXON_OUT, //!< Message originates from an axon
@@ -102,6 +67,9 @@ enum lpTypeVals {
     NEURON = 2
 };
 
+typedef enum NeuronTypes {
+    TrueNorth = 0
+} neuronTypes;
 
 //Message Structure (Used Globally so placed here)
 typedef struct Ms{
@@ -116,7 +84,49 @@ typedef struct Ms{
    
 
 }messageData;
-
-
 #endif //NEMO_GLOBALS_H
+#ifndef EXTERN
+#define EXT extern
+/**
+ * \defgroup Globals Global Variables 
+ * @{
+ */
+EXT size_type  LPS_PER_PE;
+EXT size_type  SIM_SIZE;
+EXT size_type  LP_PER_KP;
 
+EXT bool IS_RAND_NETWORK;
+EXT size_type CORES_IN_SIM;
+EXT size_type NEURONS_IN_CORE;
+EXT size_type AXONS_IN_CORE;
+EXT size_type SIM_SIZE;
+EXT size_type CORE_SIZE;
+EXT size_type SYNAPSES_IN_CORE;
+
+EXT bool BULK_MODE;
+EXT bool DEBUG_MODE;
+EXT bool SAVE_MEMBRANE_POTS ;
+EXT bool SAVE_SPIKE_EVTS ;
+EXT bool SAVE_NEURON_OUTS;
+
+EXT bool PHAS_VAL;
+EXT bool TONIC_SPK_VAL;
+EXT bool TONIC_BURST_VAL;
+EXT bool PHASIC_BURST_VAL;
+EXT bool VALIDATION;
+
+
+
+
+
+/* Global Timing Variables */
+/**
+ * little tick rate - controls little tick timing
+ */
+EXT tw_stime littleTick; 
+/**
+ * clock random value adjuster. 
+ */
+EXT tw_stime CLOCK_RANDOM_ADJ;
+
+#endif

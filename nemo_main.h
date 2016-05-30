@@ -5,13 +5,15 @@
 #ifndef NEMO_NEMO_MAIN_H
 #define NEMO_NEMO_MAIN_H
 
+#define EXTERN
 #include "globals.h"
+#undef EXTERN
+
 #include "nemo_config.h"
+#include "./neuro/neuro_event_handlers.h"
 #include "ross.h"
-#include "globals.h"
-#include "neuro/axon.h"
-#include "neuro/neuron.h"
-#include "neuro/synapse.h"
+
+
 
 
 

@@ -2,9 +2,42 @@
 // Created by Mark Plagge on 5/25/16.
 //
 
-#ifndef NEMO_TN_NEURON_H
-#define NEMO_TN_NEURON_H
+#ifndef __NEMO_TN_NEURON_H__
+#define __NEMO_TN_NEURON_H__
+
+
+
 #include "../../globals.h"
+#include "../../mapping.h"
+#include <math.h>
+
+/** IBM Function Dels:
+ * typedef void (*resetDel)(void *neuronState);
+
+typedef void (*integrateDel)(void *neuronState);
+
+typedef void (*leakDel)(void *neuronState);
+
+typedef void (*reverseResetDel)(void *neuronState, void *messageData);
+
+typedef void (*reverseIntegrateDel)(void *neuronState, void *messageData);
+
+typedef void (*reverseLeakDel)(void *neuronState, void *messageData);
+
+typedef void (*forwardEventDel)(void *neuronState, void *messageData,  void *BF);
+
+typedef void (*reverseEventDel)(void *neuronState, void *messageData, void *BF);
+*/
+
+
+void IBMForwardEvent (void *neuronState, void *messageData, void *lp, void *BF);
+
+void IBMReverseEvent (void *neuronState, void *messageData, void *lp, void *BF);
+
+/**@}*/
+
+
+
 typedef struct TN_MODEL{
 
 	//64
@@ -79,5 +112,7 @@ typedef struct TN_MODEL{
 
 
 }true_north_model;
+
+
 
 #endif //NEMO_TN_NEURON_H
