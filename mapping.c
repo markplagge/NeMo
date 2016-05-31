@@ -80,7 +80,14 @@ tw_lpid getSynapseGlobal(id_type core, id_type synapseID){
 	id_type coreLocal = AXONS_IN_CORE + 1;
 	return getGIDFromLocalIDs(core, coreLocal);
 }
+id_type getAxonLocal(tw_lpid gid){
+	return getLocalFromGID(gid); //axons start at zero.
+}
 /** Linear Mapping function */
 tw_peid getPEFromGID(tw_lpid gid){
 	return (tw_peid) gid / g_tw_nlp;
+}
+
+tw_lpid getSynapseFromAxon(id_type axon_id){
+	return AXONS_IN_CORE + 1;
 }

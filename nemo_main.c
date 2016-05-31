@@ -161,6 +161,8 @@ void init_nemo(){
 int main(int argc, char*argv[]) {
 	tw_opt_add(app_opt);
 	tw_init(&argc, &argv);
+    //call nemo init
+    init_nemo();
 
 
 }

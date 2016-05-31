@@ -1,6 +1,7 @@
 #ifndef __NEMO_axon__
 #define __NEMO_axon__
 #include "../globals.h"
+#include "../mapping.h"
 typedef struct AxonState {
 	stat_type sendMsgCount;
 	tw_lpid destSynapse;
@@ -10,5 +11,7 @@ typedef struct AxonState {
 
 	char* axtype;
 }axonState;
+
+void axon_init(axonState *s, tw_lp *lp);
 
 #endif

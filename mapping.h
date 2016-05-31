@@ -88,8 +88,23 @@ tw_lpid getAxonGlobal(id_type core, id_type axonID);
  */
 tw_lpid getSynapseGlobal(id_type core, id_type synapseID);
 
+/**
+ * @brief      Gets the axon local ID based on the gid. This is axon-specific, not core-centric local.
+ *
+ * @param[in]  gid   The gid
+ *
+ * @return     The axon local.
+ */
+id_type getAxonLocal(tw_lpid gid);
 
-
+/**
+ * @brief      Gets the synapse GID from axon.
+ *
+ * @param[in]  axon_id  The axon identifier
+ *
+ * @return     The synapse from axon.
+ */
+tw_lpid getSynapseFromAxon(id_type axon_id);
 
 
 void testMap();
