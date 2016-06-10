@@ -53,6 +53,38 @@ typedef uint64_t stat_type;
 int iIABS(int vals);
 
 /** @} */
+
+
+/**
+ *  Gets the next event time, based on a random function. Moved here to allow for
+ *  easier abstraciton, and random function replacement.
+ *
+ *
+ *  @param lp Reference to the current LP so that the function can see the RNG
+ *
+ *  @return a tw_stime value, such that \f$ 0 < t < 1 \f$. A delta for the next
+ *  time slice.
+ */
+tw_stime getNextEventTime(tw_lp *lp);
+/**
+ *  @brief  Given a tw_stime, returns the current big tick.
+ *
+ *  @param now current time
+ *
+ *  @return the current big tick time.
+ */
+tw_stime getCurrentBigTick(tw_stime now);
+
+/**
+ *  @brief  Given a tw_stime, returns the next big-tick that will happen
+ *
+ *  @param now Right now!
+ *
+ *  @return Next big tick time.
+ */
+tw_stime getNextBigTick(tw_lp *lp, tw_lpid neuronID);
+
+
 /** evtType is a message/event identifier flag */
 enum evtType {
     AXON_OUT, //!< Message originates from an axon

@@ -28,11 +28,11 @@ void axon_init(axonState *s, tw_lp *lp)
 
     }else if(TONIC_BURST_VAL){
 
-        crTonicBurstingAxon(s, lp);
+        //crTonicBurstingAxon(s, lp);
         specAxons ++;
 
     }else if(PHASIC_BURST_VAL){
-        crTonicBurstingAxon(s, lp);
+        //crTonicBurstingAxon(s, lp);
         specAxons ++;
     }
     else {
@@ -56,4 +56,42 @@ void axon_init(axonState *s, tw_lp *lp)
         printf("Axon type - %s, #%llu checking in with dest synapse %llu\n",s->axtype, lp->gid, s->destSynapse);
     }
     //printf("message ready at %f",r);
+}
+
+
+void axon_event(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
+	//generate new message
+	enum evtType mt = M->eventType;
+	long rc = lp->rng->count;
+	tw_event *axonEvent = tw_event_new(s->destSynapse, getNextEventTime(lp), lp);
+	messageData *data = (messageData *) tw_event_data(axonEvent);
+
+	data->localID = lp->gid;
+	data->eventType = AXON_OUT;
+	data->axonID = s->axonID;
+
+	tw_event_send(axonEvent);
+
+	//End message generation - add message count and check random times
+	s->sendMsgCount ++;
+	M->rndCallCount = lp->rng->count - rc;
+
+	if (VALIDATION){
+		//save axon event for validation and traceback. 
+	}
+}
+void axon_reverse(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){6
+	if(VALIDATION) {
+		//Undo save axon event for validation
+	}
+
+	long count  = M->rndCallCount;
+	while (count--){
+		tw_rand_reverse_unif(lp->rng);
+	}
+
+
+}
+void axon_final(axonState *s, tw_lp *lp){
+
 }

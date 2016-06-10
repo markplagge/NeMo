@@ -13,5 +13,7 @@ typedef struct AxonState {
 }axonState;
 
 void axon_init(axonState *s, tw_lp *lp);
-
+void axon_event(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp);
+void axon_reverse(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp);
+void axon_final(axonState *s, tw_lp *lp);
 #endif

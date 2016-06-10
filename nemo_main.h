@@ -10,6 +10,7 @@
 #undef EXTERN
 
 #include "nemo_config.h"
+#include "./neuro/axon.h"
 #include "./neuro/neuro_event_handlers.h"
 #include "ross.h"
 
