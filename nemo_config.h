@@ -1,0 +1,1 @@
+#define NEURONS_IN_CORE 512

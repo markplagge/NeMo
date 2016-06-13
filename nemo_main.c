@@ -9,8 +9,8 @@
  * @{  */
 
 size_type CORES_IN_SIM = 1024; 
-size_type NEURONS_IN_CORE = 512;
-size_type AXONS_IN_CORE = 512;
+size_type NEURONS_IN_CORE = NEURONS_IN_CORE;
+size_type AXONS_IN_CORE = NEURONS_IN_CORE;
 size_type SIM_SIZE = 1025;
 size_type SYNAPSES_IN_CORE = 0;
 size_type CORE_SIZE = 0;

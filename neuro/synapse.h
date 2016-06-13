@@ -5,14 +5,18 @@
 #ifndef NEMO_SYNAPSE_H
 #define NEMO_SYNAPSE_H
 #include "../globals.h"
-typedef struct SynapseState {
-	tw_lpid destSynapse;
-	tw_lpid destNeuron;
-	//@todo remove this cruft
-	id_t mySynapseNum;
-	stat_type msgSent;
+#include "../mapping.h"
 
-	
+
+
+typedef struct SynapseState {
+	stat_type msgSent;
+	tw_stime lastBigTick;
+	id_type myCore;	
 }synapseState;
+void synapse_init(synapseState *s, tw_lp *lp);
+void synapse_event(synapseState *s, tw_bf *, messageData *M, tw_lp *lp);
+void synapse_reverse(synapseState *, tw_bf *, messageData *M, tw_lp *lp);
+void synapse_final(synapseState *s, tw_lp *lp);
 
 #endif //NEMO_SYNAPSE_H

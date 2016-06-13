@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(NeMo)
 INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR})
+CMAKE_EXPORT_COMPILE_COMMANDS 1
 set( CMAKE_EXPORT_COMPILE_COMMANDS 1 )
 ## Model Version
 ## Model Version
@@ -30,14 +31,21 @@ set(model_srcs
         nemo_main.c
         globals.h
         neuro/synapse.h
+        neuro/synapse.c
+
+        neuro/axon.h
+        neuron/axon.c
+
         neuro/tn_neuron.c
         neuro/tn_neuron.h
+
         mapping.c
         mapping.h
         bio_validation.c
         IO/IOStack.c
         IO/IOStack.h
-        nemo_config.h nemo_main.h)
+        nemo_config.h 
+        nemo_main.h)
 
 
 ADD_EXECUTABLE(NeMo  ${model_srcs})

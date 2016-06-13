@@ -107,7 +107,7 @@ typedef struct Ms{
     tw_stime neuronLastActiveTime;
     tw_stime neuronLastLeakTime;
     random_type neuronDrawnRandom;
-
+    unsigned long int rndCallCount;
     //neuron state saving extra params:
     id_type axonID; //!< Axon ID for neuron value lookups.
 
