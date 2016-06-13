@@ -1,1 +1,2 @@
 #define NEURONS_IN_CORE 512
+#define NUM_NEURON_WEIGHTS 4 

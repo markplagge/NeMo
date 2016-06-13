@@ -37,7 +37,7 @@ tw_lpid lpTypeMapper(tw_lpid gid){
 		return SYNAPSE;
 	}
 	else{
-		
+
 		return NEURON;
 	}
 }	
@@ -91,4 +91,17 @@ tw_peid getPEFromGID(tw_lpid gid){
 
 tw_lpid getSynapseFromAxon(id_type axon_id){
 	return AXONS_IN_CORE + 1;
+}
+/**
+ * Note: this function assumes that it receives a neuron's GID - otherwise it will not return a valid value.
+ */
+id_type getNeuronLocalFromGID(tw_lpid gid){
+	//get the core:
+	id_type core = getCoreFromGID(gid);
+	//get the core-wise local value:
+	id_type local = getLocalFromGID(gid);
+
+	//then return the neuron local ID:
+	return (AXONS_IN_CORE + SYNAPSES_IN_CORE) - local;
+
 }

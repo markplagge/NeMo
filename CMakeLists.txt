@@ -11,6 +11,7 @@ LIST(APPEND CMAKE_MODULE_PATH "${ROSS_SOURCE_DIR}/cmake/")
 
 ## Model Compile-Time Options (Will add more later)
 set(NeMo_NEURONS_IN_CORE 512 CACHE STRING "The number of neurons in each simulated core")
+set(NeMo_NUM_WEIGHTS_IN_NEURON 4 CACHE STRING "How many weights does a neuron have? (4 is TN default)")
 
 ## Build Configuration Header File
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
