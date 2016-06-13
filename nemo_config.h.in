@@ -1,7 +1,6 @@
 #ifndef __NEMO_NEMO_CONFIG_H__
 #define __NEMO_NEMO_CONFIG_H__
 
-#include "globals.h"
 #define MODEL_VERSION "@GIT_SHA1_MODEL@"
 #define NEURONS_IN_CORE @NeMo_NEURONS_IN_CORE@
 #define ARCH @ARCH

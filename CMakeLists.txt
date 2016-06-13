@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(NeMo)
 INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR})
-CMAKE_EXPORT_COMPILE_COMMANDS 1
+set (CMAKE_EXPORT_COMPILE_COMMANDS 1 )
 set( CMAKE_EXPORT_COMPILE_COMMANDS 1 )
 ## Model Version
 ## Model Version
@@ -15,7 +15,7 @@ set(NeMo_NEURONS_IN_CORE 512 CACHE STRING "The number of neurons in each simulat
 ## Build Configuration Header File
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 #generated config files:
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/nemo_config.h.in ${CMAKE_CURRENT_BINARY_DIR}/model_config.h @ONLY)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/nemo_config.h.in ${CMAKE_CURRENT_BINARY_DIR}/nemo_config.h @ONLY)
 SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/nemo_config.h.in PROPERTIES GENERATED FALSE)
 SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_BINARY_DIR}/nemo_config.h PROPERTIES GENERATED TRUE)
 
@@ -30,11 +30,12 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(model_srcs
         nemo_main.c
         globals.h
+        globals.c
         neuro/synapse.h
         neuro/synapse.c
 
         neuro/axon.h
-        neuron/axon.c
+        neuro/axon.c
 
         neuro/tn_neuron.c
         neuro/tn_neuron.h

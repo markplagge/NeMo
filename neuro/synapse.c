@@ -7,16 +7,16 @@ void synapse_init(synapseState *s, tw_lp *lp){
 	s->myCore = getCoreFromGID(lp->gid);
 }
 
-void synapse_event(synapseState *s, tw_bf *, messageData *M, tw_lp *lp){
+void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
 	long rc = lp->rng->count;
 	
-	messageData outMessage;
+	messageData *outMessage;
 	tw_event *synEvt;
 	for(int i = 0; i < NEURONS_IN_CORE; i ++){
 		//add the check for connected neurons here
 		
 		synEvt = tw_event_new(getNeuronGlobal(s->myCore, i), getNextEventTime(lp), lp);
-		outMessage = (messageData *) tw_event_data(synEvt)
+		outMessage = (messageData *) tw_event_data(synEvt);
 		outMessage->eventType = SYNAPSE_OUT;
 		outMessage->axonID = M->axonID;
 
@@ -29,10 +29,10 @@ void synapse_event(synapseState *s, tw_bf *, messageData *M, tw_lp *lp){
 	
 	
 }
-void synapse_reverse(synapseState *, tw_bf *, messageData *M, tw_lp *lp){
+void synapse_reverse(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
 	s->msgSent --;
 
-	unsigned long count = m->rndCallCount;
+	unsigned long count = M->rndCallCount;
 	while (count --){
 		tw_rand_reverse_unif(lp->rng);
 	}

@@ -15,8 +15,8 @@ typedef struct SynapseState {
 	id_type myCore;	
 }synapseState;
 void synapse_init(synapseState *s, tw_lp *lp);
-void synapse_event(synapseState *s, tw_bf *, messageData *M, tw_lp *lp);
-void synapse_reverse(synapseState *, tw_bf *, messageData *M, tw_lp *lp);
+void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp);
+void synapse_reverse(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp);
 void synapse_final(synapseState *s, tw_lp *lp);
 
 #endif //NEMO_SYNAPSE_H

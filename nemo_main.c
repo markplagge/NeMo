@@ -28,7 +28,31 @@ bool PHASIC_BURST_VAL = false;
 bool VALIDATION = false;
 
 
+void doSomething(int x, int y, int z){
+  //stuff
+}
 
+//VS:
+
+typedef struct msgdat{
+  int x,
+  int y,
+  int z
+} message_data;
+/// INSIDE A DIFFERENT LP
+void sendMessage(){
+  message_data data;
+  data.x = 1;
+  data.y = 2;
+  data.z = 3;
+
+  tw_send_event(data, destinationLP);
+}
+//OP LP:
+void receiveMessage(message_data *m){
+    //stuff
+}
+//
 /**
  * @FILE_OUT - is set to true if NeMo is saving output files
  * @FILE_IN - is set to true if NeMo is reading a file.

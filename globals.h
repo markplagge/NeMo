@@ -33,15 +33,15 @@ typedef uint64_t size_type; //!< size_type holds sizes of the sim - core size, n
 typedef uint64_t stat_type;
 /**@}*/
 /*Global Macros */
-/** IABS is an integer absolute value function */
 
-#define IABS(a) (((a) < 0) ? (-a) : (a))
 
-#define SGN(x) ((x > 0) - (x < 0))
+#define IABS(a) (((a) < 0) ? (-a) : (a)) //!< Typeless integer absolute value function
+
+#define SGN(x) ((x > 0) - (x < 0)) //!< Signum function
 
 #define DT(x) !(x) //!<Kronecker Delta function.
 
-
+#define BINCOMP(s,p) IABS((s)) >= (p) //!< binary comparison for conditional stochastic evaluation
 //32bit X86 Assembler IABS:
 int iIABS(int vals);
 
@@ -107,7 +107,7 @@ typedef struct Ms{
     tw_stime neuronLastActiveTime;
     tw_stime neuronLastLeakTime;
     random_type neuronDrawnRandom;
-    unsigned long int rndCallCount;
+
     //neuron state saving extra params:
     id_type axonID; //!< Axon ID for neuron value lookups.
 

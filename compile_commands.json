@@ -1,0 +1,342 @@
+[
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/queue/splay.c.o   -c /Users/mplagge/development/ROSS/core/queue/splay.c",
+  "file": "/Users/mplagge/development/ROSS/core/queue/splay.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/ross-random.c.o   -c /Users/mplagge/development/ROSS/core/ross-random.c",
+  "file": "/Users/mplagge/development/ROSS/core/ross-random.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/rand-clcg4.c.o   -c /Users/mplagge/development/ROSS/core/rand-clcg4.c",
+  "file": "/Users/mplagge/development/ROSS/core/rand-clcg4.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/clock/amd64.c.o   -c /Users/mplagge/development/ROSS/core/clock/amd64.c",
+  "file": "/Users/mplagge/development/ROSS/core/clock/amd64.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/gvt/mpi_allreduce.c.o   -c /Users/mplagge/development/ROSS/core/gvt/mpi_allreduce.c",
+  "file": "/Users/mplagge/development/ROSS/core/gvt/mpi_allreduce.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/network-mpi.c.o   -c /Users/mplagge/development/ROSS/core/network-mpi.c",
+  "file": "/Users/mplagge/development/ROSS/core/network-mpi.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/hash-quadratic.c.o   -c /Users/mplagge/development/ROSS/core/hash-quadratic.c",
+  "file": "/Users/mplagge/development/ROSS/core/hash-quadratic.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/buddy.c.o   -c /Users/mplagge/development/ROSS/core/buddy.c",
+  "file": "/Users/mplagge/development/ROSS/core/buddy.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/lz4.c.o   -c /Users/mplagge/development/ROSS/core/lz4.c",
+  "file": "/Users/mplagge/development/ROSS/core/lz4.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/tw-state.c.o   -c /Users/mplagge/development/ROSS/core/tw-state.c",
+  "file": "/Users/mplagge/development/ROSS/core/tw-state.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/ross-global.c.o   -c /Users/mplagge/development/ROSS/core/ross-global.c",
+  "file": "/Users/mplagge/development/ROSS/core/ross-global.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/tw-event.c.o   -c /Users/mplagge/development/ROSS/core/tw-event.c",
+  "file": "/Users/mplagge/development/ROSS/core/tw-event.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/tw-opts.c.o   -c /Users/mplagge/development/ROSS/core/tw-opts.c",
+  "file": "/Users/mplagge/development/ROSS/core/tw-opts.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/tw-pe.c.o   -c /Users/mplagge/development/ROSS/core/tw-pe.c",
+  "file": "/Users/mplagge/development/ROSS/core/tw-pe.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/tw-kp.c.o   -c /Users/mplagge/development/ROSS/core/tw-kp.c",
+  "file": "/Users/mplagge/development/ROSS/core/tw-kp.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/tw-lp.c.o   -c /Users/mplagge/development/ROSS/core/tw-lp.c",
+  "file": "/Users/mplagge/development/ROSS/core/tw-lp.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/tw-timing.c.o   -c /Users/mplagge/development/ROSS/core/tw-timing.c",
+  "file": "/Users/mplagge/development/ROSS/core/tw-timing.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/tw-sched.c.o   -c /Users/mplagge/development/ROSS/core/tw-sched.c",
+  "file": "/Users/mplagge/development/ROSS/core/tw-sched.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/tw-setup.c.o   -c /Users/mplagge/development/ROSS/core/tw-setup.c",
+  "file": "/Users/mplagge/development/ROSS/core/tw-setup.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/tw-signal.c.o   -c /Users/mplagge/development/ROSS/core/tw-signal.c",
+  "file": "/Users/mplagge/development/ROSS/core/tw-signal.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/tw-stats.c.o   -c /Users/mplagge/development/ROSS/core/tw-stats.c",
+  "file": "/Users/mplagge/development/ROSS/core/tw-stats.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/tw-util.c.o   -c /Users/mplagge/development/ROSS/core/tw-util.c",
+  "file": "/Users/mplagge/development/ROSS/core/tw-util.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/core",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core   -DROSS_OPTION_LIST='\"\"'   -o CMakeFiles/ROSS.dir/avl_tree.c.o   -c /Users/mplagge/development/ROSS/core/avl_tree.c",
+  "file": "/Users/mplagge/development/ROSS/core/avl_tree.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/NeMo",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/builds/models/NeMo    -o CMakeFiles/NeMo.dir/nemo_main.c.o   -c /Users/mplagge/development/ROSS/models/NeMo/nemo_main.c",
+  "file": "/Users/mplagge/development/ROSS/models/NeMo/nemo_main.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/NeMo",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/builds/models/NeMo    -o CMakeFiles/NeMo.dir/neuro/synapse.c.o   -c /Users/mplagge/development/ROSS/models/NeMo/neuro/synapse.c",
+  "file": "/Users/mplagge/development/ROSS/models/NeMo/neuro/synapse.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/NeMo",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/builds/models/NeMo    -o CMakeFiles/NeMo.dir/neuro/axon.c.o   -c /Users/mplagge/development/ROSS/models/NeMo/neuro/axon.c",
+  "file": "/Users/mplagge/development/ROSS/models/NeMo/neuro/axon.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/NeMo",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/builds/models/NeMo    -o CMakeFiles/NeMo.dir/neuro/tn_neuron.c.o   -c /Users/mplagge/development/ROSS/models/NeMo/neuro/tn_neuron.c",
+  "file": "/Users/mplagge/development/ROSS/models/NeMo/neuro/tn_neuron.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/NeMo",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/builds/models/NeMo    -o CMakeFiles/NeMo.dir/mapping.c.o   -c /Users/mplagge/development/ROSS/models/NeMo/mapping.c",
+  "file": "/Users/mplagge/development/ROSS/models/NeMo/mapping.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/NeMo",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/builds/models/NeMo    -o CMakeFiles/NeMo.dir/bio_validation.c.o   -c /Users/mplagge/development/ROSS/models/NeMo/bio_validation.c",
+  "file": "/Users/mplagge/development/ROSS/models/NeMo/bio_validation.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/NeMo",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/builds/models/NeMo    -o CMakeFiles/NeMo.dir/IO/IOStack.c.o   -c /Users/mplagge/development/ROSS/models/NeMo/IO/IOStack.c",
+  "file": "/Users/mplagge/development/ROSS/models/NeMo/IO/IOStack.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/phold",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/ROSS/core    -o CMakeFiles/phold.dir/phold.c.o   -c /Users/mplagge/development/ROSS/models/phold/phold.c",
+  "file": "/Users/mplagge/development/ROSS/models/phold/phold.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/airport",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/airport.dir/airport.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/airport/airport.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/airport/airport.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/civilian_power",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/civilian.dir/dissim-main.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/civilian_power/dissim-main.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/civilian_power/dissim-main.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/disksim",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/disksim.dir/disksim.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/disksim/disksim.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/disksim/disksim.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/dragonfly",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/dragonfly.dir/dragonfly.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/dragonfly/dragonfly.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/dragonfly/dragonfly.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/olsr-c",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/olsr.dir/coding-error.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/olsr-c/coding-error.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/olsr-c/coding-error.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/olsr-c",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/olsr.dir/prop-loss.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/olsr-c/prop-loss.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/olsr-c/prop-loss.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/olsr-c",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/olsr.dir/mobility.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/olsr-c/mobility.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/olsr-c/mobility.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/olsr-c",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/olsr.dir/olsr.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/olsr-c/olsr.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/olsr-c/olsr.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/olsr-j",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/olsr-j.dir/olsr-main.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/olsr-j/olsr-main.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/olsr-j/olsr-main.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/olsr-j",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/olsr-j.dir/olsr-driver.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/olsr-j/olsr-driver.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/olsr-j/olsr-driver.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/pcs",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/pcs.dir/pcs.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/pcs/pcs.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/pcs/pcs.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/phold-delta",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/ROSS/core    -o CMakeFiles/dphold.dir/dphold.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/phold-delta/dphold.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/phold-delta/dphold.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/qhold",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/qhold.dir/qhold_main.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/qhold/qhold_main.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/qhold/qhold_main.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/qhold",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/qhold.dir/qhold_driver.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/qhold/qhold_driver.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/qhold/qhold_driver.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/qhold_fp",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/qhold_fp.dir/qhold_fp_main.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/qhold_fp/qhold_fp_main.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/qhold_fp/qhold_fp_main.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/qhold_fp",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/qhold_fp.dir/qhold_fp_driver.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/qhold_fp/qhold_fp_driver.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/qhold_fp/qhold_fp_driver.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/raid",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/raid.dir/raid.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/raid/raid.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/raid/raid.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/raid",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/raid.dir/raid-globals.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/raid/raid-globals.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/raid/raid-globals.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/raid",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/raid.dir/raid-controller.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/raid/raid-controller.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/raid/raid-controller.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/raid",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/raid.dir/raid-server.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/raid/raid-server.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/raid/raid-server.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/raid",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/raid.dir/raid-disk.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/raid/raid-disk.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/raid/raid-disk.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/raid",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/raid.dir/raid-io.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/raid/raid-io.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/raid/raid-io.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/rng",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/rng.dir/rng.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/rng/rng.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/rng/rng.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/srw",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/srw.dir/srw.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/srw/srw.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/srw/srw.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/suspend-test",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/builds/models/ROSS-Models/suspend-test    -o CMakeFiles/suspend.dir/suspend_main.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/suspend-test/suspend_main.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/suspend-test/suspend_main.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/suspend-test",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/builds/models/ROSS-Models/suspend-test    -o CMakeFiles/suspend.dir/increment_driver.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/suspend-test/increment_driver.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/suspend-test/increment_driver.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/suspend-test",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/builds/models/ROSS-Models/suspend-test    -o CMakeFiles/suspend.dir/decrement_driver.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/suspend-test/decrement_driver.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/suspend-test/decrement_driver.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/suspend-test",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/builds/models/ROSS-Models/suspend-test    -o CMakeFiles/suspend.dir/receiver_driver.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/suspend-test/receiver_driver.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/suspend-test/receiver_driver.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/suspend-test",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/builds/models/ROSS-Models/suspend-test    -o CMakeFiles/suspend.dir/suspend_map.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/suspend-test/suspend_map.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/suspend-test/suspend_map.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/torus",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/torus.dir/torus.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/torus/torus.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/torus/torus.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/traffic",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/Intersection.dir/Intersection.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/traffic/Intersection.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/traffic/Intersection.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/wifi",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/wifi.dir/coding-error.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/wifi/coding-error.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/wifi/coding-error.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/wifi",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/wifi.dir/prop-loss.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/wifi/prop-loss.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/wifi/prop-loss.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/ROSS-Models/wifi",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core    -o CMakeFiles/wifi.dir/wifi.c.o   -c /Users/mplagge/development/ROSS/models/ROSS-Models/wifi/wifi.c",
+  "file": "/Users/mplagge/development/ROSS/models/ROSS-Models/wifi/wifi.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/template-model",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/builds/models/template-model    -o CMakeFiles/model.dir/model_main.c.o   -c /Users/mplagge/development/ROSS/models/template-model/model_main.c",
+  "file": "/Users/mplagge/development/ROSS/models/template-model/model_main.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/template-model",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/builds/models/template-model    -o CMakeFiles/model.dir/model_driver.c.o   -c /Users/mplagge/development/ROSS/models/template-model/model_driver.c",
+  "file": "/Users/mplagge/development/ROSS/models/template-model/model_driver.c"
+},
+{
+  "directory": "/Users/mplagge/development/builds/models/template-model",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_GNU_SOURCE -I/Users/mplagge/development/ROSS/core -I/Users/mplagge/development/builds/core -I/Users/mplagge/development/builds/models/template-model    -o CMakeFiles/model.dir/model_map.c.o   -c /Users/mplagge/development/ROSS/models/template-model/model_map.c",
+  "file": "/Users/mplagge/development/ROSS/models/template-model/model_map.c"
+}
+]

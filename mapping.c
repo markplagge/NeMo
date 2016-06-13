@@ -37,6 +37,7 @@ tw_lpid lpTypeMapper(tw_lpid gid){
 		return SYNAPSE;
 	}
 	else{
+		
 		return NEURON;
 	}
 }	

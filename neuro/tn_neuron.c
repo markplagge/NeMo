@@ -9,7 +9,7 @@
  * TrueNorth Neuron leak, integrate, and fire function forward decs.
  * @{ */
 
- void TNFire(tn_neuron_state *st, void *lp);
+ void TNFire(tn_neuron_state *st, void *l);
 /**
  *  @brief  function that adds a synapse's value to the current neuron's membrane potential.
  *
@@ -96,8 +96,96 @@ void ringing(void *nsv, volt_type oldVoltage );
  * True North Leak, Integrate and Fire Functions
  * @{
  */
+/** @name ResetFunctions
+ * @details
+ * Reset function defs. Neuron reset functions will
+ * change the neuron state without saving the previous state. All voltage state saving
+ * must be handled in the neuron event function neuronReceiveMessage().
+ * These functions operate based on the table presented in \cite Cass13_1000 .
+ * Currently, there are three functions, one for linear reset (resetLinear()),
+ * "normal" reset (resetNormal()), and non-reset (resetNone()).
 
- void TNFire(tn_neuron_state *st, void *lp){
+ From the paper:
+ | \f$𝛾_j\f$ | \f$𝜘_j\f$| Reset Mode               |     Positive Reset     |     Negative Reset    |
+ |----|----|--------------------------|:----------------------:|:---------------------:|
+ | 0  | 0  | normal                   |          \f$R_j\f$         |         \f$-R_j\f$        |
+ | 0  | 1  | normal - neg saturation  |          \f$R_j\f$         |       \f$-𝛽_j\f$        |
+ | 1  | 0  | Linear                   | \f$V_j - (𝛼_j  + 𝜂_j)\f$ | \f$V_j + (𝛽_j + 𝜂_j)\f$ |
+ | 1  | 1  | linear -neg saturation   |  \f$V_j - (𝛼_j,+ 𝜂_j)\f$ |        \f$-𝛽_j\f$        |
+ | 2  | 0  | non-reset                |          \f$V_j\f$         |         \f$V_j\f$         |
+ | 2  | 1  | non-reset net saturation |          \f$V_j\f$         |        \f$-𝛽_j\f$        |
+
+ * @todo: Check that reverse reset functions are needed, since previous voltage is stored in the neuron.
+ * @{ */
+
+/**
+ * negative saturation reset function (common to all reset modes, called if
+ * 𝛾 is true. Simply sets the value of the membrane potential to $-𝛽_j$.
+**/
+void negThresholdReset(tn_neuron_state *s) {
+    s->membranePotential = -s->negThreshold;
+}
+/**
+
+ *  @details Normal reset function.
+ */
+void resetNormal(void *neuronState)
+{
+    tn_neuron_state  *s = ( tn_neuron_state  *)neuronState;
+    if(s->membranePotential < s->negThreshold){
+        if(s->kappa)
+            negThresholdReset(s);
+        else
+            s->membranePotential = -(s->resetVoltage);
+    }
+    else {
+        s->membranePotential = s->resetVoltage; // set current voltage to \f$R\f$.
+    }
+}
+
+
+/**
+ *  @details Linear reset mode - ignores \f$R\f$, and sets the membrane potential
+ *  to the difference between the threshold and the potential. *
+ */
+void resetLinear(void *neuronState)
+{
+     tn_neuron_state  *s = ( tn_neuron_state  *)neuronState;
+
+    if(s->membranePotential < s->negThreshold){
+        if(s->kappa)
+            negThresholdReset(s);
+        else{
+            s->membranePotential = s->membranePotential -
+                (s->negThreshold+ s->drawnRandomNumber);
+        }
+    }else{
+        s->membranePotential = s->membranePotential -
+            (s->posThreshold  + s->drawnRandomNumber);
+    }
+
+}
+/**
+ *  @details non-reset handler function - does non-reset style reset. Interestingly,
+ *  even non-reset functions follow the negative saturation parameter from the paper.
+ */
+void resetNone(void *neuronState)
+{
+     tn_neuron_state  *s = ( tn_neuron_state  *)neuronState;
+
+    if(s->kappa && s->membranePotential < s->negThreshold){
+        negThresholdReset(s);
+    }
+
+}
+
+
+
+
+/** From Neuron Behavior Reference - checks to make sure that there is no "ringing".
+ The specs state that the leak stores the voltage in a temporary variable. Here,
+ we store the leak voltage in the membrane potential, and override it with a new value. */
+ void TNFire(tn_neuron_state *st, void *l){
  	    tw_lp * lp = (tw_lp *) l;
 		//DEBUG
 //	tw_lpid outid = st->dendriteGlobalDest;
@@ -106,8 +194,8 @@ void ringing(void *nsv, volt_type oldVoltage );
 
 		//DEBUG
 	tw_stime nextHeartbeat = getNextBigTick(lp,st->myLocalID);
-	tw_event *newEvent = tw_event_new(st->dendriteGlobalDest, nextHeartbeat, lp);
-	Msg_Data *data = (Msg_Data *)tw_event_data(newEvent);
+	tw_event *newEvent = tw_event_new(st->outputGID, nextHeartbeat, lp);
+	messageData *data = (messageData *)tw_event_data(newEvent);
 
 	data->eventType = NEURON_OUT;
 	data->localID = st->myLocalID;
@@ -350,12 +438,12 @@ bool TNfireFloorCelingReset(tn_neuron_state *ns, tw_lp *lp){
 
 
 void TNstochasticIntegrate(weight_type weight, tn_neuron_state *st) {
-	if (BINCOMP(weigt, st->drawnRandomNumber)) {
+	if (BINCOMP(weight, st->drawnRandomNumber)) {
 		st->membranePotential += 1;
 	}
 }
 
-void TNPostIntegrate(tn_neuron_state *st, tw_stime time, tw_lp *lp, bool didFire){
+void TNPostIntegrate(tn_neuron_state *st, tw_stime time, tw_lp *lp, bool willFire){
 
 	if (willFire) { // neuron will/did fire:
         st->doReset(st);
@@ -365,7 +453,7 @@ void TNPostIntegrate(tn_neuron_state *st, tw_stime time, tw_lp *lp, bool didFire
 		thresh_type B = st->negThreshold;
 		long long K = st->resetVoltage;
 		long long G = st->resetMode;
-		rand_type n = st->drawnRandomNumber;
+		random_type n = st->drawnRandomNumber;
 		volt_type R = st->resetVoltage;
 		volt_type V = st->membranePotential;
 		st->membranePotential = (-(B*K) + (-(DT(G)) * R +
