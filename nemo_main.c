@@ -103,6 +103,33 @@ tw_lptype model_lps[] = {
         { 0 } };
 
 /**
+ * @brief      Displays NeMo's initial run size configuration.
+ */
+void displayModelSettings()
+{
+    for (int i = 0; i < 30; i++)
+    {
+        printf("*");
+    }
+    double cores_per_node = CORES_IN_SIM / tw_nnodes() ;
+    printf("\n");
+    printf("* \t %i Neurons per core, %llu cores in sim.\n", NEURONS_IN_CORE, CORES_IN_SIM);
+    printf("* \t %f cores per PE, giving %llu LPs per pe.\n", cores_per_node, g_tw_nlp);
+    printf("* \t Neuron stats:\n");
+    printf("* \tCalculated sim_size is %llu\n", SIM_SIZE);
+
+    //printf("%-10s", "title");
+
+
+    //printf("* \tTiming - Big tick occurs at %f\n", getNextBigTick(0));
+
+    for (int i = 0; i < 30; i++)
+    {
+        printf("*");
+    }
+    printf("\n");
+}
+/**
  * @brief      Initializes NeMo
  * 
  * First, this function checks for potential file IO, and creates file handles for use.
@@ -164,6 +191,14 @@ int main(int argc, char*argv[]) {
 	tw_init(&argc, &argv);
     //call nemo init
     init_nemo();
+
+    //Define LPs:
+    tw_define_lps(LPS_PER_PE, sizeof(messageData));
+    tw_lp_setup_types();
+
+    if (g_tw_mynode == 0) {
+        displayModelSettings();
+    }
 
 
 }
