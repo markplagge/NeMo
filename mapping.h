@@ -47,6 +47,15 @@ id_type getCoreFromGID(tw_lpid gid);
 id_type getLocalFromGID(tw_lpid gid);
 
 /**
+ * @brief      Gets the neuron local (not corewise) from gid. The first neuron is
+ * 0, the second neuron is 1, and so on.
+ *
+ * @param[in]  gid   The gid
+ *
+ * @return     The neuron local from gid.
+ */
+id_type getNeuronLocalFromGID(tw_lpid gid);
+/**
  * @brief      Gets the gid from local ids. Local id here is on a \f$0-s\f$ scale,
  * where \f$s\f$ is the total size of a core. This is not a local type based ID.
  * @related getGIDFromLocalIDs

@@ -16,6 +16,21 @@ int iIABS(int vals){
 
 }
 
+
+
+/** Faster version  of IABS (no branching) but needs types. @todo this
+ method will be faster on BGQ, but need to make sure that it works properly */
+//  weight_type IABS(weight_type in){
+//     //int_fast64_t const mask = in >> sizeof(int_fast64_t) * CHAR_BIT - 1;
+//     #ifdef HAVE_SIGN_EXTENDING_BITSHIFT
+//     int const mask = v >> sizeof(int) * CHAR_BIT - 1;
+//     #else
+//     int const mask = -((unsigned)in >> sizeof(int) * CHAR_BIT - 1);
+//     #endif
+//     return (in ^ mask) - mask;
+// }
+
+
 /**
  * bigTickRate is the rate of simulation - neurons synchronize based on this value.
  */

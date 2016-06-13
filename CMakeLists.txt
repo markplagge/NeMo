@@ -30,10 +30,8 @@ set(model_srcs
         nemo_main.c
         globals.h
         neuro/synapse.h
-        neuro/neuron.c
-        neuro/neuron.h
-        neuro/neuron_models/tn_neuron.c
-        neuro/neuron_models/tn_neuron.h
+        neuro/tn_neuron.c
+        neuro/tn_neuron.h
         mapping.c
         mapping.h
         bio_validation.c

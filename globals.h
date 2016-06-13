@@ -9,11 +9,12 @@
 
 
 
-#include <stdio.h>
+
 #include <inttypes.h>
 #include <stdbool.h>
 #include <limits.h>
 #include <math.h>
+#include <nemo_config.h>
 #include "ross.h"
 
 
@@ -25,6 +26,7 @@ typedef int_fast16_t id_type; //!< id type is used for local mapping functions -
 typedef int32_t volt_type; //!< volt_type stores voltage values for membrane potential calculations
 typedef int64_t weight_type;//!< seperate type for synaptic weights.
 typedef uint32_t thresh_type;//!< Type for weights internal to the neurons.
+typedef uint16_t random_type;//!< Type for random values in neuron models.
 
 typedef uint64_t size_type; //!< size_type holds sizes of the sim - core size, neurons per core, etc.
 
@@ -37,21 +39,13 @@ typedef uint64_t stat_type;
 
 #define SGN(x) ((x > 0) - (x < 0))
 
+#define DT(x) !(x) //!<Kronecker Delta function.
 
-/** Faster version  of IABS (no branching) but needs types. @todo this
- method will be faster on BGQ, but need to make sure that it works properly */
-//  weight_type IABS(weight_type in){
-//     //int_fast64_t const mask = in >> sizeof(int_fast64_t) * CHAR_BIT - 1;
-//     #ifdef HAVE_SIGN_EXTENDING_BITSHIFT
-//     int const mask = v >> sizeof(int) * CHAR_BIT - 1;
-//     #else
-//     int const mask = -((unsigned)in >> sizeof(int) * CHAR_BIT - 1);
-//     #endif
-//     return (in ^ mask) - mask;
-// }
+
 //32bit X86 Assembler IABS:
 int iIABS(int vals);
 
+weight_type iiABS(weight_type in);
 /** @} */
 
 
@@ -112,8 +106,11 @@ typedef struct Ms{
     volt_type neuronVoltage;
     tw_stime neuronLastActiveTime;
     tw_stime neuronLastLeakTime;
+    random_type neuronDrawnRandom;
+
     //neuron state saving extra params:
     id_type axonID; //!< Axon ID for neuron value lookups.
+
    
 
 }messageData;

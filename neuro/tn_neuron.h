@@ -7,50 +7,72 @@
 
 
 
-#include "../../globals.h"
-#include "../../mapping.h"
+#include "../globals.h"
+#include "../mapping.h"
 #include <math.h>
-
-/** IBM Function Dels:
- * typedef void (*resetDel)(void *neuronState);
-
-typedef void (*integrateDel)(void *neuronState);
-
-typedef void (*leakDel)(void *neuronState);
-
-typedef void (*reverseResetDel)(void *neuronState, void *messageData);
-
-typedef void (*reverseIntegrateDel)(void *neuronState, void *messageData);
-
-typedef void (*reverseLeakDel)(void *neuronState, void *messageData);
-
-typedef void (*forwardEventDel)(void *neuronState, void *messageData,  void *BF);
-
-typedef void (*reverseEventDel)(void *neuronState, void *messageData, void *BF);
-*/
+#define Vj ns->membranePotential
 
 
-void IBMForwardEvent (void *neuronState, void *messageData, void *lp, void *BF);
+/**
+ * @brief      True North Forward Event handler
+ *
+ * @param      s  The tn neuron state
+ * @param      CV               flags for message flow
+ * @param      messageData      The message data
+ * @param      lp               The pointer to a LP
+ */
+void TN_forward_event (tn_neuron_model *s, tw_bf *CV, messageData *messageData, 
+    tw_lp *lp);
 
-void IBMReverseEvent (void *neuronState, void *messageData, void *lp, void *BF);
+/**
+ * @brief      True North Reverse Event Handler
+ *
+ * @param      s  The tn neuron state
+ * @param      CV               flags for message flow
+ * @param      messageData      The message data
+ * @param      lp               The pointer to a
+ */
+void TN_reverse_event (tn_neuron_model *s, tw_bf *CV, messageData *messageData, 
+    tw_lp *lp);
 
-/**@}*/
+
+/**
+ * @brief      Initialize a TrueNorth neuron
+ *
+ * @param      s     The TN State
+ * @param      lp    The pointer to the LP
+ */
+void TN_init(tn_neuron_state *s, tw_lp *lp);
+
+/**
+ * @brief      The TN neuron final function
+ *
+ * @param      s     TN State
+ * @param      lp    The pointer to an LP
+ */
+void TN_final(tn_neuron_state *s, tw_lp *lp);
 
 
 
+
+/**
+ * TrueNorth LP Neuron Model struct
+ */
 typedef struct TN_MODEL{
 
 	//64
     tw_stime lastActiveTime; /**< last time the neuron fired - used for calculating leak and reverse functions. Should be a whole number (or very close) since big-ticks happen on whole numbers. */
     tw_stime lastLeakTime;/**< Timestamp for leak functions. Should be a mostly whole number, since this happens once per big tick. */
 
+    tw_lpid outputGID; //!< The output GID (axon global ID) of this neuron.
+
+
     //stat_type fireCount; //!< count of this neuron's output
     stat_type rcvdMsgCount; //!<  The number of synaptic messages received.
     stat_type SOPSCount; //!<  A count for SOPS calculation
-    id_type myCoreID; //!< Neuron's coreID
-
-    id_type dendriteCore; //!< Local core of the remote dendrite
-    tw_lpid dendriteGlobalDest; //!< GID of the axon this neuron talks to. @todo: The dendriteCore and dendriteLocal values might not be needed anymroe.
+                         
+                          
+    
 
     //32
     volt_type membranePotential; //!< current "voltage" of neuron, \f$V_j(t)\f$. Since this is PDES, \a t is implicit
@@ -59,13 +81,17 @@ typedef struct TN_MODEL{
     unsigned int myLocalID; //!< Neuron's local ID (from 0 - j-1);
 
     //16
-    uint16_t dendriteLocal; //!< Local ID of the remote dendrite -- not LPID, but a local axon value (0-i)
-    uint16_t drawnRandomNumber; //!<When activated, neurons draw a new random number. Reset after every big-tick as needed.
-    uint16_t thresholdPRNMask;/**!< The neuron's random threshold mask - used for randomized thresholds ( \f$M_j\f$ ).
+    id_type dendriteLocal; //!< Local ID of the remote dendrite -- not LPID, but a local axon value (0-i)
+    random_type drawnRandomNumber; //!<When activated, neurons draw a new random number. Reset after every big-tick as needed.
+    random_type thresholdPRNMask;/**!< The neuron's random threshold mask - used for randomized thresholds ( \f$M_j\f$ ).
                                *	In the TN hardware this is defined as a ones maks of configurable width, starting at the
                                * least significant bit. The mask scales the range of the random drawn number (PRN) of the model,
                                * here defined as @link drawnRandomNumber @endlink. used as a scale for the random values. */
-        //@TODO : Replace short with uint16_t for consistancy.
+
+    id_type myCoreID; //!< Neuron's coreID
+                      
+    id_type myLocalID;//!< my local ID - core wise. In a 512 size core, neuron 0 would have a local id of 262,657
+
     //small
     short largestRandomValue;
     short lambda; //!< leak weight - \f$𝜆\f$ Leak tuning parameter - the leak rate applied to the current leak function.
@@ -111,7 +137,7 @@ typedef struct TN_MODEL{
 
 
 
-}true_north_model;
+}tn_neuron_state;
 
 
 
