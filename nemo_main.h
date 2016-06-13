@@ -11,7 +11,8 @@
 
 #include "nemo_config.h"
 #include "./neuro/axon.h"
-#include "./neuro/neuro_event_handlers.h"
+#include "./neuro/synapse.h"
+#include "./neuro/tn_neuron.h"
 #include "ross.h"
 
 

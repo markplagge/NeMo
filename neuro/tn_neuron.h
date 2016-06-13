@@ -13,46 +13,6 @@
 #define Vj ns->membranePotential
 
 
-/**
- * @brief      True North Forward Event handler
- *
- * @param      s  The tn neuron state
- * @param      CV               flags for message flow
- * @param      messageData      The message data
- * @param      lp               The pointer to a LP
- */
-void TN_forward_event (tn_neuron_model *s, tw_bf *CV, messageData *messageData, 
-    tw_lp *lp);
-
-/**
- * @brief      True North Reverse Event Handler
- *
- * @param      s  The tn neuron state
- * @param      CV               flags for message flow
- * @param      messageData      The message data
- * @param      lp               The pointer to a
- */
-void TN_reverse_event (tn_neuron_model *s, tw_bf *CV, messageData *messageData, 
-    tw_lp *lp);
-
-
-/**
- * @brief      Initialize a TrueNorth neuron
- *
- * @param      s     The TN State
- * @param      lp    The pointer to the LP
- */
-void TN_init(tn_neuron_state *s, tw_lp *lp);
-
-/**
- * @brief      The TN neuron final function
- *
- * @param      s     TN State
- * @param      lp    The pointer to an LP
- */
-void TN_final(tn_neuron_state *s, tw_lp *lp);
-
-
 
 
 /**
@@ -78,7 +38,6 @@ typedef struct TN_MODEL{
     volt_type membranePotential; //!< current "voltage" of neuron, \f$V_j(t)\f$. Since this is PDES, \a t is implicit
     thresh_type posThreshold; //!< neuron's threshold value 𝛼
     thresh_type negThreshold; //!< neuron's negative threshold, 𝛽
-    unsigned int myLocalID; //!< Neuron's local ID (from 0 - j-1);
 
     //16
     id_type dendriteLocal; //!< Local ID of the remote dendrite -- not LPID, but a local axon value (0-i)
@@ -90,7 +49,8 @@ typedef struct TN_MODEL{
 
     id_type myCoreID; //!< Neuron's coreID
                       
-    id_type myLocalID;//!< my local ID - core wise. In a 512 size core, neuron 0 would have a local id of 262,657
+    id_type myLocalID;//!< my local ID - core wise. In a 512 size core, neuron 0 would have a local id of 262,657. 
+
 
     //small
     short largestRandomValue;
@@ -140,5 +100,45 @@ typedef struct TN_MODEL{
 }tn_neuron_state;
 
 
+
+
+/**
+ * @brief      True North Forward Event handler
+ *
+ * @param      s  The tn neuron state
+ * @param      CV               flags for message flow
+ * @param      messageData      The message data
+ * @param      lp               The pointer to a LP
+ */
+void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *messageData, 
+    tw_lp *lp);
+
+/**
+ * @brief      True North Reverse Event Handler
+ *
+ * @param      s  The tn neuron state
+ * @param      CV               flags for message flow
+ * @param      messageData      The message data
+ * @param      lp               The pointer to a
+ */
+void TN_reverse_event (tn_neuron_state *s, tw_bf *CV, messageData *messageData, 
+    tw_lp *lp);
+
+
+/**
+ * @brief      Initialize a TrueNorth neuron
+ *
+ * @param      s     The TN State
+ * @param      lp    The pointer to the LP
+ */
+void TN_init(tn_neuron_state *s, tw_lp *lp);
+
+/**
+ * @brief      The TN neuron final function
+ *
+ * @param      s     TN State
+ * @param      lp    The pointer to an LP
+ */
+void TN_final(tn_neuron_state *s, tw_lp *lp);
 
 #endif //NEMO_TN_NEURON_H

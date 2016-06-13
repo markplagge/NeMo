@@ -127,7 +127,7 @@ EXT size_type  LP_PER_KP;
 
 EXT bool IS_RAND_NETWORK;
 EXT size_type CORES_IN_SIM;
-EXT size_type NEURONS_IN_CORE;
+
 EXT size_type AXONS_IN_CORE;
 EXT size_type SIM_SIZE;
 EXT size_type CORE_SIZE;

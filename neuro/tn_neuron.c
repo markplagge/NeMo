@@ -446,7 +446,7 @@ void TNstochasticIntegrate(weight_type weight, tn_neuron_state *st) {
 void TNPostIntegrate(tn_neuron_state *st, tw_stime time, tw_lp *lp, bool willFire){
 
 	if (willFire) { // neuron will/did fire:
-        st->doReset(st);
+        //st->doReset(st);
 	} else if (st->membranePotential < -1 * (st->negThreshold * st->resetVoltage +
             (st->negThreshold + st->drawnRandomNumber))) {
 		//sanity variables for the formulaic reset/bounce instead of calling functions:
@@ -703,14 +703,14 @@ void TN_init(tn_neuron_state *s, tw_lp *lp){
     }
 }
 
-void TN_forward_event (tn_neuron_model *s, tw_bf *CV, messageData *messageData, 
+void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *messageData, 
     tw_lp *lp){
 
 }
 
 
 
-void TN_reverse_event (tn_neuron_model *s, tw_bf *CV, messageData *messageData, 
+void TN_reverse_event (tn_neuron_state *s, tw_bf *CV, messageData *messageData, 
     tw_lp *lp){
 
 }

@@ -80,7 +80,7 @@ void axon_event(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
 		//save axon event for validation and traceback. 
 	}
 }
-void axon_reverse(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){6
+void axon_reverse(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
 	if(VALIDATION) {
 		//Undo save axon event for validation
 	}

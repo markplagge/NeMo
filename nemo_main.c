@@ -9,7 +9,6 @@
  * @{  */
 
 size_type CORES_IN_SIM = 1024; 
-size_type NEURONS_IN_CORE = NEURONS_IN_CORE;
 size_type AXONS_IN_CORE = NEURONS_IN_CORE;
 size_type SIM_SIZE = 1025;
 size_type SYNAPSES_IN_CORE = 0;
@@ -28,30 +27,8 @@ bool PHASIC_BURST_VAL = false;
 bool VALIDATION = false;
 
 
-void doSomething(int x, int y, int z){
-  //stuff
-}
 
-//VS:
 
-typedef struct msgdat{
-  int x,
-  int y,
-  int z
-} message_data;
-/// INSIDE A DIFFERENT LP
-void sendMessage(){
-  message_data data;
-  data.x = 1;
-  data.y = 2;
-  data.z = 3;
-
-  tw_send_event(data, destinationLP);
-}
-//OP LP:
-void receiveMessage(message_data *m){
-    //stuff
-}
 //
 /**
  * @FILE_OUT - is set to true if NeMo is saving output files
@@ -75,7 +52,7 @@ const tw_optdef app_opt[] = {
 	
 	TWOPT_GROUP("Randomized (ID Matrix) Network Parameters"),
 		TWOPT_ULONGLONG("cores", CORES_IN_SIM, "number of cores in simulation"),
-    	TWOPT_ULONGLONG("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
+    	//TWOPT_ULONGLONG("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
     TWOPT_GROUP("Data Gathering Settings"),
     	TWOPT_FLAG("bulk", BULK_MODE, "Is this sim running in bulk mode?"),
     	TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
@@ -114,13 +91,13 @@ tw_lptype model_lps[] = {
         sizeof(synapseState)
     },
     {
-        (init_f)neuron_init,
+        (init_f)TN_init,
         (pre_run_f)NULL,
-        (event_f)neuron_event,
-        (revent_f)neuron_reverse,
+        (event_f)TN_forward_event,
+        (revent_f)TN_reverse_event,
         (final_f)NULL,
         (map_f)getPEFromGID, 
-        sizeof(neuronState)
+        sizeof(tn_neuron_state)
     }
     ,
         { 0 } };
