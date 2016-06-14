@@ -30,3 +30,5 @@
 docs/latex/doxygen.sty
 
 docs/latex/Makefile
+
+compile_commands.json
