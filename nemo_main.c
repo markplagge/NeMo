@@ -13,7 +13,7 @@ size_type AXONS_IN_CORE = NEURONS_IN_CORE;
 size_type SIM_SIZE = 1025;
 size_type SYNAPSES_IN_CORE = 0;
 size_type CORE_SIZE = 0;
-
+size_type LPS_PER_PE = 0;
 bool IS_RAND_NETWORK = true;
 bool BULK_MODE = false;
 bool DEBUG_MODE = false;
@@ -175,6 +175,9 @@ void init_nemo(){
 
 	///EVENTS PER PE SETTING
 	g_tw_events_per_pe = 65536; //magic number 
+                               
+    LPS_PER_PE = g_tw_nlp / g_tw_npe;
+
 
 }
 
