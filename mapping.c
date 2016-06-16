@@ -40,6 +40,8 @@ tw_lpid lpTypeMapper(tw_lpid gid){
 
 		return NEURON;
 	}
+
+	
 }	
 
 

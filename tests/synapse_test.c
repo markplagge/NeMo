@@ -1,8 +1,8 @@
-#include "synapse_test.h"
-#include "ross.h"
+#include "nemo_tests.h"
+#include <stdbool.h>
 
  bool runSynapseTests(int neuronsInCore, int cores){
- 	bool validVun = false;
+ 	bool validRun = false;
 
 
 

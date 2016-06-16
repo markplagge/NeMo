@@ -1,6 +1,8 @@
 //
 // Created by Mark Plagge on 5/25/16.
 //
+//
+/** @file globals.h */
 
 
 
@@ -18,11 +20,12 @@
 #include "ross.h"
 
 
+/** @defgroup types Typedef Vars 
+ * Typedefs to ensure proper types for the neuron parameters/mapping calculations
+ */
+/**@{  */
 
- 
-/**@{ Typedefs to ensure proper types for the neuron parameters/mapping calculations */
-
-typedef int_fast16_t id_type; //!< id type is used for local mapping functions - there should be $n$ of them depending on @CORE_SIZE
+typedef int_fast16_t id_type; //!< id type is used for local mapping functions - there should be $n$ of them depending on CORE_SIZE
 typedef int32_t volt_type; //!< volt_type stores voltage values for membrane potential calculations
 typedef int64_t weight_type;//!< seperate type for synaptic weights.
 typedef uint32_t thresh_type;//!< Type for weights internal to the neurons.
@@ -32,7 +35,10 @@ typedef uint64_t size_type; //!< size_type holds sizes of the sim - core size, n
 
 typedef uint64_t stat_type;
 /**@}*/
-/*Global Macros */
+
+/* @defgroup gmacros Global Macros and Related Functions
+ *Global Macros */
+/**@{ */
 
 
 #define IABS(a) (((a) < 0) ? (-a) : (a)) //!< Typeless integer absolute value function
@@ -48,6 +54,10 @@ int iIABS(int vals);
 weight_type iiABS(weight_type in);
 /** @} */
 
+/** @defgroup timeFuncts Time Functions
+  * Functions that manage big tick and little ticks
+  */
+  /** @{ */
 
 /**
  *  Gets the next event time, based on a random function. Moved here to allow for
@@ -72,12 +82,19 @@ tw_stime getCurrentBigTick(tw_stime now);
 /**
  *  @brief  Given a tw_stime, returns the next big-tick that will happen
  *
- *  @param now Right now!
+ *  @param lp the lp asking for the next big tick.
+ *  @param neuronID Currently unused. Reserved for future fine-grained neuron tick management.
  *
  *  @return Next big tick time.
  */
 tw_stime getNextBigTick(tw_lp *lp, tw_lpid neuronID);
 
+/**@}*/
+
+/** @defgroup global_structs_enums Global Structs and Enums
+  * Global structs and enums, including event types, lp types, and the message structure
+  */
+  /** @{ */
 
 /** evtType is a message/event identifier flag */
 enum evtType {
@@ -114,6 +131,8 @@ typedef struct Ms{
    
 
 }messageData;
+ /**@}*/
+
 #endif //NEMO_GLOBALS_H
 #ifndef EXTERN
 #define EXT extern
@@ -158,5 +177,5 @@ EXT tw_stime littleTick;
  * clock random value adjuster. 
  */
 EXT tw_stime CLOCK_RANDOM_ADJ;
-
+/** @} */
 #endif

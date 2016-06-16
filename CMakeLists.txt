@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 project(NeMo)
+enable_testing()
 INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR})
 set (CMAKE_EXPORT_COMPILE_COMMANDS 1 )
 set( CMAKE_EXPORT_COMPILE_COMMANDS 1 )
@@ -41,9 +42,17 @@ set(model_srcs
         neuro/tn_neuron.c
         neuro/tn_neuron.h
 
+        tests/nemo_tests.h
+        tests/synapse_test.c
+        tests/bio_validation.c
+
+
+
         mapping.c
         mapping.h
-        bio_validation.c
+
+
+
         IO/IOStack.c
         IO/IOStack.h
         nemo_config.h 

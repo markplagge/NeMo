@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "nemo_main.h"
 
+
 /** \addtogroup Globals 
  * @{  */
 
@@ -14,6 +15,7 @@ size_type SIM_SIZE = 1025;
 size_type SYNAPSES_IN_CORE = 0;
 size_type CORE_SIZE = 0;
 size_type LPS_PER_PE = 0;
+
 bool IS_RAND_NETWORK = true;
 bool BULK_MODE = false;
 bool DEBUG_MODE = false;
@@ -43,13 +45,15 @@ bool FILE_IN = false;
  */
 FILE *outFile;
 
+int testingMode = 0;
+
 /** @} */
 /**
  * app_opt - Application Options. Manages the options for NeMo's run.
  */
 const tw_optdef app_opt[] = {
 	TWOPT_FLAG("rand_net", IS_RAND_NETWORK, "Generate a random network? Alternatively, you need to specify config files."),
-	
+	TWOPT_UINT("tm", testingMode, "Choose a test suite to run. 0=no tests, 1=synapse tests, 2=mapping tests"),
 	TWOPT_GROUP("Randomized (ID Matrix) Network Parameters"),
 		TWOPT_ULONGLONG("cores", CORES_IN_SIM, "number of cores in simulation"),
     	//TWOPT_ULONGLONG("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
@@ -164,7 +168,7 @@ void init_nemo(){
 
 	
 	AXONS_IN_CORE = NEURONS_IN_CORE;
-	SYNAPSES_IN_CORE = (NEURONS_IN_CORE * AXONS_IN_CORE);
+	SYNAPSES_IN_CORE = 1;//(NEURONS_IN_CORE * AXONS_IN_CORE);
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
 	SIM_SIZE = CORE_SIZE * CORES_IN_SIM;
 
@@ -178,6 +182,17 @@ void init_nemo(){
                                
     LPS_PER_PE = g_tw_nlp / g_tw_npe;
 
+
+}
+
+int mapTests(){
+    //test a 512 size neuron
+    //
+    int nic =512; //(int) NEURONS_IN_CORE;
+    int lps = 512 + 512 + 1;// (int) LPS_PER_PE;
+    int *lpv; 
+    lpv = testCreateLPID(nic, lps);
+    
 
 }
 

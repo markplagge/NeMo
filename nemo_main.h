@@ -14,8 +14,7 @@
 #include "./neuro/synapse.h"
 #include "./neuro/tn_neuron.h"
 #include "ross.h"
-
-
+#include "./tests/nemo_tests.h"
 
 
 

@@ -5,7 +5,7 @@
 #include "tn_neuron.h"
 
 
-/** \ingroup TN_Function_hdrs
+/** \defgroup TN_Function_hdrs True North Function headers
  * TrueNorth Neuron leak, integrate, and fire function forward decs.
  * @{ */
 
@@ -92,12 +92,8 @@ void ringing(void *nsv, volt_type oldVoltage );
 
 
 /**
- * \ingroup TN_LIF
+ * \ingroup TN_RESET True North Reset
  * True North Leak, Integrate and Fire Functions
- * @{
- */
-/** @name ResetFunctions
- * @details
  * Reset function defs. Neuron reset functions will
  * change the neuron state without saving the previous state. All voltage state saving
  * must be handled in the neuron event function neuronReceiveMessage().
@@ -127,7 +123,7 @@ void negThresholdReset(tn_neuron_state *s) {
 }
 /**
 
- *  @details Normal reset function.
+ * Normal reset function.
  */
 void resetNormal(void *neuronState)
 {
@@ -145,7 +141,7 @@ void resetNormal(void *neuronState)
 
 
 /**
- *  @details Linear reset mode - ignores \f$R\f$, and sets the membrane potential
+ *   Linear reset mode - ignores \f$R\f$, and sets the membrane potential
  *  to the difference between the threshold and the potential. *
  */
 void resetLinear(void *neuronState)
@@ -166,7 +162,7 @@ void resetLinear(void *neuronState)
 
 }
 /**
- *  @details non-reset handler function - does non-reset style reset. Interestingly,
+ *   non-reset handler function - does non-reset style reset. Interestingly,
  *  even non-reset functions follow the negative saturation parameter from the paper.
  */
 void resetNone(void *neuronState)
@@ -180,7 +176,10 @@ void resetNone(void *neuronState)
 }
 
 
-
+/**@} */
+/** @defgroup TN_fire_reset True North Reset Fire
+*   True North reset and fire functions 
+* @{ */
 
 /** From Neuron Behavior Reference - checks to make sure that there is no "ringing".
  The specs state that the leak stores the voltage in a temporary variable. Here,
@@ -305,10 +304,14 @@ bool tnReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
     return willFire;
 }
 
-/** From Neuron Behavior Reference - checks to make sure that there is no "ringing".
+/**
+ * @brief      From Neuron Behavior Reference - checks to make sure that there is no "ringing".
  The specs state that the leak stores the voltage in a temporary variable. Here,
- we store the leak voltage in the membrane potential, and override it with a new value. */
-
+ we store the leak voltage in the membrane potential, and override it with a new value.
+ *
+ * @param      nsv         The neuron state
+ * @param[in]  oldVoltage  The old voltage
+ */
 void ringing(void *nsv, volt_type oldVoltage ){
     tn_neuron_state *ns = (tn_neuron_state *) nsv;
     if(ns->epsilon && (SGN(ns->membranePotential) != SGN(oldVoltage))){
@@ -485,7 +488,7 @@ void TNNumericLeakCalc(tn_neuron_state *st, tw_stime now){
 
 
 /**
- * \ingroup TN_REVERSE
+ * \defgroup TN_REVERSE TN Reverse
  * True North Reverse Leak, Integrate, and Fire Functions
  * @{
  */
@@ -495,7 +498,7 @@ void TNNumericLeakCalc(tn_neuron_state *st, tw_stime now){
 /** @} */
 
 
-/** \ingroup TNParams
+/** \defgroup TNParams TN Parameters
  * TrueNorth Neuron Parameter setting functions. Used as helper functions for init
  * @{ */
 
@@ -509,7 +512,7 @@ void TN_set_neuron_dest(int signalDelay, uint64_t gid, tn_neuron_state *n) {
 /** @} */
 
 //*********************************************************************************
- /** \ingroup TNNeuronInit
+ /** \defgroup TNNeuronInit TrueNorth Init
   *  TrueNorth Neuron initialization functions
   * @{ */
 /** Constructor / Init a new neuron. assumes that the reset voltage is NOT encoded (i.e.,
@@ -677,8 +680,9 @@ void TN_create_simple_neuron(tn_neuron_state *s, tw_lp *lp){
 /** @} */
 
 
-/** /ingroup TN_ROSS_HANDLERS
+/** /defgroup TN_ROSS_HANDLERS
  * Implementations of TN functions that are called by ross. Forward, reverse, init, etc.
+ * @{
  * */
 
 void TN_init(tn_neuron_state *s, tw_lp *lp){
