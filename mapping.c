@@ -57,7 +57,7 @@ id_type getCoreFromGID(tw_lpid gid){
  *
  */
 id_type getLocalFromGID(tw_lpid gid){
-	return coreOffset(gid) - gid; 
+	return gid - coreOffset(gid);
 
 }
 

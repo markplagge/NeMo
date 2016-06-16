@@ -45,6 +45,7 @@ set(model_srcs
         tests/nemo_tests.h
         tests/synapse_test.c
         tests/bio_validation.c
+        tests/mapping_tests.c
 
 
 

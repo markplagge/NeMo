@@ -53,7 +53,7 @@ int testingMode = 0;
  */
 const tw_optdef app_opt[] = {
 	TWOPT_FLAG("rand_net", IS_RAND_NETWORK, "Generate a random network? Alternatively, you need to specify config files."),
-	TWOPT_UINT("tm", testingMode, "Choose a test suite to run. 0=no tests, 1=synapse tests, 2=mapping tests"),
+	TWOPT_UINT("tm", testingMode, "Choose a test suite to run. 0=no tests, 1=mapping tests"),
 	TWOPT_GROUP("Randomized (ID Matrix) Network Parameters"),
 		TWOPT_ULONGLONG("cores", CORES_IN_SIM, "number of cores in simulation"),
     	//TWOPT_ULONGLONG("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
@@ -169,6 +169,7 @@ void init_nemo(){
 	
 	AXONS_IN_CORE = NEURONS_IN_CORE;
 	SYNAPSES_IN_CORE = 1;//(NEURONS_IN_CORE * AXONS_IN_CORE);
+    printf("\n\n%i -- %i -- %i \n\n", SYNAPSES_IN_CORE, NEURONS_IN_CORE, AXONS_IN_CORE); //
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
 	SIM_SIZE = CORE_SIZE * CORES_IN_SIM;
 
@@ -185,14 +186,43 @@ void init_nemo(){
 
 }
 
-int mapTests(){
+unsigned char mapTests(){
+    unsigned char result = 0;
     //test a 512 size neuron
     //
     int nic =512; //(int) NEURONS_IN_CORE;
     int lps = 512 + 512 + 1;// (int) LPS_PER_PE;
-    int *lpv; 
+    tw_lpid *lpv; 
     lpv = testCreateLPID(nic, lps);
-    
+
+    //should be 1025 elements in this array:
+    int i = 0;
+    for(; i < 512; i ++){  //test to ensure that these are axons
+        if (lpv[i] != AXON) {
+            result = result | INVALID_AXON;
+            
+        }
+    }
+    i ++;
+    if(lpv[i] != SYNAPSE) {
+    result = result | INVALID_SYNAPSE;
+
+    }
+    i ++;
+    for(; i < 512; i++){
+        if (lpv[i] != NEURON){
+            result = result | INVALID_NEURON;
+        }
+    }
+    printf("LP Types Created\n");
+    for(i =0; i < 1025; i++){
+        printf("%llu \t", lpv[i]);
+        if (!(i % 256)){
+            printf("\n");
+        }
+        
+    }
+    return result;
 
 }
 
@@ -210,6 +240,23 @@ int main(int argc, char*argv[]) {
     //call nemo init
     init_nemo();
 
+    if (testingMode == 1 ) {
+        unsigned char mapResult = 0;
+        mapResult = mapResult | mapTests();
+
+        if(mapResult & INVALID_AXON){
+            printf("Creted invalid axon.\n");
+            }
+        if (mapResult & INVALID_SYNAPSE){
+            printf("Created invalid synapse.\n");
+        }
+        if (mapResult & INVALID_NEURON){
+            printf("Created invalid neuron.\n");
+        }
+
+
+        return mapResult;
+    }
     //Define LPs:
     tw_define_lps(LPS_PER_PE, sizeof(messageData));
     tw_lp_setup_types();

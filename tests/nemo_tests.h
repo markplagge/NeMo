@@ -34,7 +34,7 @@
  * @return     an array of tw_lpid's 
  * 
  */
-int * testCreateLPID(int neuronsPerCore, int totalLPs);
+tw_lpid * testCreateLPID(int neuronsPerCore, int totalLPs);
 
 
 /**

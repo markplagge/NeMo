@@ -111,6 +111,15 @@ enum lpTypeVals {
     NEURON = 2
 };
 
+/**
+ * @brief      test result flag.
+ */
+enum mapTestResults {
+  INVALID_AXON = 0x01, //!< Axon was not properly defined.
+  INVALID_SYNAPSE = 0x02, //!< Synapse was not properly defined.
+  INVALID_NEURON = 0x03 //!< Neuron was not properly defined.
+};
+
 typedef enum NeuronTypes {
     TrueNorth = 0
 } neuronTypes;
