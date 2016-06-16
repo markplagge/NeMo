@@ -113,7 +113,7 @@ id_type getAxonLocal(tw_lpid gid);
  *
  * @return     The synapse from axon.
  */
-tw_lpid getSynapseFromAxon(id_type axon_id);
+tw_lpid getSynapseFromAxon(tw_lpid axon_id);
 
 
 

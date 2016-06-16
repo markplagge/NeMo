@@ -9,7 +9,7 @@
 /** \addtogroup Globals 
  * @{  */
 
-size_type CORES_IN_SIM = 1024; 
+size_type CORES_IN_SIM = 1;
 size_type AXONS_IN_CORE = NEURONS_IN_CORE;
 size_type SIM_SIZE = 1025;
 size_type SYNAPSES_IN_CORE = 0;
@@ -175,6 +175,8 @@ void init_nemo(){
 
 	g_tw_nlp = SIM_SIZE / tw_nnodes();
 	g_tw_lookahead = 0.001;
+    g_tw_lp_types = model_lps;
+    g_tw_lp_typemap = lpTypeMapper;
 
 
 
@@ -265,5 +267,6 @@ int main(int argc, char*argv[]) {
         displayModelSettings();
     }
 
-
+    tw_run();
+    tw_end();
 }

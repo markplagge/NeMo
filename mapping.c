@@ -20,7 +20,10 @@ tw_lpid coreOffset(tw_lpid gid){
 	return (getCoreFromGID(gid) * CORE_SIZE);
 }
 
-
+tw_lpid getSynapseGIDFromCore(id_type core){
+	tw_lpid offset = CORE_SIZE * core;
+	return offset + AXONS_IN_CORE + 1;
+}
 /**
  * NeMo is laid out in a grid fashon. The first \f$n\f$ lps are axons, then
  * there is one synapse lp, then there are \f$n\f$ neurons. 
@@ -91,8 +94,11 @@ tw_peid getPEFromGID(tw_lpid gid){
 	return (tw_peid) gid / g_tw_nlp;
 }
 
-tw_lpid getSynapseFromAxon(id_type axon_id){
-	return AXONS_IN_CORE + 1;
+tw_lpid getSynapseFromAxon(tw_lpid axon_id){
+	id_type core = getCoreFromGID(axon_id);
+	tw_lpid  synGID = getSynapseGIDFromCore(core);
+	return synGID;
+
 }
 /**
  * Note: this function assumes that it receives a neuron's GID - otherwise it will not return a valid value.
