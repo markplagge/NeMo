@@ -12,6 +12,10 @@ void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
 	
 	messageData *outMessage;
 	tw_event *synEvt;
+	if (M->eventType == AXON_OUT){
+		synEvt = tw_event_new(lp->gid, getNextEventTime(lp),lp );
+		outMessage = (messageData *) tw_event_data(synEvt)
+	}
 	for(int i = 0; i < NEURONS_IN_CORE; i ++){
 		//add the check for connected neurons here
 		

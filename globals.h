@@ -61,7 +61,7 @@ weight_type iiABS(weight_type in);
 
 /**
  *  Gets the next event time, based on a random function. Moved here to allow for
- *  easier abstraciton, and random function replacement.
+ *  easier abstraction, and random function replacement.
  *
  *
  *  @param lp Reference to the current LP so that the function can see the RNG
