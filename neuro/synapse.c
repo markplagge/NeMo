@@ -9,26 +9,35 @@ void synapse_init(synapseState *s, tw_lp *lp){
 
 void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
 	long rc = lp->rng->count;
-	
-	messageData *outMessage;
-	tw_event *synEvt;
-	if (M->eventType == AXON_OUT){
-		synEvt = tw_event_new(lp->gid, getNextEventTime(lp),lp );
-		outMessage = (messageData *) tw_event_data(synEvt)
-	}
-	for(int i = 0; i < NEURONS_IN_CORE; i ++){
-		//add the check for connected neurons here
-		
-		synEvt = tw_event_new(getNeuronGlobal(s->myCore, i), getNextEventTime(lp), lp);
-		outMessage = (messageData *) tw_event_data(synEvt);
-		outMessage->eventType = SYNAPSE_OUT;
-		outMessage->axonID = M->axonID;
 
-		
-		M->rndCallCount = lp->rng->count - rc;
-	
-		s->msgSent ++;
-		tw_event_send(synEvt);
+
+	if(M->eventType == NEURON_SETUP){
+		printf("Neuron setup recevied okay from neuron %i\n", M->localID);
+		for (int i = 0; i < NEURONS_IN_CORE; i ++) {
+			s->connectionGrid[M->localID][i] = M->neuronConn[i];
+		}
+	}
+	else{
+//		messageData *outMessage;
+//		tw_event *synEvt;
+//	//	if (M->eventType == AXON_OUT){
+//	//		synEvt = tw_event_new(lp->gid, getNextEventTime(lp),lp );
+//	//		outMessage = (messageData *) tw_event_data(synEvt);
+//	//	}
+//		for(int i = 0; i < NEURONS_IN_CORE; i ++) {
+//			//add the check for connected neurons here
+//
+//			synEvt = tw_event_new(getNeuronGlobal(s->myCore, i), getNextEventTime(lp), lp);
+//			outMessage = (messageData *) tw_event_data(synEvt);
+//			outMessage->eventType = SYNAPSE_OUT;
+//			outMessage->axonID = M->axonID;
+//
+//
+//			M->rndCallCount = lp->rng->count - rc;
+//
+//			s->msgSent++;
+//			tw_event_send(synEvt);
+//		}
 	}
 	
 	

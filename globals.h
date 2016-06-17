@@ -103,6 +103,7 @@ enum evtType {
     SYNAPSE_OUT, //!< Message originates from a synapse
     NEURON_OUT, //!< Message originates from a neuron, and is going to an axion.
     NEURON_HEARTBEAT, //!< Neuron heartbeat messages - for big clock syncronization.
+    NEURON_SETUP, //!< Message that contains a neuron's setup information for the synapse - connectivity info
     GEN_HEARTBEAT //!< Signal generator messages -- used to simulate input for benchmarking.
 };
 enum lpTypeVals {
@@ -133,9 +134,15 @@ typedef struct Ms{
     tw_stime neuronLastActiveTime;
     tw_stime neuronLastLeakTime;
     random_type neuronDrawnRandom;
+    union{
+        id_type axonID; //!< Axon ID for neuron value lookups.
+        bool * neuronConn;
+    };
+
 
     //neuron state saving extra params:
-    id_type axonID; //!< Axon ID for neuron value lookups.
+
+
 
    
 
@@ -146,7 +153,7 @@ typedef struct Ms{
 #ifndef EXTERN
 #define EXT extern
 /**
- * \defgroup Globals Global Variables 
+ * \defgroup Globals Global Variables
  * @{
  */
 EXT size_type  LPS_PER_PE;
@@ -182,9 +189,9 @@ EXT bool FILE_IN;
 /**
  * little tick rate - controls little tick timing
  */
-EXT tw_stime littleTick; 
+EXT tw_stime littleTick;
 /**
- * clock random value adjuster. 
+ * clock random value adjuster.
  */
 EXT tw_stime CLOCK_RANDOM_ADJ;
 /** @} */

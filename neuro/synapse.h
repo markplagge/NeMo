@@ -12,7 +12,8 @@
 typedef struct SynapseState {
 	stat_type msgSent;
 	tw_stime lastBigTick;
-	id_type myCore;	
+	id_type myCore;
+	bool connectionGrid[NEURONS_IN_CORE][NEURONS_IN_CORE];
 }synapseState;
 void synapse_init(synapseState *s, tw_lp *lp);
 void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp);

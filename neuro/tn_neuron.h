@@ -110,7 +110,7 @@ typedef struct TN_MODEL{
  * @param      messageData      The message data
  * @param      lp               The pointer to a LP
  */
-void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *messageData, 
+void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
     tw_lp *lp);
 
 /**
@@ -121,7 +121,7 @@ void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *messageData,
  * @param      messageData      The message data
  * @param      lp               The pointer to a
  */
-void TN_reverse_event (tn_neuron_state *s, tw_bf *CV, messageData *messageData, 
+void TN_reverse_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
     tw_lp *lp);
 
 
