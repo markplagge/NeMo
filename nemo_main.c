@@ -47,6 +47,12 @@ FILE *outFile;
 
 int testingMode = 0;
 
+
+//-----------------------Non global testing vars---------//
+
+char * couchAddress = "192.168.2.3";
+
+
 /** @} */
 /**
  * app_opt - Application Options. Manages the options for NeMo's run.
@@ -63,6 +69,7 @@ const tw_optdef app_opt[] = {
     	TWOPT_FLAG("network", SAVE_NEURON_OUTS, "Save neuron output axon IDs on creation"),
     	TWOPT_FLAG("svm", SAVE_MEMBRANE_POTS, "Save neuron membrane potential values (enabled by default when running a validation model"),
     	TWOPT_FLAG("svs", SAVE_SPIKE_EVTS, "Save neuron spike event times and info"),
+
     TWOPT_GROUP("Integrated Bio Model Testing"),
     	TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
     	TWOPT_FLAG("tonb",TONIC_BURST_VAL, "Tonic bursting Neuron Validation"),
@@ -116,11 +123,15 @@ void displayModelSettings()
         printf("*");
     }
     double cores_per_node = CORES_IN_SIM / tw_nnodes() ;
+    char *netMode = FILE_IN ? "file defined":"random benchmark";
     printf("\n");
-    printf("* \t %i Neurons per core, %llu cores in sim.\n", NEURONS_IN_CORE, CORES_IN_SIM);
+    printf("* \t %i Neurons per core (cmake defined), %llu cores in sim.\n", NEURONS_IN_CORE, CORES_IN_SIM);
     printf("* \t %f cores per PE, giving %llu LPs per pe.\n", cores_per_node, g_tw_nlp);
+    printf("* \t Neurons have %i axon types (cmake defined)\n", NUM_NEURON_WEIGHTS);
+    printf("* \t Network is a %s network.\n",netMode);
     printf("* \t Neuron stats:\n");
     printf("* \tCalculated sim_size is %llu\n", SIM_SIZE);
+    printf("* \tSave Messages: %i - Use Couch %i - Couch Add %s", SAVE_MSGS , USE_COUCH, COUCH_ADDRESS);
 
     //printf("%-10s", "title");
 

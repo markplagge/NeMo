@@ -55,7 +55,7 @@ void synapse_final(synapseState *s, tw_lp *lp){
 	//do some stats here if needed.
 }
 
-/** New Super Synapse with fanout code
+/** Neew Super Synapse with fanout code
 void super_synpase_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp){
     //Set up random counter monitor.
     long rc = lp->rng->count;

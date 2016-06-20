@@ -125,6 +125,7 @@ typedef enum NeuronTypes {
     TrueNorth = 0
 } neuronTypes;
 
+
 //Message Structure (Used Globally so placed here)
 typedef struct Ms{
     enum evtType eventType;
@@ -138,9 +139,11 @@ typedef struct Ms{
         id_type axonID; //!< Axon ID for neuron value lookups.
         bool * neuronConn;
     };
+    //message tracking values:
+    char * messageUUID;
+    tw_lpid originGID;
+    char originComponent;
 
-
-    //neuron state saving extra params:
 
 
 
@@ -173,6 +176,7 @@ EXT bool DEBUG_MODE;
 EXT bool SAVE_MEMBRANE_POTS ;
 EXT bool SAVE_SPIKE_EVTS ;
 EXT bool SAVE_NEURON_OUTS;
+
 
 EXT bool PHAS_VAL;
 EXT bool TONIC_SPK_VAL;

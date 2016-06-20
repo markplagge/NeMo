@@ -13,6 +13,9 @@ LIST(APPEND CMAKE_MODULE_PATH "${ROSS_SOURCE_DIR}/cmake/")
 ## Model Compile-Time Options (Will add more later)
 set(NeMo_NEURONS_IN_CORE 512 CACHE STRING "The number of neurons in each simulated core")
 set(NeMo_NUM_WEIGHTS_IN_NEURON 4 CACHE STRING "How many weights does a neuron have? (4 is TN default)")
+set(NeMo_SAVE_MSG FALSE CACHE BOOL "Save message paths to CSV or Couch? (debug messages)")
+set(NeMo_SAVE_MSG_COUCH FALSE CACHE BOOL "Save message paths directly to couch?")
+set(NeMo_COUCH_ADD "" CACHE STRING "The IP address:PORT of the couch database if used")
 
 ## Build Configuration Header File
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
@@ -64,3 +67,12 @@ ADD_EXECUTABLE(NeMo  ${model_srcs})
 
 
 TARGET_LINK_LIBRARIES(NeMo ROSS m)
+
+set(SAVE_MSGS 0 STRING)
+set(USE_COUCH 0 STRING)
+if(NeMo_SAVE_MSG)
+    set(SAVE_MSGS 1)
+    if(NeMo_SAVE_MSG_COUCH)
+        set(USE_COUCH 1)
+        endif()
+endif()
