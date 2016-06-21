@@ -21,12 +21,22 @@ void TNIntegrate(id_type synapseID,tn_neuron_state *st, void *lp);
  This is done through an event sent upon receipt of the first synapse message of the current big-tick.
  *
  *  @param st   current neuron state
- *  @param time time event was received
  *  @param m    event message data
  *  @param lp   lp.
  */
 
 bool TNReceiveMessage(tn_neuron_state *st, messageData *M, tw_lp *lp, tw_bf *bf);
+
+/**
+ * @brief handels reverse computation and state messages.
+ * @param st current neuron state
+ * @param M reverse message
+ * @param lp the lp
+ * @param bf the reverse computation bitfield.
+ */
+
+void TNReceiveReverseMessage(tn_neuron_state *st, messageData *M, tw_lp *lp, tw_bf *bf);
+
 
 /**
  *  @brief  Checks to see if a neuron should fire. 
@@ -70,7 +80,7 @@ void TNLinearLeak(tn_neuron_state *neuron, tw_stime now);
 
 void TNSendHeartbeat(tn_neuron_state *st, tw_stime time, void *lp);
 
-void TNReverseState(tn_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *lp);
+
 /**
  *  @brief  Function that runs after integration & firing, for reset function and threshold bounce calls.
  *
@@ -202,7 +212,7 @@ void resetNone(void *neuronState)
 	st->firedLast = true;
 
  }
-bool tnReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
+bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
 {
 	/** @todo Replace these state saving values with reverse computation. */
     m->neuronVoltage = st->membranePotential;
@@ -210,7 +220,7 @@ bool tnReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
     m->neuronDrawnRandom = st->drawnRandomNumber;
     //m->neuronFireCount = st->fireCount;
 
-    bf->c14 = st->heartbeatOut; //C14 indicates the old heartbeat state.
+    //bf->c14 = st->heartbeatOut; //C14 indicates the old heartbeat state.
     //state management
     bool willFire = false;
     //Next big tick:
@@ -303,7 +313,26 @@ bool tnReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
     }
     return willFire;
 }
+void TNReceiveReverseMessage(tn_neuron_state *st, messageData *M, tw_lp *lp, tw_bf *bf){
 
+    if (M->eventType == NEURON_HEARTBEAT) {
+        //reverse heartbeat message
+        st->SOPSCount--;
+    }
+    if (bf->c0 ){ //c0 flags firing state
+        //reverse computation of fire and reset functions here.
+        /**@todo implement neuron fire/reset reverse computation functions */
+        }
+    if (bf->c13){
+         st->heartbeatOut = !st->heartbeatOut;
+    }
+    /**@todo remove this once neuron reverse computation functions are built. */
+    st->membranePotential = M->neuronVoltage;
+    st->lastLeakTime =      M->neuronLastLeakTime;
+    st->lastActiveTime =    M->neuronLastActiveTime;
+    st->drawnRandomNumber = M->neuronDrawnRandom;
+
+}
 /**
  * @brief      From Neuron Behavior Reference - checks to make sure that there is no "ringing".
  The specs state that the leak stores the voltage in a temporary variable. Here,
@@ -475,6 +504,7 @@ void TNNumericLeakCalc(tn_neuron_state *st, tw_stime now){
     //then run the leak function until we've caught up:
     for(;numberOfBigTicksSinceLastLeak > 0; numberOfBigTicksSinceLastLeak --) {
         uint64_t omega = st->sigma_l * (1 - st->epsilon) + SGN(st->membranePotential)*st->sigma_l * st->epsilon;
+
         st->membranePotential = st->membranePotential +
                                     (omega * ((1 - st->c) * st->lambda)) +
                                      (st->c & (BINCOMP(st->lambda, st->drawnRandomNumber)));
@@ -720,14 +750,71 @@ void TN_init(tn_neuron_state *s, tw_lp *lp){
         printf("Neuron type %s, num: %llu checking in with GID %llu and dest %llu \n",
          s->neuronTypeDesc, s->myLocalID, lp->gid, s->outputGID);
     }
+    //Original NeMo Neuron Init
+//    static int pairedNeurons = 0;
+//    s->neuronTypeDesc = "SIMPLE";
+//    if(DEBUG_MODE && ! annouced)
+//        printf("Creating neurons\n");
+//
+//    if(PHAS_VAL) {
+//        if(!pc){
+//            crPhasic(s, lp);
+//            pc = true;
+//        }
+//        else {
+//            createDisconnectedNeuron(s, lp);
+//        }
+//
+//    } else if(TONIC_BURST_VAL) {
+//        if(pairedNeurons < 2) {
+//            crTonicBursting(s, lp);
+//            pairedNeurons ++;
+//        }
+//        else {
+//            createDisconnectedNeuron(s, lp);
+//        }
+//    } else if (PHASIC_BURST_VAL){
+//        if (pairedNeurons < 2) {
+//            crPhasicBursting(s, lp);
+//            pairedNeurons ++;
+//        }
+//
+//    } else {
+//        createSimpleNeuron(s, lp);
+//    }
+//    //createDisconnectedNeuron(s, lp);
+//    annouced = true;
 }
 
 void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
     tw_lp *lp){
 
-    /**
-     * @todo set up the forward events.
-     */
+    long start_count = lp->rng->count;
+
+    if (VALIDATION || SAVE_MEMBRANE_POTS) { //If we are running model validation or we are saving membrane potentials
+
+        //saveNeruonState(s->myLocalID, s->myCoreID, s->membranePotential, tw_now(lp));
+    }
+
+    bool fired = TNReceiveMessage(s,m,lp,CV);
+
+    /**@todo save message trace here: */
+
+
+    CV->c0 = fired; // save fired information for reverse computation.
+
+    if (fired && (SAVE_SPIKE_EVTS || VALIDATION)){ //if we are validating the model or saving spike events, save this event's info.
+
+        //write_event(s->myLocalID, s->myCoreID, s->s->outputGID, 'N', tw_now(lp));
+    }
+
+
+
+
+
+
+    m->rndCallCount = lp->rng->count - start_count;
+
 //
 //    if (m->eventType == NEURON_SETUP) {
 //        messageData *setup;
@@ -748,6 +835,21 @@ void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
 
 void TN_reverse_event (tn_neuron_state *s, tw_bf *CV, messageData *m ,
     tw_lp *lp){
+    long count = m->rndCallCount;
+
+    if (VALIDATION || SAVE_MEMBRANE_POTS) {
+        //reverse save neuron state;
+    }
+
+    TNReceiveReverseMessage(s,m,lp,CV);
+
+    if (CV->c0 && (SAVE_SPIKE_EVTS || VALIDATION)){
+        //reverse_write_event
+    }
+
+    while(count--)
+        tw_rand_reverse_unif(lp->rng);
+
 
 }
 
