@@ -18,3 +18,21 @@
 *.xml
 
 *.swp
+
+docs/latex/Makefile
+
+.ycm_extra_conf.py
+
+.ycm_extra_conf.py_old
+
+.ycm_extra_conf.pyc
+
+compile_commands.json
+
+docs/html/doxygen.css
+
+docs/html/search/search.css
+
+docs/html/tabs.css
+
+docs/latex/doxygen.sty
