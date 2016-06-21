@@ -36,6 +36,9 @@ void axon_init(axonState *s, tw_lp *lp)
         specAxons ++;
     }else if(FILE_IN){
         //Do file processing - load in the initial spikes here.
+        if (g_tw_mynode == 0){
+            tw_printf(TW_LOC,"Axon ID %llu attempted file load.\n",s->axonID);
+        }
     }
     else { //else this is a random network for benchmarking.
         s->sendMsgCount = 0;
@@ -46,7 +49,7 @@ void axon_init(axonState *s, tw_lp *lp)
         messageData *data = (messageData *)tw_event_data(axe);
         data->eventType = AXON_OUT;
         data->axonID = s->axonID;
-        //tw_event_send(axe);
+        tw_event_send(axe);
 
        
     }

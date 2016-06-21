@@ -5,6 +5,19 @@ void synapse_init(synapseState *s, tw_lp *lp){
 	s->msgSent = 0;
 	s->lastBigTick = 0;
 	s->myCore = getCoreFromGID(lp->gid);
+	// The random benchmark network uses an "identity matrix" of axon->neuron connectivity for now.
+	// So if we are using this type of network, set the diagonal of this synapse's connectivity grid to 1.
+	if (!FILE_IN){
+		for(int i = 0; i< AXONS_IN_CORE; i ++ ){
+			for(int j = 0; j < NEURONS_IN_CORE; j++) {
+				if (i == j){
+					s->connectionGrid[i][j] = 1;
+				}
+				else
+					s->connectionGrid[i][j] = 0;
+			}
+		}
+	}
 }
 
 void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
@@ -20,17 +33,21 @@ void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
 	//	}
 		for(int i = 0; i < NEURONS_IN_CORE; i ++) {
 			//add the check for connected neurons here
+			id_type axonID = M->localID;
 
-			synEvt = tw_event_new(getNeuronGlobal(s->myCore, i), getNextEventTime(lp), lp);
-			outMessage = (messageData *) tw_event_data(synEvt);
-			outMessage->eventType = SYNAPSE_OUT;
-			outMessage->axonID = M->axonID;
+			if ( s->connectionGrid[axonID][i] ) {
+
+				synEvt = tw_event_new(getNeuronGlobal(s->myCore, i), getNextEventTime(lp), lp);
+				outMessage = (messageData *) tw_event_data(synEvt);
+				outMessage->eventType = SYNAPSE_OUT;
+				outMessage->axonID = M->axonID;
 
 
-			M->rndCallCount = lp->rng->count - rc;
+				M->rndCallCount = lp->rng->count - rc;
 
-			s->msgSent++;
-			tw_event_send(synEvt);
+				s->msgSent++;
+				tw_event_send(synEvt);
+			}
 		}
 
 	
