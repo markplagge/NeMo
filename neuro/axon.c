@@ -7,7 +7,9 @@
 //
 
 #include "axon.h"
-
+void axon_mark_message(axonState *s, messageData *M){
+	M->idp1 = s->axonID
+}
 void axon_init(axonState *s, tw_lp *lp)
 {
     //TODO: Maybe switch this to a switch/case later, since it's going to get
@@ -49,6 +51,9 @@ void axon_init(axonState *s, tw_lp *lp)
         messageData *data = (messageData *)tw_event_data(axe);
         data->eventType = AXON_OUT;
         data->axonID = s->axonID;
+        if (SAVE_MSGS){
+
+        }
         tw_event_send(axe);
 
        

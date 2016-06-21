@@ -140,7 +140,13 @@ typedef struct Ms{
         bool * neuronConn;
     };
     //message tracking values:
-    char * messageUUID;
+    union {
+        uint64_t uuid;
+        struct {
+            uint32_t idp1;
+            uint32_t idp2;
+        };
+    };
     tw_lpid originGID;
     char originComponent;
 
