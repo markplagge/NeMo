@@ -699,22 +699,22 @@ void TN_init(tn_neuron_state *s, tw_lp *lp){
 
     //createDisconnectedNeuron(s, lp);
 
-    messageData *setupMsg;
-    tw_event *setupEvent;
-
-    setupEvent = tw_event_new(lp->gid, getNextEventTime(lp), lp);
-    setupMsg = (messageData *) tw_event_data(setupEvent);
-
-
-    bool * connectivity = tw_calloc(TW_LOC,"LP",sizeof(bool),AXONS_IN_CORE);
-    for (int i = 0; i < AXONS_IN_CORE; i ++){
-        connectivity[i] = s->synapticWeight[s->axonTypes[i]];
-    }
-    setupMsg->eventType = NEURON_SETUP;
-    setupMsg->localID = s->myLocalID;
-    setupMsg->neuronConn = connectivity;
-
-    tw_event_send(setupEvent);
+//    messageData *setupMsg;
+//    tw_event *setupEvent;
+//
+//    setupEvent = tw_event_new(lp->gid, getNextEventTime(lp), lp);
+//    setupMsg = (messageData *) tw_event_data(setupEvent);
+//
+//
+//    bool * connectivity = tw_calloc(TW_LOC,"LP",sizeof(bool),AXONS_IN_CORE);
+//    for (int i = 0; i < AXONS_IN_CORE; i ++){
+//        connectivity[i] = s->synapticWeight[s->axonTypes[i]];
+//    }
+//    setupMsg->eventType = NEURON_SETUP;
+//    setupMsg->localID = s->myLocalID;
+//    setupMsg->neuronConn = connectivity;
+//
+//    tw_event_send(setupEvent);
 
     if (DEBUG_MODE) {
         printf("Neuron type %s, num: %llu checking in with GID %llu and dest %llu \n",
@@ -728,20 +728,20 @@ void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
     /**
      * @todo set up the forward events.
      */
-
-    if (m->eventType == NEURON_SETUP) {
-        messageData *setup;
-        tw_event *setupEvent;
-
-        setupEvent = tw_event_new(getSynapseGlobal(s->myCoreID,0), getNextEventTime(lp), lp);
-        setup = (messageData *) tw_event_data(setup);
-
-        setup->eventType = NEURON_SETUP;
-        setup->neuronConn = m->neuronConn;
-        setup->localID = m->localID;
-        tw_event_send(setupEvent);
-
-    }
+//
+//    if (m->eventType == NEURON_SETUP) {
+//        messageData *setup;
+//        tw_event *setupEvent;
+//
+//        setupEvent = tw_event_new(getSynapseGlobal(s->myCoreID,0), getNextEventTime(lp), lp);
+//        setup = (messageData *) tw_event_data(setup);
+//
+//        setup->eventType = NEURON_SETUP;
+//        setup->neuronConn = m->neuronConn;
+//        setup->localID = m->localID;
+//        tw_event_send(setupEvent);
+//
+//    }
 }
 
 

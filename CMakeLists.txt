@@ -17,6 +17,16 @@ set(NeMo_SAVE_MSG FALSE CACHE BOOL "Save message paths to CSV or Couch? (debug m
 set(NeMo_SAVE_MSG_COUCH FALSE CACHE BOOL "Save message paths directly to couch?")
 set(NeMo_COUCH_ADD "" CACHE STRING "The IP address:PORT of the couch database if used")
 
+
+set(SAVE_MSGS 0)
+set(USE_COUCH 0)
+if(NeMo_SAVE_MSG)
+    set(SAVE_MSGS 1)
+    if(NeMo_SAVE_MSG_COUCH)
+        set(USE_COUCH 1)
+    endif()
+endif()
+
 ## Build Configuration Header File
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 #generated config files:
@@ -68,11 +78,3 @@ ADD_EXECUTABLE(NeMo  ${model_srcs})
 
 TARGET_LINK_LIBRARIES(NeMo ROSS m)
 
-set(SAVE_MSGS 0 STRING)
-set(USE_COUCH 0 STRING)
-if(NeMo_SAVE_MSG)
-    set(SAVE_MSGS 1)
-    if(NeMo_SAVE_MSG_COUCH)
-        set(USE_COUCH 1)
-        endif()
-endif()
