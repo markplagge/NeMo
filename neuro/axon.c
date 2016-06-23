@@ -7,8 +7,10 @@
 //
 
 #include "axon.h"
-void axon_mark_message(axonState *s, messageData *M){
-	M->idp1 = s->axonID
+void axon_mark_message(axonState *s, messageData *M, tw_lpid gid){
+	M->idp1 = s->axonID;
+	M->idp2 = getCoreFromGID(gid);
+	M->idp3 = s->sendMsgCount;
 }
 void axon_init(axonState *s, tw_lp *lp)
 {
@@ -52,6 +54,10 @@ void axon_init(axonState *s, tw_lp *lp)
         data->eventType = AXON_OUT;
         data->axonID = s->axonID;
         if (SAVE_MSGS){
+	        axon_mark_message(s, data, lp->gid);
+	        /** @todo add message save code to io stack
+	         * */
+	        // save message //
 
         }
         tw_event_send(axe);

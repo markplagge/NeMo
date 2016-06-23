@@ -664,7 +664,9 @@ void TN_create_simple_neuron(tn_neuron_state *s, tw_lp *lp){
         //synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1)
     }
 
-    synapticConnectivity[getNeuronLocalFromGID(lp->gid)] = 1;
+	id_type myLocalID = getNeuronLocalFromGID(lp->gid);
+
+    synapticConnectivity[myLocalID] = 1;
 
     //(creates an "ident. matrix" of neurons.
     for(int i = 0; i < 4; i ++){
@@ -790,6 +792,9 @@ void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
     tw_lp *lp){
 
     long start_count = lp->rng->count;
+    if(DEBUG_MODE){
+	    printf("Neuron Forward Event\n");
+    }
 
     if (VALIDATION || SAVE_MEMBRANE_POTS) { //If we are running model validation or we are saving membrane potentials
 

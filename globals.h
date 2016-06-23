@@ -25,7 +25,7 @@
  */
 /**@{  */
 
-typedef int_fast16_t id_type; //!< id type is used for local mapping functions - there should be $n$ of them depending on CORE_SIZE
+typedef uint_fast16_t id_type; //!< id type is used for local mapping functions - there should be $n$ of them depending on CORE_SIZE
 typedef int32_t volt_type; //!< volt_type stores voltage values for membrane potential calculations
 typedef int64_t weight_type;//!< seperate type for synaptic weights.
 typedef uint32_t thresh_type;//!< Type for weights internal to the neurons.
@@ -143,8 +143,9 @@ typedef struct Ms{
     union {
         uint64_t uuid;
         struct {
-            uint32_t idp1;
-            uint32_t idp2;
+            uint16_t idp1;
+            uint16_t idp2;
+            uint32_t idp3;
         };
     };
     tw_lpid originGID;

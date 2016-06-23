@@ -104,12 +104,17 @@ tw_lpid getSynapseFromAxon(tw_lpid axon_id){
  * Note: this function assumes that it receives a neuron's GID - otherwise it will not return a valid value.
  */
 id_type getNeuronLocalFromGID(tw_lpid gid){
-	//get the core:
-	id_type core = getCoreFromGID(gid);
+
 	//get the core-wise local value:
 	id_type local = getLocalFromGID(gid);
 
-	//then return the neuron local ID:
-	return (AXONS_IN_CORE + SYNAPSES_IN_CORE) - local;
+	//Neurons should start at GID of (AXONS_IN_CORE + SYNAPSES_IN_CORE), so
+	//neuron 0 in core 0 should have a gid of 512 if 512 axons in core and 1 synapse (super synapse).
+	//because GIDs start at 0.
+
+
+	//then return the neuron local ID. Assuming super synapse configuration of 1 synapse per core:
+	return local - AXONS_IN_CORE; /** @todo fix types here for potential large core sizes. */
+	//return local - (AXONS_IN_CORE + SYNAPSES_IN_CORE) ;
 
 }
