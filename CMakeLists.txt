@@ -65,7 +65,8 @@ set(model_srcs
         mapping.c
         mapping.h
 
-
+        IO/csv.h
+        IO/libcsv.c
 
         IO/IOStack.c
         IO/IOStack.h

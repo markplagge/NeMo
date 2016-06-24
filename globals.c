@@ -12,6 +12,7 @@ int iIABS(int vals){
         : [valI] "r" (vals)
         : "cc","%eax", "%ebx");
         return result;
+    return -1;
 
 
 }
