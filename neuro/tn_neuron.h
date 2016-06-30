@@ -77,10 +77,10 @@ typedef struct TN_MODEL{
 
 
 
-
-    char axonTypes[256];
-    char synapticWeight[4];
-    bool synapticConnectivity[256]; //!< is there a connection between axon i and neuron j?
+	
+    char axonTypes[NEURONS_IN_CORE];
+    char synapticWeight[NUM_NEURON_WEIGHTS];
+    bool synapticConnectivity[NEURONS_IN_CORE]; //!< is there a connection between axon i and neuron j?
     /** stochastic weight mode selection. $b_j^{G_i}$ */
     bool weightSelection[4];
 

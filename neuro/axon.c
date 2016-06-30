@@ -7,11 +7,22 @@
 //
 
 #include "axon.h"
+
+//Global Message CSV Writer -- for debug and message traacing
+#ifdef SAVE_MSGS
+csv_writer * messageTrace;
+
 void axon_mark_message(axonState *s, messageData *M, tw_lpid gid){
 	M->idp1 = s->axonID;
 	M->idp2 = getCoreFromGID(gid);
 	M->idp3 = s->sendMsgCount;
+	if(!M->originGID){
+		M->originGID = gid;
+	}
+	
+	
 }
+#endif
 void axon_init(axonState *s, tw_lp *lp)
 {
     //TODO: Maybe switch this to a switch/case later, since it's going to get
@@ -34,9 +45,11 @@ void axon_init(axonState *s, tw_lp *lp)
 
         //crTonicBurstingAxon(s, lp);
         specAxons ++;
+		printf("Tonic bursting validation not available in this version of NeMo\n");
 
     }else if(PHASIC_BURST_VAL){
         //crTonicBurstingAxon(s, lp);
+		printf("Phasic bursting validation not available in this version of NeMo\n");
         specAxons ++;
     }else if(FILE_IN){
         //Do file processing - load in the initial spikes here.
@@ -48,20 +61,20 @@ void axon_init(axonState *s, tw_lp *lp)
         s->sendMsgCount = 0;
         s->axonID = getAxonLocal(lp->gid);
         s->destSynapse = getSynapseFromAxon(lp->gid);
-         tw_stime r = getNextBigTick(lp,0);
+        tw_stime r = getNextBigTick(lp,0);
         tw_event *axe = tw_event_new(lp->gid, r, lp);
         messageData *data = (messageData *)tw_event_data(axe);
         data->eventType = AXON_OUT;
         data->axonID = s->axonID;
-        if (SAVE_MSGS){
-	        axon_mark_message(s, data, lp->gid);
-	        /** @todo add message save code to io stack
-	         * */
-	        // save message //
-
-        }
-        tw_event_send(axe);
-
+		tw_event_send(axe);
+		if (SAVE_MSGS){
+			messageTrace = createCSV("message_log", g_tw_mynode, g_tw_npe -1);
+			axon_mark_message(s, data, lp->gid);
+			/** @todo add message save code to io stack
+			 * */
+			// save message //
+			
+		}
        
     }
 
@@ -71,6 +84,8 @@ void axon_init(axonState *s, tw_lp *lp)
 
         printf("Axon type - %s, #%llu checking in with dest synapse %llu\n",s->axtype, lp->gid, s->destSynapse);
     }
+
+
     //printf("message ready at %f",r);
 }
 

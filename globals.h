@@ -39,7 +39,26 @@ typedef uint64_t stat_type;
 /* @defgroup gmacros Global Macros and Related Functions
  *Global Macros */
 /**@{ */
+#define printf_dec_format(x) _Generic((x), \
+char: "%c", \
+signed char: "%hhd", \
+unsigned char: "%hhu", \
+signed short: "%hd", \
+unsigned short: "%hu", \
+signed int: "%d", \
+unsigned int: "%u", \
+long int: "%ld", \
+unsigned long int: "%lu", \
+long long int: "%lld", \
+unsigned long long int: "%llu", \
+float: "%f", \
+double: "%f", \
+long double: "%Lf", \
+char *: "%s", \
+void *: "%p")
 
+#define print(x) printf(printf_dec_format(x), x)
+#define sprint(str, y) sprintf(str, printf_dec_format(y), y)
 
 #define IABS(a) (((a) < 0) ? (-a) : (a)) //!< Typeless integer absolute value function
 
@@ -140,6 +159,7 @@ typedef struct Ms{
         bool * neuronConn;
     };
     //message tracking values:
+#ifdef SAVE_MSGS
     union {
         uint64_t uuid;
         struct {
@@ -150,6 +170,9 @@ typedef struct Ms{
     };
     tw_lpid originGID;
     char originComponent;
+
+	tw_stime msgCreationTime;
+#endif
 
 
 
