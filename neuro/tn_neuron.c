@@ -350,17 +350,17 @@ void ringing(void *nsv, volt_type oldVoltage ){
 
 void TNIntegrate(id_type synapseID, tn_neuron_state *st, void *lp){
     //tw_lp *l = (tw_lp *) lp;
-	int at = st->axonTypes[synapseID];
+	//int at = st->axonTypes[synapseID];
 	bool con = st->synapticConnectivity[synapseID];
 		//DEBUG CODE REMOVE FOR PRODUCTION:
-	id_type myid = st->myLocalID;
+		//id_type myid = st->myLocalID;
 
 
 	if (con == 0)
 		return;
 		//printf("id-%llu, sid-%llu, connect: %i\n",myid, synapseID,con);
-	weight_type stw = st->synapticWeight[at];
-	weight_type weight = st->synapticWeight[st->axonTypes[synapseID]] & st->synapticConnectivity[synapseID];
+		//weight_type stw = st->synapticWeight[at];
+	weight_type weight = st->synapticWeight[st->axonTypes[synapseID]] && st->synapticConnectivity[synapseID];
     //!!!! DEBUG CHECK FOR WEIGHT ISSUES:
     //weight = 0;
     //!!! REMOVE previous FOR PRODUCTION
@@ -441,20 +441,20 @@ bool TNfireFloorCelingReset(tn_neuron_state *ns, tw_lp *lp){
 		ns->membranePotential = ((DT(gamma))	* Vrst) +
 		((DT( gamma - 1 ))	* (Vj - (alpha + ns->drawnRandomNumber))) +
 		((DT(gamma - 2))	* Vj);
-		volt_type mp = ns->membranePotential;
+		//volt_type mp = ns->membranePotential;
         shouldFire = true;
     }else if (ns->membranePotential <
               (-1 * (beta * ns->kappa +
                     (beta + ns->drawnRandomNumber) * (1 - ns->kappa)
                      ))){
-        volt_type x = ns->membranePotential;
+		//volt_type x = ns->membranePotential;
         //x = ((-1 * beta) * ns->kappa);
         volt_type s1,s2,s3,s4;
         s1 = (-1*beta) * ns->kappa;
         s2 = (-1*(DT(gamma))) * Vrst;
         s3 = (DT((gamma - 1)) * (ns->membranePotential + (beta + ns->drawnRandomNumber)));
         s4 = (DT((gamma - 2)) * ns->membranePotential) * (1 - ns->kappa);
-        x = s1 + (s2 + s3 + s4);
+		//x = s1 + (s2 + s3 + s4);
 
         ns->membranePotential = (
                                  ((-1*beta) * ns->kappa) + (
