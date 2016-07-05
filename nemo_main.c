@@ -18,7 +18,7 @@ size_type LPS_PER_PE = 0;
 
 bool IS_RAND_NETWORK = true;
 bool BULK_MODE = false;
-bool DEBUG_MODE = false;
+bool DEBUG_MODE = true;
 bool SAVE_MEMBRANE_POTS  = false;
 bool SAVE_SPIKE_EVTS  = false;
 bool SAVE_NEURON_OUTS = false;

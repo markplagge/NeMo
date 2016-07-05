@@ -16,7 +16,8 @@ void writeFullRow(csv_data *row, csv_writer *writer, int currentRow){
 	
 	if(row && (currentRow == row->rowNum)){
 		char *mod = row->isString?"\"":"";
-		fprintf(writer->csvFile, "%s%s%s",mod,row->dataValue,mod);
+		if(row->dataValue && row->nextCol && row->valid)
+			fprintf(writer->csvFile, "%s%s%s",mod,row->dataValue,mod);
 		if(row->nextCol){
 			if (((csv_data *)row->nextCol)->rowNum == currentRow){
 				fprintf(writer->csvFile, ",");
@@ -31,32 +32,10 @@ void writeFullRow(csv_data *row, csv_writer *writer, int currentRow){
 		
 	}
 	if(row){
-		free(row->dataValue);
+		//free(row->dataValue);
 		free(row);
 	}
 	
-	
-}
-void writeCSV(csv_writer *writer){
-	
-	int currentRow = 0;
-	writeHdr(writer->hdr, writer);
-	csv_data * row = writer->data;
-	
-	writeFullRow(row, writer, currentRow);
-	
-	
-	//	while(row){
-	//		while(col){
-	//			csv_data * col2 = col->nextCol;
-	//			writeElem(col, writer);
-	//			//col = col->nextCol;
-	//			col = col2;
-	//		}
-	//		fprintf(writer->csvFile,"\n");
-	//		row = row->nextRow;
-	//		col = row;
-	//	}
 	
 }
 /**
@@ -98,8 +77,44 @@ csv_writer *createCSV(char * filename, int myRank, int numRanks){
 	return writer;
 	
 }
+void writeCSV(csv_writer *writer){
+	
+	int currentRow = 0;
+	//writeHdr(writer->hdr, writer);
+	csv_data * row = writer->data;
+	
+	writeFullRow(row, writer, currentRow);
+	fclose(writer->csvFile);
+	initCSV(writer);
+	
+	
+	
+	//	while(row){
+	//		while(col){
+	//			csv_data * col2 = col->nextCol;
+	//			writeElem(col, writer);
+	//			//col = col->nextCol;
+	//			col = col2;
+	//		}
+	//		fprintf(writer->csvFile,"\n");
+	//		row = row->nextRow;
+	//		col = row;
+	//	}
+	
+}
+
+
+
+
 void addRow(csv_writer *writer){
-	++ writer->currentRow;
+	writeCSV(writer);
+	//if (writer->currentRow > MEM_BUFF ){
+	//	writeCSV(writer);
+	//	writer->currentRow = 0;
+	//}else{
+	//	++ writer->currentRow;
+	//}
+	
 	
 }
 void addCol(csv_writer *writer, char* data, int isTxt){
@@ -109,6 +124,7 @@ void addCol(csv_writer *writer, char* data, int isTxt){
 		col->dataValue = data;
 		col->isString = isTxt;
 		col->rowNum = 0;
+				col->valid = 1;
 		
 	}else{
 		while(col){
@@ -120,6 +136,7 @@ void addCol(csv_writer *writer, char* data, int isTxt){
 				col->dataValue = data;
 				col->isString = isTxt;
 				col->rowNum = writer->currentRow;
+				col->valid = 1;
 				col = 0;
 			}
 		}
@@ -127,15 +144,15 @@ void addCol(csv_writer *writer, char* data, int isTxt){
 	
 }
 void writeHdr(csv_header *hdr, csv_writer* writer){
-	while(hdr){
-		csv_header * h2 = hdr->nextHeader;
-		char *ed = hdr->nextHeader?",":"\n";
-		
-		fprintf(writer->csvFile,"%s%s", hdr->header,ed);
-		free(hdr->header);
-		free(hdr);
-		hdr = h2;
-	}
+//	while(hdr){
+//		csv_header * h2 = hdr->nextHeader;
+//		char *ed = hdr->nextHeader?",":"\n";
+//		
+//		fprintf(writer->csvFile,"%s%s", hdr->header,ed);
+//		free(hdr->header);
+//		free(hdr);
+//		hdr = h2;
+//	}
 }
 void writeElem(csv_data * curElem, csv_writer *writer){
 	if(curElem){

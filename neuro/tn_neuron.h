@@ -9,9 +9,16 @@
 
 #include "../globals.h"
 #include "../mapping.h"
+#include "../IO/IOStack.h"
 #include <math.h>
 #define Vj ns->membranePotential
 
+#ifdef SAVE_MSGS
+
+extern csv_writer * messageTrace;
+
+
+#endif
 
 
 

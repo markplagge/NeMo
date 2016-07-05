@@ -12,11 +12,15 @@
 messageData: addMessage,\
 default: addDataStr)(data, csv_writer)
 
+
+#define MEM_BUFF 128
+
 typedef struct CSV_DATA{
 	char * dataValue;
 	int isString;
 	int rowNum;
 	void * nextCol;
+	int valid;
 	
 }csv_data;
 
@@ -38,8 +42,10 @@ typedef struct CSV_WRITER{
 	FILE * csvFile;
 } csv_writer;
 
+extern csv_writer * messageTrace;
 
 csv_writer *createCSV(char * filename, int myRank, int numRanks);
+csv_writer *createCSVHDR(char * filename, int myRank, int numRanks, char * headers[], int numhdr);
 void addCol(csv_writer *writer, char* data, int isTxt);
 void writeRow(csv_writer * writer);
 void addRow(csv_writer *writer);

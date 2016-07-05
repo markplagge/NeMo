@@ -18,6 +18,11 @@ void synapse_init(synapseState *s, tw_lp *lp){
 			}
 		}
 	}
+	
+	
+	if(DEBUG_MODE){
+		printf("Super Synapse Created - GID is %llu\n", lp->gid);
+	}
 }
 
 void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){

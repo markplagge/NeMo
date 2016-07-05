@@ -22,7 +22,7 @@ tw_lpid coreOffset(tw_lpid gid){
 
 tw_lpid getSynapseGIDFromCore(id_type core){
 	tw_lpid offset = CORE_SIZE * core;
-	return offset + AXONS_IN_CORE + 1;
+	return offset + AXONS_IN_CORE;
 }
 /**
  * NeMo is laid out in a grid fashon. The first \f$n\f$ lps are axons, then
@@ -36,7 +36,7 @@ tw_lpid lpTypeMapper(tw_lpid gid){
 	if (local < AXONS_IN_CORE){
 		return AXON;
 	}
-	else if(local - AXONS_IN_CORE == 1){
+	else if(local - AXONS_IN_CORE == 0){
 		return SYNAPSE;
 	}
 	else{
@@ -60,7 +60,7 @@ id_type getCoreFromGID(tw_lpid gid){
  *
  */
 id_type getLocalFromGID(tw_lpid gid){
-	return gid - coreOffset(gid);
+	return (gid - coreOffset(gid));
 
 }
 
@@ -83,7 +83,7 @@ tw_lpid getAxonGlobal(id_type core, id_type axonID){
 
 
 tw_lpid getSynapseGlobal(id_type core, id_type synapseID){
-	id_type coreLocal = AXONS_IN_CORE + 1;
+	id_type coreLocal = AXONS_IN_CORE ;
 	return getGIDFromLocalIDs(core, coreLocal);
 }
 id_type getAxonLocal(tw_lpid gid){
@@ -114,7 +114,7 @@ id_type getNeuronLocalFromGID(tw_lpid gid){
 
 
 	//then return the neuron local ID. Assuming super synapse configuration of 1 synapse per core:
-	return local - AXONS_IN_CORE; /** @todo fix types here for potential large core sizes. */
+	return local - AXONS_IN_CORE - 1; /** @todo fix types here for potential large core sizes. */
 	//return local - (AXONS_IN_CORE + SYNAPSES_IN_CORE) ;
 
 }

@@ -58,7 +58,10 @@ char *: "%s", \
 void *: "%p")
 
 #define print(x) printf(printf_dec_format(x), x)
+
 #define sprint(str, y) sprintf(str, printf_dec_format(y), y)
+
+#define fprint(file, z) fprintf(file, printf_dec_format(z),z)
 
 #define IABS(a) (((a) < 0) ? (-a) : (a)) //!< Typeless integer absolute value function
 
