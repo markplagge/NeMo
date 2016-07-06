@@ -15,7 +15,7 @@
 
 #ifdef SAVE_MSGS
 
-extern csv_writer * messageTrace;
+
 
 
 #endif

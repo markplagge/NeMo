@@ -822,33 +822,6 @@ void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
         //write_event(s->myLocalID, s->myCoreID, s->s->outputGID, 'N', tw_now(lp));
     }
 
-#ifdef SAVE_MSGS
-	tw_lpid gid = lp->gid;
-	if(!m->originGID){
-		m->originGID = gid;
-		m->msgCreationTime = tw_now(lp);
-		m->idp1 = s->myLocalID;
-		m->idp2 = getCoreFromGID(gid);
-		m->idp3 = s->rcvdMsgCount;
-	}
-	char * dm = tw_calloc(TW_LOC,2, sizeof(char), 256);
-	//print(m->uuid);printf("\n");
-	sprint(dm,m->uuid);
-	addCol(messageTrace,dm , 0);
-	dm = tw_calloc(TW_LOC,2, sizeof(char), 256);
-	sprint(dm,m->originGID);
-	addCol(messageTrace, dm ,0);
-	dm = tw_calloc(TW_LOC,2 ,sizeof(char), 256);
-	sprint(dm,m->msgCreationTime);
-	addCol(messageTrace, dm, 0);
-	dm = tw_calloc(TW_LOC,2,  sizeof(char), 256);
-	//sprint(dm,"Axon");
-	sprintf(dm, "%s", "Axon");
-	addCol(messageTrace, dm, 1);
-	addCol(messageTrace, lp->gid, 0);
-	addRow(messageTrace);
-	
-#endif
 
 
 

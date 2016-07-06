@@ -200,42 +200,42 @@ void init_nemo(){
 }
 
 unsigned char mapTests(){
-    unsigned char result = 0;
-    //test a 512 size neuron
-    //
-    int nic =512; //(int) NEURONS_IN_CORE;
-    int lps = 512 + 512 + 1;// (int) LPS_PER_PE;
-    tw_lpid *lpv; 
-    lpv = testCreateLPID(nic, lps);
-
-    //should be 1025 elements in this array:
-    int i = 0;
-    for(; i < 512; i ++){  //test to ensure that these are axons
-        if (lpv[i] != AXON) {
-            result = result | INVALID_AXON;
-            
-        }
-    }
-    i ++;
-    if(lpv[i] != SYNAPSE) {
-    result = result | INVALID_SYNAPSE;
-
-    }
-    i ++;
-    for(; i < 512; i++){
-        if (lpv[i] != NEURON){
-            result = result | INVALID_NEURON;
-        }
-    }
-    printf("LP Types Created\n");
-    for(i =0; i < 1025; i++){
-        printf("%llu \t", lpv[i]);
-        if (!(i % 256)){
-            printf("\n");
-        }
-        
-    }
-    return result;
+//    unsigned char result = 0;
+//    //test a 512 size neuron
+//    //
+//    int nic =512; //(int) NEURONS_IN_CORE;
+//    int lps = 512 + 512 + 1;// (int) LPS_PER_PE;
+//    tw_lpid *lpv; 
+//    lpv = testCreateLPID(nic, lps);
+//
+//    //should be 1025 elements in this array:
+//    int i = 0;
+//    for(; i < 512; i ++){  //test to ensure that these are axons
+//        if (lpv[i] != AXON) {
+//            result = result | INVALID_AXON;
+//            
+//        }
+//    }
+//    i ++;
+//    if(lpv[i] != SYNAPSE) {
+//    result = result | INVALID_SYNAPSE;
+//
+//    }
+//    i ++;
+//    for(; i < 512; i++){
+//        if (lpv[i] != NEURON){
+//            result = result | INVALID_NEURON;
+//        }
+//    }
+//    printf("LP Types Created\n");
+//    for(i =0; i < 1025; i++){
+//        printf("%llu \t", lpv[i]);
+//        if (!(i % 256)){
+//            printf("\n");
+//        }
+//        
+//    }
+//    return result;
 
 }
 

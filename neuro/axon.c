@@ -147,6 +147,5 @@ void axon_reverse(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
 
 }
 void axon_final(axonState *s, tw_lp *lp){
-	writeCSV(messageTrace);
-	closeCSV(messageTrace);
+
 }
