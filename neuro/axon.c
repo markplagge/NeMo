@@ -10,35 +10,35 @@
 
 //Global Message CSV Writer -- for debug and message traacing
 #ifdef SAVE_MSGS
-csv_writer * messageTrace;
-
-void axon_mark_message(axonState *s, messageData *M, tw_lpid gid, tw_lp *lp){
-
-	if(!M->originGID){
-		M->originGID = gid;
-		M->msgCreationTime = tw_now(lp);
-		M->idp1 = s->axonID;
-		M->idp2 = getCoreFromGID(gid);
-		M->idp3 = s->sendMsgCount;
-	}
-	char * dm = tw_calloc(TW_LOC,2, sizeof(char), 256);
-	print(M->uuid);printf("\n");
-	sprint(dm,M->uuid);
-	addCol(messageTrace,dm , 0);
-	dm = tw_calloc(TW_LOC,2, sizeof(char), 256);
-	sprint(dm,M->originGID);
-	addCol(messageTrace, dm ,0);
-	dm = tw_calloc(TW_LOC,2 ,sizeof(char), 256);
-	sprint(dm,M->msgCreationTime);
-	addCol(messageTrace, dm, 0);
-	dm = tw_calloc(TW_LOC,2,  sizeof(char), 256);
-	//sprint(dm,"Axon");
-	sprintf(dm, "%s", "Axon");
-	addCol(messageTrace, dm, 1);
-	addCol(messageTrace, lp->gid, 0);
-	addRow(messageTrace);
-	
-}
+//csv_writer * messageTrace;
+//
+//void axon_mark_message(axonState *s, messageData *M, tw_lpid gid, tw_lp *lp){
+//
+//	if(!M->originGID){
+//		M->originGID = gid;
+//		M->msgCreationTime = tw_now(lp);
+//		M->idp1 = s->axonID;
+//		M->idp2 = getCoreFromGID(gid);
+//		M->idp3 = s->sendMsgCount;
+//	}
+//	char * dm = tw_calloc(TW_LOC,2, sizeof(char), 256);
+//	print(M->uuid);printf("\n");
+//	sprint(dm,M->uuid);
+//	addCol(messageTrace,dm , 0);
+//	dm = tw_calloc(TW_LOC,2, sizeof(char), 256);
+//	sprint(dm,M->originGID);
+//	addCol(messageTrace, dm ,0);
+//	dm = tw_calloc(TW_LOC,2 ,sizeof(char), 256);
+//	sprint(dm,M->msgCreationTime);
+//	addCol(messageTrace, dm, 0);
+//	dm = tw_calloc(TW_LOC,2,  sizeof(char), 256);
+//	//sprint(dm,"Axon");
+//	sprintf(dm, "%s", "Axon");
+//	addCol(messageTrace, dm, 1);
+//	addCol(messageTrace, lp->gid, 0);
+//	addRow(messageTrace);
+//	
+//}
 #endif
 void axon_init(axonState *s, tw_lp *lp)
 {
@@ -85,20 +85,20 @@ void axon_init(axonState *s, tw_lp *lp)
         data->eventType = AXON_OUT;
         data->axonID = s->axonID;
 		tw_event_send(axe);
-		if (SAVE_MSGS){
-			if(!writeInit){
-				messageTrace = createCSV("message_log", g_tw_mynode, g_tw_npe -1);
-				writeInit = true;
-				
-			}
-			
-			axon_mark_message(s, data, lp->gid, lp);
-			/** @todo add message save code to io stack
-			 * */
-			// save message //
-			
-		}
-       
+//		if (SAVE_MSGS){
+//			if(!writeInit){
+//				messageTrace = createCSV("message_log", g_tw_mynode, g_tw_npe -1);
+//				writeInit = true;
+//				
+//			}
+//			
+//			axon_mark_message(s, data, lp->gid, lp);
+//			/** @todo add message save code to io stack
+//			 * */
+//			// save message //
+//			
+//		}
+		
     }
 
 

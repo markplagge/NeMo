@@ -832,7 +832,7 @@ void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
 		m->idp3 = s->rcvdMsgCount;
 	}
 	char * dm = tw_calloc(TW_LOC,2, sizeof(char), 256);
-	print(m->uuid);printf("\n");
+	//print(m->uuid);printf("\n");
 	sprint(dm,m->uuid);
 	addCol(messageTrace,dm , 0);
 	dm = tw_calloc(TW_LOC,2, sizeof(char), 256);

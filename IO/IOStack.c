@@ -55,7 +55,7 @@ void initCSV(csv_writer * writer){
 		sprintf(filename, "%s.csv",writer->fileName);
 	}
 	
-	writer->csvFile = fopen(filename,"w");
+	writer->csvFile = fopen(filename,"a");
 	
 	writer->hdr = (csv_header *) calloc(sizeof(csv_header), 1);
 	writer->data = (csv_data *) calloc(sizeof(csv_data), 1);
