@@ -19,6 +19,15 @@
 #include <nemo_config.h>
 #include "ross.h"
 
+/** @defgroup tempConfig Temporary configuration globals
+ *	These global defines are stored here before I migrate them into either a run-time
+ *	or compile-time option 
+ * @{ */
+
+#define SAVE_NEURON_STATS
+
+/**@}*/
+
 
 /** @defgroup types Typedef Vars 
  * Typedefs to ensure proper types for the neuron parameters/mapping calculations

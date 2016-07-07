@@ -20,7 +20,11 @@
 
 #endif
 
+#ifdef SAVE_NEURON_STATS
 
+
+
+#endif
 
 /**
  * TrueNorth LP Neuron Model struct
