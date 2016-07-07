@@ -656,9 +656,7 @@ void TN_create_simple_neuron(tn_neuron_state *s, tw_lp *lp){
     bool kappa = 0;
     int signalDelay = 1;//tw_rand_integer(lp->rng, 0,5);
 
-
-
-    for(int i = 0; i < NEURONS_IN_CORE; i ++) {
+	for(int i = 0; i < NEURONS_IN_CORE; i ++) {
         //s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
         s->axonTypes[i] = 1;
         G_i[i] = 0;
@@ -669,9 +667,7 @@ void TN_create_simple_neuron(tn_neuron_state *s, tw_lp *lp){
 	id_type myLocalID = getNeuronLocalFromGID(lp->gid);
 
     synapticConnectivity[myLocalID] = 1;
-	if (DEBUG_MODE){
-		printf("Synaptic Connectivity of axon %i set to 1 by neuron %llu\n", myLocalID, lp->gid);
-	}
+	
     //(creates an "ident. matrix" of neurons.
     for(int i = 0; i < 4; i ++){
         //int ri = tw_rand_integer(lp->rng, -1, 0);
