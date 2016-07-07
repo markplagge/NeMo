@@ -132,6 +132,7 @@ enum evtType {
     AXON_OUT, //!< Message originates from an axon
     AXON_HEARTBEAT, //!< Axon heartbeat message - big clock synchronization.
     SYNAPSE_OUT, //!< Message originates from a synapse
+	SYNAPSE_HEARTBEAT, //!< Message is a synapse heartbeat message.
     NEURON_OUT, //!< Message originates from a neuron, and is going to an axion.
     NEURON_HEARTBEAT, //!< Neuron heartbeat messages - for big clock syncronization.
     NEURON_SETUP, //!< Message that contains a neuron's setup information for the synapse - connectivity info
@@ -166,6 +167,7 @@ typedef struct Ms{
     tw_stime neuronLastActiveTime;
     tw_stime neuronLastLeakTime;
     random_type neuronDrawnRandom;
+	unsigned long synapseCount;
     union{
         id_type axonID; //!< Axon ID for neuron value lookups.
         bool * neuronConn;

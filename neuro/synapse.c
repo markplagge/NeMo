@@ -24,36 +24,68 @@ void synapse_init(synapseState *s, tw_lp *lp){
 		printf("Super Synapse Created - GID is %llu\n", lp->gid);
 	}
 }
+#ifdef  SAVE_MSGS
+void saveSynapseMessage(messageData *M, tw_lp *lp){
+	
+}
 
+#endif
 void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
 	long rc = lp->rng->count;
-
+/** TODO: This is probably not going to work. I think the synapse will need a larger state. */
 
 
 		messageData *outMessage;
 		tw_event *synEvt;
-	//	if (M->eventType == AXON_OUT){
-	//		synEvt = tw_event_new(lp->gid, getNextEventTime(lp),lp );
-	//		outMessage = (messageData *) tw_event_data(synEvt);
-	//	}
-		for(int i = 0; i < NEURONS_IN_CORE; i ++) {
-			//add the check for connected neurons here
-			id_type axonID = M->localID;
 
-			if ( s->connectionGrid[axonID][i] ) {
-
-				synEvt = tw_event_new(getNeuronGlobal(s->myCore, i), getNextEventTime(lp), lp);
-				outMessage = (messageData *) tw_event_data(synEvt);
-				outMessage->eventType = SYNAPSE_OUT;
-				outMessage->axonID = M->axonID;
-
-
-				M->rndCallCount = lp->rng->count - rc;
-
-				s->msgSent++;
-				tw_event_send(synEvt);
-			}
+	if (M->eventType == AXON_OUT){
+		synEvt = tw_event_new(lp->gid, getNextEventTime(lp),lp );
+		outMessage = (messageData *) tw_event_data(synEvt);
+		outMessage->eventType = SYNAPSE_HEARTBEAT;
+		outMessage->synapseCount = 0;
+		outMessage->axonID = M->axonID;
+#ifdef SAVE_MSGS
+		saveSynapseMessage(M, lp);
+#endif
+		
+		outMessage->rndCallCount = lp->rng->count - rc;
+		
+		tw_event_send(synEvt);
+		
+		
+	}else {
+		id_type axonID = M->axonID;
+		if ( s->connectionGrid[axonID][M->synapseCount] ) {
+			id_type destinationNeuron = getNeuronGlobal(s->myCore, M->synapseCount);
+			synEvt = tw_event_new(destinationNeuron, getNextEventTime(lp), lp);
+			outMessage = (messageData *) tw_event_data(synEvt);
+			outMessage->eventType = SYNAPSE_OUT;
+			outMessage->axonID = M->axonID;
+			
+#ifdef SAVE_MSGS
+			saveSynapseMessage(M, lp);
+#endif
+			outMessage->rndCallCount = lp->rng->count - rc;
+			
+			tw_event_send(synEvt);
 		}
+		if(M->synapseCount < NEURONS_IN_CORE){
+			rc = lp->rng->count;
+			synEvt = tw_event_new(lp->gid, getNextEventTime(lp), lp);
+			outMessage = (messageData * ) tw_event_data(synEvt);
+			outMessage->eventType = SYNAPSE_HEARTBEAT;
+			outMessage->synapseCount = M->synapseCount + 1;
+			outMessage->axonID = M->axonID;
+#ifdef SAVE_MSGS
+			saveSynapseMessage(M, lp);
+#endif
+			outMessage->rndCallCount = lp->rng->count - rc;
+			tw_event_send(synEvt);
+		}
+		
+		
+	}
+	
 
 	
 	
