@@ -258,13 +258,14 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
             //Currently operates - leak->fire->(reset)
             st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
 
-			      TNNumericLeakCalc(st, tw_now(lp));
+			TNNumericLeakCalc(st, tw_now(lp));
             //linearLeak( st, tw_now(lp));
             ringing(st, m->neuronVoltage);
 
             //willFire = neuronShouldFire(st, lp); //removed and replaced with fireFloorCelingReset
             willFire = TNfireFloorCelingReset(st, lp);
-
+			bf->c0 = willFire;
+			
             if (willFire) {
                 TNFire(st,lp);
                 //st->fireCount++;
