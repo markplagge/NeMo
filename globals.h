@@ -71,15 +71,15 @@ void *: "%p")
 #define sprint(str, y) sprintf(str, printf_dec_format(y), y)
 
 #define fprint(file, z) fprintf(file, printf_dec_format(z),z)
-
+/** TODO: Eventually replace this with generic macro and non-branching ABS code. */
 #define IABS(a) (((a) < 0) ? (-a) : (a)) //!< Typeless integer absolute value function
-
+/** TODO: See if there is a non-branching version of the signum function, maybe in MAth libs and use that. */
 #define SGN(x) ((x > 0) - (x < 0)) //!< Signum function
 
 #define DT(x) !(x) //!<Kronecker Delta function.
 
 #define BINCOMP(s,p) IABS((s)) >= (p) //!< binary comparison for conditional stochastic evaluation
-//32bit X86 Assembler IABS:
+/** 32bit X86 Assembler IABS: */
 int iIABS(int vals);
 
 weight_type iiABS(weight_type in);
