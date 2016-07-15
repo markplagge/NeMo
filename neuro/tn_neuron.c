@@ -875,7 +875,9 @@ void TN_final(tn_neuron_state *s, tw_lp *lp){
 
 
 
-
+inline tn_neuron_state * TN_convert(void * lpstate){
+	return (tn_neuron_state *) lpstate;
+}
 
 
 

@@ -62,7 +62,7 @@ tw_stime getNextEventTime(tw_lp *lp) {
  */
 
 tw_stime getSynapseHeartbeatTime(tw_lp *lp){
-		return (tw_rand_)
+	return (tw_rand_unif(lp->rng) / 1000) + bigTickRate;
 }
 
 

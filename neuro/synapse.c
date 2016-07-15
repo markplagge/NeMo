@@ -31,30 +31,50 @@ void saveSynapseMessage(messageData *M, tw_lp *lp){
 
 #endif
 void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
+//	static int hasRun = 0;
+//	
+//	if (! hasRun) {
+//		for (int i = 0; i < NEURONS_IN_CORE; i++){
+//			for(int j = 0; j < NEURONS_IN_CORE; j ++){
+//				s->connectionGrid[i][j] = tw_getlp(i)->cur_state->synapticConnectivity[j];
+//			}
+//		}
+//	}
+	
 	long rc = lp->rng->count;
 	//run a loop that calls the "forward event handler" of each neuron in this core:
 	tw_lp * cNeuron;
-	messageData *outM;
+	
+	/** @TODO: See if localID is still needed ! */
+	
+	//Create a "message" that is "sent" to this neuron
+	messageData *outM = (messageData *) tw_calloc(TW_LOC, "Synapse", sizeof(messageData), 1);
+	//set up the message for the neurons
+	outM->axonID = M->axonID;
+	outM->eventType = SYNAPSE_OUT;
+	outM->localID = M->axonID;
+	
+	
 	id_type axonID = M->axonID;
 	for(int i = 0; i < AXONS_IN_CORE; i ++){
 		//check to see if the neuron is connected to the axon that sent the message
-		if(s->connectionGrid[i][axonID]){
+		//get the neuron GID
+		tw_lpid nid = getNeuronGlobal(s->myCore,i);
+		//get the LP @todo: look at changing this to direct array access
+		cNeuron = tw_getlp(nid);
+		
+		
+		
+		//if(cNeuron->connectionGrid[axonID] != 0){
+			
 
-
-			//get the neuron GID
-			tw_lpid nid = getNeuronGlobal(s->myCore,i);
-			//get the LP
-			cNeuron = tw_getlp(nid);
-
-
-			//Create a "message" that is "sent" to this neuron
-			tw_calloc()
-			outM = tw_calloc(TW_LOC,)
-			//set up the message for this neuron
 
 			//call the neuron's forward event handler
-
-		}
+			/** @todo: This is a bandaid until proper reverse computation can be determined. */
+			cNeuron->type->event(cNeuron->cur_state,&s->neuronBF[i],outM,cNeuron);
+			s->randCount[i] = outM->rndCallCount;
+			
+		//}
 
 	}
 

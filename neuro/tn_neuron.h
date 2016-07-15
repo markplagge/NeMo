@@ -152,4 +152,13 @@ void TN_init(tn_neuron_state *s, tw_lp *lp);
  */
 void TN_final(tn_neuron_state *s, tw_lp *lp);
 
+
+/**
+ * @brief	This takes a void pointer and returns this neuron's struct. 
+ * This is used for managing super synapse direct communication functionality.
+ */
+
+inline tn_neuron_state * TN_convert(void * lpstate);
+
+
 #endif //NEMO_TN_NEURON_H
