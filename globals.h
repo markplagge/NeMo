@@ -122,6 +122,7 @@ tw_stime getNextBigTick(tw_lp *lp, tw_lpid neuronID);
 
 /**@}*/
 
+tw_stime getNextSynapseHeartbeat(tw_lp *lp);
 /** @defgroup global_structs_enums Global Structs and Enums
   * Global structs and enums, including event types, lp types, and the message structure
   */
@@ -163,11 +164,17 @@ typedef struct Ms{
     enum evtType eventType;
     unsigned long rndCallCount;
     id_type localID; //!< Sender's local (within a core) id - used for weight lookups.
-    volt_type neuronVoltage;
-    tw_stime neuronLastActiveTime;
-    tw_stime neuronLastLeakTime;
-    random_type neuronDrawnRandom;
-
+	union{
+		unsigned long synapseCounter;
+		struct{
+			volt_type neuronVoltage;
+			tw_stime neuronLastActiveTime;
+			tw_stime neuronLastLeakTime;
+			random_type neuronDrawnRandom;
+		};
+	};
+	
+	
     union{
         id_type axonID; //!< Axon ID for neuron value lookups.
         bool * neuronConn;
