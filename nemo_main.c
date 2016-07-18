@@ -9,7 +9,7 @@
 /** \addtogroup Globals 
  * @{  */
 
-size_type CORES_IN_SIM = 1;
+size_type CORES_IN_SIM = 16;
 size_type AXONS_IN_CORE = NEURONS_IN_CORE;
 size_type SIM_SIZE = 1025;
 size_type SYNAPSES_IN_CORE = 0;

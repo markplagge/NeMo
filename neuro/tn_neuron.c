@@ -227,7 +227,7 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
 
 
     //@todo: see if this is used still and remove
-    int num = st->myLocalID;
+    //int num = st->myLocalID;
 
     switch (m->eventType)
     {
@@ -450,12 +450,12 @@ bool TNfireFloorCelingReset(tn_neuron_state *ns, tw_lp *lp){
                      ))){
 		//volt_type x = ns->membranePotential;
         //x = ((-1 * beta) * ns->kappa);
-        volt_type s1,s2,s3,s4;
-        s1 = (-1*beta) * ns->kappa;
-        s2 = (-1*(DT(gamma))) * Vrst;
-        s3 = (DT((gamma - 1)) * (ns->membranePotential + (beta + ns->drawnRandomNumber)));
-        s4 = (DT((gamma - 2)) * ns->membranePotential) * (1 - ns->kappa);
-		//x = s1 + (s2 + s3 + s4);
+//        volt_type s1,s2,s3,s4;
+//        s1 = (-1*beta) * ns->kappa;
+//        s2 = (-1*(DT(gamma))) * Vrst;
+//        s3 = (DT((gamma - 1)) * (ns->membranePotential + (beta + ns->drawnRandomNumber)));
+//        s4 = (DT((gamma - 2)) * ns->membranePotential) * (1 - ns->kappa);
+//		//x = s1 + (s2 + s3 + s4);
 
         ns->membranePotential = (
                                  ((-1*beta) * ns->kappa) + (
