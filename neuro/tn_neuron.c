@@ -808,10 +808,10 @@ void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
     }
 
     bool fired = TNReceiveMessage(s,m,lp,CV);
-
+	s->SOPSCount ++;
     /**@todo save message trace here: */
 
-
+	
     CV->c0 = fired; // save fired information for reverse computation.
 
     if (fired && (SAVE_SPIKE_EVTS || VALIDATION)){ //if we are validating the model or saving spike events, save this event's info.
@@ -853,7 +853,7 @@ void TN_reverse_event (tn_neuron_state *s, tw_bf *CV, messageData *m ,
     }
 
     TNReceiveReverseMessage(s,m,lp,CV);
-
+	s->SOPSCount --;
     if (CV->c0 && (SAVE_SPIKE_EVTS || VALIDATION)){
         //reverse_write_event
     }
