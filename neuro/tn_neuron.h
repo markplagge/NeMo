@@ -136,9 +136,11 @@ void TN_reverse_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
     tw_lp *lp);
 
 
+void TN_commit(tn_neuron_state *s, tw_bf * cv, messageData *m, tw_lp *lp);
+
 /**
  * @brief      Initialize a TrueNorth neuron
- *
+ *		
  * @param      s     The TN State
  * @param      lp    The pointer to the LP
  */

@@ -273,7 +273,7 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
 
             //neuronPostIntegrate(st, tw_now(lp), lp, willFire); //removed and replaced with fireFloorCelingReset
             //stats collection
-            st->SOPSCount++;
+            //st->SOPSCount++;
             st->lastActiveTime = tw_now(lp);
 
 
@@ -318,7 +318,7 @@ void TNReceiveReverseMessage(tn_neuron_state *st, messageData *M, tw_lp *lp, tw_
 
     if (M->eventType == NEURON_HEARTBEAT) {
         //reverse heartbeat message
-        st->SOPSCount--;
+        //st->SOPSCount--;
     }
     if (bf->c0 ){ //c0 flags firing state
         //reverse computation of fire and reset functions here.
@@ -862,14 +862,19 @@ void TN_reverse_event (tn_neuron_state *s, tw_bf *CV, messageData *m ,
         tw_rand_reverse_unif(lp->rng);
 
 
+}	
+
+
+/** TN_commit is a function called on commit. This is used for management of neurons! */
+void TN_commit(tn_neuron_state *s, tw_bf * cv, messageData *m, tw_lp *lp){
+    
+   
 }
 
 
-
-
-
 void TN_final(tn_neuron_state *s, tw_lp *lp){
-
+    
+    
 }
 
 

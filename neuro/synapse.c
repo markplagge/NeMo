@@ -52,18 +52,19 @@ void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
 	
 	if(M->eventType == SYNAPSE_HEARTBEAT){
 		//Heartbeat message
-		if(M->synapseCounter > 0){
-			
+		if(M->synapseCounter != 0){
+            //unsigned long sc = M->synapseCounter - 1;
             sendSynapseHB(s, bf, M, lp, M->synapseCounter);
-			
-			tw_lpid neuron = getNeuronGlobal(s->myCore, M->synapseCounter);
-			tw_event * sout = tw_event_new(neuron, getNextEventTime(lp),lp);
-			messageData * outData = tw_event_data(sout);
-			outData->axonID = M->axonID;
-			outData->localID = M->axonID;
-			outData->eventType = SYNAPSE_OUT;
-			tw_event_send(sout);
-		}
+        }
+        
+		tw_lpid neuron = getNeuronGlobal(s->myCore, M->synapseCounter);
+		tw_event * sout = tw_event_new(neuron, getNextEventTime(lp),lp);
+		messageData * outData = tw_event_data(sout);
+		outData->axonID = M->axonID;
+		outData->localID = M->axonID;
+		outData->eventType = SYNAPSE_OUT;
+        tw_event_send(sout);
+        ++ s->msgSent;
 		
 	}else if(M->eventType == AXON_OUT){
 		sendSynapseHB(s, bf, M, lp, NEURONS_IN_CORE);
