@@ -52,9 +52,9 @@ void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
 	
 	if(M->eventType == SYNAPSE_HEARTBEAT){
 		//Heartbeat message
-		if(M->synapseCounter >= 0){
-			if(M->synapseCounter > 0)
-				sendSynapseHB(s, bf, M, lp, M->synapseCounter);
+		if(M->synapseCounter > 0){
+			
+            sendSynapseHB(s, bf, M, lp, M->synapseCounter);
 			
 			tw_lpid neuron = getNeuronGlobal(s->myCore, M->synapseCounter);
 			tw_event * sout = tw_event_new(neuron, getNextEventTime(lp),lp);
