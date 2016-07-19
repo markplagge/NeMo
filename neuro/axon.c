@@ -138,7 +138,10 @@ void axon_reverse(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
 	if(VALIDATION) {
 		//Undo save axon event for validation
 	}
+    -- s->sendMsgCount;
 
+    
+    
 	long count  = M->rndCallCount;
 	while (count--){
 		tw_rand_reverse_unif(lp->rng);

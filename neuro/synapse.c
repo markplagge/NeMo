@@ -180,57 +180,22 @@ void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
 	
 	//}
 void synapse_reverse(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
-	s->msgSent --;
-
+    
+    
+    if(M->eventType == AXON_OUT){
+        
+    }else if(M->eventType == SYNAPSE_HEARTBEAT){
+        -- s->msgSent;
+    }
 	unsigned long count = M->rndCallCount;
 	while (count --){
 		tw_rand_reverse_unif(lp->rng);
 	}
+    
+    
 }
 
 void synapse_final(synapseState *s, tw_lp *lp){
 	//do some stats here if needed.
 }
 
-/** Neew Super Synapse with fanout code
-void super_synpase_event(synapseState *s, tw_bf *CV, Msg_Data *M, tw_lp *lp){
-    //Set up random counter monitor.
-    long rc = lp->rng->count;
-
-    unsigned long neuronCount ;
-
-    //store neuron dest count inside the message, under axonID or something so rewrites are not as extensive.
-    if (M->eventType == AXON_OUT){
-        neuronCount = NEURONS_IN_CORE;
-    }
-    else{
-        neuronCount = M->synapseHeartbeatCounter;
-    }
-    tw_event *av;
-    MsgData *data;
-    if (neuronCount > 0){
-
-
-    //Create a heartbeat Synapse message
-        //set up the synapse heartbeat
-        *av = tw_event_new(lp->gid, getNextEventTime(lp), lp);
-        *data = (Msg_Data *) tw_event_data(av);
-        data->eventType = SYNAPSE_OUT;
-        data->localID = lp->gid;
-        data->axonID = M->axonID;
-        neuronCount --;
-        data->synapseHeartbeatCounter = neuronCount;
-        tw_event_send(av);
-    }
-
-    // right now - I'm going to send messages from N to 0
-    tw_lpid currentNeuronDest = neuronCount; // NeuronCount + GID of some sort.
-    *av = tw_event_new(currentNeuronDest, getNextEventTime(lp),lp);
-    *data = (Msg_Data *) tw_event_data(av);
-    data->event = SYNAPSE_OUT;
-    data->localID = s->mySynapseNum;
-    data->axonID = M->axonID;
-    tw_event_send(axe);
-    M->rndCallCount = lp->rng->count - rc;
-
- } */
