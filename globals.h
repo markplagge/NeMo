@@ -66,9 +66,30 @@ long double: "%Lf", \
 char *: "%s", \
 void *: "%p")
 
+
+#define printf_insert_fmt(x) _Generic((x), \
+char: %c, \
+signed char: %hhd, \
+unsigned char: %hhu, \
+signed short: %hd, \
+unsigned short: %hu, \
+signed int: %d, \
+unsigned int: %u, \
+long int: %ld, \
+unsigned long int: %lu, \
+long long int: %lld, \
+unsigned long long int: %llu, \
+float: %f, \
+double: %f, \
+long double: %Lf, \
+char *: "%s", \
+void *: "%p")
+
 #define print(x) printf(printf_dec_format(x), x)
 
 #define sprint(str, y) sprintf(str, printf_dec_format(y), y)
+
+#define strbldr(outstr, instr, new) sprintf(outstr, "%s
 
 #define fprint(file, z) fprintf(file, printf_dec_format(z),z)
 /** TODO: Eventually replace this with generic macro and non-branching ABS code. */
