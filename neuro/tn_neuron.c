@@ -796,11 +796,7 @@ void TN_init(tn_neuron_state *s, tw_lp *lp){
 void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
     tw_lp *lp){
 	
-
     long start_count = lp->rng->count;
-//    if(DEBUG_MODE){
-//	    printf("Neuron Forward Event\n");
-//    }
 
     if (VALIDATION || SAVE_MEMBRANE_POTS) { //If we are running model validation or we are saving membrane potentials
 
@@ -818,28 +814,9 @@ void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
 
         //write_event(s->myLocalID, s->myCoreID, s->s->outputGID, 'N', tw_now(lp));
     }
-
-
-
-
-
-
     m->rndCallCount = lp->rng->count - start_count;
 
-//
-//    if (m->eventType == NEURON_SETUP) {
-//        messageData *setup;
-//        tw_event *setupEvent;
-//
-//        setupEvent = tw_event_new(getSynapseGlobal(s->myCoreID,0), getNextEventTime(lp), lp);
-//        setup = (messageData *) tw_event_data(setup);
-//
-//        setup->eventType = NEURON_SETUP;
-//        setup->neuronConn = m->neuronConn;
-//        setup->localID = m->localID;
-//        tw_event_send(setupEvent);
-//
-//    }
+
 }
 
 
