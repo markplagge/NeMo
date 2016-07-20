@@ -89,9 +89,12 @@ void *: "%p")
 
 #define sprint(str, y) sprintf(str, printf_dec_format(y), y)
 
-#define strbldr(outstr, instr, new) sprintf(outstr, "%s
+#define debugMsg(type, value) print(type); print(value); printf("\n")
 
 #define fprint(file, z) fprintf(file, printf_dec_format(z),z)
+
+
+
 /** TODO: Eventually replace this with generic macro and non-branching ABS code. */
 #define IABS(a) (((a) < 0) ? (-a) : (a)) //!< Typeless integer absolute value function
 /** TODO: See if there is a non-branching version of the signum function, maybe in MAth libs and use that. */
