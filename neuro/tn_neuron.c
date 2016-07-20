@@ -861,7 +861,6 @@ void TN_reverse_event (tn_neuron_state *s, tw_bf *CV, messageData *m ,
     while(count--)
         tw_rand_reverse_unif(lp->rng);
 
-
 }	
 
 
@@ -895,6 +894,10 @@ void TN_final(tn_neuron_state *s, tw_lp *lp){
         if(s->SOPSCount != 0){
             prhdr(dsp, em);
             debugMsg(sops, s->SOPSCount);
+        }
+        if(s->heartbeatOut != false){
+            prhdr(dsp,em);
+            debugMsg(HB, (int)s->heartbeatOut);
         }
 		
 	}

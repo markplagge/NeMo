@@ -191,11 +191,19 @@ void synapse_reverse(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
 	while (count --){
 		tw_rand_reverse_unif(lp->rng);
 	}
-    
-    
 }
 
 void synapse_final(synapseState *s, tw_lp *lp){
 	//do some stats here if needed.
+    
+    if(g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
+        char * shdr = "Synapse Error\n";
+        
+        if (s->msgSent != 0){
+            print(shdr);
+            debugMsg("Message Sent Val ->", s->msgSent);
+        }
+    }
+
 }
 

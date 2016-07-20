@@ -121,6 +121,7 @@ tw_lptype model_lps[] = {
  */
 void displayModelSettings()
 {
+    if(g_tw_mynode == 0){
     for (int i = 0; i < 30; i++)
     {
         printf("*");
@@ -146,6 +147,7 @@ void displayModelSettings()
         printf("*");
     }
     printf("\n");
+    }
 }
 /**
  * @brief      Initializes NeMo
@@ -183,7 +185,7 @@ void init_nemo(){
 	
 	AXONS_IN_CORE = NEURONS_IN_CORE;
 	SYNAPSES_IN_CORE = 1;//(NEURONS_IN_CORE * AXONS_IN_CORE);
-    printf("\n\n%llu -- %i -- %i \n\n", SYNAPSES_IN_CORE, NEURONS_IN_CORE, AXONS_IN_CORE); //
+    
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
 	SIM_SIZE = CORE_SIZE * CORES_IN_SIM;
 
@@ -195,11 +197,10 @@ void init_nemo(){
 
 
 	///EVENTS PER PE SETTING
-	g_tw_events_per_pe = 65536; //magic number 
+	g_tw_events_per_pe = 16777216; //magic number
                                
     LPS_PER_PE = g_tw_nlp / g_tw_npe;
-
-
+    //Pre-Run Quck Info
 }
 
 unsigned char mapTests(){

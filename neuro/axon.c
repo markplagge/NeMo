@@ -150,5 +150,14 @@ void axon_reverse(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
 
 }
 void axon_final(axonState *s, tw_lp *lp){
+    
+    if(g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
+        char * shdr = "Axon Error\n";
+        
+        if (s->sendMsgCount != 0){
+            print(shdr);
+            debugMsg("Message Sent Val ->", s->sendMsgCount);
+        }
+    }
 
 }
