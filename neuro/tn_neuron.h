@@ -9,11 +9,22 @@
 
 #include "../globals.h"
 #include "../mapping.h"
+#include "../IO/IOStack.h"
 #include <math.h>
 #define Vj ns->membranePotential
 
+#ifdef SAVE_MSGS
 
 
+
+
+#endif
+
+#ifdef SAVE_NEURON_STATS
+
+
+
+#endif
 
 /**
  * TrueNorth LP Neuron Model struct
@@ -77,10 +88,10 @@ typedef struct TN_MODEL{
 
 
 
-
-    char axonTypes[256];
+	
+    char axonTypes[512];
     char synapticWeight[4];
-    bool synapticConnectivity[256]; //!< is there a connection between axon i and neuron j?
+    bool synapticConnectivity[512]; //!< is there a connection between axon i and neuron j?
     /** stochastic weight mode selection. $b_j^{G_i}$ */
     bool weightSelection[4];
 
@@ -140,5 +151,14 @@ void TN_init(tn_neuron_state *s, tw_lp *lp);
  * @param      lp    The pointer to an LP
  */
 void TN_final(tn_neuron_state *s, tw_lp *lp);
+
+
+/**
+ * @brief	This takes a void pointer and returns this neuron's struct. 
+ * This is used for managing super synapse direct communication functionality.
+ */
+
+inline tn_neuron_state * TN_convert(void * lpstate);
+
 
 #endif //NEMO_TN_NEURON_H

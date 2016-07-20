@@ -21,12 +21,22 @@ void TNIntegrate(id_type synapseID,tn_neuron_state *st, void *lp);
  This is done through an event sent upon receipt of the first synapse message of the current big-tick.
  *
  *  @param st   current neuron state
- *  @param time time event was received
  *  @param m    event message data
  *  @param lp   lp.
  */
 
 bool TNReceiveMessage(tn_neuron_state *st, messageData *M, tw_lp *lp, tw_bf *bf);
+
+/**
+ * @brief handels reverse computation and state messages.
+ * @param st current neuron state
+ * @param M reverse message
+ * @param lp the lp
+ * @param bf the reverse computation bitfield.
+ */
+
+void TNReceiveReverseMessage(tn_neuron_state *st, messageData *M, tw_lp *lp, tw_bf *bf);
+
 
 /**
  *  @brief  Checks to see if a neuron should fire. 
@@ -70,7 +80,7 @@ void TNLinearLeak(tn_neuron_state *neuron, tw_stime now);
 
 void TNSendHeartbeat(tn_neuron_state *st, tw_stime time, void *lp);
 
-void TNReverseState(tn_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *lp);
+
 /**
  *  @brief  Function that runs after integration & firing, for reset function and threshold bounce calls.
  *
@@ -202,7 +212,7 @@ void resetNone(void *neuronState)
 	st->firedLast = true;
 
  }
-bool tnReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
+bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
 {
 	/** @todo Replace these state saving values with reverse computation. */
     m->neuronVoltage = st->membranePotential;
@@ -210,7 +220,7 @@ bool tnReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
     m->neuronDrawnRandom = st->drawnRandomNumber;
     //m->neuronFireCount = st->fireCount;
 
-    bf->c14 = st->heartbeatOut; //C14 indicates the old heartbeat state.
+    //bf->c14 = st->heartbeatOut; //C14 indicates the old heartbeat state.
     //state management
     bool willFire = false;
     //Next big tick:
@@ -248,13 +258,14 @@ bool tnReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
             //Currently operates - leak->fire->(reset)
             st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
 
-			      TNNumericLeakCalc(st, tw_now(lp));
+			TNNumericLeakCalc(st, tw_now(lp));
             //linearLeak( st, tw_now(lp));
             ringing(st, m->neuronVoltage);
 
             //willFire = neuronShouldFire(st, lp); //removed and replaced with fireFloorCelingReset
             willFire = TNfireFloorCelingReset(st, lp);
-
+			bf->c0 = willFire;
+			
             if (willFire) {
                 TNFire(st,lp);
                 //st->fireCount++;
@@ -303,7 +314,26 @@ bool tnReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
     }
     return willFire;
 }
+void TNReceiveReverseMessage(tn_neuron_state *st, messageData *M, tw_lp *lp, tw_bf *bf){
 
+    if (M->eventType == NEURON_HEARTBEAT) {
+        //reverse heartbeat message
+        st->SOPSCount--;
+    }
+    if (bf->c0 ){ //c0 flags firing state
+        //reverse computation of fire and reset functions here.
+        /**@todo implement neuron fire/reset reverse computation functions */
+        }
+    if (bf->c13){
+         st->heartbeatOut = !st->heartbeatOut;
+    }
+    /**@todo remove this once neuron reverse computation functions are built. */
+    st->membranePotential = M->neuronVoltage;
+    st->lastLeakTime =      M->neuronLastLeakTime;
+    st->lastActiveTime =    M->neuronLastActiveTime;
+    st->drawnRandomNumber = M->neuronDrawnRandom;
+
+}
 /**
  * @brief      From Neuron Behavior Reference - checks to make sure that there is no "ringing".
  The specs state that the leak stores the voltage in a temporary variable. Here,
@@ -321,17 +351,17 @@ void ringing(void *nsv, volt_type oldVoltage ){
 
 void TNIntegrate(id_type synapseID, tn_neuron_state *st, void *lp){
     //tw_lp *l = (tw_lp *) lp;
-	int at = st->axonTypes[synapseID];
+	//int at = st->axonTypes[synapseID];
 	bool con = st->synapticConnectivity[synapseID];
 		//DEBUG CODE REMOVE FOR PRODUCTION:
-	id_type myid = st->myLocalID;
+		//id_type myid = st->myLocalID;
 
 
 	if (con == 0)
 		return;
 		//printf("id-%llu, sid-%llu, connect: %i\n",myid, synapseID,con);
-	weight_type stw = st->synapticWeight[at];
-	weight_type weight = st->synapticWeight[st->axonTypes[synapseID]] & st->synapticConnectivity[synapseID];
+		//weight_type stw = st->synapticWeight[at];
+	weight_type weight = st->synapticWeight[st->axonTypes[synapseID]] && st->synapticConnectivity[synapseID];
     //!!!! DEBUG CHECK FOR WEIGHT ISSUES:
     //weight = 0;
     //!!! REMOVE previous FOR PRODUCTION
@@ -412,20 +442,20 @@ bool TNfireFloorCelingReset(tn_neuron_state *ns, tw_lp *lp){
 		ns->membranePotential = ((DT(gamma))	* Vrst) +
 		((DT( gamma - 1 ))	* (Vj - (alpha + ns->drawnRandomNumber))) +
 		((DT(gamma - 2))	* Vj);
-		volt_type mp = ns->membranePotential;
+		//volt_type mp = ns->membranePotential;
         shouldFire = true;
     }else if (ns->membranePotential <
               (-1 * (beta * ns->kappa +
                     (beta + ns->drawnRandomNumber) * (1 - ns->kappa)
                      ))){
-        volt_type x = ns->membranePotential;
+		//volt_type x = ns->membranePotential;
         //x = ((-1 * beta) * ns->kappa);
         volt_type s1,s2,s3,s4;
         s1 = (-1*beta) * ns->kappa;
         s2 = (-1*(DT(gamma))) * Vrst;
         s3 = (DT((gamma - 1)) * (ns->membranePotential + (beta + ns->drawnRandomNumber)));
         s4 = (DT((gamma - 2)) * ns->membranePotential) * (1 - ns->kappa);
-        x = s1 + (s2 + s3 + s4);
+		//x = s1 + (s2 + s3 + s4);
 
         ns->membranePotential = (
                                  ((-1*beta) * ns->kappa) + (
@@ -475,6 +505,7 @@ void TNNumericLeakCalc(tn_neuron_state *st, tw_stime now){
     //then run the leak function until we've caught up:
     for(;numberOfBigTicksSinceLastLeak > 0; numberOfBigTicksSinceLastLeak --) {
         uint64_t omega = st->sigma_l * (1 - st->epsilon) + SGN(st->membranePotential)*st->sigma_l * st->epsilon;
+
         st->membranePotential = st->membranePotential +
                                     (omega * ((1 - st->c) * st->lambda)) +
                                      (st->c & (BINCOMP(st->lambda, st->drawnRandomNumber)));
@@ -605,9 +636,11 @@ void tn_create_neuron_encoded_rv(id_type coreID, id_type nID,
  * @param      lp    The pointer to a
  */
 void TN_create_simple_neuron(tn_neuron_state *s, tw_lp *lp){
+	
     //Rewrote this function to have a series of variables that are easier to read.
     //Since init time is not so important, readability wins here.
     //AutoGenerated test neurons:
+	static int created = 0;
     bool synapticConnectivity[NEURONS_IN_CORE];
     short G_i[NEURONS_IN_CORE];
     short sigma[4];
@@ -624,9 +657,7 @@ void TN_create_simple_neuron(tn_neuron_state *s, tw_lp *lp){
     bool kappa = 0;
     int signalDelay = 1;//tw_rand_integer(lp->rng, 0,5);
 
-
-
-    for(int i = 0; i < NEURONS_IN_CORE; i ++) {
+	for(int i = 0; i < NEURONS_IN_CORE; i ++) {
         //s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
         s->axonTypes[i] = 1;
         G_i[i] = 0;
@@ -634,8 +665,10 @@ void TN_create_simple_neuron(tn_neuron_state *s, tw_lp *lp){
         //synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1)
     }
 
-    synapticConnectivity[getNeuronLocalFromGID(lp->gid)] = 1;
+	id_type myLocalID = getNeuronLocalFromGID(lp->gid);
 
+    synapticConnectivity[myLocalID] = 1;
+	
     //(creates an "ident. matrix" of neurons.
     for(int i = 0; i < 4; i ++){
         //int ri = tw_rand_integer(lp->rng, -1, 0);
@@ -668,7 +701,7 @@ void TN_create_simple_neuron(tn_neuron_state *s, tw_lp *lp){
         dendriteCore =  tw_rand_integer(lp->rng, 0, CORES_IN_SIM - 1);
     }
     
-
+	
     /**@note This random setup will create neurons that have an even chance of getting an axon inside thier own core
      * vs an external core. The paper actually capped this value at something like 20%. @todo - make this match the
      * paper if performance is slow. * */
@@ -676,7 +709,9 @@ void TN_create_simple_neuron(tn_neuron_state *s, tw_lp *lp){
     s->dendriteLocal = s->myLocalID;// tw_rand_integer(lp->rng, 0, AXONS_IN_CORE - 1);
     //     if (tnMapping == LLINEAR) {
     s->outputGID = getAxonGlobal(dendriteCore, s->dendriteLocal);
+	created ++;
 }
+
 /** @} */
 
 
@@ -686,16 +721,18 @@ void TN_create_simple_neuron(tn_neuron_state *s, tw_lp *lp){
  * */
 
 void TN_init(tn_neuron_state *s, tw_lp *lp){
+	
     static int pairedNeurons = 0;
     static bool announced = false;
     s->neuronTypeDesc = "SIMPLE";
-    if(DEBUG_MODE && !announced)
+	if(DEBUG_MODE && !announced){
         printf("Creating neurons\n");
-    	announced = true;
+		announced = true;
+	}
     //ADD FILE INPUT NEURON CREATION HERE
     
-    
-    TN_create_simple_neuron(s, lp);
+	
+	TN_create_simple_neuron(s, lp);
 
     //createDisconnectedNeuron(s, lp);
 
@@ -720,14 +757,75 @@ void TN_init(tn_neuron_state *s, tw_lp *lp){
         printf("Neuron type %s, num: %llu checking in with GID %llu and dest %llu \n",
          s->neuronTypeDesc, s->myLocalID, lp->gid, s->outputGID);
     }
+    //Original NeMo Neuron Init
+//    static int pairedNeurons = 0;
+//    s->neuronTypeDesc = "SIMPLE";
+//    if(DEBUG_MODE && ! annouced)
+//        printf("Creating neurons\n");
+//
+//    if(PHAS_VAL) {
+//        if(!pc){
+//            crPhasic(s, lp);
+//            pc = true;
+//        }
+//        else {
+//            createDisconnectedNeuron(s, lp);
+//        }
+//
+//    } else if(TONIC_BURST_VAL) {
+//        if(pairedNeurons < 2) {
+//            crTonicBursting(s, lp);
+//            pairedNeurons ++;
+//        }
+//        else {
+//            createDisconnectedNeuron(s, lp);
+//        }
+//    } else if (PHASIC_BURST_VAL){
+//        if (pairedNeurons < 2) {
+//            crPhasicBursting(s, lp);
+//            pairedNeurons ++;
+//        }
+//
+//    } else {
+//        createSimpleNeuron(s, lp);
+//    }
+//    //createDisconnectedNeuron(s, lp);
+//    annouced = true;
 }
 
 void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
     tw_lp *lp){
+	
 
-    /**
-     * @todo set up the forward events.
-     */
+    long start_count = lp->rng->count;
+//    if(DEBUG_MODE){
+//	    printf("Neuron Forward Event\n");
+//    }
+
+    if (VALIDATION || SAVE_MEMBRANE_POTS) { //If we are running model validation or we are saving membrane potentials
+
+        //saveNeruonState(s->myLocalID, s->myCoreID, s->membranePotential, tw_now(lp));
+    }
+
+    bool fired = TNReceiveMessage(s,m,lp,CV);
+
+    /**@todo save message trace here: */
+
+
+    CV->c0 = fired; // save fired information for reverse computation.
+
+    if (fired && (SAVE_SPIKE_EVTS || VALIDATION)){ //if we are validating the model or saving spike events, save this event's info.
+
+        //write_event(s->myLocalID, s->myCoreID, s->s->outputGID, 'N', tw_now(lp));
+    }
+
+
+
+
+
+
+    m->rndCallCount = lp->rng->count - start_count;
+
 //
 //    if (m->eventType == NEURON_SETUP) {
 //        messageData *setup;
@@ -748,6 +846,21 @@ void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
 
 void TN_reverse_event (tn_neuron_state *s, tw_bf *CV, messageData *m ,
     tw_lp *lp){
+    long count = m->rndCallCount;
+
+    if (VALIDATION || SAVE_MEMBRANE_POTS) {
+        //reverse save neuron state;
+    }
+
+    TNReceiveReverseMessage(s,m,lp,CV);
+
+    if (CV->c0 && (SAVE_SPIKE_EVTS || VALIDATION)){
+        //reverse_write_event
+    }
+
+    while(count--)
+        tw_rand_reverse_unif(lp->rng);
+
 
 }
 
@@ -762,7 +875,9 @@ void TN_final(tn_neuron_state *s, tw_lp *lp){
 
 
 
-
+inline tn_neuron_state * TN_convert(void * lpstate){
+	return (tn_neuron_state *) lpstate;
+}
 
 
 

@@ -12,6 +12,7 @@ int iIABS(int vals){
         : [valI] "r" (vals)
         : "cc","%eax", "%ebx");
         return result;
+    return -1;
 
 
 }
@@ -48,10 +49,20 @@ tw_stime littleTick = 0.001;
  *
  * @param      lp    The pointer to a lp.
  *
- * @return     The next event time.
+ * @return     The next event time. Is a jitter value that is < 0.001.
  */
 tw_stime getNextEventTime(tw_lp *lp) {
     return (tw_rand_unif(lp->rng) / 1000)  + littleTick;
+}
+
+
+/**
+ * Gets the next event time for synapse internal heartbeats - 
+ 
+ */
+
+tw_stime getSynapseHeartbeatTime(tw_lp *lp){
+	return (tw_rand_unif(lp->rng) / 1000) + bigTickRate;
 }
 
 

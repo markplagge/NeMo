@@ -19,13 +19,22 @@
 #include <nemo_config.h>
 #include "ross.h"
 
+/** @defgroup tempConfig Temporary configuration globals
+ *	These global defines are stored here before I migrate them into either a run-time
+ *	or compile-time option 
+ * @{ */
+
+#define SAVE_NEURON_STATS
+
+/**@}*/
+
 
 /** @defgroup types Typedef Vars 
  * Typedefs to ensure proper types for the neuron parameters/mapping calculations
  */
 /**@{  */
 
-typedef int_fast16_t id_type; //!< id type is used for local mapping functions - there should be $n$ of them depending on CORE_SIZE
+typedef uint_fast16_t id_type; //!< id type is used for local mapping functions - there should be $n$ of them depending on CORE_SIZE
 typedef int32_t volt_type; //!< volt_type stores voltage values for membrane potential calculations
 typedef int64_t weight_type;//!< seperate type for synaptic weights.
 typedef uint32_t thresh_type;//!< Type for weights internal to the neurons.
@@ -39,16 +48,38 @@ typedef uint64_t stat_type;
 /* @defgroup gmacros Global Macros and Related Functions
  *Global Macros */
 /**@{ */
+#define printf_dec_format(x) _Generic((x), \
+char: "%c", \
+signed char: "%hhd", \
+unsigned char: "%hhu", \
+signed short: "%hd", \
+unsigned short: "%hu", \
+signed int: "%d", \
+unsigned int: "%u", \
+long int: "%ld", \
+unsigned long int: "%lu", \
+long long int: "%lld", \
+unsigned long long int: "%llu", \
+float: "%f", \
+double: "%f", \
+long double: "%Lf", \
+char *: "%s", \
+void *: "%p")
 
+#define print(x) printf(printf_dec_format(x), x)
 
+#define sprint(str, y) sprintf(str, printf_dec_format(y), y)
+
+#define fprint(file, z) fprintf(file, printf_dec_format(z),z)
+/** TODO: Eventually replace this with generic macro and non-branching ABS code. */
 #define IABS(a) (((a) < 0) ? (-a) : (a)) //!< Typeless integer absolute value function
-
+/** TODO: See if there is a non-branching version of the signum function, maybe in MAth libs and use that. */
 #define SGN(x) ((x > 0) - (x < 0)) //!< Signum function
 
 #define DT(x) !(x) //!<Kronecker Delta function.
 
 #define BINCOMP(s,p) IABS((s)) >= (p) //!< binary comparison for conditional stochastic evaluation
-//32bit X86 Assembler IABS:
+/** 32bit X86 Assembler IABS: */
 int iIABS(int vals);
 
 weight_type iiABS(weight_type in);
@@ -101,6 +132,7 @@ enum evtType {
     AXON_OUT, //!< Message originates from an axon
     AXON_HEARTBEAT, //!< Axon heartbeat message - big clock synchronization.
     SYNAPSE_OUT, //!< Message originates from a synapse
+	SYNAPSE_HEARTBEAT, //!< Message is a synapse heartbeat message.
     NEURON_OUT, //!< Message originates from a neuron, and is going to an axion.
     NEURON_HEARTBEAT, //!< Neuron heartbeat messages - for big clock syncronization.
     NEURON_SETUP, //!< Message that contains a neuron's setup information for the synapse - connectivity info
@@ -135,14 +167,26 @@ typedef struct Ms{
     tw_stime neuronLastActiveTime;
     tw_stime neuronLastLeakTime;
     random_type neuronDrawnRandom;
+
     union{
         id_type axonID; //!< Axon ID for neuron value lookups.
         bool * neuronConn;
     };
     //message tracking values:
-    char * messageUUID;
+#ifdef SAVE_MSGS
+    union {
+        uint64_t uuid;
+        struct {
+            uint16_t idp1;
+            uint16_t idp2;
+            uint32_t idp3;
+        };
+    };
     tw_lpid originGID;
     char originComponent;
+
+	tw_stime msgCreationTime;
+#endif
 
 
 

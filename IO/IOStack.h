@@ -4,38 +4,16 @@
 
 #ifndef NEMO_IOSTACK_H
 #define NEMO_IOSTACK_H
+#include <stdio.h>
+#include <stdlib.h>
+#include "../globals.h"
 
-/**
- * { item_description }
- */
-typedef struct CSV_Element {
-	char * data;
-	void * next;
-}csvElement;
+#define addData(data, csv_writer) _Generic(data),\
+messageData: addMessage,\
+default: addDataStr)(data, csv_writer)
 
-/**
- * { item_description }
- */
-typedef struct CSV_Header {
-	char * header;
-	csvElement data;
-}csvHeader;
-/**
- * { item_description }
- */
-typedef struct CSV_DATA{ 
-	char * filename;
-	char * metaFileName;
-	char * metadata;
 
-	csvHeader data[];
 
-}csvData;
-
-void initFiles();
-void closeFiles();
-
-void writeData(csvData *data);
 
 
 #endif //NEMO_IOSTACK_H
