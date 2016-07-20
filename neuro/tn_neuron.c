@@ -798,6 +798,15 @@ void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
 	
     long start_count = lp->rng->count;
 
+//    //Delta Encoding
+//    if (g_tw_synchronization_protocol == OPTIMISTIC ||
+//        g_tw_synchronization_protocol == OPTIMISTIC_REALTIME ||
+//        g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
+//        // Only do this in OPTIMISTIC mode
+//        tw_snapshot(lp, lp->type->state_sz);
+//    }
+
+    
     if (VALIDATION || SAVE_MEMBRANE_POTS) { //If we are running model validation or we are saving membrane potentials
 
         //saveNeruonState(s->myLocalID, s->myCoreID, s->membranePotential, tw_now(lp));
@@ -816,18 +825,20 @@ void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
     }
     m->rndCallCount = lp->rng->count - start_count;
 
-
+//    tw_snapshot_delta(lp, lp->type->state_sz);
 }
 
 
 
 void TN_reverse_event (tn_neuron_state *s, tw_bf *CV, messageData *m ,
     tw_lp *lp){
+    
     long count = m->rndCallCount;
-
+//    tw_snapshot_restore(lp, lp->type->state_sz);
     if (VALIDATION || SAVE_MEMBRANE_POTS) {
         //reverse save neuron state;
     }
+    
 
     TNReceiveReverseMessage(s,m,lp,CV);
 	s->SOPSCount --;
