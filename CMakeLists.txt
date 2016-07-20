@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(NeMo)
 enable_testing()
+
 INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR})
 set (CMAKE_EXPORT_COMPILE_COMMANDS 1 )
 set( CMAKE_EXPORT_COMPILE_COMMANDS 1 )

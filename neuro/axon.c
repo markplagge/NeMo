@@ -156,7 +156,8 @@ void axon_final(axonState *s, tw_lp *lp){
         
         if (s->sendMsgCount != 0){
             print(shdr);
-            debugMsg("Message Sent Val ->", s->sendMsgCount);
+            char* m = "Message Sent Val ->";
+            debugMsg(m, s->sendMsgCount);
         }
     }
 
