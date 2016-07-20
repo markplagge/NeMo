@@ -858,10 +858,11 @@ void TN_commit(tn_neuron_state *s, tw_bf * cv, messageData *m, tw_lp *lp){
    
 }
 
-void prhdr(bool **display, char *hdr){
-    if(!display){
+void prhdr(bool *display, char *hdr){
+    bool dip = *display;
+    if(!dip){
         print(hdr);
-        display = true;
+        dip = true;
     }
 }
 void TN_final(tn_neuron_state *s, tw_lp *lp){
@@ -876,15 +877,15 @@ void TN_final(tn_neuron_state *s, tw_lp *lp){
         
 		em = sprintf(em, "%s\n Core: %i Local: %i \n",hdr,s->myCoreID,s->myLocalID);
 		if(s->membranePotential != 0){
-            prhdr(dsp, em);
+            prhdr(&dsp, em);
             debugMsg(alpha, s->membranePotential);
 		}
         if(s->SOPSCount != 0){
-            prhdr(dsp, em);
+            prhdr(&dsp, em);
             debugMsg(sops, s->SOPSCount);
         }
         if(s->heartbeatOut != false){
-            prhdr(dsp,em);
+            prhdr(&dsp,em);
             debugMsg(HB, (int)s->heartbeatOut);
         }
 		
