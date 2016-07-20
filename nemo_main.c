@@ -9,7 +9,7 @@
 /** \addtogroup Globals 
  * @{  */
 
-size_type CORES_IN_SIM = 1;
+size_type CORES_IN_SIM = 16;
 size_type AXONS_IN_CORE = NEURONS_IN_CORE;
 size_type SIM_SIZE = 1025;
 size_type SYNAPSES_IN_CORE = 0;
@@ -18,7 +18,7 @@ size_type LPS_PER_PE = 0;
 
 bool IS_RAND_NETWORK = true;
 bool BULK_MODE = false;
-bool DEBUG_MODE = true;
+bool DEBUG_MODE = false;
 bool SAVE_MEMBRANE_POTS  = false;
 bool SAVE_SPIKE_EVTS  = false;
 bool SAVE_NEURON_OUTS = false;
@@ -89,6 +89,7 @@ tw_lptype model_lps[] = {
         (pre_run_f)NULL,
         (event_f)axon_event,
         (revent_f)axon_reverse,
+        (commit_f) NULL,
         (final_f)axon_final,
         (map_f)getPEFromGID,
         sizeof(axonState) },
@@ -97,6 +98,7 @@ tw_lptype model_lps[] = {
         (pre_run_f)NULL,
         (event_f)synapse_event,
         (revent_f)synapse_reverse,
+        (commit_f) NULL,
         (final_f)NULL,
         (map_f)getPEFromGID, 
         sizeof(synapseState)
@@ -106,7 +108,8 @@ tw_lptype model_lps[] = {
         (pre_run_f)NULL,
         (event_f)TN_forward_event,
         (revent_f)TN_reverse_event,
-        (final_f)NULL,
+        (commit_f) TN_commit	,
+        (final_f)TN_final,
         (map_f)getPEFromGID, 
         sizeof(tn_neuron_state)
     }
@@ -118,6 +121,7 @@ tw_lptype model_lps[] = {
  */
 void displayModelSettings()
 {
+    if(g_tw_mynode == 0){
     for (int i = 0; i < 30; i++)
     {
         printf("*");
@@ -143,6 +147,7 @@ void displayModelSettings()
         printf("*");
     }
     printf("\n");
+    }
 }
 /**
  * @brief      Initializes NeMo
@@ -180,7 +185,7 @@ void init_nemo(){
 	
 	AXONS_IN_CORE = NEURONS_IN_CORE;
 	SYNAPSES_IN_CORE = 1;//(NEURONS_IN_CORE * AXONS_IN_CORE);
-    printf("\n\n%i -- %i -- %i \n\n", SYNAPSES_IN_CORE, NEURONS_IN_CORE, AXONS_IN_CORE); //
+    
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
 	SIM_SIZE = CORE_SIZE * CORES_IN_SIM;
 
@@ -192,11 +197,10 @@ void init_nemo(){
 
 
 	///EVENTS PER PE SETTING
-	g_tw_events_per_pe = 65536; //magic number 
+	g_tw_events_per_pe = 16777216; //magic number
                                
     LPS_PER_PE = g_tw_nlp / g_tw_npe;
-
-
+    //Pre-Run Quck Info
 }
 
 unsigned char mapTests(){
@@ -236,6 +240,7 @@ unsigned char mapTests(){
 //        
 //    }
 //    return result;
+    return '0';
 
 }
 

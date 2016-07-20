@@ -227,7 +227,7 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
 
 
     //@todo: see if this is used still and remove
-    int num = st->myLocalID;
+    //int num = st->myLocalID;
 
     switch (m->eventType)
     {
@@ -273,7 +273,7 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
 
             //neuronPostIntegrate(st, tw_now(lp), lp, willFire); //removed and replaced with fireFloorCelingReset
             //stats collection
-            st->SOPSCount++;
+            //st->SOPSCount++;
             st->lastActiveTime = tw_now(lp);
 
 
@@ -318,7 +318,7 @@ void TNReceiveReverseMessage(tn_neuron_state *st, messageData *M, tw_lp *lp, tw_
 
     if (M->eventType == NEURON_HEARTBEAT) {
         //reverse heartbeat message
-        st->SOPSCount--;
+        //st->SOPSCount--;
     }
     if (bf->c0 ){ //c0 flags firing state
         //reverse computation of fire and reset functions here.
@@ -450,12 +450,12 @@ bool TNfireFloorCelingReset(tn_neuron_state *ns, tw_lp *lp){
                      ))){
 		//volt_type x = ns->membranePotential;
         //x = ((-1 * beta) * ns->kappa);
-        volt_type s1,s2,s3,s4;
-        s1 = (-1*beta) * ns->kappa;
-        s2 = (-1*(DT(gamma))) * Vrst;
-        s3 = (DT((gamma - 1)) * (ns->membranePotential + (beta + ns->drawnRandomNumber)));
-        s4 = (DT((gamma - 2)) * ns->membranePotential) * (1 - ns->kappa);
-		//x = s1 + (s2 + s3 + s4);
+//        volt_type s1,s2,s3,s4;
+//        s1 = (-1*beta) * ns->kappa;
+//        s2 = (-1*(DT(gamma))) * Vrst;
+//        s3 = (DT((gamma - 1)) * (ns->membranePotential + (beta + ns->drawnRandomNumber)));
+//        s4 = (DT((gamma - 2)) * ns->membranePotential) * (1 - ns->kappa);
+//		//x = s1 + (s2 + s3 + s4);
 
         ns->membranePotential = (
                                  ((-1*beta) * ns->kappa) + (
@@ -796,11 +796,7 @@ void TN_init(tn_neuron_state *s, tw_lp *lp){
 void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
     tw_lp *lp){
 	
-
     long start_count = lp->rng->count;
-//    if(DEBUG_MODE){
-//	    printf("Neuron Forward Event\n");
-//    }
 
     if (VALIDATION || SAVE_MEMBRANE_POTS) { //If we are running model validation or we are saving membrane potentials
 
@@ -808,38 +804,19 @@ void TN_forward_event (tn_neuron_state *s, tw_bf *CV, messageData *m,
     }
 
     bool fired = TNReceiveMessage(s,m,lp,CV);
-
+	s->SOPSCount ++;
     /**@todo save message trace here: */
 
-
+	
     CV->c0 = fired; // save fired information for reverse computation.
 
     if (fired && (SAVE_SPIKE_EVTS || VALIDATION)){ //if we are validating the model or saving spike events, save this event's info.
 
         //write_event(s->myLocalID, s->myCoreID, s->s->outputGID, 'N', tw_now(lp));
     }
-
-
-
-
-
-
     m->rndCallCount = lp->rng->count - start_count;
 
-//
-//    if (m->eventType == NEURON_SETUP) {
-//        messageData *setup;
-//        tw_event *setupEvent;
-//
-//        setupEvent = tw_event_new(getSynapseGlobal(s->myCoreID,0), getNextEventTime(lp), lp);
-//        setup = (messageData *) tw_event_data(setup);
-//
-//        setup->eventType = NEURON_SETUP;
-//        setup->neuronConn = m->neuronConn;
-//        setup->localID = m->localID;
-//        tw_event_send(setupEvent);
-//
-//    }
+
 }
 
 
@@ -853,7 +830,7 @@ void TN_reverse_event (tn_neuron_state *s, tw_bf *CV, messageData *m ,
     }
 
     TNReceiveReverseMessage(s,m,lp,CV);
-
+	s->SOPSCount --;
     if (CV->c0 && (SAVE_SPIKE_EVTS || VALIDATION)){
         //reverse_write_event
     }
@@ -861,15 +838,48 @@ void TN_reverse_event (tn_neuron_state *s, tw_bf *CV, messageData *m ,
     while(count--)
         tw_rand_reverse_unif(lp->rng);
 
+}	
 
+
+/** TN_commit is a function called on commit. This is used for management of neurons! */
+void TN_commit(tn_neuron_state *s, tw_bf * cv, messageData *m, tw_lp *lp){
+    
+   
 }
 
-
-
-
-
+void prhdr(bool **display, char *hdr){
+    if(!display){
+        print(hdr);
+        display = true;
+    }
+}
 void TN_final(tn_neuron_state *s, tw_lp *lp){
+	if(g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
+		//Alpha, SOPS should be zero. HeartbeatOut should be false.
+		char * em = (char * ) calloc(sizeof(char), 1024);
+		char * hdr = "------ Neuron Optimistic Debug Check -----";
+		char * alpha = "--->Membrane Potential is: ";
+		char * sops = "--->SOPS is:";
+		char * HB = "--->Heartbeat is:";
+        bool dsp = false;
+        
+		em = sprintf(em, "%s\n Core: %i Local: %i \n",hdr,s->myCoreID,s->myLocalID);
+		if(s->membranePotential != 0){
+            prhdr(dsp, em);
+            debugMsg(alpha, s->membranePotential);
+		}
+        if(s->SOPSCount != 0){
+            prhdr(dsp, em);
+            debugMsg(sops, s->SOPSCount);
+        }
+        if(s->heartbeatOut != false){
+            prhdr(dsp,em);
+            debugMsg(HB, (int)s->heartbeatOut);
+        }
+		
+	}
 
+		
 }
 
 

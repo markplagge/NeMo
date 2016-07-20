@@ -49,7 +49,7 @@ tw_stime littleTick = 0.001;
  *
  * @param      lp    The pointer to a lp.
  *
- * @return     The next event time. Is a jitter value that is < 0.001.
+ * @return     The next event time. Is a jitter value that is < 0.0001.
  */
 tw_stime getNextEventTime(tw_lp *lp) {
     return (tw_rand_unif(lp->rng) / 1000)  + littleTick;
@@ -61,8 +61,8 @@ tw_stime getNextEventTime(tw_lp *lp) {
  
  */
 
-tw_stime getSynapseHeartbeatTime(tw_lp *lp){
-	return (tw_rand_unif(lp->rng) / 1000) + bigTickRate;
+tw_stime getNextSynapseHeartbeat(tw_lp *lp){
+	return (tw_rand_unif(lp->rng) / 10000) + bigTickRate;
 }
 
 

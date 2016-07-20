@@ -66,11 +66,35 @@ long double: "%Lf", \
 char *: "%s", \
 void *: "%p")
 
+
+#define printf_insert_fmt(x) _Generic((x), \
+char: %c, \
+signed char: %hhd, \
+unsigned char: %hhu, \
+signed short: %hd, \
+unsigned short: %hu, \
+signed int: %d, \
+unsigned int: %u, \
+long int: %ld, \
+unsigned long int: %lu, \
+long long int: %lld, \
+unsigned long long int: %llu, \
+float: %f, \
+double: %f, \
+long double: %Lf, \
+char *: "%s", \
+void *: "%p")
+
 #define print(x) printf(printf_dec_format(x), x)
 
 #define sprint(str, y) sprintf(str, printf_dec_format(y), y)
 
+#define debugMsg(type, value) print(type); print(value); printf("\n")
+
 #define fprint(file, z) fprintf(file, printf_dec_format(z),z)
+
+
+
 /** TODO: Eventually replace this with generic macro and non-branching ABS code. */
 #define IABS(a) (((a) < 0) ? (-a) : (a)) //!< Typeless integer absolute value function
 /** TODO: See if there is a non-branching version of the signum function, maybe in MAth libs and use that. */
@@ -122,6 +146,7 @@ tw_stime getNextBigTick(tw_lp *lp, tw_lpid neuronID);
 
 /**@}*/
 
+tw_stime getNextSynapseHeartbeat(tw_lp *lp);
 /** @defgroup global_structs_enums Global Structs and Enums
   * Global structs and enums, including event types, lp types, and the message structure
   */
@@ -163,11 +188,17 @@ typedef struct Ms{
     enum evtType eventType;
     unsigned long rndCallCount;
     id_type localID; //!< Sender's local (within a core) id - used for weight lookups.
-    volt_type neuronVoltage;
-    tw_stime neuronLastActiveTime;
-    tw_stime neuronLastLeakTime;
-    random_type neuronDrawnRandom;
-
+	union{
+		unsigned long synapseCounter;
+		struct{
+			volt_type neuronVoltage;
+			tw_stime neuronLastActiveTime;
+			tw_stime neuronLastLeakTime;
+			random_type neuronDrawnRandom;
+		};
+	};
+	
+	
     union{
         id_type axonID; //!< Axon ID for neuron value lookups.
         bool * neuronConn;
