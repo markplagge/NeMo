@@ -257,7 +257,10 @@ int main(int argc, char*argv[]) {
 	tw_init(&argc, &argv);
     //call nemo init
     init_nemo();
+if(nonC11 == 1)
+	printf("Non C11 compliant compiler detected.\n");
 
+	
     if (testingMode == 1 ) {
         unsigned char mapResult = 0;
         mapResult = mapResult | mapTests();

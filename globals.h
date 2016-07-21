@@ -9,7 +9,7 @@
 #ifndef __NEMO_GLOBALS_H__
 #define __NEMO_GLOBALS_H__
 
-
+#define BGQ 0
 
 
 #include <inttypes.h>
@@ -48,6 +48,8 @@ typedef uint64_t stat_type;
 /* @defgroup gmacros Global Macros and Related Functions
  *Global Macros */
 /**@{ */
+#define _ISOC11_SOURCE
+#if (__STDC_VERSION >= 200112L) || (_POSIX_C_SOURCE >= 20112L) || (BGQ <=0 )
 #define printf_dec_format(x) _Generic((x), \
 char: "%c", \
 signed char: "%hhd", \
@@ -67,33 +69,22 @@ char *: "%s", \
 void *: "%p")
 
 
-#define printf_insert_fmt(x) _Generic((x), \
-char: %c, \
-signed char: %hhd, \
-unsigned char: %hhu, \
-signed short: %hd, \
-unsigned short: %hu, \
-signed int: %d, \
-unsigned int: %u, \
-long int: %ld, \
-unsigned long int: %lu, \
-long long int: %lld, \
-unsigned long long int: %llu, \
-float: %f, \
-double: %f, \
-long double: %Lf, \
-char *: "%s", \
-void *: "%p")
-
 #define print(x) printf(printf_dec_format(x), x)
-
 #define sprint(str, y) sprintf(str, printf_dec_format(y), y)
-
 #define debugMsg(type, value) print(type); print(value); printf("\n")
-
 #define fprint(file, z) fprintf(file, printf_dec_format(z),z)
 
+#define nonC11 0
 
+#else //stupid BGQ
+#define print(x) printf("%lld", x);
+#define debugMsg(type, value) printf("%s -> %lld",type,value)
+#define sprint(str, y) sprintf(str, print(y), y)
+#define fprint(file, z) fprintf(file, print(z),z)
+
+#define nonC11 1
+
+#endif
 
 /** TODO: Eventually replace this with generic macro and non-branching ABS code. */
 #define IABS(a) (((a) < 0) ? (-a) : (a)) //!< Typeless integer absolute value function

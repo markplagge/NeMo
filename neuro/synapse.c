@@ -200,8 +200,8 @@ void synapse_final(synapseState *s, tw_lp *lp){
         char * shdr = "Synapse Error\n";
         
         if (s->msgSent != 0){
-            print(shdr);
-            char* m = "Message Sent Val ->";
+			printf("%s ", shdr);
+			char* m = "Message Sent Val ->";
             debugMsg(m, s->msgSent);
         }
     }

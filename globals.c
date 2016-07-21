@@ -1,7 +1,7 @@
 #include "globals.h"
 
 int iIABS(int vals){
-
+#ifdef X86ASM
         int result;
         asm ("movl  %[valI], %%eax;"
                 "cdq;"
@@ -13,8 +13,8 @@ int iIABS(int vals){
         : "cc","%eax", "%ebx");
         return result;
     return -1;
-
-
+#endif
+	return IABS(vals);
 }
 
 
