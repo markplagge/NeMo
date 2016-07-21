@@ -235,7 +235,7 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp, tw_bf *bf)
 
 
         case SYNAPSE_OUT:
-            st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue);
+            st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue); //!<- @BUG This might be creating non-deterministic errors
 			      TNIntegrate(m->axonID, st, lp);
             //next, we will check if a heartbeat message should be sent
             if (st->heartbeatOut == false) {
