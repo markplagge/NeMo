@@ -74,7 +74,7 @@ const tw_optdef app_opt[] = {
     	TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
     	TWOPT_FLAG("tonb",TONIC_BURST_VAL, "Tonic bursting Neuron Validation"),
     	TWOPT_FLAG("phb", PHASIC_BURST_VAL, "Phasic Bursting Neuron Validation"),
-    {TWOPT_END()}
+    TWOPT_END()
 
 };
 
