@@ -197,7 +197,7 @@ void init_nemo(){
 
 
 	///EVENTS PER PE SETTING
-	g_tw_events_per_pe = 16777216; //magic number
+	g_tw_events_per_pe = NEURONS_IN_CORE * AXONS_IN_CORE ; //magic number
                                
     LPS_PER_PE = g_tw_nlp / g_tw_npe;
     //Pre-Run Quck Info
