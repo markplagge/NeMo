@@ -8,7 +8,7 @@ set (CMAKE_EXPORT_COMPILE_COMMANDS 1 )
 ##NeMo uses a few C11 features, including generic macros. We assume standard C11
 ##behaviors.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11")
 
 ## Model Version
 LIST(APPEND CMAKE_MODULE_PATH "${ROSS_SOURCE_DIR}/cmake/")
