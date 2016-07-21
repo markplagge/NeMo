@@ -1,22 +1,29 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.0)
 project(NeMo)
 enable_testing()
 
 INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR})
 set (CMAKE_EXPORT_COMPILE_COMMANDS 1 )
-set( CMAKE_EXPORT_COMPILE_COMMANDS 1 )
-## Model Version
+
+##NeMo uses a few C11 features, including generic macros. We assume standard C11
+##behaviors.
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11")
+
 ## Model Version
 LIST(APPEND CMAKE_MODULE_PATH "${ROSS_SOURCE_DIR}/cmake/")
 #INCLUDE(GetGitRevisionDescription)
 #GET_GIT_HEAD_REVISION(GIT_RESPEC_MODEL GIT_SHA1_MODEL)
+
+
+
 
 ## Model Compile-Time Options (Will add more later)
 set(NeMo_NEURONS_IN_CORE 512 CACHE STRING "The number of neurons in each simulated core")
 set(NeMo_NUM_WEIGHTS_IN_NEURON 4 CACHE STRING "How many weights does a neuron have? (4 is TN default)")
 set(NeMo_SAVE_MSG FALSE CACHE BOOL "Save message paths to CSV or Couch? (debug messages)")
 set(NeMo_SAVE_MSG_COUCH FALSE CACHE BOOL "Save message paths directly to couch?")
-set(NeMo_COUCH_ADD "" CACHE STRING "The IP address:PORT of the couch database if used")
+set(NeMo_COUCH_ADD "None" CACHE STRING "The IP address:PORT of the couch database if used")
 
 
 set(SAVE_MSGS 0)
