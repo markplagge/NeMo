@@ -29,6 +29,9 @@ bool PHASIC_BURST_VAL = false;
 bool VALIDATION = false;
 
 
+char * inputFileName = "nemo_in";
+char * neuronFireFileName = "fire_record";
+
 
 
 //

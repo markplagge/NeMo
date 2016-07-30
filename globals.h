@@ -306,6 +306,9 @@ EXT bool FILE_OUT;
 EXT bool FILE_IN;
 
 
+/** Vars that manage file names for IO */
+EXT char * inputFileName;
+EXT char * neuronFireFileName;
 
 /* Global Timing Variables */
 /**
