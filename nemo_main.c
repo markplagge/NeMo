@@ -28,9 +28,10 @@ bool TONIC_BURST_VAL = false;
 bool PHASIC_BURST_VAL = false;
 bool VALIDATION = false;
 
-
+ bool MPI_SAVE = false;
+ bool BINARY_OUTPUT = false;
 char * inputFileName = "nemo_in";
-char * neuronFireFileName = "fire_record.csv";
+char * neuronFireFileName = "fire_record";
 
 int N_FIRE_BUFF_SIZE = 32;
 int N_FIRE_LINE_SIZE = 512;
@@ -307,7 +308,8 @@ if(nonC11 == 1)
     if (g_tw_mynode == 0) {
         displayModelSettings();
     }
-    testNeuronOut();
+    //neuron fire output testing function. 
+	//testNeuronOut();
     tw_run();
     tw_end();
 }

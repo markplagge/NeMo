@@ -288,9 +288,11 @@ EXT size_type SYNAPSES_IN_CORE;
 EXT bool BULK_MODE;
 EXT bool DEBUG_MODE;
 EXT bool SAVE_MEMBRANE_POTS ;
-EXT bool SAVE_SPIKE_EVTS ;
+EXT bool SAVE_SPIKE_EVTS ; //!< Toggles saving spike events
 EXT bool SAVE_NEURON_OUTS;
 
+EXT bool MPI_SAVE;
+EXT bool BINARY_OUTPUT;
 
 EXT bool PHAS_VAL;
 EXT bool TONIC_SPK_VAL;
@@ -322,7 +324,8 @@ EXT tw_stime CLOCK_RANDOM_ADJ;
 /** @} */
 
 
-/** @defgroup iocfg File buffer settings @{
+/** @defgroup iocfg File buffer settings
+ * @{
  * */
 /** POSIX Neuron Fire record Buffer Size */
 EXT int N_FIRE_BUFF_SIZE;
