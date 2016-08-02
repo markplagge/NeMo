@@ -140,7 +140,7 @@ void displayModelSettings()
     printf("* \t Network is a %s network.\n",netMode);
     printf("* \t Neuron stats:\n");
     printf("* \tCalculated sim_size is %llu\n", SIM_SIZE);
-    printf("* \tSave Messages: %i - Use Couch %i - Couch Add %s", SAVE_MSGS , USE_COUCH, COUCH_ADDRESS);
+    printf("* \tSave Messages: %i \n", SAVE_MSGS );
 
     //printf("%-10s", "title");
 
@@ -163,7 +163,7 @@ void displayModelSettings()
 
 void testNeuronOut(){
     SAVE_SPIKE_EVTS = true;
-     initFiles();
+	initOutFiles();
 
     for (int i = 0; i < 4096; i ++){
         saveNeuronFire(random() + i, 0,0,1024);
@@ -196,6 +196,10 @@ void init_nemo(){
 
 	if (FILE_OUT){
 		//Init file output handles
+		initOutFiles();
+		if(g_tw_mynode == 0){
+			printf("Output Files Init.\n");
+		}
 	}
 
 	if (FILE_IN){
@@ -267,6 +271,9 @@ unsigned char mapTests(){
 
 }
 
+
+
+
 /**
  * @brief      NeMo Main entry point
  *
@@ -308,8 +315,9 @@ if(nonC11 == 1)
     if (g_tw_mynode == 0) {
         displayModelSettings();
     }
-    //neuron fire output testing function. 
+    //neuron fire output testing function.
 	//testNeuronOut();
+	
     tw_run();
     tw_end();
 }

@@ -854,7 +854,11 @@ void TN_reverse_event (tn_neuron_state *s, tw_bf *CV, messageData *m ,
 
 /** TN_commit is a function called on commit. This is used for management of neurons! */
 void TN_commit(tn_neuron_state *s, tw_bf * cv, messageData *m, tw_lp *lp){
-    
+    //if neuron has fired and save neuron fire events is enabled, save this event.
+    if(SAVE_SPIKE_EVTS && cv->c0){
+        saveNeuronFire(tw_now(lp),s->myCoreID,s->myLocalID,s->outputGID);
+        
+    }
    
 }
 /** @todo: fix this remote value */
@@ -875,7 +879,7 @@ void TN_final(tn_neuron_state *s, tw_lp *lp){
 		char * HB = "--->Heartbeat is:";
         bool dsp = false;
         
-		em = sprintf(em, "%s\n Core: %i Local: %i \n",hdr,s->myCoreID,s->myLocalID);
+        sprintf(em, "%s\n Core: %i Local: %i \n",hdr,s->myCoreID,s->myLocalID);
 		if(s->membranePotential != 0){
             prhdr(&dsp, em);
             debugMsg(alpha, s->membranePotential);

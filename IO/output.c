@@ -112,7 +112,7 @@ void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid des
 		neuronFireBufferBIN[neuronFirePoolPos].ne = '|';
 		
 	}else {
-		sprintf(neuronFireBufferTXT[neuronFirePoolPos], "%.30f,%i,%us,%llu",
+		sprintf(neuronFireBufferTXT[neuronFirePoolPos], "%.30f,%i,%u,%llu",
 		        timestamp, core, local, destGID);
 	}
 	
@@ -148,7 +148,7 @@ void setFileNames(){
 	}
 }
 
-void initFiles(){
+void initOutFiles(){
 	setFileNames();
 	if(SAVE_SPIKE_EVTS) {
 		if(BINARY_OUTPUT) {
