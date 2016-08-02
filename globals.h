@@ -32,8 +32,8 @@
 /** @defgroup iocfg File IO @{
  * */
 
-#define N_FIRE_BUFF_SIZE 1024
-#define N_FIRE_LINE_SIZE 1024
+#define N_FIRE_BUFF_SIZE 32
+#define N_FIRE_LINE_SIZE 32
 
 /** @defgroup types Typedef Vars 
  * Typedefs to ensure proper types for the neuron parameters/mapping calculations

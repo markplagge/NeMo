@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include "nemo_main.h"
-
+#include "./IO/IOStack.h"
 
 /** \addtogroup Globals 
  * @{  */
@@ -152,6 +152,24 @@ void displayModelSettings()
     printf("\n");
     }
 }
+/** @brief Does initial tests of Neuron Output subsystem.
+ * If subsystem tests are on, then this will "simulate" a series of neuron firing events after
+ * initializing file systems.
+ *
+ * Tests file closing function as well.
+ */
+
+void testNeuronOut(){
+    SAVE_SPIKE_EVTS = true;
+     initFiles();
+
+    for (int i = 0; i < 4096; i ++){
+        saveNeuronFire(random() + i, 0,0,1024);
+    }
+    closeFiles();
+
+}
+
 /**
  * @brief      Initializes NeMo
  * 
@@ -288,7 +306,7 @@ if(nonC11 == 1)
     if (g_tw_mynode == 0) {
         displayModelSettings();
     }
-
+    testNeuronOut();
     tw_run();
     tw_end();
 }

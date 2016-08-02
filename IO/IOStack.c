@@ -12,26 +12,49 @@ FILE * neuronFireFile;
 bool neuronFireFileOpen;
 char * neuronFireFileOutput;
 
-char * neuronFireBuffer[N_FIRE_BUFF_SIZE];
+
 int neuronPoolPos = 0;
 char * mt;
+//MPI IO PROVING GROUND
+MPI_File  *neuronFireFileMPI;
+char * mpiFileName = "spike_events_mpi.csv";
+typedef struct NeuronFireStruct {
+    tw_stime timestamp;
+    id_type core;
+    id_type local;
+    tw_lpid dest;
+    char nl;
+}neuronFireStruct;
+
+neuronFireStruct * neuronFireBuffer[N_FIRE_BUFF_SIZE];
+
+
 
 void flushNeuron(){
-    while(neuronPoolPos --){
+    while(--neuronPoolPos > -1){
         fprintf(neuronFireFile, "%s\n", neuronFireBuffer[neuronPoolPos]);
     }
+    neuronPoolPos = 0;
 }
 
-
+char * setNetworkFileName(){
+    mt = (char *) calloc(128, sizeof(char));
+    sprintf(mt, "spike_evt_r-%i.csv", g_tw_mynode);
+    printf("---- FN: %s \n", mt);
+}
 void initFiles(){
 	if(SAVE_SPIKE_EVTS) {
         for (int i = 0; i < N_FIRE_BUFF_SIZE; i++) {
-            neuronFireBuffer[i] = (char *) calloc(sizeof(char), N_FIRE_LINE_SIZE);
+            neuronFireBuffer[i] = (neuronFireStruct *) calloc(sizeof(neuronFireStruct), 1);
         }
-        mt = (char *) calloc(sizeof(char), 128);
-        mt = sprintf("spike_evt_r-%i.csv", g_tw_mynode);
-        neuronFireFile = fopen(mt, "w");
-        free(mt);
+        setNetworkFileName();
+        neuronFireFile = fopen(mt, "wb");
+//
+//        MPI_File_open(MPI_COMM_WORLD,mpiFileName,
+//                      MPI_MODE_CREATE|MPI_MODE_WRONLY,MPI_INFO_NULL,neuronFireFileMPI);
+//
+//        MPI_File_set_atomicity(neuronFireFileMPI,1);
+
     }
 
 
@@ -39,24 +62,18 @@ void initFiles(){
 int completedFiles = 0;
 
 void closeFiles(){
+    flushNeuron();
+    fclose(neuronFireFile);
+//    MPI_File_close(neuronFireFileMPI);
+    MPI_Barrier(MPI_COMM_WORLD); // wait for everyone to catch up.
     if(g_tw_mynode == 0) {
-        flushNeuron();
+
         FILE *finalout = fopen("neuron_spike_evts.csv", "w");
         fprintf(finalout, "timestamp,neuron_core,neuron_local,destGID\n");
 
-        char *currentFileName = (char *) calloc(sizeof(char), 128);
-
-        FILE * cf;
-        for (int i = 0; i < tw_nnodes(); i++) {
-            currentFileName = sprintf("spike_evt_r-%i.csv", i);
-
-        }
-
-        fclose(neuronFireFile);
-    } else {
-        flushNeuron();
-        fclose(neuronFireFile);
     }
+
+
 }
 
 
@@ -74,5 +91,6 @@ void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid des
 	
 	sprintf(neuronFireBuffer[neuronPoolPos],"%d,%ld,%ld,%ld",
 	        timestamp,core,local,destGID);
-	
+
+    ++ neuronPoolPos;
 }
