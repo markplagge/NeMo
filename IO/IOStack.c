@@ -4,29 +4,15 @@
 
 #include "IOStack.h"
 
-FILE * outputFile;
+
 FILE * inputFile;
 bool inputFileOpen;
 
-FILE * neuronFireFile;
-bool neuronFireFileOpen;
-char * neuronFireFileOutput;
 
 
-int neuronPoolPos = 0;
-char * mt;
-//MPI IO PROVING GROUND
-MPI_File  *neuronFireFileMPI;
-char * mpiFileName = "spike_events_mpi.csv";
-typedef struct NeuronFireStruct {
-    tw_stime timestamp;
-    id_type core;
-    id_type local;
-    tw_lpid dest;
-    char nl;
-}neuronFireStruct;
 
-neuronFireStruct * neuronFireBuffer[N_FIRE_BUFF_SIZE];
+
+
 
 
 
@@ -59,7 +45,6 @@ void initFiles(){
 
 
 }
-int completedFiles = 0;
 
 void closeFiles(){
     flushNeuron();

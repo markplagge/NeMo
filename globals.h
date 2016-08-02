@@ -29,11 +29,7 @@
 /**@}*/
 
 
-/** @defgroup iocfg File IO @{
- * */
 
-#define N_FIRE_BUFF_SIZE 32
-#define N_FIRE_LINE_SIZE 32
 
 /** @defgroup types Typedef Vars 
  * Typedefs to ensure proper types for the neuron parameters/mapping calculations
@@ -306,9 +302,13 @@ EXT bool FILE_OUT;
 EXT bool FILE_IN;
 
 
-/** Vars that manage file names for IO */
+/** @defgroup fileNames File Names
+ * Vars that manage file names for IO  @{*/
 EXT char * inputFileName;
 EXT char * neuronFireFileName;
+
+/** @} */
+
 
 /* Global Timing Variables */
 /**
@@ -319,5 +319,19 @@ EXT tw_stime littleTick;
  * clock random value adjuster.
  */
 EXT tw_stime CLOCK_RANDOM_ADJ;
+/** @} */
+
+
+/** @defgroup iocfg File buffer settings @{
+ * */
+/** POSIX Neuron Fire record Buffer Size */
+EXT int N_FIRE_BUFF_SIZE;
+//#define N_FIRE_BUFF_SIZE 32
+
+/** POSIX Neuron Fire record line buffer size.
+ * For text mode only, sets the length of strings stored in the neuron fire buffer*/
+EXT int N_FIRE_LINE_SIZE;
+
+//#define N_FIRE_LINE_SIZE 128
 /** @} */
 #endif

@@ -30,9 +30,10 @@ bool VALIDATION = false;
 
 
 char * inputFileName = "nemo_in";
-char * neuronFireFileName = "fire_record";
+char * neuronFireFileName = "fire_record.csv";
 
-
+int N_FIRE_BUFF_SIZE = 32;
+int N_FIRE_LINE_SIZE = 512;
 
 //
 /**
