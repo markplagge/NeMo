@@ -74,3 +74,20 @@ tw_stime getCurrentBigTick(tw_stime now){
 tw_stime getNextBigTick(tw_lp *lp, tw_lpid neuronID) {    
     return (tw_rand_unif(lp->rng) / 1000) + bigTickRate;
 }
+
+
+//char * charf()      { return    "%c";}
+//char * scharf()     { return    "%hhd";}
+//char * sshortf()    { return       "%hd";}
+//char * ushortf()    { return         "%hu";}
+//char * intf()       { return             "%d";}
+//char * uintf()      { return           "%u";}
+//char * lintf()      { return               "%ld";}
+//char * ulintf()     { return      "%lu";}
+//char * llintf()     { return          "%lld";}
+//char * ullintf()    { return "%llu";}
+//char * floatf()     { return                  "%f";}
+//char * dobulef()    { return                 "%f";}
+//char * ldoublef()   { return            "%Lf";}
+////char * charsf()     {printf("STR\n"); return                  "%s";}
+//char * voidf()      { return                     "%p"; }

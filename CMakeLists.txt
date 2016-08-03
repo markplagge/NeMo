@@ -76,8 +76,11 @@ set(model_srcs
 
         IO/IOStack.c
         IO/IOStack.h
+
+        IO/output.h
+        IO/output.c
         nemo_config.h 
-        nemo_main.h)
+        nemo_main.h )
 
 
 ADD_EXECUTABLE(NeMo  ${model_srcs})

@@ -29,6 +29,8 @@
 /**@}*/
 
 
+
+
 /** @defgroup types Typedef Vars 
  * Typedefs to ensure proper types for the neuron parameters/mapping calculations
  */
@@ -48,7 +50,7 @@ typedef uint64_t stat_type;
 /* @defgroup gmacros Global Macros and Related Functions
  *Global Macros */
 /**@{ */
-#define _ISOC11_SOURCE
+
 #if (__STDC_VERSION >= 200112L) || (_POSIX_C_SOURCE >= 20112L) || (BGQ <=0 )
 #define printf_dec_format(x) _Generic((x), \
 char: "%c", \
@@ -75,16 +77,62 @@ void *: "%p")
 #define fprint(file, z) fprintf(file, printf_dec_format(z),z)
 
 #define nonC11 0
+#elif BGQ
+//#else //stupid BGQ
 
-#else //stupid BGQ
-#define print(x) printf("%lld", x);
+#define charf    "%c"   
+#define scharf   "%hhd"   
+#define sshortf  "%hd"   
+#define ushortf  "%hu"   
+#define intf     "%d"   
+#define uintf    "%u"   
+#define lintf    "%ld"   
+#define ulintf   "%lu"   
+#define llintf   "%lld"   
+#define ullintf  "%llu"   
+#define floatf   "%f"   
+#define dobulef  "%f"   
+#define ldoublef "%Lf"   
+
+#define voidf    "%p"   
+#define charsf "%s\n"
+
+#define printf_dec_format(x) _Generic((x), \
+char:                   charf, \
+signed char:            scharf, \
+signed short:           sshortf, \
+unsigned short:         ushortf ,\
+signed int:             intf    ,\
+unsigned int:           uintf   ,\
+long int:               lintf   ,\
+unsigned long int:      ulintf  ,\
+long long int:          llintf  ,\
+unsigned long long int: ullintf ,\
+float:                  floatf  ,\
+double:                 dobulef ,\
+long double:            ldoublef,\
+char *:                 charsf  ,\
+void *:                 voidf   )
+
+#define print(x) printf(printf_dec_format(x), x)
+#define sprint(str, y) sprintf(str, printf_dec_format(y), y)
+#define debugMsg(type, value) print(type); print(value); printf("\n")
+#define fprint(file, z) fprintf(file, printf_dec_format(z),z)
+#define nonC11 1
+/*
+#else
+
+#define print(x) printf("%lld", x)
+
 #define debugMsg(type, value) printf("%s -> %lld",type,value)
 #define sprint(str, y) sprintf(str, print(y), y)
 #define fprint(file, z) fprintf(file, print(z),z)
 
-#define nonC11 1
+#define nonC11 1 */
 
 #endif
+
+
 
 /** TODO: Eventually replace this with generic macro and non-branching ABS code. */
 #define IABS(a) (((a) < 0) ? (-a) : (a)) //!< Typeless integer absolute value function
@@ -240,9 +288,11 @@ EXT size_type SYNAPSES_IN_CORE;
 EXT bool BULK_MODE;
 EXT bool DEBUG_MODE;
 EXT bool SAVE_MEMBRANE_POTS ;
-EXT bool SAVE_SPIKE_EVTS ;
+EXT bool SAVE_SPIKE_EVTS ; //!< Toggles saving spike events
 EXT bool SAVE_NEURON_OUTS;
 
+EXT bool MPI_SAVE;
+EXT bool BINARY_OUTPUT;
 
 EXT bool PHAS_VAL;
 EXT bool TONIC_SPK_VAL;
@@ -254,6 +304,13 @@ EXT bool FILE_OUT;
 EXT bool FILE_IN;
 
 
+/** @defgroup fileNames File Names
+ * Vars that manage file names for IO  @{*/
+EXT char * inputFileName;
+EXT char * neuronFireFileName;
+
+/** @} */
+
 
 /* Global Timing Variables */
 /**
@@ -264,5 +321,20 @@ EXT tw_stime littleTick;
  * clock random value adjuster.
  */
 EXT tw_stime CLOCK_RANDOM_ADJ;
+/** @} */
+
+
+/** @defgroup iocfg File buffer settings
+ * @{
+ * */
+/** POSIX Neuron Fire record Buffer Size */
+EXT int N_FIRE_BUFF_SIZE;
+//#define N_FIRE_BUFF_SIZE 32
+
+/** POSIX Neuron Fire record line buffer size.
+ * For text mode only, sets the length of strings stored in the neuron fire buffer*/
+EXT int N_FIRE_LINE_SIZE;
+
+//#define N_FIRE_LINE_SIZE 128
 /** @} */
 #endif

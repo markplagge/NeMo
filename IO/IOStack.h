@@ -8,12 +8,19 @@
 #include <stdlib.h>
 #include "../globals.h"
 
-#define addData(data, csv_writer) _Generic(data),\
-messageData: addMessage,\
-default: addDataStr)(data, csv_writer)
 
 
 
+
+void initOutFiles();
+void closeFiles();
+
+void saveEvent(tw_stime timestamp, char sourceType, id_type core, id_type local,
+               id_type destCore, id_type destLocal);
+
+
+
+void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid destGID);
 
 
 #endif //NEMO_IOSTACK_H

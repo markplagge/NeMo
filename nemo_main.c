@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include "nemo_main.h"
-
+#include "./IO/IOStack.h"
 
 /** \addtogroup Globals 
  * @{  */
@@ -28,8 +28,13 @@ bool TONIC_BURST_VAL = false;
 bool PHASIC_BURST_VAL = false;
 bool VALIDATION = false;
 
+ bool MPI_SAVE = false;
+ bool BINARY_OUTPUT = false;
+char * inputFileName = "nemo_in";
+char * neuronFireFileName = "fire_record";
 
-
+int N_FIRE_BUFF_SIZE = 32;
+int N_FIRE_LINE_SIZE = 512;
 
 //
 /**
@@ -135,7 +140,7 @@ void displayModelSettings()
     printf("* \t Network is a %s network.\n",netMode);
     printf("* \t Neuron stats:\n");
     printf("* \tCalculated sim_size is %llu\n", SIM_SIZE);
-    printf("* \tSave Messages: %i - Use Couch %i - Couch Add %s", SAVE_MSGS , USE_COUCH, COUCH_ADDRESS);
+    printf("* \tSave Messages: %i \n", SAVE_MSGS );
 
     //printf("%-10s", "title");
 
@@ -149,6 +154,24 @@ void displayModelSettings()
     printf("\n");
     }
 }
+/** @brief Does initial tests of Neuron Output subsystem.
+ * If subsystem tests are on, then this will "simulate" a series of neuron firing events after
+ * initializing file systems.
+ *
+ * Tests file closing function as well.
+ */
+
+void testNeuronOut(){
+    SAVE_SPIKE_EVTS = true;
+	initOutFiles();
+
+    for (int i = 0; i < 4096; i ++){
+        saveNeuronFire(random() + i, 0,0,1024);
+    }
+    closeFiles();
+
+}
+
 /**
  * @brief      Initializes NeMo
  * 
@@ -173,6 +196,10 @@ void init_nemo(){
 
 	if (FILE_OUT){
 		//Init file output handles
+		initOutFiles();
+		if(g_tw_mynode == 0){
+			printf("Output Files Init.\n");
+		}
 	}
 
 	if (FILE_IN){
@@ -244,6 +271,9 @@ unsigned char mapTests(){
 
 }
 
+
+
+
 /**
  * @brief      NeMo Main entry point
  *
@@ -285,7 +315,9 @@ if(nonC11 == 1)
     if (g_tw_mynode == 0) {
         displayModelSettings();
     }
-
+    //neuron fire output testing function.
+	//testNeuronOut();
+	
     tw_run();
     tw_end();
 }
