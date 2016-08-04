@@ -3,9 +3,12 @@ from ctypes import *
 from struct import *
 import pandas as pd
 import numpy as np
+import os
 from os import listdir
 from os.path import isfile, join
 import fileinput
+import re
+import joblib
 import time
 ## Utility to read in binary spikes from various files ##
 ## Also can stitch together multiple csv files ##
@@ -28,16 +31,25 @@ def getBinResults(filename):
 
 
 def getTextResults(filePrefix):
+	from subprocess import call
 	files = [f for f in listdir(workingDir) if isfile(join(workingDir, f))]
 	files = [f for f in files if f.startswith(filePrefix + "_rank")]
 	# concat the files together
-
 	outFn = filePrefix + "_full.csv"
-	with open(outFn, 'w') as fout, fileinput.input(files) as fin:
-		for line in fin:
-			fout.write(line)
+	x = open(outFn, 'w')
+	x.write("Timestamp,NeuronCore,NeuronLocal,GID\n")
+	x.close()
 
-	return outFn
+
+	for file in files:
+		os.system("cat " +  str(file) +  " >> " + str(outFn))
+
+
+	# with open(outFn, 'w') as fout, fileinput.input(files) as fin:
+	# 	for line in fin:
+	# 		fout.write(line)
+	#
+	# return outFn
 
 
 def generateCSVData(outFN):
@@ -45,7 +57,9 @@ def generateCSVData(outFN):
 
 	return df
 
-
+directory = ""
+firstFile = ""
+isBinary = False
 
 
 class MainForm(npyscreen.Form):
@@ -53,7 +67,18 @@ class MainForm(npyscreen.Form):
 
 		#if self.binMode.value == 1:
 		#	self.parentApp.setNextForm('CSVLOAD')
+		assert(isinstance(self.selectedFile,str))
+		pt = re.compile('([\/].*\/)')
+		self.directory = re.search( pt, self.selectedFile).group()
+
 		self.parentApp.setNextForm(None)
+
+	def getDirFNMode(self):
+		if self.binMode.value == 0:
+			mode = "b"
+		else:
+			mode = "c"
+		return (self.directory,self.selectedFile,mode)
 
 	def create(self):
 
@@ -68,7 +93,7 @@ class MainForm(npyscreen.Form):
 		self.spawn_file_dialog('a')
 
 		self.add(npyscreen.TitleText,name="Selected starting file", value=self.selectedFile)
-
+		self.resultName=self.add(npyscreen.TitleText,name="Save combined file as: (will add .csv to end of file) ", value="spike_log")
 		#path = self.selectedFile.remove the file from the element so that you get a path.
 		#Then show all of the CSV files you are going to merge in a box.
 		#then save the selected file, minus the .csv, as the prefix for parsing the rest of the CSV files.
@@ -90,9 +115,33 @@ class NeuronSpikeLoader(npyscreen.NPSAppManaged):
 		self.addForm("MAIN", MainForm, name="NeMo Spike Output Parser Main Menu")
 		self.STARTING_FORM="MAIN"
 
-
-
+	def onCleanExit(self):
+		print("EXIT CLEAN")
+		self.done = "DONE!"
+		self.data = self.getForm("MAIN").getDirFNMode()
 
 if __name__ == '__main__':
+
+	result = getTextResults("fire_record")
+	exit()
+
 	TA = NeuronSpikeLoader()
 	TA.run()
+	print(TA.done)
+	print(TA.data)
+
+	workingDir = TA.data[0]
+	fileName = TA.data[1]
+	if TA.data[2] == 'b':
+		binMode = True
+	else:
+		binMode = False
+	resultName = TA.getForm("MAIN").resultName.value
+	if binMode:
+		pass
+	else:
+		r1 = getTextResults(resultName)
+
+	#load the files and save them into one larger file
+
+
