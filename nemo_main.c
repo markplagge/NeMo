@@ -319,10 +319,13 @@ if(nonC11 == 1)
 	//testNeuronOut();
 	
     tw_run();
-    tw_end();
 	
 	if(FILE_OUT)
 		closeFiles();
 	if(FILE_IN)
 		printf("File input set but not implemented yet.");
+	
+    tw_end();
+	
+
 }
