@@ -153,7 +153,6 @@ void initOutFiles(){
 	if(SAVE_SPIKE_EVTS) {
 		if(BINARY_OUTPUT) {
 			neuronFireBufferBIN = (neuronFireStruct *) tw_calloc(TW_LOC,"OUTPUT",sizeof(neuronFireStruct),N_FIRE_BUFF_SIZE);
-			
 			neuronFireFile = fopen(neuronRankFN, "wb");
 			
 		}else{

@@ -863,16 +863,16 @@ void TN_commit(tn_neuron_state *s, tw_bf * cv, messageData *m, tw_lp *lp){
 }
 /** @todo: fix this remote value */
 void prhdr(bool *display, char *hdr){
-    bool dip = *display;
-    if(!dip){
+	
+    if(&display){
         print(hdr);
-		display = true;
+		*display = true;
     }
 }
 void TN_final(tn_neuron_state *s, tw_lp *lp){
 	if(g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
 		//Alpha, SOPS should be zero. HeartbeatOut should be false.
-		char * em = (char * ) calloc(sizeof(char), 1024);
+		char * em = (char * ) calloc( 1024, sizeof(char));
 		char * hdr = "------ Neuron Optimistic Debug Check -----";
 		char * alpha = "--->Membrane Potential is: ";
 		char * sops = "--->SOPS is:";

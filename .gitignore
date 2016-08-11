@@ -34,3 +34,7 @@ docs/latex/Makefile
 compile_commands.json
 
 *.iml
+
+.idea/NeMo.iml
+
+.idea/NeMo.iml
