@@ -150,6 +150,41 @@ void LIF_init(lif_neuron_state *s, tw_lp *lp)
 
 void LIF_forward_event (lif_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *lp)
 {
+     long start_count = lp->rng->count;
+
+     //bool fired = TNReceiveMessage()
+     m->neuronVoltage = s->membranePotential;
+     m->neuronLastLeakTime = s->lastLeakTime;
+     m->neuronDrawnRandom = s->drawnRandomNumber;
+
+     bool willFire = false;
+
+     switch(m->eventType)
+     {
+          case SYNAPSE_OUT:
+               st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue); //!<- @BUG This might be creating non-deterministic errors
+
+               //Integrate -- AUG 23 LEFT OFF POINT
+
+               if (st->heartbeatOut == false)
+               {
+                    tw_stime time = getNextBigTick(lp, st->myLocalID);
+                    st->heartbeatOut = true;
+                    bf->c13 = 1; //C13 indicates that the heartbeatout flag has been changed.
+                    TNSendHeartbeat(st, time,lp);
+               }
+               break;
+
+          case NEURON_HEARTBEAT:
+
+               break;
+
+          default:
+               tw_error(TW_LOC, "Neuron (%i,%i) received invalid message type, %i \n ", st->myCoreID,st->myLocalID, m->eventType);
+
+               break;
+          }
+
 
 }
 
