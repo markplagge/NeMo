@@ -165,17 +165,44 @@ void LIF_forward_event (lif_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *l
                st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue); //!<- @BUG This might be creating non-deterministic errors
 
                //Integrate -- AUG 23 LEFT OFF POINT
+               LIFIntegrate(m->axonID,st,lp);
 
                if (st->heartbeatOut == false)
                {
                     tw_stime time = getNextBigTick(lp, st->myLocalID);
                     st->heartbeatOut = true;
                     bf->c13 = 1; //C13 indicates that the heartbeatout flag has been changed.
-                    TNSendHeartbeat(st, time,lp);
+                    LIFSendHeartbeat(st, time,lp);
                }
                break;
 
           case NEURON_HEARTBEAT:
+               st->heartbeatOut = false;
+               bf->c13 = 1;
+
+               st->drawnRandomNumber = tw_rand_integer(lp->rng,0,st->largestRandomValue);
+
+               LIFNumericLeakCalc(st, tw_now(lp));
+
+               willFire = LIFFireFloorCeilingReset(st, lp);
+               bf->c0 = willFire;
+
+               if(willFire)
+               {
+                    LIFFire(st,lp);
+               }
+
+               st->lastActiveTime = tw_now(lp);
+
+               volt_type threshold = st->posThreshold;
+               if( (st->membranePotential >= threshold) && st->heartbeatOut == false ){
+                   tw_stime time = getNextBigTick(lp, st->myLocalID);
+                   st->heartbeatOut = true;
+                   //set message flag indicating that the heartbeat msg has been sent
+                   bf->c13 = 1; //C13 indicates that the heartbeatout flag has been changed.
+                   LIFSendHeartbeat(st, time, lp);
+               }
+               
 
                break;
 
@@ -183,7 +210,7 @@ void LIF_forward_event (lif_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *l
                tw_error(TW_LOC, "Neuron (%i,%i) received invalid message type, %i \n ", st->myCoreID,st->myLocalID, m->eventType);
 
                break;
-          }
+     }
 
 
 }
