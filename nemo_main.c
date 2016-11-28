@@ -71,7 +71,7 @@ const tw_optdef app_opt[] = {
     TWOPT_GROUP("Data Gathering Settings"),
     	TWOPT_FLAG("bulk", BULK_MODE, "Is this sim running in bulk mode?"),
     	TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
-    	TWOPT_FLAG("network", SAVE_NEURON_OUTS, "Save neuron output axon IDs on creation"),
+    	TWOPT_FLAG("network", SAVE_NEURON_OUTS, "Save neuron output axon IDs on creation - Creates a map of the neural network."),
     	TWOPT_FLAG("svm", SAVE_MEMBRANE_POTS, "Save neuron membrane potential values (enabled by default when running a validation model"),
     	TWOPT_FLAG("svs", SAVE_SPIKE_EVTS, "Save neuron spike event times and info"),
 
@@ -319,5 +319,13 @@ if(nonC11 == 1)
 	//testNeuronOut();
 	
     tw_run();
+	
+	if(FILE_OUT)
+		closeFiles();
+	if(FILE_IN)
+		printf("File input set but not implemented yet.");
+	
     tw_end();
+	
+
 }
