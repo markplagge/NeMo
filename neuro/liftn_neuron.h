@@ -19,6 +19,35 @@
 
 #endif
 
+
+typedef struct LIF_MODEL {
+
+     tw_stime lastActiveTime;
+     tw_stime lastLeakTime;
+     tw_lpid outputGID;
+
+     stat_type rcvdMsgCount;
+     stat_type SOPSCount;
+
+     volt_type membranePotential;
+
+     thresh_type posThreshold;
+     thresh_type negThreshold;
+
+     id_type dendriteLocal;
+
+     random_type drawnRandomNumber;
+
+     id_type myCoreID;
+     id_type myLocalID;
+
+     short lambda;
+
+     int refract_length;
+
+     //TODO add stuff frrom the LIF model - ASK MARK what from the TN model is important, or what they all mean
+}
+
 /**
  * TrueNorth LP Neuron Model struct
  */
