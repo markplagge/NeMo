@@ -43,10 +43,24 @@ typedef struct LIF_MODEL {
 
      short lambda;
 
-     int refract_length;
+     char sigma_l;          //!< leak sign bit - eqiv. to σ
+     unsigned char delayVal;  //!<@todo: Need to fully implement this - this value
+                              //!is between 1 and 15, a "delay" of n timesteps of a
+                              //!neuron. -- outgoing delay //from BOOTCAMP!
 
-     //TODO add stuff frrom the LIF model - ASK MARK what from the TN model is important, or what they all mean
-}
+     bool firedLast;
+     bool heartbeatOut;
+     bool isSelfFiring;
+
+     bool canGenerateSpontaniousSpikes;
+
+     char axonTypes[512];
+     char synapticWeight[4];
+     bool synapticConnectivity[512];  //!< is there a connection between axon i and
+                                      //!neuron j?
+     /** stochastic weight mode selection. $b_j^{G_i}$ */
+     bool weightSelection[4];
+} lif_neuron_state;
 
 /**
  * TrueNorth LP Neuron Model struct

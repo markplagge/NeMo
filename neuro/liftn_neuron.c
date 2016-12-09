@@ -342,10 +342,8 @@ void LIF_set_neuron_dest(int signalDelay, uint64_t gid, tn_neuron_state* n) {
 void LIF_create_neuron(id_type coreID, id_type nID,
                       bool synapticConnectivity[NEURONS_IN_CORE],
                       short G_i[NEURONS_IN_CORE], short sigma[4], short S[4],
-                      bool b[4], bool epsilon, short sigma_l, short lambda,
-                      bool c, uint32_t alpha, uint32_t beta, short TM, short VR,
-                      short sigmaVR, short gamma, bool kappa,
-                      tn_neuron_state* n, int signalDelay,
+                      bool b[4], short sigma_l, short lambda,
+                      lif_neuron_state* n, int signalDelay,
                       uint64_t destGlobalID, int destAxonID) {
   for (int i = 0; i < 4; i++) {
     n->synapticWeight[i] = sigma[i] * S[i];
@@ -359,38 +357,17 @@ void LIF_create_neuron(id_type coreID, id_type nID,
   // set up other parameters
   n->myCoreID = coreID;
   n->myLocalID = nID;
-  n->epsilon = epsilon;
   n->sigma_l = sigma_l;
   n->lambda = lambda;
-  n->c = c;
   n->posThreshold = alpha;
   n->negThreshold = beta;
-  // n->thresholdMaskBits = TM;
-  // n->thresholdPRNMask = getBitMask(n->thresholdMaskBits);
-  n->sigmaVR = SGN(VR);
-  n->encodedResetVoltage = VR;
-  n->resetVoltage = VR;  //* sigmaVR;
 
-  n->resetMode = gamma;
-  n->kappa = kappa;
-  n->omega = 0;
-
-  //! @TODO: perhaps calculate if a neuron is self firing or not.
   n->firedLast = false;
   n->heartbeatOut = false;
-  // n->isSelfFiring = false;
-  // n->receivedSynapseMsgs = 0;
 
   LIF_set_neuron_dest(signalDelay, destGlobalID, n);
 
   // synaptic neuron setup:
-  n->largestRandomValue = n->thresholdPRNMask;
-  if (n->largestRandomValue > 256) {
-    tw_error(TW_LOC, "Error - neuron (%i,%i) has a PRN Max greater than 256\n ",
-             n->myCoreID, n->myLocalID);
-  }
-  // just using this rather than bit shadowing.
-
   n->dendriteLocal = destAxonID;
   n->outputGID = destGlobalID;
 
@@ -399,20 +376,20 @@ void LIF_create_neuron(id_type coreID, id_type nID,
   n->isSelfFiring =
       false;  //!@TODO: Add logic to support self-firing (spontanious) neurons
 }
-void LIF_create_neuron_encoded_rv(
-    id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
-    short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
-    bool epsilon, short sigma_l, short lambda, bool c, uint32_t alpha,
-    uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa,
-    tn_neuron_state* n, int signalDelay, uint64_t destGlobalID,
-    int destAxonID) {
- LIF_create_neuron(coreID, nID, synapticConnectivity, G_i, sigma, S, b, epsilon,
-                   sigma_l, lambda, c, alpha, beta, TM, VR, sigmaVR, gamma,
-                   kappa, n, signalDelay, destGlobalID, destAxonID);
-  n->sigmaVR = sigmaVR;
-  n->encodedResetVoltage = VR;
-  n->resetVoltage = (n->sigmaVR * (pow(2, n->encodedResetVoltage) - 1));
-}
+// void LIF_create_neuron_encoded_rv(
+//     id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
+//     short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
+//     bool epsilon, short sigma_l, short lambda, bool c, uint32_t alpha,
+//     uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa,
+//     tn_neuron_state* n, int signalDelay, uint64_t destGlobalID,
+//     int destAxonID) {
+//  LIF_create_neuron(coreID, nID, synapticConnectivity, G_i, sigma, S, b, epsilon,
+//                    sigma_l, lambda, c, alpha, beta, TM, VR, sigmaVR, gamma,
+//                    kappa, n, signalDelay, destGlobalID, destAxonID);
+//   n->sigmaVR = sigmaVR;
+//   n->encodedResetVoltage = VR;
+//   n->resetVoltage = (n->sigmaVR * (pow(2, n->encodedResetVoltage) - 1));
+// }
 /**
  * @brief      Creates a simple neuron for a identity matrix benchmark.
  *  Weights are set up such that axon $n$ has weight 1, where $n$ is the
@@ -434,23 +411,14 @@ void LIF_create_simple_neuron(tn_neuron_state* s, tw_lp* lp) {
   short sigma[4];
   short S[4] = {[0] = 3};
   bool b[4];
-  bool epsilon = 0;
   bool sigma_l = 0;
   short lambda = 0;
-  bool c = false;
-  short TM = 0;
-  short VR = 0;
-  short sigmaVR = 1;
-  short gamma = 0;
-  bool kappa = 0;
   int signalDelay = 1;  // tw_rand_integer(lp->rng, 0,5);
 
   for (int i = 0; i < NEURONS_IN_CORE; i++) {
-    // s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
     s->axonTypes[i] = 1;
     G_i[i] = 0;
     synapticConnectivity[i] = 0;
-    // synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1)
   }
 
   id_type myLocalID = getNeuronLocalFromGID(lp->gid);
@@ -459,26 +427,14 @@ void LIF_create_simple_neuron(tn_neuron_state* s, tw_lp* lp) {
 
   //(creates an "ident. matrix" of neurons.
   for (int i = 0; i < 4; i++) {
-    // int ri = tw_rand_integer(lp->rng, -1, 0);
-    // unsigned int mk = tw_rand_integer(lp->rng, 0, 1);
-
-    // sigma[i] = (!ri * 1) + (-1 & ri))
-    // sigma[i] = (mk ^ (mk - 1)) * 1;
     sigma[i] = 1;
     b[i] = 0;
   }
 
-  // weight_type alpha = tw_rand_integer(lp->rng, THRESHOLD_MIN, THRESHOLD_MAX);
-  // weight_type beta = tw_rand_integer(lp->rng, (NEG_THRESH_SIGN *
-  // NEG_THRESHOLD_MIN), NEG_THRESHOLD_MAX);
-  weight_type alpha = 1;
-  weight_type beta = -1;
-  // DEBUG LINE
-
-  LIF_create_neuron_encoded_rv(
+  LIF_create_neuron(
       getCoreFromGID(lp->gid), getNeuronLocalFromGID(lp->gid),
-      synapticConnectivity, G_i, sigma, S, b, epsilon, sigma_l, lambda, c,
-      alpha, beta, TM, VR, sigmaVR, gamma, kappa, s, signalDelay, 0, 0);
+      synapticConnectivity, G_i, sigma, S, b, sigma_l, lambda,
+      s, signalDelay, 0, 0);
   // we re-define the destination axons here, rather than use the constructor.
 
   float remoteCoreProbability = .905;
