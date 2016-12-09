@@ -60,8 +60,8 @@ set(model_srcs
         neuro/axon.h
         neuro/axon.c
 
-        neuro/tn_neuron.c
-        neuro/tn_neuron.h
+        neuro/liftn_neuron.c
+        neuro/liftn_neuron.h
 
         tests/nemo_tests.h
         tests/synapse_test.c
@@ -79,7 +79,7 @@ set(model_srcs
 
         IO/output.h
         IO/output.c
-        nemo_config.h 
+        nemo_config.h
         nemo_main.h )
 
 
@@ -87,4 +87,3 @@ ADD_EXECUTABLE(NeMo  ${model_srcs})
 
 
 TARGET_LINK_LIBRARIES(NeMo ROSS m)
-

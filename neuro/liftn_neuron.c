@@ -2,20 +2,20 @@
 // Created by Mark Plagge on 5/25/16.
 //
 
-#include "tn_neuron.h"
+#include "liftn_neuron.h"
 
 /** \defgroup TN_Function_hdrs True North Function headers
  * TrueNorth Neuron leak, integrate, and fire function forward decs.
  * @{ */
 
-void LIFFire(tn_neuron_state* st, void* l);
+void LIFFire(lif_neuron_state* st, void* l);
 /**
  *  @brief  function that adds a synapse's value to the current neuron's
  * membrane potential.
  *
  *  @param synapseID localID of the synapse sending the message.
  */
-void LIFIntegrate(id_type synapseID, tn_neuron_state* st, void* lp);
+void LIFIntegrate(id_type synapseID, lif_neuron_state* st, void* lp);
 /**
 *  @brief  handles incomming synapse messages. In this model, the neurons send
 messages to axons during "big tick" intervals.
@@ -27,7 +27,7 @@ the current big-tick.
 *  @param lp   lp.
 */
 
-bool LIFReceiveMessage(tn_neuron_state* st, messageData* M, tw_lp* lp,
+bool LIFReceiveMessage(lif_neuron_state* st, messageData* M, tw_lp* lp,
                       tw_bf* bf);
 
 /**
@@ -38,7 +38,7 @@ bool LIFReceiveMessage(tn_neuron_state* st, messageData* M, tw_lp* lp,
  * @param bf the reverse computation bitfield.
  */
 
-void LIFReceiveReverseMessage(tn_neuron_state* st, messageData* M, tw_lp* lp,
+void LIFReceiveReverseMessage(lif_neuron_state* st, messageData* M, tw_lp* lp,
                              tw_bf* bf);
 
 /**
@@ -50,7 +50,7 @@ void LIFReceiveReverseMessage(tn_neuron_state* st, messageData* M, tw_lp* lp,
  *
  *  @return true if the neuron is ready to fire.
  */
-bool LIFShouldFire(tn_neuron_state* st, tw_lp* lp);
+bool LIFShouldFire(lif_neuron_state* st, tw_lp* lp);
 
 /**
  *  @brief NumericLeakCalc - uses formula from the TrueNorth paper to calculate
@@ -66,17 +66,17 @@ bool LIFShouldFire(tn_neuron_state* st, tw_lp* lp);
  * reset.
  *  @TODO: test leaking functions
  */
-void LIFNumericLeakCalc(tn_neuron_state* st, tw_stime now);
+void LIFNumericLeakCalc(lif_neuron_state* st, tw_stime now);
 
 
-void LIFSendHeartbeat(tn_neuron_state* st, tw_stime time, void* lp);
+void LIFSendHeartbeat(lif_neuron_state* st, tw_stime time, void* lp);
 
 
 /**
  * negative saturation reset function (common to all reset modes, called if
  * 𝛾 is true. Simply sets the value of the membrane potential to $-𝛽_j$.
 **/
-void negThresholdReset(tn_neuron_state* s) {
+void negThresholdReset(lif_neuron_state* s) {
   s->membranePotential = -s->negThreshold;
 }
 /**
@@ -84,7 +84,7 @@ void negThresholdReset(tn_neuron_state* s) {
  * Normal reset function.
  */
 void resetNormal(void* neuronState) {
-  tn_neuron_state* s = (tn_neuron_state*)neuronState;
+  lif_neuron_state* s = (lif_neuron_state*)neuronState;
   if (s->membranePotential < s->negThreshold) {
     if (s->kappa)
       negThresholdReset(s);
@@ -100,7 +100,7 @@ void resetNormal(void* neuronState) {
  *  to the difference between the threshold and the potential. *
  */
 void resetLinear(void* neuronState) {
-  tn_neuron_state* s = (tn_neuron_state*)neuronState;
+  lif_neuron_state* s = (lif_neuron_state*)neuronState;
 
   if (s->membranePotential < s->negThreshold) {
     if (s->kappa)
@@ -120,7 +120,7 @@ void resetLinear(void* neuronState) {
  * paper.
  */
 void resetNone(void* neuronState) {
-  tn_neuron_state* s = (tn_neuron_state*)neuronState;
+  lif_neuron_state* s = (lif_neuron_state*)neuronState;
 
   if (s->kappa && s->membranePotential < s->negThreshold) {
     negThresholdReset(s);
@@ -137,7 +137,7 @@ void resetNone(void* neuronState) {
  The specs state that the leak stores the voltage in a temporary variable. Here,
  we store the leak voltage in the membrane potential, and override it with a new
  value. */
-void LIFFire(tn_neuron_state* st, void* l) {
+void LIFFire(lif_neuron_state* st, void* l) {
   tw_lp* lp = (tw_lp*)l;
   // DEBUG
   //	tw_lpid outid = st->dendriteGlobalDest;
@@ -155,7 +155,7 @@ void LIFFire(tn_neuron_state* st, void* l) {
   tw_event_send(newEvent);
   st->firedLast = true;
 }
-bool LIFReceiveMessage(tn_neuron_state* st, messageData* m, tw_lp* lp,
+bool LIFReceiveMessage(lif_neuron_state* st, messageData* m, tw_lp* lp,
                       tw_bf* bf) {
   /** @todo Replace these state saving values with reverse computation. */
   m->neuronVoltage = st->membranePotential;
@@ -187,7 +187,7 @@ bool LIFReceiveMessage(tn_neuron_state* st, messageData* m, tw_lp* lp,
         st->heartbeatOut = true;
         bf->c13 =
             1;  // C13 indicates that the heartbeatout flag has been changed.
-        TNSendHeartbeat(st, time, lp);
+        LIFSendHeartbeat(st, time, lp);
 
         // set message flag indicating that the heartbeat msg has been sent
       }
@@ -209,11 +209,11 @@ bool LIFReceiveMessage(tn_neuron_state* st, messageData* m, tw_lp* lp,
 
       // willFire = neuronShouldFire(st, lp); //removed and replaced with
       // fireFloorCelingReset
-      willFire = TNShouldFire(st,lp);
+      willFire = LIFShouldFire(st,lp);
       bf->c0 = willFire;
 
       if (willFire) {
-        TNFire(st, lp);
+        LIFFire(st, lp);
         // st->fireCount++;
       }
 
@@ -254,7 +254,7 @@ bool LIFReceiveMessage(tn_neuron_state* st, messageData* m, tw_lp* lp,
   }
   return willFire;
 }
-void LIFReceiveReverseMessage(tn_neuron_state* st, messageData* M, tw_lp* lp,
+void LIFReceiveReverseMessage(lif_neuron_state* st, messageData* M, tw_lp* lp,
                              tw_bf* bf) {
   if (M->eventType == NEURON_HEARTBEAT) {
     // reverse heartbeat message
@@ -275,7 +275,7 @@ void LIFReceiveReverseMessage(tn_neuron_state* st, messageData* M, tw_lp* lp,
 }
 
 
-void LIFIntegrate(id_type synapseID, tn_neuron_state* st, void* lp) {
+void LIFIntegrate(id_type synapseID, lif_neuron_state* st, void* lp) {
   bool con = st->synapticConnectivity[synapseID];
   if (con == 0) return;
   if(st->synapticConnectivity[synapseID]){
@@ -285,7 +285,7 @@ void LIFIntegrate(id_type synapseID, tn_neuron_state* st, void* lp) {
 }
 
 
-void LIFSendHeartbeat(tn_neuron_state* st, tw_stime time, void* lp) {
+void LIFSendHeartbeat(lif_neuron_state* st, tw_stime time, void* lp) {
   tw_lp* l = (tw_lp*)lp;
   tw_event* newEvent =
       tw_event_new(l->gid, getNextBigTick(l, st->myLocalID), l);
@@ -301,14 +301,14 @@ void LIFSendHeartbeat(tn_neuron_state* st, tw_stime time, void* lp) {
   }
 }
 
-bool LIFShouldFire(tn_neuron_state* st, tw_lp* lp) {
+bool LIFShouldFire(lif_neuron_state* st, tw_lp* lp) {
   // check negative threshold values:
   volt_type threshold = st->posThreshold;
   return (st->membranePotential >= threshold);  // + (st->drawnRandomNumber));
 }
 
 
-void LIFNumericLeakCalc(tn_neuron_state* st, tw_stime now) {
+void LIFNumericLeakCalc(lif_neuron_state* st, tw_stime now) {
   // shortcut for calcuation - neurons do not leak if:
   // lambda is zero:
   if (st->lambda == 0) return;
@@ -329,7 +329,7 @@ void LIFNumericLeakCalc(tn_neuron_state* st, tw_stime now) {
 
 
 
-void LIF_set_neuron_dest(int signalDelay, uint64_t gid, tn_neuron_state* n) {
+void LIF_set_neuron_dest(int signalDelay, uint64_t gid, lif_neuron_state* n) {
   n->delayVal = signalDelay;
   n->outputGID = gid;
 }
@@ -400,7 +400,7 @@ void LIF_create_neuron(id_type coreID, id_type nID,
  * @param      s     { parameter_description }
  * @param      lp    The pointer to a
  */
-void LIF_create_simple_neuron(tn_neuron_state* s, tw_lp* lp) {
+void LIF_create_simple_neuron(lif_neuron_state* s, tw_lp* lp) {
   // Rewrote this function to have a series of variables that are easier to
   // read.
   // Since init time is not so important, readability wins here.
@@ -461,7 +461,7 @@ void LIF_create_simple_neuron(tn_neuron_state* s, tw_lp* lp) {
 }
 
 
-void LIF_init(tn_neuron_state* s, tw_lp* lp) {
+void LIF_init(lif_neuron_state* s, tw_lp* lp) {
   static int pairedNeurons = 0;
   static bool announced = false;
   s->neuronTypeDesc = "SIMPLE";
@@ -480,7 +480,7 @@ void LIF_init(tn_neuron_state* s, tw_lp* lp) {
   }
 
 
-void LIF_forward_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
+void LIF_forward_event(lif_neuron_state* s, tw_bf* CV, messageData* m,
                       tw_lp* lp) {
   long start_count = lp->rng->count;
 
@@ -493,7 +493,7 @@ void LIF_forward_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
   m->rndCallCount = lp->rng->count - start_count;
 }
 
-void TN_reverse_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
+void TN_reverse_event(lif_neuron_state* s, tw_bf* CV, messageData* m,
                       tw_lp* lp) {
   long count = m->rndCallCount;
 
@@ -505,7 +505,7 @@ void TN_reverse_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
 
 /** TN_commit is a function called on commit. This is used for management of
  * neurons! */
-void LIF_commit(tn_neuron_state* s, tw_bf* cv, messageData* m, tw_lp* lp) {
+void LIF_commit(lif_neuron_state* s, tw_bf* cv, messageData* m, tw_lp* lp) {
   // if neuron has fired and save neuron fire events is enabled, save this
   // event.
   if (SAVE_SPIKE_EVTS && cv->c0) {
@@ -519,7 +519,7 @@ void prhdr(bool* display, char* hdr) {
     *display = true;
   }
 }
-void LIF_final(tn_neuron_state* s, tw_lp* lp) {
+void LIF_final(lif_neuron_state* s, tw_lp* lp) {
   if (g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
     // Alpha, SOPS should be zero. HeartbeatOut should be false.
     char* em = (char*)calloc(1024, sizeof(char));
@@ -545,6 +545,6 @@ void LIF_final(tn_neuron_state* s, tw_lp* lp) {
   }
 }
 
-inline LIF_neuron_state* TN_convert(void* lpstate) {
-  return (tn_neuron_state*)lpstate;
+inline lif_neuron_state* LIF_convert(void* lpstate) {
+  return (lif_neuron_state*)lpstate;
 }
