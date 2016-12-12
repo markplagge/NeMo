@@ -66,65 +66,18 @@ bool LIFShouldFire(lif_neuron_state* st, tw_lp* lp);
  * reset.
  *  @TODO: test leaking functions
  */
-void LIFNumericLeakCalc(lif_neuron_state* st, tw_stime now);
+// void LIFNumericLeakCalc(lif_neuron_state* st, tw_stime now);
+
+void LIFConstantLeak(lif_neuron_state* st, tw_stime now);
+
 
 
 void LIFSendHeartbeat(lif_neuron_state* st, tw_stime time, void* lp);
 
 
-/**
- * negative saturation reset function (common to all reset modes, called if
- * 𝛾 is true. Simply sets the value of the membrane potential to $-𝛽_j$.
-**/
-void negThresholdReset(lif_neuron_state* s) {
-  s->membranePotential = -s->negThreshold;
-}
-/**
-
- * Normal reset function.
- */
-void resetNormal(void* neuronState) {
-  lif_neuron_state* s = (lif_neuron_state*)neuronState;
-  if (s->membranePotential < s->negThreshold) {
-    if (s->kappa)
-      negThresholdReset(s);
-    else
-      s->membranePotential = -(s->resetVoltage);
-  } else {
-    s->membranePotential = s->resetVoltage;  // set current voltage to \f$R\f$.
-  }
-}
-
-/**
- *   Linear reset mode - ignores \f$R\f$, and sets the membrane potential
- *  to the difference between the threshold and the potential. *
- */
-void resetLinear(void* neuronState) {
-  lif_neuron_state* s = (lif_neuron_state*)neuronState;
-
-  if (s->membranePotential < s->negThreshold) {
-    if (s->kappa)
-      negThresholdReset(s);
-    else {
-      s->membranePotential =
-          s->membranePotential - (s->negThreshold + s->drawnRandomNumber);
-    }
-  } else {
-    s->membranePotential =
-        s->membranePotential - (s->posThreshold + s->drawnRandomNumber);
-  }
-}
-/**
- *   non-reset handler function - does non-reset style reset. Interestingly,
- *  even non-reset functions follow the negative saturation parameter from the
- * paper.
- */
-void resetNone(void* neuronState) {
-  lif_neuron_state* s = (lif_neuron_state*)neuronState;
-
-  if (s->kappa && s->membranePotential < s->negThreshold) {
-    negThresholdReset(s);
-  }
+void LIF_reset_membrane(lif_neuron_state* st, tw_lp* lp)
+{
+     st-> membranePotential = 0;
 }
 
 /**@} */
@@ -176,10 +129,6 @@ bool LIFReceiveMessage(lif_neuron_state* st, messageData* m, tw_lp* lp,
     /// validation isn't working check this.
 
     case SYNAPSE_OUT: //You received a firing
-      st->drawnRandomNumber = tw_rand_integer(
-          lp->rng, 0,
-          st->largestRandomValue);  //!<- @BUG This might be creating
-      //! non-deterministic errors
       LIFIntegrate(m->axonID, st, lp);
       // next, we will check if a heartbeat message should be sent
       if (st->heartbeatOut == false) {
@@ -199,11 +148,8 @@ bool LIFReceiveMessage(lif_neuron_state* st, messageData* m, tw_lp* lp,
       bf->c13 =
           1;  // C13 indicates that the heartbeatout flag has been changed.
 
-      // Currently operates - leak->fire->(reset)
-      st->drawnRandomNumber =
-          tw_rand_integer(lp->rng, 0, st->largestRandomValue);
 
-      LIFNumericLeakCalc(st, tw_now(lp));
+      LIFConstantLeak(st, tw_now(lp));
       // linearLeak( st, tw_now(lp));
 
 
@@ -271,7 +217,6 @@ void LIFReceiveReverseMessage(lif_neuron_state* st, messageData* M, tw_lp* lp,
   st->membranePotential = M->neuronVoltage;
   st->lastLeakTime = M->neuronLastLeakTime;
   st->lastActiveTime = M->neuronLastActiveTime;
-  st->drawnRandomNumber = M->neuronDrawnRandom;
 }
 
 
@@ -308,25 +253,20 @@ bool LIFShouldFire(lif_neuron_state* st, tw_lp* lp) {
 }
 
 
-void LIFNumericLeakCalc(lif_neuron_state* st, tw_stime now) {
-  // shortcut for calcuation - neurons do not leak if:
-  // lambda is zero:
-  if (st->lambda == 0) return;
-  // calculate current time since last leak --- LEAK IS TERRIBLE FOR THIS:
-  uint_fast32_t numberOfBigTicksSinceLastLeak =
-      getCurrentBigTick(now) - getCurrentBigTick(st->lastLeakTime);
-  // then run the leak function until we've caught up:
-  for (; numberOfBigTicksSinceLastLeak > 0; numberOfBigTicksSinceLastLeak--) {
-    uint64_t omega = st->sigma_l * (1 - st->epsilon) +
-                     SGN(st->membranePotential) * st->sigma_l * st->epsilon;
 
-    st->membranePotential =
-        st->membranePotential + (omega * ((1 - st->c) * st->lambda)) +
-        (st->c & (BINCOMP(st->lambda, st->drawnRandomNumber)));
-  }
-  st->lastLeakTime = now;
+
+void LIFConstantLeak(lif_neuron_state* st, tw_stime now)
+{
+     // calculate current time since last leak --- LEAK IS TERRIBLE FOR THIS:
+     uint_fast32_t numberOfBigTicksSinceLastLeak =
+         getCurrentBigTick(now) - getCurrentBigTick(st->lastLeakTime);
+     // then run the leak function until we've caught up:
+     for(; numberOfBigTicksSinceLastLeak > 0; numberOfBigTicksSinceLastLeak--)
+     {
+          st->membranePotential = st->membranePotential - st->lambda_j;
+     }
+     st->lastLeakTime = now;
 }
-
 
 
 void LIF_set_neuron_dest(int signalDelay, uint64_t gid, lif_neuron_state* n) {
@@ -342,7 +282,7 @@ void LIF_set_neuron_dest(int signalDelay, uint64_t gid, lif_neuron_state* n) {
 void LIF_create_neuron(id_type coreID, id_type nID,
                       bool synapticConnectivity[NEURONS_IN_CORE],
                       short G_i[NEURONS_IN_CORE], short sigma[4], short S[4],
-                      bool b[4], short sigma_l, short lambda,
+                      bool b[4], short sigma_l, short lambda_j, uint32_t alpha,
                       lif_neuron_state* n, int signalDelay,
                       uint64_t destGlobalID, int destAxonID) {
   for (int i = 0; i < 4; i++) {
@@ -358,9 +298,8 @@ void LIF_create_neuron(id_type coreID, id_type nID,
   n->myCoreID = coreID;
   n->myLocalID = nID;
   n->sigma_l = sigma_l;
-  n->lambda = lambda;
+  n->lambda_j = lambda_j;
   n->posThreshold = alpha;
-  n->negThreshold = beta;
 
   n->firedLast = false;
   n->heartbeatOut = false;
@@ -412,8 +351,10 @@ void LIF_create_simple_neuron(lif_neuron_state* s, tw_lp* lp) {
   short S[4] = {[0] = 3};
   bool b[4];
   bool sigma_l = 0;
-  short lambda = 0;
+  short lambda_j = .1;
   int signalDelay = 1;  // tw_rand_integer(lp->rng, 0,5);
+  weight_type alpha = 1;
+
 
   for (int i = 0; i < NEURONS_IN_CORE; i++) {
     s->axonTypes[i] = 1;
@@ -433,7 +374,7 @@ void LIF_create_simple_neuron(lif_neuron_state* s, tw_lp* lp) {
 
   LIF_create_neuron(
       getCoreFromGID(lp->gid), getNeuronLocalFromGID(lp->gid),
-      synapticConnectivity, G_i, sigma, S, b, sigma_l, lambda,
+      synapticConnectivity, G_i, sigma, S, b, sigma_l, lambda_j, alpha,
       s, signalDelay, 0, 0);
   // we re-define the destination axons here, rather than use the constructor.
 
@@ -464,27 +405,26 @@ void LIF_create_simple_neuron(lif_neuron_state* s, tw_lp* lp) {
 void LIF_init(lif_neuron_state* s, tw_lp* lp) {
   static int pairedNeurons = 0;
   static bool announced = false;
-  s->neuronTypeDesc = "SIMPLE";
   if (DEBUG_MODE && !announced) {
     printf("Creating neurons\n");
     announced = true;
   }
   // ADD FILE INPUT NEURON CREATION HERE
 
-  TN_create_simple_neuron(s, lp);
+  LIF_create_simple_neuron(s, lp);
 
   if (DEBUG_MODE) {
     printf(
-        "Neuron type %s, num: %llu checking in with GID %llu and dest %llu \n",
-        s->neuronTypeDesc, s->myLocalID, lp->gid, s->outputGID);
+        "Neuron type SIMPLE, num: %hu checking in with GID %llu and dest %llu \n", s->myLocalID, lp->gid, s->outputGID);
   }
+}
 
 
 void LIF_forward_event(lif_neuron_state* s, tw_bf* CV, messageData* m,
                       tw_lp* lp) {
   long start_count = lp->rng->count;
 
-  bool fired = TNReceiveMessage(s, m, lp, CV);
+  bool fired = LIFReceiveMessage(s, m, lp, CV);
   s->SOPSCount++;
   /**@todo save message trace here: */
 
@@ -493,11 +433,11 @@ void LIF_forward_event(lif_neuron_state* s, tw_bf* CV, messageData* m,
   m->rndCallCount = lp->rng->count - start_count;
 }
 
-void TN_reverse_event(lif_neuron_state* s, tw_bf* CV, messageData* m,
+void LIF_reverse_event(lif_neuron_state* s, tw_bf* CV, messageData* m,
                       tw_lp* lp) {
   long count = m->rndCallCount;
 
-  TNReceiveReverseMessage(s, m, lp, CV);
+  LIFReceiveReverseMessage(s, m, lp, CV);
   s->SOPSCount--;
 
   while (count--) tw_rand_reverse_unif(lp->rng);

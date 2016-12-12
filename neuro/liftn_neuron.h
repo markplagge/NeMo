@@ -32,7 +32,6 @@ typedef struct LIF_MODEL {
      volt_type membranePotential;
 
      thresh_type posThreshold;
-     thresh_type negThreshold;
 
      id_type dendriteLocal;
 
@@ -41,7 +40,7 @@ typedef struct LIF_MODEL {
      id_type myCoreID;
      id_type myLocalID;
 
-     short lambda;
+     short lambda_j;
 
      char sigma_l;          //!< leak sign bit - eqiv. to σ
      unsigned char delayVal;  //!<@todo: Need to fully implement this - this value
