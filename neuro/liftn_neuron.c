@@ -129,6 +129,7 @@ bool LIFReceiveMessage(lif_neuron_state* st, messageData* m, tw_lp* lp,
     /// validation isn't working check this.
 
     case SYNAPSE_OUT: //You received a firing
+      printf("%i: I received a firing from %i!\n",st->myLocalID,m->localID);
       LIFIntegrate(m->axonID, st, lp);
       // next, we will check if a heartbeat message should be sent
       if (st->heartbeatOut == false) {
@@ -351,7 +352,7 @@ void LIF_create_simple_neuron(lif_neuron_state* s, tw_lp* lp) {
   short S[4] = {[0] = 3};
   bool b[4];
   bool sigma_l = 0;
-  short lambda_j = .1;
+  short lambda_j = .9;
   int signalDelay = 1;  // tw_rand_integer(lp->rng, 0,5);
   weight_type alpha = 1;
 
