@@ -5,57 +5,60 @@
 #include "lif_neuron.h"
 
 
-void LIFFire(tn_neuron_state *st, void *l);
+void LIFFire(tn_neuron_state *s, tw_lp *lp));
 
-void LIFIntegrate(id_type snyapseID, lif_neuron_state *st, void *lp);
+void LIFIntegrate(id_type snyapseID, lif_neuron_state *st, tw_lp *lp));
 
-void LIFShouldFire(lif_neuron_state *st, tw_lp *lp);
+void LIFShouldFire(lif_neuron_state *s, tw_lp *lp);
 
 bool LIFFireFloorCeilingReset(lif_neuron_state *st, tw_lp *lp);
 
-void LIFNumericLeakCalc(lif_neuron_state *st, tw_stime now);
+void LIFLeakCalc(lif_neuron_state *s, tw_stime now);
 
-void LIFLinearLeak(lif_neuron_state *st, tw_stime now);
-
-void LIFSendHeartbeat(lif_neuron_state *st tw_stime time, void *lp);
+void LIFSendHeartbeat(lif_neuron_state *s tw_stime time, tw_lp *lp));
 
 
 
 
 void LIF_init(lif_neuron_state *s, tw_lp *lp)
 {
-     s->neuronTypeDesc = "SIMPLE";
+
+     //residual TN LIF model stuff / NeMo stuff
      if (DEBUG_MODE)
      {
           printf("Creating Neuron\n");
      }
 
      static int created = 0;
-
-     bool synapticConnectivity[NEURONS_IN_CORE];
-     short G_i[NEURONS_IN_CORE];
      short sigma[4]; //TODO hardcoded types of weights in neuron to 4.
      short S[4] = {[0] = 3};
      bool b[4];
-     bool epsilon =0;
-     bool sigma_l = 0;
-     short lambda = 0;
-     bool c = false;
-     short TM = 0;
-     short VR = 0;
-     short sigmaVR = 1;
-     short gamma = 0;
-     bool kappa = 0;
      int signalDelay = 1;
+     bool heartbeatOut = false;
+
+     //my model stuff
+     s->R_mem = 10;
+     s->C_mem = 25;
+     s->Tau = R_mem * C_mem;
+     s->V_thresh = 1.6;
+     s->V_in = 0.0;
+     s->V_spike = .25;
+     s->V_mem = 0;
+     s->V_last = 0;
+     s->firing_count = 0;
+
+     s->R_mem = 10;
+
+
 
      for(int i = 0; i < NEURONS_IN_CORE; i++)
      {
-          s->axonTypes[i] = 1;
-          G_i[i] = 0;
-          synapticConnectivity[i] = 0;
+          s->axonTypes[i] = 0;
+          s->synapticConnectivity[i] = 0;
      }
      id_type myLocalID = getNeuronLocalFromGID(lp->gid);
-     synapticConnectivity[myLocalID] = 1;
+     s->synapticConnectivity[myLocalID] = 1;
+
 
 
      for(int i = 0; i < 4; i++) //TODO hardcoded weights in neuron to 4.
@@ -64,69 +67,31 @@ void LIF_init(lif_neuron_state *s, tw_lp *lp)
           b[i] = 0;
      }
 
-     weight_type alpha = 1;
-     weight_type beta = -1;
-
-
-     // *********************************** create neuron encoded rv  --- here.
-
      for(int i = 0; i < 4; i++)= //TODO hardcoded weights in neuron to 4.
      {
-          n->snyapticWeight[i] = sigma[i] * S[i];
-          n->weightSelection[i] = b[i];
-     }
-
-     for(int i = 0; i < NEURONS_IN_CORE; i++)
-     {
-          n->synapticConnectivity[i] = synapticConnectivity[i];
-          n->axonTypes[i] = G_i[i];
+          s->snyapticWeight[i] = sigma[i] * S[i];
+          s->weightSelection[i] = b[i];
      }
 
      //Setup other parameters
-     n->myCoreID = coreID;
-     n->myLocalID = nID;
-     n->epsilon = epsilon;
-     n->sigma_l = sigma_l;
-     n->lambda = lambda;
-     n->c = c;
-     n->posThreshold = alpha;
-     n->negThreshold = beta;
-     n->sigmaVR = SGN(VR);
-     n->encodedResetVoltage = VR;
-     n->resetVoltage = VR; //* sigmaVR;
-     n->resetMode = gamma;
-     n->kappa = kappa;
-     n->omega = 0;
+     s->myCoreID = coreID;
+     s->myLocalID = nID;
 
-     n->firedLast = false;
-     n->heartbeatOut = false;
+     s->firedLast = firedLast;
+     s->heartbeatOut = heartbeatOut;
 
      //TN Set Neuron Dest
-     n->delayVal = signalDelay;
-     n->outputGID = gid;
+     s->delayVal = signalDelay;
+     s->outputGID = gid;
 
-     n->largestRandomValue = n->thresholdPRNMask;
-     if(n->largestRandomValue > 256)
-     {
-          tw_error(TW_LOC, "Error - neuron (%i,%i) has a PRN Max greater than 256\n ", n->myCoreID, n->myLocalID);
-     }
-     //just using this rather than bit shadowing.
+     s->dendriteLocal = destAxonID;
+     s->outputGID = destGlobalID;
 
-     n->dendriteLocal = destAxonID;
-     n->outputGID = destGlobalID;
-
-     //Check to see if we are a self-firing neuron. If so, we need to send heartbeats every big tick.
-     n->isSelfFiring = false; //!@TODO: Add logic to support self-firing (spontanious) neurons
-
-     // put the rest of create neuron encoded rv here vvv
-     n->sigmaVR = sigmaVR;
-     n->encodedResetVoltage = VR;
-     n->resetVoltage = (n->sigmaVR * (pow(2, n->encodedResetVoltage)-1));
 
      if (DEBUG_MODE)
      {
-          printf("Neuron type %s, num: %llu checking in with GID %llu and dest %llu\n",
-           s->neuronTypeDesc, s->myLocalID, lp->gid, s->outputGID);
+          printf("Neuron type SIMPLE, num: %llu checking in with GID %llu and dest %llu\n",
+          s->myLocalID, lp->gid, s->outputGID);
      }
 
      float remoteCoreProbability = .905;
@@ -147,23 +112,40 @@ void LIF_init(lif_neuron_state *s, tw_lp *lp)
      created++;
 }
 
+void LIFIntegrate(id_type synapseID, lif_neuron_state* s, tw_lp *lp)
+{
+     bool con = s->synapticConnectivity[synapseID];
+
+     if(con) //if there's a connection
+     {
+          weight_type weight = s->synapticWeight[s->axonTypes[synapseID]];
+          s->V_in += weight;
+     }
+}
+
+void LIFLeakCalc(lif_neuron_state *s, tw_stime now)
+{
+
+
+
+     uint_fast32_t numberOfBigTicksSinceLastLeak = getCurrentBigTick(now) - getCurrentBigTick(s->lastLeakTime);
+
+
+
+}
 
 void LIF_forward_event (lif_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *lp)
 {
      long start_count = lp->rng->count;
 
-     //bool fired = TNReceiveMessage()
      m->neuronVoltage = s->membranePotential;
      m->neuronLastLeakTime = s->lastLeakTime;
-     m->neuronDrawnRandom = s->drawnRandomNumber;
 
      bool willFire = false;
 
      switch(m->eventType)
      {
           case SYNAPSE_OUT:
-               st->drawnRandomNumber = tw_rand_integer(lp->rng, 0, st->largestRandomValue); //!<- @BUG This might be creating non-deterministic errors
-
                //Integrate -- AUG 23 LEFT OFF POINT
                LIFIntegrate(m->axonID,st,lp);
 
@@ -177,33 +159,23 @@ void LIF_forward_event (lif_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *l
                break;
 
           case NEURON_HEARTBEAT:
-               st->heartbeatOut = false;
+               s->heartbeatOut = false;
                bf->c13 = 1;
 
-               st->drawnRandomNumber = tw_rand_integer(lp->rng,0,st->largestRandomValue);
+               LIFLeakCalc(s, tw_now(lp));
 
-               LIFNumericLeakCalc(st, tw_now(lp));
-
-               willFire = LIFFireFloorCeilingReset(st, lp);
-               bf->c0 = willFire;
+               willFire = LIFShouldFire(s, lp);
+               CV->c0 = willFire;
 
                if(willFire)
                {
-                    LIFFire(st,lp);
+                    LIFFire(s,lp);
                }
 
-               st->lastActiveTime = tw_now(lp);
+               s->lastActiveTime = tw_now(lp);
 
-               volt_type threshold = st->posThreshold;
-               if( (st->membranePotential >= threshold) && st->heartbeatOut == false ){
-                   tw_stime time = getNextBigTick(lp, st->myLocalID);
-                   st->heartbeatOut = true;
-                   //set message flag indicating that the heartbeat msg has been sent
-                   bf->c13 = 1; //C13 indicates that the heartbeatout flag has been changed.
-                   LIFSendHeartbeat(st, time, lp);
-               }
-               
 
+               s->V_in = 0; //Reset the input voltage from the integration steps
                break;
 
           default:
@@ -212,7 +184,8 @@ void LIF_forward_event (lif_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *l
                break;
      }
 
-
+     s->SOPSCount++;
+     m->rndCallCount = lp->rng->count - start_count;
 }
 
 
