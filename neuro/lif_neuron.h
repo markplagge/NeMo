@@ -33,8 +33,9 @@ typedef struct LIF_MODEL
      volt_type V_mem; //!< current "voltage" of neuron, \f$V_j(t)\f$. Since this is PDES, \a t is implicit
      volt_type V_in;
      volt_type V_spike;
-     volt_type V_last;
      thresh_type V_thresh;
+
+     volt_type* V_history;
 
      //16
      id_type dendriteLocal; //!< Local ID of the remote dendrite -- not LPID, but a local axon value (0-i)
@@ -56,13 +57,12 @@ typedef struct LIF_MODEL
      bool heartbeatOut;
 
      char axonTypes[512];
-     char synapticWeight[4];
+     double synapticWeight[4];
      bool synapticConnectivity[512]; //!< is there a connection between axon i and neuron j?
      /** stochastic weight mode selection. $b_j^{G_i}$ */
-     bool weightSelection[4];
 
 
-}lif_neuron_state
+}lif_neuron_state;
 
 
 

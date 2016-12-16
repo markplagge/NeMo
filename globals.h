@@ -21,7 +21,7 @@
 
 /** @defgroup tempConfig Temporary configuration globals
  *	These global defines are stored here before I migrate them into either a run-time
- *	or compile-time option 
+ *	or compile-time option
  * @{ */
 
 #define SAVE_NEURON_STATS
@@ -31,15 +31,15 @@
 
 
 
-/** @defgroup types Typedef Vars 
+/** @defgroup types Typedef Vars
  * Typedefs to ensure proper types for the neuron parameters/mapping calculations
  */
 /**@{  */
 
 typedef uint_fast16_t id_type; //!< id type is used for local mapping functions - there should be $n$ of them depending on CORE_SIZE
-typedef int32_t volt_type; //!< volt_type stores voltage values for membrane potential calculations
+typedef double volt_type; //!< volt_type stores voltage values for membrane potential calculations
 typedef int64_t weight_type;//!< seperate type for synaptic weights.
-typedef uint32_t thresh_type;//!< Type for weights internal to the neurons.
+typedef double thresh_type;//!< Type for weights internal to the neurons.
 typedef uint16_t random_type;//!< Type for random values in neuron models.
 
 typedef uint64_t size_type; //!< size_type holds sizes of the sim - core size, neurons per core, etc.
@@ -80,21 +80,21 @@ void *: "%p")
 #elif BGQ
 //#else //stupid BGQ
 
-#define charf    "%c"   
-#define scharf   "%hhd"   
-#define sshortf  "%hd"   
-#define ushortf  "%hu"   
-#define intf     "%d"   
-#define uintf    "%u"   
-#define lintf    "%ld"   
-#define ulintf   "%lu"   
-#define llintf   "%lld"   
-#define ullintf  "%llu"   
-#define floatf   "%f"   
-#define dobulef  "%f"   
-#define ldoublef "%Lf"   
+#define charf    "%c"
+#define scharf   "%hhd"
+#define sshortf  "%hd"
+#define ushortf  "%hu"
+#define intf     "%d"
+#define uintf    "%u"
+#define lintf    "%ld"
+#define ulintf   "%lu"
+#define llintf   "%lld"
+#define ullintf  "%llu"
+#define floatf   "%f"
+#define dobulef  "%f"
+#define ldoublef "%Lf"
 
-#define voidf    "%p"   
+#define voidf    "%p"
 #define charsf "%s\n"
 
 #define printf_dec_format(x) _Generic((x), \
@@ -230,14 +230,15 @@ typedef struct Ms{
 	union{
 		unsigned long synapseCounter;
 		struct{
+               volt_type neuronVoltageIn;
 			volt_type neuronVoltage;
 			tw_stime neuronLastActiveTime;
 			tw_stime neuronLastLeakTime;
 			random_type neuronDrawnRandom;
 		};
 	};
-	
-	
+
+
     union{
         id_type axonID; //!< Axon ID for neuron value lookups.
         bool * neuronConn;
@@ -261,7 +262,7 @@ typedef struct Ms{
 
 
 
-   
+
 
 }messageData;
  /**@}*/

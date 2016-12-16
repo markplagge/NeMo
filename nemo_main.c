@@ -113,7 +113,7 @@ tw_lptype model_lps[] = {
         (pre_run_f)NULL,
         (event_f)LIF_forward_event,
         (revent_f)LIF_reverse_event,
-        (commit_f) LIF_commit	,
+        (commit_f)LIF_commit,
         (final_f)LIF_final,
         (map_f)getPEFromGID,
         sizeof(lif_neuron_state)

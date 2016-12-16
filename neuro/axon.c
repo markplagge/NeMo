@@ -37,7 +37,7 @@
 //	addCol(messageTrace, dm, 1);
 //	addCol(messageTrace, lp->gid, 0);
 //	addRow(messageTrace);
-//	
+//
 //}
 #endif
 void axon_init(axonState *s, tw_lp *lp)
@@ -89,16 +89,16 @@ void axon_init(axonState *s, tw_lp *lp)
 //			if(!writeInit){
 //				messageTrace = createCSV("message_log", g_tw_mynode, g_tw_npe -1);
 //				writeInit = true;
-//				
+//
 //			}
-//			
+//
 //			axon_mark_message(s, data, lp->gid, lp);
 //			/** @todo add message save code to io stack
 //			 * */
 //			// save message //
-//			
+//
 //		}
-		
+
     }
 
 
@@ -131,7 +131,7 @@ void axon_event(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
 	M->rndCallCount = lp->rng->count - rc;
 
 	if (VALIDATION){
-		//save axon event for validation and traceback. 
+		//save axon event for validation and traceback.
 	}
 }
 void axon_reverse(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
@@ -140,8 +140,8 @@ void axon_reverse(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
 	}
     -- s->sendMsgCount;
 
-    
-    
+
+
 	long count  = M->rndCallCount;
 	while (count--){
 		tw_rand_reverse_unif(lp->rng);
@@ -150,10 +150,10 @@ void axon_reverse(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
 
 }
 void axon_final(axonState *s, tw_lp *lp){
-    
+
     if(g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
         char * shdr = "Axon Error\n";
-        
+
         if (s->sendMsgCount != 0){
             print(shdr);
             char* m = "Message Sent Val ->";
