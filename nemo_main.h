@@ -12,7 +12,7 @@
 #include "nemo_config.h"
 #include "./neuro/axon.h"
 #include "./neuro/synapse.h"
-#include "./neuro/liftn_neuron.h"
+#include "./neuro/lif_neuron.h"
 #include "ross.h"
 // #include "./tests/nemo_tests.h"
 

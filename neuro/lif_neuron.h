@@ -115,13 +115,7 @@ void LIF_final(lif_neuron_state *s, tw_lp *lp);
  * This is used for managing super synapse direct communication functionality.
  */
 
-inline lif_neuron_state * TN_convert(void * lpstate);
-
-
-
-
-
-
+// inline lif_neuron_state * TN_convert(void * lpstate);
 
 
 #endif //NEMO_LIF_NEURON_H

@@ -11,14 +11,9 @@ void LIFIntegrate(id_type snyapseID, lif_neuron_state *st, tw_lp *lp));
 
 void LIFShouldFire(lif_neuron_state *s, tw_lp *lp);
 
-bool LIFFireFloorCeilingReset(lif_neuron_state *st, tw_lp *lp);
-
-void LIFLeakCalc(lif_neuron_state *s, tw_stime now);
+void LIFLeakProcess(lif_neuron_state *s, tw_stime now);
 
 void LIFSendHeartbeat(lif_neuron_state *s tw_stime time, tw_lp *lp));
-
-
-
 
 void LIF_init(lif_neuron_state *s, tw_lp *lp)
 {
@@ -119,17 +114,21 @@ void LIFIntegrate(id_type synapseID, lif_neuron_state* s, tw_lp *lp)
      if(con) //if there's a connection
      {
           weight_type weight = s->synapticWeight[s->axonTypes[synapseID]];
-          s->V_in += weight;
+          s->V_in += weight/s->Tau;
      }
 }
 
-void LIFLeakCalc(lif_neuron_state *s, tw_stime now)
+void LIFLeakProcess(lif_neuron_state *s, tw_stime now)
 {
+     uint_fast32_t numBigTicksMissed = getCurrentBigTick(now) - getCurrentBigTick(s->lastLeakTime); //minimum is 1
+     volt_type newVoltage = s->V_mem;
+     for(int i = 0; i < numBigTicksMissed; i++)
+     {
+          newVoltage = newVoltage - newVoltage/s->Tau;
+     }
 
-
-
-     uint_fast32_t numberOfBigTicksSinceLastLeak = getCurrentBigTick(now) - getCurrentBigTick(s->lastLeakTime);
-
+     s->V_mem = newVoltage
+     s->lastLeakTime = now;
 
 
 }
@@ -138,7 +137,7 @@ void LIF_forward_event (lif_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *l
 {
      long start_count = lp->rng->count;
 
-     m->neuronVoltage = s->membranePotential;
+     m->neuronVoltage = s->V_mem;
      m->neuronLastLeakTime = s->lastLeakTime;
 
      bool willFire = false;
@@ -146,13 +145,12 @@ void LIF_forward_event (lif_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *l
      switch(m->eventType)
      {
           case SYNAPSE_OUT:
-               //Integrate -- AUG 23 LEFT OFF POINT
                LIFIntegrate(m->axonID,st,lp);
 
                if (st->heartbeatOut == false)
                {
-                    tw_stime time = getNextBigTick(lp, st->myLocalID);
-                    st->heartbeatOut = true;
+                    tw_stime time = getNextBigTick(lp, s->myLocalID);
+                    s->heartbeatOut = true;
                     bf->c13 = 1; //C13 indicates that the heartbeatout flag has been changed.
                     LIFSendHeartbeat(st, time,lp);
                }
@@ -162,11 +160,10 @@ void LIF_forward_event (lif_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *l
                s->heartbeatOut = false;
                bf->c13 = 1;
 
-               LIFLeakCalc(s, tw_now(lp));
+               LIFLeakProcess(s, tw_now(lp));
 
                willFire = LIFShouldFire(s, lp);
                CV->c0 = willFire;
-
                if(willFire)
                {
                     LIFFire(s,lp);
@@ -180,7 +177,6 @@ void LIF_forward_event (lif_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *l
 
           default:
                tw_error(TW_LOC, "Neuron (%i,%i) received invalid message type, %i \n ", st->myCoreID,st->myLocalID, m->eventType);
-
                break;
      }
 
@@ -191,14 +187,61 @@ void LIF_forward_event (lif_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *l
 
 void LIF_reverse_event (lif_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *lp)
 {
+     long count = m->rndCallCount;
 
+     if (M->eventType == NEURON_HEARTBEAT) {
+       // reverse heartbeat message
+       // st->SOPSCount--;
+     }
+     if (bf->c0) {  // c0 flags firing state
+                    // reverse computation of fire and reset functions here.
+       /**@todo implement neuron fire/reset reverse computation functions */
+     }
+     if (bf->c13) {
+       s->heartbeatOut = s->heartbeatOut;
+     }
+     /**@todo remove this once neuron reverse computation functions are built. */
+     s->V_mem = m->neuronVoltage;
+     s->lastLeakTime = m->neuronLastLeakTime;
+     s->lastActiveTime = m->neuronLastActiveTime;
+
+     s->SOPSCount--;
+
+     while (count--) tw_rand_reverse_unif(lp->rng);
 }
 
 
 void LIF_commit(lif_neuron_state *s, tw_bf * cv, messageData *m, tw_lp *lp)
 {
-
+     if (SAVE_SPIKE_EVTS && cv->c0) {
+       saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID);
+     }
 }
 
 
-void LIF_final(lif_neuron_state *s, tw_lp *lp);
+void LIF_final(lif_neuron_state *s, tw_lp *lp)
+{
+     if (g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
+       // Alpha, SOPS should be zero. HeartbeatOut should be false.
+       char* em = (char*)calloc(1024, sizeof(char));
+       char* hdr = "------ Neuron Optimistic Debug Check -----";
+       char* alpha = "--->Membrane Potential is: ";
+       char* sops = "--->SOPS is:";
+       char* HB = "--->Heartbeat is:";
+       bool dsp = false;
+
+       sprintf(em, "%s\n Core: %i Local: %i \n", hdr, s->myCoreID, s->myLocalID);
+       if (s->membranePotential != 0) {
+         prhdr(&dsp, em);
+         debugMsg(alpha, s->membranePotential);
+       }
+       if (s->SOPSCount != 0) {
+         prhdr(&dsp, em);
+         debugMsg(sops, s->SOPSCount);
+       }
+       if (s->heartbeatOut != false) {
+         prhdr(&dsp, em);
+         debugMsg(HB, (int)s->heartbeatOut);
+       }
+     }
+}

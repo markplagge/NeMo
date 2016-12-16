@@ -60,8 +60,8 @@ set(model_srcs
         neuro/axon.h
         neuro/axon.c
 
-        neuro/liftn_neuron.c
-        neuro/liftn_neuron.h
+        neuro/lif_neuron.c
+        neuro/lif_neuron.h
 
         tests/nemo_tests.h
         tests/synapse_test.c
