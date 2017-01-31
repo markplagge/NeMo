@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/markplagge/NeMo.png?label=ready&title=Ready)](https://waffle.io/markplagge/NeMo)
 # *NeMo*: A Generic Neuromorphic Hardware Simulation Model built on top of ROSS
 
 *NeMo* is a simulation model designed to allow experimentation with different neuromorphic hardware. Built on top of ROSS, *NeMo* features excellent scalability across HPC clusters. *NeMo* is targeted at current neuromorphic hardware designs, and as such currently simulates spiking neural networks in a grid layout, similar to the [IBM TrueNorth Processor](http://science.sciencemag.org/content/345/6197/668.short). 
