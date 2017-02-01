@@ -1,0 +1,3 @@
+[submodule "ROSS"]
+	path = ROSS
+	url = git@github.com:carothersc/ROSS.git
