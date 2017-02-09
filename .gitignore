@@ -38,3 +38,7 @@ compile_commands.json
 .idea/NeMo.iml
 
 .idea/NeMo.iml
+
+cmake-build-debug/*
+
+.idea/.name
