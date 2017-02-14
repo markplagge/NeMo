@@ -4,25 +4,28 @@ import numpy as np
 from functools import reduce
 class TN:
     type = "TN"
+    core_id = 0
+    local_id = 0
     connectivity = []
     synapse_type = []
-    sign_bits = []
+    sign_g = [1,1,-1,-1]
+    sign_l = -1
+    sign_vr = 1
+    alpha = 1
+    beta = 2
     synaptic_weights = []
+
     leak = 0
     deterministic = 1
     monotonic = 1
-    alpha = 2
-    beta = 2
-    M = 1001
     TM = 1001
-    Vrst = 2
-    VRJ = 0
+    VR = 0
 
     def __init__(self):
         """Creates a connected neuron with random weights, no leak, and a threshold of 10."""
         self.connectivity = [1] * 256
         self.synapse_type = np.random.randint(0,4,size=256)
-        self.sign_bits = 1,1,1,1
+        self.sign_bits = 1,1,-1,-1
         self.synaptic_weights = np.random.randint(0,5,size=4)
 
 
@@ -30,6 +33,7 @@ class TN:
         os = lambda xx,yy: str(xx) + "," + str(yy)
         out = ""
         out += self.type + ","
+        out += "{},{},".format(self.core_id,self.local_id)
         out += reduce(os,self.connectivity) + ","
         out += reduce(os,self.synapse_type) + ","
         out += reduce(os,self.sign_bits) + ","
@@ -81,5 +85,6 @@ if __name__ == '__main__':
     cfg.add_neuron(n1)
     print(cfg.to_csv())
     cfg.save_csv("demo.csv")
+
 
 

@@ -22,28 +22,30 @@ The variables for this file are:
 
 	* "tn": the  TrueNorth neuron
 	* "LIF": Standard leaky integrate and fire neuron
-void tn_create_neuron_encoded_rv(
-        id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
-        short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
-        bool epsilon, short sigma_l, short lambda, bool c, uint32_t alpha,
-        uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa,
-        tn_neuron_state* n, int signalDelay, uint64_t destGlobalID,
-        int destAxonID);
-* neuron parameters: this is a comma separated list of the parameters needed to configure the specified neuron. All parameters specified are required.
+
+* neuron parameters: this is a comma separated list of the parameters needed to configure the specified neuron. 
+All parameters specified are required. For values specified here in the form of X<sub>j</sub><sup>G<sub>i</sub></sup> 
+must contain *neuron_weight_count* number of values. For example, if neuron_weight_count is 4, then 
+s<sub>j</sub><sup>Gi</sup> must have 4 parameters specified.
 	* For the true north neuron, the list is organized as follows (Given a neuron *j*, and axons *i* ):
 	 * coreID : The Neurosynaptic core the neuron is located in
 	 * neuronID : The local (core based) ID of the neuron.
 	 * [w<sub>i,j</sub>]	- A comma seperated list of Neuron _j_'s connectivity to synapse _i_. For example, a fully connected neuron would be: [1,1,1,1,1,1,1,1,1 ... 1,1].
 	 * [G<sub>i</sub>] - A comma seperated list - the type of the _i_<sup> _th_</sup> axon.
-	 * σ<sub>j</sub><sup>G<sub>i</sub></sup>,σ<sub>j</sub><sup>λ</sup>,σ<sub>j</sub><sup>VR</sup>] : Sign bits
-	 * s<sub>j</sub><sup>Gi</sup> : Synaptic Weights
-	 * λ<sub>j</sub> : The Leak
+	 * α<sub>j</sub>: The positive membrane potential threshold
+     * β<sub>jM</sub>: The negative membrane potential threshold
+     * M<sub>j</sub> / TM<sub>j</sub> The encoded threshold pseudorandom number mask. Used for stochastic modes.
+     	  expands to 2<sup>TM</sup> - 1. 
+	 * σ<sub>j</sub><sup>G<sub>i</sub></sup>,σ<sub>j</sub><sup>λ</sup>,σ<sub>j</sub><sup>VR</sup>] : Sign bits.
+	 G is the sign bit of the weight for a particular axon type. The other two values indicate the sign of the leak and
+	 the sign of the reset voltage value.  σ<sub>j</sub><sup>G<sub>i</sub></sup> is a multi value option.
+	 * s<sub>j</sub><sup>Gi</sup> : Synaptic Weights 
+	 * λ<sub>j</sub> : The Leak weight/modifier. Leak is calculated using λ and σ to calculate the sign. λ must be 
+	 positive - negative (traditional) leak is determined by the sign of σ.
 	 * bj<sup>Gi</sup> :Selects between deterministic and stochastic integration (can be 1 or 0)
 	 * ε<sub>j</sub>: Selects between monotonic and divergent/convergent leak
-	 * α<sub>j</sub>: The positive membrane potential threshold
-	 * β<sub>jM</sub>: The negative membrane potential threshold
-	 * M<sub>j</sub>, TM<sub>j</sub> : The (encoded) threshold psudeorandom number mask - expands to 2<sup>TM</sup> - 1
-	 * Vrstj, VRj The (encoded) reset potential VR; expands to 𝜎<sup>VR</sup>(2<sup>VR</sup> -1)
+	 * M<sub>j</sub>/ TM<sub>j</sub> : The (encoded) threshold psudeorandom number mask - 
+	 * Vrstj/VRj The (encoded) reset potential VR; expands to σ<sup>VR</sup>(2<sup>VR</sup> -1)
 
 
 For the True North neuron, an example configuration line would be:
@@ -57,3 +59,4 @@ The file must start with the initial simulation parameters first, so first the s
 4
 "tn",1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,4,4,2,3,1,4,0,4,3,3,0,4,1,1,0,3,0,4,3,0,4,4,1,4,3,4,0,3,4,3,1,4,2,2,2,3,3,2,3,4,4,2,1,0,4,4,2,3,3,2,4,4,4,2,0,0,4,1,1,1,3,0,3,3,3,3,4,0,4,0,0,3,3,2,1,1,2,3,0,0,2,2,2,3,0,0,1,0,0,1,0,4,0,2,4,1,2,2,2,3,0,0,3,0,2,2,4,1,4,1,4,1,2,2,4,4,0,2,4,3,3,1,4,4,3,0,3,4,0,4,1,1,4,3,1,1,2,3,3,1,1,2,3,0,0,1,3,4,0,3,4,3,0,1,1,3,3,3,0,2,4,0,0,0,1,3,1,2,0,4,1,1,1,2,4,0,2,1,4,1,4,1,2,0,4,1,2,3,1,3,2,4,4,1,3,1,0,0,3,2,3,0,2,3,2,0,1,4,0,0,4,2,3,4,4,4,2,1,3,1,4,3,0,1,0,2,1,1,3,4,3,1,3,0,0,4,4,2,0,2,3,2,2,0,0,3,1,4,4,1,1,0,0,4,4,1,-1,1,1,2,3,4,1,0,0,-10,10001,10001,0,0
 ```
+
