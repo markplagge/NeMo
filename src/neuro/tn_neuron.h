@@ -114,6 +114,14 @@ typedef struct TN_MODEL {
 
 } tn_neuron_state;
 
+void tn_create_neuron_encoded_rv(
+        id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
+        short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
+        bool epsilon, short sigma_l, short lambda, bool c, uint32_t alpha,
+        uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa,
+        tn_neuron_state* n, int signalDelay, uint64_t destGlobalID,
+        int destAxonID);
+
 /**
  * @brief      True North Forward Event handler
  *
