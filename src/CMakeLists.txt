@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 2.4)
 project(NeMo)
 enable_testing()
 
@@ -19,7 +19,7 @@ LIST(APPEND CMAKE_MODULE_PATH "${ROSS_SOURCE_DIR}/cmake/")
 
 
 ## Model Compile-Time Options (Will add more later)
-set(NeMo_NEURONS_IN_CORE 512 CACHE STRING "The number of neurons in each simulated core")
+set(NeMo_NEURONS_IN_CORE 256 CACHE STRING "The number of neurons in each simulated core")
 set(NeMo_NUM_WEIGHTS_IN_NEURON 4 CACHE STRING "How many weights does a neuron have? (4 is TN default)")
 set(NeMo_SAVE_MSG FALSE CACHE BOOL "Save message paths to CSV or Couch? (debug messages)")
 set(NeMo_SAVE_MSG_COUCH FALSE CACHE BOOL "Save message paths directly to couch?")
