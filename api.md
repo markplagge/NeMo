@@ -27,11 +27,24 @@ The variables for this file are:
 All parameters specified are required. For values specified here in the form of X<sub>j</sub><sup>G<sub>i</sub></sup> 
 must contain *neuron_weight_count* number of values. For example, if neuron_weight_count is 4, then 
 s<sub>j</sub><sup>Gi</sup> must have 4 parameters specified.
+
+void tn_create_neuron_encoded_rv(
+        id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
+        short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
+        bool epsilon, short sigma_l, short lambda, bool c, uint32_t alpha,
+        uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa,
+        tn_neuron_state* n, int signalDelay, uint64_t destGlobalID,
+        int destAxonID);
 	* For the true north neuron, the list is organized as follows (Given a neuron *j*, and axons *i* ):
 	 * coreID : The Neurosynaptic core the neuron is located in
 	 * neuronID : The local (core based) ID of the neuron.
 	 * [w<sub>i,j</sub>]	- A comma seperated list of Neuron _j_'s connectivity to synapse _i_. For example, a fully connected neuron would be: [1,1,1,1,1,1,1,1,1 ... 1,1].
 	 * [G<sub>i</sub>] - A comma seperated list - the type of the _i_<sup> _th_</sup> axon.
+	 * [sigma] The list of sigma weights (default is four)
+	 * [S] The list of weights (default is four)
+	 * [b] The weight mode selection parameters (default is four)
+	 * ε : The monotonic / divergent leak mode selection
+	 * σ<sub>l</sub> 
 	 * α<sub>j</sub>: The positive membrane potential threshold
      * β<sub>jM</sub>: The negative membrane potential threshold
      * M<sub>j</sub> / TM<sub>j</sub> The encoded threshold pseudorandom number mask. Used for stochastic modes.
