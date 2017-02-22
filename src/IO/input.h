@@ -6,12 +6,16 @@
 #define SUPERNEMO_INPUT_H
 
 #include "../lib/csv.h"
-
+#include "../globals.h"
+#include "../neuro/tn_neuron.h"
 char * networkFileName;
 char * spikeFileName;
 
+FILE * networkFile;
+FILE * sortedNetFile;
 
 int openInputFiles();
+
 int closeNetworkFile();
 int closeSpikeFile();
 

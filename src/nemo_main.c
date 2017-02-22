@@ -6,6 +6,8 @@
 #include "nemo_main.h"
 #include "./IO/IOStack.h"
 
+#define TESTIO 1
+
 /** \addtogroup Globals 
  * @{  */
 
@@ -272,8 +274,9 @@ unsigned char mapTests(){
 }
 
 /** TESTING CODE */
+#ifdef TESTIO
 #include "IO/testIO.c"
-
+#endif
 
 /**
  * @brief      NeMo Main entry point
@@ -284,8 +287,9 @@ unsigned char mapTests(){
  
  */
 int main(int argc, char*argv[]) {
-
-//    int r = testLib();
+#ifdef TESTIO
+    int r = testLib();
+#endif
 
 
 	tw_opt_add(app_opt);
