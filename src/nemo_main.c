@@ -271,7 +271,8 @@ unsigned char mapTests(){
 
 }
 
-
+/** TESTING CODE */
+#include "IO/testIO.c"
 
 
 /**
@@ -283,6 +284,10 @@ unsigned char mapTests(){
  
  */
 int main(int argc, char*argv[]) {
+
+//    int r = testLib();
+
+
 	tw_opt_add(app_opt);
 	tw_init(&argc, &argv);
     //call nemo init

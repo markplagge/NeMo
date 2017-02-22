@@ -74,11 +74,15 @@ set(model_srcs
         mapping.h
 
 
+        lib/csv.h
+        lib/libcsv.c
+
         IO/IOStack.c
         IO/IOStack.h
-
         IO/output.h
         IO/output.c
+        IO/input.h
+        IO/input.c
         nemo_config.h 
         nemo_main.h )
 
