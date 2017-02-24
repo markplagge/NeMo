@@ -43,10 +43,10 @@ class TN:
         out += str(self.monotonic) + ","
         out += str(self.alpha) + ","
         out += str(self.beta) + ','
-        out += str(self.M) + ','
+#        out += str(self.M) + ','
         out += str(self.TM) + ','
-        out += str(self.Vrst) + ','
-        out += str(self.VRJ) + '\n'
+#        out += str(self.Vrst) + ','
+#        out += str(self.VRJ) + '\n'
 
         return out
 
@@ -82,8 +82,9 @@ if __name__ == '__main__':
     #create a file with one neuron for testing.
     cfg = ConfigFile()
     n1 = TN()
-    cfg.add_neuron(n1)
-    print(cfg.to_csv())
+    for i in range(0, 4096):
+        cfg.add_neuron(n1)
+#   print(cfg.to_csv())
     cfg.save_csv("demo.csv")
 
 

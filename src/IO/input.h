@@ -12,14 +12,21 @@ char * networkFileName;
 char * spikeFileName;
 
 FILE * networkFile;
-FILE * sortedNetFile;
+FILE * spikeFile;
 
 int openInputFiles();
 
 int closeNetworkFile();
 int closeSpikeFile();
 
+void readNeuron(id_type core, id_type nid, char ntype, void* neuron);
 
 
-
+typedef enum ReadStatus{
+    loaded = 0,
+    inNeurons = 1,
+    myCoreGreater = 2,
+    myCoreLower = 3,
+    eof = 4
+}readStatus;
 #endif //SUPERNEMO_INPUT_H

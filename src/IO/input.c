@@ -3,10 +3,8 @@
 //
 
 #include "input.h"
+static readStatus netReadStat;
 
-static char* networkTempName;
-static FILE* networkTempFile;
-static FILE* networkTempFiles[];
 int openInputFiles(){
     networkFile = fopen(networkFileName,"r");
     if (errno){
@@ -14,27 +12,39 @@ int openInputFiles(){
                        "file %s, with error code %i.\n",networkFileName, errno);
         return errno;
     }
+    netReadStat = 0;
 
     int ws = g_tw_npe;
 
-    networkTempFiles = calloc(ws,sizeof(FILE*));
 
-    for (int i = 0; i < ws; i ++) {
-        networkTempName = calloc(64, sizeof(char));
-        networkTempName = sprintf(networkTempName, "NeMoNetworkTemp_rank%l.dat", g_tw_mynode);
-        networkTempFile = fopen(networkTempName, "wb");
-        networkTempFiles[i] = networkTempFile;
-    }
-    if (errno){
-        printf("Error saving network temp file. Error code %i  \n", errno);
-        return errno;
-    }
 
     return 0;
 
 }
 
+int closeInputFiles(){
+    fclose(networkFile);
+    return 0;
+}
+
+
+void forwardToNetwork(){
+    char * linebuff = calloc(512, sizeof(char));
+    int isEOL = 0
+    while (netReadStat == loaded){
+        while(isEOL == 0){
+            if(fgets(linebuff,512,networkFile) != NULL){
+                s
+            }
+            else{
+                printf("Error encountered when reading network CSV - could not find a neuron def. \n");
+            }
+        }
+    }
+}
+
 /** Callback function called when libCSV has read an entire field */
+
 void fld_read (void *s, size_t len, void *data){
     //When a field is read, the data in string format is given here.
     //assemble a complete data structure based on the type (use state machine st 1)
@@ -47,6 +57,7 @@ void line_read(void *s, size_t len, void *data) {
     //pick the binary file based on which rank the NS core should run on.
 
 }
+
 void parseNetworkFile(){
     //Only run on MPI first rank
     //OR
@@ -55,8 +66,11 @@ void parseNetworkFile(){
     //read CSV file line by line.
     //Parse the simulation parameters, and store them
     //Once in neuron defs, start using CSV_PARSE with the fld_read callback until done.
+
 }
 
-void readNeurons(){
+//menomization for file IO
+
+void readNeuron(id_type core, id_type nid, char ntype, void* neuron){
 
 }
