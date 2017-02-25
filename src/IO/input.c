@@ -4,6 +4,7 @@
 
 #include "input.h"
 static readStatus netReadStat;
+static fpos_t * CUR_NET_POS;
 
 int openInputFiles(){
     networkFile = fopen(networkFileName,"r");
@@ -34,13 +35,17 @@ void forwardToNetwork(){
     while (netReadStat == loaded){
         while(isEOL == 0){
             if(fgets(linebuff,512,networkFile) != NULL){
-                s
+
             }
             else{
                 printf("Error encountered when reading network CSV - could not find a neuron def. \n");
             }
         }
     }
+}
+
+int* getCoresLinesInFile(){
+
 }
 
 /** Callback function called when libCSV has read an entire field */

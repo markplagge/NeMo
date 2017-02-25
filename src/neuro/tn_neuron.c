@@ -740,7 +740,7 @@ void TN_create_simple_neuron(tn_neuron_state* s, tw_lp* lp) {
 void TN_init(tn_neuron_state* s, tw_lp* lp) {
   static int pairedNeurons = 0;
   static bool announced = false;
-  s->neuronTypeDesc = "SIMPLE";
+  //s->neuronTypeDesc = "SIMPLE";
   if (DEBUG_MODE && !announced) {
     printf("Creating neurons\n");
     announced = true;
@@ -767,12 +767,12 @@ void TN_init(tn_neuron_state* s, tw_lp* lp) {
   //    setupMsg->neuronConn = connectivity;
   //
   //    tw_event_send(setupEvent);
-
-  if (DEBUG_MODE) {
-    printf(
-        "Neuron type %s, num: %llu checking in with GID %llu and dest %llu \n",
-        s->neuronTypeDesc, s->myLocalID, lp->gid, s->outputGID);
-  }
+//
+//  if (DEBUG_MODE) {
+//    printf(
+//        "Neuron type %s, num: %llu checking in with GID %llu and dest %llu \n",
+//        s->neuronTypeDesc, s->myLocalID, lp->gid, s->outputGID);
+//  }
   // Original NeMo Neuron Init
   //    static int pairedNeurons = 0;
   //    s->neuronTypeDesc = "SIMPLE";

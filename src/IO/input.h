@@ -8,11 +8,7 @@
 #include "../lib/csv.h"
 #include "../globals.h"
 #include "../neuro/tn_neuron.h"
-char * networkFileName;
-char * spikeFileName;
 
-FILE * networkFile;
-FILE * spikeFile;
 
 int openInputFiles();
 

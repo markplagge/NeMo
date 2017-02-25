@@ -306,9 +306,13 @@ EXT bool FILE_IN;
 
 /** @defgroup fileNames File Names
  * Vars that manage file names for IO  @{*/
-EXT char * inputFileName;
-EXT char * neuronFireFileName;
 
+EXT char * neuronFireFileName;
+EXT char * networkFileName;
+EXT char * spikeFileName;
+
+EXT FILE * networkFile;
+EXT FILE * spikeFile;
 /** @} */
 
 

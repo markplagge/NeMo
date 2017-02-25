@@ -77,7 +77,7 @@ typedef struct TN_MODEL {
   short encodedResetVoltage;  //!< encoded reset voltage - VR.
   short omega;                //!<temporary leak direction variable
 
-  char *neuronTypeDesc;  //!< a debug tool, contains a text desc of the neuron.
+  //char *neuronTypeDesc;  //!< a debug tool, contains a text desc of the neuron.
   char sigma_l;          //!< leak sign bit - eqiv. to σ
   unsigned char delayVal;  //!<@todo: Need to fully implement this - this value
                            //!is between 1 and 15, a "delay" of n timesteps of a
