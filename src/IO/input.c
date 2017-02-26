@@ -31,7 +31,7 @@ int closeInputFiles(){
 
 void forwardToNetwork(){
     char * linebuff = calloc(512, sizeof(char));
-    int isEOL = 0
+    int isEOL = 0;
     while (netReadStat == loaded){
         while(isEOL == 0){
             if(fgets(linebuff,512,networkFile) != NULL){
@@ -71,6 +71,17 @@ void parseNetworkFile(){
     //read CSV file line by line.
     //Parse the simulation parameters, and store them
     //Once in neuron defs, start using CSV_PARSE with the fld_read callback until done.
+
+}
+
+typedef struct neuronConfig{
+    int n_type;
+};
+
+int initNetworkFile(){
+    //g_tw_npe
+    FILE * networkBin;
+
 
 }
 

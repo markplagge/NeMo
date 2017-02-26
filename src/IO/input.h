@@ -11,9 +11,11 @@
 
 
 int openInputFiles();
-
+int initNetworkFile();
 int closeNetworkFile();
 int closeSpikeFile();
+
+
 
 void readNeuron(id_type core, id_type nid, char ntype, void* neuron);
 
