@@ -190,7 +190,7 @@ void neuron_line(int c, void *data) {
  */
 void initNeuron(tn_neuron_state *neuron, struct CsvNeuron csvN){
     for (int i = 0; i < 12; i ++){
-        
+
     }
 }
 /** readNeuron - Currently, NeMo's neuron input system uses
