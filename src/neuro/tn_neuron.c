@@ -910,4 +910,15 @@ inline tn_neuron_state* TN_convert(void* lpstate) {
   return (tn_neuron_state*)lpstate;
 }
 
-/*@}*/
+/**@}*/
+/** RIO Functions for neuron config  @{ **/
+size_t tn_size(tn_neuron_state *s, tw_lp *lp){
+  size_t neuronSize = sizeof(tn_neuron_state);
+  return neuronSize;
+}
+void tn_serialize(tn_neuron_state *s, void * buffer, tw_lp *lp){
+  memcpy(buffer, s, sizeof(tn_neuron_state));
+}
+void tn_deserialize(tn_neuron_state *s, void *buffer, tw_lp *lp) {
+  memcpy(s, buffer, sizeof(tn_neuron_state));
+}

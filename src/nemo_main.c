@@ -12,7 +12,7 @@
  * @{  */
 
 size_type CORES_IN_SIM = 16;
-size_type AXONS_IN_CORE = NEURONS_IN_CORE;
+//size_type AXONS_IN_CORE = NEURONS_IN_CORE;
 size_type SIM_SIZE = 1025;
 size_type SYNAPSES_IN_CORE = 0;
 size_type CORE_SIZE = 0;
@@ -212,7 +212,7 @@ void init_nemo(){
 	}
 
 	
-	AXONS_IN_CORE = NEURONS_IN_CORE;
+	//AXONS_IN_CORE = NEURONS_IN_CORE;
 	SYNAPSES_IN_CORE = 1;//(NEURONS_IN_CORE * AXONS_IN_CORE);
     
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
@@ -273,10 +273,6 @@ unsigned char mapTests(){
 
 }
 
-/** TESTING CODE */
-#ifdef TESTIO
-#include "IO/testIO.c"
-#endif
 
 /**
  * @brief      NeMo Main entry point
@@ -287,9 +283,7 @@ unsigned char mapTests(){
  
  */
 int main(int argc, char*argv[]) {
-#ifdef TESTIO
-    int r = testLib();
-#endif
+
 
 
 	tw_opt_add(app_opt);

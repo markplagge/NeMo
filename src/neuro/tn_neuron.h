@@ -9,6 +9,7 @@
 #include "../IO/IOStack.h"
 #include "../globals.h"
 #include "../mapping.h"
+#include "../nemo_config.h"
 #define Vj ns->membranePotential
 
 #ifdef SAVE_MSGS
@@ -100,8 +101,8 @@ typedef struct TN_MODEL {
                //!negative threshold setting to reset or saturate
   bool canGenerateSpontaniousSpikes;
 
-  char axonTypes[512];
-  char synapticWeight[4];
+  char axonTypes[AXONS_IN_CORE];
+  char synapticWeight[NUM_NEURON_WEIGHTS];
   bool synapticConnectivity[512];  //!< is there a connection between axon i and
                                    //!neuron j?
   /** stochastic weight mode selection. $b_j^{G_i}$ */
@@ -166,5 +167,11 @@ void TN_final(tn_neuron_state *s, tw_lp *lp);
  */
 
 inline tn_neuron_state *TN_convert(void *lpstate);
+
+
+size_t tn_size(tn_neuron_state *s, tw_lp *lp);
+void tn_serialize(tn_neuron_state *s, void * buffer, tw_lp *lp);
+void tn_deserialize(tn_neuron_state *s, void *buffer, tw_lp *lp);
+
 
 #endif  // NEMO_TN_NEURON_H

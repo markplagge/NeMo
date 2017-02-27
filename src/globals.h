@@ -207,6 +207,9 @@ enum lpTypeVals {
     SYNAPSE = 1,
     NEURON = 2
 };
+enum neuronTypeVals {
+    TN = 0
+};
 
 /**
  * @brief      test result flag.
@@ -280,7 +283,7 @@ EXT size_type  LP_PER_KP;
 EXT bool IS_RAND_NETWORK;
 EXT size_type CORES_IN_SIM;
 
-EXT size_type AXONS_IN_CORE;
+//EXT size_type AXONS_IN_CORE;
 EXT size_type SIM_SIZE;
 EXT size_type CORE_SIZE;
 EXT size_type SYNAPSES_IN_CORE;
@@ -304,16 +307,7 @@ EXT bool FILE_OUT;
 EXT bool FILE_IN;
 
 
-/** @defgroup fileNames File Names
- * Vars that manage file names for IO  @{*/
 
-EXT char * neuronFireFileName;
-EXT char * networkFileName;
-EXT char * spikeFileName;
-
-EXT FILE * networkFile;
-EXT FILE * spikeFile;
-/** @} */
 
 
 /* Global Timing Variables */
@@ -342,3 +336,17 @@ EXT int N_FIRE_LINE_SIZE;
 //#define N_FIRE_LINE_SIZE 128
 /** @} */
 #endif
+
+
+/** @defgroup fileNames File Names
+ * Vars that manage file names for IO.
+ * These variables are declared/init in input.c and
+ * output.c @{*/
+
+extern char * neuronFireFileName;
+extern char * networkFileName;
+extern char * spikeFileName;
+
+extern FILE * networkFile;
+extern FILE * spikeFile;
+/** @} */

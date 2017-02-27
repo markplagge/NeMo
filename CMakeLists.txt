@@ -7,6 +7,7 @@ set (ND "${CMAKE_CURRENT_SOURCE_DIR}/src/")
 
 ADD_SUBDIRECTORY(${RD})
 ADD_SUBDIRECTORY(${ND})
+
 SET(CMAKE_C_COMPILER mpicc)
 SET(CMAKE_CXX_COMPILER mpicxx)
 set_target_properties( NeMo

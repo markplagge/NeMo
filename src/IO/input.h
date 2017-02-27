@@ -14,11 +14,12 @@ int openInputFiles();
 int initNetworkFile();
 int closeNetworkFile();
 int closeSpikeFile();
+enum lpTypeVals* neuronMap;
 
 
-
-void readNeuron(id_type core, id_type nid, char ntype, void* neuron);
-
+void readNeuron(id_type core, id_type nid, int ntype, void* neuron);
+void parseNetworkFile();
+void postParseCleanup();
 
 typedef enum ReadStatus{
     loaded = 0,
