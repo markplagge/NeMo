@@ -27,9 +27,11 @@
 #define SAVE_NEURON_STATS
 
 /**@}*/
-
-
-
+/**
+ * Neuron file read buffer size - for reading CSV files.
+ */
+#define NEURON_BUFFER_SZ  1024
+#define MAX_NEURON_PARAMS  262144
 
 /** @defgroup types Typedef Vars 
  * Typedefs to ensure proper types for the neuron parameters/mapping calculations
@@ -260,14 +262,21 @@ typedef struct Ms{
 
 	tw_stime msgCreationTime;
 #endif
-
-
-
-
-   
-
 }messageData;
  /**@}*/
+
+
+/** Structs for managing neuron reads */
+typedef struct CsvNeuron{
+    int fld_num;
+    int req_core_id;
+    int req_local_id;
+    int foundNeuron;
+    //char rawDat[MAX_NEURON_PARAMS][NEURON_BUFFER_SZ];
+    char **rawDat;
+
+}csvNeuron;
+
 
 #endif //NEMO_GLOBALS_H
 #ifndef EXTERN

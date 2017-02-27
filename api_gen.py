@@ -1,7 +1,10 @@
 """A quick and dirty script that creates configuration 'files' for NeMo. """
-
-import numpy as np
+import itertools
 from functools import reduce
+import random 
+def rl(n,x=4):
+    return random.sample(list(range(x)) * (2*n), n)
+    return [random.randint(0,4) for i in range(0,10000)]
 class TN:
     type = "TN"
     core_id = 0
@@ -24,9 +27,9 @@ class TN:
     def __init__(self):
         """Creates a connected neuron with random weights, no leak, and a threshold of 10."""
         self.connectivity = [1] * 256
-        self.synapse_type = np.random.randint(0,4,size=256)
+        self.synapse_type = rl(256) #[random.randint(0,4)],size=256)
         self.sign_bits = 1,1,-1,-1
-        self.synaptic_weights = np.random.randint(0,5,size=4)
+        self.synaptic_weights = rl(256,5) #random.randint(0,5,size=4)
 
 
     def to_csv(self):
@@ -44,9 +47,10 @@ class TN:
         out += str(self.alpha) + ","
         out += str(self.beta) + ','
 #        out += str(self.M) + ','
-        out += str(self.TM) + ','
+        out += str(self.TM) + '\n'
 #        out += str(self.Vrst) + ','
 #        out += str(self.VRJ) + '\n'
+#        out += "\n"
 
         return out
 

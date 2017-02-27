@@ -17,7 +17,7 @@ int closeSpikeFile();
 enum lpTypeVals* neuronMap;
 
 
-void readNeuron(id_type core, id_type nid, int ntype, void* neuron);
+struct CsvNeuron getNeuronData(id_type core, id_type nid);
 void parseNetworkFile();
 void postParseCleanup();
 

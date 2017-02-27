@@ -26,14 +26,6 @@ struct csvFullDat{
     int line_num;
 };
 
-/** Structs for managing neuron reads */
-typedef struct CsvNeuron{
-    int fld_num;
-    int req_core_id;
-    int req_local_id;
-    char rawDat[32][1024];
-
-}csvNeuron;
 
 enum neuron_read_mode{
     START_READ,
@@ -153,7 +145,7 @@ void parseNetworkFile(){
             exit(EXIT_FAILURE);
         }
     }
-    csv_free(&p) //, fldRead, lineRead, &data);
+    csv_free(&p); //, fldRead, lineRead, &data);
 
 }
 
@@ -176,7 +168,8 @@ void neuron_fld(void *s, size_t len, void*data){
             break;
         default:
             readMode = IN_DAT;
-            dat->rawDat[dat->fld_num] = (char*) s;
+            //dat->rawDat[dat->fld_num] = (char*) s;
+            sprintf(dat->rawDat[dat->fld_num],"%s",(char*) s);
     }
     dat->fld_num ++;
 
@@ -193,6 +186,7 @@ void initNeuron(tn_neuron_state *neuron, struct CsvNeuron csvN){
 
     }
 }
+
 /** readNeuron - Currently, NeMo's neuron input system uses
  * libcsv. When requesting a neuron's config file (the calling function)
  * this function will go through the CSV file until either
@@ -205,44 +199,50 @@ void initNeuron(tn_neuron_state *neuron, struct CsvNeuron csvN){
  * @param ntype
  * @param neuron
  */
-void readNeuron(id_type core, id_type nid, int ntype, void* neuron){
+struct CsvNeuron getNeuronData(id_type core, id_type nid) {
     bool foundNeuron = false;
     readMode = START_READ;
     struct csv_parser csvP;
-    struct CsvNeuron data = {0};
+    struct CsvNeuron data;
+    data.req_core_id=core;
+    data.req_local_id=nid;
+    data.fld_num = 0;
+
+    char ** neuronParams = tw_calloc(TW_LOC,"Neuron Read CSV", sizeof(char*), MAX_NEURON_PARAMS);
+    for (int i =0; i < MAX_NEURON_PARAMS; i ++ ){
+        char * values = tw_calloc(TW_LOC,"Neuron Read CSV", sizeof(char), NEURON_BUFFER_SZ);
+        neuronParams[i] = values;
+    }
+
     char buf[4096];
     size_t bytes_read;
     if(csv_init(&csvP,CSV_APPEND_NULL) !=0) exit(EXIT_FAILURE);
-    while((fgets(buf,  4096,networkFile))){
-        if(csv_parse(&csvP, buf, bytes_read, neuron_fld, neuron_line, &data)){
-            tw_error(TW_LOC,"CSV Neuron File Read Error\n");
+    while((fgets(buf,  4096,networkFile))) {
+        if (csv_parse(&csvP, buf, bytes_read, neuron_fld, neuron_line, &data)) {
+            tw_error(TW_LOC, "CSV Neuron File Read Error\n");
         }
-        switch (readMode){
+        switch (readMode) {
             case IN_ID:
                 break;
             case OUT_ID:
                 //did we get the right core?
-                if (core != data.req_core_id){
-                    if (nid != data.req_local_id){
+                if (core != data.req_core_id) {
+                    if (nid != data.req_local_id) {
                         //wrong neuron, skip the line:
                         //If we weren't loading line by line this would be useful.
-                    } else{
+                    } else {
                         foundNeuron = true;
                     }
                 }
                 break;
             case END_READ:
-                if(foundNeuron){
-                    struct CsvNeuron * retDat = tw_calloc(TW_LOC,"IO", sizeof(retDat),1);
-                    retDat->rawDat = data.rawDat;
-
+                if (foundNeuron) {
+                    data.foundNeuron = 1;
+                    return data;
                 }
-
+                break;
         }
-
-
     }
-
-
-
+    data.foundNeuron = 0;
+    return data;
 }
