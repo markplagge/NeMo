@@ -76,6 +76,7 @@ void *: "%p")
 #define print(x) printf(printf_dec_format(x), x)
 #define sprint(str, y) sprintf(str, printf_dec_format(y), y)
 #define debugMsg(type, value) print(type); print(value); printf("\n")
+#define oprint(message, item) print(message); printf(":"); print(item); printf("\n");
 #define fprint(file, z) fprintf(file, printf_dec_format(z),z)
 
 #define nonC11 0

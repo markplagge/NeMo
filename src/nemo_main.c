@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include "nemo_main.h"
 #include "./IO/IOStack.h"
-
+/** Set for testing IO ops */
 #define TESTIO 1
 
 /** \addtogroup Globals 
@@ -272,7 +272,10 @@ unsigned char mapTests(){
     return '0';
 
 }
-
+#ifdef TESTIO
+#import "tests/testIO.c"
+#import <assert.h>
+#endif
 
 /**
  * @brief      NeMo Main entry point
@@ -282,7 +285,22 @@ unsigned char mapTests(){
  *
  
  */
+
 int main(int argc, char*argv[]) {
+
+    /** Tests */
+#ifdef TESTIO
+    networkFileName = "demo.csv";
+    int tv = 0;
+    tv = testInitInput();
+    assert(tv == 0);
+     tv = testCloseInput();
+    assert(tv == 0);
+    tv = testPreParseNetwork();
+    assert(tv == 0);
+    tv = testNeuronRead();
+    exit(tv);
+#endif
 
 	tw_opt_add(app_opt);
 

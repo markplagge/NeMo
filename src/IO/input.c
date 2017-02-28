@@ -38,7 +38,7 @@ static enum neuron_read_mode readMode = START_READ;
 
 
 int openInputFiles(){
-    networkFile = fopen(networkFileName,"r");
+    networkFile = fopen(networkFileName,"rb");
     if (errno){
         printf("Error opening network def "
                        "file %s, with error code %i.\n",networkFileName, errno);
@@ -54,7 +54,7 @@ int openInputFiles(){
 
 }
 
-int closeInputFiles(){
+int closeNetworkFile(){
     fclose(networkFile);
     return 0;
 }
@@ -91,7 +91,7 @@ void fldRead(void *s, size_t len, void *data){
     struct csvFullDat * dat = (struct csvFullDat *)data;
     if(dat->fld_num  == 0){
         //Neuron Type Map Creation -- add new
-        if ( strcmp( (char*) s,'TN') == 0){
+        if ( strcmp( (char*) s,"TN") == 0){
                 dat->type = TN;
         }
 
@@ -137,7 +137,7 @@ void parseNetworkFile(){
     char buf[4096];
     size_t bytes_read;
     if(csv_init(&p, CSV_APPEND_NULL) != 0) exit(EXIT_FAILURE);
-    networkFile = fopen(networkFileName, "rb");
+    //networkFile = fopen(networkFileName, "rb");
 
     while((bytes_read = fread(buf, 1, 4096, networkFile)) > 0){
         if(csv_parse(&p, buf, bytes_read, fldRead, lineRead, &data)){
