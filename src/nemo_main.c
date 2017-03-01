@@ -294,11 +294,11 @@ int main(int argc, char*argv[]) {
     int tv = 0;
     tv = testInitInput();
     assert(tv == 0);
-     tv = testCloseInput();
-    assert(tv == 0);
     tv = testPreParseNetwork();
-    assert(tv == 0);
+	assert(tv == 0);
     tv = testNeuronRead();
+	assert(tv == 0);
+	tv = testCloseInput();
     exit(tv);
 #endif
 

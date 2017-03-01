@@ -30,8 +30,8 @@
 /**
  * Neuron file read buffer size - for reading CSV files.
  */
-#define NEURON_BUFFER_SZ  1024
-#define MAX_NEURON_PARAMS  262144
+#define NEURON_BUFFER_SZ  32
+#define MAX_NEURON_PARAMS  65536
 
 /** @defgroup types Typedef Vars 
  * Typedefs to ensure proper types for the neuron parameters/mapping calculations
@@ -273,7 +273,8 @@ typedef struct CsvNeuron{
     int req_core_id;
     int req_local_id;
     int foundNeuron;
-    //char rawDat[MAX_NEURON_PARAMS][NEURON_BUFFER_SZ];
+    char rawDatM[MAX_NEURON_PARAMS][NEURON_BUFFER_SZ];
+	char *rawDatP[NEURON_BUFFER_SZ];
     char **rawDat;
 
 }csvNeuron;
