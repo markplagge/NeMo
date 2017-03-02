@@ -167,6 +167,10 @@ void postParseCleanup(){
 void neuron_fld(void *s, size_t len, void*data){
 	//printf("Inside neuron fld.\n");
     csvNeuron *dat = (csvNeuron *) data;
+	char * d = dat->rawDatM[dat->fld_num];
+	char * csvD = (char*) s;
+	
+	
     switch (dat->fld_num){
         case 0:
             break;
@@ -180,13 +184,11 @@ void neuron_fld(void *s, size_t len, void*data){
             break;
         default:
             readMode = IN_DAT;
-            //dat->rawDat[dat->fld_num] = (char*) s;
-			// sprintf(dat->rawDat[dat->fld_num],"%s",(char*) s);
-			char * d = dat->rawDatM[dat->fld_num];
-			char * csvD = (char*) s;
-			while( (*d++ = *csvD++) );
 			
     }
+	//dat->rawDat[dat->fld_num] = (char*) s;
+	//sprintf(dat->rawDat[dat->fld_num],"%s",(char*) s);
+	while( (*d++ = *csvD++) );
     dat->fld_num ++;
 
 }

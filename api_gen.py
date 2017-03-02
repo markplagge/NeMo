@@ -85,10 +85,16 @@ class ConfigFile:
 if __name__ == '__main__':
     #create a file with one neuron for testing.
     cfg = ConfigFile()
-    n1 = TN()
-    for i in range(0, 4096):
-        cfg.add_neuron(n1)
+    
+#    for i in range(0, 4096)
+    for core in range(0,4096):
+        for neuron in range(0,256):
+            n1 = TN()
+            n1.core_id = core
+            n1.local_id = neuron
+            cfg.add_neuron(n1)
 #   print(cfg.to_csv())
+    print("Created neurons. Saving....")
     cfg.save_csv("demo.csv")
 
 
