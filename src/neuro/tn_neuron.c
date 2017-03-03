@@ -737,7 +737,7 @@ void TN_create_simple_neuron(tn_neuron_state* s, tw_lp* lp) {
 void TN_Create_From_File(tn_neuron_state* s, tw_lp lp){
 	
 	//first, get our GID.
-	tw_lpid gid
+	tw_lpid gid;
 	
 	//Next, get the fields from the neuron txt:
 	struct CsvNeuron rawNeuron = getNeuronData(0,0);
