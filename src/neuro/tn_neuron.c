@@ -729,21 +729,14 @@ void TN_create_simple_neuron(tn_neuron_state* s, tw_lp* lp) {
   created++;
 }
 
-/** @} */
-/** attempts to find this neuron's def. from the file input.
- Files are assumed to be inited during main().
- 
- */
-void TN_Create_From_File(tn_neuron_state* s, tw_lp lp){
-	
-	//first, get our GID.
-	tw_lpid gid;
-	
-	//Next, get the fields from the neuron txt:
-	struct CsvNeuron rawNeuron = getNeuronData(0,0);
-	
-	//todo: implement neuron exist in file check
-	
+
+//missing lambdas, so I made this macro HERE of all places.
+//TODO: move this to a sane location or possibly replace with nice functions.
+#define nextToI()	atoi(raw.rawDatM[currentFld++]);
+
+
+void parseCSVDat(tn_neuron_state *st, csvNeuron raw){
+	//simply cast everything and either call a constructor or directly touch state.
 	/* Ref for the constructor:
 	 id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
 	 short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
@@ -753,10 +746,81 @@ void TN_Create_From_File(tn_neuron_state* s, tw_lp lp){
 	 int destAxonID);
 	 */
 	//Next, go through the fields and make them shiny and chrome:
+	id_type coreID = raw.req_core_id;
+	id_type nID = raw.req_local_id;
+	
+	//hobbits don't use pointers - use counter variable and array.
+	int currentFld = 3; //Data starts at 4th element: "TN",CORE,LOCAL,....
+	
+	bool synapticConnectivity[NEURONS_IN_CORE];
+	//boooooooooooool array
+	for(int i = 0; i < NEURONS_IN_CORE; i ++){
+		synapticConnectivity[i] = atoi(raw.rawDatM[currentFld++]); //postfix, increments after use.
+	}
+	
+	short G_i[NEURONS_IN_CORE];
+	for (int i = 0; i < NEURONS_IN_CORE; i ++){
+		G_i[i] = atoi(raw.rawDatM[currentFld++]);
+	}
+	short sigmaSBool[NUM_NEURON_WEIGHTS * 3];
+	short *sigma = sigmaSBool;
+	short *S = (sigmaSBool) + NUM_NEURON_WEIGHTS;
+	bool  *b = (sigmaSBool) + NUM_NEURON_WEIGHTS;
+	
+	for (int i = 0; i < NUM_NEURON_WEIGHTS * 3; i++){
+		sigmaSBool[i] = atoi(raw.rawDatM[currentFld++]);
+	}
+	bool epsilon = nextToI();
+	bool sigma_l = nextToI();
+	short lambda = nextToI();
+	bool c = nextToI();
+	uint32_t alpha = nextToI();
+	uint32_t beta = nextToI();
+	short TM = nextToI();
+	short VR = nextToI();
+	short sigmaVR = nextToI();
+	short gamma = nextToI();
+	bool kappa = nextToI();
+	int signalDelay = nextToI();
+	
+	int destCore = nextToI();
+	int destLocal = nextToI();
 	
 	
+	tw_lpid globalDest = getGIDFromLocalIDs(destCore, destLocal);
+	//call the constructor with our variables:
+	
+	tn_create_neuron(coreID, nID, synapticConnectivity, G_i, sigma, S, b, epsilon, sigma_l, lambda,
+					 c, alpha, beta, TM, VR, sigmaVR, gamma, kappa, st, signalDelay, globalDest, destLocal);
+}
+
+/** @} */
+/** attempts to find this neuron's def. from the file input.
+ Files are assumed to be inited during main().
+ 
+ */
+void TN_Create_From_File(tn_neuron_state* s, tw_lp* lp){
+	
+	//first, get our GID.
+	id_type core = getCoreFromGID(lp->gid);
+	id_type nid = getNeuronLocalFromGID(lp->gid);
+	
+	//Next, get the fields from the neuron txt:
+	struct CsvNeuron rawNeuron = getNeuronData(core, nid);
+	if (rawNeuron.foundNeuron){
+		//found the neuron, set up state
+	} else {
+		//no neuron, so set up a disconnected neuron.
+		for(int i = 0; i < SYNAPSES_IN_CORE; i ++)
+			s->synapticConnectivity[i] = false;
+	}
+	
+	//todo: implement neuron exist in file check
+	
+
 	
 }
+
 /** /defgroup TN_ROSS_HANDLERS
  * Implementations of TN functions that are called by ross. Forward, reverse,
  * init, etc.
@@ -771,9 +835,12 @@ void TN_init(tn_neuron_state* s, tw_lp* lp) {
     printf("Creating neurons\n");
     announced = true;
   }
-  // ADD FILE INPUT NEURON CREATION HERE
+	TN_Create_From_File(s, lp);
 
-  TN_create_simple_neuron(s, lp);
+
+	
+	
+	//TN_create_simple_neuron(s, lp);
 
   // createDisconnectedNeuron(s, lp);
 
