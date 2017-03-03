@@ -730,7 +730,33 @@ void TN_create_simple_neuron(tn_neuron_state* s, tw_lp* lp) {
 }
 
 /** @} */
-
+/** attempts to find this neuron's def. from the file input.
+ Files are assumed to be inited during main().
+ 
+ */
+void TN_Create_From_File(tn_neuron_state* s, tw_lp lp){
+	
+	//first, get our GID.
+	tw_lpid gid
+	
+	//Next, get the fields from the neuron txt:
+	struct CsvNeuron rawNeuron = getNeuronData(0,0);
+	
+	//todo: implement neuron exist in file check
+	
+	/* Ref for the constructor:
+	 id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
+	 short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
+	 bool epsilon, short sigma_l, short lambda, bool c, uint32_t alpha,
+	 uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa,
+	 tn_neuron_state* n, int signalDelay, uint64_t destGlobalID,
+	 int destAxonID);
+	 */
+	//Next, go through the fields and make them shiny and chrome:
+	
+	
+	
+}
 /** /defgroup TN_ROSS_HANDLERS
  * Implementations of TN functions that are called by ross. Forward, reverse,
  * init, etc.

@@ -4,6 +4,7 @@
 
 #import "testIO.h"
 #import <time.h>
+#import <assert.h>
 int testInitInput(){
     int r = openInputFiles();
 
@@ -50,8 +51,6 @@ int testNeuronRead(){
     clock_t end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 	debugMsg("Time spent finding neuron data: ", time_spent);
-    csvNeuron n = getNeuronData(0,0);
-
 
 
     return r;

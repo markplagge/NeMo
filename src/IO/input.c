@@ -20,7 +20,7 @@ static int * coreLoc[];
 
 struct csvFullDat{
     int fld_num;
-    enum NeuronTypes type;
+    enum neuronTypeVals type;
     int core_id;
     int local_id;
     int line_num;
@@ -125,6 +125,7 @@ void lineRead(int c, void *data) {
 char * netFile;
 
 
+
 /**
  * runs on mpi rank 0. Reads CSV file containing neurons,
  * then sets the LP type map for this simulation's neurons.
@@ -133,7 +134,11 @@ char * netFile;
  */
 void parseNetworkFile(){
     //@TODO: Free this memory once TN_INIT has been called
-    neuronMap = calloc(CORES_IN_SIM * NEURONS_IN_CORE,sizeof(enum lpTypeVals));
+	//neuronMap = calloc(CORES_IN_SIM * NEURONS_IN_CORE,sizeof(enum neuronTypeVals));
+	neuronMap = malloc(CORES_IN_SIM * NEURONS_IN_CORE * sizeof(enum neuronTypeVals));
+	for (int i = 0; i < CORES_IN_SIM * NEURONS_IN_CORE; i ++){
+		neuronMap[i] = NA;
+	}
     struct csv_parser p;
     struct csvFullDat data = {0,0,0,0,0};
 
@@ -154,8 +159,9 @@ void parseNetworkFile(){
     csv_free(&p); //, fldRead, lineRead, &data);
 	rewind(networkFile);
 	//TODO: TEMP/debug hack for perf.
-	netFile = malloc(ttl_bytes);
-	fgets(netFile,ttl_bytes,networkFile);
+	netFile = malloc(ttl_bytes+1);
+	//fgets(netFile,ttl_bytes,networkFile);
+	fread(netFile, ttl_bytes, 1, networkFile);
 	rewind(networkFile);
 
 }
@@ -164,6 +170,22 @@ void postParseCleanup(){
     free(neuronMap);
     rewind(networkFile);
 }
+
+/** Function that checks if a neuron is in the file. Returns a line number to 
+ start the search. Returns -1 if the neuron is not in the CSV file.*/
+int findNeuronInFile(id_type core, id_type nid){
+	tw_lpid nGID = getGIDFromLocalIDs(core,nid);
+	int nType = neuronMap[nGID];
+	if(nType){
+		return 0;
+	}
+	else{
+		return -1;
+	}
+	
+}
+
+/** CSV hanlder for flds read in - used for neuron parameter gathering. */
 void neuron_fld(void *s, size_t len, void*data){
 	//printf("Inside neuron fld.\n");
     csvNeuron *dat = (csvNeuron *) data;
@@ -188,7 +210,9 @@ void neuron_fld(void *s, size_t len, void*data){
     }
 	//dat->rawDat[dat->fld_num] = (char*) s;
 	//sprintf(dat->rawDat[dat->fld_num],"%s",(char*) s);
-	while( (*d++ = *csvD++) );
+	strcpy(d, csvD);
+	//while( (*d++ = *csvD++) );
+	
     dat->fld_num ++;
 
 }
@@ -196,14 +220,7 @@ void neuron_line(int c, void *data) {
  readMode = END_READ;
 }
 
-/** Neuron init function -- currently hand-made TrueNorth init function -- this can be made more elegant, but
- * I want something that works right now.
- */
-void initNeuron(tn_neuron_state *neuron, struct CsvNeuron csvN){
-    for (int i = 0; i < 12; i ++){
 
-    }
-}
 
 /** readNeuron - Currently, NeMo's neuron input system uses
  * libcsv. When requesting a neuron's config file (the calling function)
@@ -228,6 +245,10 @@ struct CsvNeuron getNeuronData(id_type core, id_type nid) {
     data.fld_num = 0;
 	data.foundNeuron = 0;
 	
+	int startLN = findNeuronInFile(core, nid);
+	if(startLN == -1){
+		return data;
+	}
 
 	//    char ** neuronParams = tw_calloc(TW_LOC,"Neuron Read CSV", sizeof(char*), MAX_NEURON_PARAMS);
 //	data.rawDat =  tw_calloc(TW_LOC,"Neuron Read CSV", sizeof(char*), MAX_NEURON_PARAMS);
@@ -238,22 +259,25 @@ struct CsvNeuron getNeuronData(id_type core, id_type nid) {
 //		data.rawDat[i] = values;
 //    }
 
-    char buf[2048];
+    char buf[65792];
     size_t bytes_read;
 	
 	
 	if(csv_init(&csvP,CSV_APPEND_NULL) !=0) {
 	exit(EXIT_FAILURE);
 	}
-	int i;
-	char c;
-	char cc[1];
+
+
+	char cc[65792];
 	//while((bytes_read = fread(buf, 1,  2048,networkFile)) > 0) {
-	//while((i = getc(networkFile)) != EOF ) {
 	//	c = i;
-	while((*cc = *netFile++)){
+	char * nf2 = netFile;
+	
+	while((*cc = *nf2++)){
 		if(csv_parse(&csvP, cc, 1, neuron_fld, neuron_line, &data) != 1){
-		//	if (csv_parse(&csvP, buf, bytes_read, neuron_fld, neuron_line, &data) != bytes_read) {
+	//	while((bytes_read = fread(buf, sizeof(char), 1, networkFile)) > 0){
+	//	if (csv_parse(&csvP, buf, bytes_read, neuron_fld, neuron_line, &data) != bytes_read) {
+		
 			tw_error(TW_LOC, "CSV Neuron File Read Error\n");
 		//	}
 		}
@@ -268,6 +292,9 @@ struct CsvNeuron getNeuronData(id_type core, id_type nid) {
 				}
 				
                 break;
+			case IN_DAT:
+				//inside the data, nothing to do here...
+				break;
             case END_READ:
                 if (foundNeuron) {
                     data.foundNeuron = 1;
@@ -275,7 +302,15 @@ struct CsvNeuron getNeuronData(id_type core, id_type nid) {
 					csv_free(&csvP);
                     return data;
                 }
+				
+				readMode = START_READ;
+				data.fld_num = 0;
+				data.foundNeuron = 0;
+				data.req_core_id = -1;
+				data.req_local_id = -1;
                 break;
+			
+				
         }
     }
     data.foundNeuron = 0;

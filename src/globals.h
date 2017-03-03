@@ -49,6 +49,9 @@ typedef uint64_t size_type; //!< size_type holds sizes of the sim - core size, n
 typedef uint64_t stat_type;
 /**@}*/
 
+/* @defgroup cmacros Global Dynamic Typing casting macros for file IO */
+#define CAST_TYPE(x) 
+
 /* @defgroup gmacros Global Macros and Related Functions
  *Global Macros */
 /**@{ */
@@ -211,7 +214,8 @@ enum lpTypeVals {
     NEURON = 2
 };
 enum neuronTypeVals {
-    TN = 0
+	NA = 0,
+    TN = 1
 };
 
 /**
@@ -223,9 +227,9 @@ enum mapTestResults {
   INVALID_NEURON = 0x03 //!< Neuron was not properly defined.
 };
 
-typedef enum NeuronTypes {
-    TrueNorth = 0
-} neuronTypes;
+//typedef enum NeuronTypes {
+//    TrueNorth = 0
+//} neuronTypes;
 
 
 //Message Structure (Used Globally so placed here)
@@ -274,8 +278,8 @@ typedef struct CsvNeuron{
     int req_local_id;
     int foundNeuron;
     char rawDatM[MAX_NEURON_PARAMS][NEURON_BUFFER_SZ];
-	char *rawDatP[NEURON_BUFFER_SZ];
-    char **rawDat;
+//	char *rawDatP[NEURON_BUFFER_SZ];
+//    char **rawDat;
 
 }csvNeuron;
 

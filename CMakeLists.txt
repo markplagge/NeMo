@@ -7,6 +7,8 @@ set (ND "${CMAKE_CURRENT_SOURCE_DIR}/src/")
 
 ADD_SUBDIRECTORY(${RD})
 ADD_SUBDIRECTORY(${ND})
+find_package(MPI REQUIRED)
+include_directories(${MPI_INCLUDE_PATH})
 
 SET(CMAKE_C_COMPILER mpicc)
 SET(CMAKE_CXX_COMPILER mpicxx)
