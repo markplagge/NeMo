@@ -49,10 +49,17 @@ typedef uint64_t size_type; //!< size_type holds sizes of the sim - core size, n
 typedef uint64_t stat_type;
 /**@}*/
 
-/* @defgroup cmacros Global Dynamic Typing casting macros for file IO */
-#define CAST_TYPE(x) 
+/** @defgroup cmacros Global Dynamic Typing casting macros for file IO */
+/** @{ */
+#define ATOX(x) _Generic((x), \
+double: atof,\
+long: atol,\
+int: atoi,\
+float: atof
 
-/* @defgroup gmacros Global Macros and Related Functions
+
+
+/** @defgroup gmacros Global Macros and Related Functions
  *Global Macros */
 /**@{ */
 

@@ -2,9 +2,9 @@
 // Created by Mark Plagge on 5/25/16.
 //
 
-#include <stdio.h>
+
 #include "nemo_main.h"
-#include "./IO/IOStack.h"
+
 /** Set for testing IO ops */
 #define TESTIO 1
 
@@ -37,7 +37,7 @@ char * neuronFireFileName = "fire_record";
 
 int N_FIRE_BUFF_SIZE = 32;
 int N_FIRE_LINE_SIZE = 512;
-
+char * NETWORK_FILE_NAME = "demo_ts.csv";
 //
 /**
  * @FILE_OUT - is set to true if NeMo is saving output files
@@ -65,22 +65,24 @@ char * couchAddress = "192.168.2.3";
  * app_opt - Application Options. Manages the options for NeMo's run.
  */
 const tw_optdef app_opt[] = {
-	TWOPT_FLAG("rand_net", IS_RAND_NETWORK, "Generate a random network? Alternatively, you need to specify config files."),
+	//	TWOPT_FLAG("rand_net", IS_RAND_NETWORK, "Generate a random network? Alternatively, you need to specify config files."),
+	TWOPT_FLAG("netIn", FILE_IN, "Load network information from a file"),
+	TWOPT_CHAR("nfn", NETWORK_FILE_NAME, "Input Network File Name"),
 	TWOPT_UINT("tm", testingMode, "Choose a test suite to run. 0=no tests, 1=mapping tests"),
 	TWOPT_GROUP("Randomized (ID Matrix) Network Parameters"),
 		TWOPT_ULONGLONG("cores", CORES_IN_SIM, "number of cores in simulation"),
     	//TWOPT_ULONGLONG("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
     TWOPT_GROUP("Data Gathering Settings"),
-    	TWOPT_FLAG("bulk", BULK_MODE, "Is this sim running in bulk mode?"),
+	//TWOPT_FLAG("bulk", BULK_MODE, "Is this sim running in bulk mode?"),
     	TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
-    	TWOPT_FLAG("network", SAVE_NEURON_OUTS, "Save neuron output axon IDs on creation - Creates a map of the neural network."),
+		TWOPT_FLAG("network", SAVE_NEURON_OUTS, "Save neuron output axon IDs on creation - Creates a map of the neural network."),
     	TWOPT_FLAG("svm", SAVE_MEMBRANE_POTS, "Save neuron membrane potential values (enabled by default when running a validation model"),
     	TWOPT_FLAG("svs", SAVE_SPIKE_EVTS, "Save neuron spike event times and info"),
 
-    TWOPT_GROUP("Integrated Bio Model Testing"),
-    	TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
-    	TWOPT_FLAG("tonb",TONIC_BURST_VAL, "Tonic bursting Neuron Validation"),
-    	TWOPT_FLAG("phb", PHASIC_BURST_VAL, "Phasic Bursting Neuron Validation"),
+//    TWOPT_GROUP("Integrated Bio Model Testing"),
+//    	TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
+//    	TWOPT_FLAG("tonb",TONIC_BURST_VAL, "Tonic bursting Neuron Validation"),
+//    	TWOPT_FLAG("phb", PHASIC_BURST_VAL, "Phasic Bursting Neuron Validation"),
     TWOPT_END()
 
 };
@@ -206,9 +208,8 @@ void init_nemo(){
 
 	if (FILE_IN){
 		//Init File Input Handles
-		//reconfigure cores_in_sim and neurons_in_sim based on loaded file.
-		//override default LP function pointers
-		
+		networkFileName = NETWORK_FILE_NAME;
+		openInputFiles();	
 	}
 
 	
@@ -272,10 +273,6 @@ unsigned char mapTests(){
     return '0';
 
 }
-#ifdef TESTIO
-#import "tests/testIO.c"
-#import <assert.h>
-#endif
 
 /**
  * @brief      NeMo Main entry point
@@ -287,20 +284,8 @@ unsigned char mapTests(){
  */
 
 int main(int argc, char*argv[]) {
+IS_RAND_NETWORK = !FILE_IN;
 
-    /** Tests */
-#ifdef TESTIO
-    networkFileName = "demo.csv";
-    int tv = 0;
-    tv = testInitInput();
-    assert(tv == 0);
-    tv = testPreParseNetwork();
-	assert(tv == 0);
-    tv = testNeuronRead();
-	assert(tv == 0);
-	tv = testCloseInput();
-    exit(tv);
-#endif
 
 	tw_opt_add(app_opt);
 

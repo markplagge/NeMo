@@ -4,6 +4,24 @@
 
 #include "tn_neuron.h"
 
+/** Enum for parsing CSV data */
+enum arrayFtr{
+	CONN , //Syn. Connectivity
+	AXTP, //Axon Types
+	SGI, //sigma GI vals
+	SP, //S Vals
+	BV, //b vals
+	NEXT, //goto next array data chunk
+	OUT //out of array data
+};
+//nextToI() is a quick way to reduce the amount I type the ATOI function.
+//In Globals.h, there is a proto-macro that I'm working on that will
+//auto-choose the right string conversion function.
+
+//TODO: move this to a sane location or possibly replace with nice functions.
+#define nextToI()	atoi(raw.rawDatM[currentFld++]);
+
+
 /** \defgroup TN_Function_hdrs True North Function headers
  * TrueNorth Neuron leak, integrate, and fire function forward decs.
  * @{ */
@@ -552,6 +570,7 @@ void TNNumericLeakCalc(tn_neuron_state* st, tw_stime now) {
 void TN_set_neuron_dest(int signalDelay, uint64_t gid, tn_neuron_state* n) {
   n->delayVal = signalDelay;
   n->outputGID = gid;
+
 }
 
 /** @} */
@@ -731,20 +750,12 @@ void TN_create_simple_neuron(tn_neuron_state* s, tw_lp* lp) {
 
 
 //missing lambdas, so I made this macro HERE of all places.
-//TODO: move this to a sane location or possibly replace with nice functions.
-#define nextToI()	atoi(raw.rawDatM[currentFld++]);
 
 
+/* REMOVED & replaced with an all-in-one neuron parse & init function, seen below.
 void parseCSVDat(tn_neuron_state *st, csvNeuron raw){
 	//simply cast everything and either call a constructor or directly touch state.
-	/* Ref for the constructor:
-	 id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
-	 short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
-	 bool epsilon, short sigma_l, short lambda, bool c, uint32_t alpha,
-	 uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa,
-	 tn_neuron_state* n, int signalDelay, uint64_t destGlobalID,
-	 int destAxonID);
-	 */
+
 	//Next, go through the fields and make them shiny and chrome:
 	id_type coreID = raw.req_core_id;
 	id_type nID = raw.req_local_id;
@@ -764,8 +775,10 @@ void parseCSVDat(tn_neuron_state *st, csvNeuron raw){
 	}
 	short sigmaSBool[NUM_NEURON_WEIGHTS * 3];
 	short *sigma = sigmaSBool;
-	short *S = (sigmaSBool) + NUM_NEURON_WEIGHTS;
-	bool  *b = (sigmaSBool) + NUM_NEURON_WEIGHTS;
+	short *S = sigmaSBool;
+	S += NUM_NEURON_WEIGHTS;
+	short  *b = sigmaSBool;
+	b+=  NUM_NEURON_WEIGHTS;
 	
 	for (int i = 0; i < NUM_NEURON_WEIGHTS * 3; i++){
 		sigmaSBool[i] = atoi(raw.rawDatM[currentFld++]);
@@ -786,12 +799,110 @@ void parseCSVDat(tn_neuron_state *st, csvNeuron raw){
 	int destCore = nextToI();
 	int destLocal = nextToI();
 	
+	int isOutputNeuron = nextToI();
+	int selfFiring = nextToI();
 	
 	tw_lpid globalDest = getGIDFromLocalIDs(destCore, destLocal);
-	//call the constructor with our variables:
 	
-	tn_create_neuron(coreID, nID, synapticConnectivity, G_i, sigma, S, b, epsilon, sigma_l, lambda,
-					 c, alpha, beta, TM, VR, sigmaVR, gamma, kappa, st, signalDelay, globalDest, destLocal);
+	
+} */
+
+void parseCSVCreateTN(tn_neuron_state *st, csvNeuron raw){
+	st->myCoreID = raw.req_core_id;
+	st->myLocalID = raw.req_local_id;
+	int currentFld = 3; //Data starts at 4th element: "TN",CORE,LOCAL,....
+	
+	// Set up neuron params in arrays:
+	// Synaptic Connectivity, Gi, SigmaG, S, B
+	enum arrayFtr arrayNum = CONN;
+	//Calculation needed for neurosynaptic weights (sigma[i] * S[i]), so store sigma and S in arrays
+	short sigma[NUM_NEURON_WEIGHTS];
+	short S[NUM_NEURON_WEIGHTS];
+	
+	// for array features, this is the number of elements total to be loaded.
+	int lenOfArrayParams = (NEURONS_IN_CORE * 2) + (NUM_NEURON_WEIGHTS * 3);
+	void * datum;
+	int pos = 0;
+	for(int i = 0; i < lenOfArrayParams; i ++){
+		switch (arrayNum) {
+			case CONN:
+				st->synapticConnectivity[pos] = nextToI(); // atoi(raw.rawDatM[currentFld ++]);
+				break;
+			case AXTP:
+				st->axonTypes[pos] = nextToI();
+				break;
+			case SGI:
+				sigma[pos] = nextToI();
+				break;
+			case SP:
+				S[pos] = nextToI();
+				break;
+			case BV:
+				st->weightSelection[pos] = nextToI();
+				break;
+				
+		}
+		switch (arrayNum){
+			case CONN:
+			case AXTP:
+				if(pos == NEURONS_IN_CORE - 1){
+					arrayNum ++;
+					pos = 0;
+				}
+				break;
+				
+			default:
+				if(pos == NUM_NEURON_WEIGHTS - 1){
+					arrayNum ++;
+					pos = 0;
+				}
+				
+		}
+	}
+	//set up weights:
+	for (int i = 0; i < NUM_NEURON_WEIGHTS; i ++){
+		st->synapticWeight[i] = sigma[i] * S[i];
+	}
+	st->epsilon = nextToI();
+	st->sigma_l = nextToI();
+	st->lambda = nextToI();
+	st->c = nextToI();
+	
+	st->posThreshold = nextToI();
+	st->negThreshold = nextToI();
+	
+	st->thresholdPRNMask = nextToI();
+	st->thresholdPRNMask = pow(2, st->thresholdPRNMask) - 1;
+	
+	short VR = nextToI();
+	short sigmaVR = nextToI();
+	sigmaVR = SGN(sigmaVR);
+	st->resetVoltage = (sigmaVR * (pow(2, VR) -1));
+	st->encodedResetVoltage = VR;
+	
+	st->resetMode = nextToI();
+	st->kappa = nextToI();
+	st->omega = 0;
+	
+	int signalDelay = nextToI();
+	int destCore = nextToI();
+	int destLocal = nextToI();
+	st->dendriteLocal = destLocal;
+	tw_lpid globalDest = getGIDFromLocalIDs(destCore, destLocal);
+	TN_set_neuron_dest(signalDelay, globalDest, st);
+	
+	
+	st->isOutputNeuron = nextToI();
+	st->isSelfFiring = nextToI();
+	
+	//set up PRNG masks:
+	
+	
+	//final insurance that state is consistent:
+	assert(st->largestRandomValue < 256);
+	
+	
+
 }
 
 /** @} */
@@ -809,10 +920,10 @@ void TN_Create_From_File(tn_neuron_state* s, tw_lp* lp){
 	struct CsvNeuron rawNeuron = getNeuronData(core, nid);
 	if (rawNeuron.foundNeuron){
 		//found the neuron, set up state
+		parseCSVCreateTN(s, rawNeuron);
 	} else {
 		//no neuron, so set up a disconnected neuron.
-		for(int i = 0; i < SYNAPSES_IN_CORE; i ++)
-			s->synapticConnectivity[i] = false;
+		s->isActiveNeuron = false;
 	}
 	
 	//todo: implement neuron exist in file check
@@ -835,7 +946,11 @@ void TN_init(tn_neuron_state* s, tw_lp* lp) {
     printf("Creating neurons\n");
     announced = true;
   }
-	TN_Create_From_File(s, lp);
+	if(FILE_IN){
+		TN_Create_From_File(s, lp);
+	}else{
+		TN_create_simple_neuron(s, lp);
+	}
 
 
 	

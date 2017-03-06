@@ -6,9 +6,7 @@
 static readStatus netReadStat;
 static fpos_t * CUR_NET_POS;
 FILE* networkFile;
-char * neuronFireFileName;
-char * networkFileName;
-char * spikeFileName;
+
 FILE * spikeFile;
 //menomization for file IO
 static int minCore = 0;

@@ -6,6 +6,7 @@
 #define __NEMO_TN_NEURON_H__
 
 #include <math.h>
+#include <assert.h>
 #include "../IO/IOStack.h"
 #include "../globals.h"
 #include "../mapping.h"
@@ -73,8 +74,8 @@ typedef struct TN_MODEL {
   short largestRandomValue;
   short lambda;  //!< leak weight - \f$𝜆\f$ Leak tuning parameter - the leak
                  //!rate applied to the current leak function.
-  short int resetMode;     //!< Reset mode selection. Valid options are 0,1,2 .
-                           //!Gamma or resetMode 𝛾
+  short int resetMode;     //!<Gamma or resetMode. 𝛾 Reset mode selection. Valid options are 0,1,2 .
+
   volt_type resetVoltage;  //!< Reset voltage for reset params, \f$R\f$.
   short sigmaVR;           //!< reset voltage - reset voltage sign
   short encodedResetVoltage;  //!< encoded reset voltage - VR.
@@ -91,6 +92,7 @@ typedef struct TN_MODEL {
   bool firedLast;
   bool heartbeatOut;
   bool isSelfFiring;
+	bool isOutputNeuron; //Is this an output neruon?
   bool epsilon;  //!<epsilon function - leak reversal flag. from the paper this
                  //!changes the function of the leak from always directly being
                  //!integrated (false), or having the leak directly integrated
@@ -102,10 +104,12 @@ typedef struct TN_MODEL {
   bool kappa;  //!<Kappa or negative reset mode. From the paper's ,\f$𝜅_j\f$,
                //!negative threshold setting to reset or saturate
   bool canGenerateSpontaniousSpikes;
-
+	
+	bool isActiveNeuron; /**!< If true, this neuron is an inactive one in the
+						  simulation */
   char axonTypes[AXONS_IN_CORE];
   char synapticWeight[NUM_NEURON_WEIGHTS];
-  bool synapticConnectivity[512];  //!< is there a connection between axon i and
+  bool synapticConnectivity[NEURONS_IN_CORE];  //!< is there a connection between axon i and
                                    //!neuron j?
   /** stochastic weight mode selection. $b_j^{G_i}$ */
   bool weightSelection[4];

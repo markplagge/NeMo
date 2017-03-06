@@ -15,7 +15,9 @@ int initNetworkFile();
 int closeNetworkFile();
 int closeSpikeFile();
 enum neuronTypeVals* neuronMap;
-
+char * neuronFireFileName;
+char * networkFileName;
+char * spikeFileName;
 
 struct CsvNeuron getNeuronData(id_type core, id_type nid);
 void parseNetworkFile();
