@@ -59,18 +59,19 @@ int closeNetworkFile(){
 
 /** Todo: Currently not used - API is strict for now, only neurons in network file. */
 void forwardToNetwork(){
-    char * linebuff = calloc(512, sizeof(char));
-    int isEOL = 0;
-    while (netReadStat == loaded){
-        while(isEOL == 0){
-            if(fgets(linebuff,512,networkFile) != NULL){
-
-            }
-            else{
-                printf("Error encountered when reading network CSV - could not find a neuron def. \n");
-            }
-        }
-    }
+	//Not implemented.
+//    char * linebuff = calloc(512, sizeof(char));
+//    int isEOL = 0;
+//    while (netReadStat == loaded){
+//        while(isEOL == 0){
+//            if(fgets(linebuff,512,networkFile) != NULL){
+//
+//            }
+//            else{
+//                printf("Error encountered when reading network CSV - could not find a neuron def. \n");
+//            }
+//        }
+//    }
 }
 
 int* getCoresLinesInFile(){

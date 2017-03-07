@@ -69,13 +69,15 @@ void axon_init(axonState *s, tw_lp *lp)
         //crTonicBurstingAxon(s, lp);
 		printf("Phasic bursting validation not available in this version of NeMo\n");
         specAxons ++;
-    }else if(FILE_IN){
-        //Do file processing - load in the initial spikes here.
-        if (g_tw_mynode == 0){
-            tw_printf(TW_LOC,"Axon ID %llu attempted file load.\n",s->axonID);
-        }
-    }
-    else { //else this is a random network for benchmarking.
+//    }else if(FILE_IN){
+//        //Do file processing - load in the initial spikes here.
+//        if (g_tw_mynode == 0){
+//			//why would an axon want to load a file?
+//			//tw_printf(TW_LOC,"Axon ID %llu attempted file load.\n",s->axonID);
+//			
+//        }
+//    }
+	} else { //else this is a random network for benchmarking.
         s->sendMsgCount = 0;
         s->axonID = getAxonLocal(lp->gid);
         s->destSynapse = getSynapseFromAxon(lp->gid);
@@ -85,6 +87,21 @@ void axon_init(axonState *s, tw_lp *lp)
         data->eventType = AXON_OUT;
         data->axonID = s->axonID;
 		tw_event_send(axe);
+		
+		//Debug / testing code for FIlE IO
+		//Should not be left in after spike input files are created.
+		
+//		for(int i = 0; i < NEURONS_IN_CORE; i ++){
+//			tw_stime r = getNextBigTick(lp, i) + i;
+//			tw_event *init_event = tw_event_new(lp->gid, r, lp);
+//			messageData *data = tw_event_data(init_event);
+//			data->eventType = AXON_OUT;
+//			data->axonID = s->axonID;
+//			tw_event_send(init_event);
+//		}
+//		
+		
+		
 //		if (SAVE_MSGS){
 //			if(!writeInit){
 //				messageTrace = createCSV("message_log", g_tw_mynode, g_tw_npe -1);

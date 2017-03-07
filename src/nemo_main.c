@@ -6,7 +6,7 @@
 #include "nemo_main.h"
 
 /** Set for testing IO ops */
-#define TESTIO 1
+#define TESTIO 0
 
 /** \addtogroup Globals 
  * @{  */
@@ -29,12 +29,10 @@ bool TONIC_SPK_VAL = false;
 bool TONIC_BURST_VAL = false;
 bool PHASIC_BURST_VAL = false;
 bool VALIDATION = false;
-
  bool MPI_SAVE = false;
  bool BINARY_OUTPUT = false;
 char * inputFileName = "nemo_in";
 char * neuronFireFileName = "fire_record";
-
 int N_FIRE_BUFF_SIZE = 32;
 int N_FIRE_LINE_SIZE = 512;
 char * NETWORK_FILE_NAME = "demo_ts.csv";
@@ -66,7 +64,9 @@ char * couchAddress = "192.168.2.3";
  */
 const tw_optdef app_opt[] = {
 	//	TWOPT_FLAG("rand_net", IS_RAND_NETWORK, "Generate a random network? Alternatively, you need to specify config files."),
-	TWOPT_FLAG("netIn", FILE_IN, "Load network information from a file"),
+	TWOPT_FLAG("netin", FILE_IN, "Load network information from a file. If set,"
+			   "a network file name must be specified.\n If off, a randomly "
+			   "generated benchmark model will be used."),
 	TWOPT_CHAR("nfn", NETWORK_FILE_NAME, "Input Network File Name"),
 	TWOPT_UINT("tm", testingMode, "Choose a test suite to run. 0=no tests, 1=mapping tests"),
 	TWOPT_GROUP("Randomized (ID Matrix) Network Parameters"),
@@ -107,8 +107,8 @@ tw_lptype model_lps[] = {
         (pre_run_f)NULL,
         (event_f)synapse_event,
         (revent_f)synapse_reverse,
-        (commit_f) NULL,
-        (final_f)NULL,
+		(commit_f) NULL,
+        (final_f)synapse_final,
         (map_f)getPEFromGID, 
         sizeof(synapseState)
     },
@@ -195,7 +195,7 @@ void init_nemo(){
 	FILE_OUT = SAVE_SPIKE_EVTS || SAVE_NEURON_OUTS || 
 				SAVE_MEMBRANE_POTS || VALIDATION;
 
-	FILE_IN = !IS_RAND_NETWORK;
+	
 
 
 	if (FILE_OUT){
@@ -208,8 +208,11 @@ void init_nemo(){
 
 	if (FILE_IN){
 		//Init File Input Handles
+		printf("Network Input Active");
+		printf("Filename specified: %s", NETWORK_FILE_NAME);
 		networkFileName = NETWORK_FILE_NAME;
-		openInputFiles();	
+		openInputFiles();
+		parseNetworkFile();
 	}
 
 	
@@ -284,12 +287,10 @@ unsigned char mapTests(){
  */
 
 int main(int argc, char*argv[]) {
-IS_RAND_NETWORK = !FILE_IN;
-
 
 	tw_opt_add(app_opt);
-
 	tw_init(&argc, &argv);
+	
     //call nemo init
     init_nemo();
 if(nonC11 == 1)

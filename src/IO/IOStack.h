@@ -6,6 +6,8 @@
 #define NEMO_IOSTACK_H
 #include <stdio.h>
 #include <stdlib.h>
+#include "input.h"
+#include "output.h"
 #include "../globals.h"
 
 

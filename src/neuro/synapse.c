@@ -5,19 +5,7 @@ void synapse_init(synapseState *s, tw_lp *lp){
 	s->msgSent = 0;
 	s->lastBigTick = 0;
 	s->myCore = getCoreFromGID(lp->gid);
-	// The random benchmark network uses an "identity matrix" of axon->neuron connectivity for now.
-	// So if we are using this type of network, set the diagonal of this synapse's connectivity grid to 1.
-	if (!FILE_IN){
-		for(int i = 0; i< AXONS_IN_CORE; i ++ ){
-			for(int j = 0; j < NEURONS_IN_CORE; j++) {
-				if (i == j){
-					s->connectionGrid[i][j] = 1;
-				}
-				else
-					s->connectionGrid[i][j] = 0;
-			}
-		}
-	}
+
 	
 	
 	if(DEBUG_MODE){
@@ -49,6 +37,8 @@ void reverseSynapseHB(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
 void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
 	unsigned long randCount = lp->rng->count;
 	
+	if(M->axonID > AXONS_IN_CORE )
+		tw_error(TW_LOC, "Invalid AXON value within synapse system.");
 	
 	if(M->eventType == SYNAPSE_HEARTBEAT){
 		//Heartbeat message
@@ -105,7 +95,8 @@ void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
 //		//get the LP @todo: look at changing this to direct array access
 //		cNeuron = tw_getlp(nid);
 //		
-//		
+//
+
 //		
 //		//if(cNeuron->connectionGrid[axonID] != 0){
 //			
@@ -119,7 +110,6 @@ void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp){
 //		//}
 //
 //	}
-
 
 ///** TODO: This is probably not going to work. I think the synapse will need a larger state. */
 //
@@ -205,6 +195,10 @@ void synapse_final(synapseState *s, tw_lp *lp){
             debugMsg(m, s->msgSent);
         }
     }
+	print( (char*) "SS Messages sent: ");
+	print(s->msgSent);
+	
+	
 
 }
 

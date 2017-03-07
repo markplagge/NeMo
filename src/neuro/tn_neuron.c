@@ -749,63 +749,6 @@ void TN_create_simple_neuron(tn_neuron_state* s, tw_lp* lp) {
 }
 
 
-//missing lambdas, so I made this macro HERE of all places.
-
-
-/* REMOVED & replaced with an all-in-one neuron parse & init function, seen below.
-void parseCSVDat(tn_neuron_state *st, csvNeuron raw){
-	//simply cast everything and either call a constructor or directly touch state.
-
-	//Next, go through the fields and make them shiny and chrome:
-	id_type coreID = raw.req_core_id;
-	id_type nID = raw.req_local_id;
-	
-	//hobbits don't use pointers - use counter variable and array.
-	int currentFld = 3; //Data starts at 4th element: "TN",CORE,LOCAL,....
-	
-	bool synapticConnectivity[NEURONS_IN_CORE];
-	//boooooooooooool array
-	for(int i = 0; i < NEURONS_IN_CORE; i ++){
-		synapticConnectivity[i] = atoi(raw.rawDatM[currentFld++]); //postfix, increments after use.
-	}
-	
-	short G_i[NEURONS_IN_CORE];
-	for (int i = 0; i < NEURONS_IN_CORE; i ++){
-		G_i[i] = atoi(raw.rawDatM[currentFld++]);
-	}
-	short sigmaSBool[NUM_NEURON_WEIGHTS * 3];
-	short *sigma = sigmaSBool;
-	short *S = sigmaSBool;
-	S += NUM_NEURON_WEIGHTS;
-	short  *b = sigmaSBool;
-	b+=  NUM_NEURON_WEIGHTS;
-	
-	for (int i = 0; i < NUM_NEURON_WEIGHTS * 3; i++){
-		sigmaSBool[i] = atoi(raw.rawDatM[currentFld++]);
-	}
-	bool epsilon = nextToI();
-	bool sigma_l = nextToI();
-	short lambda = nextToI();
-	bool c = nextToI();
-	uint32_t alpha = nextToI();
-	uint32_t beta = nextToI();
-	short TM = nextToI();
-	short VR = nextToI();
-	short sigmaVR = nextToI();
-	short gamma = nextToI();
-	bool kappa = nextToI();
-	int signalDelay = nextToI();
-	
-	int destCore = nextToI();
-	int destLocal = nextToI();
-	
-	int isOutputNeuron = nextToI();
-	int selfFiring = nextToI();
-	
-	tw_lpid globalDest = getGIDFromLocalIDs(destCore, destLocal);
-	
-	
-} */
 
 void parseCSVCreateTN(tn_neuron_state *st, csvNeuron raw){
 	st->myCoreID = raw.req_core_id;
@@ -848,13 +791,18 @@ void parseCSVCreateTN(tn_neuron_state *st, csvNeuron raw){
 				if(pos == NEURONS_IN_CORE - 1){
 					arrayNum ++;
 					pos = 0;
+				}else{
+					pos ++;
 				}
 				break;
-				
-			default:
+			case SGI:
+			case SP:
+			case BV:
 				if(pos == NUM_NEURON_WEIGHTS - 1){
 					arrayNum ++;
 					pos = 0;
+				}else{
+					pos ++;
 				}
 				
 		}
@@ -921,12 +869,15 @@ void TN_Create_From_File(tn_neuron_state* s, tw_lp* lp){
 	if (rawNeuron.foundNeuron){
 		//found the neuron, set up state
 		parseCSVCreateTN(s, rawNeuron);
+		s->isActiveNeuron = true;
 	} else {
 		//no neuron, so set up a disconnected neuron.
 		s->isActiveNeuron = false;
+		s->myCoreID = core;
+		s->myLocalID = nid;
 	}
 	
-	//todo: implement neuron exist in file check
+	
 	
 
 	
@@ -948,77 +899,31 @@ void TN_init(tn_neuron_state* s, tw_lp* lp) {
   }
 	if(FILE_IN){
 		TN_Create_From_File(s, lp);
+
 	}else{
-		TN_create_simple_neuron(s, lp);
+		//TN_create_simple_neuron(s, lp);
+		s->isActiveNeuron = false;
+		
+		
 	}
 
-
-	
-	
-	//TN_create_simple_neuron(s, lp);
-
-  // createDisconnectedNeuron(s, lp);
-
-  //    messageData *setupMsg;
-  //    tw_event *setupEvent;
-  //
-  //    setupEvent = tw_event_new(lp->gid, getNextEventTime(lp), lp);
-  //    setupMsg = (messageData *) tw_event_data(setupEvent);
-  //
-  //
-  //    bool * connectivity = tw_calloc(TW_LOC,"LP",sizeof(bool),AXONS_IN_CORE);
-  //    for (int i = 0; i < AXONS_IN_CORE; i ++){
-  //        connectivity[i] = s->synapticWeight[s->axonTypes[i]];
-  //    }
-  //    setupMsg->eventType = NEURON_SETUP;
-  //    setupMsg->localID = s->myLocalID;
-  //    setupMsg->neuronConn = connectivity;
-  //
-  //    tw_event_send(setupEvent);
-//
-//  if (DEBUG_MODE) {
-//    printf(
-//        "Neuron type %s, num: %llu checking in with GID %llu and dest %llu \n",
-//        s->neuronTypeDesc, s->myLocalID, lp->gid, s->outputGID);
-//  }
-  // Original NeMo Neuron Init
-  //    static int pairedNeurons = 0;
-  //    s->neuronTypeDesc = "SIMPLE";
-  //    if(DEBUG_MODE && ! annouced)
-  //        printf("Creating neurons\n");
-  //
-  //    if(PHAS_VAL) {
-  //        if(!pc){
-  //            crPhasic(s, lp);
-  //            pc = true;
-  //        }
-  //        else {
-  //            createDisconnectedNeuron(s, lp);
-  //        }
-  //
-  //    } else if(TONIC_BURST_VAL) {
-  //        if(pairedNeurons < 2) {
-  //            crTonicBursting(s, lp);
-  //            pairedNeurons ++;
-  //        }
-  //        else {
-  //            createDisconnectedNeuron(s, lp);
-  //        }
-  //    } else if (PHASIC_BURST_VAL){
-  //        if (pairedNeurons < 2) {
-  //            crPhasicBursting(s, lp);
-  //            pairedNeurons ++;
-  //        }
-  //
-  //    } else {
-  //        createSimpleNeuron(s, lp);
-  //    }
-  //    //createDisconnectedNeuron(s, lp);
-  //    annouced = true;
 }
+
+
 
 void TN_forward_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
                       tw_lp* lp) {
+	long ld = s->myLocalID;
+	long cd = s->myCoreID;
+	if (m->eventType == SYNAPSE_OUT && m->axonID == 0){
+		printf("Axon 0 rcvd. \n");
+	}
+	if (ld == 0){
+		printf("Neuron 0, core 0 checking in. \n");
+	}
+	if(! s->isActiveNeuron){
+		return;
+	}
   long start_count = lp->rng->count;
 
   //    //Delta Encoding
@@ -1033,8 +938,8 @@ void TN_forward_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
                                            // or we are saving membrane
                                            // potentials
 
-    // saveNeruonState(s->myLocalID, s->myCoreID, s->membranePotential,
-    // tw_now(lp));
+	  //saveNeruonState(s->myLocalID, s->myCoreID, s->membranePotential,
+	  //tw_now(lp));
   }
 
   bool fired = TNReceiveMessage(s, m, lp, CV);
@@ -1055,8 +960,13 @@ void TN_forward_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
   //    tw_snapshot_delta(lp, lp->type->state_sz);
 }
 
+
+
 void TN_reverse_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
                       tw_lp* lp) {
+	if(! s->isActiveNeuron){
+		return;
+	}
   long count = m->rndCallCount;
   //    tw_snapshot_restore(lp, lp->type->state_sz);
   if (VALIDATION || SAVE_MEMBRANE_POTS) {

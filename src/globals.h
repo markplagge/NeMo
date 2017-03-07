@@ -255,13 +255,13 @@ typedef struct Ms{
 	};
 	
 	
-    union{
+	// union{
         id_type axonID; //!< Axon ID for neuron value lookups.
         bool * neuronConn;
-    };
+	//};
     //message tracking values:
 #ifdef SAVE_MSGS
-    union {
+	union {
         uint64_t uuid;
         struct {
             uint16_t idp1;

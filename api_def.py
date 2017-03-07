@@ -37,10 +37,14 @@ class TN:
 		self.S = [1] * weightsPerNeuron
 		self.synaptic_weights = [0] * weightsPerNeuron  # random.randint(0,5,size=4)
 		self.b = [0] * 4
+		self._numSyns = numSynapsesPerCore
 
-
+	def sanity_check(self):
+		assert(len(self.g_i) == len(self.synapticConnectivity))
+		assert(len(self.g_i) == self._numSyns)
 
 	def to_csv(self):
+		self.sanity_check()
 		os = lambda xx, yy: str(xx) + "," + str(yy)
 
 		ocsv = "{},{},{},".format(self.type, self.coreID, self.localID)
@@ -91,7 +95,11 @@ if __name__ == '__main__':
 	n0.destCore = 0
 	n0.destLocal = 0
 	n0.sigmaG = [1,1,1,1]
+	n0.g_i=[1] * 256
+	n0.g_i[0] = 0
 
+
+	#loopback neurons - one fires when msg got in core 1 to core 1, other fires to core 0
 	n1 = TN(256,4)
 	n1.synapticConnectivity = [1] * 256
 	n1.S = [1,1,1,1]
@@ -100,13 +108,18 @@ if __name__ == '__main__':
 	n1.destLocal=0
 	n1.coreID = 1
 	n1.localID = 0
+	n1.g_i =[1] * 256
 	
-	n2 = n1
+	n2 = TN(256,4)
+	n2.synapticConnectivity = [1] * 256
+	n2.S = [1,1,1,1]
+	n2.alpha = 1
 	n2.destCore=1
 	n2.destLocal=0
 	n2.coreID = 1
 	n2.localID = 1
-	
+	n2.g_i = [0,1,2,3] * 64
+
 	n0CSV = n0.to_csv()
 	
 	with open("demo_ts.csv", 'w') as f:
