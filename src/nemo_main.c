@@ -36,6 +36,7 @@ char * neuronFireFileName = "fire_record";
 int N_FIRE_BUFF_SIZE = 32;
 int N_FIRE_LINE_SIZE = 512;
 char * NETWORK_FILE_NAME = "demo_ts.csv";
+char * SPIKE_FILE_NAME = "spikein.nsf";
 //
 /**
  * @FILE_OUT - is set to true if NeMo is saving output files
@@ -49,7 +50,6 @@ bool FILE_IN = false;
  * outFile - basic output file handler.
  */
 FILE *outFile;
-
 int testingMode = 0;
 
 
@@ -68,6 +68,7 @@ const tw_optdef app_opt[] = {
 			   "a network file name must be specified.\n If off, a randomly "
 			   "generated benchmark model will be used."),
 	TWOPT_CHAR("nfn", NETWORK_FILE_NAME, "Input Network File Name"),
+	TWOPT_CHAR("sfn", SPIKE_FILE_NAME, "Spike input file name"),
 	TWOPT_UINT("tm", testingMode, "Choose a test suite to run. 0=no tests, 1=mapping tests"),
 	TWOPT_GROUP("Randomized (ID Matrix) Network Parameters"),
 		TWOPT_ULONGLONG("cores", CORES_IN_SIM, "number of cores in simulation"),
@@ -76,7 +77,8 @@ const tw_optdef app_opt[] = {
 	//TWOPT_FLAG("bulk", BULK_MODE, "Is this sim running in bulk mode?"),
     	TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
 		TWOPT_FLAG("network", SAVE_NEURON_OUTS, "Save neuron output axon IDs on creation - Creates a map of the neural network."),
-    	TWOPT_FLAG("svm", SAVE_MEMBRANE_POTS, "Save neuron membrane potential values (enabled by default when running a validation model"),
+    	TWOPT_FLAG("svm", SAVE_MEMBRANE_POTS, "Save neuron membrane potential "
+				   "values (saves membrane potential per-tick if neuron was active.)"),
     	TWOPT_FLAG("svs", SAVE_SPIKE_EVTS, "Save neuron spike event times and info"),
 
 //    TWOPT_GROUP("Integrated Bio Model Testing"),
@@ -142,9 +144,11 @@ void displayModelSettings()
     printf("* \t %f cores per PE, giving %llu LPs per pe.\n", cores_per_node, g_tw_nlp);
     printf("* \t Neurons have %i axon types (cmake defined)\n", NUM_NEURON_WEIGHTS);
     printf("* \t Network is a %s network.\n",netMode);
+		printf("* \t Network Input FileName: %s \n", NETWORK_FILE_NAME);
+		printf("* \t Spike Input FileName %s \n", SPIKE_FILE_NAME);
     printf("* \t Neuron stats:\n");
     printf("* \tCalculated sim_size is %llu\n", SIM_SIZE);
-    printf("* \tSave Messages: %i \n", SAVE_MSGS );
+
 
     //printf("%-10s", "title");
 
@@ -211,8 +215,10 @@ void init_nemo(){
 		printf("Network Input Active");
 		printf("Filename specified: %s", NETWORK_FILE_NAME);
 		networkFileName = NETWORK_FILE_NAME;
+		spikeFileName = SPIKE_FILE_NAME;
 		openInputFiles();
 		parseNetworkFile();
+		
 	}
 
 	
@@ -323,6 +329,9 @@ if(nonC11 == 1)
     }
     //neuron fire output testing function.
 	//testNeuronOut();
+	
+	
+	
 	
     tw_run();
 	

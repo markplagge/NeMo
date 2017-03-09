@@ -8,46 +8,29 @@
 
 #include "axon.h"
 
-//Global Message CSV Writer -- for debug and message traacing
-#ifdef SAVE_MSGS
-//csv_writer * messageTrace;
-//
-//void axon_mark_message(axonState *s, messageData *M, tw_lpid gid, tw_lp *lp){
-//
-//	if(!M->originGID){
-//		M->originGID = gid;
-//		M->msgCreationTime = tw_now(lp);
-//		M->idp1 = s->axonID;
-//		M->idp2 = getCoreFromGID(gid);
-//		M->idp3 = s->sendMsgCount;
-//	}
-//	char * dm = tw_calloc(TW_LOC,2, sizeof(char), 256);
-//	print(M->uuid);printf("\n");
-//	sprint(dm,M->uuid);
-//	addCol(messageTrace,dm , 0);
-//	dm = tw_calloc(TW_LOC,2, sizeof(char), 256);
-//	sprint(dm,M->originGID);
-//	addCol(messageTrace, dm ,0);
-//	dm = tw_calloc(TW_LOC,2 ,sizeof(char), 256);
-//	sprint(dm,M->msgCreationTime);
-//	addCol(messageTrace, dm, 0);
-//	dm = tw_calloc(TW_LOC,2,  sizeof(char), 256);
-//	//sprint(dm,"Axon");
-//	sprintf(dm, "%s", "Axon");
-//	addCol(messageTrace, dm, 1);
-//	addCol(messageTrace, lp->gid, 0);
-//	addRow(messageTrace);
-//	
-//}
-#endif
+
 void axon_init(axonState *s, tw_lp *lp)
 {
-	static bool writeInit = false;
+	
     //TODO: Maybe switch this to a switch/case later, since it's going to get
     //big.
 	static int specAxons = 0;
     s->axtype = "NORM";
-    if(PHAS_VAL) {//one phasic axon:
+	
+	if(FILE_IN){
+		
+		
+		s->sendMsgCount = 0;
+		s->axonID = getAxonLocal(lp->gid);
+		s->destSynapse = getSynapseFromAxon(lp->gid);
+		
+		//SLOW SLOW way to load spikes - need to optimize //
+		
+
+		specAxons ++;
+		
+		
+	}else if(PHAS_VAL) {//one phasic axon:
         if (specAxons == 0){
             //crPhasicAxon(s, lp);
             specAxons ++;
@@ -87,34 +70,6 @@ void axon_init(axonState *s, tw_lp *lp)
         data->eventType = AXON_OUT;
         data->axonID = s->axonID;
 		tw_event_send(axe);
-		
-		//Debug / testing code for FIlE IO
-		//Should not be left in after spike input files are created.
-		
-//		for(int i = 0; i < NEURONS_IN_CORE; i ++){
-//			tw_stime r = getNextBigTick(lp, i) + i;
-//			tw_event *init_event = tw_event_new(lp->gid, r, lp);
-//			messageData *data = tw_event_data(init_event);
-//			data->eventType = AXON_OUT;
-//			data->axonID = s->axonID;
-//			tw_event_send(init_event);
-//		}
-//		
-		
-		
-//		if (SAVE_MSGS){
-//			if(!writeInit){
-//				messageTrace = createCSV("message_log", g_tw_mynode, g_tw_npe -1);
-//				writeInit = true;
-//				
-//			}
-//			
-//			axon_mark_message(s, data, lp->gid, lp);
-//			/** @todo add message save code to io stack
-//			 * */
-//			// save message //
-//			
-//		}
 		
     }
 

@@ -15,13 +15,6 @@
 #include "../IO/output.h"
 #define Vj ns->membranePotential
 
-#ifdef SAVE_MSGS
-
-#endif
-
-#ifdef SAVE_NEURON_STATS
-
-#endif
 
 /**
  * TrueNorth LP Neuron Model struct

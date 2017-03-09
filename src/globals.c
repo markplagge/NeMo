@@ -40,7 +40,7 @@ tw_stime bigTickRate = 1;
  * littleTick is the rate of intra core synchronization. Synapses and axons do 
  * calculations using this rate, and neurons integrate with messages set to this rate.
  */
-tw_stime littleTick = 0.001;
+tw_stime littleTick = 0.0001;
 
 
 
@@ -52,7 +52,7 @@ tw_stime littleTick = 0.001;
  * @return     The next event time. Is a jitter value that is < 0.0001.
  */
 tw_stime getNextEventTime(tw_lp *lp) {
-    return (tw_rand_unif(lp->rng) / 10000)  + littleTick;
+    return JITTER  + littleTick;
 }
 
 
@@ -62,7 +62,7 @@ tw_stime getNextEventTime(tw_lp *lp) {
  */
 
 tw_stime getNextSynapseHeartbeat(tw_lp *lp){
-	return (tw_rand_unif(lp->rng) / 10000) + littleTick;
+	return JITTER + littleTick;
 }
 
 
@@ -72,7 +72,7 @@ tw_stime getCurrentBigTick(tw_stime now){
 
 
 tw_stime getNextBigTick(tw_lp *lp, tw_lpid neuronID) {    
-    return (tw_rand_unif(lp->rng) / 1000) + bigTickRate;
+    return JITTER + bigTickRate;
 }
 
 

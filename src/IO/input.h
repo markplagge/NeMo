@@ -8,26 +8,36 @@
 #include "../lib/csv.h"
 #include "../globals.h"
 #include "../neuro/tn_neuron.h"
+#include <sys/queue.h>
 
-
-int openInputFiles();
-int initNetworkFile();
-int closeNetworkFile();
-int closeSpikeFile();
 enum neuronTypeVals* neuronMap;
 char * neuronFireFileName;
 char * networkFileName;
 char * spikeFileName;
+typedef enum ReadStatus{
+	loaded = 0,
+	inNeurons = 1,
+	myCoreGreater = 2,
+	myCoreLower = 3,
+	eof = 4
+}readStatus;
 
-struct CsvNeuron getNeuronData(id_type core, id_type nid);
+
+int openInputFiles();
+int initNetworkFile();
 void parseNetworkFile();
 void postParseCleanup();
 
-typedef enum ReadStatus{
-    loaded = 0,
-    inNeurons = 1,
-    myCoreGreater = 2,
-    myCoreLower = 3,
-    eof = 4
-}readStatus;
+
+double  * getNextSpikeFromFile();
+int queueSpikesFromAxon(id_type coreID, id_type localID);
+
+int closeNetworkFile();
+int closeSpikeFile();
+
+struct CsvNeuron getNeuronData(id_type core, id_type nid);
+
+
+
+
 #endif //SUPERNEMO_INPUT_H

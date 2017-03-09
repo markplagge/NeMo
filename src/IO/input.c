@@ -13,6 +13,14 @@ static int minCore = 0;
 static int maxCore = 0;
 static int * coreLoc[];
 
+struct spikeQ {
+	long double spikeTime;
+	id_type destCore;
+	id_type destAxon;
+	struct spikeQ *next_ptr;
+};
+
+struct spikeQ *spikeList;
 
 /** Struct for managing full CSV read in */
 
@@ -38,13 +46,17 @@ static enum neuron_read_mode readMode = START_READ;
 int openInputFiles(){
     networkFile = fopen(networkFileName,"rb");
     if (errno){
-        printf("Error opening network def "
-                       "file %s, with error code %i.\n",networkFileName, errno);
-        return errno;
+		tw_error(TW_LOC, "Error opening network def "
+				 "file %s, with error code %i.\n",networkFileName, errno);
     }
+	
+	spikeFile = fopen(spikeFileName, "rb");
+	if (errno){
+		tw_error(TW_LOC, "Error opening spike def "
+				 "file %s, with error code %i.\n",networkFileName, errno);
+	}
     netReadStat = 0;
-
-    int ws = g_tw_npe;
+	spikeList = NULL;
 
 
 
@@ -57,28 +69,40 @@ int closeNetworkFile(){
     return 0;
 }
 
-/** Todo: Currently not used - API is strict for now, only neurons in network file. */
-void forwardToNetwork(){
-	//Not implemented.
-//    char * linebuff = calloc(512, sizeof(char));
-//    int isEOL = 0;
-//    while (netReadStat == loaded){
-//        while(isEOL == 0){
-//            if(fgets(linebuff,512,networkFile) != NULL){
-//
-//            }
-//            else{
-//                printf("Error encountered when reading network CSV - could not find a neuron def. \n");
-//            }
-//        }
-//    }
+
+
+
+double * getNextSpikeFromFile(){
+	static _Bool isE = false;
+	static double spikeInfo[3];
+	spikeInfo[0] = -1;
+	
+	if (isE){
+	
+		return NULL;
+	}
+	//double * spikeinfo = tw_calloc(TW_LOC,  "SpikeInput", sizeof(double), 3);
+	
+	//dumb way to do this for demo pps:
+	if (fscanf(spikeFile,"%la,%la,%la",&spikeInfo[0],&spikeInfo[1],&spikeInfo[2]) > 0){
+		return spikeInfo;
+	}else{
+		isE = true;
+		spikeInfo[0] = -1;
+		return NULL;
+	}
+	
 }
 
-int* getCoresLinesInFile(){
+//double * findEvent(id_type coreID, id_type localID){
+//	return &-1.0
+//}
+
+int queueSpikesFromAxon(id_type coreID, id_type localID){
+	
+	return -1;
 
 }
-
-
 
 
 /** Callback function called when libCSV has read an entire field. Add

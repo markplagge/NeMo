@@ -166,6 +166,11 @@ weight_type iiABS(weight_type in);
   */
   /** @{ */
 
+/** Macro for use within globals. 
+ Assumes that there is a tw_lp pointer called lp in the function it is used.
+ */
+#define JITTER (tw_rand_unif(lp->rng) / 10000)
+
 /**
  *  Gets the next event time, based on a random function. Moved here to allow for
  *  easier abstraction, and random function replacement.
