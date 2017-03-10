@@ -119,10 +119,14 @@ void push(spikeRecord * head, double  vals[]) {
     }
 
     /* now we can add a new variable */
+	
     print(vals[0]);
+	print(" ");
     print(vals[1]);
-    print(vals[2]);
-    current->nextRecord = malloc(sizeof(spikeList));
+	print(" ");
+	print(vals[2]);
+	print("\n");
+    current->nextRecord = malloc(sizeof(spikeRecord));
     current->nextRecord->scheduledTime = vals[0];
     current->nextRecord->destCore = vals[1];
     current->nextRecord->destAxon = vals[2];
@@ -139,7 +143,7 @@ void loadSpikes(){
 
 
         if(fr){
-            spikeList = malloc(sizeof(spikeList));
+            spikeList = malloc(sizeof(spikeRecord));
             spikeList->scheduledTime = spikeInfo[0];
             spikeList->destCore = spikeInfo[1];
             spikeList->destAxon = spikeInfo[2];

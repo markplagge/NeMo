@@ -33,8 +33,7 @@ int openInputFiles();
 int initNetworkFile();
 void parseNetworkFile();
 void postParseCleanup();
-
-
+spikeRecord * getRecord(id_type core, id_type local);
 double  * getNextSpikeFromFile();
 void loadSpikes();
 tw_stime queueSpikesFromAxon(id_type coreID, id_type localID);

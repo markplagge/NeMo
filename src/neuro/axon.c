@@ -25,6 +25,19 @@ void axon_init(axonState *s, tw_lp *lp)
 		s->destSynapse = getSynapseFromAxon(lp->gid);
 		
 		//SLOW SLOW way to load spikes - need to optimize //
+		id_type core = getCoreFromGID(lp->gid);
+		spikeRecord * spk = getRecord(core, s->axonID);
+		
+		while(spk != NULL){
+			
+			tw_stime sched_event = floor(spk->scheduledTime) + JITTER;
+			tw_event *saxe = tw_event_new(lp->gid, sched_event, lp);
+			
+			messageData *data = (messageData *) tw_event_data(saxe);
+			data->axonID = s->axonID;
+			data->eventType = AXON_OUT;
+			tw_event_send(saxe);
+		}
 		
 
 		specAxons ++;
