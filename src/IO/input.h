@@ -22,6 +22,12 @@ typedef enum ReadStatus{
 	eof = 4
 }readStatus;
 
+typedef struct SpikeRecord{
+	tw_stime scheduledTime;
+	id_type destCore;
+	id_type destAxon;
+	struct SpikeRecord * nextRecord;
+}spikeRecord;
 
 int openInputFiles();
 int initNetworkFile();
@@ -30,7 +36,8 @@ void postParseCleanup();
 
 
 double  * getNextSpikeFromFile();
-int queueSpikesFromAxon(id_type coreID, id_type localID);
+void loadSpikes();
+tw_stime queueSpikesFromAxon(id_type coreID, id_type localID);
 
 int closeNetworkFile();
 int closeSpikeFile();

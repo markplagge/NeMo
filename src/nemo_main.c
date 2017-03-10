@@ -35,8 +35,8 @@ char * inputFileName = "nemo_in";
 char * neuronFireFileName = "fire_record";
 int N_FIRE_BUFF_SIZE = 32;
 int N_FIRE_LINE_SIZE = 512;
-char * NETWORK_FILE_NAME = "demo_ts.csv";
-char * SPIKE_FILE_NAME = "spikein.nsf";
+char * NETWORK_FILE_NAME = "./demo_ts.csv";
+char * SPIKE_FILE_NAME = "spike.csv";
 //
 /**
  * @FILE_OUT - is set to true if NeMo is saving output files
@@ -44,7 +44,7 @@ char * SPIKE_FILE_NAME = "spikein.nsf";
  * 
  */
 bool FILE_OUT = false;
-bool FILE_IN = false;
+bool FILE_IN = true;
 
 /**
  * outFile - basic output file handler.
@@ -208,6 +208,7 @@ void init_nemo(){
 		if(g_tw_mynode == 0){
 			printf("Output Files Init.\n");
 		}
+
 	}
 
 	if (FILE_IN){
@@ -218,6 +219,7 @@ void init_nemo(){
 		spikeFileName = SPIKE_FILE_NAME;
 		openInputFiles();
 		parseNetworkFile();
+        loadSpikes();
 		
 	}
 

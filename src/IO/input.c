@@ -20,7 +20,9 @@ struct spikeQ {
 	struct spikeQ *next_ptr;
 };
 
-struct spikeQ *spikeList;
+//struct spikeQ *spikeList;
+
+spikeRecord * spikeList;
 
 /** Struct for managing full CSV read in */
 
@@ -43,15 +45,16 @@ enum neuron_read_mode{
 static enum neuron_read_mode readMode = START_READ;
 
 
+
 int openInputFiles(){
     networkFile = fopen(networkFileName,"rb");
-    if (errno){
+    if (networkFile == NULL){
 		tw_error(TW_LOC, "Error opening network def "
 				 "file %s, with error code %i.\n",networkFileName, errno);
     }
 	
 	spikeFile = fopen(spikeFileName, "rb");
-	if (errno){
+	if (spikeFile == NULL){
 		tw_error(TW_LOC, "Error opening spike def "
 				 "file %s, with error code %i.\n",networkFileName, errno);
 	}
@@ -69,28 +72,107 @@ int closeNetworkFile(){
     return 0;
 }
 
+void addSpike(spikeRecord *new){
+    spikeRecord *sp;
+    if(spikeList == NULL){
+        spikeList = new;
+        return;
+    }
+    sp = spikeList;
+    while(sp->nextRecord){
+        sp = sp->nextRecord;
+    }
+    sp->nextRecord = new;
 
+}
+
+spikeRecord *  getRecord(id_type core, id_type local){
+    spikeRecord *sp;
+    spikeRecord *prev;
+    if(spikeList == NULL){
+        return NULL;
+    }
+    sp = spikeList;
+    bool found = false;
+    if (sp->destAxon == local && sp->destCore == core)
+        return sp;
+
+    while(sp->nextRecord) {
+        prev = sp;
+        if (sp->destAxon == local && sp->destCore == core) {
+
+            spikeRecord *found = sp;
+            prev->nextRecord = sp->nextRecord;
+            return found;
+        }
+
+        sp = sp->nextRecord;
+    }
+    return NULL;
+
+
+}
+void push(spikeRecord * head, double  vals[]) {
+    spikeRecord * current = head;
+    while (current->nextRecord != NULL) {
+        current = current->nextRecord;
+    }
+
+    /* now we can add a new variable */
+    print(vals[0]);
+    print(vals[1]);
+    print(vals[2]);
+    current->nextRecord = malloc(sizeof(spikeList));
+    current->nextRecord->scheduledTime = vals[0];
+    current->nextRecord->destCore = vals[1];
+    current->nextRecord->destAxon = vals[2];
+    current->nextRecord->nextRecord = NULL;
+}
+
+void loadSpikes(){
+
+
+    bool fr = true;
+    double spikeInfo[3];
+
+    while(fscanf(spikeFile,"%la,%la,%la",&spikeInfo[0],&spikeInfo[1],&spikeInfo[2]) > 0){
+
+
+        if(fr){
+            spikeList = malloc(sizeof(spikeList));
+            spikeList->scheduledTime = spikeInfo[0];
+            spikeList->destCore = spikeInfo[1];
+            spikeList->destAxon = spikeInfo[2];
+            spikeList->nextRecord = NULL;
+                fr = false;
+        } else{
+            push(spikeList, spikeInfo);
+        }
+    }
+
+}
 
 
 double * getNextSpikeFromFile(){
-	static _Bool isE = false;
-	static double spikeInfo[3];
-	spikeInfo[0] = -1;
-	
-	if (isE){
-	
-		return NULL;
-	}
-	//double * spikeinfo = tw_calloc(TW_LOC,  "SpikeInput", sizeof(double), 3);
-	
-	//dumb way to do this for demo pps:
-	if (fscanf(spikeFile,"%la,%la,%la",&spikeInfo[0],&spikeInfo[1],&spikeInfo[2]) > 0){
-		return spikeInfo;
-	}else{
-		isE = true;
-		spikeInfo[0] = -1;
-		return NULL;
-	}
+//	static _Bool isE = false;
+//	double spikeInfo[3];
+//	spikeInfo[0] = -1;
+//
+//	if (isE){
+//
+//		return spikeInfo;
+//	}
+//	//double * spikeinfo = tw_calloc(TW_LOC,  "SpikeInput", sizeof(double), 3);
+//
+//	//dumb way to do this for demo pps:
+//    //time,core,axon
+//	if (fscanf(spikeFile,"%la,%la,%la",&spikeInfo[0],&spikeInfo[1],&spikeInfo[2]) > 0){
+//		return spikeInfo;
+//	}else{
+//		isE = true;
+//		spikeInfo[0] = -1;
+//		return spikeInfo;
+//	}
 	
 }
 
@@ -98,9 +180,15 @@ double * getNextSpikeFromFile(){
 //	return &-1.0
 //}
 
-int queueSpikesFromAxon(id_type coreID, id_type localID){
+tw_stime queueSpikesFromAxon(id_type coreID, id_type localID){
 	
-	return -1;
+	spikeRecord * spike = getRecord(coreID, localID);
+    if (spike == NULL){
+        return -1;
+    }
+    tw_stime sched = spike->scheduledTime;
+    free(spike);
+    return sched;
 
 }
 

@@ -8,8 +8,8 @@ set (CMAKE_EXPORT_COMPILE_COMMANDS 1 )
 find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
 
-SET(CMAKE_C_COMPILER mpicc)
-SET(CMAKE_CXX_COMPILER mpicxx)
+#SET(CMAKE_C_COMPILER mpicc)
+#SET(CMAKE_CXX_COMPILER mpicxx)
 
 ##NeMo uses a few C11 features, including generic macros. We assume standard C11
 ##behaviors.
@@ -30,6 +30,7 @@ set(NeMo_NUM_WEIGHTS_IN_NEURON 4 CACHE STRING "How many weights does a neuron ha
 # set(NeMo_SAVE_MSG FALSE CACHE BOOL "Save message paths to CSV or Couch? (debug messages)")
 # set(NeMo_SAVE_MSG_COUCH FALSE CACHE BOOL "Save message paths directly to couch?")
 # set(NeMo_COUCH_ADD "None" CACHE STRING "The IP address:PORT of the couch database if used")
+#
 
 
 set(SAVE_MSGS 0)

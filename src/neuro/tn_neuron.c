@@ -915,12 +915,10 @@ void TN_forward_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
                       tw_lp* lp) {
 	long ld = s->myLocalID;
 	long cd = s->myCoreID;
-	if (m->eventType == SYNAPSE_OUT && m->axonID == 0){
-		printf("Axon 0 rcvd. \n");
-	}
-	if (ld == 0){
-		printf("Neuron 0, core 0 checking in. \n");
-	}
+	//if (m->eventType == SYNAPSE_OUT && m->axonID == 0){
+	//	printf("Axon 0 rcvd. \n");
+	//}
+
 	if(! s->isActiveNeuron){
 		return;
 	}
