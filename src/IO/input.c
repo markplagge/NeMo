@@ -72,46 +72,61 @@ int closeNetworkFile(){
     return 0;
 }
 
-void addSpike(spikeRecord *new){
-    spikeRecord *sp;
-    if(spikeList == NULL){
-        spikeList = new;
-        return;
-    }
-    sp = spikeList;
-    while(sp->nextRecord){
-        sp = sp->nextRecord;
-    }
-    sp->nextRecord = new;
-
-}
+//void addSpike(spikeRecord *new){
+//    spikeRecord *sp;
+//    if(spikeList == NULL){
+//        spikeList = new;
+//        return;
+//    }
+//    sp = spikeList;
+//    while(sp->nextRecord){
+//        sp = sp->nextRecord;
+//    }
+//    sp->nextRecord = new;
+//
+//}
+/** SpikeRecord searches through the spike linked list, and returns a pointer
+ *	to the first spike record found for a particular axon. 
+ *  If found, it wil return the pointer to that spike event, and then
+ *  remove the item from the list. */
 
 spikeRecord *  getRecord(id_type core, id_type local){
+	static int genRecords = 0;
     spikeRecord *sp;
     spikeRecord *prev;
+	printf("returned %i records \n", genRecords);
     if(spikeList == NULL){
         return NULL;
     }
     sp = spikeList;
-    bool found = false;
-    if (sp->destAxon == local && sp->destCore == core)
-        return sp;
-
+	//bool found = false;
+//    if (sp->destAxon == local && sp->destCore == core)
+//        return sp;
+	int listnum = 0;
     while(sp->nextRecord) {
         prev = sp;
         if (sp->destAxon == local && sp->destCore == core) {
 
             spikeRecord *found = sp;
-            prev->nextRecord = sp->nextRecord;
+			if (listnum) {
+				prev->nextRecord = sp->nextRecord;
+			}else{
+				
+				spikeList = spikeList->nextRecord;
+			}
+			genRecords ++;
             return found;
         }
-
+		listnum ++;
         sp = sp->nextRecord;
     }
+	
     return NULL;
-
-
 }
+
+spikeRecord * searchList(spikeRecord *pos, id_type core, id_type local){
+	}
+
 void push(spikeRecord * head, double  vals[]) {
     spikeRecord * current = head;
     while (current->nextRecord != NULL) {

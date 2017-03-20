@@ -37,6 +37,9 @@ void axon_init(axonState *s, tw_lp *lp)
 			data->axonID = s->axonID;
 			data->eventType = AXON_OUT;
 			tw_event_send(saxe);
+			free(spk);
+			spk = getRecord(core, s->axonID);
+			
 		}
 		
 
