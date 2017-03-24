@@ -7,8 +7,16 @@
 #import "../IO/input.h"
 #import "../IO/output.h"
 #import "../globals.h"
+#import "../neuro/tn_neuron.h"
+
 int testInitInput();
 int testCloseInput();
 int testPreParseNetwork();
 int testNeuronRead();
+
+
+
+
 #endif //SUPERNEMO_TESTIO_H
+
+

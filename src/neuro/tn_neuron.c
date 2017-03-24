@@ -4,6 +4,16 @@
 
 #include "tn_neuron.h"
 
+/** Testing Values @{*/
+ #ifdef NET_IO_DEBUG
+ //#include "../tests/nemo_tests.h"
+ char * BBFN = "neuron_config_test";
+ FILE * neuronConfigFile;
+ char  configFileName[128];
+ 
+ #endif
+/*@}*/
+
 /** Enum for parsing CSV data */
 enum arrayFtr{
 	CONN , //Syn. Connectivity
@@ -842,7 +852,7 @@ void parseCSVCreateTN(tn_neuron_state *st, csvNeuron raw){
 	
 	st->isOutputNeuron = nextToI();
 	st->isSelfFiring = nextToI();
-	
+	st->isActiveNeuron = true;
 	//set up PRNG masks:
 	
 	
@@ -906,6 +916,11 @@ void TN_init(tn_neuron_state* s, tw_lp* lp) {
 		
 		
 	}
+	
+#ifdef NET_IO_DEBUG
+	
+	testCreateTNNeuronFromFile(s, lp);
+#endif
 
 }
 
@@ -996,7 +1011,10 @@ void prhdr(bool* display, char* hdr) {
     *display = true;
   }
 }
-void TN_final(tn_neuron_state* s, tw_lp* lp) {
+void TN_final(tn_neuron_state *s, tw_lp *lp) {
+#ifdef NET_IO_DEBUG
+	closeTestFile();
+#endif
   if (g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
     // Alpha, SOPS should be zero. HeartbeatOut should be false.
     char* em = (char*)calloc(1024, sizeof(char));
@@ -1038,3 +1056,103 @@ void tn_serialize(tn_neuron_state *s, void * buffer, tw_lp *lp){
 void tn_deserialize(tn_neuron_state *s, void *buffer, tw_lp *lp) {
   memcpy(s, buffer, sizeof(tn_neuron_state));
 }
+
+#ifdef NET_IO_DEBUG
+
+
+
+
+int tddbFileOpen = 0;
+
+
+
+
+void testCreateTNNeuronFromFile(tn_neuron_state *s, tw_lp *lp){
+	
+	if (!tddbFileOpen){
+		sprintf(configFileName, "%s_%li.csv", BBFN, g_tw_mynode);
+		neuronConfigFile = fopen(configFileName, "w");
+		tddbFileOpen =1;
+		fprintf(neuronConfigFile, "type,isOutput,coreID,localID,"
+				"alpha, beta,thresholdPRNMask,lambda,"
+				"resetMode,resetVoltage,sigmaVR,encodedResetVoltage,"
+				"sigma_l, delayVal,epsilon,leakSelection,"
+				"kappa,isSelfFiring,"
+				);
+		
+		
+		
+		for(int i = 0; i < (NEURONS_IN_CORE * 2); i ++){
+			if(i / NEURONS_IN_CORE == 0){
+			fprintf(neuronConfigFile, "synapseConn-%i,",i%NEURONS_IN_CORE);
+			}else{
+			fprintf(neuronConfigFile, "synapse_type-%i,",i%NEURONS_IN_CORE);
+			}
+		}
+
+		for(int i = 0; i < (NUM_NEURON_WEIGHTS * 2); i ++){
+			
+			if (i / NUM_NEURON_WEIGHTS ){
+				fprintf(neuronConfigFile, "synaptic_weight_%i,", i % NUM_NEURON_WEIGHTS);
+			}else {
+				fprintf(neuronConfigFile, "sign_bit_%i,", i % NUM_NEURON_WEIGHTS);
+			}
+		}
+		for(int i = 0; i < (NUM_NEURON_WEIGHTS); i ++){
+			MCRN("stochastic_weight_mode_select");
+		}
+		UN( "isActive\n");
+	}
+	fflush(neuronConfigFile);
+	//Loop through the elements of the neuron state, saving it's configuration to the file.
+	MCRN("TN", s->isOutputNeuron,s->myCoreID,s->myLocalID);
+	fflush(neuronConfigFile);
+	MCRN(s->posThreshold, s->negThreshold, s->thresholdPRNMask, s->lambda);
+	fflush(neuronConfigFile);
+	MCRN(s->resetMode, s->resetVoltage, s->sigmaVR, s->lambda);
+	fflush(neuronConfigFile);
+	int sl = (int)s->sigma_l;
+	MCRN(sl, s->delayVal, s->epsilon, s->c);
+	fflush(neuronConfigFile);
+	MCRN(s->kappa, s->canGenerateSpontaniousSpikes);
+	fflush(neuronConfigFile);
+	
+	
+	for (int i = 0; i < (NEURONS_IN_CORE * 2); i ++){
+		if (i / NEURONS_IN_CORE == 0){
+			MCRN(s->synapticConnectivity[i]);
+		}else{
+			MCRN(s->axonTypes[i % NEURONS_IN_CORE]);
+		}
+	}
+	fflush(neuronConfigFile);
+	for (int i = 0; i < (NUM_NEURON_WEIGHTS * 2); i ++){
+		if (i / NUM_NEURON_WEIGHTS == 0){
+			MCRN(s->synapticWeight[i % NUM_NEURON_WEIGHTS]);
+		}else{
+			int ss = SGN(s->synapticWeight[i % NUM_NEURON_WEIGHTS]);
+			MCRN(ss);
+		}
+	}
+	fflush(neuronConfigFile);
+	for(int i = 0; i < (NUM_NEURON_WEIGHTS); i++){
+		MCRN(s->weightSelection[i]);
+	}
+	fflush(neuronConfigFile);
+	fprintf(neuronConfigFile, "%i\n", s->isSelfFiring);
+	fflush(neuronConfigFile);
+	
+	
+	
+	
+}
+
+void closeTestFile(){
+	if(tddbFileOpen){
+		fclose(neuronConfigFile);
+		
+		tddbFileOpen = 0;
+	}
+}
+#endif
+

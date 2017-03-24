@@ -13,8 +13,12 @@
 #include "../nemo_config.h"
 #include "../IO/input.h"
 #include "../IO/output.h"
+
 #define Vj ns->membranePotential
 
+#ifdef NET_IO_DEBUG
+#include <stdarg.h>
+#endif
 
 /**
  * TrueNorth LP Neuron Model struct
@@ -102,7 +106,7 @@ typedef struct TN_MODEL {
 						  simulation */
   char axonTypes[AXONS_IN_CORE];
   char synapticWeight[NUM_NEURON_WEIGHTS];
-  bool synapticConnectivity[NEURONS_IN_CORE];  //!< is there a connection between axon i and
+  bool synapticConnectivity[AXONS_IN_CORE];  //!< is there a connection between axon i and
                                    //!neuron j?
   /** stochastic weight mode selection. $b_j^{G_i}$ */
   bool weightSelection[4];
@@ -113,6 +117,9 @@ typedef struct TN_MODEL {
   // PRNSeedValues to the neurons to improve TN compatibility.
 
 } tn_neuron_state;
+
+
+
 
 void tn_create_neuron_encoded_rv(
         id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
@@ -171,6 +178,25 @@ inline tn_neuron_state *TN_convert(void *lpstate);
 size_t tn_size(tn_neuron_state *s, tw_lp *lp);
 void tn_serialize(tn_neuron_state *s, void * buffer, tw_lp *lp);
 void tn_deserialize(tn_neuron_state *s, void *buffer, tw_lp *lp);
+
+//////testing for IO input ///////
+/**
+ * \ingroup nemo_tests
+ * @brief Generates testing data from neuron states.
+ * Saves a CSV file with the state information from the TN Neurons.
+ * Use this to verify that the TN neuron was created properly from
+ * an input CSV file. Saves one CSV file per MPI rank.
+ * @param[in]	s	The neuron's state
+ */
+
+void testCreateTNNeuronFromFile(tn_neuron_state *s, tw_lp *lp);
+
+/**
+ * \ingroup nemo_tests
+ * Closes the test file for this rank (if it has not already been closed.)
+ */
+void closeTestFile();
+
 
 
 #endif  // NEMO_TN_NEURON_H

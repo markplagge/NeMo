@@ -10,7 +10,7 @@
 #define __NEMO_GLOBALS_H__
 
 #define BGQ 0
-
+#define NET_IO_DEBUG 1
 
 #include <inttypes.h>
 #include <stdbool.h>
@@ -63,6 +63,56 @@ float: atof
  *Global Macros */
 /**@{ */
 
+///////FILE DEBUG HELPERS /////////
+#ifdef NET_IO_DEBUG
+
+#define genWrite(x) _Generic((x), \
+char: "%i,", \
+signed char: "%hhd,", \
+unsigned char: "%hhu,", \
+signed short: "%hd,", \
+unsigned short: "%hu,", \
+signed int: "%d,", \
+unsigned int: "%u,", \
+long int: "%ld,", \
+unsigned long int: "%lu,", \
+long long int: "%lld,", \
+unsigned long long int: "%llu,", \
+float: "%f,", \
+double: "%f,", \
+long double: "%Lf,", \
+char *: "%s,", \
+bool: "%i,",\
+void *: "%p,")
+
+
+#define _GET_NTH_ARG(_1, _2, _3, _4, _5, N, ...) N
+#define COUNT_VARARGS(...) _GET_NTH_ARG("ignored", ##__VA_ARGS__, 4, 3, 2, 1, 0)
+
+#define MCR(i) fprintf(neuronConfigFile, genWrite(i), i);
+
+//#define _tp0(...)
+//#define _tp1(i)		genWrite(i)
+//#define _tp2(i,...) genWrite(i) _tp1(__VA_ARGS__)
+//#define _tp3(i,...) genWrite(i) _tp2(__VA_AGRS__)
+//#define _tp4(i,...) genWrite(i) _tp3(__VA_ARGS__)
+
+#define _tp0(...)
+#define _tp1(i)		MCR(i)
+#define _tp2(i,...) MCR(i) _tp1(__VA_ARGS__)
+#define _tp3(i,...) MCR(i) _tp2(__VA_ARGS__)
+#define _tp4(i,...) MCR(i) _tp3(__VA_ARGS__)
+
+#define MCRN(...)  \
+_GET_NTH_ARG("ignored", ##__VA_ARGS__, \
+_tp4, _tp3, _tp2, _tp1,_tp0)(__VA_ARGS__)
+
+
+
+
+#endif
+
+
 #if (__STDC_VERSION >= 200112L) || (_POSIX_C_SOURCE >= 20112L) || (BGQ <=0 )
 #define printf_dec_format(x) _Generic((x), \
 char: "%c", \
@@ -87,8 +137,8 @@ void *: "%p")
 #define sprint(str, y) sprintf(str, printf_dec_format(y), y)
 #define debugMsg(type, value) print(type); print(value); printf("\n")
 #define oprint(message, item) print(message); printf(":"); print(item); printf("\n");
-#define fprint(file, z) fprintf(file, printf_dec_format(z),z)
-
+#define fprint(file, z) fprintf(file, printf_dec_format(z),z);
+#define UN(i) fprintf(neuronConfigFile, printf_dec_format(i), i);
 #define nonC11 0
 #elif BGQ
 //#else //stupid BGQ

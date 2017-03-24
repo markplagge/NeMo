@@ -135,12 +135,6 @@ void push(spikeRecord * head, double  vals[]) {
 
     /* now we can add a new variable */
 	
-    print(vals[0]);
-	print(" ");
-    print(vals[1]);
-	print(" ");
-	print(vals[2]);
-	print("\n");
     current->nextRecord = malloc(sizeof(spikeRecord));
     current->nextRecord->scheduledTime = vals[0];
     current->nextRecord->destCore = vals[1];

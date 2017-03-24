@@ -69,6 +69,8 @@ set(model_srcs
         tests/synapse_test.c
         tests/bio_validation.c
         tests/mapping_tests.c
+        tests/testIO.h
+        tests/testIO.c
 
 
 
