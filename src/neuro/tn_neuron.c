@@ -1074,14 +1074,25 @@ void testCreateTNNeuronFromFile(tn_neuron_state *s, tw_lp *lp){
 		neuronConfigFile = fopen(configFileName, "w");
 		tddbFileOpen =1;
 		fprintf(neuronConfigFile, "type,isOutput,coreID,localID,"
-				"alpha, beta,thresholdPRNMask,lambda,"
-				"resetMode,resetVoltage,sigmaVR,encodedResetVoltage,"
-				"sigma_l, delayVal,epsilon,leakSelection,"
-				"kappa,isSelfFiring,"
+				"sigma0,sigma1,sigma2,sigma3,"
+				"s0,s1,s2,s3,"
+				"b0,b1,b2,b3,"
+				"sigma_lambda,"
+				"lambda,"
+				"c_lambda,"
+				"epsilon,"
+				"alpha,"
+				"beta,"
+				"TM,"
+				"gamma,"
+				"kappa,"
+				"sigma_VR,"
+				"VR,"
+				"V,"
+				"core_delay,"
+				"isSelfFiring,"
+				
 				);
-		
-		
-		
 		for(int i = 0; i < (NEURONS_IN_CORE * 2); i ++){
 			if(i / NEURONS_IN_CORE == 0){
 			fprintf(neuronConfigFile, "synapseConn-%i,",i%NEURONS_IN_CORE);
@@ -1089,32 +1100,45 @@ void testCreateTNNeuronFromFile(tn_neuron_state *s, tw_lp *lp){
 			fprintf(neuronConfigFile, "synapse_type-%i,",i%NEURONS_IN_CORE);
 			}
 		}
-
-		for(int i = 0; i < (NUM_NEURON_WEIGHTS * 2); i ++){
-			
-			if (i / NUM_NEURON_WEIGHTS ){
-				fprintf(neuronConfigFile, "synaptic_weight_%i,", i % NUM_NEURON_WEIGHTS);
-			}else {
-				fprintf(neuronConfigFile, "sign_bit_%i,", i % NUM_NEURON_WEIGHTS);
-			}
-		}
-		for(int i = 0; i < (NUM_NEURON_WEIGHTS); i ++){
-			MCRN("stochastic_weight_mode_select");
-		}
+		
 		UN( "isActive\n");
 	}
 	fflush(neuronConfigFile);
 	//Loop through the elements of the neuron state, saving it's configuration to the file.
 	MCRN("TN", s->isOutputNeuron,s->myCoreID,s->myLocalID);
+	
 	fflush(neuronConfigFile);
-	MCRN(s->posThreshold, s->negThreshold, s->thresholdPRNMask, s->lambda);
-	fflush(neuronConfigFile);
-	MCRN(s->resetMode, s->resetVoltage, s->sigmaVR, s->lambda);
-	fflush(neuronConfigFile);
-	int sl = (int)s->sigma_l;
-	MCRN(sl, s->delayVal, s->epsilon, s->c);
-	fflush(neuronConfigFile);
-	MCRN(s->kappa, s->canGenerateSpontaniousSpikes);
+	int mode = 0;
+	int ss = 1;
+	for (int i = 0; i < (NUM_NEURON_WEIGHTS * 2); i ++){
+		if (i / NUM_NEURON_WEIGHTS == 0){
+			mode ++;
+		}
+		switch (mode) {
+			case 1:
+				//sigma0, sigma1, sigma2, sigma3 (sign of inputs from axons of type s0,s1,s2,s3
+				ss = SGN(s->synapticWeight[i % NUM_NEURON_WEIGHTS]);
+				MCRN(ss);
+				break;
+				
+			case 2:
+				MCRN(s->synapticWeight[i % NUM_NEURON_WEIGHTS]);
+				
+				break;
+			case 3:
+				MCRN(s->weightSelection[i % NUM_NEURON_WEIGHTS]);
+				break;
+				
+		}
+	}
+	
+	MCRN((int)s->sigma_l,s->lambda, s->c,s->epsilon);
+	
+	MCRN(s->posThreshold, s->negThreshold, s->thresholdPRNMask, s->resetMode);
+	MCRN(s->kappa, s->sigmaVR, s->encodedResetVoltage,s->membranePotential);
+	
+	MCRN((unsigned int) s->delayVal, (unsigned int)s->canGenerateSpontaniousSpikes);
+
 	fflush(neuronConfigFile);
 	
 	
@@ -1125,21 +1149,13 @@ void testCreateTNNeuronFromFile(tn_neuron_state *s, tw_lp *lp){
 			MCRN(s->axonTypes[i % NEURONS_IN_CORE]);
 		}
 	}
-	fflush(neuronConfigFile);
-	for (int i = 0; i < (NUM_NEURON_WEIGHTS * 2); i ++){
-		if (i / NUM_NEURON_WEIGHTS == 0){
-			MCRN(s->synapticWeight[i % NUM_NEURON_WEIGHTS]);
-		}else{
-			int ss = SGN(s->synapticWeight[i % NUM_NEURON_WEIGHTS]);
-			MCRN(ss);
-		}
-	}
+	
 	fflush(neuronConfigFile);
 	for(int i = 0; i < (NUM_NEURON_WEIGHTS); i++){
 		MCRN(s->weightSelection[i]);
 	}
 	fflush(neuronConfigFile);
-	fprintf(neuronConfigFile, "%i\n", s->isSelfFiring);
+	UN("\n");
 	fflush(neuronConfigFile);
 	
 	
