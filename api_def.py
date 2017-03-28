@@ -3,6 +3,7 @@ from functools import reduce
 
 def subCSV(xx, yy):
 	return str(xx) + "," + str(yy)
+
 class TN:
 	type = "TN"
 	coreID = 0

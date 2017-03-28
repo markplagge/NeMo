@@ -42,3 +42,9 @@ compile_commands.json
 cmake-build-debug/*
 cmake-build-release/*
 .idea/.name
+
+__pycache__/api_def.cpython-35.pyc
+
+__pycache__/api_def.cpython-36.pyc
+
+~$api_ref.xlsx
