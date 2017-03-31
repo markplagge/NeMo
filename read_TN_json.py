@@ -104,36 +104,6 @@ def parseCrossbar(crossbarDef, n=256):
 	return crossbars
 
 
-def readTN(filename):
-	with open(filename, 'r') as f:
-		parser = JsonComment(json)
-		tnData = parser.load(f)
-
-	mdl = tnData['model']
-	crossbarDat = tnData["crossbarTypes"]
-
-	coreDat = tnData["core"]
-
-	model = Model()
-	model.params = mdl
-	model.neuronClass = mdl['neuronclass']
-	neuronTypes = {}
-
-	for nt in tnData['neuronTypes']:
-
-		neuronTypes[nt['name']] = DefaultNeuronClasses(nt['class'])
-		# filtered = dict((k,val) for k,val in zip(nt.keys(), nt.values()) if k!= 'name')
-		# for k,v in filtered:
-		# 	neuronTypes[nt['name']][k] = v
-		neuronTypes[nt['name']] = dict((k, v) for k, v in zip(nt.keys(), nt.values()) if k != 'name')
-
-		defaults = DefaultNeuronClasses(nt['class'])
-		for k, v in zip(defaults.keys(), defaults.values()):
-
-			if k not in neuronTypes[nt['name']]:
-				neuronTypes[nt['name']][k] = v
-	crossbarDat = parseCrossbar(crossbarDat, mdl['crossbarSize'])
-	return (mdl, neuronTypes, crossbarDat, coreDat)
 
 
 
@@ -206,6 +176,44 @@ def getNeuronModels(neuronTypes,nsynapses = 256, nweights = 4):
 	return neuronTemplates
 
 
+def tnJSONHandler(dict):
+	print(dict)
+	return dict
+
+
+def readTN(filename):
+	with open(filename, 'r') as f:
+
+		parser = JsonComment(json)
+		tnData = parser.load(f,object_pairs_hook=tnJSONHandler)
+
+	mdl = tnData['model']
+	crossbarDat = tnData["crossbarTypes"]
+
+	coreDat = tnData["core"]
+
+	model = Model()
+	model.params = mdl
+	model.neuronClass = mdl['neuronclass']
+	neuronTypes = {}
+
+	for nt in tnData['neuronTypes']:
+
+		neuronTypes[nt['name']] = DefaultNeuronClasses(nt['class'])
+		# filtered = dict((k,val) for k,val in zip(nt.keys(), nt.values()) if k!= 'name')
+		# for k,v in filtered:
+		# 	neuronTypes[nt['name']][k] = v
+		neuronTypes[nt['name']] = dict((k, v) for k, v in zip(nt.keys(), nt.values()) if k != 'name')
+
+		defaults = DefaultNeuronClasses(nt['class'])
+		for k, v in zip(defaults.keys(), defaults.values()):
+
+			if k not in neuronTypes[nt['name']]:
+				neuronTypes[nt['name']][k] = v
+	crossbarDat = parseCrossbar(crossbarDat, mdl['crossbarSize'])
+	return (mdl, neuronTypes, crossbarDat, coreDat)
+
+
 """Per Neuron CSV for NeMo.
  CSV format is:
  type, coreID, localID, connectivityGrid, synapseTypes
@@ -222,6 +230,11 @@ def createTNNeMoCSV(filename):
 
 	neuronTemplates = getNeuronModels(neuronTypes)
 
+	neurons = [] # create neurons and store them in this array for the def file
+
+
+	#given the crossbar def
+	#each crossbar contains neuron connection info and names.
 
 
 	return "d"
