@@ -2,10 +2,8 @@ import copy
 import typing
 from typing import List
 import typing
-try:
-	import ujson as json
-except:
-	import json
+
+import json
 from jsoncomment import JsonComment
 from api_def import TN
 
@@ -97,14 +95,11 @@ def parseCrossbar(crossbarDef, n=256):
 			superNintendoChalmers = row['synapses'].split(' ')
 			superNintendoChalmers = [val for sl in [hex_byte_to_bits(byte) for byte in superNintendoChalmers]
 									 for val in sl]
-			connectivityGrid[rowID] = superNintendoChalmers #[bool(bit) for bit in superNintendoChalmers]
+			connectivityGrid[rowID] = superNintendoChalmers  # [bool(bit) for bit in superNintendoChalmers]
 			rowID += 1
 		crossbars[name] = [synapseTypes, connectivityGrid]
 
 	return crossbars
-
-
-
 
 
 def getConnectivityForNeuron(crossbarDat, crossbarName, neuronID):
@@ -116,6 +111,7 @@ def getConnectivityForNeuron(crossbarDat, crossbarName, neuronID):
 		neuronConnectivity.append(row[neuronID])
 	return neuronConnectivity
 
+
 def getSynapseTypesForNeuron(crossbarDat, crossbarName):
 	cb = crossbarDat[crossbarName]
 	types = cb[0]
@@ -123,10 +119,11 @@ def getSynapseTypesForNeuron(crossbarDat, crossbarName):
 	for row in types:
 		typeMap.append(row)
 
-#def createNeuronfromNeuronTemplate(neuronObject:TN, coreID:int, localID:int, synapticConnectivity:List[int])->TN:
+
+# def createNeuronfromNeuronTemplate(neuronObject:TN, coreID:int, localID:int, synapticConnectivity:List[int])->TN:
 
 
-def createNeuronfromNeuronTemplate(neuronObject, coreID, localID, synapticConnectivity,typeList):
+def createNeuronfromNeuronTemplate(neuronObject, coreID, localID, synapticConnectivity, typeList):
 	n = copy.deepcopy(neuronObject)
 	n.coreID = coreID
 	n.localID = localID
@@ -136,12 +133,12 @@ def createNeuronfromNeuronTemplate(neuronObject, coreID, localID, synapticConnec
 	return n
 
 
-def createNeuronTemplateFromEntry(line,nSynapses=256, weights=4):
+def createNeuronTemplateFromEntry(line, nSynapses=256, weights=4):
 	neuron = TN(nSynapses, weights)
 	sigmas = []
 	s = []
 	b = []
-	for i in range(0,weights):
+	for i in range(0, weights):
 		sigmas.append(line[f'sigma{i}'])
 		s.append(line[f's{i}'])
 		bs = line[f'b{i}']
@@ -167,30 +164,91 @@ def createNeuronTemplateFromEntry(line,nSynapses=256, weights=4):
 	return neuron
 
 
-
-
-def getNeuronModels(neuronTypes,nsynapses = 256, nweights = 4):
+def getNeuronModels(neuronTypes, nsynapses=256, nweights=4):
 	neuronTemplates = {}
-	for name,vals in zip(neuronTypes.keys(), neuronTypes.values()):
-		neuronTemplates[name] = createNeuronTemplateFromEntry(vals, nsynapses,nweights)
+	for name, vals in zip(neuronTypes.keys(), neuronTypes.values()):
+		neuronTemplates[name] = createNeuronTemplateFromEntry(vals, nsynapses, nweights)
 	return neuronTemplates
 
 
-def tnJSONHandler(dict):
-	print(dict)
-	return dict
+import re
+import jsoncomment.package.comments as comments
+
+
+def uniqueify(jsData):
+	coreCount = 0
+
+	jsLines = []  # jsData.split()
+
+	for l in jsData.split():
+		if "core" in l:
+			line = str.replace(l, '"core"', f'"core{coreCount}"')
+			coreCount += 1
+		else:
+			line = l
+		jsLines.append(line)
+
+	jsData = ""
+	for l in jsLines:
+		jsData += l
+	return jsData
+
+
+def tnJSONHandler(di):
+	if 'coreCount' in di.keys():
+		model = Model()
+		model.params = di
+		return model
+
+	if 'crossbar' in di.keys():
+		return {'crossbarTypes': di}
+
+	return di
+
+
+from collections import OrderedDict
+
+
+def make_unique(key, dct):
+	counter = 0
+	unique_key = key
+
+	while unique_key in dct:
+		counter += 1
+		unique_key = '{}_{}'.format(key, counter)
+	return unique_key
+
+
+def parse_object_pairs(pairs):
+	dct = OrderedDict()
+	for key, value in pairs:
+		if key in dct:
+			key = make_unique(key, dct)
+		dct[key] = value
+
+	return dct
 
 
 def readTN(filename):
-	with open(filename, 'r') as f:
+	# with open(filename, 'r') as f:
+	#	data = f.readLines()
 
-		parser = JsonComment(json)
-		tnData = parser.load(f,object_pairs_hook=tnJSONHandler)
+	data = open(filename, 'r').readlines()
+
+	data = comments.json_preprocess(data)
+
+	data = uniqueify(data)
+
+	# tnData = json.loads(data)
+	#tnData = json.load(open(filename, 'r'), object_pairs_hook=tnJSONHandler)
+	tnData = json.load(open(filename,'r'), 	object_pairs_hook=parse_object_pairs)
 
 	mdl = tnData['model']
 	crossbarDat = tnData["crossbarTypes"]
-
-	coreDat = tnData["core"]
+	coreDat = []
+	for k in tnData.keys():
+		if "core" in k:
+			coreDat.append(tnData[k])
 
 	model = Model()
 	model.params = mdl
@@ -230,20 +288,13 @@ def createTNNeMoCSV(filename):
 
 	neuronTemplates = getNeuronModels(neuronTypes)
 
-	neurons = [] # create neurons and store them in this array for the def file
+	neurons = []  # create neurons and store them in this array for the def file
 
-
-	#given the crossbar def
-	#each crossbar contains neuron connection info and names.
+	# given the crossbar def
+	# each crossbar contains neuron connection info and names.
 
 
 	return "d"
-
-
-
-
-
-
 
 
 if __name__ == '__main__':
@@ -254,12 +305,11 @@ if __name__ == '__main__':
 					lambd=0, c_lambda=0, epsilon=False, alpha=10, beta=0, TM=18, gamma=2, kappa=False, sigmaVR=1, VR=4,
 					V=0, cls="TestNeuron")
 
-	gen = readTN('bistable_spike.json')
-	print(gen[2]["coreProt0000001"][1])
-	print(gen[1])
+	gen = readTN('sobel.json')
+
 	print('-' * 50)
-	print(gen[2])
-	print('-'  * 100)
+	print(gen[3])
+	print('-' * 100)
 
 	ns = createTNNeMoCSV('bistable_spike.json')
 	print(ns)
