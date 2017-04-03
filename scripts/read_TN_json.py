@@ -237,11 +237,11 @@ def readTN(filename):
 
 	data = comments.json_preprocess(data)
 
-	data = uniqueify(data)
-
 	# tnData = json.loads(data)
 	#tnData = json.load(open(filename, 'r'), object_pairs_hook=tnJSONHandler)
-	tnData = json.load(open(filename,'r'), 	object_pairs_hook=parse_object_pairs)
+	tnData = json.loads(data, 	object_pairs_hook=parse_object_pairs)
+
+
 
 	mdl = tnData['model']
 	crossbarDat = tnData["crossbarTypes"]
@@ -294,6 +294,12 @@ def createTNNeMoCSV(filename):
 	# each crossbar contains neuron connection info and names.
 
 
+	for core in cores:
+		# Core either has a prototype crossbar or has one defined.
+		if core['crossbar'].
+
+
+
 	return "d"
 
 
@@ -305,11 +311,6 @@ if __name__ == '__main__':
 					lambd=0, c_lambda=0, epsilon=False, alpha=10, beta=0, TM=18, gamma=2, kappa=False, sigmaVR=1, VR=4,
 					V=0, cls="TestNeuron")
 
-	gen = readTN('sobel.json')
 
-	print('-' * 50)
-	print(gen[3])
-	print('-' * 100)
-
-	ns = createTNNeMoCSV('bistable_spike.json')
+	ns = createTNNeMoCSV('sobel.json')
 	print(ns)
