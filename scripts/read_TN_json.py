@@ -1,7 +1,7 @@
+
 import copy
 import typing
 from typing import List
-import typing
 
 import json
 from jsoncomment import JsonComment
@@ -290,13 +290,14 @@ def createTNNeMoCSV(filename):
 
 	neurons = []  # create neurons and store them in this array for the def file
 
+
 	# given the crossbar def
 	# each crossbar contains neuron connection info and names.
 
 
 	for core in cores:
 		# Core either has a prototype crossbar or has one defined.
-		if core['crossbar'].
+		pass
 
 
 
