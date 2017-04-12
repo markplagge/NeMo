@@ -1,15 +1,15 @@
+import itertools
 from functools import reduce
-
-
-def subCSV(xx, yy):
-	return str(xx) + "," + str(yy)
-
+import numpy.random as random
+import numpy as np
 
 class TN:
-	type = "TN"
+	type="TN"
 	coreID = 0
+
 	localID = 0
 	synapticConnectivity = []
+
 	g_i = []  # type of ith neuron
 	sigmaG = []  # sign of ith neuron
 	S = []  # synaptic weight table
@@ -31,6 +31,7 @@ class TN:
 	outputNeuron = 0  # is this a neuron that belongs to an output layer?
 	selfFiring = 0  # is this neuron capable of spontaneous firing?
 
+
 	def __init__(self, numSynapsesPerCore, weightsPerNeuron):
 		"""Creates a connected neuron with random weights, no leak, and a threshold of 10."""
 		self.synapticConnectivity = [0] * numSynapsesPerCore
@@ -41,14 +42,12 @@ class TN:
 		self.b = [0] * 4
 		self._numSyns = numSynapsesPerCore
 
-	def sanity_check(self):
-		assert (len(self.g_i) == len(self.synapticConnectivity))
-		assert (len(self.g_i) == self._numSyns)
+
+
 
 	def to_csv(self):
 		self.sanity_check()
 		os = lambda xx, yy: str(xx) + "," + str(yy)
-
 		ocsv = "{},{},{},".format(self.type, self.coreID, self.localID)
 		for elms in [self.synapticConnectivity, self.g_i, self.sigmaG, self.S, self.b]:
 			ocsv += reduce(os, elms) + ","
@@ -67,21 +66,32 @@ class TN:
 					self.destCore,
 					self.destLocal,
 					self.outputNeuron]:
-			ocsv += "{},".format(var)
+			ocsv += f"{var}"
 
-		ocsv += str(self.selfFiring) + "\n"  # final
+		ocsv += f"{self.selfFiring} \n" # Final line of csv
 
 		return ocsv
 
-		return out
+
+
+	def sanity_check(self):
+		assert (len(self.g_i) == len(self.synapticConnectivity))
+		assert (len(self.g_i) == self._numSyns)
+
+
 
 
 class ConfigFile:
 	neuron_list = []
-
 	ns_cores = 1024
 	neurons_per_core = 256
 	neuron_weight_count = 4
+
+	def __init__(self,neuronList,ns_cores=1024,neurons_per_core=256,neuron_weight_count=4):
+		#Set up the list of neurons:
+
+		for i in neuronList:
+			self.neuron_list.append(i)
 
 	def add_neuron(self, neuron):
 		self.neuron_list.append(neuron)
@@ -100,54 +110,9 @@ class ConfigFile:
 			f.write(self.to_csv())
 
 
-if __name__ == '__main__':
-	print("Generate a tonic spiking neuron demo file (demo.csv) from the API.")
-	n0 = TN(256, 4)
-	n0.synapticConnectivity = [1] + ([0] * 255)
-	print("SC Size is: " + str(len(n0.synapticConnectivity)))
-	n0.S = [3, 0, 0, 0]
-	n0.epsilon = 0
-	n0.lmbda = 0
-	n0.c = 0
-	n0.alpha = 32
-	n0.beta = 0
-	n0.TM = 0
-	n0.sigmaVR = 1
-	n0.VR = 0
-	n0.kappa = 1
-	n0.gamma = 0
-	n0.outputNeuron = 1
-	n0.selfFiring = 1
-	n0.destCore = 0
-	n0.destLocal = 0
-	n0.sigmaG = [1, 1, 1, 1]
-	n0.g_i = [1] * 256
-	n0.g_i[0] = 0
 
-	# loopback neurons - one fires when msg got in core 1 to core 1, other fires to core 0
-	n1 = TN(256, 4)
-	n1.synapticConnectivity = [1] * 256
-	n1.S = [1, 1, 1, 1]
-	n1.alpha = 1
-	n1.destCore = 0
-	n1.destLocal = 0
-	n1.coreID = 1
-	n1.localID = 0
-	n1.g_i = [1] * 256
 
-	n2 = TN(256, 4)
-	n2.synapticConnectivity = [1] * 256
-	n2.S = [1, 1, 1, 1]
-	n2.alpha = 1
-	n2.destCore = 1
-	n2.destLocal = 0
-	n2.coreID = 1
-	n2.localID = 1
-	n2.g_i = [0, 1, 2, 3] * 64
 
-	n0CSV = n0.to_csv()
+def testNeuronFile():
+	#generates two cores - one is random, the other is a synaptic id matrix benchmark, connected to the first core.
 
-	with open("demo_ts.csv", 'w') as f:
-		f.write(n0CSV)
-		f.write(n1.to_csv())
-		f.write(n2.to_csv())

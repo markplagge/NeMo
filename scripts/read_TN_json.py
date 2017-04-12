@@ -2,7 +2,10 @@
 import copy
 import typing
 from typing import List
-
+import re
+import jsoncomment.package.comments as comments
+from collections import OrderedDict
+import numpy as np
 import json
 from jsoncomment import JsonComment
 from api_def import TN
@@ -82,14 +85,16 @@ def hex_byte_to_bits(hex_byte):
 
 
 def parseCrossbar(crossbarDef, n=256):
-	synapseTypes = [0] * n
-	connectivityGrid = [[]] * n
+
 	getType = lambda typeStr: int(typeStr[1])
 	crossbars = {}
 	for c in crossbarDef:
 		name = c['name']
 		cb = c['crossbar']
 		rowID = 0
+		synapseTypes = [0] * n
+		connectivityGrid = [[]] * n
+
 		for row in cb['rows']:
 			synapseTypes[rowID] = getType(row['type'])
 			superNintendoChalmers = row['synapses'].split(' ')
@@ -142,11 +147,12 @@ def createNeuronTemplateFromEntry(line, nSynapses=256, weights=4):
 		sigmas.append(line[f'sigma{i}'])
 		s.append(line[f's{i}'])
 		bs = line[f'b{i}']
-		bs = 0 if bs == False else True
+		bs = 0 if bs == False else 1
 
 		b.append(bs)
 
 	neuron.S = s
+	neuron.sigmaG = sigmas
 	neuron.epsilon = line['epsilon']
 	neuron.sigma_lmbda = line['sigma_lambda']
 	neuron.lmbda = line['lambda']
@@ -167,12 +173,11 @@ def createNeuronTemplateFromEntry(line, nSynapses=256, weights=4):
 def getNeuronModels(neuronTypes, nsynapses=256, nweights=4):
 	neuronTemplates = {}
 	for name, vals in zip(neuronTypes.keys(), neuronTypes.values()):
+		name = name.replace("N","")
 		neuronTemplates[name] = createNeuronTemplateFromEntry(vals, nsynapses, nweights)
+		neuronTemplates[name].nnid = int(name)
 	return neuronTemplates
 
-
-import re
-import jsoncomment.package.comments as comments
 
 
 def uniqueify(jsData):
@@ -206,7 +211,6 @@ def tnJSONHandler(di):
 	return di
 
 
-from collections import OrderedDict
 
 
 def make_unique(key, dct):
@@ -250,6 +254,19 @@ def readTN(filename):
 		if "core" in k:
 			coreDat.append(tnData[k])
 
+	cbid = 0
+	#go through cores and find any non-prototye crossbars and put them in the
+	for core in coreDat:
+		if 'name' not in core['crossbar'].keys():
+			v = {}
+			core['crossbar']['name'] = f"cb{cbid}"
+
+			crossbarDat.append({'crossbar':core['crossbar'], 'name':f"cb{cbid}"})
+			cbid += 1
+
+
+
+
 	model = Model()
 	model.params = mdl
 	model.neuronClass = mdl['neuronclass']
@@ -268,8 +285,99 @@ def readTN(filename):
 
 			if k not in neuronTypes[nt['name']]:
 				neuronTypes[nt['name']][k] = v
+
+	neuronTypesTrim = {}
+
+	for nk in neuronTypes.keys():
+		n_num = nk.replace('N','')
+		neuronTypes[nk]['nid'] = int(n_num)
+
 	crossbarDat = parseCrossbar(crossbarDat, mdl['crossbarSize'])
 	return (mdl, neuronTypes, crossbarDat, coreDat)
+
+
+def getRange(jItem,start=0):
+	return getRangeAndValue(jItem, start)[0]
+
+def getRangeAndValue(jItem, start=0):
+	stm = start
+
+
+	inc = 1
+	if jItem.count(':') == 1:
+		start = int( jItem.split(":")[0])
+		end = int(jItem.split(":")[1])
+		value = 0
+		stm += 1
+	elif jItem.count(":") == 2:
+		sp = jItem.split(":")
+		value = int(sp[0])
+		end = int(sp[2])
+		inc = int(sp[1])
+	elif jItem.count('x') == 1:
+		sp = jItem.split("x")
+		value = int(sp[0])
+		end = int(sp[1])
+	else:
+		print("jItem")
+		end = int(jItem)
+		value = -1
+
+	end = end + stm
+
+	return [np.arange(start,end,inc),value]
+
+def getNeuronTypeList(typeList):
+	types = [-1] * 256 #create NULL neuron list (-1 is null)
+	pos = 0
+	for typeDef in typeList:
+		tp = int(typeDef.split('x')[0])
+		for i in getRange(typeDef,pos):
+			types[i] = tp
+			pos += 1
+	return types
+
+def getNeuronDendrites(dendList):
+	dendrites = [-1] * 256
+	pos = 0
+	for denditm in dendList:
+		rng,value = getRangeAndValue(denditm, pos)
+		for i in rng:
+			dendrites[pos] = value
+			pos += 1
+	return dendrites
+
+
+def getNeuronDestCores(destList):
+	return getNeuronDendrites(destList)
+	destCores = [-1] * 256
+	pos = 0
+	for dCore in destList:
+		rng, value = getRangeAndValue(dCore, pos)
+		for _ in rng:
+			destCores[pos] = value
+			pos += 1
+
+	return destCores
+
+def getNeuronDestAxons(ll):
+	destAxons = [0] * 256
+	axonloc  = 0
+	for axon in ll:
+		rng, value = getRangeAndValue(axon, 0)
+		for v in rng:
+			destAxons[axonloc] = v
+			axonloc += 1
+	return destAxons
+
+def getNeuronDelays(ll):
+	return getNeuronTypeList(ll)
+
+def getNeuronFromID(id, neuronList):
+
+	for k,v in zip(neuronList.keys(), neuronList.values()):
+		pass
+
 
 
 """Per Neuron CSV for NeMo.
@@ -288,16 +396,48 @@ def createTNNeMoCSV(filename):
 
 	neuronTemplates = getNeuronModels(neuronTypes)
 
-	neurons = []  # create neurons and store them in this array for the def file
+	nullNeuron = TN(256,4)
+	nullNeuron.S =[0,0,0,0]
 
+	neurons = []
+	#set up neurons for cores:
+	ntmp = {}
+	for nt in neuronTemplates.values():
+		ntmp[nt.nnid] = nt
 
-	# given the crossbar def
-	# each crossbar contains neuron connection info and names.
-
+	neuronTemplates = ntmp
 
 	for core in cores:
-		# Core either has a prototype crossbar or has one defined.
-		pass
+		crossbar = crossbars[core['crossbar']['name']]
+		coreNeuronTypes = getNeuronTypeList(core['neurons']['types'])
+		dendriteCons = getNeuronDendrites(core['neurons']['dendrites'])
+		destCores = getNeuronDestCores(core['neurons']['destCores'])
+		destAxons = getNeuronDestAxons(core['neurons']['destAxons'])
+		destDelays = getNeuronDelays(core['neurons']['destDelays'])
+
+		coreID = core['id']
+
+		#synapse types:
+		tl = crossbar[0]
+
+		#core data configured, create neurons for this core:
+		for i in range(0,256):
+			#get synaptic connectivity col for this neuron:
+			connectivity = np.array(crossbar[1])[:,i]
+
+			neuron = createNeuronfromNeuronTemplate(neuronTemplates[coreNeuronTypes[i]],coreID,i,connectivity,tl)
+			neuron.destCore = destCores[i]
+			neuron.destLocal = destAxons[i]
+			neuron.signalDelay = destDelays[i]
+			neurons.append(neuron)
+
+
+
+
+
+
+
+
 
 
 
