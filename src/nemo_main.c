@@ -2,15 +2,17 @@
 // Created by Mark Plagge on 5/25/16.
 //
 
-#include <stdio.h>
+
 #include "nemo_main.h"
-#include "./IO/IOStack.h"
+
+/** Set for testing IO ops */
+#define TESTIO 0
 
 /** \addtogroup Globals 
  * @{  */
 
 size_type CORES_IN_SIM = 16;
-size_type AXONS_IN_CORE = NEURONS_IN_CORE;
+//size_type AXONS_IN_CORE = NEURONS_IN_CORE;
 size_type SIM_SIZE = 1025;
 size_type SYNAPSES_IN_CORE = 0;
 size_type CORE_SIZE = 0;
@@ -27,15 +29,14 @@ bool TONIC_SPK_VAL = false;
 bool TONIC_BURST_VAL = false;
 bool PHASIC_BURST_VAL = false;
 bool VALIDATION = false;
-
  bool MPI_SAVE = false;
  bool BINARY_OUTPUT = false;
 char * inputFileName = "nemo_in";
 char * neuronFireFileName = "fire_record";
-
 int N_FIRE_BUFF_SIZE = 32;
 int N_FIRE_LINE_SIZE = 512;
-
+char * NETWORK_FILE_NAME = "./demo_ts.csv";
+char * SPIKE_FILE_NAME = "spikes.csv";
 //
 /**
  * @FILE_OUT - is set to true if NeMo is saving output files
@@ -43,13 +44,12 @@ int N_FIRE_LINE_SIZE = 512;
  * 
  */
 bool FILE_OUT = false;
-bool FILE_IN = false;
+bool FILE_IN = true;
 
 /**
  * outFile - basic output file handler.
  */
 FILE *outFile;
-
 int testingMode = 0;
 
 
@@ -63,22 +63,28 @@ char * couchAddress = "192.168.2.3";
  * app_opt - Application Options. Manages the options for NeMo's run.
  */
 const tw_optdef app_opt[] = {
-	TWOPT_FLAG("rand_net", IS_RAND_NETWORK, "Generate a random network? Alternatively, you need to specify config files."),
+	//	TWOPT_FLAG("rand_net", IS_RAND_NETWORK, "Generate a random network? Alternatively, you need to specify config files."),
+	TWOPT_FLAG("netin", FILE_IN, "Load network information from a file. If set,"
+			   "a network file name must be specified.\n If off, a randomly "
+			   "generated benchmark model will be used."),
+	TWOPT_CHAR("nfn", NETWORK_FILE_NAME, "Input Network File Name"),
+	TWOPT_CHAR("sfn", SPIKE_FILE_NAME, "Spike input file name"),
 	TWOPT_UINT("tm", testingMode, "Choose a test suite to run. 0=no tests, 1=mapping tests"),
 	TWOPT_GROUP("Randomized (ID Matrix) Network Parameters"),
 		TWOPT_ULONGLONG("cores", CORES_IN_SIM, "number of cores in simulation"),
     	//TWOPT_ULONGLONG("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
     TWOPT_GROUP("Data Gathering Settings"),
-    	TWOPT_FLAG("bulk", BULK_MODE, "Is this sim running in bulk mode?"),
+	//TWOPT_FLAG("bulk", BULK_MODE, "Is this sim running in bulk mode?"),
     	TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
-    	TWOPT_FLAG("network", SAVE_NEURON_OUTS, "Save neuron output axon IDs on creation - Creates a map of the neural network."),
-    	TWOPT_FLAG("svm", SAVE_MEMBRANE_POTS, "Save neuron membrane potential values (enabled by default when running a validation model"),
+		TWOPT_FLAG("network", SAVE_NEURON_OUTS, "Save neuron output axon IDs on creation - Creates a map of the neural network."),
+    	TWOPT_FLAG("svm", SAVE_MEMBRANE_POTS, "Save neuron membrane potential "
+				   "values (saves membrane potential per-tick if neuron was active.)"),
     	TWOPT_FLAG("svs", SAVE_SPIKE_EVTS, "Save neuron spike event times and info"),
 
-    TWOPT_GROUP("Integrated Bio Model Testing"),
-    	TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
-    	TWOPT_FLAG("tonb",TONIC_BURST_VAL, "Tonic bursting Neuron Validation"),
-    	TWOPT_FLAG("phb", PHASIC_BURST_VAL, "Phasic Bursting Neuron Validation"),
+//    TWOPT_GROUP("Integrated Bio Model Testing"),
+//    	TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
+//    	TWOPT_FLAG("tonb",TONIC_BURST_VAL, "Tonic bursting Neuron Validation"),
+//    	TWOPT_FLAG("phb", PHASIC_BURST_VAL, "Phasic Bursting Neuron Validation"),
     TWOPT_END()
 
 };
@@ -103,8 +109,8 @@ tw_lptype model_lps[] = {
         (pre_run_f)NULL,
         (event_f)synapse_event,
         (revent_f)synapse_reverse,
-        (commit_f) NULL,
-        (final_f)NULL,
+		(commit_f) NULL,
+        (final_f)synapse_final,
         (map_f)getPEFromGID, 
         sizeof(synapseState)
     },
@@ -138,9 +144,11 @@ void displayModelSettings()
     printf("* \t %f cores per PE, giving %llu LPs per pe.\n", cores_per_node, g_tw_nlp);
     printf("* \t Neurons have %i axon types (cmake defined)\n", NUM_NEURON_WEIGHTS);
     printf("* \t Network is a %s network.\n",netMode);
+		printf("* \t Network Input FileName: %s \n", NETWORK_FILE_NAME);
+		printf("* \t Spike Input FileName %s \n", SPIKE_FILE_NAME);
     printf("* \t Neuron stats:\n");
     printf("* \tCalculated sim_size is %llu\n", SIM_SIZE);
-    printf("* \tSave Messages: %i \n", SAVE_MSGS );
+
 
     //printf("%-10s", "title");
 
@@ -191,7 +199,7 @@ void init_nemo(){
 	FILE_OUT = SAVE_SPIKE_EVTS || SAVE_NEURON_OUTS || 
 				SAVE_MEMBRANE_POTS || VALIDATION;
 
-	FILE_IN = !IS_RAND_NETWORK;
+	
 
 
 	if (FILE_OUT){
@@ -200,17 +208,23 @@ void init_nemo(){
 		if(g_tw_mynode == 0){
 			printf("Output Files Init.\n");
 		}
+
 	}
 
 	if (FILE_IN){
 		//Init File Input Handles
-		//reconfigure cores_in_sim and neurons_in_sim based on loaded file.
-		//override default LP function pointers
+		printf("Network Input Active -");
+		printf("Filename specified: %s\n", NETWORK_FILE_NAME);
+		networkFileName = NETWORK_FILE_NAME;
+		spikeFileName = SPIKE_FILE_NAME;
+		openInputFiles();
+		parseNetworkFile();
+        loadSpikes();
 		
 	}
 
 	
-	AXONS_IN_CORE = NEURONS_IN_CORE;
+	//AXONS_IN_CORE = NEURONS_IN_CORE;
 	SYNAPSES_IN_CORE = 1;//(NEURONS_IN_CORE * AXONS_IN_CORE);
     
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
@@ -271,9 +285,6 @@ unsigned char mapTests(){
 
 }
 
-
-
-
 /**
  * @brief      NeMo Main entry point
  *
@@ -282,9 +293,12 @@ unsigned char mapTests(){
  *
  
  */
+
 int main(int argc, char*argv[]) {
+
 	tw_opt_add(app_opt);
 	tw_init(&argc, &argv);
+	
     //call nemo init
     init_nemo();
 if(nonC11 == 1)
@@ -317,6 +331,9 @@ if(nonC11 == 1)
     }
     //neuron fire output testing function.
 	//testNeuronOut();
+	
+	
+	
 	
     tw_run();
 	

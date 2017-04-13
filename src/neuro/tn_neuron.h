@@ -6,17 +6,18 @@
 #define __NEMO_TN_NEURON_H__
 
 #include <math.h>
+#include <assert.h>
 #include "../IO/IOStack.h"
 #include "../globals.h"
 #include "../mapping.h"
+#include "../nemo_config.h"
+#include "../IO/input.h"
+#include "../IO/output.h"
+
 #define Vj ns->membranePotential
 
-#ifdef SAVE_MSGS
-
-#endif
-
-#ifdef SAVE_NEURON_STATS
-
+#ifdef NET_IO_DEBUG
+#include <stdarg.h>
 #endif
 
 /**
@@ -70,14 +71,14 @@ typedef struct TN_MODEL {
   short largestRandomValue;
   short lambda;  //!< leak weight - \f$𝜆\f$ Leak tuning parameter - the leak
                  //!rate applied to the current leak function.
-  short int resetMode;     //!< Reset mode selection. Valid options are 0,1,2 .
-                           //!Gamma or resetMode 𝛾
+  short int resetMode;     //!<Gamma or resetMode. 𝛾 Reset mode selection. Valid options are 0,1,2 .
+
   volt_type resetVoltage;  //!< Reset voltage for reset params, \f$R\f$.
   short sigmaVR;           //!< reset voltage - reset voltage sign
   short encodedResetVoltage;  //!< encoded reset voltage - VR.
   short omega;                //!<temporary leak direction variable
 
-  char *neuronTypeDesc;  //!< a debug tool, contains a text desc of the neuron.
+  //char *neuronTypeDesc;  //!< a debug tool, contains a text desc of the neuron.
   char sigma_l;          //!< leak sign bit - eqiv. to σ
   unsigned char delayVal;  //!<@todo: Need to fully implement this - this value
                            //!is between 1 and 15, a "delay" of n timesteps of a
@@ -88,6 +89,7 @@ typedef struct TN_MODEL {
   bool firedLast;
   bool heartbeatOut;
   bool isSelfFiring;
+	bool isOutputNeuron; //Is this an output neruon?
   bool epsilon;  //!<epsilon function - leak reversal flag. from the paper this
                  //!changes the function of the leak from always directly being
                  //!integrated (false), or having the leak directly integrated
@@ -99,10 +101,12 @@ typedef struct TN_MODEL {
   bool kappa;  //!<Kappa or negative reset mode. From the paper's ,\f$𝜅_j\f$,
                //!negative threshold setting to reset or saturate
   bool canGenerateSpontaniousSpikes;
-
-  char axonTypes[512];
-  char synapticWeight[4];
-  bool synapticConnectivity[512];  //!< is there a connection between axon i and
+	
+	bool isActiveNeuron; /**!< If true, this neuron is an inactive one in the
+						  simulation */
+  char axonTypes[AXONS_IN_CORE];
+  char synapticWeight[NUM_NEURON_WEIGHTS];
+  bool synapticConnectivity[AXONS_IN_CORE];  //!< is there a connection between axon i and
                                    //!neuron j?
   /** stochastic weight mode selection. $b_j^{G_i}$ */
   bool weightSelection[4];
@@ -113,6 +117,17 @@ typedef struct TN_MODEL {
   // PRNSeedValues to the neurons to improve TN compatibility.
 
 } tn_neuron_state;
+
+
+
+
+void tn_create_neuron_encoded_rv(
+        id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
+        short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
+        bool epsilon, short sigma_l, short lambda, bool c, uint32_t alpha,
+        uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa,
+        tn_neuron_state* n, int signalDelay, uint64_t destGlobalID,
+        int destAxonID);
 
 /**
  * @brief      True North Forward Event handler
@@ -158,5 +173,30 @@ void TN_final(tn_neuron_state *s, tw_lp *lp);
  */
 
 inline tn_neuron_state *TN_convert(void *lpstate);
+
+
+size_t tn_size(tn_neuron_state *s, tw_lp *lp);
+void tn_serialize(tn_neuron_state *s, void * buffer, tw_lp *lp);
+void tn_deserialize(tn_neuron_state *s, void *buffer, tw_lp *lp);
+
+//////testing for IO input ///////
+/**
+ * \ingroup nemo_tests
+ * @brief Generates testing data from neuron states.
+ * Saves a CSV file with the state information from the TN Neurons.
+ * Use this to verify that the TN neuron was created properly from
+ * an input CSV file. Saves one CSV file per MPI rank.
+ * @param[in]	s	The neuron's state
+ */
+
+void testCreateTNNeuronFromFile(tn_neuron_state *s, tw_lp *lp);
+
+/**
+ * \ingroup nemo_tests
+ * Closes the test file for this rank (if it has not already been closed.)
+ */
+void closeTestFile();
+
+
 
 #endif  // NEMO_TN_NEURON_H

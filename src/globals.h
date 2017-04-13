@@ -10,7 +10,7 @@
 #define __NEMO_GLOBALS_H__
 
 #define BGQ 0
-
+#define NET_IO_DEBUG 1
 
 #include <inttypes.h>
 #include <stdbool.h>
@@ -27,9 +27,11 @@
 #define SAVE_NEURON_STATS
 
 /**@}*/
-
-
-
+/**
+ * Neuron file read buffer size - for reading CSV files.
+ */
+#define NEURON_BUFFER_SZ  32
+#define MAX_NEURON_PARAMS  65536
 
 /** @defgroup types Typedef Vars 
  * Typedefs to ensure proper types for the neuron parameters/mapping calculations
@@ -47,9 +49,69 @@ typedef uint64_t size_type; //!< size_type holds sizes of the sim - core size, n
 typedef uint64_t stat_type;
 /**@}*/
 
-/* @defgroup gmacros Global Macros and Related Functions
+/** @defgroup cmacros Global Dynamic Typing casting macros for file IO */
+/** @{ */
+#define ATOX(x) _Generic((x), \
+double: atof,\
+long: atol,\
+int: atoi,\
+float: atof
+
+
+
+/** @defgroup gmacros Global Macros and Related Functions
  *Global Macros */
 /**@{ */
+
+///////FILE DEBUG HELPERS /////////
+#ifdef NET_IO_DEBUG
+
+#define genWrite(x) _Generic((x), \
+char: "%i,", \
+signed char: "%hhd,", \
+unsigned char: "%hhu,", \
+signed short: "%hd,", \
+unsigned short: "%hu,", \
+signed int: "%d,", \
+unsigned int: "%u,", \
+long int: "%ld,", \
+unsigned long int: "%lu,", \
+long long int: "%lld,", \
+unsigned long long int: "%llu,", \
+float: "%f,", \
+double: "%f,", \
+long double: "%Lf,", \
+char *: "%s,", \
+bool: "%i,",\
+void *: "%p,")
+
+
+#define _GET_NTH_ARG(_1, _2, _3, _4, _5, N, ...) N
+#define COUNT_VARARGS(...) _GET_NTH_ARG("ignored", ##__VA_ARGS__, 4, 3, 2, 1, 0)
+
+#define MCR(i) fprintf(neuronConfigFile, genWrite(i), i);
+
+//#define _tp0(...)
+//#define _tp1(i)		genWrite(i)
+//#define _tp2(i,...) genWrite(i) _tp1(__VA_ARGS__)
+//#define _tp3(i,...) genWrite(i) _tp2(__VA_AGRS__)
+//#define _tp4(i,...) genWrite(i) _tp3(__VA_ARGS__)
+
+#define _tp0(...)
+#define _tp1(i)		MCR(i)
+#define _tp2(i,...) MCR(i) _tp1(__VA_ARGS__)
+#define _tp3(i,...) MCR(i) _tp2(__VA_ARGS__)
+#define _tp4(i,...) MCR(i) _tp3(__VA_ARGS__)
+
+#define MCRN(...)  \
+_GET_NTH_ARG("ignored", ##__VA_ARGS__, \
+_tp4, _tp3, _tp2, _tp1,_tp0)(__VA_ARGS__)
+
+
+
+
+#endif
+
 
 #if (__STDC_VERSION >= 200112L) || (_POSIX_C_SOURCE >= 20112L) || (BGQ <=0 )
 #define printf_dec_format(x) _Generic((x), \
@@ -74,8 +136,9 @@ void *: "%p")
 #define print(x) printf(printf_dec_format(x), x)
 #define sprint(str, y) sprintf(str, printf_dec_format(y), y)
 #define debugMsg(type, value) print(type); print(value); printf("\n")
-#define fprint(file, z) fprintf(file, printf_dec_format(z),z)
-
+#define oprint(message, item) print(message); printf(":"); print(item); printf("\n");
+#define fprint(file, z) fprintf(file, printf_dec_format(z),z);
+#define UN(i) fprintf(neuronConfigFile, printf_dec_format(i), i);
 #define nonC11 0
 #elif BGQ
 //#else //stupid BGQ
@@ -153,6 +216,11 @@ weight_type iiABS(weight_type in);
   */
   /** @{ */
 
+/** Macro for use within globals. 
+ Assumes that there is a tw_lp pointer called lp in the function it is used.
+ */
+#define JITTER (tw_rand_unif(lp->rng) / 10000)
+
 /**
  *  Gets the next event time, based on a random function. Moved here to allow for
  *  easier abstraction, and random function replacement.
@@ -207,6 +275,10 @@ enum lpTypeVals {
     SYNAPSE = 1,
     NEURON = 2
 };
+enum neuronTypeVals {
+	NA = 0,
+    TN = 1
+};
 
 /**
  * @brief      test result flag.
@@ -217,9 +289,9 @@ enum mapTestResults {
   INVALID_NEURON = 0x03 //!< Neuron was not properly defined.
 };
 
-typedef enum NeuronTypes {
-    TrueNorth = 0
-} neuronTypes;
+//typedef enum NeuronTypes {
+//    TrueNorth = 0
+//} neuronTypes;
 
 
 //Message Structure (Used Globally so placed here)
@@ -238,13 +310,13 @@ typedef struct Ms{
 	};
 	
 	
-    union{
+	// union{
         id_type axonID; //!< Axon ID for neuron value lookups.
         bool * neuronConn;
-    };
+	//};
     //message tracking values:
 #ifdef SAVE_MSGS
-    union {
+	union {
         uint64_t uuid;
         struct {
             uint16_t idp1;
@@ -257,14 +329,22 @@ typedef struct Ms{
 
 	tw_stime msgCreationTime;
 #endif
-
-
-
-
-   
-
 }messageData;
  /**@}*/
+
+
+/** Structs for managing neuron reads */
+typedef struct CsvNeuron{
+    int fld_num;
+    int req_core_id;
+    int req_local_id;
+    int foundNeuron;
+    char rawDatM[MAX_NEURON_PARAMS][NEURON_BUFFER_SZ];
+//	char *rawDatP[NEURON_BUFFER_SZ];
+//    char **rawDat;
+
+}csvNeuron;
+
 
 #endif //NEMO_GLOBALS_H
 #ifndef EXTERN
@@ -280,7 +360,7 @@ EXT size_type  LP_PER_KP;
 EXT bool IS_RAND_NETWORK;
 EXT size_type CORES_IN_SIM;
 
-EXT size_type AXONS_IN_CORE;
+//EXT size_type AXONS_IN_CORE;
 EXT size_type SIM_SIZE;
 EXT size_type CORE_SIZE;
 EXT size_type SYNAPSES_IN_CORE;
@@ -304,12 +384,7 @@ EXT bool FILE_OUT;
 EXT bool FILE_IN;
 
 
-/** @defgroup fileNames File Names
- * Vars that manage file names for IO  @{*/
-EXT char * inputFileName;
-EXT char * neuronFireFileName;
 
-/** @} */
 
 
 /* Global Timing Variables */
@@ -338,3 +413,17 @@ EXT int N_FIRE_LINE_SIZE;
 //#define N_FIRE_LINE_SIZE 128
 /** @} */
 #endif
+
+
+/** @defgroup fileNames File Names
+ * Vars that manage file names for IO.
+ * These variables are declared/init in input.c and
+ * output.c @{*/
+
+extern char * neuronFireFileName;
+extern char * networkFileName;
+extern char * spikeFileName;
+
+extern FILE * networkFile;
+extern FILE * spikeFile;
+/** @} */
