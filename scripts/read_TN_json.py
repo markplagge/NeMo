@@ -8,7 +8,12 @@ from collections import OrderedDict
 import numpy as np
 import json
 from jsoncomment import JsonComment
-from api_def import TN
+try:
+	import  api_def
+	from api_def import TN,ConfigFile, Spike
+except:
+	import scripts.api_def
+	from scripts.api_def import TN,ConfigFile, Spike
 
 """ JSON REMOVE COMMMENTS"""
 import re
@@ -390,7 +395,7 @@ def getNeuronFromID(id, neuronList):
 """
 
 
-def createTNNeMoCSV(filename):
+def createTNNeMoConfig(filename):
 	model, neuronTypes, crossbars, cores = readTN(filename)
 	crossbarSize = model['crossbarSize']
 
@@ -406,7 +411,7 @@ def createTNNeMoCSV(filename):
 		ntmp[nt.nnid] = nt
 
 	neuronTemplates = ntmp
-
+	nc = 0
 	for core in cores:
 		crossbar = crossbars[core['crossbar']['name']]
 		coreNeuronTypes = getNeuronTypeList(core['neurons']['types'])
@@ -419,6 +424,7 @@ def createTNNeMoCSV(filename):
 
 		#synapse types:
 		tl = crossbar[0]
+		nc += 1
 
 		#core data configured, create neurons for this core:
 		for i in range(0,256):
@@ -433,16 +439,35 @@ def createTNNeMoCSV(filename):
 
 
 
+	cfgFile = ConfigFile()
+	cfgFile.ns_cores = nc
+
+	for n in neurons:
+		cfgFile.add_neuron(n)
+
+	return cfgFile
+
+
+def readSpikeJSON(filename):
+
+	data = open(filename, 'r').readlines()
+
+	data = comments.json_preprocess(data)
+
+	spikes = []
+	for line in data:
+		spike = json.loads(line)
+		if "srctime" in spike.keys().lower():
+			spk = Spike(spike['scrTime'], spike['destCore'], spike['destAxon'])
+			spikes.append(spk)
+
+	return spikes
 
 
 
-
-
-
-
-
-	return "d"
-
+def readSpikeFile(filename, type='json'):
+	if type=='json':
+		return readSpikeJSON(filename)
 
 if __name__ == '__main__':
 	mdl = Model()
@@ -453,5 +478,5 @@ if __name__ == '__main__':
 					V=0, cls="TestNeuron")
 
 
-	ns = createTNNeMoCSV('sobel.json')
-	print(ns)
+	ns = createTNNeMoConfig('sobel.json')
+	ns.save_csv('test.csv')

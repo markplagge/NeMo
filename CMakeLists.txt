@@ -17,6 +17,16 @@ set_target_properties( NeMo
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+        CONFIG_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/scripts"
 )
+
+
+#files for running IO:
+#
+file(COPY "./scripts/read_TN_json.py" DESTINATION ${CMAKE_BINARY_DIR}/scripts)
+file(COPY "./scripts/api_def.py" DESTINATION ${CMAKE_BINARY_DIR}/scripts)
+file(COPY "./scripts/read_TN_spikes.py" DESTINATION ${CMAKE_BINARY_DIR}/scripts)
+configure_file("./NeMo_TN.py" "${CMAKE_BINARY_DIR}" COPYONLY)
+
 configure_file("demo.csv" "${CMAKE_BINARY_DIR}/bin/demo.csv" COPYONLY)
 #TODO: Add targets to the build-tree export set

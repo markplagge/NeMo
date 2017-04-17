@@ -99,6 +99,18 @@ class ConfigFile:
 		with open(filename, 'w') as f:
 			f.write(self.to_csv())
 
+class Spike:
+	time = 0.0
+	destCore = 0
+	destAxon = 0
+
+	def __init__(self, time, destCore,destAxon):
+		self.time = time
+		self.destcore = destCore
+		self.destAxon = destAxon
+
+	def toCSV(self):
+		return f"{time},{destCore}{destAxon}\n"
 
 if __name__ == '__main__':
 	print("Generate a tonic spiking neuron demo file (demo.csv) from the API.")

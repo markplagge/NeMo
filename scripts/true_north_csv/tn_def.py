@@ -114,5 +114,5 @@ class ConfigFile:
 
 
 def testNeuronFile():
-	#generates two cores - one is random, the other is a synaptic id matrix benchmark, connected to the first core.
+	pass #generates two cores - one is random, the other is a synaptic id matrix benchmark, connected to the first core.
 
