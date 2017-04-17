@@ -469,6 +469,16 @@ def readSpikeFile(filename, type='json'):
 	if type=='json':
 		return readSpikeJSON(filename)
 
+def readAndSaveSpikeFile(filename, type,saveFile="spikes.csv"):
+	spikes = readSpikeFile(filename, type)
+
+	out = [s.toCSV().replace('\n','') for s in spikes]
+	with open(saveFile, 'w') as f:
+		f.writelines(out)
+
+
+
+
 if __name__ == '__main__':
 	mdl = Model()
 
