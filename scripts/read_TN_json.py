@@ -458,8 +458,9 @@ def createTNNeMoConfig(filename):
 		bar.update(pid)
 
 	print("Combining CSV text...")
-	for str in q:
-		cfgFile.neuron_text = cfgFile.neuron_text + str
+	while not q.empty():
+
+		cfgFile.neuron_text = cfgFile.neuron_text + q.get()
 
 
 	#neuronCSVGen(cores, crossbars, nc, neuronTemplates, q)
