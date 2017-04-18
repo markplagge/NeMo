@@ -463,7 +463,7 @@ def createTNNeMoConfig(filename):
 			f.append( e.submit(neuronCSVFut,ch,crossbars,nc,neuronTemplates))
 
 		for i in f:
-			data = data + i.result()
+			data = data + i
 
 
 	# for p in procs:
@@ -533,27 +533,23 @@ def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
 		nrs = []
 		# core data configured, create neurons for this core:
 		# genNeuronBlock(coreID, coreNeuronTypes, crossbar, destAxons, destCores, destDelays, neuronTemplates, neurons, tl)
-		genNFut(coreID, coreNeuronTypes, crossbar, destAxons, destCores, destDelays, neuronTemplates, nrs, tl)
+		for i in range(0, 256):
+			# get synaptic connectivity col for this neuron:
+			connectivity = np.array(crossbar[1])[:, i]
+			if coreNeuronTypes[i] in neuronTemplates.keys():
+				neuron = createNeuronfromNeuronTemplate(neuronTemplates[coreNeuronTypes[i]], coreID, i, connectivity,
+														tl)
+			else:
+				neuron = TN(256, 4)
+			neuron.destCore = destCores[i]
+			neuron.destLocal = destAxons[i]
+			neuron.signalDelay = destDelays[i]
+			#d = d + neuron.to_csv()
+			nrs.append(neuron)
 		for i in nrs:
 			d = d + i.to_csv()
 			# cfgFile.add_neuron(neuron)
 	return d
-
-@jit
-def genNFut(coreID, coreNeuronTypes, crossbar, destAxons, destCores, destDelays, neuronTemplates, nrs, tl):
-	for i in range(0, 256):
-		# get synaptic connectivity col for this neuron:
-		connectivity = np.array(crossbar[1])[:, i]
-		if coreNeuronTypes[i] in neuronTemplates.keys():
-			neuron = createNeuronfromNeuronTemplate(neuronTemplates[coreNeuronTypes[i]], coreID, i, connectivity,
-													tl)
-		else:
-			neuron = TN(256, 4)
-		neuron.destCore = destCores[i]
-		neuron.destLocal = destAxons[i]
-		neuron.signalDelay = destDelays[i]
-		# d = d + neuron.to_csv()
-		nrs.append(neuron)
 
 
 def readSpikeJSON(filename):
