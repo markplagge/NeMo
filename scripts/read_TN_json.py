@@ -1,16 +1,17 @@
 
 import copy
-import typing
-from typing import List
-import re
-import jsoncomment.package.comments as comments
-from collections import OrderedDict
-import numpy as np
-import json
-from numba import jit
 import itertools
+import json
+from collections import OrderedDict
+from concurrent.futures import as_completed
+import multiprocessing as mp
+import concurrent.futures
+import jsoncomment.package.comments as comments
+import numpy as np
 import progressbar
-from jsoncomment import JsonComment
+from numba import jit
+from tqdm import tqdm
+
 try:
 	import  api_def
 	from api_def import TN,ConfigFile, Spike
@@ -19,7 +20,6 @@ except:
 	from scripts.api_def import TN,ConfigFile, Spike
 
 """ JSON REMOVE COMMMENTS"""
-import re
 
 """ MAIN APPLICATION """
 
@@ -144,6 +144,8 @@ def createNeuronfromNeuronTemplate(neuronObject, coreID, localID, synapticConnec
 	n.g_i = typeList
 
 	return n
+
+
 
 
 def createNeuronTemplateFromEntry(line, nSynapses=256, weights=4):
@@ -345,7 +347,6 @@ def getNeuronTypeList(typeList):
 			for i in getRange(typeDef,pos):
 				types[i] = tp
 				pos += 1
-		elif ":" in typeDef:
 			pass
 
 	return types
@@ -401,12 +402,8 @@ def getNeuronFromID(id, neuronList):
  resteMode, kappa, signaldelay, destCore, destLocal
  isOutputNeuron, isSelfFiring, isActive
 """
-@jit
-def genCore(core):
-	pass
 
-import multiprocessing as mp
-import concurrent.futures
+
 
 
 
@@ -456,6 +453,9 @@ def createTNNeMoConfig(filename):
 	count = int (cores.__len__() / mp.cpu_count())
 	cc = getCC(cores,mp.cpu_count())
 
+	maxNeurons = cores.__len__() * 256
+	q = mp.SimpleQueue()
+
 	if(cores.__len__() > 64):
 		coreCH = split_seq(cores, count)
 
@@ -466,8 +466,8 @@ def createTNNeMoConfig(filename):
 
 
 	print("Importing JSON file and generating csv...")
-	bar = progressbar.ProgressBar(max_value=cc+1)
-	bar.update(1)
+	#bar = progressbar.ProgressBar(max_value=cc+1)
+	#bar.update(1)
 	pid = 0
 	result = ""
 	# temp = []
@@ -480,17 +480,27 @@ def createTNNeMoConfig(filename):
 		f = []
 		for ch in coreCH:
 			f.append( e.submit(neuronCSVFut,ch,crossbars,nc,neuronTemplates))
-		done = False
-		while(not done):
-			done = True
-			for proc in f:
-				if proc.done():
-					bar.update(1)
-				else:
-					done = False
 
-		for i in f:
-			data = data + i.result()
+		kwargs = {
+			'total': len(f),
+			'unit' : 'nap',
+			'unit_scale' : True,
+			'leave': True
+		}
+		print("Running JSON neuron conversion...")
+		#done = False
+		# while(not done):
+		# 	done = True
+		# 	for proc in f:
+		# 		if proc.done():
+		# 			bar.update(1)
+		# 		else:
+		# 			done = False
+
+		#for i in f:
+		#	data = data + i.result()
+		for dti in tqdm(as_completed(f), **kwargs):
+			data = data + dti.result()
 
 
 	# for p in procs:
@@ -573,6 +583,7 @@ def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
 			neuron.signalDelay = destDelays[i]
 			#d = d + neuron.to_csv()
 			nrs.append(neuron)
+
 		for i in nrs:
 			d = d + i.to_csv()
 			# cfgFile.add_neuron(neuron)
