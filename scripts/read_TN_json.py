@@ -402,7 +402,7 @@ def genCore(core):
 	pass
 
 import multiprocessing as mp
-
+import concurrent.futures
 
 
 
@@ -440,27 +440,37 @@ def createTNNeMoConfig(filename):
 	mp.set_start_method('spawn')
 	q = mp.Queue()
 	if(cores.__len__() > 64):
-
 		coreCH = split_seq(cores, (int (cores.__len__() / mp.cpu_count())))
 	else:
 		coreCH = split_seq(cores, 1)
-
-	procs = []
-	for i in coreCH: # range(0, mp.cpu_count()):
-		procs.append(mp.Process(target=neuronCSVGen, args=(i, crossbars,nc,neuronTemplates,q,)))
-	for p in procs:
-		p.start()
+	#
+	# procs = []
+	# for i in coreCH: # range(0, mp.cpu_count()):
+	# 	procs.append(mp.Process(target=neuronCSVGen, args=(i, crossbars,nc,neuronTemplates,q,)))
+	# for p in procs:
+	# 	p.start()
 	print("Importing JSON file and generating csv...")
-	bar = progressbar.ProgressBar(max_value=procs.__len__())
+	#bar = progressbar.ProgressBar(max_value=procs.__len__())
 	pid = 0
-	for p in procs:
-		p.join()
-		bar.update(pid)
+	result = ""
+	with concurrent.futures.ProcessPoolExecutor(max_workers=mp.cpu_count()) as e:
+		f = []
+		for ch in coreCH:
+			f.append( e.submit(neuronCSVFut,ch,crossbars,nc,neuronTemplates))
 
-	print("Combining CSV text...")
-	while not q.empty():
+		for i in f:
+			print(i.result())
 
-		cfgFile.neuron_text = cfgFile.neuron_text + q.get()
+
+	# for p in procs:
+	# 	p.join()
+	# 	bar.update(pid)
+	# 	pid += 1;
+	#
+	# print("Combining CSV text...")
+	# while not q.empty():
+	#
+	# 	cfgFile.neuron_text = cfgFile.neuron_text + q.get()
 
 
 	#neuronCSVGen(cores, crossbars, nc, neuronTemplates, q)
@@ -500,6 +510,41 @@ def neuronCSVGen(cores, crossbars, nc, neuronTemplates, q):
 			neuron.signalDelay = destDelays[i]
 			# cfgFile.add_neuron(neuron)
 			q.put(neuron.to_csv())
+
+
+@jit
+def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
+	d = ""
+	for core in cores:
+		crossbar = crossbars[core['crossbar']['name']]
+		coreNeuronTypes = getNeuronTypeList(core['neurons']['types'])
+		dendriteCons = getNeuronDendrites(core['neurons']['dendrites'])
+		destCores = getNeuronDestCores(core['neurons']['destCores'])
+		destAxons = getNeuronDestAxons(core['neurons']['destAxons'])
+		destDelays = getNeuronDelays(core['neurons']['destDelays'])
+
+		coreID = core['id']
+
+		# synapse types:
+		tl = crossbar[0]
+		nc += 1
+
+		# core data configured, create neurons for this core:
+		# genNeuronBlock(coreID, coreNeuronTypes, crossbar, destAxons, destCores, destDelays, neuronTemplates, neurons, tl)
+		for i in range(0, 256):
+			# get synaptic connectivity col for this neuron:
+			connectivity = np.array(crossbar[1])[:, i]
+			if coreNeuronTypes[i] in neuronTemplates.keys():
+				neuron = createNeuronfromNeuronTemplate(neuronTemplates[coreNeuronTypes[i]], coreID, i, connectivity,
+														tl)
+			else:
+				neuron = TN(256, 4)
+			neuron.destCore = destCores[i]
+			neuron.destLocal = destAxons[i]
+			neuron.signalDelay = destDelays[i]
+			d = d + neuron.to_csv()
+			# cfgFile.add_neuron(neuron)
+	return d
 
 
 def readSpikeJSON(filename):
