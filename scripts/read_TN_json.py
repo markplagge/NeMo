@@ -421,6 +421,16 @@ def split_seq(iterable, size):
 	while item:
 		yield item
 		item = list(itertools.islice(it, size))
+def getCC(cores, cpu_count):
+	if(cores.__len__() > 64):
+		coreCH = split_seq(cores, cpu_count)
+	else:
+		coreCH = split_seq(cores,2)
+
+	cc = 0
+	for i in coreCH:
+		cc += 1
+	return cc
 
 def createTNNeMoConfig(filename):
 
@@ -443,16 +453,21 @@ def createTNNeMoConfig(filename):
 	cfgFile = ConfigFile()
 	#mp.set_start_method('spawn')
 	q = mp.Queue()
+	count = int (cores.__len__() / mp.cpu_count())
+	cc = getCC(cores,mp.cpu_count())
+
 	if(cores.__len__() > 64):
-		coreCH = split_seq(cores, (int (cores.__len__() / mp.cpu_count())))
+		coreCH = split_seq(cores, count)
+
 	else:
-		coreCH = split_seq(cores, 1)
+		coreCH = split_seq(cores, 2)
 
 	data = ""
 
 
 	print("Importing JSON file and generating csv...")
-	#bar = progressbar.ProgressBar(max_value=procs.__len__())
+	bar = progressbar.ProgressBar(max_value=cc+1)
+	bar.update(1)
 	pid = 0
 	result = ""
 	# temp = []
@@ -465,6 +480,14 @@ def createTNNeMoConfig(filename):
 		f = []
 		for ch in coreCH:
 			f.append( e.submit(neuronCSVFut,ch,crossbars,nc,neuronTemplates))
+		done = False
+		while(not done):
+			done = True
+			for proc in f:
+				if proc.done():
+					bar.update(1)
+				else:
+					done = False
 
 		for i in f:
 			data = data + i.result()
