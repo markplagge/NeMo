@@ -324,7 +324,7 @@
 		"neurons":{
 			/* Parameters */
 			"dendrites":["0:2","3:255"],
-			"types":["2:4","0x253"],
+			"types":["2x2","0x253"],
 			"destCores":["-32x3","-1x253"],
 			"destAxons":["0:2","0x253"],
 			"destDelays":["1x3","1x253"]

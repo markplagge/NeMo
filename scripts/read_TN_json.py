@@ -340,10 +340,14 @@ def getNeuronTypeList(typeList):
 	types = [-1] * 256 #create NULL neuron list (-1 is null)
 	pos = 0
 	for typeDef in typeList:
-		tp = int(typeDef.split('x')[0])
-		for i in getRange(typeDef,pos):
-			types[i] = tp
-			pos += 1
+		if "x" in typeDef:
+			tp = int(typeDef.split('x')[0])
+			for i in getRange(typeDef,pos):
+				types[i] = tp
+				pos += 1
+		elif ":" in typeDef:
+			pass
+
 	return types
 
 def getNeuronDendrites(dendList):
@@ -456,14 +460,14 @@ def createTNNeMoConfig(filename):
 	# 	temp.append(neuronCSVFut(ch,crossbars,nc,neuronTemplates))
 	# for i in temp:
 	# 	data = data + i
-	#
+
 	with concurrent.futures.ProcessPoolExecutor(max_workers=mp.cpu_count()) as e:
 		f = []
 		for ch in coreCH:
 			f.append( e.submit(neuronCSVFut,ch,crossbars,nc,neuronTemplates))
 
 		for i in f:
-			data = data + i
+			data = data + i.result()
 
 
 	# for p in procs:
@@ -514,7 +518,7 @@ def neuronCSVGen(cores, crossbars, nc, neuronTemplates, q):
 			q.put(neuron.to_csv())
 
 
-@jit
+
 def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
 	d = ""
 	for core in cores:
@@ -594,6 +598,10 @@ if __name__ == '__main__':
 					V=0, cls="TestNeuron")
 
 	ns = createTNNeMoConfig('./sobel/sobelTiles.json')
+	print("sobel created")
+	ns = createTNNeMoConfig('./test/patternMatch.json')
+	print("PatternMatch Created")
 	spks = readSpikeFile('./sobel/sobelTiles_inputSpikes.sfti')
+	print("sobel spikes created")
 
 	ns.save_csv('test.csv')
