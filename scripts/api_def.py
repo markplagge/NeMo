@@ -1,5 +1,5 @@
 from functools import reduce
-
+from numba import jit
 
 def subCSV(xx, yy):
 	return str(xx) + "," + str(yy)
@@ -45,13 +45,18 @@ class TN:
 		assert (len(self.g_i) == len(self.synapticConnectivity))
 		assert (len(self.g_i) == self._numSyns)
 
+	@jit
+	def os(self,xx,yy):
+		return str(xx) + "," + str(yy)
+
+	@jit
 	def to_csv(self):
 		self.sanity_check()
-		os = lambda xx, yy: str(xx) + "," + str(yy)
+		#os = lambda xx, yy: str(xx) + "," + str(yy)
 
 		ocsv = "{},{},{},".format(self.type, self.coreID, self.localID)
 		for elms in [self.synapticConnectivity, self.g_i, self.sigmaG, self.S, self.b]:
-			ocsv += reduce(os, elms) + ","
+			ocsv += reduce(self.os, elms) + ","
 		for var in [self.epsilon,
 					self.sigma_lmbda,
 					self.lmbda,

@@ -1,7 +1,7 @@
 import click
 import numpy as np
 import os
-from scripts.read_TN_json import createTNNeMoConfig
+from scripts.read_TN_json import createTNNeMoConfig,readSpikeFile
 from scripts.read_TN_spikes import *
 
 
@@ -19,9 +19,12 @@ nemoBin = os.path.join(click.get_app_dir(APP_NAME), 'bin')
 @click.option('--end', help="Simulate for this many ticks.", default=1000)
 def run_tn_model(modelf,spikef, np, mpi,end):
 	df = createTNNeMoConfig(modelf)
+
 	tempfile = "tn_model_tmp.csv"
 	loadfile = "tn_model.csv"
+	spikec = "tn_spikes.csv"
 	extramem = 6553500
+
 
 	df.save_csv(tempfile)
 	with open(tempfile, 'r') as f:
@@ -30,7 +33,13 @@ def run_tn_model(modelf,spikef, np, mpi,end):
 			cores = fdat[0]
 			o.writelines(fdat[2:])
 
+	#todo: remove temp file
+	spikes = readSpikeFile(spikef, 'json')
+	csv = [x.to_csv() for x in spikes]
 
+	with open(spikec, 'w') as f:
+		for l in csv:
+			f.write(l)
 
 
 if __name__ == '__main__':

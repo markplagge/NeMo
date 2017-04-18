@@ -443,23 +443,27 @@ def createTNNeMoConfig(filename):
 		coreCH = split_seq(cores, (int (cores.__len__() / mp.cpu_count())))
 	else:
 		coreCH = split_seq(cores, 1)
-	#
-	# procs = []
-	# for i in coreCH: # range(0, mp.cpu_count()):
-	# 	procs.append(mp.Process(target=neuronCSVGen, args=(i, crossbars,nc,neuronTemplates,q,)))
-	# for p in procs:
-	# 	p.start()
+
+	data = ""
+
+
 	print("Importing JSON file and generating csv...")
 	#bar = progressbar.ProgressBar(max_value=procs.__len__())
 	pid = 0
 	result = ""
+	# temp = []
+	# for ch in coreCH:
+	# 	temp.append(neuronCSVFut(ch,crossbars,nc,neuronTemplates))
+	# for i in temp:
+	# 	data = data + i
+	#
 	with concurrent.futures.ProcessPoolExecutor(max_workers=mp.cpu_count()) as e:
 		f = []
 		for ch in coreCH:
 			f.append( e.submit(neuronCSVFut,ch,crossbars,nc,neuronTemplates))
 
 		for i in f:
-			print(i.result())
+			data = data + i
 
 
 	# for p in procs:
@@ -467,16 +471,14 @@ def createTNNeMoConfig(filename):
 	# 	bar.update(pid)
 	# 	pid += 1;
 	#
-	# print("Combining CSV text...")
+	print("Combining CSV text...")
+	cfgFile.neuron_text = cfgFile.neuron_text + data
 	# while not q.empty():
 	#
 	# 	cfgFile.neuron_text = cfgFile.neuron_text + q.get()
 
 
 	#neuronCSVGen(cores, crossbars, nc, neuronTemplates, q)
-
-
-
 	return cfgFile
 
 @jit
@@ -528,37 +530,46 @@ def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
 		# synapse types:
 		tl = crossbar[0]
 		nc += 1
-
+		nrs = []
 		# core data configured, create neurons for this core:
 		# genNeuronBlock(coreID, coreNeuronTypes, crossbar, destAxons, destCores, destDelays, neuronTemplates, neurons, tl)
-		for i in range(0, 256):
-			# get synaptic connectivity col for this neuron:
-			connectivity = np.array(crossbar[1])[:, i]
-			if coreNeuronTypes[i] in neuronTemplates.keys():
-				neuron = createNeuronfromNeuronTemplate(neuronTemplates[coreNeuronTypes[i]], coreID, i, connectivity,
-														tl)
-			else:
-				neuron = TN(256, 4)
-			neuron.destCore = destCores[i]
-			neuron.destLocal = destAxons[i]
-			neuron.signalDelay = destDelays[i]
-			d = d + neuron.to_csv()
+		genNFut(coreID, coreNeuronTypes, crossbar, destAxons, destCores, destDelays, neuronTemplates, nrs, tl)
+		for i in nrs:
+			d = d + i.to_csv()
 			# cfgFile.add_neuron(neuron)
 	return d
+
+@jit
+def genNFut(coreID, coreNeuronTypes, crossbar, destAxons, destCores, destDelays, neuronTemplates, nrs, tl):
+	for i in range(0, 256):
+		# get synaptic connectivity col for this neuron:
+		connectivity = np.array(crossbar[1])[:, i]
+		if coreNeuronTypes[i] in neuronTemplates.keys():
+			neuron = createNeuronfromNeuronTemplate(neuronTemplates[coreNeuronTypes[i]], coreID, i, connectivity,
+													tl)
+		else:
+			neuron = TN(256, 4)
+		neuron.destCore = destCores[i]
+		neuron.destLocal = destAxons[i]
+		neuron.signalDelay = destDelays[i]
+		# d = d + neuron.to_csv()
+		nrs.append(neuron)
 
 
 def readSpikeJSON(filename):
 
 	data = open(filename, 'r').readlines()
 
-	data = comments.json_preprocess(data)
+
 
 	spikes = []
 	for line in data:
 		spike = json.loads(line)
-		if "srctime" in spike.keys().lower():
-			spk = Spike(spike['scrTime'], spike['destCore'], spike['destAxon'])
-			spikes.append(spk)
+		if 'spike' in spike.keys():
+			if "srcTime" in spike['spike'].keys():
+				spike = spike['spike']
+				spk = Spike(spike['srcTime'], spike['destCore'], spike['destAxon'])
+				spikes.append(spk)
 
 	return spikes
 
@@ -586,7 +597,7 @@ if __name__ == '__main__':
 					lambd=0, c_lambda=0, epsilon=False, alpha=10, beta=0, TM=18, gamma=2, kappa=False, sigmaVR=1, VR=4,
 					V=0, cls="TestNeuron")
 
-
 	ns = createTNNeMoConfig('./sobel/sobelTiles.json')
 	spks = readSpikeFile('./sobel/sobelTiles_inputSpikes.sfti')
+
 	ns.save_csv('test.csv')
