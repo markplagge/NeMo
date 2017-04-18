@@ -463,7 +463,7 @@ def createTNNeMoConfig(filename):
 			f.append( e.submit(neuronCSVFut,ch,crossbars,nc,neuronTemplates))
 
 		for i in f:
-			data = data + i
+			data = data + i.result()
 
 
 	# for p in procs:
