@@ -441,7 +441,7 @@ def createTNNeMoConfig(filename):
 	neuronTemplates = ntmp
 	nc = 0
 	cfgFile = ConfigFile()
-	mp.set_start_method('spawn')
+	#mp.set_start_method('spawn')
 	q = mp.Queue()
 	if(cores.__len__() > 64):
 		coreCH = split_seq(cores, (int (cores.__len__() / mp.cpu_count())))
