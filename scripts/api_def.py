@@ -73,7 +73,8 @@ class TN:
 
 		return ocsv
 
-		return out
+
+
 
 
 class ConfigFile:
@@ -82,15 +83,33 @@ class ConfigFile:
 	ns_cores = 1024
 	neurons_per_core = 256
 	neuron_weight_count = 4
+	it = 0
+	neuron_text = ''
+
+	def __init__(self,nc=1024,npc=256,nw=4):
+		self.ns_cores = nc
+		self.neurons_per_core = npc
+		self.neuron_weight_count = nw
+		self.neuron_text = self.getHeader()
 
 	def add_neuron(self, neuron):
 		self.neuron_list.append(neuron)
+		self.it += 1
+		if self.it > 512:
+			for i in self.neuron_list:
+				self.neuron_text += i.to_csv()
+			self.neuron_list = []
+			self.it = 0
 
-	def to_csv(self):
+	def getHeader(self):
 		out = ""
 		out += str(self.ns_cores) + "\n"
 		out += str(self.neurons_per_core) + "\n"
 		out += str(self.neuron_weight_count) + "\n"
+		return out
+
+	def to_csv(self):
+		out = self.neuron_text
 		for n in self.neuron_list:
 			out += n.to_csv()
 		return out

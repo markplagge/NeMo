@@ -7,6 +7,9 @@ import jsoncomment.package.comments as comments
 from collections import OrderedDict
 import numpy as np
 import json
+from numba import jit
+import itertools
+
 from jsoncomment import JsonComment
 try:
 	import  api_def
@@ -314,6 +317,7 @@ def getRangeAndValue(jItem, start=0):
 		end = int(jItem.split(":")[1])
 		value = 0
 		stm += 1
+		return [np.arange(start,end), value]
 	elif jItem.count(":") == 2:
 		sp = jItem.split(":")
 		value = int(sp[0])
@@ -393,9 +397,29 @@ def getNeuronFromID(id, neuronList):
  resteMode, kappa, signaldelay, destCore, destLocal
  isOutputNeuron, isSelfFiring, isActive
 """
+@jit
+def genCore(core):
+	pass
 
+import multiprocessing as mp
+
+
+
+
+def chunks(l, n):
+	"""Yield successive n-sized chunks from l."""
+	for i in range(0, len(l), n):
+		yield l[i:i + n]
+
+def split_seq(iterable, size):
+	it = iter(iterable)
+	item = list(itertools.islice(it, size))
+	while item:
+		yield item
+		item = list(itertools.islice(it, size))
 
 def createTNNeMoConfig(filename):
+
 	model, neuronTypes, crossbars, cores = readTN(filename)
 	crossbarSize = model['crossbarSize']
 
@@ -412,6 +436,35 @@ def createTNNeMoConfig(filename):
 
 	neuronTemplates = ntmp
 	nc = 0
+	cfgFile = ConfigFile()
+	mp.set_start_method('spawn')
+	q = mp.Queue()
+	if(cores.__len__() > 64):
+
+		coreCH = split_seq(cores, (int (cores.__len__() / mp.cpu_count())))
+	else:
+		coreCH = split_seq(cores, 1)
+
+	procs = []
+	for i in coreCH: # range(0, mp.cpu_count()):
+		procs.append(mp.Process(target=neuronCSVGen, args=(i, crossbars,nc,neuronTemplates,q,)))
+	for p in procs:
+		p.start()
+
+	for p in procs:
+		p.join()
+
+	for str in q:
+		cfgFile.neuron_text = cfgFile.neuron_text + str
+
+	#neuronCSVGen(cores, crossbars, nc, neuronTemplates, q)
+
+
+
+	return cfgFile
+
+@jit
+def neuronCSVGen(cores, crossbars, nc, neuronTemplates, q):
 	for core in cores:
 		crossbar = crossbars[core['crossbar']['name']]
 		coreNeuronTypes = getNeuronTypeList(core['neurons']['types'])
@@ -422,30 +475,25 @@ def createTNNeMoConfig(filename):
 
 		coreID = core['id']
 
-		#synapse types:
+		# synapse types:
 		tl = crossbar[0]
 		nc += 1
 
-		#core data configured, create neurons for this core:
-		for i in range(0,256):
-			#get synaptic connectivity col for this neuron:
-			connectivity = np.array(crossbar[1])[:,i]
-
-			neuron = createNeuronfromNeuronTemplate(neuronTemplates[coreNeuronTypes[i]],coreID,i,connectivity,tl)
+		# core data configured, create neurons for this core:
+		# genNeuronBlock(coreID, coreNeuronTypes, crossbar, destAxons, destCores, destDelays, neuronTemplates, neurons, tl)
+		for i in range(0, 256):
+			# get synaptic connectivity col for this neuron:
+			connectivity = np.array(crossbar[1])[:, i]
+			if coreNeuronTypes[i] in neuronTemplates.keys():
+				neuron = createNeuronfromNeuronTemplate(neuronTemplates[coreNeuronTypes[i]], coreID, i, connectivity,
+														tl)
+			else:
+				neuron = TN(256, 4)
 			neuron.destCore = destCores[i]
 			neuron.destLocal = destAxons[i]
 			neuron.signalDelay = destDelays[i]
-			neurons.append(neuron)
-
-
-
-	cfgFile = ConfigFile()
-	cfgFile.ns_cores = nc
-
-	for n in neurons:
-		cfgFile.add_neuron(n)
-
-	return cfgFile
+			# cfgFile.add_neuron(neuron)
+			q.put(neuron.to_csv())
 
 
 def readSpikeJSON(filename):
@@ -488,5 +536,6 @@ if __name__ == '__main__':
 					V=0, cls="TestNeuron")
 
 
-	ns = createTNNeMoConfig('sobel.json')
+	ns = createTNNeMoConfig('./sobel/sobelTiles.json')
+	spks = readSpikeFile('./sobel/sobelTiles_inputSpikes.sfti')
 	ns.save_csv('test.csv')
