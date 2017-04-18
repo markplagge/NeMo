@@ -9,7 +9,7 @@ import numpy as np
 import json
 from numba import jit
 import itertools
-
+import progressbar
 from jsoncomment import JsonComment
 try:
 	import  api_def
@@ -450,12 +450,17 @@ def createTNNeMoConfig(filename):
 		procs.append(mp.Process(target=neuronCSVGen, args=(i, crossbars,nc,neuronTemplates,q,)))
 	for p in procs:
 		p.start()
-
+	print("Importing JSON file and generating csv...")
+	bar = progressbar.ProgressBar(max_value=procs.__len__())
+	pid = 0
 	for p in procs:
 		p.join()
+		bar.update(pid)
 
+	print("Combining CSV text...")
 	for str in q:
 		cfgFile.neuron_text = cfgFile.neuron_text + str
+
 
 	#neuronCSVGen(cores, crossbars, nc, neuronTemplates, q)
 
