@@ -518,7 +518,7 @@ def neuronCSVGen(cores, crossbars, nc, neuronTemplates, q):
 			q.put(neuron.to_csv())
 
 
-
+@jit
 def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
 	d = ""
 	for core in cores:
@@ -597,10 +597,11 @@ if __name__ == '__main__':
 					lambd=0, c_lambda=0, epsilon=False, alpha=10, beta=0, TM=18, gamma=2, kappa=False, sigmaVR=1, VR=4,
 					V=0, cls="TestNeuron")
 
-	ns = createTNNeMoConfig('./sobel/sobelTiles.json')
-	print("sobel created")
 	ns = createTNNeMoConfig('./test/patternMatch.json')
 	print("PatternMatch Created")
+	ns = createTNNeMoConfig('./sobel/sobelTiles.json')
+	print("sobel created")
+
 	spks = readSpikeFile('./sobel/sobelTiles_inputSpikes.sfti')
 	print("sobel spikes created")
 
