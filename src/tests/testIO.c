@@ -2,9 +2,9 @@
 // Created by Mark Plagge on 2/28/17.
 //
 
-#import "testIO.h"
-#import <time.h>
-#import <assert.h>
+#include "testIO.h"
+#include <time.h>
+#include <assert.h>
 int testInitInput(){
     int r = openInputFiles();
 
