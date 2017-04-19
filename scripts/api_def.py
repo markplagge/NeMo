@@ -1,5 +1,6 @@
 from functools import reduce
 from numba import jit
+from cffi import FFI
 
 def subCSV(xx, yy):
 	return str(xx) + "," + str(yy)
@@ -135,6 +136,10 @@ class Spike:
 
 	def toCSV(self):
 		return f"{time},{destCore}{destAxon}\n"
+
+
+
+
 
 if __name__ == '__main__':
 	print("Generate a tonic spiking neuron demo file (demo.csv) from the API.")

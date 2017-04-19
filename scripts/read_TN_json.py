@@ -338,16 +338,62 @@ def getRangeAndValue(jItem, start=0):
 
 	return [np.arange(start,end,inc),value]
 
+
+
+def getArrayFromMulti(jItem):
+
+	increment = 1
+	if jItem.count(':') >= 1:
+		vals = jItem.split(":")
+
+		if jItem.count(':') == 1:
+			start = int(vals[0])
+			end = int(vals[1] ) + start + 1
+		else:
+			start = int(vals[0])
+			end = int(vals[2])  + start + 1
+			increment = int(vals[1])
+
+		rng  = np.arange(start,end,increment)
+		return rng
+	elif jItem.count('x') == 1:
+		sp = jItem.split('x')
+		num = sp[1]
+		val = sp[0]
+		its = [num] * (int(val) - 1)
+		return its
+	else:
+		return np.array([int(jItem)])
+
+
+
+def testNeuronTypeList():
+	t1 = ["2x2","0x253"]
+	t1_key = ([2]*2) + ([0] * 253)
+
+	t2 = []
+
+def getTypeArray(typeList):
+	types = np.array([-1] * 256)
+	pos = 0
+
 def getNeuronTypeList(typeList):
 	types = [-1] * 256 #create NULL neuron list (-1 is null)
 	pos = 0
-	for typeDef in typeList:
-		if "x" in typeDef:
-			tp = int(typeDef.split('x')[0])
-			for i in getRange(typeDef,pos):
-				types[i] = tp
-				pos += 1
-			pass
+
+	for typeItem in typeList:
+		itms = getArrayFromMulti(typeItem)
+		for itm in itms:
+			types[pos] = itm
+			pos += 1
+
+	# for typeDef in typeList:
+	# 	if "x" in typeDef:
+	# 		tp = int(typeDef.split('x')[0])
+	# 		for i in getRange(typeDef,pos):
+	# 			types[i] = tp
+	# 			pos += 1
+	# 		pass
 
 	return types
 
@@ -478,7 +524,8 @@ def createTNNeMoConfig(filename):
 
 	with concurrent.futures.ProcessPoolExecutor(max_workers=mp.cpu_count()) as e:
 		f = []
-		for ch in coreCH:
+		for ch in cores:
+			ch = [ch]
 			f.append( e.submit(neuronCSVFut,ch,crossbars,nc,neuronTemplates))
 
 		kwargs = {
@@ -551,7 +598,7 @@ def neuronCSVGen(cores, crossbars, nc, neuronTemplates, q):
 			q.put(neuron.to_csv())
 
 
-@jit
+#@jit
 def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
 	d = ""
 	for core in cores:
@@ -625,6 +672,18 @@ def readAndSaveSpikeFile(filename, type,saveFile="spikes.csv"):
 
 if __name__ == '__main__':
 	mdl = Model()
+	typeTests = [
+		["0:255"],
+		["1x256"],
+		["1x16", "-2x240"],
+		["0:15", "-1x240"],
+		['1x256']
+	]
+
+	res = []
+	#for testList in typeTests:
+	#	res.append(getNeuronTypeList(testList))
+
 
 	nt = NeuronType(model=mdl, name="Tester", sigmas=[1, 2, 3, 4], s=[1, 2, 3, 4], b=[False, False, False, False],
 					sigma_lambda=-1,
