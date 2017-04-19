@@ -690,7 +690,8 @@ if __name__ == '__main__':
 					lambd=0, c_lambda=0, epsilon=False, alpha=10, beta=0, TM=18, gamma=2, kappa=False, sigmaVR=1, VR=4,
 					V=0, cls="TestNeuron")
 
-	ns = createTNNeMoConfig('./test/patternMatch.json')
+	ns = createTNNeMoConfig('../test/patternMatch.json')
+	ns.save_csv('t1.csv')
 	print("PatternMatch Created")
 	ns = createTNNeMoConfig('./sobel/sobelTiles.json')
 	print("sobel created")

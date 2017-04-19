@@ -142,6 +142,7 @@ class ConfigFile:
 	def save_csv(self, filename):
 		with open(filename, 'w') as f:
 			f.write(self.to_csv())
+
 class Spike:
 	time = 0.0
 	destCore = 0

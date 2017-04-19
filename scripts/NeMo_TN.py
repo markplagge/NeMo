@@ -55,9 +55,10 @@ def read(params, modelf, spikef):
 			bar.update(70)
 			df.save_csv(tempfile)
 			with open(tempfile, 'r') as f:
-				cores = f.readlines()[0]
+				fdat = f.readlines()
+				cores = fdat[0]/usr/bin/mpicc
 				with open(loadfile, 'w') as o:
-					fdat = f.readlines()
+
 					o.writelines(fdat[2:])
 			bar.update(10)
 
