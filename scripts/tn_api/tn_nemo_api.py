@@ -153,7 +153,7 @@ class Spike:
 		self.destAxon = destAxon
 
 	def toCSV(self):
-		return f"{time},{destCore}{destAxon}\n"
+		return f"{self.time},{self.destCore}{self.destAxon}\n"
 
 
 # Vnames sets the variable names and order.
