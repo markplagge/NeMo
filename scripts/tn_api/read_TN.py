@@ -323,6 +323,8 @@ def createNeMoCFGFromJson(filename):
 	return cfgFile
 
 
+
+
 def neuronTemplatesToArr(neuronTemplates):
 	ks = []
 	vs = []

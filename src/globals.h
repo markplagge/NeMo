@@ -66,7 +66,7 @@ float: atof
 ///////FILE DEBUG HELPERS /////////
 #ifdef NET_IO_DEBUG
 
-#define genWrite(x) _Generic((x), \
+#define genWrite(x) _Generic((0,x), \
 char: "%i,", \
 signed char: "%hhd,", \
 unsigned char: "%hhu,", \
@@ -114,7 +114,7 @@ _tp4, _tp3, _tp2, _tp1,_tp0)(__VA_ARGS__)
 
 
 #if (__STDC_VERSION >= 200112L) || (_POSIX_C_SOURCE >= 20112L) || (BGQ <=0 )
-#define printf_dec_format(x) _Generic((x), \
+#define printf_dec_format(x) _Generic((0,x), \
 char: "%c", \
 signed char: "%hhd", \
 unsigned char: "%hhu", \

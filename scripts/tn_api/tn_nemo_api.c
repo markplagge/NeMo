@@ -1,3 +1,1 @@
 #import "string.h"
-
-typedef 
