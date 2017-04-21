@@ -56,7 +56,7 @@ def read(params, modelf, spikef):
 			df.save_csv(tempfile)
 			with open(tempfile, 'r') as f:
 				fdat = f.readlines()
-				cores = fdat[0]/usr/bin/mpicc
+				cores = fdat[0]
 				with open(loadfile, 'w') as o:
 
 					o.writelines(fdat[2:])

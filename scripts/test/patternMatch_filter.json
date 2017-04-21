@@ -1,9 +1,0 @@
-[
-{
-"version" : "1.0",
-"MonitorFilterSpecs" :
-[
-{ "cores" : [ 1 ], "neurons" : [ "0:2"] }
-]
-}
-]
