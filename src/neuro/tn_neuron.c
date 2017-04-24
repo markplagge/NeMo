@@ -951,8 +951,7 @@ void TN_forward_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
                                            // or we are saving membrane
                                            // potentials
 
-	  //saveNeruonState(s->myLocalID, s->myCoreID, s->membranePotential,
-	  //tw_now(lp));
+	  //saveNeruonState(s->myLocalID, s->myCoreID, s->membranePotential, tw_now(lp));
   }
 
   bool fired = TNReceiveMessage(s, m, lp, CV);

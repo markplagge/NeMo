@@ -35,8 +35,8 @@ char * inputFileName = "nemo_in";
 char * neuronFireFileName = "fire_record";
 int N_FIRE_BUFF_SIZE = 32;
 int N_FIRE_LINE_SIZE = 512;
-char * NETWORK_FILE_NAME = "./demo_ts.csv";
-char * SPIKE_FILE_NAME = "spikes.csv";
+char * NETWORK_FILE_NAME = "./ex1.csv";
+char * SPIKE_FILE_NAME = "./ex1_spike.csv";
 //
 /**
  * @FILE_OUT - is set to true if NeMo is saving output files

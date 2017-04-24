@@ -1,4 +1,4 @@
-
+import pandas as pd
 import copy
 import itertools
 import json
@@ -142,7 +142,6 @@ def createNeuronfromNeuronTemplate(neuronObject, coreID, localID, synapticConnec
 	n.localID = localID
 	n.synapticConnectivity = synapticConnectivity
 	n.g_i = typeList
-
 	return n
 
 
@@ -565,40 +564,10 @@ def createTNNeMoConfig(filename):
 	#neuronCSVGen(cores, crossbars, nc, neuronTemplates, q)
 	return cfgFile
 
+
+
+
 @jit
-def neuronCSVGen(cores, crossbars, nc, neuronTemplates, q):
-	for core in cores:
-		crossbar = crossbars[core['crossbar']['name']]
-		coreNeuronTypes = getNeuronTypeList(core['neurons']['types'])
-		dendriteCons = getNeuronDendrites(core['neurons']['dendrites'])
-		destCores = getNeuronDestCores(core['neurons']['destCores'])
-		destAxons = getNeuronDestAxons(core['neurons']['destAxons'])
-		destDelays = getNeuronDelays(core['neurons']['destDelays'])
-
-		coreID = core['id']
-
-		# synapse types:
-		tl = crossbar[0]
-		nc += 1
-
-		# core data configured, create neurons for this core:
-		# genNeuronBlock(coreID, coreNeuronTypes, crossbar, destAxons, destCores, destDelays, neuronTemplates, neurons, tl)
-		for i in range(0, 256):
-			# get synaptic connectivity col for this neuron:
-			connectivity = np.array(crossbar[1])[:, i]
-			if coreNeuronTypes[i] in neuronTemplates.keys():
-				neuron = createNeuronfromNeuronTemplate(neuronTemplates[coreNeuronTypes[i]], coreID, i, connectivity,
-														tl)
-			else:
-				neuron = TN(256, 4)
-			neuron.destCore = destCores[i]
-			neuron.destLocal = destAxons[i]
-			neuron.signalDelay = destDelays[i]
-			# cfgFile.add_neuron(neuron)
-			q.put(neuron.to_csv())
-
-
-#@jit
 def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
 	d = ""
 	for core in cores:
@@ -626,8 +595,11 @@ def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
 			else:
 				neuron = TN(256, 4)
 			neuron.destCore = destCores[i]
+			if neuron.destCore < 0 or neuron.destLocal < 0:
+				neuron.selfFiring=1
 			neuron.destLocal = destAxons[i]
 			neuron.signalDelay = destDelays[i]
+
 			#d = d + neuron.to_csv()
 			nrs.append(neuron)
 
@@ -640,9 +612,6 @@ def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
 def readSpikeJSON(filename):
 
 	data = open(filename, 'r').readlines()
-
-
-
 	spikes = []
 	for line in data:
 		spike = json.loads(line)
@@ -651,6 +620,7 @@ def readSpikeJSON(filename):
 				spike = spike['spike']
 				spk = Spike(spike['srcTime'], spike['destCore'], spike['destAxon'])
 				spikes.append(spk)
+				#spikes.append([float(spike['srcTime']), int(spike['destCore']), int(spike['destAxon'])])
 
 	return spikes
 
