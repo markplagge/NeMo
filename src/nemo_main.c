@@ -23,7 +23,7 @@ bool BULK_MODE = false;
 bool DEBUG_MODE = false;
 bool SAVE_MEMBRANE_POTS  = false;
 bool SAVE_SPIKE_EVTS  = true;
-bool SAVE_NETWORK_STRUCTURE = false;
+bool SAVE_NETWORK_STRUCTURE = true;
 bool PHAS_VAL = false;
 bool TONIC_SPK_VAL = false;
 bool TONIC_BURST_VAL = false;
@@ -196,7 +196,7 @@ void init_nemo(){
 
 
 	VALIDATION = PHAS_VAL || TONIC_BURST_VAL || PHASIC_BURST_VAL;
-	FILE_OUT = SAVE_SPIKE_EVTS || SAVE_NETWORK_STRUCTURE || 
+	FILE_OUT = SAVE_SPIKE_EVTS || SAVE_NETWORK_STRUCTURE ||
 				SAVE_MEMBRANE_POTS || VALIDATION;
 
 	
@@ -344,8 +344,7 @@ if(nonC11 == 1)
     }
 	if(FILE_OUT)
 		closeFiles();
-	if(FILE_IN)
-		printf("File input set but not implemented yet.");
+
 	
     tw_end();
 	

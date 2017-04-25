@@ -34,7 +34,7 @@ void closeOutputFiles(){
 }
 void initDataStructures(int simSize){
     list_init(& networkStructureList);
-    
+
 
 }
 /**
