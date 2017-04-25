@@ -53,6 +53,7 @@ class TN:
 
 	def os(self, xx, yy):
 		# return f"{xx},{yy}"
+		return f"{xx},{yy}"
 		return "%s,%s" % (xx, yy)
 		return str(xx) + "," + str(yy)
 
@@ -65,16 +66,16 @@ class TN:
 		self.sanity_check()
 		# os = lambda xx, yy: str(xx) + "," + str(yy)
 		sio = io.StringIO()
-		sio.write("f{self.type},{self.coreID},{self.localID}")
+		sio.write(f"{self.type},{self.coreID},{self.localID}")
 		# p1 = "{},{},{},".format(self.type, self.coreID, self.localID)
 		svs = []
 		for elms in [self.synapticConnectivity, self.g_i, self.sigmaG, self.S, self.b]:
-			# p2 = reduce(self.os, elms) + ","
-			sio.write(f"reduce(self.os,elms),")
+			#p2 = reduce(self.os, elms) + ","
+			sio.write(f"{reduce(self.os,elms)},")
 
 		sio.write = f"{self.epsilon},{self.sigma_lmbda},{self.lmbda},{self.c},{self.alpha},{self.beta},{self.TM},{self.VR}," \
 					f"{self.sigmaVR},{self.gamma},{self.kappa},{self.signalDelay},{self.destCore},{self.destLocal},{self.outputNeuron}," \
-					f"{self.selfFiring}\n"
+					f"{self.selfFiring}"
 		# for var in [self.epsilon,
 		# 			self.sigma_lmbda,
 		# 			self.lmbda,
@@ -96,7 +97,7 @@ class TN:
 
 		# oscv = f"{p1}{p2}{p3}"
 
-		return sio.getvalue()
+		return sio.getvalue() + "\n"
 
 
 class ConfigFile:

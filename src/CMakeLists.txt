@@ -80,6 +80,8 @@ set(model_srcs
 
         lib/csv.h
         lib/libcsv.c
+        lib/simclist.h
+        lib/simclist.c
 
         IO/IOStack.c
         IO/IOStack.h
@@ -88,7 +90,7 @@ set(model_srcs
         IO/input.h
         IO/input.c
         nemo_config.h 
-        nemo_main.h )
+        nemo_main.h IO/spike_reader.c IO/spike_reader.h )
 
 
 ADD_EXECUTABLE(NeMo  ${model_srcs})

@@ -61,7 +61,8 @@ class Model():
 class NeuronType():
 	def __init__(self, model, name, sigmas, s, b, sigma_lambda, lambd, c_lambda, epsilon, alpha,
 				 beta, TM, gamma, kappa, sigmaVR, VR, V, cls=""):
-		vvals = [name, sigmas, s, b, sigma_lambda, lambd, c_lambda,
+		vvals = [name, sigmas, s, b, sigma_lambda, lambd, c_lambda, epsilon, alpha,
+				 beta, TM, gamma, kappa, sigmaVR, VR, V, cls]
 
 		self.model = model
 		if cls == "":
@@ -346,8 +347,6 @@ def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
 
 
 
-
-
 			tp = ""
 
 
@@ -384,13 +383,14 @@ def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
 				neuron.destLocal = destAxons[i]
 				neuron.signalDelay = destDelays[i]
 				# d = d + neuron.to_csv()
-                                if neuron.destCore < 0 or neuron.destLocal < 0:
-                                    neuron.selfFiring=1
+				if neuron.destCore < 0 or neuron.destLocal < 0:
+					neuron.selfFiring=1
 				nrs.append(neuron)
 
 			for i in nrs:
-				d = f"{d}{i.to_csv}" #d + i.to_csv()
-			# cfgFile.add_neuron(neuron)
+				ic = i.to_csv()
+				d = "{}{}".format(d,ic) #d + i.to_csv()
+			#cfgFile.add_neuron(neuron)
 			coreNeuronTypes.fill(0)
 			destCores.fill(0)
 			destAxons.fill(0)

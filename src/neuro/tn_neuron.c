@@ -960,13 +960,6 @@ void TN_forward_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
 
   CV->c0 = fired;  // save fired information for reverse computation.
 
-  if (fired &&
-      (SAVE_SPIKE_EVTS ||
-       VALIDATION)) {  // if we are validating the model or saving spike
-                       // events, save this event's info.
-
-    // write_event(s->myLocalID, s->myCoreID, s->s->outputGID, 'N', tw_now(lp));
-  }
   m->rndCallCount = lp->rng->count - start_count;
 
   //    tw_snapshot_delta(lp, lp->type->state_sz);

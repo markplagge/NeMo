@@ -345,6 +345,11 @@ typedef struct CsvNeuron{
 
 }csvNeuron;
 
+typedef struct SpikeElem{
+    long scheduledTime;
+    long destCore;
+    long destAxon;
+}spikeElem;
 
 #endif //NEMO_GLOBALS_H
 #ifndef EXTERN

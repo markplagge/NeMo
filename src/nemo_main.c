@@ -22,7 +22,7 @@ bool IS_RAND_NETWORK = true;
 bool BULK_MODE = false;
 bool DEBUG_MODE = false;
 bool SAVE_MEMBRANE_POTS  = false;
-bool SAVE_SPIKE_EVTS  = false;
+bool SAVE_SPIKE_EVTS  = true;
 bool SAVE_NEURON_OUTS = false;
 bool PHAS_VAL = false;
 bool TONIC_SPK_VAL = false;
@@ -35,8 +35,8 @@ char * inputFileName = "nemo_in";
 char * neuronFireFileName = "fire_record";
 int N_FIRE_BUFF_SIZE = 32;
 int N_FIRE_LINE_SIZE = 512;
-char * NETWORK_FILE_NAME = "./ex1.csv";
-char * SPIKE_FILE_NAME = "./ex1_spike.csv";
+char * NETWORK_FILE_NAME = "nemo_model.csv";
+char * SPIKE_FILE_NAME = "nemo_spike.csv";
 //
 /**
  * @FILE_OUT - is set to true if NeMo is saving output files
@@ -218,9 +218,12 @@ void init_nemo(){
 		networkFileName = NETWORK_FILE_NAME;
 		spikeFileName = SPIKE_FILE_NAME;
 		openInputFiles();
+        //openSpikeFile(SPIKE_FILE_NAME);
 		parseNetworkFile();
-        loadSpikes();
-		
+
+        loadSpikesFromFile(spikeFileName);
+
+        closeSpikeFile();
 	}
 
 	
