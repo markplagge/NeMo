@@ -34,7 +34,7 @@ void closeOutputFiles(){
 }
 void initDataStructures(int simSize){
     list_init(& networkStructureList);
-
+    list_attributes_copy(&networkStructureList, list_meter_string);
 
 }
 /**
@@ -75,7 +75,7 @@ void saveNetworkStructure(){
                 char * line = list_get_at(&networkStructureList, 0);
                 fprintf(outNetworkCfgFile, line);
                 list_delete_at(&networkStructureList, 0);
-                free(line);
+                
             }
         }
     }
