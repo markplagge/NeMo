@@ -26,10 +26,17 @@ void openOutputFiles(char * outputFileName){
 //    strcat(ncfgfn,".bin");
 
     outNetworkCfgFile = fopen(outputFileName,"wb");
+    fprintf(outNetworkCfgFile, "Core,NeuronID,DestCore,DestAxon\n");
 //    outNeuronCfgFile = fopen(ncfgfn, "wb");
 
 }
 void closeOutputFiles(){
+    while(list_size(&networkStructureList) > 0){
+        char * line = list_get_at(&networkStructureList, 0);
+        fprintf(outNetworkCfgFile, line);
+        list_delete_at(&networkStructureList, 0);
+    }
+
     fclose(outNetworkCfgFile);
 }
 void initDataStructures(int simSize){
@@ -49,7 +56,20 @@ int neuronConnToSCSV(tn_neuron_state *n, char *state){
     id_type local = n->myLocalID;
     return sprintf(state,"%li,%li,%i,%i\n", core,local,destCore, destAxon);
 }
+void saveIndNeuron(void *ns) {
+    tn_neuron_state *n = (tn_neuron_state *) ns;
+    char *line = calloc(sizeof(char), 128);
+    neuronConnToSCSV(n, line);
+    list_append(&networkStructureList, line);
+    if (list_size(&networkStructureList) > maxNetworkListSize) {
+        while (list_size(&networkStructureList) > 0) {
+            char *line = list_get_at(&networkStructureList, 0);
+            fprintf(outNetworkCfgFile, line);
+            list_delete_at(&networkStructureList, 0);
 
+        }
+    }
+}
 void saveNetworkStructure(){
 
     openOutputFiles("network_def.csv");

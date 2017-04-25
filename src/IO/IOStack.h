@@ -30,4 +30,6 @@ void openOutputFiles(char * outputFileName);
 void initDataStructures(int simSize);
 void saveNeurons();
 void saveNetworkStructure();
+void closeOutputFiles();
+void saveIndNeuron(void *n);
 #endif //NEMO_IOSTACK_H

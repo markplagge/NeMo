@@ -1027,6 +1027,9 @@ void TN_final(tn_neuron_state *s, tw_lp *lp) {
       debugMsg(HB, (int)s->heartbeatOut);
     }
   }
+    if(SAVE_NETWORK_STRUCTURE){
+        saveIndNeuron(s);
+    }
 }
 
 inline tn_neuron_state* TN_convert(void* lpstate) {

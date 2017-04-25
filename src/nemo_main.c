@@ -205,7 +205,10 @@ void init_nemo(){
 	if (FILE_OUT){
 		//Init file output handles
 		initOutFiles();
+        openOutputFiles("network_def.csv");
+        initDataStructures(g_tw_nlp);
 		if(g_tw_mynode == 0){
+
 			printf("Output Files Init.\n");
 		}
 
@@ -340,7 +343,8 @@ if(nonC11 == 1)
 	
     tw_run();
 	if(SAVE_NETWORK_STRUCTURE){
-        saveNetworkStructure();
+        //saveNetworkStructure();
+        closeOutputFiles();
     }
 	if(FILE_OUT)
 		closeFiles();
