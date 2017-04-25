@@ -23,7 +23,7 @@ bool BULK_MODE = false;
 bool DEBUG_MODE = false;
 bool SAVE_MEMBRANE_POTS  = false;
 bool SAVE_SPIKE_EVTS  = true;
-bool SAVE_NEURON_OUTS = false;
+bool SAVE_NETWORK_STRUCTURE = false;
 bool PHAS_VAL = false;
 bool TONIC_SPK_VAL = false;
 bool TONIC_BURST_VAL = false;
@@ -31,7 +31,7 @@ bool PHASIC_BURST_VAL = false;
 bool VALIDATION = false;
  bool MPI_SAVE = false;
  bool BINARY_OUTPUT = false;
-char * inputFileName = "nemo_in";
+
 char * neuronFireFileName = "fire_record";
 int N_FIRE_BUFF_SIZE = 32;
 int N_FIRE_LINE_SIZE = 512;
@@ -76,7 +76,7 @@ const tw_optdef app_opt[] = {
     TWOPT_GROUP("Data Gathering Settings"),
 	//TWOPT_FLAG("bulk", BULK_MODE, "Is this sim running in bulk mode?"),
     	TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
-		TWOPT_FLAG("network", SAVE_NEURON_OUTS, "Save neuron output axon IDs on creation - Creates a map of the neural network."),
+		TWOPT_FLAG("network", SAVE_NETWORK_STRUCTURE, "Save neuron output axon IDs on creation - Creates a map of the neural network."),
     	TWOPT_FLAG("svm", SAVE_MEMBRANE_POTS, "Save neuron membrane potential "
 				   "values (saves membrane potential per-tick if neuron was active.)"),
     	TWOPT_FLAG("svs", SAVE_SPIKE_EVTS, "Save neuron spike event times and info"),
@@ -196,7 +196,7 @@ void init_nemo(){
 
 
 	VALIDATION = PHAS_VAL || TONIC_BURST_VAL || PHASIC_BURST_VAL;
-	FILE_OUT = SAVE_SPIKE_EVTS || SAVE_NEURON_OUTS || 
+	FILE_OUT = SAVE_SPIKE_EVTS || SAVE_NETWORK_STRUCTURE || 
 				SAVE_MEMBRANE_POTS || VALIDATION;
 
 	
@@ -339,7 +339,9 @@ if(nonC11 == 1)
 	
 	
     tw_run();
-	
+	if(SAVE_NETWORK_STRUCTURE){
+        saveNetworkStructure();
+    }
 	if(FILE_OUT)
 		closeFiles();
 	if(FILE_IN)

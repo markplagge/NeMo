@@ -947,12 +947,7 @@ void TN_forward_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
   //        tw_snapshot(lp, lp->type->state_sz);
   //    }
 
-  if (VALIDATION || SAVE_MEMBRANE_POTS) {  // If we are running model validation
-                                           // or we are saving membrane
-                                           // potentials
 
-	  //saveNeruonState(s->myLocalID, s->myCoreID, s->membranePotential, tw_now(lp));
-  }
 
   bool fired = TNReceiveMessage(s, m, lp, CV);
   s->SOPSCount++;
@@ -974,15 +969,11 @@ void TN_reverse_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
 	}
   long count = m->rndCallCount;
   //    tw_snapshot_restore(lp, lp->type->state_sz);
-  if (VALIDATION || SAVE_MEMBRANE_POTS) {
-    // reverse save neuron state;
-  }
+
 
   TNReceiveReverseMessage(s, m, lp, CV);
   s->SOPSCount--;
-  if (CV->c0 && (SAVE_SPIKE_EVTS || VALIDATION)) {
-    // reverse_write_event
-  }
+  
 
   while (count--) tw_rand_reverse_unif(lp->rng);
 }
@@ -995,6 +986,12 @@ void TN_commit(tn_neuron_state* s, tw_bf* cv, messageData* m, tw_lp* lp) {
   if (SAVE_SPIKE_EVTS && cv->c0) {
     saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID);
   }
+    if (VALIDATION || SAVE_MEMBRANE_POTS) {  // If we are running model validation
+        // or we are saving membrane
+        // potentials
+
+        //saveNeruonState(s->myLocalID, s->myCoreID, s->membranePotential, tw_now(lp));
+    }
 }
 /** @todo: fix this remote value */
 void prhdr(bool* display, char* hdr) {

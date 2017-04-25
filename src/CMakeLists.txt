@@ -90,7 +90,7 @@ set(model_srcs
         IO/input.h
         IO/input.c
         nemo_config.h 
-        nemo_main.h IO/spike_reader.c IO/spike_reader.h )
+        nemo_main.h IO/spike_reader.c IO/spike_reader.h IO/neuron_output.c)
 
 
 ADD_EXECUTABLE(NeMo  ${model_srcs})

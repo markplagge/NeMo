@@ -24,7 +24,7 @@
  *	or compile-time option 
  * @{ */
 
-#define SAVE_NEURON_STATS
+#define SAVE_NEURON_STATS 1
 
 /**@}*/
 /**
@@ -332,7 +332,7 @@ typedef struct Ms{
 }messageData;
  /**@}*/
 
-
+/** \defgroup IOStructs Input/Output structs @{ */
 /** Structs for managing neuron reads */
 typedef struct CsvNeuron{
     int fld_num;
@@ -344,12 +344,36 @@ typedef struct CsvNeuron{
 //    char **rawDat;
 
 }csvNeuron;
-
+/**
+ * SpikeElem / spikeElem is a struct that holds the raw spike data
+ * from a CSV file. The data is stored in a simclist list. One spike
+ * is stored in each spikeElem.
+ */
 typedef struct SpikeElem{
     long scheduledTime;
     long destCore;
     long destAxon;
 }spikeElem;
+
+/**
+ * NeuronMembraneRecord stores an active neuron's membrane potential.
+ * This is used to save and store membrane potential / neuron activity
+ * during a simulation run. Used by output.c
+ */
+typedef struct NeuronMembraneRecord{
+	tw_stime tickTime;
+	volt_type membranePot;
+	id_type neuronCore;
+	id_type neuronID;
+}neuronMembraneRecord;
+
+
+
+
+
+
+
+/** @} */
 
 #endif //NEMO_GLOBALS_H
 #ifndef EXTERN
@@ -374,7 +398,7 @@ EXT bool BULK_MODE;
 EXT bool DEBUG_MODE;
 EXT bool SAVE_MEMBRANE_POTS ;
 EXT bool SAVE_SPIKE_EVTS ; //!< Toggles saving spike events
-EXT bool SAVE_NEURON_OUTS;
+EXT bool SAVE_NETWORK_STRUCTURE;
 
 EXT bool MPI_SAVE;
 EXT bool BINARY_OUTPUT;

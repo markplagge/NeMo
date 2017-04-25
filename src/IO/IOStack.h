@@ -9,9 +9,12 @@
 #include "input.h"
 #include "output.h"
 #include "../globals.h"
+#include "../lib/simclist.h"
+#include "../nemo_config.h"
 
 
 
+#define SAVE_ALL_NEURON_PARAMS 1
 
 
 void initOutFiles();
@@ -23,6 +26,8 @@ void closeFiles();
 
 
 void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid destGID);
-
-
+void openOutputFiles(char * outputFileName);
+void initDataStructures(int simSize);
+void saveNeurons();
+void saveNetworkStructure();
 #endif //NEMO_IOSTACK_H
