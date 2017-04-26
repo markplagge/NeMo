@@ -16,7 +16,7 @@ bool neuronFireFileOpen;
 bool outputFileOpen;
 
 
-
+int N_FIRE_BUFF_SIZE = 32;
 //Names of output files
 char * neuronFireFinalFN;
 char * neuronRankFN;
@@ -150,16 +150,17 @@ void setFileNames(){
 
 void initOutFiles(){
 	setFileNames();
+	int tv = N_FIRE_BUFF_SIZE;
 	if(SAVE_SPIKE_EVTS) {
 		if(BINARY_OUTPUT) {
-			neuronFireBufferBIN = (neuronFireStruct *) tw_calloc(TW_LOC,"OUTPUT",sizeof(neuronFireStruct),N_FIRE_BUFF_SIZE);
+			neuronFireBufferBIN = (neuronFireStruct *) tw_calloc(TW_LOC,"OUTPUT",tv, sizeof(neuronFireStruct));
 			neuronFireFile = fopen(neuronRankFN, "wb");
 			
 		}else{
-			neuronFireBufferTXT = (char **) tw_calloc(TW_LOC, "OUTPUT", sizeof(char *),N_FIRE_BUFF_SIZE);
+			neuronFireBufferTXT = (char **) tw_calloc(TW_LOC, "OUTPUT", tv, sizeof(char *));
 			
 			for(int i = 0; i < N_FIRE_BUFF_SIZE; i ++) {
-				neuronFireBufferTXT[i] = (char *) tw_calloc(TW_LOC, "OUTPUT", sizeof(char *), N_FIRE_LINE_SIZE);
+				neuronFireBufferTXT[i] = (char *) tw_calloc(TW_LOC, "OUTPUT", tv, sizeof(char *));
 			}
 			neuronFireFile = fopen(neuronRankFN, "w");
 		}

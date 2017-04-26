@@ -413,7 +413,8 @@ EXT bool FILE_OUT;
 EXT bool FILE_IN;
 
 
-
+EXT char * NETWORK_FILE_NAME;
+EXT char * SPIKE_FILE_NAME;
 
 
 /* Global Timing Variables */

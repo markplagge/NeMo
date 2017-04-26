@@ -431,26 +431,34 @@ def readSpikeJSON(filename):
 
 
 def readSpikeFile(filename, type='json'):
-	if type=='json':
-		return readSpikeJSON(filename)
 
-def readAndSaveSpikeFile(filename, type,saveFile="spikes.csv"):
+	return readSpikeJSON(filename)
+
+def readAndSaveSpikeFile(filename, type = "json",saveFile="spikes.csv"):
 	spikes = readSpikeFile(filename, type)
 
-	out = [s.toCSV().replace('\n','') for s in spikes]
+	out = [s.toCSV() for s in spikes]
 	with open(saveFile, 'w') as f:
 		f.writelines(out)
 
 
+def readAndSaveModel(modelFN, saveFN):
+	mdl = createNeMoCFGFromJson(modelFN)
+	with open(saveFN, 'w') as f:
+		f.write(mdl.to_csv())
 
 
 
 if __name__ == '__main__':
+	print("Ex 1 - Model & Spikes")
+	ex1_model = createNeMoCFGFromJson('../test/ex1.json')
+	ex1_spikes = readSpikeJSON('../test/ex1_spikes.sfti')
+	readAndSaveSpikeFile(filename='../test/ex1_spikes.sfti', saveFile="../test/ex1_spike.csv")
+	print("saving...")
+	ex1_model = ex1_model.to_csv()
+	with open('../test/ex1.csv', "w") as f:
+		f.writelines(ex1_model)
 
-	ns = createNeMoCFGFromJson('../test/patternMatch.json')
-	print("PatternMatch Created")
-	ns = createNeMoCFGFromJson('../sobel/sobelTiles.json')
-	print("sobel created")
 
-	spks = readSpikeFile('./sobel/sobelTiles_inputSpikes.sfti')
-	print("sobel spikes created")
+	print("Ex 2 - Model & Spikes")
+

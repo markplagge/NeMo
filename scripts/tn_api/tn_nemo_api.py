@@ -66,7 +66,7 @@ class TN:
 		self.sanity_check()
 		# os = lambda xx, yy: str(xx) + "," + str(yy)
 		sio = io.StringIO()
-		sio.write(f"{self.type},{self.coreID},{self.localID}")
+		sio.write(f"{self.type},{self.coreID},{self.localID},")
 		# p1 = "{},{},{},".format(self.type, self.coreID, self.localID)
 		svs = []
 		for elms in [self.synapticConnectivity, self.g_i, self.sigmaG, self.S, self.b]:

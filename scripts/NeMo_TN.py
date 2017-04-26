@@ -48,30 +48,23 @@ def read(params, modelf, spikef):
 	spikec = output_name + "_spike.csv"
 
 	if (params.fread) or not os.path.exists(loadfile):
-		with click.progressbar(length=100, label="Processing JSON") as bar:
-			click.echo("Starting JSON load (will take some time)")
-			bar.update(5)
-			df = createNeMoCFGFromJson(modelf)
-			bar.update(70)
-			df.save_csv(tempfile)
-			with open(tempfile, 'r') as f:
-				fdat = f.readlines()
-				cores = fdat[0]
-				with open(loadfile, 'w') as o:
+		# with click.progressbar(length=100, label="Processing JSON") as bar:
+		click.echo("Starting JSON load (will take some time)")
 
-					o.writelines(fdat[2:])
-			bar.update(10)
+		df = createNeMoCFGFromJson(modelf)
 
-			#todo: remove temp file
-			spikes = readSpikeFile(spikef, 'json')
+		df.save_csv(tempfile)
+		with open(tempfile, 'r') as f:
+			fdat = f.readlines()
+			cores = fdat[0]
+			with open(loadfile, 'w') as o:
 
-			bar.update(5)
-			csv = [x.toCSV() for x in spikes]
-			with open(spikec, 'w') as f:
-				for l in csv:
-					f.write(l)
-			bar.update(10)
-			params.cores = cores
+				o.writelines(fdat[2:])
+
+
+		#todo: remove temp file
+		spikes = readAndSaveSpikeFile(filename=spikef, saveFile=spikec)
+		params.cores = cores
 
 
 @click.command()

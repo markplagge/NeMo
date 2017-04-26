@@ -40,9 +40,7 @@ int readSpike(spikeElem * spike){
             spike->scheduledTime = time;
             spike->destCore = core;
             spike->destAxon = axon;
-            if (time > 30){
-                printf("Err - too much time \n");
-            }
+
         }
 
         return ctr;
