@@ -61,7 +61,14 @@ int openInputFiles(){
     netReadStat = 0;
 	spikeList = NULL;
 
-
+    //go through the file until the first neuron element is found:
+    //removed for debug
+    //while(fgetc(networkFile) != 'T');
+    char cv = '0';
+    while(cv != 'T'){
+        cv = fgetc(networkFile);
+    }
+    fseek(networkFile, -1, SEEK_CUR);
 
     return 0;
 
