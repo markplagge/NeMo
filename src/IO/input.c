@@ -141,7 +141,7 @@ void push(spikeRecord * head, double  vals[]) {
     }
 
     /* now we can add a new variable */
-	
+
     current->nextRecord = malloc(sizeof(spikeRecord));
     current->nextRecord->scheduledTime = vals[0];
     current->nextRecord->destCore = vals[1];
@@ -149,68 +149,11 @@ void push(spikeRecord * head, double  vals[]) {
     current->nextRecord->nextRecord = NULL;
 }
 
-void loadSpikes(){
 
-
-    bool fr = true;
-    double spikeInfo[3];
-
-    while(fscanf(spikeFile,"%la,%la,%la",&spikeInfo[0],&spikeInfo[1],&spikeInfo[2]) > 0){
-
-
-        if(fr){
-            spikeList = malloc(sizeof(spikeRecord));
-            spikeList->scheduledTime = spikeInfo[0];
-            spikeList->destCore = spikeInfo[1];
-            spikeList->destAxon = spikeInfo[2];
-            spikeList->nextRecord = NULL;
-                fr = false;
-        } else{
-            push(spikeList, spikeInfo);
-        }
-    }
-
-}
-
-
-double * getNextSpikeFromFile(){
-//	static _Bool isE = false;
-//	double spikeInfo[3];
-//	spikeInfo[0] = -1;
-//
-//	if (isE){
-//
-//		return spikeInfo;
-//	}
-//	//double * spikeinfo = tw_calloc(TW_LOC,  "SpikeInput", sizeof(double), 3);
-//
-//	//dumb way to do this for demo pps:
-//    //time,core,axon
-//	if (fscanf(spikeFile,"%la,%la,%la",&spikeInfo[0],&spikeInfo[1],&spikeInfo[2]) > 0){
-//		return spikeInfo;
-//	}else{
-//		isE = true;
-//		spikeInfo[0] = -1;
-//		return spikeInfo;
-//	}
-	
-}
 
 //double * findEvent(id_type coreID, id_type localID){
 //	return &-1.0
 //}
-
-tw_stime queueSpikesFromAxon(id_type coreID, id_type localID){
-	
-	spikeRecord * spike = getRecord(coreID, localID);
-    if (spike == NULL){
-        return -1;
-    }
-    tw_stime sched = spike->scheduledTime;
-    free(spike);
-    return sched;
-
-}
 
 
 /** Callback function called when libCSV has read an entire field. Add

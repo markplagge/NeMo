@@ -6,12 +6,15 @@
 #define NEMO_IOSTACK_H
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "input.h"
 #include "output.h"
 #include "../globals.h"
 #include "../lib/simclist.h"
 #include "../nemo_config.h"
-
+//#include "../lib/lua.h"
+//#include "../lib/lualib.h"
+//#include "../lib/lauxlib.h"
 
 
 #define SAVE_ALL_NEURON_PARAMS 1
@@ -31,4 +34,8 @@ void initDataStructures(int simSize);
 
 void closeOutputFiles();
 void saveIndNeuron(void *n);
+
+int getNeuronParameters(double *paramArray, int core, int local);
+void initModelInput(char *filename, int maxNeurons);
+
 #endif //NEMO_IOSTACK_H

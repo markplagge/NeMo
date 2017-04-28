@@ -332,7 +332,7 @@ def neuronTemplatesToArr(neuronTemplates):
 		ks.append(key)
 		vs.append(value)
 
-@jit
+#@jit
 def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
 
 		d = ""
@@ -450,6 +450,43 @@ def readAndSaveModel(modelFN, saveFN):
 
 
 if __name__ == '__main__':
+	print("one neuron, with activation of 1 connected to another neuron that has an output connector. ")
+	n1 = TN(256,4)
+	n1.synapticConnectivity = [0] * 256
+	n1.synapticConnectivity[0] = 1
+	n1.S = [1,1,0,0]
+	n1.g_i = [1] * 256
+	n1.g_i[0] = 0
+	n1.alpha = 1
+	n1.destCore = 0
+	n1.destLocal = 1
+
+	n2 = TN(256,4)
+	n2.coreID = 0
+	n2.localID = 1
+	n2.synapticConnectivity = [0] * 256
+	n2.synapticConnectivity[1] = 1
+	n2.S = [1,1,1,1]
+	n1.g_i = [1] *256
+	n1.alpha = 1
+	n1.destCore = -1
+	n1.destLocal = -1
+
+	c1 = n1.to_csv()
+	c1 = c1 + n2.to_csv()
+
+	with open('../test/dualn.csv',"w") as f:
+		f.write(c1)
+
+	spks = []
+	for i in range(0, 1024):
+		spks.append(Spike(i, 0, 0))
+
+	with open('../test/dualn_spike.csv',"w") as f:
+		o = [s.toCSV() for s in spks]
+		f.writelines(o)
+
+
 	print("Ex 1 - Model & Spikes")
 	ex1_model = createNeMoCFGFromJson('../test/ex1.json')
 	ex1_spikes = readSpikeJSON('../test/ex1_spikes.sfti')

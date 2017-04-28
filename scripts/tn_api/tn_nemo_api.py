@@ -58,10 +58,10 @@ class TN:
 		return str(xx) + "," + str(yy)
 
 	def to_csv(self):
-		if self.destCore > 0:
-			self.outputNeuron = 1
+		if self.destCore < 0:
+			self.outputNeuron = "1"
 		else:
-			self.outputNeuron = 0
+			self.outputNeuron = "0"
 
 		self.sanity_check()
 		# os = lambda xx, yy: str(xx) + "," + str(yy)
@@ -73,9 +73,18 @@ class TN:
 			#p2 = reduce(self.os, elms) + ","
 			sio.write(f"{reduce(self.os,elms)},")
 
-		sio.write = f"{self.epsilon},{self.sigma_lmbda},{self.lmbda},{self.c},{self.alpha},{self.beta},{self.TM},{self.VR}," \
-					f"{self.sigmaVR},{self.gamma},{self.kappa},{self.signalDelay},{self.destCore},{self.destLocal},{self.outputNeuron}," \
-					f"{self.selfFiring}"
+
+		def toI(val):
+			if val == True:
+				return "1"
+			if val == False:
+				return "0"
+			return val
+
+		# x =  f"{self.epsilon},{self.sigma_lmbda},{self.lmbda},{self.c},{self.alpha},{self.beta},{self.TM},{self.VR}," \
+		# 			f"{self.sigmaVR},{self.gamma},{self.kappa},{self.signalDelay},{self.destCore},{self.destLocal},{self.outputNeuron}," \
+		# 			f"{self.selfFiring}"
+		# sio.write(x)
 		# for var in [self.epsilon,
 		# 			self.sigma_lmbda,
 		# 			self.lmbda,
@@ -90,9 +99,29 @@ class TN:
 		# 			self.signalDelay,
 		# 			self.destCore,
 		# 			self.destLocal,
-		# 			self.outputNeuron]:
-		# 	p3 += "{},".format(var)
-
+		# 			self.outputNeuron,
+		# 			self.selfFiring]:
+		#
+		# 	sio.write(f"{toI(var)}")
+		# 	sio.write(",")
+		vars = [self.epsilon,
+		 self.sigma_lmbda,
+		 self.lmbda,
+		 self.c,
+		 self.alpha,
+		 self.beta,
+		 self.TM,
+		 self.VR,
+		 self.sigmaVR,
+		 self.gamma,
+		 self.kappa,
+		 self.signalDelay,
+		 self.destCore,
+		 self.destLocal,
+		 self.outputNeuron,
+		 self.selfFiring]
+		vars = [str(toI(x)) for x in vars]
+		sio.write(",".join(vars))
 		# p4 += str(self.selfFiring) + "\n"  # final
 
 		# oscv = f"{p1}{p2}{p3}"

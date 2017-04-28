@@ -34,8 +34,8 @@ bool BINARY_OUTPUT = false;
 char *neuronFireFileName = "fire_record";
 //int N_FIRE_BUFF_SIZE = 32;
 //int N_FIRE_LINE_SIZE = 512;
-char *NETWORK_FILE_NAME = "/Users/mplagge/development/NeMo/scripts/test/ex1.csv";
-char *SPIKE_FILE_NAME = "/Users/mplagge/development/NeMo/scripts/test/ex1_spike.csv";
+char *NETWORK_FILE_NAME = "nemo_model.csv";
+char *SPIKE_FILE_NAME = "nemo_spike.csv";
 //
 /**
  * @FILE_OUT - is set to true if NeMo is saving output files

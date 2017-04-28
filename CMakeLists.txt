@@ -1,12 +1,18 @@
 cmake_minimum_required(VERSION 2.6)
 project(SuperNeMo)
 enable_testing()
-
+include(ExternalProject)
 set (RD "${CMAKE_CURRENT_SOURCE_DIR}/ROSS/")
 set (ND "${CMAKE_CURRENT_SOURCE_DIR}/src/")
 
+set (LuaD "${CMAKE_CURRENT_SOURCE_DIR}/lua5.1")
+
+
 ADD_SUBDIRECTORY(${RD})
 ADD_SUBDIRECTORY(${ND})
+#ADD_SUBDIRECTORY(${LuaD})
+
+
 find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
 
