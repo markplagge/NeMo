@@ -384,7 +384,7 @@ def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
 		for dti in tqdm(as_completed(f), **kwargs):
 			data.append(dti.result())
 
-		[cfgFile.addNeuron(n) for n in data]
+		[[cfgFile.addNeuron(v) for v in n] for n in data]
 
 	# cfgFile.neuron_text = cfgFile.neuron_text + data
 	return cfgFile

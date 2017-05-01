@@ -1,5 +1,5 @@
 import io
-
+import numpy as np
 
 class TN(object):
 	type = "TN"
@@ -58,14 +58,15 @@ class TN(object):
 		assert(isinstance(pname, str))
 		val = self.__getattribute__(pname)
 		template = f"{pname} = "
-		if isinstance(val, list):
+		if isinstance(val, (list, np.ndarray)):
 			val = [toI(v) for v in val]
 			template = template + "{ "
 			outstr = template + ",".join([f"{x}" for x in val])
 			outstr = f"{outstr} {'}'}"
 		else:
 			val = toI(val)
-			if isinstance(val, str):
+			if pname is 'type':
+
 				val = f'"{val}"'
 
 			outstr = f"{template} {val}"
@@ -110,7 +111,7 @@ class TN(object):
 
 
 class ConfigFile(object):
-	neurons = []
+
 	nsCores = 1024
 	neuronsPerCore = 256
 	it = 0
