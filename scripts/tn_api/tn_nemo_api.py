@@ -10,6 +10,8 @@ def subCSV(xx, yy):
 import io
 
 
+
+
 class TN:
 	type = "TN"
 	coreID = 0
@@ -57,12 +59,66 @@ class TN:
 		return "%s,%s" % (xx, yy)
 		return str(xx) + "," + str(yy)
 
-	def to_csv(self):
+	def setOut(self):
 		if self.destCore < 0:
 			self.outputNeuron = "1"
 		else:
 			self.outputNeuron = "0"
 
+	def nf2GS(self, pname):
+		assert(isinstance(pname, str))
+		val = self.__getattribute__(pname)
+		template = f"{pname} = "
+		if isinstance(val, list):
+			template = template + "{ "
+			outstr = template + ",".join([f"{x}" for x in val])
+			outstr = f"{outstr} {'}'}"
+		else:
+			if isinstance(val, str):
+				val = f'"{val}"'
+
+			outstr = f"{template} {val}"
+		return f"{outstr} "
+
+	def to_nf2(self):
+		self.setOut()
+		self.sanity_check()
+		sio = io.StringIO()
+		hdr = ["type", "coreID", "localID"]
+		arrs = ["synapticConnectivity", "g_i", "sigmaG", "S", "b"]
+		singles = [ "epsilon",
+					"sigma_lmbda",
+					"lmbda",
+					"c",
+					"alpha",
+					"beta",
+					"TM",
+					"VR",
+					"sigmaVR",
+					"gamma",
+					"kappa",
+					"signalDelay",
+					"destCore",
+					"destLocal",
+					"outputNeuron",
+					"selfFiring"
+					]
+		name = f"{self.type}{self.coreID}{self.localID}"
+		full = hdr + arrs + singles
+		sio.write(name)
+		sio.write("= {")
+
+		for vn in full:
+			sio.write(self.nf2GS(vn))
+			sio.write(",")
+
+		fn = sio.getvalue()
+		return f"{fn[:-1]} {'}'}"
+
+
+
+	def to_csv(self):
+		self.setOut()
 		self.sanity_check()
 		# os = lambda xx, yy: str(xx) + "," + str(yy)
 		sio = io.StringIO()
@@ -201,3 +257,5 @@ def TNFunct(**kwargs):
 if __name__ == '__main__':
 	n = TN(numSynapsesPerCore=256, weightsPerNeuron=4)
 	n.to_csv()
+	dd = n.to_nf2()
+	print(dd)

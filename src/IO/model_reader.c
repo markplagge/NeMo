@@ -9,19 +9,7 @@
 
 #include "../lib/csv.h"
 
-enum modelReadMode{
-    START_READ,
-    MODEL_HDR,
-    N_TYPE,
-    N_CORE,
-    N_LOCAL,
-    N_CONNECTIVITY,
-    N_AXONTYPES,
-    N_SGI,
-    N_SP,
-    N_BV,
-    N_PARAMS
-};
+
 //enum TNReadMode{
 //    CONN , //Syn. Connectivity
 //    AXTP, //Axon Types
@@ -32,18 +20,7 @@ enum modelReadMode{
 //    OUT //out of array data
 //};
 
-struct tnCSV{
-    unsigned int fldNumber;
-    enum modelReadMode rm;
-    long coreID;
-    long localID;
-    char connectivity[AXONS_IN_CORE];
-    char axontypes[AXONS_IN_CORE];
-    char sgi[NUM_NEURON_WEIGHTS];
-    char sp[NUM_NEURON_WEIGHTS];
-    char bv[NUM_NEURON_WEIGHTS];
-    char params[128];
-};
+
 static enum modelReadMode fileReadState = START_READ;
 //static enum TNReadMode tnReadState = CONN;
 

@@ -20,6 +20,37 @@
 #define SAVE_ALL_NEURON_PARAMS 1
 
 
+enum modelReadMode{
+    START_READ,
+    MODEL_HDR,
+    N_TYPE,
+    N_CORE,
+    N_LOCAL,
+    N_CONNECTIVITY,
+    N_AXONTYPES,
+    N_SGI,
+    N_SP,
+    N_BV,
+    N_PARAMS
+};
+/**
+ * struct tnCSV stores the values read in via the multi-file system.
+ */
+struct tnCSV{
+    unsigned int fldNumber;
+    enum modelReadMode rm;
+    long coreID;
+    long localID;
+    char connectivity[AXONS_IN_CORE];
+    char axontypes[AXONS_IN_CORE];
+    char sgi[NUM_NEURON_WEIGHTS];
+    char sp[NUM_NEURON_WEIGHTS];
+    char bv[NUM_NEURON_WEIGHTS];
+    char params[128];
+};
+
+
+
 void initOutFiles();
 void closeFiles();
 
@@ -34,6 +65,14 @@ void initDataStructures(int simSize);
 
 void closeOutputFiles();
 void saveIndNeuron(void *n);
+
+/** New NeMo API: Neurons are read in via multiple files, and the data is stored
+ * in a struct. The struct can be one of the types defined in this file.
+ * @param paramArray
+ * @param core
+ * @param local
+ * @return
+ */
 
 int getNeuronParameters(double *paramArray, int core, int local);
 /**
