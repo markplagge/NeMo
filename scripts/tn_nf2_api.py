@@ -114,7 +114,7 @@ class ConfigFile(object):
 	nsCores = 1024
 	neuronsPerCore = 256
 	it = 0
-	destination = 'nemo_model.mdc'
+	destination = 'nemo_model.nfg1'
 	fileDat = ""
 
 	def __init__(self, destFileName, nc=1024, npc=256, nw=4):
@@ -139,6 +139,24 @@ class ConfigFile(object):
 	def addNeuron(self,neuron):
 		self.fileDat = f"{self.fileDat} \n" \
 					   f"{neuron.toNeMoStr()}"
+
+
+
+class Spike(object):
+
+	time = 0.0
+	destCore = 0
+	destAxon = 0
+
+	def __init__(self, time, destCore, destAxon):
+		self.time = time
+		self.destcore = destCore
+		self.destAxon = destAxon
+
+	def toCSV(self):
+		return f"{self.time},{self.destCore},{self.destAxon}\n"
+
+
 
 
 if __name__ == '__main__':
