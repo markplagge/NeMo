@@ -370,7 +370,7 @@ void TNReceiveReverseMessage(tn_neuron_state* st, messageData* M, tw_lp* lp,
                              tw_bf* bf) {
   if (M->eventType == NEURON_HEARTBEAT) {
     // reverse heartbeat message
-    // st->SOPSCount--;
+    st->SOPSCount--;
   }
   if (bf->c0) {  // c0 flags firing state
                  // reverse computation of fire and reset functions here.

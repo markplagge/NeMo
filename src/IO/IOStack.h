@@ -36,6 +36,24 @@ void closeOutputFiles();
 void saveIndNeuron(void *n);
 
 int getNeuronParameters(double *paramArray, int core, int local);
+/**
+ * initNeuronFromCSV - configures a neuron using the loaded CSV data.
+ * Neurons must be passed in from the initialization function, already allocated.
+ * If the neuron is not found in the CSV file, the neuron state is not changed
+ * and the function returns -1.
+ * @param core The core of the neuron.
+ * @param local The local (corewise) ID of the neuron.
+ * @param neuron The neuron state
+ * @param neurohnConstructor a pointer to the neuron constructor function. If null, the state is directly loaded
+ * @param neuronType the neuron type. TrueNorth neurons are 'T'.
+ */
+int initNeuronFromCSV(int core, int local, void * neuron, void * neuronConstructor, char neuronType);
+/**
+ * Prepares the model file for loadiing. Loads the file into memory and stores it in a list.
+ * @param filename the model filename, must be a NeMo CSV
+ * @param maxNeurons The maximum number of neurons in the model file. Is an upper bound on the list size. If set to -1,
+ * will be estimated from the number of lines in the file.
+ */
 void initModelInput(char *filename, int maxNeurons);
 
 #endif //NEMO_IOSTACK_H
