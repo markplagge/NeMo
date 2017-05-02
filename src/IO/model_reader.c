@@ -6,8 +6,10 @@
 #include <search.h>
 #include "../lib/simclist.h"
 #include "../neuro/tn_neuron.h"
-
 #include "../lib/csv.h"
+#include "../lib/lua.h"
+#include "../lib/lualib.h"
+#include "../lib/lauxlib.h"
 
 
 //enum TNReadMode{

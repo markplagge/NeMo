@@ -107,7 +107,7 @@ class TN(object):
 
 		fn = ",".join([self.nf2GS(pn) for pn in full])
 
-		return  f"{name} = {'{'} {fn} {'}'} \n"
+		return  f"{name} = {'{'} {fn} {'}'} "
 
 
 class ConfigFile(object):
@@ -116,7 +116,7 @@ class ConfigFile(object):
 	neuronsPerCore = 256
 	it = 0
 	destination = 'nemo_model.nfg1'
-	fileDat = ""
+	fileDat = []
 
 	def __init__(self, destFileName, nc=1024, npc=256, nw=4):
 		if ".nfg1" not in destFileName:
@@ -127,19 +127,22 @@ class ConfigFile(object):
 		self.destination = destFileName
 		self.openFile()
 		self.header= f"cores = {nc} \n neuronsPerCore = {npc} \n" \
-					 f"neuron_weights = {nw}"
+					 f"neuron_weights = {nw} \n "\
+					 "neurons = { "
 		self.fhandle.write(self.header)
 
 	def openFile(self):
 		self.fhandle = open(self.destination,mode='w')
 
 	def closeFile(self):
-		self.fhandle.write(self.fileDat)
+		self.fhandle.write(",\n".join(self.fileDat))
+		self.fhandle.write(" }")
 		self.fhandle.close()
 
 	def addNeuron(self,neuron):
-		self.fileDat = f"{self.fileDat} \n" \
-					   f"{neuron.toNeMoStr()}"
+		self.fileDat.append(f"{neuron.toNeMoStr()}")
+
+
 
 
 
