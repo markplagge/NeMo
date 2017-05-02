@@ -359,7 +359,8 @@ def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
 
 	neuronTemplates = ntmp
 	nc = 0
-	cfgFile = ConfigFile('nemo_model.nfg1')
+
+	cfgFile = ConfigFile(modelFN)
 
 	print("Generating CSV...")
 	data = []
@@ -431,15 +432,16 @@ def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
 				neuron = createNeuronfromNeuronTemplate(neuronTemplates[coreNeuronTypes[i]], coreID, i,
 														connectivity,
 														tl)
-			else:
-				neuron = TN(256, 4)
-			neuron.destCore = destCores[i]
-			neuron.destLocal = destAxons[i]
-			neuron.signalDelay = destDelays[i]
-			# d = d + neuron.to_csv()
-			if neuron.destCore < 0 or neuron.destLocal < 0:
-				neuron.selfFiring = 1
-			nrs.append(neuron)
+				neuron.destCore = destCores[i]
+				neuron.destLocal = destAxons[i]
+				neuron.signalDelay = destDelays[i]
+				# d = d + neuron.to_csv()
+				if neuron.destCore < 0 or neuron.destLocal < 0:
+					neuron.selfFiring = 1
+				nrs.append(neuron)
+#			else:
+#				neuron = TN(256, 4)
+
 
 		# for i in nrs:
 		# ic = i.to_csv()

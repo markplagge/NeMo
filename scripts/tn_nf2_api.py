@@ -102,7 +102,7 @@ class TN(object):
 					"outputNeuron",
 					"selfFiring"
 					]
-		name = f"{self.type}{self.coreID}{self.localID}"
+		name = f"{self.type}_{self.coreID}_{self.localID}"
 		full = hdr + arrs + singles
 
 		fn = ",".join([self.nf2GS(pn) for pn in full])

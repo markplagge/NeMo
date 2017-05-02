@@ -8,15 +8,14 @@ class nOpts:
 		self.csvFN = csvFN
 
 
-@click.group(chain=True)
+@click.command()
 @click.option('--modelname', default='nemo_', help="The file prefix used for this model/spike file parse run")
-@click.option('--cores', default=1024, help="The number of NS cores to simulate NOT IMPLEMENTED")
+#@click.option('--cores', default=1024, help="The number of NS cores to simulate NOT IMPLEMENTED")
 @click.option('--jmodel', help="The TN JSON file to read")
 @click.option('--jspike', help="The TN JSON spike file to read")
-@click.pass_context
-def cli(ctx, modelname,cores,jmodel,jspike):
-	ctx.obj = nOpts(modelname)
-	ctx.cores = cores
+def cli(modelname,jmodel,jspike):
+	ctx  = nOpts(modelname)
+
 	ctx.jspike = jspike
 	ctx.jmodel = jmodel
 	readJSON(ctx)
@@ -41,6 +40,7 @@ def readJSON(ctx):
 
 
 
-
+if __name__ == '__main__':
+	cli()
 
 
