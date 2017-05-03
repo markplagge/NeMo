@@ -228,6 +228,16 @@ def createNeuronTemplateFromEntry(line, nSynapses=256, weights=4):
 	return neuron
 
 
+def convertNeuronName(neuronName):
+	"""
+	Converts the neuron type name to an integer. The input is in hex. The actual naming doesn't particularly matter in
+	this case so this function makes any changes consistent
+	:param neuronName: neuron type name of format: hex string
+	:return: integer representing neuron type
+	"""
+	return int(neuronName,16)
+
+
 def getNeuronModels(neuronTypes, nsynapses=256, nweights=4):
 	"""
 	Generates a dictionary of predefined neuron types (per the neuron templates desc. in the TN documentation)
@@ -240,7 +250,7 @@ def getNeuronModels(neuronTypes, nsynapses=256, nweights=4):
 	for name, vals in zip(neuronTypes.keys(), neuronTypes.values()):
 		name = name.replace("N", "")
 		neuronTemplates[name] = createNeuronTemplateFromEntry(vals, nsynapses, nweights)
-		neuronTemplates[name].nnid = int(name)
+		neuronTemplates[name].nnid = convertNeuronName(name)
 	return neuronTemplates
 
 
@@ -292,7 +302,9 @@ def readTN(filename):
 
 	for nk in neuronTypes.keys():
 		n_num = nk.replace('N', '')
-		neuronTypes[nk]['nid'] = int(n_num)
+		n_num = convertNeuronName(n_num)
+
+		neuronTypes[nk]['nid'] = n_num
 
 	crossbarDat = parseCrossbar(crossbarDat, mdl['crossbarSize'])
 	return (mdl, neuronTypes, crossbarDat, coreDat)
@@ -439,8 +451,8 @@ def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
 				if neuron.destCore < 0 or neuron.destLocal < 0:
 					neuron.selfFiring = 1
 				nrs.append(neuron)
-#			else:
-#				neuron = TN(256, 4)
+			#			else:
+			#				neuron = TN(256, 4)
 
 
 		# for i in nrs:
@@ -487,7 +499,7 @@ def readAndSaveSpikeFile(filename, type="json", saveFile="spikes.csv"):
 if __name__ == '__main__':
 	print("Testing read TN Json")
 	print("Example 1 JSON file loading")
-	ex1_model = createNeMoCFGFromJson('./test/ex1.json')
+	ex1_model = createNeMoCFGFromJson('./test/mnist.json','neil_mnist_nemo_model.nfg1')
 	ex1_model.closeFile()
 	print("Example 1 JSON Spike load")
 	readAndSaveSpikeFile('./test/ex1_spikes.sfti', saveFile='nemo_spike.csv')
