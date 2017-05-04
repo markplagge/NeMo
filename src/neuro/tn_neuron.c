@@ -906,6 +906,15 @@ void TN_final(tn_neuron_state* s, tw_lp* lp) {
   }
 }
 
+
+void TN_neuron_event_trace(messageData *m, tw_lp *lp, char *buffer, int *collect_flag)
+{
+     id_type sender = (id_type) m->localID;
+     memcpy(buffer, &sender, sizeof(id_type));
+}
+
+
+
 inline tn_neuron_state* TN_convert(void* lpstate) {
   return (tn_neuron_state*)lpstate;
 }
