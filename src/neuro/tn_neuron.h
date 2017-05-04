@@ -7,6 +7,7 @@
 
 #include <math.h>
 #include <assert.h>
+#include <search.h>
 #include "../IO/IOStack.h"
 #include "../globals.h"
 #include "../mapping.h"
@@ -62,6 +63,14 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp);
  */
 void TN_init(tn_neuron_state *s, tw_lp *lp);
 
+
+
+/**
+ * TN_pre_run cleans up the input files after an initialization/
+ * @param s
+ * @param me
+ */
+void TN_pre_run(tn_neuron_state *s, tw_lp *me);
 /**
  * @brief      The TN neuron final function
  *

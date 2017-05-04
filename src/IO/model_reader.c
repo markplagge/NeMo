@@ -22,12 +22,14 @@
  * L -> Global (to the model def) state of the lua file
  */
 lua_State *L;
+lua_State *LT;
 
 //!! Global LUA helper function names.
 char* loadCFGfn = "loadFile";
 char* getNParfn = "getNeuronParam";
 char* nExistfn = "doesNeuronExist";
-char* luaUtilFile = "./model_read.lua";
+char* luaUtilFile = "model_read.lua";
+char* tnLuaLU = "tn_types.lua";
 
 long curCoreID, curLocalID;
 char * curType;
@@ -78,6 +80,22 @@ void initModelInput(unsigned long maxNeurons){
 		tw_error(TW_LOC,"MDL_LOAD", "Unable to load helper file %s \n", luaUtilFile );
 
 	}
+	LT = luaL_newstate();
+	luaL_openlibs(LT);
+	s = luaL_loadfile(LT, tnLuaLU);
+
+	if(!s)
+		s = lua_pcall(LT, 0, LUA_MULTRET, 0);
+
+	//show any errors
+	if(s){
+		printf("Error: %s \n", lua_tostring(L, -1));
+		printf("fn: %s \n",tnLuaLU);
+		tw_error(TW_LOC,"MDL_LOAD", "Unable to load LUA-> Config file %s \n", tnLuaLU );
+
+		lua_pop(L, 1);
+	}
+
 }
 
 void lPushParam(char* paramName){
@@ -140,7 +158,7 @@ int lookupAndPrimeNeuron(long coreID, long localID, char * nt){
 
 	if (neuronExists()){
 		if (DBG_MODEL_MSGS){
-			printf("NeuronExists - %li_%s_%li \n", coreID, localID, nt);
+			printf("NeuronExists - %li_%s_%li \n", coreID, nt, localID);
 		}
 		return 0;
 	}else{
@@ -151,9 +169,10 @@ int lookupAndPrimeNeuron(long coreID, long localID, char * nt){
 	return -1;
 }
 
-long lGetAndPushParam(char * paramName, int isArray, long * arrayParam){
+long lGetAndPushParam(char *paramName, int isArray, long *arrayParam) {
 	lPushParam(paramName);
-	return lGetParam(isArray,arrayParam);
+	return lGetParam(isArray, arrayParam);
+
 }
 
 //enum TNReadMode{
@@ -170,6 +189,12 @@ long lGetAndPushParam(char * paramName, int isArray, long * arrayParam){
 static enum modelReadMode fileReadState = START_READ;
 //static enum TNReadMode tnReadState = CONN;
 
+char* luT(char * nemoName){
+	lua_getglobal(LT, nemoName);
+	char * vname =(char *) lua_tostring(LT,-1);
+	lua_pop(LT, 1);
+	return vname;
 
+}
 
 

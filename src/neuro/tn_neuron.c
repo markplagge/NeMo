@@ -875,33 +875,102 @@ void parseCSVCreateTN(tn_neuron_state *st, csvNeuron raw){
 	
 
 }
+#define LGT(V) ( lGetAndPushParam( luT( (V) ) , 0, NULL ) )
 
+void TNPopulateFromFile(tn_neuron_state *st, tw_lp* lp){
+	// Set up neuron - first non array params:
+	long outputGID;
+	long outputCore;
+	long outputLID;
+	id_type core = getCoreFromGID(lp->gid);
+	id_type nid = getNeuronLocalFromGID(lp->gid);
+	
+	
+	outputCore = lGetAndPushParam("destCore", 0, NULL);
+	outputLID = lGetAndPushParam("destLocal", 0, NULL);
+	if (outputCore < 0){
+		st->outputGID = 0;
+		st->isOutputNeuron = true;
+	} else{
+		outputGID = getAxonGlobal(outputCore, outputLID);
+		st->outputGID = outputGID;
+
+	}
+	char * v1 = luT("lambda");
+
+	short lambda = 				LGT("lambda");
+	short resetMode = 			LGT("resetMode");
+	volt_type resetVoltage = 	LGT("resetVoltage");
+	short sigmaVR = 			LGT("sigmaVR");
+	short encodedResetVoltage = LGT("encodedResetVoltage");
+	int sigma_l = 				LGT("sigma_l");
+	bool isOutputNeuron = 		LGT("isOutputNeuron");
+	bool epsilon = 				LGT("epsilon");
+	bool c = 					LGT("c");
+	bool kappa = 				LGT("kappa");
+	bool isActiveNeuron = 		LGT("isActiveNeuron");
+
+
+	bool synapticConnectivity[NEURONS_IN_CORE];
+	short G_i[NEURONS_IN_CORE];
+	short sigma[NUM_NEURON_WEIGHTS];
+	short S[NUM_NEURON_WEIGHTS];
+	bool b[NUM_NEURON_WEIGHTS];
+
+
+	long vars[NEURONS_IN_CORE];
+	long validation = 0;
+
+
+	validation = lGetAndPushParam(luT("synapticConnectivity"), 1, &vars);
+	if (validation > 0){
+		for(int i = 0; i < validation; i ++){
+			synapticConnectivity[i] = (bool) vars[i];
+		}
+	}
+	printf("Validation num %li \n", validation);
+
+//
+//	tn_create_neuron_encoded_rv(core, nid,)
+//	id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
+//	short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
+//	bool epsilon, short sigma_l, short lambda, bool c, uint32_t alpha,
+//			uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa,
+//	tn_neuron_state* n, int signalDelay, uint64_t destGlobalID,
+//	int destAxonID)
+
+
+
+
+}
 /** @} */
 /** attempts to find this neuron's def. from the file input.
  Files are assumed to be inited during main().
+
  
  */
-void TN_Create_From_File(tn_neuron_state* s, tw_lp* lp){
+void TNCreateFromFile(tn_neuron_state* s, tw_lp* lp){
+
 	
-//	//first, get our GID.
-//	id_type core = getCoreFromGID(lp->gid);
-//	id_type nid = getNeuronLocalFromGID(lp->gid);
-//
-//	//Next, get the fields from the neuron txt:
-//	struct CsvNeuron rawNeuron = getNeuronData(core, nid);
-//	if (rawNeuron.foundNeuron){
-//		//found the neuron, set up state
-//		parseCSVCreateTN(s, rawNeuron);
-//		s->isActiveNeuron = true;
-//	} else {
-//		//no neuron, so set up a disconnected neuron.
-//		s->isActiveNeuron = false;
-//		s->myCoreID = core;
-//		s->myLocalID = nid;
-//	}
-//
-//
-//
+	//first, get our Neuron IDs:
+	id_type core = getCoreFromGID(lp->gid);
+	id_type nid = getNeuronLocalFromGID(lp->gid);
+	s->myCoreID = core;
+	s->myLocalID = nid;
+	char * nt = "TN";
+	int nNotFound = lookupAndPrimeNeuron(core,nid,nt);
+	if(DBG_MODEL_MSGS){
+		printf("Found status: %i \n ", nNotFound);
+	}
+	
+
+	if(nNotFound) {
+		s->isActiveNeuron = false;
+
+	}else {
+		TNPopulateFromFile(s, lp);
+	}
+
 
 	
 }
@@ -921,7 +990,7 @@ void TN_init(tn_neuron_state* s, tw_lp* lp) {
     announced = true;
   }
 	if(FILE_IN){
-		TN_Create_From_File(s, lp);
+		TNCreateFromFile(s, lp);
 
 	}else{
 		//TN_create_simple_neuron(s, lp);

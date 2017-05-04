@@ -32,5 +32,6 @@ set_target_properties( NeMo
 
 
 configure_file("demo.csv" "${CMAKE_BINARY_DIR}/bin/demo.csv" COPYONLY)
-
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/src/IO/model_read.lua ${CMAKE_CURRENT_BINARY_DIR}/bin/model_read.lua COPYONLY)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/src/IO/tn_types.lua ${CMAKE_CURRENT_BINARY_DIR}/bin/tn_types.lua COPYONLY)
 #TODO: Add targets to the build-tree export set

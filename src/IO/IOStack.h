@@ -110,7 +110,7 @@ int populateNeuron(long coreID, long localID, void * neuron, char nt[2], char **
  * @param coreID
  * @param localID
  * @param nt NeuronType: can be "TN"
- * @return
+ * @return -1 if not found, 0 if found.
  */
 int lookupAndPrimeNeuron(long coreID, long localID, char * nt);
 
@@ -132,7 +132,14 @@ void lPushParam(char* paramName);
 
 long lGetParam(int isArray, long * arrayParam);
 
-
+/**
+ * Returns a specific global model configuration parameter.
+ * Currently, (for optimization reasons), these are not really used. Most global configuration
+ * settings are handled at build time.
+ * @param modelParamName
+ * @return
+ */
+long getModelParam(char* modelParamName);
 
 /**
  * a helper function that calls lPushParam then lGetParam.
@@ -141,7 +148,7 @@ long lGetParam(int isArray, long * arrayParam);
  * @param arrayParam
  * @return If no neuron is found -1 - otherwise it returns the value, or the length of values found in the array.
  */
-long lGetAndPushParam(char * paramName, int isArray, long * arrayParam);
+long lGetAndPushParam(char *paramName, int isArray, long *arrayParam);
 
 
 
@@ -152,6 +159,21 @@ long lGetAndPushParam(char * paramName, int isArray, long * arrayParam);
  * will be estimated from the number of lines in the file.
  */
 void initModelInput(unsigned long maxNeurons);
+
+/**
+ * uses a lua table to lookup the nemo config variable name from a TN Name
+ * @param nemoName
+ * @return
+ */
+char* luT( char * nemoName);
+
+
+
+/**
+ * closeModelInput closes the LUA parser after the model has been loaded.
+ * Do this once the neurons have be initialized.
+ */
+void closeModelInput();
 
 /** @} */
 

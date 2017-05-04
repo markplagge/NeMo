@@ -63,6 +63,8 @@ float: atof
  *Global Macros */
 /**@{ */
 
+#define GET_VNAME(Variable) (#Variable)
+
 ///////FILE DEBUG HELPERS /////////
 #ifdef NET_IO_DEBUG
 
