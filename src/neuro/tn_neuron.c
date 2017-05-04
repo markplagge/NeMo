@@ -877,6 +877,35 @@ void parseCSVCreateTN(tn_neuron_state *st, csvNeuron raw){
 }
 #define LGT(V) ( lGetAndPushParam( luT( (V) ) , 0, NULL ) )
 
+int getArray(char * varName, void * array, char type){
+	long vars[NEURONS_IN_CORE];
+	long validation = lGetAndPushParam(luT(varName), 1, &vars);
+
+	void * ta;
+
+	if (validation > 0) {
+		for (int i = 0; i < validation; i ++){
+
+			switch (type) {
+
+				case 'S':
+					((short *)array)[i] = vars[i];
+					break;
+				case 'V':
+					((volt_type *) array)[i] = vars[i];
+					break;
+				case 'B':
+					((bool * ) array)[i] = vars[i];
+					break;
+			}
+			return validation;
+
+		}
+	}
+	return -1;
+
+}
+#define GA(N,T) (getArray( (#N) , &(N), (T) ))
 void TNPopulateFromFile(tn_neuron_state *st, tw_lp* lp){
 	// Set up neuron - first non array params:
 	long outputGID;
@@ -891,6 +920,7 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp* lp){
 	if (outputCore < 0){
 		st->outputGID = 0;
 		st->isOutputNeuron = true;
+
 	} else{
 		outputGID = getAxonGlobal(outputCore, outputLID);
 		st->outputGID = outputGID;
@@ -910,9 +940,16 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp* lp){
 	bool kappa = 				LGT("kappa");
 	bool isActiveNeuron = 		LGT("isActiveNeuron");
 
+	volt_type alpha = lGetAndPushParam("alpha", 0, NULL);
+	volt_type beta = lGetAndPushParam("beta", 0, NULL);
+
+	short TM = lGetAndPushParam("TM", 0, NULL);
+	short VR = lGetAndPushParam("VR", 0, NULL);
+	short gamma = lGetAndPushParam("gamma", 0, NULL);
+
 
 	bool synapticConnectivity[NEURONS_IN_CORE];
-	short G_i[NEURONS_IN_CORE];
+	short axonTypes[NEURONS_IN_CORE];
 	short sigma[NUM_NEURON_WEIGHTS];
 	short S[NUM_NEURON_WEIGHTS];
 	bool b[NUM_NEURON_WEIGHTS];
@@ -921,14 +958,34 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp* lp){
 	long vars[NEURONS_IN_CORE];
 	long validation = 0;
 
+	getArray("synapticConnectivity", &synapticConnectivity, 'B');
+	getArray("sigma", &sigma, 'S');
+	getArray("S", &S, 'S');
+	getArray("b", &b, 'B');
+	getArray("axonTypes", &axonTypes, 'S');
 
-	validation = lGetAndPushParam(luT("synapticConnectivity"), 1, &vars);
-	if (validation > 0){
-		for(int i = 0; i < validation; i ++){
-			synapticConnectivity[i] = (bool) vars[i];
-		}
-	}
+	tn_create_neuron_encoded_rv(core,nid, &synapticConnectivity,&axonTypes, &sigma, &S, &b,
+	epsilon, sigma_l, lambda, c, alpha, beta,TM,VR,sigmaVR,gamma, kappa, st, 0, outputGID, outputLID);
+
+
+
+//	validation = lGetAndPushParam(luT("synapticConnectivity"), 1, &vars);
+//	if (validation > 0){
+//		for(int i = 0; i < validation; i ++){
+//			synapticConnectivity[i] = (bool) vars[i];
+//
+//		}
+//	}
+//	validation = lGetAndPushParam(luT("axonTypes"), 1, &vars);
+//	if (validation > 0){
+//		for(int i = 0; i < valdidation; i ++){
+//			axontypes[i] = (short) vars[i];
+//		}
+//	}
+
+
 	printf("Validation num %li \n", validation);
+
 
 //
 //	tn_create_neuron_encoded_rv(core, nid,)
@@ -1085,6 +1142,8 @@ void prhdr(bool* display, char* hdr) {
     *display = true;
   }
 }
+
+
 void TN_final(tn_neuron_state *s, tw_lp *lp) {
 #ifdef NET_IO_DEBUG
 	closeTestFile();
