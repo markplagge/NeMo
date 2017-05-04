@@ -346,12 +346,13 @@ def populateArray(inputArr, lines):
 		itms = getArrayFromMulti(typeItem)
 		for itm in itms:
 			inputArr[pos] = itm
-			pos += 1
 			if pos > 255:
 				print("Err - line item {} pushed past the end of the array from {}".format(itm, lines))
 				# raise IndexError("Error OOB from lineitem")
 
 				return inputArr
+			pos += 1
+
 
 	return inputArr
 
