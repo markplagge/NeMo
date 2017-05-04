@@ -6,7 +6,7 @@
 #include "nemo_main.h"
 #include "./IO/IOStack.h"
 
-/** \addtogroup Globals 
+/** \addtogroup Globals
  * @{  */
 
 size_type CORES_IN_SIM = 16;
@@ -40,7 +40,7 @@ int N_FIRE_LINE_SIZE = 512;
 /**
  * @FILE_OUT - is set to true if NeMo is saving output files
  * @FILE_IN - is set to true if NeMo is reading a file.
- * 
+ *
  */
 bool FILE_OUT = false;
 bool FILE_IN = false;
@@ -99,13 +99,13 @@ tw_lptype model_lps[] = {
         (map_f)getPEFromGID,
         sizeof(axonState) },
     {
-        (init_f)synapse_init, 
+        (init_f)synapse_init,
         (pre_run_f)NULL,
         (event_f)synapse_event,
         (revent_f)synapse_reverse,
         (commit_f) NULL,
         (final_f)NULL,
-        (map_f)getPEFromGID, 
+        (map_f)getPEFromGID,
         sizeof(synapseState)
     },
     {
@@ -115,11 +115,23 @@ tw_lptype model_lps[] = {
         (revent_f)TN_reverse_event,
         (commit_f) TN_commit	,
         (final_f)TN_final,
-        (map_f)getPEFromGID, 
+        (map_f)getPEFromGID,
         sizeof(tn_neuron_state)
     }
     ,
         { 0 } };
+
+st_trace_type nemo_trace_types[] = {
+     { 0 },
+     { 0 },
+     {
+          (rbev_trace_f) NULL,
+          0,
+          (ev_trace_f) TN_neuron_event_trace,
+          sizeof(id_type)
+     },
+     { 0 }
+};
 
 /**
  * @brief      Displays NeMo's initial run size configuration.
@@ -174,21 +186,21 @@ void testNeuronOut(){
 
 /**
  * @brief      Initializes NeMo
- * 
+ *
  * First, this function checks for potential file IO, and creates file handles for use.
- * 
- * Based on the file_in option, the function then sets the neuron, axon, and synapse 
+ *
+ * Based on the file_in option, the function then sets the neuron, axon, and synapse
  * function pointers to the proper values. Default is the IBM TrueNorth neuron model.
  * If NeMo is reading a file, then we set the size of the sim based on the model config file.
- * 
+ *
  * The rest of this function manages ROSS initialization and setup. When done,
- * 
+ *
  */
 void init_nemo(){
 
 
 	VALIDATION = PHAS_VAL || TONIC_BURST_VAL || PHASIC_BURST_VAL;
-	FILE_OUT = SAVE_SPIKE_EVTS || SAVE_NEURON_OUTS || 
+	FILE_OUT = SAVE_SPIKE_EVTS || SAVE_NEURON_OUTS ||
 				SAVE_MEMBRANE_POTS || VALIDATION;
 
 	FILE_IN = !IS_RAND_NETWORK;
@@ -206,26 +218,27 @@ void init_nemo(){
 		//Init File Input Handles
 		//reconfigure cores_in_sim and neurons_in_sim based on loaded file.
 		//override default LP function pointers
-		
+
 	}
 
-	
+
 	AXONS_IN_CORE = NEURONS_IN_CORE;
 	SYNAPSES_IN_CORE = 1;//(NEURONS_IN_CORE * AXONS_IN_CORE);
-    
+
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
 	SIM_SIZE = CORE_SIZE * CORES_IN_SIM;
 
 	g_tw_nlp = SIM_SIZE / tw_nnodes();
 	g_tw_lookahead = 0.001;
     g_tw_lp_types = model_lps;
+    g_st_trace_types = nemo_trace_types;
     g_tw_lp_typemap = lpTypeMapper;
 
 
 
 	///EVENTS PER PE SETTING
 	g_tw_events_per_pe = NEURONS_IN_CORE * AXONS_IN_CORE ; //magic number
-                               
+
     LPS_PER_PE = g_tw_nlp / g_tw_npe;
     //Pre-Run Quck Info
 }
@@ -236,7 +249,7 @@ unsigned char mapTests(){
 //    //
 //    int nic =512; //(int) NEURONS_IN_CORE;
 //    int lps = 512 + 512 + 1;// (int) LPS_PER_PE;
-//    tw_lpid *lpv; 
+//    tw_lpid *lpv;
 //    lpv = testCreateLPID(nic, lps);
 //
 //    //should be 1025 elements in this array:
@@ -244,7 +257,7 @@ unsigned char mapTests(){
 //    for(; i < 512; i ++){  //test to ensure that these are axons
 //        if (lpv[i] != AXON) {
 //            result = result | INVALID_AXON;
-//            
+//
 //        }
 //    }
 //    i ++;
@@ -264,7 +277,7 @@ unsigned char mapTests(){
 //        if (!(i % 256)){
 //            printf("\n");
 //        }
-//        
+//
 //    }
 //    return result;
     return '0';
@@ -280,7 +293,7 @@ unsigned char mapTests(){
  * @param[in]  argc  The argc
  * @param      argv  The argv
  *
- 
+
  */
 int main(int argc, char*argv[]) {
 	tw_opt_add(app_opt);
@@ -290,7 +303,7 @@ int main(int argc, char*argv[]) {
 if(nonC11 == 1)
 	printf("Non C11 compliant compiler detected.\n");
 
-	
+
     if (testingMode == 1 ) {
         unsigned char mapResult = 0;
         mapResult = mapResult | mapTests();
@@ -317,15 +330,15 @@ if(nonC11 == 1)
     }
     //neuron fire output testing function.
 	//testNeuronOut();
-	
+
     tw_run();
-	
+
 	if(FILE_OUT)
 		closeFiles();
 	if(FILE_IN)
 		printf("File input set but not implemented yet.");
-	
+
     tw_end();
-	
+
 
 }

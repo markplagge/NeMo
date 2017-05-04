@@ -152,6 +152,10 @@ void TN_init(tn_neuron_state *s, tw_lp *lp);
  */
 void TN_final(tn_neuron_state *s, tw_lp *lp);
 
+
+void TN_neuron_event_trace(messageData *m, tw_lp *lp, char *buffer, int *collect_flag);
+
+
 /**
  * @brief	This takes a void pointer and returns this neuron's struct.
  * This is used for managing super synapse direct communication functionality.
