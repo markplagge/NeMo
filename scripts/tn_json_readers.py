@@ -321,10 +321,10 @@ def getArrayFromMulti(jItem):
 
 		if jItem.count(':') == 1:
 			start = int(vals[0])
-			end = int(vals[1]) + start + -1
+			end = int(vals[1])+1
 		else:
 			start = int(vals[0])
-			end = int(vals[2]) + start + -1
+			end = int(vals[2])+1
 			increment = int(vals[1])
 
 		rng = np.arange(start, end, increment, dtype=np.int32)
@@ -333,7 +333,7 @@ def getArrayFromMulti(jItem):
 		sp = jItem.split('x')
 		num = int(sp[1])
 		val = int(sp[0])
-		its = [val] * (num - 1)
+		its = [val] * (num)
 		return np.array(its, dtype=np.int32)
 	else:
 		return [int(jItem)]
