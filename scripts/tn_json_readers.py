@@ -373,7 +373,7 @@ def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
 	neuronTemplates = ntmp
 	nc = 0
 
-	cfgFile = ConfigFile(modelFN)
+	cfgFile = ConfigFile(modelFN,nc = len(cores))
 
 	print("Generating CSV...")
 	data = []
