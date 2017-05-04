@@ -948,7 +948,7 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp* lp){
 	short gamma = lGetAndPushParam("gamma", 0, NULL);
 
 
-	bool synapticConnectivity[NEURONS_IN_CORE];
+	short synapticConnectivity[NEURONS_IN_CORE];
 	short axonTypes[NEURONS_IN_CORE];
 	short sigma[NUM_NEURON_WEIGHTS];
 	short S[NUM_NEURON_WEIGHTS];
