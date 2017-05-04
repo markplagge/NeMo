@@ -5,13 +5,15 @@
 
 #ifndef nemo_tests_h
 #define nemo_tests_h
-
+#include "../neuro/tn_neuron.h"
+#include "../globals.h"
 #include "../neuro/synapse.h"
 #include "../neuro/axon.h"
-#include "../neuro/tn_neuron.h"
+
 #include "../mapping.h"
 #include "ross.h"
 #include <stdbool.h>
+#include "testIO.h"
 
 /**
  * @file nemo_tests.h
@@ -31,7 +33,7 @@
  * @param[in]  neuronsPerCore  The neurons per core
  * @param[in]  coreSize        The core size
  *
- * @return     an array of tw_lpid's 
+ * @return     an array of tw_lpid's
  * 
  */
 tw_lpid * testCreateLPID(int neuronsPerCore, int totalLPs);
