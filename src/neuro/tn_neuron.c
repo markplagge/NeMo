@@ -883,25 +883,25 @@ void parseCSVCreateTN(tn_neuron_state *st, csvNeuron raw){
  */
 void TN_Create_From_File(tn_neuron_state* s, tw_lp* lp){
 	
-	//first, get our GID.
-	id_type core = getCoreFromGID(lp->gid);
-	id_type nid = getNeuronLocalFromGID(lp->gid);
-	
-	//Next, get the fields from the neuron txt:
-	struct CsvNeuron rawNeuron = getNeuronData(core, nid);
-	if (rawNeuron.foundNeuron){
-		//found the neuron, set up state
-		parseCSVCreateTN(s, rawNeuron);
-		s->isActiveNeuron = true;
-	} else {
-		//no neuron, so set up a disconnected neuron.
-		s->isActiveNeuron = false;
-		s->myCoreID = core;
-		s->myLocalID = nid;
-	}
-	
-	
-	
+//	//first, get our GID.
+//	id_type core = getCoreFromGID(lp->gid);
+//	id_type nid = getNeuronLocalFromGID(lp->gid);
+//
+//	//Next, get the fields from the neuron txt:
+//	struct CsvNeuron rawNeuron = getNeuronData(core, nid);
+//	if (rawNeuron.foundNeuron){
+//		//found the neuron, set up state
+//		parseCSVCreateTN(s, rawNeuron);
+//		s->isActiveNeuron = true;
+//	} else {
+//		//no neuron, so set up a disconnected neuron.
+//		s->isActiveNeuron = false;
+//		s->myCoreID = core;
+//		s->myLocalID = nid;
+//	}
+//
+//
+//
 
 	
 }

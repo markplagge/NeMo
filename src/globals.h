@@ -413,8 +413,9 @@ EXT bool FILE_OUT;
 EXT bool FILE_IN;
 
 
-EXT char * NETWORK_FILE_NAME;
-EXT char * SPIKE_FILE_NAME;
+EXT char * NETWORK_CFG_FN;
+EXT char * SPIKE_IN_FN;
+EXT char * NEURON_FIRE_R_FN	;
 
 
 /* Global Timing Variables */
@@ -450,10 +451,4 @@ EXT int N_FIRE_LINE_SIZE;
  * These variables are declared/init in input.c and
  * output.c @{*/
 
-extern char * neuronFireFileName;
-extern char * networkFileName;
-extern char * spikeFileName;
-
-extern FILE * networkFile;
-extern FILE * spikeFile;
 /** @} */

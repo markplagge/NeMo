@@ -4,10 +4,11 @@
 
 #ifndef SUPERNEMO_TESTIO_H
 #define SUPERNEMO_TESTIO_H
-#include "../IO/input.h"
+
 #include "../IO/output.h"
 #include "../globals.h"
 #include "../neuro/tn_neuron.h"
+#include "../IO/IOStack.h"
 
 int testInitInput();
 int testCloseInput();

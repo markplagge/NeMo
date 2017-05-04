@@ -20,7 +20,7 @@ int N_FIRE_BUFF_SIZE = 32;
 //Names of output files
 char * neuronFireFinalFN;
 char * neuronRankFN;
-//char * neuronFireFileName = "fire_record"; <-- Global variable sets the name of the fire record.
+//char * NEURON_FIRE_R_FN = "fire_record"; <-- Global variable sets the name of the fire record.
 
 //Global Memory Pool Position Counters
 int neuronFirePoolPos = 0;
@@ -93,9 +93,9 @@ void setNeuronNetFileName(){
 	
 		char * ext = BINARY_OUTPUT? ".dat" : ".csv";
 		neuronRankFN = (char *) calloc(128, sizeof(char));
-		sprintf(neuronRankFN, "%s_rank_%li%s",neuronFireFileName, g_tw_mynode,ext);
+		sprintf(neuronRankFN, "%s_rank_%li%s",NEURON_FIRE_R_FN, g_tw_mynode,ext);
 		neuronFireFinalFN = (char *) calloc(128, sizeof(char));
-		sprintf(neuronFireFinalFN, "%s_final.csv", neuronFireFileName);
+		sprintf(neuronFireFinalFN, "%s_final.csv", NEURON_FIRE_R_FN);
 	
 }
 

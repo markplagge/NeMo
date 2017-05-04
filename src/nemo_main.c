@@ -31,11 +31,15 @@ bool VALIDATION = false;
 bool MPI_SAVE = false;
 bool BINARY_OUTPUT = false;
 
-char *neuronFireFileName = "fire_record";
+ char * NEURON_FIRE_R_FN = "fire_record";
+ char * NETWORK_CFG_FN  = "nemo_model.nfg";
+ char * SPIKE_IN_FN 	 = "nemo_spike.csv";
+
+
 //int N_FIRE_BUFF_SIZE = 32;
 //int N_FIRE_LINE_SIZE = 512;
-char *NETWORK_FILE_NAME = "nemo_model.csv";
-char *SPIKE_FILE_NAME = "nemo_spike.csv";
+
+
 //
 /**
  * @FILE_OUT - is set to true if NeMo is saving output files
@@ -48,8 +52,7 @@ bool FILE_IN = true;
 /**
  * outFile - basic output file handler.
  */
-FILE *outFile;
-int testingMode = 0;
+
 
 //-----------------------Non global testing vars---------//
 
@@ -67,8 +70,8 @@ const tw_optdef app_opt[] = {
                "Load network information from a file. If set,"
                "a network file name must be specified.\n If off, a randomly "
                "generated benchmark model will be used."),
-    //TWOPT_CHAR("nfn", NETWORK_FILE_NAME, "Input Network File Name"),
-    //TWOPT_CHAR("sfn", SPIKE_FILE_NAME, "Spike input file name"),
+    //TWOPT_CHAR("nfn", NETWORK_CFG_FN, "Input Network File Name"),
+    //TWOPT_CHAR("sfn", SPIKE_IN_FN, "Spike input file name"),
     // TWOPT_UINT("tm", testingMode, "Choose a test suite to run. 0=no tests,
     // 1=mapping tests"),
     TWOPT_GROUP("General Network Parameters"),
@@ -128,8 +131,8 @@ void displayModelSettings() {
     printf("* \t Neurons have %i axon types (cmake defined)\n",
            NUM_NEURON_WEIGHTS);
     printf("* \t Network is a %s network.\n", netMode);
-    printf("* \t Network Input FileName: %s \n", NETWORK_FILE_NAME);
-    printf("* \t Spike Input FileName %s \n", SPIKE_FILE_NAME);
+    printf("* \t Network Input FileName: %s \n", NETWORK_CFG_FN);
+    printf("* \t Spike Input FileName %s \n", SPIKE_IN_FN);
     printf("* \t Neuron stats:\n");
     printf("* \tCalculated sim_size is %llu\n", SIM_SIZE);
 
@@ -194,14 +197,16 @@ void init_nemo() {
   if (FILE_IN) {
     // Init File Input Handles
     printf("Network Input Active -");
-    printf("Filename specified: %s\n", NETWORK_FILE_NAME);
-    networkFileName = NETWORK_FILE_NAME;
-    spikeFileName = SPIKE_FILE_NAME;
-    openInputFiles();
-    // openSpikeFile(SPIKE_FILE_NAME);
-    parseNetworkFile();
+    printf("Filename specified: %s\n", NETWORK_CFG_FN);
 
-    loadSpikesFromFile(spikeFileName);
+    //spikeFileName = SPIKE_IN_FN;
+
+	  // INPUT Model file init here:
+///////////////////////////////////////////////
+
+// INPUT SPIKE FILE init HERE:
+	  ////////////////////////
+    loadSpikesFromFile(SPIKE_IN_FN);
 
     closeSpikeFile();
   }

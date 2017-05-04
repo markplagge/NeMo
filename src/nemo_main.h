@@ -16,7 +16,6 @@
 #include "ross.h"
 #include "./tests/nemo_tests.h"
 #include "./IO/IOStack.h"
-#include "./IO/input.h" 
 #include "./IO/spike_reader.h"
 
 

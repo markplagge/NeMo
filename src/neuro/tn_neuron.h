@@ -11,7 +11,7 @@
 #include "../globals.h"
 #include "../mapping.h"
 #include "../nemo_config.h"
-#include "../IO/input.h"
+
 #include "../IO/output.h"
 #include "./tn_neuron_struct.h"
 #define Vj ns->membranePotential

@@ -48,7 +48,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/nemo_config.h.in ${CMAKE_CURRENT_BINARY_DIR}/nemo_config.h @ONLY)
 SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/nemo_config.h.in PROPERTIES GENERATED FALSE)
 SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_BINARY_DIR}/nemo_config.h PROPERTIES GENERATED TRUE)
-
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/IO/model_read.lua ${CMAKE_CURRENT_BINARY_DIR}/model_read.lua COPYONLY)
 
 
 #Source Files:
@@ -83,18 +83,24 @@ set(model_srcs
         lib/simclist.h
         lib/simclist.c
 
+
+
+
         IO/IOStack.c
         IO/IOStack.h
         IO/output.h
         IO/output.c
-        IO/input.h
-        IO/input.c
-        nemo_config.h 
-        nemo_main.h IO/spike_reader.c IO/spike_reader.h IO/neuron_output.c IO/model_reader.c neuro/tn_neuron_struct.h)
+        nemo_config.h
+        nemo_main.h
+        IO/spike_reader.c
+        IO/spike_reader.h
+        IO/neuron_output.c
+        IO/model_reader.c
+        neuro/tn_neuron_struct.h)
 
 
 ADD_EXECUTABLE(NeMo  ${model_srcs})
 
 
-TARGET_LINK_LIBRARIES(NeMo ROSS m)
+TARGET_LINK_LIBRARIES(NeMo ROSS liblua_static m)
 

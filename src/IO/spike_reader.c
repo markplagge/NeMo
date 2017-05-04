@@ -56,12 +56,12 @@ int readSpike(spikeElem * spike){
 int loadSpikesFromFile(char * filename){
     int v = openSpikeFile(filename);
     int count = -1;
-//    if (v != 0){
-//        printf("Error opening file %s, errorcode %i \n",filename, v);
-//        closeSpikeFile();
-//        return count;
-//
-//    }
+    if (v != 0){
+        printf("Error opening file %s, errorcode %i \n",filename, v);
+        closeSpikeFile();
+        return count;
+
+    }
 
     list_init(&spikeList);
 

@@ -5,12 +5,12 @@ include(ExternalProject)
 set (RD "${CMAKE_CURRENT_SOURCE_DIR}/ROSS/")
 set (ND "${CMAKE_CURRENT_SOURCE_DIR}/src/")
 
-set (LuaD "${CMAKE_CURRENT_SOURCE_DIR}/lua5.1")
+set (LuaD "${CMAKE_CURRENT_SOURCE_DIR}/lua")
 
 
 ADD_SUBDIRECTORY(${RD})
 ADD_SUBDIRECTORY(${ND})
-#ADD_SUBDIRECTORY(${LuaD})
+ADD_SUBDIRECTORY(${LuaD})
 
 
 find_package(MPI REQUIRED)
@@ -23,7 +23,7 @@ set_target_properties( NeMo
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-        CONFIG_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/scripts"
+    CONFIG_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/scripts"
 )
 
 
@@ -32,4 +32,5 @@ set_target_properties( NeMo
 
 
 configure_file("demo.csv" "${CMAKE_BINARY_DIR}/bin/demo.csv" COPYONLY)
+
 #TODO: Add targets to the build-tree export set
