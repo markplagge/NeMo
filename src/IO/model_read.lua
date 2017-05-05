@@ -27,12 +27,12 @@ end
 
 function getNeuronParam(ncore, nlocal, ntype, paramName)
     local rv = getNeuron(ncore, nlocal, ntype)
-    print(rv[paramName])
+---    print(rv[paramName])
     return rv[paramName]
 end
 
 function doesNeuronExist(ncore, nlocal, ntype)
-    print("Nexist from " .. ncore .. " | " .. nlocal .. " | " .. ntype)
+    --print("Nexist from " .. ncore .. " | " .. nlocal .. " | " .. ntype)
 
     if getNeuron(ncore,nlocal,ntype) == nil then
         return false

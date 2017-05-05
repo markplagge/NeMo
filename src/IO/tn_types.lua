@@ -10,7 +10,8 @@ negThreshold  = "beta"
  sigma_l  = "sigma_lmbda"
  delayVal  = ""
  
- 
+ b = "b"
+S = "S"
  isSelfFiring  = "selfFiring"
  isOutputNeuron  = "outputNeuron"
  epsilon  = "epsilon"

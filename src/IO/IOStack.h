@@ -19,7 +19,7 @@ extern char * NEURON_FIRE_R_FN	;
 extern char * NETWORK_CFG_FN 	;
 extern char * SPIKE_IN_FN 		;
 #define SAVE_ALL_NEURON_PARAMS 1
-#define DBG_MODEL_MSGS 1
+#define DBG_MODEL_MSGS 0
 enum modelReadMode{
     START_READ,
     MODEL_HDR,

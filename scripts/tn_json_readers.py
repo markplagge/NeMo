@@ -498,9 +498,15 @@ def readAndSaveSpikeFile(filename, type="json", saveFile="spikes.csv"):
 
 
 if __name__ == '__main__':
-	print("Testing read TN Json")
-	print("Example 1 JSON file loading")
-	ex1_model = createNeMoCFGFromJson('./test/mnist.json','neil_mnist_nemo_model.nfg1')
-	ex1_model.closeFile()
-	print("Example 1 JSON Spike load")
-	readAndSaveSpikeFile('./test/ex1_spikes.sfti', saveFile='nemo_spike.csv')
+	#print("Testing read TN Json")
+	#print("Example 1 JSON file loading")
+	#ex1_model = createNeMoCFGFromJson('./test/mnist.json','neil_mnist_nemo_model.nfg1')
+	#ex1_model.closeFile()
+	#print("Example 1 JSON Spike load")
+	#readAndSaveSpikeFile('./test/ex1_spikes.sfti', saveFile='nemo_spike.csv')
+
+	print("Neil JSON load")
+	n_mod = createNeMoCFGFromJson('/Users/mplagge/development/NeMo/scripts/test/NM/mnist_neil.json', '/Users/mplagge/development/NeMo/scripts/nemo_model.nfg1')
+	n_mod.closeFile()
+
+	readAndSaveSpikeFile('/Users/mplagge/development/NeMo/scripts/test/NM/mnist_neil_spikes.sfci', '/Users/mplagge/development/NeMo/scripts/nemo_spike.cfg')
