@@ -1067,16 +1067,14 @@ void TN_forward_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
                       tw_lp* lp) {
 	long ld = s->myLocalID;
 	long cd = s->myCoreID;
-    if(ld == 0){
-        printf("local debug point \n");
-    }
+
 	//if (m->eventType == SYNAPSE_OUT && m->axonID == 0){
 	//	printf("Axon 0 rcvd. \n");
 	//}
 
-	if(! s->isActiveNeuron){
-		return;
-	}
+//	if(! s->isActiveNeuron){
+//		return;
+//	}
   long start_count = lp->rng->count;
 
   //    //Delta Encoding
@@ -1121,11 +1119,7 @@ void TN_reverse_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
 /** TN_commit is a function called on commit. This is used for management of
  * neurons! */
 void TN_commit(tn_neuron_state* s, tw_bf* cv, messageData* m, tw_lp* lp) {
-  // if neuron has fired and save neuron fire events is enabled, save this
-  // event.
-    if(s->myLocalID == 0){
-        printf("local commit");
-    }
+
   if (SAVE_SPIKE_EVTS && cv->c0 && s->isOutputNeuron) {
     saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID);
   }

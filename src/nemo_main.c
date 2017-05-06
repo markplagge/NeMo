@@ -205,8 +205,8 @@ void init_nemo() {
 
 // INPUT SPIKE FILE init HERE:
 		////////////////////////
-		loadSpikesFromFile(SPIKE_IN_FN);
-
+		int spkCT = loadSpikesFromFile(SPIKE_IN_FN);
+		printf("Read %i spikes\n", spkCT);
 		closeSpikeFile();
 	}
 

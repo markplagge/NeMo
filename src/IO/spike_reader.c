@@ -19,12 +19,14 @@ int seeker(const void *element, const void *key){
 
 
 int openSpikeFile(char * filename){
+    errno = 0;
     spikeFile = fopen(filename,"rb");
     lineBuff = calloc(128, sizeof(char));
     return errno;
 }
 int closeSpikeFile(){
     return fclose(spikeFile);
+    free(lineBuff);
 }
 
 
@@ -54,7 +56,7 @@ int readSpike(spikeElem * spike){
  * @return the number of elements added to the spike list.
  */
 int loadSpikesFromFile(char * filename){
-    int v = openSpikeFile(filename);
+    int v = openSpikeFile("/Users/mplagge/development/NeMo/cmake-build-debug/bin/nemo_spike.csv");
     int count = -1;
     if (v != 0){
         printf("Error opening file %s, errorcode %i \n",filename, v);
