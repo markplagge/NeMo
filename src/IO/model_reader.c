@@ -13,9 +13,12 @@
 #include "../lib/csv.h"
 /* Input uses standard lua 5.1. However, these includes may be switched out
  * with luaJIT in the future. Maintain lua 5.1 / partial 5.2 compatiblility. */
-#include "../lib/lua/lua.h"
-#include "../lib/lua/lualib.h"
-#include "../lib/lua/lauxlib.h"
+//#include "../lib/lua/lua.h"
+//#include "../lib/lua/lualib.h"
+//#include "../lib/lua/lauxlib.h"
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
 
 
 /**

@@ -8,13 +8,41 @@ set (CMAKE_EXPORT_COMPILE_COMMANDS 1 )
 find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
 
+
+
+if(USE_LUA_JIT)
+    message(AUTHOR_WARNING "USE JIT: ${USE_LUA_JIT}")
+
+    ExternalProject_Add(project_luajit
+    URL http://luajit.org/download/LuaJIT-2.1.0-beta2.tar.gz
+        PREFIX ${CMAKE_CURRENT_BINARY_DIR}/luajit
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND ${jbld}
+        BUILD_IN_SOURCE 1
+        INSTALL_COMMAND make install
+        PREFIX=${CMAKE_CURRENT_BINARY_DIR}/luajit
+        )
+ExternalProject_Get_Property(project_luajit install_dir)
+add_library(luajit STATIC IMPORTED)
+set_property(TARGET luajit PROPERTY IMPORTED_LOCATION ${install_dir}/lib/libluajit-5.1.a)
+add_dependencies(luajit project_luajit)
+    include_directories(${install_dir}/include/luajit-2.1)
+    message(AUTHOR_WARNING " LJ ${install_dir}/include/luajit-2.1}")
+else()
+
+    include_directories(
+        ${LuaD}/src
+        ${lua_BINARY_DIR})
+
+endif()
+
 #SET(CMAKE_C_COMPILER mpicc)
 #SET(CMAKE_CXX_COMPILER mpicxx)
 
 ##NeMo uses a few C11 features, including generic macros. We assume standard C11
 ##behaviors.
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11")
 
 ## Model Version
 LIST(APPEND CMAKE_MODULE_PATH "${ROSS_SOURCE_DIR}/cmake/")
@@ -43,7 +71,9 @@ if(NeMo_SAVE_MSG)
 endif()
 
 ## Build Configuration Header File
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
+INCLUDE_DIRECTORIES(
+        ${MPI_INCLUDE_PATH}
+        ${CMAKE_CURRENT_BINARY_DIR})
 #generated config files:
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/nemo_config.h.in ${CMAKE_CURRENT_BINARY_DIR}/nemo_config.h @ONLY)
 SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/nemo_config.h.in PROPERTIES GENERATED FALSE)
@@ -100,6 +130,10 @@ set(model_srcs
 
 ADD_EXECUTABLE(NeMo  ${model_srcs})
 
+if(USE_LUA_JIT)
+    TARGET_LINK_LIBRARIES(NeMo ROSS luajit m)
 
-TARGET_LINK_LIBRARIES(NeMo ROSS liblua_static m)
+else()
+    TARGET_LINK_LIBRARIES(NeMo ROSS liblua_static m)
+endif()
 
