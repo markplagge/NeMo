@@ -983,11 +983,6 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp* lp){
 //			axontypes[i] = (short) vars[i];
 //		}
 //	}
-
-
-	printf("Validation num %li \n", validation);
-
-
 //
 //	tn_create_neuron_encoded_rv(core, nid,)
 //	id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
