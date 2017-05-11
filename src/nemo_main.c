@@ -237,10 +237,10 @@ void init_nemo() {
  */
 
 int main(int argc, char *argv[]) {
-	char *NETWORK_FILE_NAME = calloc(256, sizeof(char));
-	strcpy(NETWORK_FILE_NAME, "nemo_model.csv");
-	char *SPIKE_FILE_NAME = calloc(256, sizeof(char));
-	strcpy(SPIKE_FILE_NAME, "nemo_spike.csv");
+//	char *NETWORK_FILE_NAME = calloc(256, sizeof(char));
+//	strcpy(NETWORK_FILE_NAME, "nemo_model.csv");
+//	char *SPIKE_FILE_NAME = calloc(256, sizeof(char));
+//	strcpy(SPIKE_FILE_NAME, "nemo_spike.csv");
 	tw_opt_add(app_opt);
 	tw_init(&argc, &argv);
 

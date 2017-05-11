@@ -55,7 +55,7 @@ struct tnCSV{
  * @param filename Optional - if provided will overrride the global variable.
  * @return status - 0 if good.
  */
-int openSpikeFile(char * filename);
+
 int closeSpikeFile();
 
 int loadSpikesFromFile(char * filename);
@@ -151,6 +151,10 @@ long getModelParam(char* modelParamName);
 long lGetAndPushParam(char *paramName, int isArray, long *arrayParam);
 
 
+/** 
+ * A model read error helper function */
+
+void getModelErrorInfo(int ncore, int nlocal, char * ntype, char * paramName, int errorno);
 
 /**
  * Prepares the model file for loadiing. Loads the file into memory and stores it in a list.

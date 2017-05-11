@@ -1,5 +1,5 @@
 --
--- Created by IntelliJ IDEA.
+-- Created by Mark Plagge
 -- User: markplagge
 -- Date: 5/1/17
 -- Time: 10:28 PM
@@ -41,7 +41,47 @@ function doesNeuronExist(ncore, nlocal, ntype)
     end
 
 end
+function findLine(nid, paramName, fn)
+    local file = io.open(fn)
+    local linetxt = ""
+    for line in file:lines() do
+        linetxt = linetxt .. line
+    end
+    local txt = ""
+    local ss, es = string.find(linetxt, ""..nid)
 
+    local neuronLine = string.sub(linetxt, ss)
+    local line = string.match(neuronLine, paramName.."[%s=]+%b{}")
+    return line
+
+
+
+
+
+end
+function modelErr(ncore, nlocal,ntype, paramName, errno, fn)
+    local file = io.open(fn)
+    local linetxt = ""
+    for line in file:lines() do
+        linetxt = linetxt .. line
+    end
+    local gg = genID(ncore,nlocal,ntype)
+    local n = getNeuron(ncore,nlocal,ntype)
+    local param = getNeuronParam(ncore, nlocal, ntype, paramName)
+    local cstart, e = string.find(linetxt, ""..gg)
+    print("Bad neuron starts at " .. cstart)
+    if param == nil then
+        print("Neuron " .. gg .. " parameter " .. paramName .. " does not exist. \n" )
+        print("Config line is: \n"..string.match(linetxt,gg..".-%b{}"))
+
+    else
+
+        print("Param misconfigured. Check parameter: \n" .. findLine(gg,paramName,fn))
+    end
+
+    --see if the parameter is in the file at all
+
+
+end
 -- loadFile("/Users/mplagge/development/model_reader/model_reader/ex.nfg1")
 
-print("Config File Loaded.")

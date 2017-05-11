@@ -875,11 +875,67 @@ void parseCSVCreateTN(tn_neuron_state *st, csvNeuron raw){
 	
 
 }
-
-
+#define LB sprintf(em, "%s\n%s", em,linebreak)
+void modelErr(char * element, char * filename, id_type coreID, id_type lID, char * tp, char * fnDat, int codeline){
+    char * em = calloc(4096, sizeof(char));
+    char * linebreak = calloc(128, sizeof(char));
+    int i = 0;
+    for (; i < 100; i ++){
+        linebreak[i] = '-';
+    }
+    linebreak[i+1] = '\n';
+    LB;
+    char * emp1 = "Error while loading NeMo Model config file. Possible bad option.\n";
+    sprintf(em, "%s", emp1);
+    sprintf(em,"%s\n Filename: %s", em, filename);
+    char loc[128];
+    sprintf(loc, "%i%s%i", coreID, tp, lID);
+    sprintf(em,"%s \n NeuronID: %s",em,loc);
+    sprintf(em,"%s \n While loading parameter %s ",em, element);
+    LB;
+    sprintf(em,"%s \n -- Error type: %s \n", em, fnDat);
+    LB;
+    sprintf(em,"%s%s", em, "Config File Details: \n");
+    getModelErrorInfo(coreID, lID, tp, element, 0);
+    printf("%s", em);
+    tw_error(TW_LOC, em);
+    
+}
+int safeGetArr(int direct,  char * lutName, char * dirName, long vars[],
+                int expectedParams, int cid, int lid,char * ntype){
+    char * errtps[4] = {"0 - No Parameters Loaded From File", "1 - Too Few Parameters Loaded From File",
+        "2 - Parameter Not Found - Assuming 0 values.", "3 - Too Many Values Found"};
+    int validation = 0;
+    char * pn;
+    if(direct) {
+        validation = lGetAndPushParam(dirName, 1, vars);
+        pn = dirName;
+    }else{
+        validation = lGetAndPushParam(luT(lutName), 1, vars);
+        pn = lutName;
+    }
+    ++ validation;
+    if(validation == expectedParams){
+        return validation;
+    }else if (validation == 0){
+        modelErr(pn, MODEL_FILE, cid, lid, ntype, errtps[0], 917);
+        
+    }else if (validation < expectedParams && validation > 0){
+        modelErr(pn, MODEL_FILE, cid, lid, ntype, errtps[1], 917);
+    }else if (validation > expectedParams){
+        modelErr(pn, MODEL_FILE, cid, lid, ntype, errtps[3], 917);
+    }else{
+        modelErr(pn, MODEL_FILE, cid, lid, ntype, errtps[2], 917);
+    }
+    return validation;
+}
+//**** Some loader helper macros.
+//TODO: Move these helper macros somewhere better! .
 #define LGT(V) ( lGetAndPushParam( luT( (V) ) , 0, NULL ) )
 #define GA(N,T) (getArray( (#N) , &(N), (T) ))
+#define TID core, nid, "TN"
 void TNPopulateFromFile(tn_neuron_state *st, tw_lp* lp){
+    int extraParamCache = 32;
 	// Set up neuron - first non array params:
 	long outputGID;
 	long outputCore;
@@ -928,74 +984,50 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp* lp){
 	bool b[NUM_NEURON_WEIGHTS];
 
 
-	long vars[NEURONS_IN_CORE];
+	long vars[NEURONS_IN_CORE + extraParamCache];
 	long validation = 0;
 
-
-	validation = lGetAndPushParam(luT("synapticConnectivity"), 1, vars);
-	if (validation > 0){
+    //@TODO: move the string types to a lookup table
+    
+    validation = safeGetArr(0, "synapticConnectivity", NULL, vars, NEURONS_IN_CORE, TID);
+//	validation = lGetAndPushParam(luT("synapticConnectivity"), 1, vars);
+	if (validation > 0 && validation == NEURONS_IN_CORE){
 		for (int i = 0; i < validation; i ++)
 			synapticConnectivity[i] = vars[i];
 	}
-	validation = lGetAndPushParam(luT("axonTypes"), 1, vars);
-	if (validation > 0){
+    validation = safeGetArr(0, "axonTypes", NULL, vars, NEURONS_IN_CORE, TID);
+//	validation = lGetAndPushParam(luT("axonTypes"), 1, vars);
+	if (validation > 0 && validation == NEURONS_IN_CORE){
 		for (int i = 0; i < validation; i ++)
 			axonTypes[i] = vars[i];
-
 	}
-	validation = lGetAndPushParam(luT("sigma"), 1, vars);
-	if (validation > 0){
+    validation = safeGetArr(0, "sigma", NULL, vars, NUM_NEURON_WEIGHTS, TID);
+//	validation = lGetAndPushParam(luT("sigma"), 1, vars);
+	if (validation > 0 && validation == NUM_NEURON_WEIGHTS){
 		for (int i = 0; i < validation; i ++)
 			sigma[i] = vars[i];
 	}
-	validation = lGetAndPushParam("S", 1, vars);
-	if (validation > 0){
+    validation =safeGetArr(1, NULL, "S", vars, NUM_NEURON_WEIGHTS, TID);
+//	validation = lGetAndPushParam("S", 1, vars);
+	if (validation > 0 && validation == NUM_NEURON_WEIGHTS){
 		for (int i = 0; i < validation; i ++)
 			S[i] = vars[i];
 	}
-	validation = lGetAndPushParam(luT("b"), 1, vars);
-	if (validation > 0){
+    validation = safeGetArr(1, NULL,"b", vars, NUM_NEURON_WEIGHTS, TID);
+//	validation = lGetAndPushParam(luT("b"), 1, vars);
+	if (validation > 0 && validation == NUM_NEURON_WEIGHTS){
 		for (int i = 0; i < validation; i ++)
 			b[i] = vars[i];
 	}
-
-//	getArray("synapticConnectivity", &synapticConnectivity, 'B');
-//	getArray("sigma", &sigma, 'S');
-//	getArray("S", &S, 'S');
-//	getArray("b", &b, 'B');
-//	getArray("axonTypes", &axonTypes, 'S');
-
 	tn_create_neuron_encoded_rv(core,nid, synapticConnectivity,axonTypes, sigma, S, b,
 	epsilon, sigma_l, lambda, c, alpha, beta,TM,VR,sigmaVR,gamma, kappa, st, 0, outputGID, outputLID);
-
-
-
-//	validation = lGetAndPushParam(luT("synapticConnectivity"), 1, &vars);
-//	if (validation > 0){
-//		for(int i = 0; i < validation; i ++){
-//			synapticConnectivity[i] = (bool) vars[i];
-//
-//		}
-//	}
-//	validation = lGetAndPushParam(luT("axonTypes"), 1, &vars);
-//	if (validation > 0){
-//		for(int i = 0; i < valdidation; i ++){
-//			axontypes[i] = (short) vars[i];
-//		}
-//	}
-//
-//	tn_create_neuron_encoded_rv(core, nid,)
-//	id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
-//	short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
-//	bool epsilon, short sigma_l, short lambda, bool c, uint32_t alpha,
-//			uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa,
-//	tn_neuron_state* n, int signalDelay, uint64_t destGlobalID,
-//	int destAxonID)
-
-
-
-
+    st->resetMode = resetMode;
+    st->isActiveNeuron = isActiveNeuron;
+    st->isOutputNeuron = isOutputNeuron;
+    
+    
 }
+
 /** @} */
 /** attempts to find this neuron's def. from the file input.
  Files are assumed to be inited during main().

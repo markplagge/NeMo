@@ -111,6 +111,18 @@ void lPushParam(char* paramName){
 }
 
 
+void getModelErrorInfo(int ncore, int nlocal, char * ntype, char * paramName, int errorno){
+    lua_getglobal(L, "modelErr");
+    lua_pushnumber(L, ncore);
+    lua_pushnumber(L, nlocal);
+    lua_pushstring(L, ntype);
+    lua_pushstring(L, paramName);
+    lua_pushnumber(L, errorno);
+    lua_pushstring(L, MODEL_FILE);
+    
+    lua_call(L, 6, 0);
+}
+
 long getLuaArray(long * arr){
 
 	lua_pushvalue(L, -1);
