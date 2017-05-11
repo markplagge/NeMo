@@ -59,7 +59,8 @@ int loadSpikesFromFile(char * filename){
     int v = openSpikeFile("/Users/mplagge/development/NeMo/cmake-build-debug/bin/nemo_spike.csv");
     int count = -1;
     if (v != 0){
-        printf("Error opening file %s, errorcode %i \n",filename, v);
+        printf("\n");
+        tw_error(TW_LOC,"Spike File Reader", "Error opening file %s, errorcode %i, errno:%i \n",filename, v,errno);
         closeSpikeFile();
         return count;
 

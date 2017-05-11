@@ -415,8 +415,7 @@ EXT bool FILE_OUT;
 EXT bool FILE_IN;
 
 
-EXT char * NETWORK_CFG_FN;
-EXT char * SPIKE_IN_FN;
+
 EXT char * NEURON_FIRE_R_FN	;
 
 

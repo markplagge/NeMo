@@ -59,7 +59,7 @@ int countLines(FILE *fileHandle){
 void initModelInput(unsigned long maxNeurons){
 	L = luaL_newstate();
 	luaL_openlibs(L);
-	int s = luaL_loadfile(L, NETWORK_CFG_FN);
+	int s = luaL_loadfile(L, MODEL_FILE);
 
 	if(!s)
 		s = lua_pcall(L, 0, LUA_MULTRET, 0);
@@ -67,7 +67,7 @@ void initModelInput(unsigned long maxNeurons){
 	//show any errors
 	if(s){
 		printf("Error: %s \n", lua_tostring(L, -1));
-		tw_error(TW_LOC,"MDL_LOAD", "Unable to load config file %s \n", NETWORK_CFG_FN );
+		tw_error(TW_LOC,"MDL_LOAD", "Unable to load config file %s \n", MODEL_FILE );
 
 		lua_pop(L, 1);
 	}

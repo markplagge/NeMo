@@ -33,7 +33,6 @@ bool BINARY_OUTPUT = false;
 
 char *NEURON_FIRE_R_FN = "fire_record";
 char *NETWORK_CFG_FN = "nemo_model.nfg1";
-char *SPIKE_IN_FN = "nemo_spike.csv";
 
 
 //int N_FIRE_BUFF_SIZE = 32;
@@ -131,8 +130,8 @@ void displayModelSettings() {
 		printf("* \t Neurons have %i axon types (cmake defined)\n",
 			   NUM_NEURON_WEIGHTS);
 		printf("* \t Network is a %s network.\n", netMode);
-		printf("* \t Network Input FileName: %s \n", NETWORK_CFG_FN);
-		printf("* \t Spike Input FileName %s \n", SPIKE_IN_FN);
+		printf("* \t Network Input FileName: %s \n", MODEL_FILE);
+		printf("* \t Spike Input FileName %s \n", SPIKE_FILE);
 		printf("* \t Neuron stats:\n");
 		printf("* \tCalculated sim_size is %llu\n", SIM_SIZE);
 
@@ -196,8 +195,8 @@ void init_nemo() {
 
 	if (FILE_IN) {
 		// Init File Input Handles
-		printf("Network Input Active -");
-		printf("Filename specified: %s\n", NETWORK_CFG_FN);
+		printf("Network Input Active");
+		printf("Filename specified: %s\n", MODEL_FILE);
 		//spikeFileName = SPIKE_IN_FN;
 		// INPUT Model file init here:
 ///////////////////////////////////////////////
@@ -205,7 +204,7 @@ void init_nemo() {
 
 // INPUT SPIKE FILE init HERE:
 		////////////////////////
-		int spkCT = loadSpikesFromFile(SPIKE_IN_FN);
+		int spkCT = loadSpikesFromFile(SPIKE_FILE);
 		printf("Read %i spikes\n", spkCT);
 		closeSpikeFile();
 	}
