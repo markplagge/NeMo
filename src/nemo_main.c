@@ -206,7 +206,7 @@ void init_nemo() {
 		////////////////////////
 		int spkCT = loadSpikesFromFile(SPIKE_FILE);
 		printf("Read %i spikes\n", spkCT);
-		
+
 	}
 
 	// AXONS_IN_CORE = NEURONS_IN_CORE;

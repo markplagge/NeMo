@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
-set(CMAKE_C_STANDARD 11)
-ADD_COMPILE_OPTIONS(-std=gnu11)
-set(CMAKE_C_FLAGS "${CMAKE_C_CFLAGS} -std=gnu11")
+set(CMAKE_C_STANDARD 99)
+ADD_COMPILE_OPTIONS(-std=gnu99)
+#set(CMAKE_C_FLAGS "${CMAKE_C_CFLAGS} -std=gnu99")
 project(SuperNeMo)
 enable_testing()
 include(ExternalProject)
@@ -31,7 +31,7 @@ endif()
 
 
 ADD_SUBDIRECTORY(${ND})
-find_package(MPI REQUIRED)
+#find_package(MPI REQUIRED)
 
 
 
