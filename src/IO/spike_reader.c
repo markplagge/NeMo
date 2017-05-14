@@ -28,8 +28,9 @@ int openSpikeFile(){
     //return errno;
 }
 int closeSpikeFile(){
-    return fclose(spikeFile);
     free(lineBuff);
+    return fclose(spikeFile);
+
 }
 
 
