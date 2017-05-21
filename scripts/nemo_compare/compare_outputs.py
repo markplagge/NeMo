@@ -88,11 +88,29 @@ def create_plots(nemo_out, compass_out):
 
 
 if __name__ == '__main__':
-    nemoInput = 'nemo_neil2_output_spikes.csv'
-    compassInput = 'compass_neil2_output_spikes.sfci'
+    nemoInput = ''
+    compassInput = ''
+    if len(sys.argv) == 3:
+        nemoInput = sys.argv[1]
+        compassInput = sys.argv[2]
+    else:
+        print("WARNING: USING DEMO FILE INPUTS")
+        nemoInput = 'nemo_neil2_output_spikes.csv'
+        compassInput = 'compass_neil2_output_spikes.sfci'
 
-    nemo_out = importNeMoOutput(nemoInput)
-    compass_out = importCompassOutput(compassInput)
+    nemo_out = []
+    try:
+        nemo_out = importNeMoOutput(nemoInput)
+    except:
+        print("\nError Loading NeMo Output Spike File")
+        sys.exit(1)
+
+    compass_out = []
+    try:
+        compass_out = importCompassOutput(compassInput)
+    except:
+        print("\nError Loading Compass Output Spike File")
+        sys.exit(1)
 
     (fig,fig2) = create_plots(nemo_out,compass_out)
     fig.show()
