@@ -24,7 +24,7 @@
  *	or compile-time option 
  * @{ */
 
-#define SAVE_NEURON_STATS
+#define SAVE_NEURON_STATS 1
 
 /**@}*/
 /**
@@ -63,10 +63,12 @@ float: atof
  *Global Macros */
 /**@{ */
 
+#define GET_VNAME(Variable) (#Variable)
+
 ///////FILE DEBUG HELPERS /////////
 #ifdef NET_IO_DEBUG
 
-#define genWrite(x) _Generic((x), \
+#define genWrite(x) _Generic((0,x), \
 char: "%i,", \
 signed char: "%hhd,", \
 unsigned char: "%hhu,", \
@@ -114,7 +116,7 @@ _tp4, _tp3, _tp2, _tp1,_tp0)(__VA_ARGS__)
 
 
 #if (__STDC_VERSION >= 200112L) || (_POSIX_C_SOURCE >= 20112L) || (BGQ <=0 )
-#define printf_dec_format(x) _Generic((x), \
+#define printf_dec_format(x) _Generic((0,x), \
 char: "%c", \
 signed char: "%hhd", \
 unsigned char: "%hhu", \
@@ -332,7 +334,7 @@ typedef struct Ms{
 }messageData;
  /**@}*/
 
-
+/** \defgroup IOStructs Input/Output structs @{ */
 /** Structs for managing neuron reads */
 typedef struct CsvNeuron{
     int fld_num;
@@ -344,7 +346,36 @@ typedef struct CsvNeuron{
 //    char **rawDat;
 
 }csvNeuron;
+/**
+ * SpikeElem / spikeElem is a struct that holds the raw spike data
+ * from a CSV file. The data is stored in a simclist list. One spike
+ * is stored in each spikeElem.
+ */
+typedef struct SpikeElem{
+    long scheduledTime;
+    long destCore;
+    long destAxon;
+}spikeElem;
 
+/**
+ * NeuronMembraneRecord stores an active neuron's membrane potential.
+ * This is used to save and store membrane potential / neuron activity
+ * during a simulation run. Used by output.c
+ */
+typedef struct NeuronMembraneRecord{
+	tw_stime tickTime;
+	volt_type membranePot;
+	id_type neuronCore;
+	id_type neuronID;
+}neuronMembraneRecord;
+
+
+
+
+
+
+
+/** @} */
 
 #endif //NEMO_GLOBALS_H
 #ifndef EXTERN
@@ -369,7 +400,7 @@ EXT bool BULK_MODE;
 EXT bool DEBUG_MODE;
 EXT bool SAVE_MEMBRANE_POTS ;
 EXT bool SAVE_SPIKE_EVTS ; //!< Toggles saving spike events
-EXT bool SAVE_NEURON_OUTS;
+EXT bool SAVE_NETWORK_STRUCTURE;
 
 EXT bool MPI_SAVE;
 EXT bool BINARY_OUTPUT;
@@ -385,6 +416,7 @@ EXT bool FILE_IN;
 
 
 
+EXT char * NEURON_FIRE_R_FN	;
 
 
 /* Global Timing Variables */
@@ -420,10 +452,4 @@ EXT int N_FIRE_LINE_SIZE;
  * These variables are declared/init in input.c and
  * output.c @{*/
 
-extern char * neuronFireFileName;
-extern char * networkFileName;
-extern char * spikeFileName;
-
-extern FILE * networkFile;
-extern FILE * spikeFile;
 /** @} */

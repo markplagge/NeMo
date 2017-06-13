@@ -16,11 +16,11 @@ bool neuronFireFileOpen;
 bool outputFileOpen;
 
 
-
+int N_FIRE_BUFF_SIZE = 32;
 //Names of output files
 char * neuronFireFinalFN;
 char * neuronRankFN;
-//char * neuronFireFileName = "fire_record"; <-- Global variable sets the name of the fire record.
+//char * NEURON_FIRE_R_FN = "fire_record"; <-- Global variable sets the name of the fire record.
 
 //Global Memory Pool Position Counters
 int neuronFirePoolPos = 0;
@@ -93,9 +93,9 @@ void setNeuronNetFileName(){
 	
 		char * ext = BINARY_OUTPUT? ".dat" : ".csv";
 		neuronRankFN = (char *) calloc(128, sizeof(char));
-		sprintf(neuronRankFN, "%s_rank_%li%s",neuronFireFileName, g_tw_mynode,ext);
+		sprintf(neuronRankFN, "%s_rank_%li%s",NEURON_FIRE_R_FN, g_tw_mynode,ext);
 		neuronFireFinalFN = (char *) calloc(128, sizeof(char));
-		sprintf(neuronFireFinalFN, "%s_final.csv", neuronFireFileName);
+		sprintf(neuronFireFinalFN, "%s_final.csv", NEURON_FIRE_R_FN);
 	
 }
 
@@ -150,16 +150,17 @@ void setFileNames(){
 
 void initOutFiles(){
 	setFileNames();
+	int tv = N_FIRE_BUFF_SIZE;
 	if(SAVE_SPIKE_EVTS) {
 		if(BINARY_OUTPUT) {
-			neuronFireBufferBIN = (neuronFireStruct *) tw_calloc(TW_LOC,"OUTPUT",sizeof(neuronFireStruct),N_FIRE_BUFF_SIZE);
+			neuronFireBufferBIN = (neuronFireStruct *) tw_calloc(TW_LOC,"OUTPUT",tv, sizeof(neuronFireStruct));
 			neuronFireFile = fopen(neuronRankFN, "wb");
 			
 		}else{
-			neuronFireBufferTXT = (char **) tw_calloc(TW_LOC, "OUTPUT", sizeof(char *),N_FIRE_BUFF_SIZE);
+			neuronFireBufferTXT = (char **) tw_calloc(TW_LOC, "OUTPUT", tv, sizeof(char *));
 			
 			for(int i = 0; i < N_FIRE_BUFF_SIZE; i ++) {
-				neuronFireBufferTXT[i] = (char *) tw_calloc(TW_LOC, "OUTPUT", sizeof(char *), N_FIRE_LINE_SIZE);
+				neuronFireBufferTXT[i] = (char *) tw_calloc(TW_LOC, "OUTPUT", tv, sizeof(char *));
 			}
 			neuronFireFile = fopen(neuronRankFN, "w");
 		}

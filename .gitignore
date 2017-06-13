@@ -51,3 +51,9 @@ cmake-build-debug/
 cmake-build-release/src/
 
 cmake-build-release/
+
+scripts/ol_api/t1\.csv
+
+scripts/tn_api/__init__.pyc
+
+*.pyc

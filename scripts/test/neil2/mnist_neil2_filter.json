@@ -1,0 +1,9 @@
+[
+{
+"version" : "1.0",
+"MonitorFilterSpecs" :
+[
+{ "cores" : [ 4 ], "neurons" : [ "0:249"] }
+]
+}
+]

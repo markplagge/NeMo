@@ -1,0 +1,31 @@
+Fields:
+type
+coreID
+localID
+//Arrays are first // 
+synapticConnectivity
+SigmaGI
+S
+weight_selection
+// synaptic_weights calculated value
+epsilon
+sigma_l
+lambda
+c
+posThreshold
+negThreshold
+thresholdRPNMask
+VR
+sigmaVR
+resetVoltage (VR)
+resetMode
+kappa
+omega
+signalDelay
+destCore
+destLocal
+//CUSTOM FOR NEMO //
+isOutputNeuron
+isSelfFiring
+isActiveNeuron (true) //////not used! 
+

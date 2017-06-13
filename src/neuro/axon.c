@@ -18,30 +18,46 @@ void axon_init(axonState *s, tw_lp *lp)
     s->axtype = "NORM";
 	
 	if(FILE_IN){
-		
-		
+
 		s->sendMsgCount = 0;
 		s->axonID = getAxonLocal(lp->gid);
 		s->destSynapse = getSynapseFromAxon(lp->gid);
-		
-		//SLOW SLOW way to load spikes - need to optimize //
 		id_type core = getCoreFromGID(lp->gid);
-		spikeRecord * spk = getRecord(core, s->axonID);
-		
+
+		spikeElem * spk = getSpike(core,s->axonID);
 		while(spk != NULL){
-			
 			tw_stime sched_event = floor(spk->scheduledTime) + JITTER;
 			tw_event *saxe = tw_event_new(lp->gid, sched_event, lp);
-			
-			messageData *data = (messageData *) tw_event_data(saxe);
+			messageData *data = (messageData * ) tw_event_data(saxe);
 			data->axonID = s->axonID;
 			data->eventType = AXON_OUT;
 			tw_event_send(saxe);
 			free(spk);
-			spk = getRecord(core, s->axonID);
-			
+			spk = getSpike(core, s->axonID);
 		}
 		
+//		s->sendMsgCount = 0;
+//		s->axonID = getAxonLocal(lp->gid);
+//		s->destSynapse = getSynapseFromAxon(lp->gid);
+//
+//		//SLOW SLOW way to load spikes - need to optimize //
+//		id_type core = getCoreFromGID(lp->gid);
+//		spikeRecord * spk = getRecord(core, s->axonID);
+//
+//		while(spk != NULL){
+//
+//			tw_stime sched_event = floor(spk->scheduledTime) + JITTER;
+//			tw_event *saxe = tw_event_new(lp->gid, sched_event, lp);
+//
+//			messageData *data = (messageData *) tw_event_data(saxe);
+//			data->axonID = s->axonID;
+//			data->eventType = AXON_OUT;
+//			tw_event_send(saxe);
+//			//free(spk);
+//			spk = getRecord(core, s->axonID);
+//
+//		}
+//
 
 		specAxons ++;
 		
@@ -143,9 +159,9 @@ void axon_final(axonState *s, tw_lp *lp){
         char * shdr = "Axon Error\n";
         
         if (s->sendMsgCount != 0){
-            print(shdr);
-            char* m = "Message Sent Val ->";
-            debugMsg(m, s->sendMsgCount);
+            //print(shdr);
+            //char* m = "Message Sent Val ->";
+            //debugMsg(m, s->sendMsgCount);
         }
     }
 
