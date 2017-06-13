@@ -39,6 +39,7 @@ char *NETWORK_CFG_FN = "nemo_model.nfg1";
 //int N_FIRE_LINE_SIZE = 512;
 
 
+
 //
 /**
  * @FILE_OUT - is set to true if NeMo is saving output files
@@ -101,16 +102,21 @@ const tw_optdef app_opt[] = {
 tw_lptype model_lps[] = {
 		{
 
-				(init_f) axon_init,    (pre_run_f) NULL,       (event_f) axon_event,
+				(init_f) axon_init,    (pre_run_f) NULL, (event_f) axon_event,
 				(revent_f) axon_reverse,     (commit_f) NULL,      (final_f) axon_final,
-				(map_f) getPEFromGID, sizeof(axonState)},
-		{       (init_f) synapse_init, (pre_run_f) NULL,       (event_f) synapse_event,
+				(map_f) getPEFromGID, sizeof(axonState)
+		},
+		{       (init_f) synapse_init, (pre_run_f) NULL, (event_f) synapse_event,
 				(revent_f) synapse_reverse,  (commit_f) NULL,      (final_f) synapse_final,
 				(map_f) getPEFromGID, sizeof(synapseState)},
 		{       (init_f) TN_init,      (pre_run_f) NULL, (event_f) TN_forward_event,
 				(revent_f) TN_reverse_event, (commit_f) TN_commit, (final_f) TN_final,
-				(map_f) getPEFromGID, sizeof(tn_neuron_state)},
+				(map_f) getPEFromGID, sizeof(tn_neuron_state)
+		},
 		{       0}};
+
+
+
 
 /**
  * @brief      Displays NeMo's initial run size configuration.

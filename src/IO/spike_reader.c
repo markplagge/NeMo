@@ -54,6 +54,7 @@ int readSpike(spikeElem * spike){
     return -1;
 }
 
+
 /**
  * Loads spikes from a specified file. Returns the number of elements loaded.
  * @param filename the filename to load
