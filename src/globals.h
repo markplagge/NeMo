@@ -303,7 +303,8 @@ EXT bool VALIDATION;
 EXT bool FILE_OUT;
 EXT bool FILE_IN;
 
-
+/** value for the size of a processor. Defaults to 4096 cores per proc */
+EXT int CORES_IN_PROC;
 /** @defgroup fileNames File Names
  * Vars that manage file names for IO  @{*/
 EXT char * inputFileName;

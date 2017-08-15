@@ -221,6 +221,17 @@ void TNFire(tn_neuron_state* st, void* l) {
 
   data->eventType = NEURON_OUT;
   data->localID = st->myLocalID;
+	///// CODES INTEGRATION HOOK GOES HERE
+	///ENCLOSE WITH A CODES ON/OFF switch somewhere
+	///Like if (isCODES) { //
+
+	bool isIntraChip = isMessageInterchip(lp->gid, st->outputGID);
+	if (isIntraChip){
+		// send message via the CODES framework
+	}else{
+		//dont send message via CODES
+	}
+
   tw_event_send(newEvent);
   st->firedLast = true;
 }
@@ -283,6 +294,8 @@ bool TNReceiveMessage(tn_neuron_state* st, messageData* m, tw_lp* lp,
 
       if (willFire) {
         TNFire(st, lp);
+		  //CODES INTEGRATION FRAMEWORK HOOK HERE - Detection of intra-chip comms
+
         // st->fireCount++;
       }
 
