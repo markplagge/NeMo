@@ -221,16 +221,7 @@ void TNFire(tn_neuron_state* st, void* l) {
 
   data->eventType = NEURON_OUT;
   data->localID = st->myLocalID;
-	///// CODES INTEGRATION HOOK GOES HERE
-	///ENCLOSE WITH A CODES ON/OFF switch somewhere
-	///Like if (isCODES) { //
 
-	bool isIntraChip = isMessageInterchip(lp->gid, st->outputGID);
-	if (isIntraChip){
-		// send message via the CODES framework
-	}else{
-		//dont send message via CODES
-	}
 
   tw_event_send(newEvent);
   st->firedLast = true;
@@ -294,28 +285,21 @@ bool TNReceiveMessage(tn_neuron_state* st, messageData* m, tw_lp* lp,
 
       if (willFire) {
         TNFire(st, lp);
-		  //CODES INTEGRATION FRAMEWORK HOOK HERE - Detection of intra-chip comms
+          //check for intra-core communications -
+          //setting bit 31 as toggle for send communication
+          if(isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))){
+              bf->c31 = 1;
+          }
+          else{
+              bf->c31 = 0;
+          }
 
         // st->fireCount++;
       }
 
-      // neuronPostIntegrate(st, tw_now(lp), lp, willFire); //removed and
-      // replaced with fireFloorCelingReset
-      // stats collection
-      // st->SOPSCount++;
       st->lastActiveTime = tw_now(lp);
 
-      //            if(neuronShouldFire(st, lp)){
-      //                st->heartbeatOut = true;
-      //                tw_stime time = getNextBigTick(lp, st->myLocalID);
-      //                sendHeartbeat(st, time, lp);
-      //                //set message flag indicating that the heartbeat msg has
-      //                been sent
-      //                bf->c13 = 1; //C13 indicates that the heartbeatout flag
-      //                has been changed.
-      //
-      //
-      //            }
+
       // do we still have more than the threshold volts left? if so,
       // send a heartbeat out that will ensure the neuron fires again.
       // Or if we are as self-firing neuron.
@@ -751,6 +735,16 @@ void TN_create_simple_neuron(tn_neuron_state* s, tw_lp* lp) {
  * */
 
 void TN_init(tn_neuron_state* s, tw_lp* lp) {
+    static int fileInit = 0;
+    ///// DUMPI FILE
+    if (! fileInit) {
+        char *fn = calloc(sizeof(char), 256);
+        sprintf(fn, "dumpi_virt-%i_rnk%li.txt", getCoreFromGID(lp->gid), g_tw_mynode);
+        dumpi_out = fopen(fn, "w");
+        free(fn);
+        fileInit = 1;
+    }
+
   static int pairedNeurons = 0;
   static bool announced = false;
   s->neuronTypeDesc = "SIMPLE";
@@ -885,6 +879,15 @@ void TN_commit(tn_neuron_state* s, tw_bf* cv, messageData* m, tw_lp* lp) {
   if (SAVE_SPIKE_EVTS && cv->c0) {
     saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID);
   }
+
+    // save simulated dumpi trace if inter core and dumpi trace is on
+    /** @TODO: Add dumpi save flag to config. */
+    if (cv->c31){
+        saveMPIMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp),
+                       dumpi_out);
+
+    }
+
 }
 /** @todo: fix this remote value */
 void prhdr(bool* display, char* hdr) {
@@ -894,6 +897,12 @@ void prhdr(bool* display, char* hdr) {
   }
 }
 void TN_final(tn_neuron_state* s, tw_lp* lp) {
+    static fileOpen = 1;
+
+    if (fileOpen){
+        fclose(dumpi_out);
+        fileOpen= 0;
+    }
   if (g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
     // Alpha, SOPS should be zero. HeartbeatOut should be false.
     char* em = (char*)calloc(1024, sizeof(char));

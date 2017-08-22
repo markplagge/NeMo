@@ -116,14 +116,7 @@ id_type getAxonLocal(tw_lpid gid);
 tw_lpid getSynapseFromAxon(tw_lpid axon_id);
 
 
-/**
- * isMessageInterchip -- determines if a send message to the axon at destGID from the neuron at sourceGID
- * crosses a chip/processor/
- * @param sourceGID
- * @param destGID
- * @return
- */
-bool isMessageInterchip(tw_lpid sourceGID, tw_lpid destGID);
+
 
 
 #endif //NEMO_MAPPING_H

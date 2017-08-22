@@ -9,6 +9,8 @@
 #include "../IO/IOStack.h"
 #include "../globals.h"
 #include "../mapping.h"
+#include "../dumpi.h"
+
 #define Vj ns->membranePotential
 
 #ifdef SAVE_MSGS
@@ -18,7 +20,8 @@
 #ifdef SAVE_NEURON_STATS
 
 #endif
-
+/** DUMPI FILE */
+FILE * dumpi_out;
 /**
  * TrueNorth LP Neuron Model struct
  */

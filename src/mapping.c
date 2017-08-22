@@ -118,18 +118,3 @@ id_type getNeuronLocalFromGID(tw_lpid gid){
 	//return local - (AXONS_IN_CORE + SYNAPSES_IN_CORE) ;
 
 }
-/**
- * isMessageInterchip - Implementation that will return True if the message is going to cross processor bounds,
- * false otherwise. Needs a source GID and a destination GID.
- */
-bool isMessageInterchip(tw_lpid sourceGID, tw_lpid destGID){
-
-	//oneliner
-	return (getCoreFromGID(sourceGID) / CORES_IN_PROC) != (getCoreFromGID(destGID) / CORES_IN_PROC);
-	//simple slower method (temp vars, possibly optimized out by compiler? ) :
-	long sourceCoreID = (getCoreFromGID(sourceGID)) / CORES_IN_PROC;
-	long destCoreID = (getCoreFromGID(destGID)) / CORES_IN_PROC;
-	return sourceCoreID != destCoreID;
-
-
-}

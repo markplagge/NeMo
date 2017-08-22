@@ -33,7 +33,7 @@ bool BINARY_OUTPUT = false;
 char * inputFileName = "nemo_in";
 char * neuronFireFileName = "fire_record";
 
-int CORES_IN_PROC = 4096;
+int CORES_IN_CHIP = 4096;
 
 int N_FIRE_BUFF_SIZE = 32;
 int N_FIRE_LINE_SIZE = 512;
@@ -70,7 +70,7 @@ const tw_optdef app_opt[] = {
 	TWOPT_FLAG("rand_net", IS_RAND_NETWORK, "Generate a random network? Alternatively, you need to specify config files."),
 	TWOPT_UINT("tm", testingMode, "Choose a test suite to run. 0=no tests, 1=mapping tests"),
 	TWOPT_GROUP("Randomized (ID Matrix) Network Parameters"),
-	TWOPT_UINT("chip", CORES_IN_PROC, "The number of neurosynaptic cores contained in one chip"),
+	TWOPT_UINT("chip", CORES_IN_CHIP, "The number of neurosynaptic cores contained in one chip"),
 		TWOPT_ULONGLONG("cores", CORES_IN_SIM, "number of cores in simulation"),
     	//TWOPT_ULONGLONG("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
     TWOPT_GROUP("Data Gathering Settings"),
