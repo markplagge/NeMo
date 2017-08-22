@@ -10,7 +10,12 @@
 #include "../globals.h"
 #include "../mapping.h"
 #include "../dumpi.h"
-#include <stdlib.h>
+
+//Linux / BSD issue
+#ifndef arc4random
+#define arc4random random
+#endif
+
 #define Vj ns->membranePotential
 
 #ifdef SAVE_MSGS
