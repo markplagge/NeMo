@@ -6,6 +6,13 @@
 #define SUPERNEMO_DUMPI_H
 
 #include "globals.h"
+#include <stdlib.h>
+//Linux / BSD issue
+
+#ifndef arc4random
+#define arc4random random
+#endif
+
 
 #define DEBUG 1
 /** DUMPI TEXT FILE PERMS
