@@ -10,7 +10,7 @@
 #include "../globals.h"
 #include "../mapping.h"
 #include "../dumpi.h"
-
+#include <stdlib.h>
 #define Vj ns->membranePotential
 
 #ifdef SAVE_MSGS
