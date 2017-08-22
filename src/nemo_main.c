@@ -33,8 +33,10 @@ bool BINARY_OUTPUT = false;
 char * inputFileName = "nemo_in";
 char * neuronFireFileName = "fire_record";
 
-int CORES_IN_CHIP = 4096;
-
+unsigned int CORES_IN_CHIP = 4096;
+unsigned int CORES_IN_CHIP;
+unsigned int NUM_CHIPS_IN_SIM;
+unsigned int CHIPS_PER_RANK;
 int N_FIRE_BUFF_SIZE = 32;
 int N_FIRE_LINE_SIZE = 512;
 
@@ -232,7 +234,10 @@ void init_nemo(){
 	g_tw_events_per_pe = NEURONS_IN_CORE * AXONS_IN_CORE ; //magic number
                                
     LPS_PER_PE = g_tw_nlp / g_tw_npe;
-    //Pre-Run Quck Info
+
+	NUM_CHIPS_IN_SIM = CORES_IN_SIM / CORES_IN_CHIP;
+	CHIPS_PER_RANK = 1;
+
 }
 
 unsigned char mapTests(){

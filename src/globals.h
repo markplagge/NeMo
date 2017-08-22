@@ -304,7 +304,10 @@ EXT bool FILE_OUT;
 EXT bool FILE_IN;
 
 /** value for the size of a processor. Defaults to 4096 cores per proc */
-EXT int CORES_IN_CHIP;
+EXT unsigned int CORES_IN_CHIP;
+EXT unsigned int NUM_CHIPS_IN_SIM;
+EXT unsigned int CHIPS_PER_RANK;
+
 /** @defgroup fileNames File Names
  * Vars that manage file names for IO  @{*/
 EXT char * inputFileName;

@@ -13,9 +13,9 @@ int COUNT = 2; // One count for the COREid, one for the neuron local id.
 int DTYPE = 11; // dtype  for the DUMPI file.
 int COMM = 4;
 int TAG = 0;
+//unsigned int NUM_CHIPS_IN_SIM = CORES_IN_SIM / CORES_IN_CHIP;
+//unsigned int CHIPS_PER_RANK; = g_tw_npe; //! Sets the number of chips per MPI rank for sim
 
-unsigned int CHIPS_PER_RANK = 1; //! Sets the number of chips per MPI rank for sim
-unsigned int NUM_SIM_RANKS = 128; //! Sets the number of simulated MPI ranks
 
 
 
@@ -30,6 +30,7 @@ double NEURO_CORE_CLOCK = 1000; //! Neuromorphic core speed (cycles / second).
  * @return
  */
 size_type chipToRank(size_type chipID){
+	long NUM_SIM_RANKS = NUM_CHIPS_IN_SIM;
 #ifdef DEBUG
     if ((chipID / CHIPS_PER_RANK) > NUM_SIM_RANKS){
         printf("Error in chip to rank calculation \n");
@@ -41,7 +42,8 @@ size_type chipToRank(size_type chipID){
 }
 
 size_type coreToChip(size_type coreID){
-    return coreID / CORES_IN_SIM;
+    return coreID / CORES_IN_CHIP;
+
 }
 
 size_type coreToRank(size_type coreID){
@@ -95,6 +97,8 @@ char * generateMsg(long sourceChip, long destChip, double twTimeSend,
                      type, sourceChip, destChip, getWallStart(twTimeSend),
                      getWallEnd(twTimeSend), getCPUStart(twTimeSend),
                      getCPUEnd(twTimeSend), COUNT, DTYPE, COMM, TAG);
+	//virtual ranks are interleaved - add a "running-on" feature for script extraction at the start of the line
+	rv = sprintf(outStr, "%li,%s",sourceChip,outStr);
     return outStr;
 }
 char * generateIsend(long sourceChip, long destChip, double twTimeSend){
@@ -106,6 +110,7 @@ char * generateIrecv(long sourceChip, long destChip, double twTimeSend){
 }
 
 bool isDestInterchip(id_type core1, id_type core2){
+
     return coreToRank(core1) != coreToRank(core2);
 }
 
@@ -115,7 +120,7 @@ void saveMPIMessage(id_type sourceCore, id_type destCore, double twTimeSend,
     long sourceChip = coreToRank(sourceCore);
     long destChip = coreToRank(destCore);
     char * isend = generateIsend(sourceChip,destChip,twTimeSend);
-    char * ircv = generateIrecv(sourceChip, destChip, twTimeSend);
+    char * ircv = generateIrecv(destChip, sourceChip, twTimeSend);
 
     fprintf(outputFile, isend);
     fprintf(outputFile, ircv);
