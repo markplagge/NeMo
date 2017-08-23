@@ -111,8 +111,9 @@ char * generateMsg(long sourceChip, long destChip, double twTimeSend,
 	double wallEnd = getWallEnd(twTimeSend);
 	double cpuStart = getCPUStart(twTimeSend);
 	double cpuEnd = getCPUEnd(cpuStart);
-	if (type[5] = 'r'){
-		long t = sourceChip;
+	long t = sourceChip;
+	if (type[5] == 'r'){
+
 		sourceChip = destChip;
 		destChip = t;
 	}
