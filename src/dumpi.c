@@ -58,7 +58,9 @@ size_type coreToRank(size_type coreID){
  */
 
 double getWallStart(double twSendTime){
-    return twSendTime + arc4random() * WALL_OFFSET;
+	tw_wtime *t;
+	double ctime = tw_wall_to_double(t);
+    return ctime + (arc4random() * WALL_OFFSET);
 }
 
 /**
@@ -67,7 +69,7 @@ double getWallStart(double twSendTime){
  * @return
  */
 double getWallEnd(double twSendTime){
-    return getWallStart(twSendTime) + WALL_OFFSET + arc4random() * WALL_OFFSET;
+    return (getWallStart(twSendTime) + WALL_OFFSET);
 }
 
 /**
@@ -76,7 +78,7 @@ double getWallEnd(double twSendTime){
  * @return
  */
 double getCPUStart(double twSendTime){
-    return twSendTime / NEURO_CORE_CLOCK;
+    return (twSendTime * CPU_OFFSET ) + (arc4random() * CPU_OFFSET);
 }
 
 /**
@@ -85,7 +87,7 @@ double getCPUStart(double twSendTime){
  * @return
  */
 double getCPUEnd(double twSendTime){
-    return getCPUStart(twSendTime) + CPU_OFFSET * rand();
+    return getCPUStart(twSendTime) + CPU_OFFSET;
 }
 
 char * generateMsg(long sourceChip, long destChip, double twTimeSend,
