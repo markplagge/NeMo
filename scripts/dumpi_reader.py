@@ -8,7 +8,7 @@ def readL(line):
 def readFile(filename):
 
 	with open(filename,'r') as f:
-		lines = f.readline()
+		lines = f.readlines()
 
 	return lines
 
@@ -16,11 +16,13 @@ def readFile(filename):
 def parseFiles(file_list):
 	datum = {}
 	for filename in file_list:
+		print("File: " + filename)
 		lines = readFile(filename)
 		for line in lines:
 			if(line[0] not in datum.keys()):
-				datum[line[0]].append(line[1])
-			datum[line[0]] = []
+				datum[line[0]] = []
+
+			datum[line[0]].append(line[1])
 	return datum
 
 
@@ -48,6 +50,7 @@ if __name__ == '__main__':
 	if(len(arg.files) > 0):
 		for file in arg.files:
 			file_list.append(file)
+	print("Reading in:")
 
 	datum = parseFiles(file_list)
 
