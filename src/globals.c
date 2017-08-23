@@ -75,6 +75,9 @@ tw_stime getNextBigTick(tw_lp *lp, tw_lpid neuronID) {
     return (tw_rand_unif(lp->rng) / 1000) + bigTickRate;
 }
 
+void debugMsg(char * m, char * d){
+	printf("%s %s", m,d);
+}
 
 //char * charf()      { return    "%c";}
 //char * scharf()     { return    "%hhd";}

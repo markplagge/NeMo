@@ -116,7 +116,7 @@ class NeuronSpikeLoader(npyscreen.NPSAppManaged):
 		self.STARTING_FORM="MAIN"
 
 	def onCleanExit(self):
-		print("EXIT CLEAN")
+		//print("EXIT CLEAN")
 		self.done = "DONE!"
 		self.data = self.getForm("MAIN").getDirFNMode()
 
@@ -127,8 +127,8 @@ if __name__ == '__main__':
 
 	TA = NeuronSpikeLoader()
 	TA.run()
-	print(TA.done)
-	print(TA.data)
+	//print(TA.done)
+	//print(TA.data)
 
 	workingDir = TA.data[0]
 	fileName = TA.data[1]

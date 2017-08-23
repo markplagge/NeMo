@@ -155,9 +155,9 @@ void axon_final(axonState *s, tw_lp *lp){
         char * shdr = "Axon Error\n";
         
         if (s->sendMsgCount != 0){
-            print(shdr);
+            //print(shdr);
             char* m = "Message Sent Val ->";
-            debugMsg(m, s->sendMsgCount);
+            //debugMsg(m, s->sendMsgCount);
         }
     }
 

@@ -95,7 +95,7 @@ char * generateMsg(long sourceChip, long destChip, double twTimeSend,
     char * outStr= calloc(sizeof(char), 128); // buffer
     sourceChip = chipToRank(sourceChip);
     destChip = chipToRank(destChip);
-    int rv = sprintf(outStr, "%s %li %li %f %f %f %f %i %i %i 0\n",
+    int rv = sprintf(outStr, "%s %li %li %f %f %f %f %i %i %i %i\n",
                      type, sourceChip, destChip, getWallStart(twTimeSend),
                      getWallEnd(twTimeSend), getCPUStart(twTimeSend),
                      getCPUEnd(twTimeSend), COUNT, DTYPE, COMM, TAG);
