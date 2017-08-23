@@ -118,7 +118,7 @@ char * generateMsg(long sourceChip, long destChip, double twTimeSend,
 		destChip = t;
 	}
     int rv = sprintf(outStr, "%li,%s %li %li %lf %lf %lf %lf %i %i %i %i\n",
-                     sourceChip, type, sourceChip, destChip, wallStart,
+                     t, type, sourceChip, destChip, wallStart,
                      wallEnd, cpuStart, cpuEnd, COUNT, DTYPE, COMM, TAG);
 
 	//virtual ranks are interleaved - add a "running-on" feature for script extraction at the start of the line
