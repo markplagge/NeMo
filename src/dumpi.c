@@ -21,7 +21,7 @@ int TAG = 0;
 
 
 double WALL_OFFSET = 0.001; //! Some sort of offset for the wall clock time - what is a good value?
-double CPU_OFFSET = 0.000001; //! The CPU time for recv. messages.
+double CPU_OFFSET = 0.0001; //! The CPU time for recv. messages.
 
 double NEURO_CORE_CLOCK = 1000; //! Neuromorphic core speed (cycles / second).
 
