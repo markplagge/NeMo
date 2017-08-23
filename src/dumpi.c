@@ -61,7 +61,7 @@ size_type coreToRank(size_type coreID){
 double getWallStart(double twSendTime){
 	struct timespec start;
 	clock_gettime(CLOCK_MONOTONIC, &start);
-	double ctime = start.tv_nsec;
+	double ctime = start.tv_sec;
 
     return ctime;// + (arc4random() * WALL_OFFSET);
 }
@@ -84,7 +84,7 @@ double getCPUStart(double twSendTime){
 
 	struct timespec start;
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
-	double ctime = start.tv_nsec;
+	double ctime = start.tv_sec;
 	ctime = ctime * CPU_OFFSET;
 	return (( arc4random() % 1000) * CPU_OFFSET) + twSendTime;
 	return ctime;
@@ -125,7 +125,7 @@ char * generateIsend(long sourceChip, long destChip, double twTimeSend){
     return generateMsg(sourceChip,destChip,twTimeSend,"MPI_Isend");
 }
 char * generateIrecv(long sourceChip, long destChip, double twTimeSend){
-    return generateMsg(sourceChip, destChip, twTimeSend, "MPI_Irecv");
+    return generateMsg(sourceChip, destChip, twTimeSend + (3 * CPU_OFFSET), "MPI_Irecv");
 }
 
 bool isDestInterchip(id_type core1, id_type core2){
