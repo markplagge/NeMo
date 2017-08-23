@@ -58,4 +58,4 @@ if __name__ == '__main__':
 	for k in datum.keys():
 		with open(arg.outfile_tmplt + str(k).zfill(4) + ".dat", 'w') as f:
 			for v in datum[k]:
-				f.write(v + "\n")
+				f.write(v )
