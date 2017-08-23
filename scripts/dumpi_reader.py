@@ -80,5 +80,6 @@ if __name__ == '__main__':
 
 	for k in datum.keys():
 		with open(arg.outfile_tmplt + str(k).zfill(4) + ".dat", 'w') as f:
+			f.write("<mpiType> <src> <dst> <wallStart> <wallStop> <cpuStart> <cpuStop> <count> <dataType> <comm> <tag>\n")
 			for v in datum[k]:
 				f.write(v )
