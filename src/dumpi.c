@@ -111,7 +111,11 @@ char * generateMsg(long sourceChip, long destChip, double twTimeSend,
 	double wallEnd = getWallEnd(twTimeSend);
 	double cpuStart = getCPUStart(twTimeSend);
 	double cpuEnd = getCPUEnd(cpuStart);
-
+	if (type[5] = 'r'){
+		long t = sourceChip;
+		sourceChip = destChip;
+		destChip = t;
+	}
     int rv = sprintf(outStr, "%li,%s %li %li %lf %lf %lf %lf %i %i %i %i\n",
                      sourceChip, type, sourceChip, destChip, wallStart,
                      wallEnd, cpuStart, cpuEnd, COUNT, DTYPE, COMM, TAG);

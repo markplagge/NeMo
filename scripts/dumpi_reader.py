@@ -19,6 +19,7 @@ def parseFiles(file_list):
 		print("File: " + filename)
 		lines = readFile(filename)
 		for line in lines:
+			line = line.split(',')
 			if(line[0] not in datum.keys()):
 				datum[line[0]] = []
 
