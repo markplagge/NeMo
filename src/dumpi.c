@@ -6,6 +6,7 @@
 #include "dumpi.h"
 #include "ross.h"
 #include "mapping.h"
+#include <time.h>
 /*
  * Set up datatypes for the MPI send/rcv cdoe
  */
@@ -58,10 +59,11 @@ size_type coreToRank(size_type coreID){
  */
 
 double getWallStart(double twSendTime){
-	tw_wtime *t;
-	tw_wall_now(t);
-	double ctime = tw_wall_to_double(t);
-    return ctime + (arc4random() * WALL_OFFSET);
+	struct timespec start;
+	clock_gettime(CLOCK_MONOTONIC, &start);
+	double ctime = start.tv_nsec;
+
+    return ctime;// + (arc4random() * WALL_OFFSET);
 }
 
 /**
@@ -79,7 +81,14 @@ double getWallEnd(double twSendTime){
  * @return
  */
 double getCPUStart(double twSendTime){
-    return (twSendTime * CPU_OFFSET ) + (arc4random() * CPU_OFFSET);
+
+	struct timespec start;
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+	double ctime = start.tv_nsec;
+	ctime = ctime * CPU_OFFSET;
+	return (arc4random_uniform(1000) * CPU_OFFSET) + twSendTime;
+	return ctime;
+    //return (twSendTime * CPU_OFFSET ) + (arc4random() * CPU_OFFSET);
 }
 
 /**
@@ -87,21 +96,28 @@ double getCPUStart(double twSendTime){
  * @param twSendTime
  * @return
  */
-double getCPUEnd(double twSendTime){
-    return getCPUStart(twSendTime) + CPU_OFFSET;
+double getCPUEnd(double cpuStart){
+    return cpuStart + CPU_OFFSET + (arc4random_uniform(1000) * CPU_OFFSET);
 }
 
 char * generateMsg(long sourceChip, long destChip, double twTimeSend,
                    char* type){
-    char * outStr= calloc(sizeof(char), 128); // buffer
-    sourceChip = chipToRank(sourceChip);
-    destChip = chipToRank(destChip);
-    int rv = sprintf(outStr, "%s %li %li %f %f %f %f %i %i %i %i\n",
-                     type, sourceChip, destChip, getWallStart(twTimeSend),
-                     getWallEnd(twTimeSend), getCPUStart(twTimeSend),
-                     getCPUEnd(twTimeSend), COUNT, DTYPE, COMM, TAG);
+    char * outStr= calloc(sizeof(char), 512); // alloc new string - using this instead of buffer for the time being.
+//    sourceChip = chipToRank(sourceChip);
+//    destChip = chipToRank(destChip);
+	size_type sc = chipToRank(sourceChip);
+	size_type dt = chipToRank(destChip);
+	double wallStart = getWallStart(twTimeSend);
+	double wallEnd = getWallEnd(twTimeSend);
+	double cpuStart = getCPUStart(twTimeSend);
+	double cpuEnd = getCPUEnd(cpuStart);
+
+    int rv = sprintf(outStr, "%li,%s %li %li %lf %lf %lf %lf %i %i %i %i\n",
+                     sourceChip, type, sourceChip, destChip, wallStart,
+                     wallEnd, cpuStart, cpuEnd, COUNT, DTYPE, COMM, TAG);
+
 	//virtual ranks are interleaved - add a "running-on" feature for script extraction at the start of the line
-	rv = sprintf(outStr, "%li,%s",sourceChip,outStr);
+	//rv = sprintf(outStr, "%li,%s",sourceChip,outStr);
     return outStr;
 }
 char * generateIsend(long sourceChip, long destChip, double twTimeSend){
