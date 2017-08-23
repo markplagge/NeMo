@@ -86,7 +86,7 @@ double getCPUStart(double twSendTime){
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
 	double ctime = start.tv_nsec;
 	ctime = ctime * CPU_OFFSET;
-	return (arc4random_uniform(1000) * CPU_OFFSET) + twSendTime;
+	return (( arc4random() % 1000) * CPU_OFFSET) + twSendTime;
 	return ctime;
     //return (twSendTime * CPU_OFFSET ) + (arc4random() * CPU_OFFSET);
 }
@@ -97,7 +97,7 @@ double getCPUStart(double twSendTime){
  * @return
  */
 double getCPUEnd(double cpuStart){
-    return cpuStart + CPU_OFFSET + (arc4random_uniform(1000) * CPU_OFFSET);
+    return cpuStart + CPU_OFFSET + (( arc4random() % 1000) * CPU_OFFSET);
 }
 
 char * generateMsg(long sourceChip, long destChip, double twTimeSend,
