@@ -3,9 +3,9 @@
 //
 
 #include <printf.h>
-#include "dumpi.h"
+#include "../src/dumpi.h"
 #include "ross.h"
-#include "mapping.h"
+#include "../src/mapping.h"
 #include <time.h>
 /*
  * Set up datatypes for the MPI send/rcv cdoe
@@ -61,7 +61,7 @@ size_type coreToRank(size_type coreID){
 double getWallStart(double twSendTime){
 	struct timespec start;
 	clock_gettime(CLOCK_MONOTONIC, &start);
-	double ctime = start.tv_sec;
+	double ctime = start.tv_nsec / 1000000000;
 
     return ctime;// + (arc4random() * WALL_OFFSET);
 }
