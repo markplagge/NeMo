@@ -59,6 +59,7 @@ size_type coreToRank(size_type coreID){
 
 double getWallStart(double twSendTime){
 	tw_wtime *t;
+	tw_wall_now(t);
 	double ctime = tw_wall_to_double(t);
     return ctime + (arc4random() * WALL_OFFSET);
 }
