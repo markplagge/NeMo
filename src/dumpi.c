@@ -61,7 +61,8 @@ size_type coreToRank(size_type coreID){
 double getWallStart(double twSendTime){
 	struct timespec start;
 	clock_gettime(CLOCK_MONOTONIC, &start);
-	double ctime = start.tv_nsec / 1000000;
+	double ctime = start.tv_nsec / 10000;
+	ctime = ctime + twSendTime;
 
     return ctime;// + (arc4random() * WALL_OFFSET);
 }
