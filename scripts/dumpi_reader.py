@@ -12,9 +12,29 @@ def readFile(filename):
 
 	return lines
 
+def compareLine(line1, line2):
+	l1 = line1.split(' ')
+	l2 = line2.split(' ')
+	st1 = float(l1[3])
+	st2 = float(l2[3])
+	if st1 == st2:
+		st1 = float(l1[5])
+		st2 = float(l2[5])
+		if st1==st2:
+			return 0
+
+
+	if st1 > st2:
+		return 1
+
+	return -1
+
+
 
 def parseFiles(file_list):
 	datum = {}
+
+
 	for filename in file_list:
 		print("File: " + filename)
 		lines = readFile(filename)
@@ -24,6 +44,9 @@ def parseFiles(file_list):
 				datum[line[0]] = []
 
 			datum[line[0]].append(line[1])
+	for key in datum:
+		datum[key].sort(key=lambda x: float(x.split(' ')[3]))
+
 	return datum
 
 
