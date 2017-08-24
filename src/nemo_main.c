@@ -133,11 +133,13 @@ tw_lptype model_lps[] = {
  */
 void displayModelSettings()
 {
-    if(g_tw_mynode == 0){
-    for (int i = 0; i < 30; i++)
-    {
-        printf("*");
-    }
+//	char *header = { '*'
+//    if(g_tw_mynode == 0){
+//    for (int i = 0; i < 30; i++)
+//    {
+//        printf("*");
+//    }
+	printf(TXT_HEADER);
     double cores_per_node = CORES_IN_SIM / tw_nnodes() ;
     char *netMode = FILE_IN ? "file defined":"random benchmark";
     printf("\n");
@@ -148,18 +150,13 @@ void displayModelSettings()
     printf("* \t Neuron stats:\n");
     printf("* \tCalculated sim_size is %llu\n", SIM_SIZE);
     printf("* \tSave Messages: %i \n", SAVE_MSGS );
+	printf(TXT_HEADER);
+	printf("* \tChip Sim Info:\n");
+	printf("* \tCores per chip: %i\n", CORES_IN_CHIP);
+	printf("* \tReported chips in sim: %li\n", coreToChip(CORES_IN_SIM - 1 ));
+	printf(TXT_HEADER);
+	printf("\n");
 
-    //printf("%-10s", "title");
-
-
-    //printf("* \tTiming - Big tick occurs at %f\n", getNextBigTick(0));
-
-    for (int i = 0; i < 30; i++)
-    {
-        printf("*");
-    }
-    printf("\n");
-    }
 }
 /** @brief Does initial tests of Neuron Output subsystem.
  * If subsystem tests are on, then this will "simulate" a series of neuron firing events after
