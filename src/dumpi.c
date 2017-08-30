@@ -149,7 +149,7 @@ char * generateMsg(long sourceChip, long destChip, double twTimeSend,
 	size_type sc = chipToRank(sourceChip);
 	size_type dt = chipToRank(destChip);
 	long double wallStart = getWallStart(twTimeSend);
-	long double wallEnd = getWallEnd(twTimeSend);
+	long double wallEnd = getWallEnd(wallStart);
 	long double cpuStart = getCPUStart(twTimeSend);
 	long double cpuEnd = getCPUEnd(cpuStart);
 	long t = sourceChip;
