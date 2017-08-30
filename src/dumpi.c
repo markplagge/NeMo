@@ -24,8 +24,8 @@ const long double WALL_OFFSET = 0.0000002; //! Some sort of offset for the wall 
 const long double CPU_OFFSET = 0.0000002; //! The CPU time for recv. messages.
 const long double NEURO_CORE_CLOCK = 1000; //! Neuromorphic core speed (cycles / second).
 //new constansts for wall clock time
-const long double JITTER_MAX 	= 0.0000009;
-const long double JITTER_MIN 	= 0.000000001;
+const long double JITTER_MAX 	= 0.0000005;
+const long double JITTER_MIN 	= 0.0000000001;
 const long double COMPUTE_TIME  = 0.000002;
 const long double SEND_TIME_MIN = 0.000005;
 const long double SEND_TIME_MAX = 0.000050;
