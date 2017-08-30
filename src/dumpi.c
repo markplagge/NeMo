@@ -20,11 +20,19 @@ int TAG = 0;
 
 
 
-double WALL_OFFSET = 0.001; //! Some sort of offset for the wall clock time - what is a good value?
-double CPU_OFFSET = 0.0001; //! The CPU time for recv. messages.
+const long double WALL_OFFSET = 0.0000002; //! Some sort of offset for the wall clock time - what is a good value?
+const long double CPU_OFFSET = 0.0000002; //! The CPU time for recv. messages.
+const long double NEURO_CORE_CLOCK = 1000; //! Neuromorphic core speed (cycles / second).
+//new constansts for wall clock time
+const long double JITTER_MAX 	= 0.0000009;
+const long double JITTER_MIN 	= 0.000000001;
+const long double COMPUTE_TIME  = 0.000002;
+const long double SEND_TIME_MIN = 0.000005;
+const long double SEND_TIME_MAX = 0.000050;
 
-double NEURO_CORE_CLOCK = 1000; //! Neuromorphic core speed (cycles / second).
+long double LAST_END_TIME_WC = 0;
 
+long CURRENT_TICK = 0;
 /**
  * Converts the chip ID to an MPI rank.
  * @param chipID
@@ -51,6 +59,27 @@ size_type coreToRank(size_type coreID){
     return chipToRank(coreToChip(coreID));
 }
 
+long double ld_rand( long double min, long double max )
+{
+	long double scale = rand() / (long double) RAND_MAX; /* [0, 1.0] */
+	return min + scale * ( max - min );      /* [min, max] */
+}
+
+ long double jitter(){
+	long double jit = ld_rand(JITTER_MIN, JITTER_MAX);
+	 return jit;
+}
+ long double compTime(){
+	//not truly random due to maths - but fast
+	return COMPUTE_TIME + jitter();
+}
+int getCurrentTick(double now){
+	return floorl(now);
+}
+long double sendTime(){
+	return ld_rand(SEND_TIME_MIN, SEND_TIME_MAX);
+}
+
 /**@{ */
 /**
  * getWallStart returns the wallStart param for dumpi
@@ -58,22 +87,32 @@ size_type coreToRank(size_type coreID){
  * @return
  */
 
-double getWallStart(double twSendTime){
-	struct timespec start;
-	clock_gettime(CLOCK_REALTIME, &start);
-	double ctime = start.tv_sec / 100.0;
-	ctime = ctime + twSendTime;
+ long double getWallStart(long double twSendTime){
 
-    return ctime;// + (arc4random() * WALL_OFFSET);
+//	struct timespec start;
+//	clock_gettime(CLOCK_REALTIME, &start);
+//
+//	double ctime = start.tv_sec / 100.0;
+//	ctime = ctime + twSendTime;
+//    return ctime;// + (arc4random() * WALL_OFFSET);
+	int ct = getCurrentTick(twSendTime);
+	if (ct != CURRENT_TICK){
+		CURRENT_TICK = ct;
+		LAST_END_TIME_WC = 0.0;
+	}
+	long double wctime = LAST_END_TIME_WC + compTime();
+	return wctime;
 }
 
 /**
  * getWallEnd returns the  wallEnd param for dumpi.
- * @param twSendTime
+ * @param startTime
  * @return
  */
-double getWallEnd(double twSendTime){
-    return (getWallStart(twSendTime) + WALL_OFFSET);
+long double getWallEnd(long double startTime){
+	long double endTime = startTime + sendTime() + jitter();
+	LAST_END_TIME_WC = endTime;
+	return endTime;
 }
 
 /**
@@ -82,7 +121,7 @@ double getWallEnd(double twSendTime){
  * @return
  */
 double getCPUStart(double twSendTime){
-
+	return twSendTime;
 	struct timespec start;
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
 	double ctime = start.tv_sec;
@@ -98,7 +137,8 @@ double getCPUStart(double twSendTime){
  * @return
  */
 double getCPUEnd(double cpuStart){
-    return cpuStart + CPU_OFFSET + (( arc4random() % 1000) * CPU_OFFSET);
+	//return cpuStart + CPU_OFFSET + (( arc4random() % 1000) * CPU_OFFSET);
+	return cpuStart;
 }
 
 char * generateMsg(long sourceChip, long destChip, double twTimeSend,
@@ -108,17 +148,16 @@ char * generateMsg(long sourceChip, long destChip, double twTimeSend,
 //    destChip = chipToRank(destChip);
 	size_type sc = chipToRank(sourceChip);
 	size_type dt = chipToRank(destChip);
-	double wallStart = getWallStart(twTimeSend);
-	double wallEnd = getWallEnd(twTimeSend);
-	double cpuStart = getCPUStart(twTimeSend);
-	double cpuEnd = getCPUEnd(cpuStart);
+	long double wallStart = getWallStart(twTimeSend);
+	long double wallEnd = getWallEnd(twTimeSend);
+	long double cpuStart = getCPUStart(twTimeSend);
+	long double cpuEnd = getCPUEnd(cpuStart);
 	long t = sourceChip;
 	if (type[5] == 'r'){
-
 		sourceChip = destChip;
 		destChip = t;
 	}
-    int rv = sprintf(outStr, "%li,%s %li %li %lf %lf %lf %lf %i %i %i %i\n",
+    int rv = sprintf(outStr, "%li,%s %li %li %Lf %Lf %Lf %Lf %i %i %i %i\n",
                      t, type, sourceChip, destChip, wallStart,
                      wallEnd, cpuStart, cpuEnd, COUNT, DTYPE, COMM, TAG);
 
