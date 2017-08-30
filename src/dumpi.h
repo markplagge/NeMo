@@ -50,4 +50,7 @@ size_type coreToRank(size_type coreID);
 
 bool isDestInterchip(id_type core1, id_type core2);
 
+void saveSendMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, FILE * outputFile);
+void saveRecvMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, FILE * outputFile);
+
 #endif //SUPERNEMO_DUMPI_H

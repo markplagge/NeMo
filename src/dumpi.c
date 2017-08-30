@@ -27,8 +27,8 @@ const long double NEURO_CORE_CLOCK = 1000; //! Neuromorphic core speed (cycles /
 const long double JITTER_MAX 	= 0.0000005;
 const long double JITTER_MIN 	= 0.0000000001;
 const long double COMPUTE_TIME  = 0.000002;
-const long double SEND_TIME_MIN = 0.000005;
-const long double SEND_TIME_MAX = 0.000050;
+const long double SEND_TIME_MIN = 0.00000005;
+const long double SEND_TIME_MAX = 0.00000050;
 
 long double LAST_END_TIME_WC = 0;
 
@@ -74,7 +74,7 @@ long double ld_rand( long double min, long double max )
 	return COMPUTE_TIME + jitter();
 }
 int getCurrentTick(double now){
-	return floorl(now);
+	return (int)now ;
 }
 long double sendTime(){
 	return ld_rand(SEND_TIME_MIN, SEND_TIME_MAX);
@@ -95,12 +95,16 @@ long double sendTime(){
 //	double ctime = start.tv_sec / 100.0;
 //	ctime = ctime + twSendTime;
 //    return ctime;// + (arc4random() * WALL_OFFSET);
+
 	int ct = getCurrentTick(twSendTime);
+    long double wctime = twSendTime;
+
 	if (ct != CURRENT_TICK){
 		CURRENT_TICK = ct;
-		LAST_END_TIME_WC = floor(twSendTime);
-	}
-	long double wctime = LAST_END_TIME_WC + compTime();
+		LAST_END_TIME_WC = twSendTime;
+	}else if (twSendTime <= LAST_END_TIME_WC){
+        wctime = LAST_END_TIME_WC + compTime();
+    }
 	LAST_END_TIME_WC = wctime;
 	return wctime;
 }
@@ -111,6 +115,8 @@ long double sendTime(){
  * @return
  */
 long double getWallEnd(long double startTime){
+    LAST_END_TIME_WC = startTime + sendTime();
+    return LAST_END_TIME_WC;// + jitter();
 	long double endTime = LAST_END_TIME_WC + sendTime() + jitter();
 	LAST_END_TIME_WC = endTime;
 	return endTime;
@@ -150,7 +156,7 @@ char * generateMsg(long sourceChip, long destChip, double twTimeSend,
 	size_type sc = chipToRank(sourceChip);
 	size_type dt = chipToRank(destChip);
 	long double wallStart = getWallStart(twTimeSend);
-	long double wallEnd = getWallEnd(wallStart);
+	long double wallEnd = getWallEnd(twTimeSend);
 	long double cpuStart = getCPUStart(twTimeSend);
 	long double cpuEnd = getCPUEnd(cpuStart);
 	long t = sourceChip;
@@ -193,6 +199,20 @@ void saveMPIMessage(id_type sourceCore, id_type destCore, double twTimeSend,
     free(isend);
     free(ircv);
 
+}
+void saveSendMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, FILE * outputFile){
+    long sourceChip = coreToRank(sourceCore);
+    long destChip = coreToRank(destCore);
+    char* isend = generateIsend(sourceChip,destChip,twTime);
+    fprintf(outputFile, isend);
+    free(isend);
+}
+void saveRecvMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, FILE * outputFile){
+    long sourceChip = coreToRank(sourceCore);
+    long destChip = coreToRank(destCore);
+    char* ircv = generateIrecv(destChip,sourceChip,twTime);
+    fprintf(outputFile, ircv);
+    free(ircv);
 }
 
 /**@}*/

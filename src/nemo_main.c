@@ -101,7 +101,7 @@ tw_lptype model_lps[] = {
         (pre_run_f)NULL,
         (event_f)axon_event,
         (revent_f)axon_reverse,
-        (commit_f) NULL,
+        (commit_f) axon_commit,
         (final_f)axon_final,
         (map_f)getPEFromGID,
         sizeof(axonState) },
@@ -329,7 +329,7 @@ int main(int argc, char*argv[]) {
 	
 	if(FILE_OUT)
 		printf("File output complete.");
-		closeFiles();
+		//closeFiles();
 	if(FILE_IN)
 		printf("File input set but not implemented yet.");
 	

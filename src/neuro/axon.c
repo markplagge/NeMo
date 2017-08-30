@@ -40,8 +40,20 @@
 //	
 //}
 #endif
+FILE * dumpi_out1;
+
 void axon_init(axonState *s, tw_lp *lp)
 {
+    static int fileInit = 0;
+    ///// DUMPI FILE
+    if (!fileInit) {
+        char *fn = calloc(sizeof(char), 256);
+        sprintf(fn, "dumpi_virt-%i_rnk%li-rcvr.txt", getCoreFromGID(lp->gid), g_tw_mynode);
+        dumpi_out1 = fopen(fn, "w");
+        free(fn);
+        fileInit = 1;
+    }
+
 	static bool writeInit = false;
     //TODO: Maybe switch this to a switch/case later, since it's going to get
     //big.
@@ -124,6 +136,11 @@ void axon_event(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
 	data->eventType = AXON_OUT;
 	data->axonID = s->axonID;
 
+
+
+
+
+
 	tw_event_send(axonEvent);
 
 	//End message generation - add message count and check random times
@@ -133,6 +150,7 @@ void axon_event(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
 	if (VALIDATION){
 		//save axon event for validation and traceback. 
 	}
+
 }
 void axon_reverse(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
 	if(VALIDATION) {
@@ -160,5 +178,19 @@ void axon_final(axonState *s, tw_lp *lp){
             //debugMsg(m, s->sendMsgCount);
         }
     }
+    static int fileOpen = 1;
 
+    if (fileOpen) {
+        fclose(dumpi_out1);
+        fileOpen = 0;
+    }
+
+}
+void axon_commit(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
+    if (M->isRemote) {
+        //saveMPIMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp),
+        //			   dumpi_out);
+
+        saveRecvMessage(M->isRemote, getCoreFromGID(lp->gid), tw_now(lp), dumpi_out1);
+    }
 }

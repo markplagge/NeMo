@@ -225,7 +225,10 @@ void TNFire(tn_neuron_state *st, void *l) {
 	data->eventType = NEURON_OUT;
 	data->localID = st->myLocalID;
 
+    if (isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))) {
+        data->isRemote = st->myCoreID;
 
+    }
 	tw_event_send(newEvent);
 	st->firedLast = true;
 }
@@ -890,10 +893,13 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
 	// save simulated dumpi trace if inter core and dumpi trace is on
 	/** @TODO: Add dumpi save flag to config. */
 	if (cv->c31) {
-		saveMPIMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp),
-					   dumpi_out);
+        //saveMPIMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp),
+        //			   dumpi_out);
 
-	}
+        saveSendMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp), dumpi_out);
+
+    }
+
 
 }
 

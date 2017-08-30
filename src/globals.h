@@ -149,6 +149,8 @@ typedef struct Ms{
     enum evtType eventType;
     unsigned long rndCallCount;
     id_type localID; //!< Sender's local (within a core) id - used for weight lookups.
+    unsigned long long isRemote;
+	long double remoteRcvTime;
 	union{
 		unsigned long synapseCounter;
 		struct{
