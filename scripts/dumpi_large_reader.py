@@ -78,7 +78,8 @@ def loadFiles(file_list, tablename):
 				lndat = []
 				for line in lines:
 					line = line.split(',')
-					lndat.append([int(line[0]), float(line[1].split(' ')[5]), line[1]])
+					#float(line[1].split(' ')[X] is the key to sort on. 3 is wall clock start, 5 is CPU start
+					lndat.append([int(line[0]), float(line[1].split(' ')[3]), line[1]])
 
 					#addLine(line[0], line[1].split(' ')[5], line[1],c)
 				psycopg2.extras.execute_batch(c,"INSERT INTO "+arg.table + " VALUES (%s, %s, %s)",lndat)

@@ -45,6 +45,7 @@ def parseFiles(file_list):
 
 			datum[line[0]].append(line[1])
 	for key in datum:
+		#float(x.split(' ')[X] is the key to sort on. 3 is wall clock start, 5 is CPU start
 		datum[key].sort(key=lambda x: float(x.split(' ')[3]))
 
 	return datum
