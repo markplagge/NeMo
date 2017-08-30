@@ -143,7 +143,7 @@ double getCPUEnd(double cpuStart){
 
 char * generateMsg(long sourceChip, long destChip, double twTimeSend,
                    char* type){
-    char * outStr= calloc(sizeof(char), 512); // alloc new string - using this instead of buffer for the time being.
+    char * outStr= calloc(sizeof(char), 1024); // alloc new string - using this instead of buffer for the time being.
 //    sourceChip = chipToRank(sourceChip);
 //    destChip = chipToRank(destChip);
 	size_type sc = chipToRank(sourceChip);
@@ -157,7 +157,7 @@ char * generateMsg(long sourceChip, long destChip, double twTimeSend,
 		sourceChip = destChip;
 		destChip = t;
 	}
-    int rv = sprintf(outStr, "%li,%s %li %li %Lf %Lf %Lf %Lf %i %i %i %i\n",
+    int rv = sprintf(outStr, "%li,%s %li %li %.21Lf %.21Lf %.17Lf %.17Lf %i %i %i %i\n",
                      t, type, sourceChip, destChip, wallStart,
                      wallEnd, cpuStart, cpuEnd, COUNT, DTYPE, COMM, TAG);
 

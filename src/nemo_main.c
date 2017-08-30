@@ -328,6 +328,7 @@ int main(int argc, char*argv[]) {
     tw_run();
 	
 	if(FILE_OUT)
+		printf("File output complete.");
 		closeFiles();
 	if(FILE_IN)
 		printf("File input set but not implemented yet.");
