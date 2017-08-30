@@ -101,6 +101,7 @@ long double sendTime(){
 		LAST_END_TIME_WC = 0.0;
 	}
 	long double wctime = LAST_END_TIME_WC + compTime();
+	LAST_END_TIME_WC = wctime;
 	return wctime;
 }
 
@@ -110,7 +111,7 @@ long double sendTime(){
  * @return
  */
 long double getWallEnd(long double startTime){
-	long double endTime = startTime + sendTime() + jitter();
+	long double endTime = LAST_END_TIME_WC + sendTime() + jitter();
 	LAST_END_TIME_WC = endTime;
 	return endTime;
 }
