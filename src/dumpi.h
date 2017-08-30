@@ -38,7 +38,7 @@ char * generateIsend(long sourceChip, long destChip,  double twTimeSend);
  * @param stop -DUMPI end
  * @return A char (dynamic mem) containing the full dumpi line.
  */
-char * generateIrecv(long sourceChip, long destChip, double twTimeSend);
+char * generateIrecv(long sourceChip, long destChip, double twTimeSbend);
 
 
 void saveMPIMessage(id_type sourceCore, id_type destCore, double twTimeSend,

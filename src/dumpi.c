@@ -98,7 +98,7 @@ long double sendTime(){
 	int ct = getCurrentTick(twSendTime);
 	if (ct != CURRENT_TICK){
 		CURRENT_TICK = ct;
-		LAST_END_TIME_WC = 0.0;
+		LAST_END_TIME_WC = floor(twSendTime);
 	}
 	long double wctime = LAST_END_TIME_WC + compTime();
 	LAST_END_TIME_WC = wctime;

@@ -153,7 +153,7 @@ void displayModelSettings()
 	printf(TXT_HEADER);
 	printf("* \tChip Sim Info:\n");
 	printf("* \tCores per chip: %i\n", CORES_IN_CHIP);
-	printf("* \tReported chips in sim: %li\n", coreToChip(CORES_IN_SIM - 1 ));
+	printf("* \tReported chips in sim: %li\n", coreToChip(CORES_IN_SIM  ));
 	printf(TXT_HEADER);
 	printf("\n");
 
