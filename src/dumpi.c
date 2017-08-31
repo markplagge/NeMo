@@ -25,10 +25,16 @@ const long double CPU_OFFSET = 0.0000002; //! The CPU time for recv. messages.
 const long double NEURO_CORE_CLOCK = 1000; //! Neuromorphic core speed (cycles / second).
 //new constansts for wall clock time
 const long double JITTER_MAX 	= 0.0000005;
-const long double JITTER_MIN 	= 0.0000000001;
-const long double COMPUTE_TIME  = 0.000002;
-const long double SEND_TIME_MIN = 0.00000005;
-const long double SEND_TIME_MAX = 0.00000050;
+const long double JITTER_MIN 	= 0.0000001;
+const long double COMPUTE_TIME  = 0.000005;
+const long double SEND_TIME_MIN = 0.000005;
+const long double SEND_TIME_MAX = 0.000010;
+
+
+
+long double RAND_COMP_TIME = 0.0;
+long double RAND_JITTER = 0.0;
+long double RAND_SEND_TIME = 0.0;
 
 long double LAST_END_TIME_WC = 0;
 
@@ -59,17 +65,21 @@ size_type coreToRank(size_type coreID){
     return chipToRank(coreToChip(coreID));
 }
 
-long double ld_rand( long double min, long double max )
+long double ld_rand( long double min, long double max , tw_rng_stream *g)
 {
-	long double scale = rand() / (long double) RAND_MAX; /* [0, 1.0] */
-	return min + scale * ( max - min );      /* [min, max] */
+	long double scale = tw_rand_unif(g) / 1;
+	return min + scale * (max - min);
+
+
 }
 
  long double jitter(){
-	long double jit = ld_rand(JITTER_MIN, JITTER_MAX);
-	 return jit;
+	 return RAND_JITTER;
+	 //long double jit = ld_rand(JITTER_MIN, JITTER_MAX);
+	 //return jit;
 }
  long double compTime(){
+	 return RAND_COMP_TIME;
 	//not truly random due to maths - but fast
 	return COMPUTE_TIME + jitter();
 }
@@ -77,7 +87,8 @@ int getCurrentTick(double now){
 	return (int)now ;
 }
 long double sendTime(){
-	return ld_rand(SEND_TIME_MIN, SEND_TIME_MAX);
+//return ld_rand(SEND_TIME_MIN, SEND_TIME_MAX);
+	return RAND_SEND_TIME;
 }
 
 /**@{ */
@@ -213,6 +224,12 @@ void saveRecvMessage(unsigned long long sourceCore, unsigned long long destCore,
     char* ircv = generateIrecv(destChip,sourceChip,twTime);
     fprintf(outputFile, ircv);
     free(ircv);
+}
+
+void setrnd(tw_lp * lp){
+	RAND_JITTER = ld_rand(JITTER_MIN, JITTER_MAX, lp->rng);
+	RAND_COMP_TIME = COMPUTE_TIME +  RAND_JITTER;
+	RAND_SEND_TIME = ld_rand(SEND_TIME_MIN, SEND_TIME_MAX, lp->rng);
 }
 
 /**@}*/

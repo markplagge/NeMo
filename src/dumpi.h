@@ -20,7 +20,6 @@
  * <cpuStop> <count> <dataType> <comm> <tag>
  */
 
-
 /**
  * returns an Isend in dumpi format.
  * @param sourceChip The soruce chip - will be converted to an mpi rank
@@ -52,5 +51,7 @@ bool isDestInterchip(id_type core1, id_type core2);
 
 void saveSendMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, FILE * outputFile);
 void saveRecvMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, FILE * outputFile);
+
+void setrnd(tw_lp * lp);
 
 #endif //SUPERNEMO_DUMPI_H

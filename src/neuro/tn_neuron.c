@@ -896,6 +896,7 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
         //saveMPIMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp),
         //			   dumpi_out);
 
+		setrnd(lp);
         saveSendMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp), dumpi_out);
 
     }
