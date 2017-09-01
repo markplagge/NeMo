@@ -161,8 +161,8 @@ double getCPUEnd(double cpuStart){
 	return cpuStart;
 }
 
-char * generateMsg(long sourceChip, long destChip, double twTimeSend,
-                   char* type){
+char * generateMsg(size_type sourceChip, size_type destChip, double twTimeSend,
+				   char *type){
     char * outStr= calloc(sizeof(char), 1024); // alloc new string - using this instead of buffer for the time being.
 //    sourceChip = chipToRank(sourceChip);
 //    destChip = chipToRank(destChip);
@@ -185,11 +185,11 @@ char * generateMsg(long sourceChip, long destChip, double twTimeSend,
 	//rv = sprintf(outStr, "%li,%s",sourceChip,outStr);
     return outStr;
 }
-char * generateIsend(long sourceChip, long destChip, double twTimeSend){
+char * generateIsend(size_type sourceChip, size_type destChip, double twTimeSend){
 
     return generateMsg(sourceChip,destChip,twTimeSend,"MPI_Isend");
 }
-char * generateIrecv(long sourceChip, long destChip, double twTimeSend){
+char * generateIrecv(size_type sourceChip, size_type destChip, double twTimeSend){
     return generateMsg(sourceChip, destChip, twTimeSend + (3 * CPU_OFFSET), "MPI_Irecv");
 }
 
@@ -214,8 +214,8 @@ void saveMPIMessage(id_type sourceCore, id_type destCore, double twTimeSend,
 
 }
 void saveSendMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, FILE * outputFile){
-    long sourceChip = coreToRank(sourceCore);
-    long destChip = coreToRank(destCore);
+    size_type sourceChip = coreToRank(sourceCore);
+    size_type destChip = coreToRank(destCore);
     char* isend = generateIsend(sourceChip,destChip,twTime);
     fprintf(outputFile, isend);
     free(isend);

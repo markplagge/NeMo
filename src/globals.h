@@ -150,7 +150,7 @@ typedef struct Ms{
     unsigned long rndCallCount;
     id_type localID; //!< Sender's local (within a core) id - used for weight lookups.
     unsigned long long isRemote;
-	long double remoteRcvTime;
+	//long double remoteRcvTime;
 	union{
 		unsigned long synapseCounter;
 		struct{
@@ -176,10 +176,10 @@ typedef struct Ms{
             uint32_t idp3;
         };
     };
-    tw_lpid originGID;
-    char originComponent;
+   // tw_lpid originGID;
+    //char originComponent;
 
-	tw_stime msgCreationTime;
+	//tw_stime msgCreationTime;
 #endif
 
 
