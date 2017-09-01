@@ -1,7 +1,13 @@
 import argparse
-
+import concurrent
+import progressbar
 import os
 import time
+from concurrent.futures.thread import ThreadPoolExecutor
+
+import joblib
+from joblib import delayed,memory,Memory,Parallel
+
 def readL(line):
 	return line.split(",")
 
@@ -29,6 +35,9 @@ def compareLine(line1, line2):
 
 	return -1
 
+def sortKey(fullLine = []):
+	fullLine.sort(key=lambda x: float(x.split(' ')[3]))
+	return fullLine
 
 
 def parseFiles(file_list):
@@ -44,11 +53,35 @@ def parseFiles(file_list):
 				datum[line[0]] = []
 
 			datum[line[0]].append(line[1])
-	for key in datum:
-		#float(x.split(' ')[X] is the key to sort on. 3 is wall clock start, 5 is CPU start
-		datum[key].sort(key=lambda x: float(x.split(' ')[3]))
+	print("Sort starting...")
+	bc = 0
+
+	with concurrent.futures.ProcessPoolExecutor(max_workers=16) as executor:
+		fts = []
+		with progressbar.ProgressBar(max_value = len(datum.keys())) as bar:
+			for key in datum:
+				fts.append(executor.submit(sortKey,datum[key]))
+				bar.update(bc)
+				bc += 1
+		print("Sorting files...")
+
+		with progressbar.ProgressBar(max_value = len(datum.keys())) as bar:
+			while(all([x.running() for x in fts])):
+				bar.update(sum([x.done() for x in fts]))
+
+
+	print("File sorted")
+#	for key in datum:
+			#float(x.split(' ')[X] is the key to sort on. 3 is wall clock start, 5 is CPU start
+	#		datum[key].sort(key=lambda x: float(x.split(' ')[3]))
 
 	return datum
+
+def saveRank(data,key):
+	with open(arg.outfile_tmplt+str(key).zfill(4) + ".dat", 'w') as f:
+		f.write("<mpiType> <src> <dst> <wallStart> <wallStop> <cpuStart> <cpuStop> <count> <dataType> <comm> <tag>\n")
+		for v in data:
+			f.write(v)
 
 
 
@@ -78,9 +111,17 @@ if __name__ == '__main__':
 	print("Reading in:")
 
 	datum = parseFiles(file_list)
+	print("saving files")
+	with concurrent.futures.ThreadPoolExecutor() as executor:
+		dats = []
+		for k in datum.keys():
+			dats.append(executor.submit(saveRank,datum[k],k))
+		print("Writing.....")
+		executor.shutdown()
 
-	for k in datum.keys():
-		with open(arg.outfile_tmplt + str(k).zfill(4) + ".dat", 'w') as f:
-			f.write("<mpiType> <src> <dst> <wallStart> <wallStop> <cpuStart> <cpuStop> <count> <dataType> <comm> <tag>\n")
-			for v in datum[k]:
-				f.write(v )
+
+	# for k in datum.keys():
+	# 	with open(arg.outfile_tmplt + str(k).zfill(4) + ".dat", 'w') as f:
+	# 		f.write("<mpiType> <src> <dst> <wallStart> <wallStop> <cpuStart> <cpuStop> <count> <dataType> <comm> <tag>\n")
+	# 		for v in datum[k]:
+	# 			f.write(v )
