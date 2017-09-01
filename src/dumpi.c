@@ -28,8 +28,8 @@ const long double JITTER_MAX 	= 0.0000005;
 const long double JITTER_MIN 	= 0.0000001;
 
 long double COMPUTE_TIME;  //= 0.000005;
-long double SEND_TIME_MIN; //= 0.000005;
-long double SEND_TIME_MAX;// = 0.000010;
+long double SEND_TIME_MIN; //= 0.00000005;
+long double SEND_TIME_MAX;// = 0.00000010;
 
 
 
