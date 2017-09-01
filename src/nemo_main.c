@@ -41,6 +41,10 @@ int N_FIRE_BUFF_SIZE = 32;
 int N_FIRE_LINE_SIZE = 512;
 
 
+long double COMPUTE_TIME  = 0.000005;
+long double SEND_TIME_MIN = 0.000005;
+long double SEND_TIME_MAX = 0.000010;
+
 
 //
 /**
@@ -86,6 +90,13 @@ const tw_optdef app_opt[] = {
     	TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
     	TWOPT_FLAG("tonb",TONIC_BURST_VAL, "Tonic bursting Neuron Validation"),
     	TWOPT_FLAG("phb", PHASIC_BURST_VAL, "Phasic Bursting Neuron Validation"),
+
+	TWOPT_GROUP("DUMPI Timing Parameters - All Parameters are in the scale of microseconds."),
+		TWOPT_STIME("ct", COMPUTE_TIME, "The time between message sends."
+				"\n Used if a collision in TW_NOW is detected when generating DUMPI cmds"),
+		TWOPT_STIME("stmin", SEND_TIME_MIN, "The send time min value"),
+		TWOPT_STIME("stmax", SEND_TIME_MAX, "The maximum send time value"),
+
     TWOPT_END()
 
 };

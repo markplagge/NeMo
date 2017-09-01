@@ -240,6 +240,14 @@ EXT char * neuronFireFileName;
 /** @} */
 
 
+/** @defgroup ctime Compute Time Parameters
+ * Variables that change DUMPI compute time / send time @{
+ */
+EXT long double COMPUTE_TIME  ;
+EXT long double SEND_TIME_MIN ;
+EXT long double SEND_TIME_MAX ;
+
+
 /* Global Timing Variables */
 /**
  * little tick rate - controls little tick timing

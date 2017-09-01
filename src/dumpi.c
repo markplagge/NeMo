@@ -26,9 +26,10 @@ const long double NEURO_CORE_CLOCK = 1000; //! Neuromorphic core speed (cycles /
 //new constansts for wall clock time
 const long double JITTER_MAX 	= 0.0000005;
 const long double JITTER_MIN 	= 0.0000001;
-const long double COMPUTE_TIME  = 0.000005;
-const long double SEND_TIME_MIN = 0.000005;
-const long double SEND_TIME_MAX = 0.000010;
+
+long double COMPUTE_TIME;  //= 0.000005;
+long double SEND_TIME_MIN; //= 0.000005;
+long double SEND_TIME_MAX;// = 0.000010;
 
 
 
@@ -67,7 +68,8 @@ size_type coreToRank(size_type coreID){
 
 long double ld_rand( long double min, long double max , tw_rng_stream *g)
 {
-	long double scale = tw_rand_unif(g) / 1;
+
+	long double scale = tw_rand_unif(g);
 	return min + scale * (max - min);
 
 
@@ -167,7 +169,7 @@ char * generateMsg(long sourceChip, long destChip, double twTimeSend,
 	size_type sc = chipToRank(sourceChip);
 	size_type dt = chipToRank(destChip);
 	long double wallStart = getWallStart(twTimeSend);
-	long double wallEnd = getWallEnd(twTimeSend);
+	long double wallEnd = getWallEnd(wallStart);
 	long double cpuStart = getCPUStart(twTimeSend);
 	long double cpuEnd = getCPUEnd(cpuStart);
 	long t = sourceChip;
