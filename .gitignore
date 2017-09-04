@@ -38,3 +38,13 @@ compile_commands.json
 .idea/NeMo.iml
 
 .idea/NeMo.iml
+
+cmake-build-debug
+cmake-build-release
+.idea/
+
+src/lib/
+
+*.pyc
+
+scripts/__pycache__/
