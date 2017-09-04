@@ -114,7 +114,7 @@ void TN_create_saturation_neuron(tn_neuron_state* s, tw_lp* lp) {
 	}
 	for (int i = 0; i < NUM_NEURON_WEIGHTS; i ++){
 		s->synapticWeight[i] = connectedWeight;
-		
+
 	}
 
 
