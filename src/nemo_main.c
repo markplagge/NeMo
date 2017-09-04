@@ -41,9 +41,9 @@ int N_FIRE_BUFF_SIZE = 32;
 int N_FIRE_LINE_SIZE = 512;
 
 
-long double COMPUTE_TIME  = 0.0000005;
-long double SEND_TIME_MIN = 0.00000005;
-long double SEND_TIME_MAX = 0.00000010;
+long double COMPUTE_TIME  = 0.00000005;
+long double SEND_TIME_MIN = 0.00000001;
+long double SEND_TIME_MAX = 0.00000005;
 
 
 //

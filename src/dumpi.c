@@ -113,11 +113,16 @@ long double sendTime(){
     long double wctime = twSendTime;
 
 	if (ct != CURRENT_TICK){
+
 		CURRENT_TICK = ct;
-		LAST_END_TIME_WC = twSendTime;
-	}else if (twSendTime <= LAST_END_TIME_WC){
+		//LAST_END_TIME_WC = twSendTime;
+		LAST_END_TIME_WC = ct;
+
+	}else if (twSendTime <= LAST_END_TIME_WC || (twSendTime - LAST_END_TIME_WC > COMPUTE_TIME)){
         wctime = LAST_END_TIME_WC + compTime();
     }
+
+
 	LAST_END_TIME_WC = wctime;
 	return wctime;
 }
@@ -163,6 +168,7 @@ double getCPUEnd(double cpuStart){
 
 char * generateMsg(size_type sourceChip, size_type destChip, double twTimeSend,
 				   char *type){
+	twTimeSend = twTimeSend / 1000;
     char * outStr= calloc(sizeof(char), 1024); // alloc new string - using this instead of buffer for the time being.
 //    sourceChip = chipToRank(sourceChip);
 //    destChip = chipToRank(destChip);
