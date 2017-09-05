@@ -111,7 +111,7 @@ long double sendTime(){
 
 	int ct = getCurrentTick(twSendTime);
 
-    long double wctime = twSendTime / 1000;
+    long double wctime = twSendTime / 100;
 
 	if (ct != CURRENT_TICK){
 
