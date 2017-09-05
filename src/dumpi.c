@@ -113,14 +113,14 @@ long double sendTime(){
 
     long double wctime = twSendTime / 100;
 
-	if (ct != CURRENT_TICK){
+	if (ct != CURRENT_TICK) {
 
 		CURRENT_TICK = ct;
 		//LAST_END_TIME_WC = twSendTime;
 		twSendTime = ((long double) ct) / (long double) 1000.0;
 		LAST_END_TIME_WC = twSendTime;
 		wctime = twSendTime;
-
+	}
 //	}else if (twSendTime <= LAST_END_TIME_WC ||
 //			(twSendTime - LAST_END_TIME_WC > COMPUTE_TIME)){
 //        wctime = LAST_END_TIME_WC + compTime();
