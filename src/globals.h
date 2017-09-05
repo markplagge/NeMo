@@ -246,7 +246,6 @@ EXT char * neuronFireFileName;
 EXT long double COMPUTE_TIME  ;
 EXT long double SEND_TIME_MIN ;
 EXT long double SEND_TIME_MAX ;
-
 EXT bool DO_DUMPI ;
 
 /* Global Timing Variables */
@@ -260,6 +259,13 @@ EXT tw_stime littleTick;
 EXT tw_stime CLOCK_RANDOM_ADJ;
 /** @} */
 
+/** @definegroup satnet Saturation network flags / settings @{ */
+EXT unsigned int SAT_NET_PERCENT;
+EXT bool SAT_NET_COREMODE ;
+EXT unsigned int SAT_NET_THRESH;
+EXT unsigned int SAT_NET_LEAK;
+EXT bool SAT_NET_STOC;
+EXT bool IS_SAT_NET;
 
 /** @defgroup iocfg File buffer settings
  * @{
@@ -271,7 +277,6 @@ EXT int N_FIRE_BUFF_SIZE;
 /** POSIX Neuron Fire record line buffer size.
  * For text mode only, sets the length of strings stored in the neuron fire buffer*/
 EXT int N_FIRE_LINE_SIZE;
-
 //#define N_FIRE_LINE_SIZE 128
 /** @} */
 #endif

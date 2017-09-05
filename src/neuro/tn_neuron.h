@@ -10,7 +10,7 @@
 #include "../globals.h"
 #include "../mapping.h"
 #include "../dumpi.h"
-
+#include "../tests/tomacs_exp.h"
 
 
 #define Vj ns->membranePotential
@@ -80,7 +80,7 @@ typedef struct TN_MODEL {
   volt_type resetVoltage;  //!< Reset voltage for reset params, \f$R\f$.
   short sigmaVR;           //!< reset voltage - reset voltage sign
   short encodedResetVoltage;  //!< encoded reset voltage - VR.
-  short omega;                //!<temporary leak direction variable
+
 
   char *neuronTypeDesc;  //!< a debug tool, contains a text desc of the neuron.
   char sigma_l;          //!< leak sign bit - eqiv. to σ
@@ -140,6 +140,8 @@ void TN_forward_event(tn_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *lp);
 void TN_reverse_event(tn_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *lp);
 
 void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp);
+
+
 
 /**
  * @brief      Initialize a TrueNorth neuron

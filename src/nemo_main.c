@@ -47,6 +47,14 @@ long double COMPUTE_TIME  = 0.0000000002;
 long double SEND_TIME_MIN = 0.0000000001;
 long double SEND_TIME_MAX = 0.000000002;
 
+/** @{ sat net flags */
+unsigned int SAT_NET_PERCENT = 2;
+bool SAT_NET_COREMODE = true;
+unsigned int SAT_NET_THRESH = 2;
+unsigned int SAT_NET_LEAK = 1;
+bool SAT_NET_STOC = false;
+bool IS_SAT_NET = false;
+/**@} */
 
 //
 /**
@@ -62,6 +70,7 @@ bool FILE_IN = false;
  */
 FILE *outFile;
 
+
 int testingMode = 0;
 
 
@@ -75,7 +84,15 @@ char * couchAddress = "192.168.2.3";
  * app_opt - Application Options. Manages the options for NeMo's run.
  */
 const tw_optdef app_opt[] = {
-	TWOPT_FLAG("rand_net", IS_RAND_NETWORK, "Generate a random network? Alternatively, you need to specify config files."),
+	TWOPT_FLAG("rand_net", IS_RAND_NETWORK, "Generate a random network? Alternatively, "
+            "you need to specify config files."),
+	TWOPT_FLAG("sat_net", IS_SAT_NET,"Generate a SAT network with n% core/neuron connectivity"),
+	TWOPT_UINT("sp", SAT_NET_PERCENT,"SAT network connectivity percentage in core mode, "
+            "or percentage chance of connected axon"),
+	TWOPT_FLAG("sc", SAT_NET_COREMODE,"Use connectivity percentage per core or per neuron"),
+	TWOPT_UINT("st", SAT_NET_THRESH, "Sat network neuron threshold"),
+	TWOPT_UINT("sl", SAT_NET_LEAK, "Sat network per-neuron leak value"),
+	TWOPT_FLAG("ss", SAT_NET_STOC,"Sat network stochastic weight mode "),
 	TWOPT_UINT("tm", testingMode, "Choose a test suite to run. 0=no tests, 1=mapping tests"),
 	TWOPT_GROUP("Randomized (ID Matrix) Network Parameters"),
 	TWOPT_UINT("chip", CORES_IN_CHIP, "The number of neurosynaptic cores contained in one chip"),
@@ -93,6 +110,7 @@ const tw_optdef app_opt[] = {
     	TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
     	TWOPT_FLAG("tonb",TONIC_BURST_VAL, "Tonic bursting Neuron Validation"),
     	TWOPT_FLAG("phb", PHASIC_BURST_VAL, "Phasic Bursting Neuron Validation"),
+
 
 	TWOPT_GROUP("DUMPI Timing Parameters - All Parameters are in the scale of seconds."),
     TWOPT_FLAG("dmp", DO_DUMPI, "Save simulated DUMPI files. Note: For consistent operation, "

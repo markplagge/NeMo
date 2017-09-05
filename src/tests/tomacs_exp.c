@@ -5,19 +5,24 @@
 #include "tomacs_exp.h"
 
 /** \ingroup synapSat @{ */
-//! Neurons have connectivityProb probability of having a connection.
-float connectivityProb = 0.2;
-//! when connected,  axons will have this weight
-int connectedWeight = 1;
+
 
 //! Synaptic connectivity method. 0=Per axon, 1= Per Core
 int synConMeth = 0;
 int *synCoreBucket;
 
-weight_type alpha = 4;
-weight_type leakValue = 1;
+//SAT NET parameters
+unsigned int SAT_NET_PERCENT;
+bool SAT_NET_COREMODE ;
+unsigned int SAT_NET_THRESH;
+unsigned int SAT_NET_LEAK;
+bool SAT_NET_STOC;
+bool IS_SAT_NET;
 
-
+//! Neurons have connectivityProb probability of having a connection.
+float connectivityProb = 0.2 ; // (float) SAT_NET_PERCENT / 100;
+//! when connected,  axons will have this weight
+int connectedWeight = 1;
 /**
  * Fisher-Yates Shuffle
  * @param pool
@@ -52,7 +57,8 @@ void  getCoreConnBkt(tw_lp *lp, bool * coreConArr){
 	if(cCore != lastCore){
 		int ctr = 0;
 
-		long long pbr = (int)(floorf(synCoreBktSize * connectivityProb));
+		long long pbr = (int)(floorf(synCoreBktSize * ((float)SAT_NET_PERCENT / 100.0)));
+        //or for pure stochastic mode:
 		for (int i = 0; i < synCoreBktSize; i ++){
 			synCoreBucket[i] = i > pbr;
 		}
@@ -85,40 +91,6 @@ void getSynapticConnectivity(bool *synapticConGrid, tw_lp *lp) {
 	}
 
 }
-void TN_create_saturation_neuron(tn_neuron_state* s, tw_lp* lp) {
-	TN_init(s,lp);
-	static int created = 0;
-	bool synapticConnectivity[NEURONS_IN_CORE];
-	short G_i[NEURONS_IN_CORE];
-	short sigma[4] = {1};
-	short S[4] = {[0] = 3};
-	bool b[4] = {0};
-	bool epsilon = 0;
-	bool sigma_l = 0;
-	short lambda = 0;
-	bool c = false;
-	short TM = 0;
-	short VR = 0;
-	short sigmaVR = 1;
-	short gamma = 0;
-	bool kappa = 0;
-	int signalDelay = 1;
-	weight_type beta = -1;
-	getSynapticConnectivity(&synapticConnectivity,lp);
 
-	for (int i = 0; i < NEURONS_IN_CORE; i++) {
-		// s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
-		s->axonTypes[i] = 1;
-		s->synapticConnectivity[i] = synapticConnectivity[i];
-
-	}
-	for (int i = 0; i < NUM_NEURON_WEIGHTS; i ++){
-		s->synapticWeight[i] = connectedWeight;
-
-	}
-
-
-
-}
 /** @} */
 

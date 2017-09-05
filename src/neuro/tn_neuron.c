@@ -219,7 +219,7 @@ void TNFire(tn_neuron_state *st, void *l) {
 
 	// DEBUG
 	tw_stime nextHeartbeat = getNextBigTick(lp, st->myLocalID);
-	tw_event *newEvent = tw_event_new(st->outputGID, nextHeartbeat, lp);
+	tw_event *newEvent = tw_event_new(st->outputGID, nextHeartbeat + st->delayVal, lp);
 	messageData *data = (messageData *) tw_event_data(newEvent);
 
 	data->eventType = NEURON_OUT;
@@ -603,7 +603,7 @@ void tn_create_neuron(id_type coreID, id_type nID,
 
 	n->resetMode = gamma;
 	n->kappa = kappa;
-	n->omega = 0;
+
 
 	//! @TODO: perhaps calculate if a neuron is self firing or not.
 	n->firedLast = false;
@@ -735,7 +735,55 @@ void TN_create_simple_neuron(tn_neuron_state *s, tw_lp *lp) {
 	s->outputGID = getAxonGlobal(dendriteCore, s->dendriteLocal);
 	created++;
 }
+/**
+ * Details - must be called from TN_init after TN_create_simple_neuron() has been called.
+ * @param s
+ * @param lp
+ */
+void TN_create_saturation_neuron(tn_neuron_state* s, tw_lp* lp) {
+	static uint64_t numCreated = 0;
+	bool synapticConnectivity[NEURONS_IN_CORE];
+//	short G_i[NEURONS_IN_CORE];
+//	short sigma[4] = {1};
+//	short S[4] = {[0] = 3};
+//	bool b[4] = {0};
+//	bool epsilon = 0;
+//	bool sigma_l = 0;
+//	short lambda = 0;
+//	bool c = false;
+//	short TM = 0;
+//	short VR = 0;
+//	short sigmaVR = 1;
+//	short gamma = 0;
+//	bool kappa = 0;
+//	int signalDelay = 1;
+//	weight_type beta = -1;
+	getSynapticConnectivity(&synapticConnectivity,lp);
 
+	for (int i = 0; i < NEURONS_IN_CORE; i++) {
+		// s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
+		s->axonTypes[i] = 1;
+		s->synapticConnectivity[i] = synapticConnectivity[i];
+
+	}
+	for (int i = 0; i < NUM_NEURON_WEIGHTS; i ++){
+		s->synapticWeight[i] = connectedWeight;
+
+	}
+	s->lambda = SAT_NET_LEAK;
+	s->c = SAT_NET_STOC;
+	s->posThreshold = SAT_NET_THRESH;
+	s->negThreshold = (0 - SAT_NET_THRESH);
+
+	numCreated ++;
+	if (numCreated > NEURONS_IN_CORE * CORES_IN_SIM){
+		printf("SAT network finished init \n");
+		clearBucket();
+	}
+
+
+
+}
 /** @} */
 
 /** /defgroup TN_ROSS_HANDLERS
@@ -767,65 +815,16 @@ void TN_init(tn_neuron_state *s, tw_lp *lp) {
 	// ADD FILE INPUT NEURON CREATION HERE
 
 	TN_create_simple_neuron(s, lp);
-
-	// createDisconnectedNeuron(s, lp);
-
-	//    messageData *setupMsg;
-	//    tw_event *setupEvent;
-	//
-	//    setupEvent = tw_event_new(lp->gid, getNextEventTime(lp), lp);
-	//    setupMsg = (messageData *) tw_event_data(setupEvent);
-	//
-	//
-	//    bool * connectivity = tw_calloc(TW_LOC,"LP",sizeof(bool),AXONS_IN_CORE);
-	//    for (int i = 0; i < AXONS_IN_CORE; i ++){
-	//        connectivity[i] = s->synapticWeight[s->axonTypes[i]];
-	//    }
-	//    setupMsg->eventType = NEURON_SETUP;
-	//    setupMsg->localID = s->myLocalID;
-	//    setupMsg->neuronConn = connectivity;
-	//
-	//    tw_event_send(setupEvent);
+	if(IS_SAT_NET){
+		TN_create_saturation_neuron(s,lp);
+	}
 
 	if (DEBUG_MODE) {
 		printf(
 				"Neuron type %s, num: %llu checking in with GID %llu and dest %llu \n",
 				s->neuronTypeDesc, s->myLocalID, lp->gid, s->outputGID);
 	}
-	// Original NeMo Neuron Init
-	//    static int pairedNeurons = 0;
-	//    s->neuronTypeDesc = "SIMPLE";
-	//    if(DEBUG_MODE && ! annouced)
-	//        printf("Creating neurons\n");
-	//
-	//    if(PHAS_VAL) {
-	//        if(!pc){
-	//            crPhasic(s, lp);
-	//            pc = true;
-	//        }
-	//        else {
-	//            createDisconnectedNeuron(s, lp);
-	//        }
-	//
-	//    } else if(TONIC_BURST_VAL) {
-	//        if(pairedNeurons < 2) {
-	//            crTonicBursting(s, lp);
-	//            pairedNeurons ++;
-	//        }
-	//        else {
-	//            createDisconnectedNeuron(s, lp);
-	//        }
-	//    } else if (PHASIC_BURST_VAL){
-	//        if (pairedNeurons < 2) {
-	//            crPhasicBursting(s, lp);
-	//            pairedNeurons ++;
-	//        }
-	//
-	//    } else {
-	//        createSimpleNeuron(s, lp);
-	//    }
-	//    //createDisconnectedNeuron(s, lp);
-	//    annouced = true;
+
 }
 
 void TN_forward_event(tn_neuron_state *s, tw_bf *CV, messageData *m,
