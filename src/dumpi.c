@@ -121,11 +121,11 @@ long double sendTime(){
 		LAST_END_TIME_WC = twSendTime;
 		wctime = twSendTime;
 
-	}else if (twSendTime <= LAST_END_TIME_WC ||
-			(twSendTime - LAST_END_TIME_WC > COMPUTE_TIME)){
-        wctime = LAST_END_TIME_WC + compTime();
-    }
-
+//	}else if (twSendTime <= LAST_END_TIME_WC ||
+//			(twSendTime - LAST_END_TIME_WC > COMPUTE_TIME)){
+//        wctime = LAST_END_TIME_WC + compTime();
+//    }
+		wctime = LAST_END_TIME_WC + sendTime();
 
 	LAST_END_TIME_WC = wctime;
 	return wctime;
