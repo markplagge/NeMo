@@ -30,7 +30,7 @@ bool VALIDATION = false;
 
 bool MPI_SAVE = false;
 bool BINARY_OUTPUT = false;
-unsigned int DO_DUMPI = true;
+unsigned int DO_DUMPI = false;
 
 char * inputFileName = "nemo_in";
 char * neuronFireFileName = "fire_record";
