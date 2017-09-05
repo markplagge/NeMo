@@ -30,6 +30,8 @@ bool VALIDATION = false;
 
 bool MPI_SAVE = false;
 bool BINARY_OUTPUT = false;
+bool DO_DUMPI = true;
+
 char * inputFileName = "nemo_in";
 char * neuronFireFileName = "fire_record";
 
@@ -80,6 +82,7 @@ const tw_optdef app_opt[] = {
 		TWOPT_ULONGLONG("cores", CORES_IN_SIM, "number of cores in simulation"),
     	//TWOPT_ULONGLONG("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
     TWOPT_GROUP("Data Gathering Settings"),
+
     	TWOPT_FLAG("bulk", BULK_MODE, "Is this sim running in bulk mode?"),
     	TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
     	TWOPT_FLAG("network", SAVE_NEURON_OUTS, "Save neuron output axon IDs on creation - Creates a map of the neural network."),
@@ -91,7 +94,9 @@ const tw_optdef app_opt[] = {
     	TWOPT_FLAG("tonb",TONIC_BURST_VAL, "Tonic bursting Neuron Validation"),
     	TWOPT_FLAG("phb", PHASIC_BURST_VAL, "Phasic Bursting Neuron Validation"),
 
-	TWOPT_GROUP("DUMPI Timing Parameters - All Parameters are in the scale of microseconds."),
+	TWOPT_GROUP("DUMPI Timing Parameters - All Parameters are in the scale of seconds."),
+    TWOPT_FLAG("dmp", DO_DUMPI, "Save simulated DUMPI files. Note: For consistent operation, "
+            "run one rank per sim chip."),
 		TWOPT_STIME("ct", COMPUTE_TIME, "The time between message sends."
 				"\n Used if a collision in TW_NOW is detected when generating DUMPI cmds"),
 		TWOPT_STIME("stmin", SEND_TIME_MIN, "The send time min value"),

@@ -46,7 +46,7 @@ void axon_init(axonState *s, tw_lp *lp)
 {
     static int fileInit = 0;
     ///// DUMPI FILE
-    if (!fileInit) {
+    if (DO_DUMPI && !fileInit) {
         char *fn = calloc(sizeof(char), 256);
         sprintf(fn, "dumpi_virt-%i_rnk%li-rcvr.txt", getCoreFromGID(lp->gid), g_tw_mynode);
         dumpi_out1 = fopen(fn, "w");
@@ -168,7 +168,7 @@ void axon_reverse(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
 
 }
 void axon_final(axonState *s, tw_lp *lp){
-    
+    static int fileOpen = 1;
     if(g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
         char * shdr = "Axon Error\n";
         
@@ -178,16 +178,15 @@ void axon_final(axonState *s, tw_lp *lp){
             //debugMsg(m, s->sendMsgCount);
         }
     }
-    static int fileOpen = 1;
 
-    if (fileOpen) {
+    if (DO_DUMPI && fileOpen) {
         fclose(dumpi_out1);
         fileOpen = 0;
     }
 
 }
 void axon_commit(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
-    if (M->isRemote) {
+    if (DO_DUMPI && M->isRemote) {
         //saveMPIMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp),
         //			   dumpi_out);
 		setrnd(lp);

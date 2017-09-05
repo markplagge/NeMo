@@ -247,6 +247,7 @@ EXT long double COMPUTE_TIME  ;
 EXT long double SEND_TIME_MIN ;
 EXT long double SEND_TIME_MAX ;
 
+EXT bool DO_DUMPI ;
 
 /* Global Timing Variables */
 /**

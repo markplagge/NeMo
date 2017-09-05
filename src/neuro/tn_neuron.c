@@ -745,14 +745,16 @@ void TN_create_simple_neuron(tn_neuron_state *s, tw_lp *lp) {
  * */
 
 void TN_init(tn_neuron_state *s, tw_lp *lp) {
-	static int fileInit = 0;
+	static u_int8_t fileInit = 0;
 	///// DUMPI FILE
-	if (!fileInit) {
-		char *fn = calloc(sizeof(char), 256);
-		sprintf(fn, "dumpi_virt-%i_rnk%li.txt", getCoreFromGID(lp->gid), g_tw_mynode);
-		dumpi_out = fopen(fn, "w");
-		free(fn);
-		fileInit = 1;
+	if(DO_DUMPI) {
+		if (!fileInit) {
+			char *fn = calloc(sizeof(char), 256);
+			sprintf(fn, "dumpi_virt-%i_rnk%li.txt", getCoreFromGID(lp->gid), g_tw_mynode);
+			dumpi_out = fopen(fn, "w");
+			free(fn);
+			fileInit = 1;
+		}
 	}
 
 	static int pairedNeurons = 0;
@@ -892,7 +894,7 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
 
 	// save simulated dumpi trace if inter core and dumpi trace is on
 	/** @TODO: Add dumpi save flag to config. */
-	if (cv->c31) {
+	if (cv->c31 && DO_DUMPI) {
         //saveMPIMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp),
         //			   dumpi_out);
 
@@ -917,10 +919,11 @@ void prhdr(bool *display, char *hdr) {
 void TN_final(tn_neuron_state *s, tw_lp *lp) {
 	static int fileOpen = 1;
 
-	if (fileOpen) {
+	if (DO_DUMPI && fileOpen) {
 		fclose(dumpi_out);
 		fileOpen = 0;
 	}
+
 	if (g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
 		// Alpha, SOPS should be zero. HeartbeatOut should be false.
 		char *em = (char *) calloc(1024, sizeof(char));
