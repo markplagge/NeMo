@@ -741,7 +741,13 @@ void TN_create_simple_neuron(tn_neuron_state *s, tw_lp *lp) {
  * @param lp
  */
 void TN_create_saturation_neuron(tn_neuron_state* s, tw_lp* lp) {
+
 	static uint64_t numCreated = 0;
+
+    if(numCreated == 0){
+        printf("Started saturation network generation.\n");
+    }
+
 	bool synapticConnectivity[NEURONS_IN_CORE];
 //	short G_i[NEURONS_IN_CORE];
 //	short sigma[4] = {1};
@@ -776,7 +782,7 @@ void TN_create_saturation_neuron(tn_neuron_state* s, tw_lp* lp) {
 	s->negThreshold = (0 - SAT_NET_THRESH);
 
 	numCreated ++;
-	if (numCreated > NEURONS_IN_CORE * CORES_IN_SIM){
+	if (numCreated >= NEURONS_IN_CORE * CORES_IN_SIM){
 		printf("SAT network finished init \n");
 		clearBucket();
 	}

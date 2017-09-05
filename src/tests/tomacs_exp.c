@@ -52,19 +52,43 @@ void  getCoreConnBkt(tw_lp *lp, bool * coreConArr){
 	unsigned long synCoreBktSize = NEURONS_IN_CORE * AXONS_IN_CORE;
 	if (isInit == 0) {
 		synCoreBucket = tw_calloc(TW_LOC, "bucketData", sizeof(int), synCoreBktSize);
-		isInit = 1;
+
 	}
-	if(cCore != lastCore){
+	if(cCore != lastCore || isInit == 0){
 		int ctr = 0;
+        bool err = true;
+        if (isInit != 0) {
+            if (cCore != lastCore + 1) {
+                tw_printf(TW_LOC, "CB err - new core is not incremental: ");
+
+            } else if (cCore < lastCore) {
+                tw_printf(TW_LOC, "CB err - new core is `earlier` than oldCore: ");
+            } else {
+                err = false;
+            }
+
+            if (err) {
+                tw_printf(TW_LOC, "LastCore: %lu NewCore %lu", lastCore, cCore);
+                tw_printf(TW_LOC, "*****************************\n");
+            }
+        }else{
+            isInit = 1;
+        }
 
 		long long pbr = (int)(floorf(synCoreBktSize * ((float)SAT_NET_PERCENT / 100.0)));
         //or for pure stochastic mode:
 		for (int i = 0; i < synCoreBktSize; i ++){
-			synCoreBucket[i] = i > pbr;
+			synCoreBucket[i] = i < pbr;
 		}
 		shuffle(synCoreBucket,synCoreBktSize,lp);
 		lastCore = cCore;
 		idx = 0;
+//        long double tmp = 0.0;
+//        for(int i = 0; i < synCoreBktSize; i ++){
+//            tmp += synCoreBucket[i];
+//        }
+//        tmp /= synCoreBktSize;
+//        tw_printf(TW_LOC, "bucket created with %Lf connections vs %i %% calculated.", tmp, SAT_NET_PERCENT);
 
 	}
 	for(int i = 0; i < AXONS_IN_CORE; i++){
@@ -79,7 +103,7 @@ void clearBucket(){
 }
 void getSynapticConnectivity(bool *synapticConGrid, tw_lp *lp) {
 
-	if(synConMeth == 1){
+	if(SAT_NET_COREMODE){
 		getCoreConnBkt(lp,synapticConGrid);
 
 	}else {
