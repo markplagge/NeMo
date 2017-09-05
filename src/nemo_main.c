@@ -49,7 +49,7 @@ long double SEND_TIME_MAX = 0.000000002;
 
 /** @{ sat net flags */
 unsigned int SAT_NET_PERCENT = 2;
-bool SAT_NET_COREMODE = true;
+bool SAT_NET_COREMODE = false;
 unsigned int SAT_NET_THRESH = 2;
 unsigned int SAT_NET_LEAK = 1;
 bool SAT_NET_STOC = false;
