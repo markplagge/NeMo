@@ -4,9 +4,9 @@
 
 #ifndef SUPERNEMO_TOMACS_EXP_H
 #define SUPERNEMO_TOMACS_EXP_H
-#import "../globals.h"
-#import "../neuro/tn_neuron.h"
-#import "ross.h"
+#include "../globals.h"
+#include "../neuro/tn_neuron.h"
+#include "ross.h"
 #ifdef _OPENMP
 #include <omp.h>
 #else
