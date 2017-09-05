@@ -80,7 +80,9 @@ set(model_srcs
         IO/output.h
         IO/output.c
         nemo_config.h 
-        nemo_main.h dumpi.c dumpi.h)
+        dumpi.c dumpi.h
+        nemo_main.h tests/tomacs_exp.c tests/tomacs_exp.h)
+
 
 
 ADD_EXECUTABLE(NeMo  ${model_srcs})
