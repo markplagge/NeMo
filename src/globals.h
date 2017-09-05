@@ -29,7 +29,8 @@
 /**@}*/
 
 #define TXT_HEADER "****************************************************************************\n"
-
+#define TH printf( TXT_HEADER );
+#define STT( str,p ) printf("* \t" str "\n" , p );
 
 /** @defgroup types Typedef Vars 
  * Typedefs to ensure proper types for the neuron parameters/mapping calculations
@@ -246,7 +247,7 @@ EXT char * neuronFireFileName;
 EXT long double COMPUTE_TIME  ;
 EXT long double SEND_TIME_MIN ;
 EXT long double SEND_TIME_MAX ;
-EXT bool DO_DUMPI ;
+EXT unsigned int DO_DUMPI ;
 
 /* Global Timing Variables */
 /**
@@ -261,11 +262,11 @@ EXT tw_stime CLOCK_RANDOM_ADJ;
 
 /** @definegroup satnet Saturation network flags / settings @{ */
 EXT unsigned int SAT_NET_PERCENT;
-EXT bool SAT_NET_COREMODE ;
+EXT unsigned int SAT_NET_COREMODE ;
 EXT unsigned int SAT_NET_THRESH;
 EXT unsigned int SAT_NET_LEAK;
-EXT bool SAT_NET_STOC;
-EXT bool IS_SAT_NET;
+EXT unsigned int SAT_NET_STOC;
+EXT unsigned int IS_SAT_NET;
 
 /** @defgroup iocfg File buffer settings
  * @{

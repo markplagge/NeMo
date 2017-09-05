@@ -12,12 +12,12 @@ int synConMeth = 0;
 int *synCoreBucket;
 
 //SAT NET parameters
-unsigned int SAT_NET_PERCENT;
-bool SAT_NET_COREMODE ;
-unsigned int SAT_NET_THRESH;
-unsigned int SAT_NET_LEAK;
-bool SAT_NET_STOC;
-bool IS_SAT_NET;
+//unsigned int SAT_NET_PERCENT;
+//bool SAT_NET_COREMODE ;
+//unsigned int SAT_NET_THRESH;
+//unsigned int SAT_NET_LEAK;
+//bool SAT_NET_STOC;
+//bool IS_SAT_NET;
 
 //! Neurons have connectivityProb probability of having a connection.
 float connectivityProb = 0.2 ; // (float) SAT_NET_PERCENT / 100;

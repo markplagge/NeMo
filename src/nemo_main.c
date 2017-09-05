@@ -30,7 +30,7 @@ bool VALIDATION = false;
 
 bool MPI_SAVE = false;
 bool BINARY_OUTPUT = false;
-bool DO_DUMPI = true;
+unsigned int DO_DUMPI = true;
 
 char * inputFileName = "nemo_in";
 char * neuronFireFileName = "fire_record";
@@ -49,11 +49,11 @@ long double SEND_TIME_MAX = 0.000000002;
 
 /** @{ sat net flags */
 unsigned int SAT_NET_PERCENT = 2;
-bool SAT_NET_COREMODE = false;
+unsigned int SAT_NET_COREMODE = false;
 unsigned int SAT_NET_THRESH = 2;
 unsigned int SAT_NET_LEAK = 1;
-bool SAT_NET_STOC = false;
-bool IS_SAT_NET = false;
+unsigned int SAT_NET_STOC = false;
+unsigned int IS_SAT_NET = false;
 /**@} */
 
 //
@@ -84,9 +84,9 @@ char * couchAddress = "192.168.2.3";
  * app_opt - Application Options. Manages the options for NeMo's run.
  */
 const tw_optdef app_opt[] = {
-	TWOPT_FLAG("rand_net", IS_RAND_NETWORK, "Generate a random network? Alternatively, "
+	TWOPT_FLAG("rand", IS_RAND_NETWORK, "Generate a random network? Alternatively, "
             "you need to specify config files."),
-	TWOPT_FLAG("sat_net", IS_SAT_NET,"Generate a SAT network with n% core/neuron connectivity"),
+	TWOPT_FLAG("sat", IS_SAT_NET,"Generate a SAT network with n% core/neuron connectivity"),
 	TWOPT_UINT("sp", SAT_NET_PERCENT,"SAT network connectivity percentage in core mode, "
             "or percentage chance of connected axon"),
 	TWOPT_FLAG("sc", SAT_NET_COREMODE,"Use connectivity percentage per core or per neuron"),
@@ -173,7 +173,7 @@ void displayModelSettings()
 //    {
 //        printf("*");
 //    }
-	printf(TXT_HEADER);
+	TH
     double cores_per_node = CORES_IN_SIM / tw_nnodes() ;
     char *netMode = FILE_IN ? "file defined":"random benchmark";
     printf("\n");
@@ -184,13 +184,22 @@ void displayModelSettings()
     printf("* \t Neuron stats:\n");
     printf("* \tCalculated sim_size is %llu\n", SIM_SIZE);
     printf("* \tSave Messages: %i \n", SAVE_MSGS );
-	printf(TXT_HEADER);
+	TH
 	printf("* \tChip Sim Info:\n");
 	printf("* \tCores per chip: %i\n", CORES_IN_CHIP);
 	printf("* \tReported chips in sim: %li\n", coreToChip(CORES_IN_SIM  ));
-	printf(TXT_HEADER);
+    TH
+    STT("SAT NET ENABLED: %i", IS_SAT_NET);
+    STT("SAT net stoc. mode: %i", SAT_NET_STOC);
+    STT("SAT NET Weight: %u %%", SAT_NET_PERCENT);
+    TH
 	printf("\n");
-
+//    unsigned int SAT_NET_PERCENT = 2;
+//    bool SAT_NET_COREMODE = false;
+//    unsigned int SAT_NET_THRESH = 2;
+//    unsigned int SAT_NET_LEAK = 1;
+//    bool SAT_NET_STOC = false;
+//    bool IS_SAT_NET = false;
 }
 /** @brief Does initial tests of Neuron Output subsystem.
  * If subsystem tests are on, then this will "simulate" a series of neuron firing events after
