@@ -110,14 +110,16 @@ long double sendTime(){
 //    return ctime;// + (arc4random() * WALL_OFFSET);
 
 	int ct = getCurrentTick(twSendTime);
-	twSendTime = floor(twSendTime) /  1000;
-    long double wctime = twSendTime;
+
+    long double wctime = twSendTime / 1000;
 
 	if (ct != CURRENT_TICK){
 
 		CURRENT_TICK = ct;
 		//LAST_END_TIME_WC = twSendTime;
+		twSendTime = ((long double) ct) / (long double) 1000.0;
 		LAST_END_TIME_WC = twSendTime;
+		wctime = twSendTime;
 
 	}else if (twSendTime <= LAST_END_TIME_WC ||
 			(twSendTime - LAST_END_TIME_WC > COMPUTE_TIME)){
