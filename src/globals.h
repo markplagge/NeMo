@@ -262,11 +262,12 @@ EXT tw_stime CLOCK_RANDOM_ADJ;
 
 /** @definegroup satnet Saturation network flags / settings @{ */
 EXT unsigned int SAT_NET_PERCENT;
-EXT unsigned int SAT_NET_COREMODE ;
+EXT unsigned int SAT_NET_COREMODE;
 EXT unsigned int SAT_NET_THRESH;
 EXT unsigned int SAT_NET_LEAK;
 EXT unsigned int SAT_NET_STOC;
 EXT unsigned int IS_SAT_NET;
+
 
 /** @defgroup iocfg File buffer settings
  * @{

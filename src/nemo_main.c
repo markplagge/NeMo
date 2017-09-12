@@ -192,6 +192,8 @@ void displayModelSettings()
     STT("SAT NET ENABLED: %i", IS_SAT_NET);
     STT("SAT net stoc. mode: %i", SAT_NET_STOC);
     STT("SAT NET Weight: %u %%", SAT_NET_PERCENT);
+    STT("SAT mode set to %u ", SAT_NET_COREMODE)
+    printf("* \t Modes: (0) - Neuron %, (1) - Core Pool, (2) Neuron Pool \n");
     TH
 	printf("\n");
 //    unsigned int SAT_NET_PERCENT = 2;

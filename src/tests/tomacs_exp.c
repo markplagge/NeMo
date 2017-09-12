@@ -74,12 +74,15 @@ void  getCoreConnBkt(tw_lp *lp, bool * coreConArr){
         }else{
             isInit = 1;
         }
-
-		long long pbr = (int)(floorf(synCoreBktSize * ((float)SAT_NET_PERCENT / 100.0)));
-        //or for pure stochastic mode:
-		for (int i = 0; i < synCoreBktSize; i ++){
-			synCoreBucket[i] = i < pbr;
+		for (int i = 0; i < SAT_NET_PERCENT; i ++){
+			synCoreBucket[i] = true;
 		}
+//
+//		long long pbr = (int)(floorf(synCoreBktSize * ((float)SAT_NET_PERCENT / 100.0)));
+//        //or for pure stochastic mode:
+//		for (int i = 0; i < synCoreBktSize; i ++){
+//			synCoreBucket[i] = i < pbr;
+//		}
 		shuffle(synCoreBucket,synCoreBktSize,lp);
 		lastCore = cCore;
 		idx = 0;
@@ -101,12 +104,29 @@ void  getCoreConnBkt(tw_lp *lp, bool * coreConArr){
 void clearBucket(){
 	free(synCoreBucket);
 }
+void setNeuronPoolMode(tw_lp *lp, bool *synapticConGrid){
+	int min = 0;
+
+	int scg[AXONS_IN_CORE];
+	memset(scg,0,sizeof scg);
+	for(int i = 0; i < SAT_NET_PERCENT; i ++){
+		scg[i] = 1;
+	}
+	shuffle( scg,AXONS_IN_CORE,lp);
+	for(int i = 0; i < AXONS_IN_CORE; i ++){
+		synapticConGrid[i] = scg[i];
+	}
+
+
+}
 void getSynapticConnectivity(bool *synapticConGrid, tw_lp *lp) {
 
-	if(SAT_NET_COREMODE){
+	if(SAT_NET_COREMODE == 1){
 		getCoreConnBkt(lp,synapticConGrid);
 
-	}else {
+	}else if (SAT_NET_COREMODE == 2){
+		setNeuronPoolMode(lp, synapticConGrid);
+	}else{
 		//per axon method
 		for(int i = 0; i < AXONS_IN_CORE; i++){
 			synapticConGrid[i] = tw_rand_unif(lp->rng) > connectivityProb;
