@@ -89,7 +89,7 @@ const tw_optdef app_opt[] = {
 	TWOPT_FLAG("sat", IS_SAT_NET,"Generate a SAT network with n% core/neuron connectivity"),
 	TWOPT_UINT("sp", SAT_NET_PERCENT,"SAT network connectivity percentage in core mode, "
             "or percentage chance of connected axon"),
-	TWOPT_FLAG("sc", SAT_NET_COREMODE,"Use connectivity percentage per core or per neuron"),
+	TWOPT_UINT("sc", SAT_NET_COREMODE,"SAT network mode: 0: axon probability, 1: Core pool, 2: Neuron pool."),
 	TWOPT_UINT("st", SAT_NET_THRESH, "Sat network neuron threshold"),
 	TWOPT_UINT("sl", SAT_NET_LEAK, "Sat network per-neuron leak value"),
 	TWOPT_FLAG("ss", SAT_NET_STOC,"Sat network stochastic weight mode "),
@@ -234,8 +234,10 @@ void testNeuronOut(){
  * 
  */
 void init_nemo(){
-
-
+    if (SAT_NET_COREMODE > 2 || SAT_NET_COREMODE < 0){
+        tw_error(TW_LOC, "Please choose a valid SAT mode if using SAT. \n"
+                "Can be 0,1,2");
+    }
 	VALIDATION = PHAS_VAL || TONIC_BURST_VAL || PHASIC_BURST_VAL;
 	FILE_OUT = SAVE_SPIKE_EVTS || SAVE_NEURON_OUTS || 
 				SAVE_MEMBRANE_POTS || VALIDATION;
