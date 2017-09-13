@@ -744,9 +744,9 @@ void TN_create_saturation_neuron(tn_neuron_state* s, tw_lp* lp) {
 
 	static uint64_t numCreated = 0;
 
-    if(numCreated == 0){
-        printf("Started saturation network generation.\n");
-    }
+//    if(numCreated == 0){
+//        printf("Started saturation network generation.\n");
+//    }
 
 	bool synapticConnectivity[NEURONS_IN_CORE];
 //	short G_i[NEURONS_IN_CORE];
