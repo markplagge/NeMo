@@ -169,14 +169,14 @@ typedef struct Ms{
     };
     //message tracking values:
 #ifdef SAVE_MSGS
-    union {
-        uint64_t uuid;
-        struct {
-            uint16_t idp1;
-            uint16_t idp2;
-            uint32_t idp3;
-        };
-    };
+//    union {
+//        uint64_t uuid;
+//        struct {
+//            uint16_t idp1;
+//            uint16_t idp2;
+//            uint32_t idp3;
+//        };
+//    };
    // tw_lpid originGID;
     //char originComponent;
 
@@ -216,11 +216,11 @@ EXT bool SAVE_MEMBRANE_POTS ;
 EXT bool SAVE_SPIKE_EVTS ; //!< Toggles saving spike events
 EXT bool SAVE_NEURON_OUTS;
 
-EXT bool MPI_SAVE;
+//EXT bool MPI_SAVE;
 EXT bool BINARY_OUTPUT;
 
 EXT bool PHAS_VAL;
-EXT bool TONIC_SPK_VAL;
+//EXT bool TONIC_SPK_VAL;
 EXT bool TONIC_BURST_VAL;
 EXT bool PHASIC_BURST_VAL;
 EXT bool VALIDATION;

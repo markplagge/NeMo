@@ -23,12 +23,12 @@ bool SAVE_MEMBRANE_POTS  = false;
 bool SAVE_SPIKE_EVTS  = false;
 bool SAVE_NEURON_OUTS = false;
 bool PHAS_VAL = false;
-bool TONIC_SPK_VAL = false;
+//bool TONIC_SPK_VAL = false;
 bool TONIC_BURST_VAL = false;
 bool PHASIC_BURST_VAL = false;
 bool VALIDATION = false;
 
-bool MPI_SAVE = false;
+//bool MPI_SAVE = false;
 bool BINARY_OUTPUT = false;
 unsigned int DO_DUMPI = false;
 
