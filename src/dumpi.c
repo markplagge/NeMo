@@ -50,7 +50,7 @@ size_type chipToRank(size_type chipID){
 #ifdef DEBUG
     if ((chipID / CHIPS_PER_RANK) > NUM_SIM_RANKS){
         printf("Error in chip to rank calculation \n");
-        printf("Chip: %lu - CPR: %i - RANKS: %i - CALC %lu", chipID,
+        printf("Chip: %llu - CPR: %i - RANKS: %li - CALC %llu", chipID,
                CHIPS_PER_RANK, NUM_SIM_RANKS, chipID / NUM_SIM_RANKS);
     }
 #endif
@@ -187,7 +187,7 @@ char * generateMsg(size_type sourceChip, size_type destChip, double twTimeSend,
 		sourceChip = destChip;
 		destChip = t;
 	}
-    int rv = sprintf(outStr, "%li,%s %li %li %.21Lf %.21Lf %.17Lf %.17Lf %i %i %i %i\n",
+    int rv = sprintf(outStr, "%li,%s %llu %llu %.21Lf %.21Lf %.17Lf %.17Lf %i %i %i %i\n",
                      t, type, sourceChip, destChip, wallStart,
                      wallEnd, cpuStart, cpuEnd, COUNT, DTYPE, COMM, TAG);
 

@@ -764,7 +764,7 @@ void TN_create_saturation_neuron(tn_neuron_state* s, tw_lp* lp) {
 //	bool kappa = 0;
 //	int signalDelay = 1;
 //	weight_type beta = -1;
-	getSynapticConnectivity(&synapticConnectivity,lp);
+	getSynapticConnectivity(synapticConnectivity,lp);
 
 	for (int i = 0; i < NEURONS_IN_CORE; i++) {
 		// s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
@@ -827,7 +827,7 @@ void TN_init(tn_neuron_state *s, tw_lp *lp) {
 
 	if (DEBUG_MODE) {
 		printf(
-				"Neuron type %s, num: %llu checking in with GID %llu and dest %llu \n",
+				"Neuron type %s, num: %u checking in with GID %llu and dest %llu \n",
 				s->neuronTypeDesc, s->myLocalID, lp->gid, s->outputGID);
 	}
 

@@ -193,7 +193,7 @@ void displayModelSettings()
     STT("SAT net stoc. mode: %i", SAT_NET_STOC);
     STT("SAT NET Weight: %u %%", SAT_NET_PERCENT);
     STT("SAT mode set to %u ", SAT_NET_COREMODE)
-    printf("* \t Modes: (0) - Neuron %, (1) - Core Pool, (2) Neuron Pool \n");
+    printf("* \t Modes: (0) - Neuron %%, (1) - Core Pool, (2) Neuron Pool \n");
     TH
 	printf("\n");
 //    unsigned int SAT_NET_PERCENT = 2;
@@ -234,7 +234,7 @@ void testNeuronOut(){
  * 
  */
 void init_nemo(){
-    if (SAT_NET_COREMODE > 2 || SAT_NET_COREMODE < 0){
+    if (SAT_NET_COREMODE > 2){
         tw_error(TW_LOC, "Please choose a valid SAT mode if using SAT. \n"
                 "Can be 0,1,2");
     }
