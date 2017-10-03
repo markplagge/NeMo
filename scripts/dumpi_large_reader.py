@@ -46,7 +46,7 @@ def initSQL(dname='dumpi.db'):
 		print("DB Create Error")
 		c.execute('''DROP TABLE dumpi''')
 		c.execute('''CREATE TABLE dumpi 
-			  					(rank int, sort real, line text)''')
+			  					(rank int, sort numeric, line text)''')
 	#c.execute("CREATE INDEX rank ON dumpi (rank)")
 	conn.commit()
 	return conn
