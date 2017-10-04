@@ -167,7 +167,7 @@ typedef struct Ms{
         id_type axonID; //!< Axon ID for neuron value lookups.
         bool * neuronConn;
     };
-	unsigned long dumpiID;
+	//unsigned long dumpiID;
     //message tracking values:
 #ifdef SAVE_MSGS
 //    union {

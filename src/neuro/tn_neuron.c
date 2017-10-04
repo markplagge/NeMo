@@ -296,7 +296,7 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp,
 				//setting bit 31 as toggle for send communication
 				if (isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))) {
 					bf->c31 = 1;
-					m->dumpiID = tw_rand_ulong(lp->rng,0,ULONG_MAX - 1);
+					//m->dumpiID = tw_rand_ulong(lp->rng,0,ULONG_MAX - 1);
 				} else {
 					bf->c31 = 0;
 				}
@@ -905,7 +905,7 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
         //			   dumpi_out);
 
 		setrnd(lp);
-		saveSendMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp), m->dumpiID, dumpi_out);
+		saveSendMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp), 0, dumpi_out);
 
     }
 
