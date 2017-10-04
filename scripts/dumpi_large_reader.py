@@ -83,7 +83,7 @@ def loadFiles(file_list, tablename):
 
 
 					#float(line[1].split(' ')[X] is the key to sort on. 3 is wall clock start, 5 is CPU start
-					
+
 					#lndat.append([int(line[0]), float(line[1].split(' ')[3]), line[1]])
 
 					#addLine(line[0], line[1].split(' ')[5], line[1],c)

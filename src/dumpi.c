@@ -186,7 +186,7 @@ char *generateMsg(size_type sourceChip, size_type destChip, double twTimeSend, c
 		sourceChip = destChip;
 		destChip = t;
 	}
-    int rv = sprintf(outStr, "%li,%ul|%s %li %li %.21Lf %.21Lf %.17Lf %.17Lf %i %i %i %i\n",
+    int rv = sprintf(outStr, "%li,%lu|%s %li %li %.21Lf %.21Lf %.17Lf %.17Lf %i %i %i %i\n",
                      t, dumpID, type, sourceChip, destChip, wallStart,
                      wallEnd, cpuStart, cpuEnd, COUNT, DTYPE, COMM, TAG);
 
