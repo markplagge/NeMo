@@ -1,10 +1,11 @@
 import argparse
 import os
 import time
-import sqlite3
+
 import progressbar
 import psycopg2
 from psycopg2 import extras
+
 def readL(line):
 	return line.split(",")
 
@@ -46,7 +47,7 @@ def initSQL(dname='dumpi.db'):
 		print("DB Create Error")
 		c.execute('''DROP TABLE dumpi''')
 		c.execute('''CREATE TABLE dumpi 
-			  					(rank int, sort real, line text)''')
+			  					(rank int, dumpID numeric,  sort real,  line text)''')
 	#c.execute("CREATE INDEX rank ON dumpi (rank)")
 	conn.commit()
 	return conn
@@ -78,11 +79,16 @@ def loadFiles(file_list, tablename):
 				lndat = []
 				for line in lines:
 					line = line.split(',')
+					p2 = line[1].split("|")
+					lndat.append([int(line[0]), int(p2[0]), float(p2[1].split(" ")[3]), p2[1] ])
+
+
 					#float(line[1].split(' ')[X] is the key to sort on. 3 is wall clock start, 5 is CPU start
-					lndat.append([int(line[0]), float(line[1].split(' ')[3]), line[1]])
+					
+					#lndat.append([int(line[0]), float(line[1].split(' ')[3]), line[1]])
 
 					#addLine(line[0], line[1].split(' ')[5], line[1],c)
-				psycopg2.extras.execute_batch(c,"INSERT INTO "+arg.table + " VALUES (%s, %s, %s)",lndat)
+				psycopg2.extras.execute_batch(c,"INSERT INTO "+arg.table + " VALUES (%s, %s, %s, %s)",lndat)
 			bar.update(i)
 			i += 1
 
