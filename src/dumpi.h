@@ -27,7 +27,7 @@
  * @param twTimeSend -DUMPI start
  * @return A char (dynamic mem) containing the full dumpi line.
  */
-char * generateIsend(size_type sourceChip, size_type destChip,  double twTimeSend);
+char *generateIsend(size_type sourceChip, size_type destChip, double twTimeSend, unsigned long dumpID);
 
 /**
  * returns an Irecv in dumpi format.
@@ -37,7 +37,7 @@ char * generateIsend(size_type sourceChip, size_type destChip,  double twTimeSen
  * @param stop -DUMPI end
  * @return A char (dynamic mem) containing the full dumpi line.
  */
-char * generateIrecv(size_type sourceChip, size_type destChip, double twTimeSbend);
+char *generateIrecv(size_type sourceChip, size_type destChip, double twTimeSbend, unsigned long dumpID);
 
 
 void saveMPIMessage(id_type sourceCore, id_type destCore, double twTimeSend,
@@ -49,8 +49,10 @@ size_type coreToRank(size_type coreID);
 
 bool isDestInterchip(id_type core1, id_type core2);
 
-void saveSendMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, FILE * outputFile);
-void saveRecvMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, FILE * outputFile);
+void saveSendMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, unsigned long dumpID,
+					 FILE *outputFile);
+void saveRecvMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, unsigned long dumpID,
+					 FILE *outputFile);
 
 void setrnd(tw_lp * lp);
 

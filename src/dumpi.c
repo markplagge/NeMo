@@ -170,8 +170,7 @@ double getCPUEnd(double cpuStart){
 	return cpuStart;
 }
 
-char * generateMsg(size_type sourceChip, size_type destChip, double twTimeSend,
-				   char *type){
+char *generateMsg(size_type sourceChip, size_type destChip, double twTimeSend, char *type, unsigned long dumpID) {
 
     char * outStr= calloc(sizeof(char), 1024); // alloc new string - using this instead of buffer for the time being.
 //    sourceChip = chipToRank(sourceChip);
@@ -187,20 +186,20 @@ char * generateMsg(size_type sourceChip, size_type destChip, double twTimeSend,
 		sourceChip = destChip;
 		destChip = t;
 	}
-    int rv = sprintf(outStr, "%li,%s %li %li %.21Lf %.21Lf %.17Lf %.17Lf %i %i %i %i\n",
-                     t, type, sourceChip, destChip, wallStart,
+    int rv = sprintf(outStr, "%li,%ul|%s %li %li %.21Lf %.21Lf %.17Lf %.17Lf %i %i %i %i\n",
+                     t, dumpID, type, sourceChip, destChip, wallStart,
                      wallEnd, cpuStart, cpuEnd, COUNT, DTYPE, COMM, TAG);
 
 	//virtual ranks are interleaved - add a "running-on" feature for script extraction at the start of the line
 	//rv = sprintf(outStr, "%li,%s",sourceChip,outStr);
     return outStr;
 }
-char * generateIsend(size_type sourceChip, size_type destChip, double twTimeSend){
+char *generateIsend(size_type sourceChip, size_type destChip, double twTimeSend, unsigned long dumpID) {
 
-    return generateMsg(sourceChip,destChip,twTimeSend,"MPI_Isend");
+    return generateMsg(sourceChip, destChip, twTimeSend, "MPI_Isend", dumpID);
 }
-char * generateIrecv(size_type sourceChip, size_type destChip, double twTimeSend){
-    return generateMsg(sourceChip, destChip, twTimeSend + (3 * CPU_OFFSET), "MPI_Irecv");
+char *generateIrecv(size_type sourceChip, size_type destChip, double twTimeSend, unsigned long dumpID) {
+    return generateMsg(sourceChip, destChip, twTimeSend + (3 * CPU_OFFSET), "MPI_Irecv", dumpID);
 }
 
 bool isDestInterchip(id_type core1, id_type core2){
@@ -213,8 +212,8 @@ void saveMPIMessage(id_type sourceCore, id_type destCore, double twTimeSend,
                     FILE * outputFile){
     long sourceChip = coreToRank(sourceCore);
     long destChip = coreToRank(destCore);
-    char * isend = generateIsend(sourceChip,destChip,twTimeSend);
-    char * ircv = generateIrecv(destChip, sourceChip, twTimeSend);
+    char * isend = generateIsend(sourceChip, destChip, twTimeSend, 0);
+    char * ircv = generateIrecv(destChip, sourceChip, twTimeSend, 0);
 
     fprintf(outputFile, isend);
     fprintf(outputFile, ircv);
@@ -223,17 +222,19 @@ void saveMPIMessage(id_type sourceCore, id_type destCore, double twTimeSend,
     free(ircv);
 
 }
-void saveSendMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, FILE * outputFile){
+void saveSendMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, unsigned long dumpID,
+					 FILE *outputFile) {
     size_type sourceChip = coreToRank(sourceCore);
     size_type destChip = coreToRank(destCore);
-    char* isend = generateIsend(sourceChip,destChip,twTime);
+    char* isend = generateIsend(sourceChip, destChip, twTime, dumpID);
     fprintf(outputFile, isend);
     free(isend);
 }
-void saveRecvMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, FILE * outputFile){
+void saveRecvMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, unsigned long dumpID,
+					 FILE *outputFile) {
     long sourceChip = coreToRank(sourceCore);
     long destChip = coreToRank(destCore);
-    char* ircv = generateIrecv(destChip,sourceChip,twTime);
+    char* ircv = generateIrecv(destChip, sourceChip, twTime, dumpID);
     fprintf(outputFile, ircv);
     free(ircv);
 }
