@@ -676,7 +676,7 @@ void TN_create_simple_neuron(tn_neuron_state *s, tw_lp *lp) {
 	short sigmaVR = 1;
 	short gamma = 0;
 	bool kappa = 0;
-	int signalDelay = 1;  // tw_rand_integer(lp->rng, 0,5);
+	int signalDelay = 0;  // tw_rand_integer(lp->rng, 0,5);
 
 	for (int i = 0; i < NEURONS_IN_CORE; i++) {
 		// s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
