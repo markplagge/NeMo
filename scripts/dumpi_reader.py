@@ -4,6 +4,8 @@ import progressbar
 import os
 import time
 from concurrent.futures.thread import ThreadPoolExecutor
+import psycopg2
+from psycopg2 import extras
 
 import joblib
 from joblib import delayed,memory,Memory,Parallel
