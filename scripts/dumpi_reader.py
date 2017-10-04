@@ -102,7 +102,7 @@ def loadFiles(file_list, tablename):
 					lndat.append([int(line[0]), float(line[1].split(' ')[3]), line[1]])
 
 					#addLine(line[0], line[1].split(' ')[5], line[1],c)
-				psycopg2.extras.execute_batch(c,"INSERT INTO "+arg.table + " VALUES (%s, %s, %s, %s)",lndat)
+				psycopg2.extras.execute_batch(c,"INSERT INTO "+arg.table + " VALUES (%s, %s, %s)",lndat)
 			bar.update(i)
 			i += 1
 
