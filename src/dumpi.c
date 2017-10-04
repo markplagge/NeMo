@@ -50,7 +50,7 @@ size_type chipToRank(size_type chipID){
 #ifdef DEBUG
     if ((chipID / CHIPS_PER_RANK) > NUM_SIM_RANKS){
         printf("Error in chip to rank calculation \n");
-        printf("Chip: %lu - CPR: %i - RANKS: %i - CALC %lu", chipID,
+        printf("Chip: %llu - CPR: %i - RANKS: %li - CALC %llu", chipID,
                CHIPS_PER_RANK, NUM_SIM_RANKS, chipID / NUM_SIM_RANKS);
     }
 #endif
