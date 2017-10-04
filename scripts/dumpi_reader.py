@@ -212,6 +212,8 @@ if __name__ == '__main__':
 			file_list.append(file)
 	print("Reading in:")
 	if arg.db:
+		
+		arg.table = arg.table[0]
 		i = loadFiles(file_list, arg.table)
 		print("saving from db")
 		get_and_save_from_db(i)
