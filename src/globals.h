@@ -167,16 +167,17 @@ typedef struct Ms{
         id_type axonID; //!< Axon ID for neuron value lookups.
         bool * neuronConn;
     };
+	unsigned long dumpiID;
     //message tracking values:
 #ifdef SAVE_MSGS
-    union {
-        uint64_t uuid;
-        struct {
-            uint16_t idp1;
-            uint16_t idp2;
-            uint32_t idp3;
-        };
-    };
+//    union {
+//        uint64_t uuid;
+//        struct {
+//            uint16_t idp1;
+//            uint16_t idp2;
+//            uint32_t idp3;
+//        };
+//    };
    // tw_lpid originGID;
     //char originComponent;
 
@@ -216,11 +217,11 @@ EXT bool SAVE_MEMBRANE_POTS ;
 EXT bool SAVE_SPIKE_EVTS ; //!< Toggles saving spike events
 EXT bool SAVE_NEURON_OUTS;
 
-EXT bool MPI_SAVE;
+//EXT bool MPI_SAVE;
 EXT bool BINARY_OUTPUT;
 
 EXT bool PHAS_VAL;
-EXT bool TONIC_SPK_VAL;
+//EXT bool TONIC_SPK_VAL;
 EXT bool TONIC_BURST_VAL;
 EXT bool PHASIC_BURST_VAL;
 EXT bool VALIDATION;
@@ -262,11 +263,12 @@ EXT tw_stime CLOCK_RANDOM_ADJ;
 
 /** @definegroup satnet Saturation network flags / settings @{ */
 EXT unsigned int SAT_NET_PERCENT;
-EXT unsigned int SAT_NET_COREMODE ;
+EXT unsigned int SAT_NET_COREMODE;
 EXT unsigned int SAT_NET_THRESH;
 EXT unsigned int SAT_NET_LEAK;
 EXT unsigned int SAT_NET_STOC;
 EXT unsigned int IS_SAT_NET;
+
 
 /** @defgroup iocfg File buffer settings
  * @{

@@ -190,6 +190,6 @@ void axon_commit(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp){
         //saveMPIMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp),
         //			   dumpi_out);
 		setrnd(lp);
-        saveRecvMessage(M->isRemote, getCoreFromGID(lp->gid), tw_now(lp), dumpi_out1);
+		saveRecvMessage(M->isRemote, getCoreFromGID(lp->gid), tw_now(lp), M->dumpiID, dumpi_out1);
     }
 }

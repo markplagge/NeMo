@@ -24,6 +24,9 @@
 #endif
 /** DUMPI FILE */
 FILE * dumpi_out;
+
+extern int connectedWeight;
+
 /**
  * TrueNorth LP Neuron Model struct
  */

@@ -296,6 +296,7 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp,
 				//setting bit 31 as toggle for send communication
 				if (isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))) {
 					bf->c31 = 1;
+					m->dumpiID = tw_rand_ulong(lp->rng,0,ULONG_MAX - 1);
 				} else {
 					bf->c31 = 0;
 				}
@@ -744,9 +745,9 @@ void TN_create_saturation_neuron(tn_neuron_state* s, tw_lp* lp) {
 
 	static uint64_t numCreated = 0;
 
-    if(numCreated == 0){
-        printf("Started saturation network generation.\n");
-    }
+//    if(numCreated == 0){
+//        printf("Started saturation network generation.\n");
+//    }
 
 	bool synapticConnectivity[NEURONS_IN_CORE];
 //	short G_i[NEURONS_IN_CORE];
@@ -764,7 +765,7 @@ void TN_create_saturation_neuron(tn_neuron_state* s, tw_lp* lp) {
 //	bool kappa = 0;
 //	int signalDelay = 1;
 //	weight_type beta = -1;
-	getSynapticConnectivity(&synapticConnectivity,lp);
+	getSynapticConnectivity(synapticConnectivity,lp);
 
 	for (int i = 0; i < NEURONS_IN_CORE; i++) {
 		// s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
@@ -827,7 +828,7 @@ void TN_init(tn_neuron_state *s, tw_lp *lp) {
 
 	if (DEBUG_MODE) {
 		printf(
-				"Neuron type %s, num: %llu checking in with GID %llu and dest %llu \n",
+				"Neuron type %s, num: %u checking in with GID %llu and dest %llu \n",
 				s->neuronTypeDesc, s->myLocalID, lp->gid, s->outputGID);
 	}
 
@@ -904,7 +905,7 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
         //			   dumpi_out);
 
 		setrnd(lp);
-        saveSendMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp), dumpi_out);
+		saveSendMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp), m->dumpiID, dumpi_out);
 
     }
 
