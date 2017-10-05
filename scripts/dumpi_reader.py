@@ -1,11 +1,19 @@
 import argparse
 import concurrent
+
+import random
 import progressbar
 import os
 import time
 from concurrent.futures.thread import ThreadPoolExecutor
 import psycopg2
 from psycopg2 import extras
+try:
+	import pymongo
+	from pymongo import MongoClient
+	mongo_ok = True
+except:
+	mongo_ok = False
 
 import joblib
 from joblib import delayed,memory,Memory,Parallel
@@ -49,21 +57,33 @@ def saveRank(data,key):
 			f.write(v)
 
 
-def initSQL(dname='dumpi.db'):
+def initSQL(dname='dumpi.db',host="localhost"):
 	# conn = sqlite3.connect(dname)
 	#
 	# c = conn.cursor()
+	# if(arg.table):
+	print("table set to " + str(arg.table))
 	tnt = arg.table
-	conn = psycopg2.connect("dbname=postgres user=postgres password=mysecretpassword host=localhost")
+	# else:
+	# 	r = random.randrange(1,10000)
+	# 	tnt = "dload_" + str(r)
+	# 	print("table set to " + tnt)
+
+	conn = psycopg2.connect("dbname=postgres user=postgres password=mysecretpassword host=" + host)
 	c = conn.cursor()
 	try:
-		c.execute("CREATE TABLE " + tnt + " (rank int , sort numeric, line text) ")
+		c.execute("CREATE TABLE {} (rank int , sort numeric, line text) ".format(tnt))
 	except:
 		print("DB Create Error")
-		c.execute('''DROP TABLE dumpi''')
-		c.execute('''CREATE TABLE dumpi (rank int, sort numeric, line text)''')
+		c.execute("DROP TABLE {} ".format(tnt) )
+		c.execute("CREATE TABLE {} (rank int, sort numeric, line text)".format(tnt))
 	#c.execute("CREATE INDEX rank ON dumpi (rank)")
 	conn.commit()
+	return conn
+
+def getCon(dbname='dumpi.db', host='localhost'):
+	tnt = arg.table
+	conn = psycopg2.connect("dbname=postgres  user=postgres password=mysecretpassword host=localhost")
 	return conn
 
 
@@ -82,15 +102,14 @@ def addLine(rank,time,line,cursor):
 def commit(cursor):
 	cursor.commit()
 
-def loadFiles(file_list, tablename):
-	conn = initSQL()
-	c = conn.cursor()
+def bulkLoadForDB(file_list):
 	i = 0
-	with progressbar.ProgressBar(max_value = len(file_list)) as bar:
+	lndat = []
+	with progressbar.ProgressBar(max_value=len(file_list)) as bar:
 		for filename in file_list:
 			with open(filename, 'r') as f:
 				lines = f.readlines()
-				lndat = []
+				#lndat = []
 				for line in lines:
 					line = line.split(',')
 					#p2 = line[1].split("|")
@@ -98,13 +117,48 @@ def loadFiles(file_list, tablename):
 
 
 					#float(line[1].split(' ')[X] is the key to sort on. 3 is wall clock start, 5 is CPU start
-
+					if arg.join:
+						line = removeDelay(line)
 					lndat.append([int(line[0]), float(line[1].split(' ')[3]), line[1]])
 
 					#addLine(line[0], line[1].split(' ')[5], line[1],c)
-				psycopg2.extras.execute_batch(c,"INSERT INTO "+arg.table + " VALUES (%s, %s, %s)",lndat)
+
+				#psycopg2.extras.execute_batch(c,"INSERT INTO "+arg.table + " VALUES (%s, %s, %s)",lndat)
 			bar.update(i)
 			i += 1
+
+
+def loadFiles(file_list, tablename,type="pg"):
+
+	i = 0
+	lndat = []
+	lndat = bulkLoadForDB(file_list)
+
+	# with progressbar.ProgressBar(max_value = len(file_list)) as bar:
+	# 	for filename in file_list:
+	# 		with open(filename, 'r') as f:
+	# 			lines = f.readlines()
+	# 			#lndat = []
+	# 			for line in lines:
+	# 				line = line.split(',')
+	# 				#p2 = line[1].split("|")
+	# 				#lndat.append([int(line[0]), int(p2[0]), float(p2[1].split(" ")[3]), p2[1] ])
+	#
+	#
+	# 				#float(line[1].split(' ')[X] is the key to sort on. 3 is wall clock start, 5 is CPU start
+	#
+	# 				lndat.append([int(line[0]), float(line[1].split(' ')[3]), line[1]])
+	#
+	# 				#addLine(line[0], line[1].split(' ')[5], line[1],c)
+	#
+	# 			#psycopg2.extras.execute_batch(c,"INSERT INTO "+arg.table + " VALUES (%s, %s, %s)",lndat)
+	# 		bar.update(i)
+	# 		i += 1
+	if type == "pg":
+		print (" loading into postgres...")
+		conn = initSQL()
+		c = conn.cursor()
+	psycopg2.extras.execute_batch(c, "INSERT INTO " + arg.table + " VALUES (%s, %s, %s)", lndat)
 
 
 
@@ -180,6 +234,13 @@ def get_and_save_from_db(i):
 		line = c.fetchone()
 	f.close()
 
+#### Band-aid fix for delay ####
+
+def removeDelay(textLine):
+	tl = textLine.split(" ")
+	if tl[0] == "MPI_Irecv":
+		tl[3] = str(float(tl[3]) - 1)
+	return " ".join(tl)
 
 
 if __name__ == '__main__':
@@ -196,7 +257,7 @@ if __name__ == '__main__':
 						"-processed-")
 	parser.add_argument("files", nargs="*", help="process these files", type=argparse.FileType('r'))
 
-
+	parser.add_argument("--join", action="store_true", default=False)
 	arg = parser.parse_args()
 
 	#generate file list:
