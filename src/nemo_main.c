@@ -243,7 +243,7 @@ void init_nemo(){
 				SAVE_MEMBRANE_POTS || VALIDATION;
 
 	FILE_IN = !IS_RAND_NETWORK;
-
+    FILE_IN = false;
 
 	if (FILE_OUT){
 		//Init file output handles
