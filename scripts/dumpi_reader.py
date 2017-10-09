@@ -105,8 +105,16 @@ def commit(cursor):
 def bulkLoadForDB(file_list):
 	i = 0
 	lndat = []
+	maxFiles = 1024
+	cfiles = 0
+	if type == "pg":
+		print (" loading into postgres...")
+		conn = initSQL()
+		c = conn.cursor()
+
 	with progressbar.ProgressBar(max_value=len(file_list)) as bar:
 		for filename in file_list:
+			cfiles = cfiles + 1
 			with open(filename, 'r') as f:
 				lines = f.readlines()
 				#lndat = []
@@ -126,39 +134,50 @@ def bulkLoadForDB(file_list):
 				#psycopg2.extras.execute_batch(c,"INSERT INTO "+arg.table + " VALUES (%s, %s, %s)",lndat)
 			bar.update(i)
 			i += 1
+			if cfiles >= maxFiles:
+				psycopg2.extras.execute_batch(c, "INSERT INTO " + arg.table + " VALUES (%s, %s, %s)", lndat)
+				cfiles = 0
+				lndat = []
+
+	psycopg2.extras.execute_batch(c, "INSERT INTO " + arg.table + " VALUES (%s, %s, %s)", lndat)
+
 
 
 def loadFiles(file_list, tablename,type="pg"):
+	if arg.bulk == True:
+		bulkLoadForDB(file_list)
+		return
 
+	#Used to do this line by line.
 	i = 0
 	lndat = []
-	lndat = bulkLoadForDB(file_list)
-
-	# with progressbar.ProgressBar(max_value = len(file_list)) as bar:
-	# 	for filename in file_list:
-	# 		with open(filename, 'r') as f:
-	# 			lines = f.readlines()
-	# 			#lndat = []
-	# 			for line in lines:
-	# 				line = line.split(',')
-	# 				#p2 = line[1].split("|")
-	# 				#lndat.append([int(line[0]), int(p2[0]), float(p2[1].split(" ")[3]), p2[1] ])
-	#
-	#
-	# 				#float(line[1].split(' ')[X] is the key to sort on. 3 is wall clock start, 5 is CPU start
-	#
-	# 				lndat.append([int(line[0]), float(line[1].split(' ')[3]), line[1]])
-	#
-	# 				#addLine(line[0], line[1].split(' ')[5], line[1],c)
-	#
-	# 			#psycopg2.extras.execute_batch(c,"INSERT INTO "+arg.table + " VALUES (%s, %s, %s)",lndat)
-	# 		bar.update(i)
-	# 		i += 1
+	#lndat = bulkLoadForDB(file_list)
 	if type == "pg":
 		print (" loading into postgres...")
 		conn = initSQL()
 		c = conn.cursor()
-	psycopg2.extras.execute_batch(c, "INSERT INTO " + arg.table + " VALUES (%s, %s, %s)", lndat)
+
+	with progressbar.ProgressBar(max_value = len(file_list)) as bar:
+		for filename in file_list:
+			with open(filename, 'r') as f:
+				lines = f.readlines()
+				#lndat = []
+				for line in lines:
+					line = line.split(',')
+					#p2 = line[1].split("|")
+					#lndat.append([int(line[0]), int(p2[0]), float(p2[1].split(" ")[3]), p2[1] ])
+
+
+					#float(line[1].split(' ')[X] is the key to sort on. 3 is wall clock start, 5 is CPU start
+
+					lndat.append([int(line[0]), float(line[1].split(' ')[3]), line[1]])
+
+					#addLine(line[0], line[1].split(' ')[5], line[1],c)
+				psycopg2.extras.execute_batch(c,"INSERT INTO "+arg.table + " VALUES (%s, %s, %s)",lndat)
+			bar.update(i)
+			i += 1
+
+	#psycopg2.extras.execute_batch(c, "INSERT INTO " + arg.table + " VALUES (%s, %s, %s)", lndat)
 
 
 
@@ -250,7 +269,7 @@ if __name__ == '__main__':
 	parser.add_argument("--all", action="store_false", help="process all files with extension found in dir",
 						default=True)
 
-	parser.add_argument("--db", action="store_true", help="use database", default=False)
+	parser.add_argument("--db", action="store_true", help="use database", default=True)
 	parser.add_argument('--table', nargs=1, help="table name", default="dumpi")
 
 	parser.add_argument('outfile_tmplt', nargs='?', help="save to this file", default="dumpi--" + ctimes +
@@ -258,6 +277,7 @@ if __name__ == '__main__':
 	parser.add_argument("files", nargs="*", help="process these files", type=argparse.FileType('r'))
 
 	parser.add_argument("--join", action="store_true", default=False)
+	parser.add_argument("--bulk", action="store_true", default=False)
 	arg = parser.parse_args()
 
 	#generate file list:
@@ -273,7 +293,7 @@ if __name__ == '__main__':
 			file_list.append(file)
 	print("Reading in:")
 	if arg.db:
-		
+
 		arg.table = arg.table[0]
 		i = loadFiles(file_list, arg.table)
 		print("saving from db")
