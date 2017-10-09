@@ -108,9 +108,10 @@ def bulkLoadForDB(file_list):
 	maxFiles = 1024
 	cfiles = 0
 	if type == "pg":
-		print (" loading into postgres...")
-		conn = initSQL()
-		c = conn.cursor()
+		pass
+	print (" loading into postgres...")
+	conn = initSQL()
+	c = conn.cursor()
 
 	with progressbar.ProgressBar(max_value=len(file_list)) as bar:
 		for filename in file_list:
@@ -153,9 +154,10 @@ def loadFiles(file_list, tablename,type="pg"):
 	lndat = []
 	#lndat = bulkLoadForDB(file_list)
 	if type == "pg":
-		print (" loading into postgres...")
-		conn = initSQL()
-		c = conn.cursor()
+		pass
+	print (" loading into postgres...")
+	conn = initSQL()
+	c = conn.cursor()
 
 	with progressbar.ProgressBar(max_value = len(file_list)) as bar:
 		for filename in file_list:
