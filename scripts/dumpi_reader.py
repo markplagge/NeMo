@@ -18,6 +18,8 @@ except:
 import joblib
 from joblib import delayed,memory,Memory,Parallel
 
+
+
 def readL(line):
 	return line.split(",")
 
@@ -102,6 +104,56 @@ def addLine(rank,time,line,cursor):
 def commit(cursor):
 	cursor.commit()
 
+
+def fastLoadPushRunner(localFileList):
+	conn = initSQL()
+	c = conn.cursor()
+	lndat = []
+	for filename in localFileList:
+		with open(filename, "r") as f:
+			lines = f.readlines()
+			for line in lines:
+				lndat.append([int(line[0]), float(line[1].split(' ')[3]), line[1]])
+	psycopg2.extras.execute_batch(c, "INSERT INTO " + arg.table + " VALUES (%s, %s, %s)", lndat)
+	commit(c)
+
+def fastLoadDB(file_list):
+
+	chunks = 32
+	worker_file_lists = []
+	cworker = 0
+	for i in range(0,chunks):
+		worker_file_lists[i] = []
+
+	for fn in file_list:
+		worker_file_lists[cworker].append(fn)
+		cworker += 1
+		if cworker > chunks:
+			cworker = 0
+	print("Arming & Starting FILE->DB ")
+	running_procs = []
+	with concurrent.futures.ProcessPoolExecutor(max_workers=16) as executor:
+
+		with progressbar.ProgressBar(max_value=property.UnknownLength) as bar:
+			for worker_files in worker_file_lists:
+				running_procs.append(executor.submit(fastLoadPushRunner, worker_files))
+				bar.update(1)
+	print("Loading DB")
+
+	with progressbar.ProgressBar(max_value=len(running_procs)) as bar:
+		while(all([x.running() for x in running_procs])) :
+			bar.update(sum([x.done() for x in running_procs]))
+
+	print("loaded into DB")
+	return
+
+
+
+
+
+
+
+
 def bulkLoadForDB(file_list):
 	i = 0
 	lndat = []
@@ -126,8 +178,8 @@ def bulkLoadForDB(file_list):
 
 
 					#float(line[1].split(' ')[X] is the key to sort on. 3 is wall clock start, 5 is CPU start
-					if arg.join:
-						line = removeDelay(line)
+					# if arg.join:
+					# 	line = removeDelay(line)
 					lndat.append([int(line[0]), float(line[1].split(' ')[3]), line[1]])
 
 					#addLine(line[0], line[1].split(' ')[5], line[1],c)
@@ -231,7 +283,7 @@ def getMaxRank():
 	print(v)
 	return v[0]
 
-def get_and_save_from_db(i):
+def get_and_save_from_db(i=0):
 	rnkCmd = "SELECT rank,line FROM " + str(arg.table) + " ORDER BY rank,sort"
 	conn = getSQL()
 	c = conn.cursor()
@@ -280,6 +332,8 @@ if __name__ == '__main__':
 
 	parser.add_argument("--join", action="store_true", default=False)
 	parser.add_argument("--bulk", action="store_true", default=False)
+	parser.add_argument("--mp", action="store_true", default=False
+						)
 	arg = parser.parse_args()
 
 	#generate file list:
@@ -295,11 +349,13 @@ if __name__ == '__main__':
 			file_list.append(file)
 	print("Reading in:")
 	if arg.db:
-
 		arg.table = arg.table[0]
-		i = loadFiles(file_list, arg.table)
+		if arg.mp:
+			fastLoadDB(file_list)
+		else:
+			loadFiles(file_list, arg.table)
 		print("saving from db")
-		get_and_save_from_db(i)
+		get_and_save_from_db()
 
 	else:
 		datum = parseFiles(file_list)
