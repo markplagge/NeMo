@@ -298,8 +298,8 @@ void init_nemo(){
 
 
 	///EVENTS PER PE SETTING
-	g_tw_events_per_pe = NEURONS_IN_CORE * AXONS_IN_CORE ; //magic number
-                               
+	g_tw_events_per_pe = (CORES_IN_SIM * NEURONS_IN_CORE * 256) / tw_nnodes() ; //magic number
+    
     LPS_PER_PE = g_tw_nlp / g_tw_npe;
 
 	NUM_CHIPS_IN_SIM = CORES_IN_SIM / CORES_IN_CHIP;
