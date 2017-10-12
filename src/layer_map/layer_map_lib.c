@@ -109,7 +109,12 @@ void setupGrid(int showMapping){
 
 
 }
-
+bool inFirstLayer(tn_neuron_state *s){
+    if (s->myCoreID > CORES_PER_LAYER){
+        return true;
+    }
+    return false;
+};
 void configureGridNeuron(tn_neuron_state *s, tw_lp *lp){
     for (int i = 0; i < NEURONS_IN_CORE; i ++){
         s->synapticConnectivity[i] = 1;
@@ -129,5 +134,11 @@ void configureNeuronInLayer(tn_neuron_state *s, tw_lp *lp){
             break;
         default:
             break;
+    }
+    if(inFirstLayer(s)){
+        s->isSelfFiring = true;
+        s->sigma_l = -1;
+        s->epsilon = 0;
+        s->lambda = 1;
     }
 }

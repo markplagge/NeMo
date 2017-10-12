@@ -531,7 +531,7 @@ void TNNumericLeakCalc(tn_neuron_state *st, tw_stime now) {
 			getCurrentBigTick(now) - getCurrentBigTick(st->lastLeakTime);
 	// then run the leak function until we've caught up:
 	for (; numberOfBigTicksSinceLastLeak > 0; numberOfBigTicksSinceLastLeak--) {
-		uint64_t omega = st->sigma_l * (1 - st->epsilon) +
+		int64_t omega = st->sigma_l * (1 - st->epsilon) +
 						 SGN(st->membranePotential) * st->sigma_l * st->epsilon;
 
 		st->membranePotential =
