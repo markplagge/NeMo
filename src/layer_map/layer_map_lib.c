@@ -113,7 +113,7 @@ void setupGrid(int showMapping){
 void configureGridNeuron(tn_neuron_state *s, tw_lp *lp){
     for (int i = 0; i < NEURONS_IN_CORE; i ++){
         s->synapticConnectivity[i] = 1;
-        s->axonTypes[i] = 1;
+        s->axonTypes[i] = 0;
     }
     tw_lpid dest = getNeuronDestInLayer(s->myCoreID, s->myLocalID);
     s->outputGID = dest;

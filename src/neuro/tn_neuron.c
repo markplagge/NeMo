@@ -29,7 +29,7 @@ the current big-tick.
 *  @param lp   lp.
 */
 
-bool TNReceiveMessage(tn_neuron_state *st, messageData *M, tw_lp *lp,
+bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp,
 					  tw_bf *bf);
 
 /**

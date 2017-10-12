@@ -208,7 +208,7 @@ void displayModelSettings()
 	TH
 	printf("* \tChip Sim Info:\n");
 	printf("* \tCores per chip: %i\n", CORES_IN_CHIP);
-	printf("* \tReported chips in sim: %li\n", coreToChip(CORES_IN_SIM  ));
+	printf("* \tReported chips in sim: %llu\n", (long) coreToChip(CORES_IN_SIM  ));
     TH
     STT("SAT NET ENABLED: %i", IS_SAT_NET);
     STT("SAT net stoc. mode: %i", SAT_NET_STOC);
