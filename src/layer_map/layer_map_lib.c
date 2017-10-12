@@ -12,7 +12,7 @@ tw_lpid gridLinear(id_type sourceCoure, id_type sourceNeuron){
     //straight grid mapping
     //get the number of cores in each layer:
     //Calculate the destination core using the source core and cores per layer:
-    id_type destCore = CORES_PER_LAYER + sourceCoure + 1;
+    id_type destCore = CORES_PER_LAYER + sourceCoure;
     //get destination GID using mylocalID and dest core:
     return getGIDFromLocalIDs(destCore, sourceNeuron);
 }
@@ -20,8 +20,10 @@ tw_lpid gridLinear(id_type sourceCoure, id_type sourceNeuron){
 tw_lpid getGridNeuronDest(unsigned int sourceCoure, unsigned int sourceNeuron){
     if (LAYER_NET_MODE & OUTPUT_RND){
         if (LAYER_NET_MODE & OUTPUT_UNQ){
+            tw_error(TW_LOC," UNIQUE NOT IMP");
             return -1; //Random unique grid mode
         }
+        tw_error(TW_LOC," UNIQUE NOT IMP");
         return -1; //Random non-unique grid mode
     }
     //linear grid mode:
