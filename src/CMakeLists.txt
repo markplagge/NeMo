@@ -2,13 +2,20 @@ cmake_minimum_required(VERSION 2.4)
 project(NeMo)
 enable_testing()
 
-INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR})
+INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR} ${lmdir} )
 set (CMAKE_EXPORT_COMPILE_COMMANDS 1 )
-
+set (NON11 0 CACHE BOOL "Non C11 Compliant Compiler?")
 ##NeMo uses a few C11 features, including generic macros. We assume standard C11
 ##behaviors.
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11")
+if(${NON11})
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11")
+
+endif()
+
 
 ## Model Version
 LIST(APPEND CMAKE_MODULE_PATH "${ROSS_SOURCE_DIR}/cmake/")
@@ -81,7 +88,9 @@ set(model_srcs
         IO/output.c
         nemo_config.h 
         dumpi.c dumpi.h
-        nemo_main.h tests/tomacs_exp.c tests/tomacs_exp.h)
+        layer_map/layer_map_lib.h layer_map/layer_map_lib.c
+        nemo_main.h tests/tomacs_exp.c tests/tomacs_exp.h
+        )
 
 
 

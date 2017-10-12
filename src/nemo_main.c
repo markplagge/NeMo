@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include "nemo_main.h"
 #include "./IO/IOStack.h"
-
+#include "./layer_map/layer_map_lib.h"
 /** \addtogroup Globals 
  * @{  */
 
@@ -56,6 +56,19 @@ unsigned int SAT_NET_STOC = false;
 unsigned int IS_SAT_NET = false;
 /**@} */
 
+
+/** Layer Network Settings - Globals:
+ */
+
+unsigned int NUM_LAYERS_IN_SIM;
+layerTypes LAYER_NET_MODE;
+unsigned int LAYER_SIZES[4096]; //!< 4k Layers max. Defines the number of neurons in a
+unsigned int GRID_ENABLE = 0;
+unsigned int GRID_MODE = 0;
+unsigned int RND_GRID = 0;
+unsigned int RND_UNIQ = 0;
+unsigned int UNEVEN_LAYERS = 0;
+char * LAYER_LAYOUT;
 //
 /**
  * @FILE_OUT - is set to true if NeMo is saving output files
@@ -119,8 +132,16 @@ const tw_optdef app_opt[] = {
 				"\n Used if a collision in TW_NOW is detected when generating DUMPI cmds"),
 		TWOPT_STIME("stmin", SEND_TIME_MIN, "The send time min value"),
 		TWOPT_STIME("stmax", SEND_TIME_MAX, "The maximum send time value"),
+	TWOPT_GROUP("Layer/Grid Network Benchmark Parameters"),
+	TWOPT_FLAG("gd", GRID_ENABLE,"Enable Grid Mode"),
+	TWOPT_UINT("gm", GRID_MODE, "Grid Mode: 0 is Linear, 1 is Convolutional"),
+	TWOPT_FLAG("gr", RND_GRID , "Enable random grid mode"),
+	TWOPT_FLAG("gru", RND_UNIQ , "For random grids, are connections unique (no neurons attached to the same axon)"),
+    TWOPT_UINT("lnum", NUM_LAYERS_IN_SIM, "Number of layers in simulation. Ignored if grid mode."),
+	TWOPT_UINT("gridsize", CHIPS_PER_LAYER, "Number of chips in a layer. Grid mode only. Must be evenly distributable,"),
+	TWOPT_FLAG("uneven", UNEVEN_LAYERS, "Enable uneven layer mode. Must specify chips per layer in CPL option"),
 
-    TWOPT_END()
+	TWOPT_END()
 
 };
 
@@ -195,6 +216,8 @@ void displayModelSettings()
     STT("SAT mode set to %u ", SAT_NET_COREMODE)
     printf("* \t Modes: (0) - Neuron %%, (1) - Core Pool, (2) Neuron Pool \n");
     TH
+	printf("* \tLayer Network Parameters \n");
+    displayConfig();
 	printf("\n");
 //    unsigned int SAT_NET_PERCENT = 2;
 //    bool SAT_NET_COREMODE = false;
@@ -281,52 +304,16 @@ void init_nemo(){
 
 	NUM_CHIPS_IN_SIM = CORES_IN_SIM / CORES_IN_CHIP;
 	CHIPS_PER_RANK = 1;
+    //Layer / Grid Mode setup:
+    setupGrid(0);
 
 }
+
+
 
 unsigned char mapTests(){
-//    unsigned char result = 0;
-//    //test a 512 size neuron
-//    //
-//    int nic =512; //(int) NEURONS_IN_CORE;
-//    int lps = 512 + 512 + 1;// (int) LPS_PER_PE;
-//    tw_lpid *lpv; 
-//    lpv = testCreateLPID(nic, lps);
-//
-//    //should be 1025 elements in this array:
-//    int i = 0;
-//    for(; i < 512; i ++){  //test to ensure that these are axons
-//        if (lpv[i] != AXON) {
-//            result = result | INVALID_AXON;
-//            
-//        }
-//    }
-//    i ++;
-//    if(lpv[i] != SYNAPSE) {
-//    result = result | INVALID_SYNAPSE;
-//
-//    }
-//    i ++;
-//    for(; i < 512; i++){
-//        if (lpv[i] != NEURON){
-//            result = result | INVALID_NEURON;
-//        }
-//    }
-//    printf("LP Types Created\n");
-//    for(i =0; i < 1025; i++){
-//        printf("%llu \t", lpv[i]);
-//        if (!(i % 256)){
-//            printf("\n");
-//        }
-//        
-//    }
-//    return result;
-    return '0';
-
+    return 0;
 }
-
-
-
 
 /**
  * @brief      NeMo Main entry point

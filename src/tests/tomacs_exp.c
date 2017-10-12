@@ -136,5 +136,38 @@ void getSynapticConnectivity(bool *synapticConGrid, tw_lp *lp) {
 
 }
 
+//long  getGridChipFromChip(unsigned int sourceChip){
+//    //grid communication for chips - layer to layer.
+//    long chipsPerLayer = NUM_CHIPS_IN_SIM / NUM_LAYERS_IN_SIM;
+//    long   destChip = sourceChip + chipsPerLayer;
+//    return destChip > NUM_CHIPS_IN_SIM ? ( long)-1:destChip;
+//}
+//
+//
+//
+//
+//gid_t getGridNeuronGIDFromNeuron(id_type myCore, id_type myNeuronLID, gid_t myNeuronGID){
+//
+//    //Get the number of cores in each layer:
+//    long coresInLayer;
+//    //Calculate the destination core using the source core and cores per layer:
+//    long destCore; // = coresInLayer + destCore + 1
+//    //get the destination axon GID using my localID and the dest core:
+//    tw_lpid destGID = getGIDFromLocalIDs(myNeuronLID, destCore);
+//    size_type sourceChip = coreToChip(myCore);
+//    long long destChip = getGridChipFromChip(sourceChip);
+//    if (destChip == -1)
+//        return myNeuronGID;
+//    //Neruons are connected across the network:
+//
+//    unsigned int firstCoreInChip = (destChip * CORES_IN_CHIP);
+//    firstCoreInChip = firstCoreInChip + myNeuronLID;
+//
+////    unsigned int destCore = CORES_IN_CHIP * ;
+//
+//
+//    //return destNeuronGID;
+//
+//}
 /** @} */
 

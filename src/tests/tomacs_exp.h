@@ -13,6 +13,10 @@
 
 
 /** \defgroup synapSat Synaptic Saturation Experement @{ */
+unsigned int NUM_LAYERS_IN_SIM;
+layerTypes LAYER_NET_MODE;
+unsigned int LAYER_SIZES[4096];
+
 
 int connectedWeight;
 

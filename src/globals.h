@@ -37,7 +37,7 @@
  */
 /**@{  */
 
-typedef uint_fast16_t id_type; //!< id type is used for local mapping functions - there should be $n$ of them depending on CORE_SIZE
+typedef uint_fast32_t id_type; //!< id type is used for local mapping functions - there should be $n$ of them depending on CORE_SIZE
 typedef int32_t volt_type; //!< volt_type stores voltage values for membrane potential calculations
 typedef int64_t weight_type;//!< seperate type for synaptic weights.
 typedef uint32_t thresh_type;//!< Type for weights internal to the neurons.
@@ -55,6 +55,7 @@ typedef uint64_t stat_type;
 //Switched from C11 variables to generic print function:
 void debugMsg(char * m, char * d);
 #define print printf
+#define pm(x) printf("%s",x);
 //
 
 /** TODO: Eventually replace this with generic macro and non-branching ABS code. */
@@ -135,15 +136,25 @@ enum lpTypeVals {
  * @brief      test result flag.
  */
 enum mapTestResults {
-  INVALID_AXON = 0x01, //!< Axon was not properly defined.
-  INVALID_SYNAPSE = 0x02, //!< Synapse was not properly defined.
-  INVALID_NEURON = 0x03 //!< Neuron was not properly defined.
+  INVALID_AXON = 1 << 1, //!< Axon was not properly defined.
+  INVALID_SYNAPSE = 1 << 2, //!< Synapse was not properly defined.
+  INVALID_NEURON = 1 << 3 //!< Neuron was not properly defined.
 };
 
 typedef enum NeuronTypes {
     TrueNorth = 0
 } neuronTypes;
+/** @defgroup laynet Basic Layer Network Settings @{ */
 
+typedef enum LayerTypes{
+    NON_LAYER =          0,
+    GRID_LAYER =         1 << 1,
+    CONVOLUTIONAL_LAYER =1 << 2,
+	OUTPUT_UNQ =    1 << 3,
+	OUTPUT_RND = 1 << 4
+
+}layerTypes;
+/**@} */
 
 //Message Structure (Used Globally so placed here)
 typedef struct Ms{
@@ -195,6 +206,7 @@ typedef struct Ms{
 #endif //NEMO_GLOBALS_H
 #ifndef EXTERN
 #define EXT extern
+
 /**
  * \defgroup Globals Global Variables
  * @{
@@ -261,7 +273,7 @@ EXT tw_stime littleTick;
 EXT tw_stime CLOCK_RANDOM_ADJ;
 /** @} */
 
-/** @definegroup satnet Saturation network flags / settings @{ */
+/** @defgroup satnet Saturation network flags / settings @{ */
 EXT unsigned int SAT_NET_PERCENT;
 EXT unsigned int SAT_NET_COREMODE;
 EXT unsigned int SAT_NET_THRESH;
@@ -269,8 +281,24 @@ EXT unsigned int SAT_NET_LEAK;
 EXT unsigned int SAT_NET_STOC;
 EXT unsigned int IS_SAT_NET;
 
-
-/** @defgroup iocfg File buffer settings
+/** @} @defgroup laynet Basic Layer Network Settings @{ */
+//typedef struct LParams {
+//    unsigned long numLayersInSim;
+//    layerTypes LAYER_NET_MODE;
+//    unsigned int layerSizes[4096];
+//};
+EXT unsigned int NUM_LAYERS_IN_SIM;
+EXT layerTypes LAYER_NET_MODE;
+EXT unsigned int LAYER_SIZES[4096];
+EXT unsigned int CORES_PER_LAYER;
+EXT unsigned int CHIPS_PER_LAYER;
+EXT unsigned int GRID_ENABLE;
+EXT unsigned int GRID_MODE;
+EXT unsigned int RND_GRID;
+EXT unsigned int RND_UNIQ;
+EXT unsigned int UNEVEN_LAYERS;
+EXT char * LAYER_LAYOUT;
+/**@} @defgroup iocfg File buffer settings
  * @{
  * */
 /** POSIX Neuron Fire record Buffer Size */

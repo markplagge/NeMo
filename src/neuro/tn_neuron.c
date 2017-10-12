@@ -3,6 +3,7 @@
 //
 
 #include "tn_neuron.h"
+#include "../layer_map/layer_map_lib.h"
 
 /** \defgroup TN_Function_hdrs True North Function headers
  * TrueNorth Neuron leak, integrate, and fire function forward decs.
@@ -820,8 +821,11 @@ void TN_init(tn_neuron_state *s, tw_lp *lp) {
 		announced = true;
 	}
 	// ADD FILE INPUT NEURON CREATION HERE
-
-	TN_create_simple_neuron(s, lp);
+    TN_create_simple_neuron(s, lp);
+    //This if statement should not be needed, due to check in setupGrud.
+	if( (LAYER_NET_MODE & GRID_LAYER) || (LAYER_NET_MODE & CONVOLUTIONAL_LAYER)){
+        configureNeuronInLayer(s, lp);
+    }
 	if(IS_SAT_NET){
 		TN_create_saturation_neuron(s,lp);
 	}
