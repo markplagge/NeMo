@@ -48,11 +48,11 @@ long CURRENT_TICK = 0;
 size_type chipToRank(size_type chipID){
 	long NUM_SIM_RANKS = NUM_CHIPS_IN_SIM;
 #ifdef DEBUG
-    if ((chipID / CHIPS_PER_RANK) > NUM_SIM_RANKS){
-        printf("Error in chip to rank calculation \n");
-        printf("Chip: %llu - CPR: %i - RANKS: %li - CALC %llu", chipID,
-               CHIPS_PER_RANK, NUM_SIM_RANKS, chipID / NUM_SIM_RANKS);
-    }
+//    if ((chipID / CHIPS_PER_RANK) > NUM_SIM_RANKS){
+//        printf("Error in chip to rank calculation \n");
+//        printf("Chip: %llu - CPR: %i - RANKS: %li - CALC %llu", chipID,
+//               CHIPS_PER_RANK, NUM_SIM_RANKS, chipID / NUM_SIM_RANKS);
+//    }
 #endif
     return chipID / CHIPS_PER_RANK;
 }
