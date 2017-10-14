@@ -96,11 +96,12 @@ typedef struct TN_MODEL {
   bool firedLast;
   bool heartbeatOut;
   bool isSelfFiring;
-  bool epsilon;  //!<epsilon function - leak reversal flag. from the paper this
-                 //!changes the function of the leak from always directly being
-                 //!integrated (false), or having the leak directly integrated
-                 //!when membrane potential is above zero, and the sign is
-                 //!reversed when the membrane potential is below zero.
+    /**epsilon - leak reversal flag. from the paper this
+    //!changes the function of the leak from always directly being
+    //!integrated (false), or having the leak directly integrated
+    //!when membrane potential is above zero, and the sign is
+    //!reversed when the membrane potential is below zero. */
+  bool epsilon;
   bool c;        //!< leak weight selection. If true, this is a stochastic leak
            //!function and the \a leakRateProb value is a probability, otherwise
            //!it is a leak rate.

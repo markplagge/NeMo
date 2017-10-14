@@ -199,6 +199,7 @@ void displayModelSettings()
     char *netMode = FILE_IN ? "file defined":"random benchmark";
     printf("\n");
     printf("* \t %i Neurons per core (cmake defined), %llu cores in sim.\n", NEURONS_IN_CORE, CORES_IN_SIM);
+    STT("%i LPs (including Axons and Super Synapse) Per Core", CORE_SIZE);
     printf("* \t %f cores per PE, giving %llu LPs per pe.\n", cores_per_node, g_tw_nlp);
     printf("* \t Neurons have %i axon types (cmake defined)\n", NUM_NEURON_WEIGHTS);
     printf("* \t Network is a %s network.\n",netMode);

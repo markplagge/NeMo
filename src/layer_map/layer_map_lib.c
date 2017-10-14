@@ -18,6 +18,7 @@ typedef struct ConInfo{
     id_type destChip;
     id_type sourceLayer;
     id_type destLayer;
+    tw_lpid sourceNeuronGID;
 
 
 }conInfo;
@@ -25,9 +26,9 @@ typedef struct ConInfo{
 
 void getGridLinearMap(conInfo * neuron){
 
-    neuron->sourceNeuron = getNeuronGlobal(neuron->sourceCore, neuron->sourceNeuron);
 
-    neuron->sourceCore = neuron->sourceNeuron / NEURONS_IN_CORE;
+    id_type sourceNeuronGlobal =  neuron->sourceNeuron + (NEURONS_IN_CORE * neuron->sourceCore);
+    neuron->sourceNeuron = sourceNeuronGlobal;
     neuron->sourceChip = neuron->sourceCore / CORES_IN_CHIP;
     neuron->sourceLayer = neuron->sourceCore / CHIPS_PER_LAYER;
     neuron->sourceLayer = neuron->sourceChip / CHIPS_PER_LAYER;
@@ -39,6 +40,8 @@ void getGridLinearMap(conInfo * neuron){
     neuron->destNeuron = ((neuron->destCore * NEURONS_IN_CORE) +
                           (neuron->sourceNeuron % NEURONS_IN_CORE));
 
+    id_type localSourceNeuron = getNeuronLocalFromGID(neuron->sourceNeuronGID);
+    neuron->destNeuron = getGIDFromLocalIDs(neuron->destCore, localSourceNeuron);
 
 }
 
@@ -48,7 +51,8 @@ tw_lpid getGridNeuronDest(unsigned int sourceCore, tw_lpid neuronGID) {
     conInfo * ncon = calloc(sizeof(conInfo),1);
     //ncon->sourceNeuron = sourceNeuron;
     ncon->sourceNeuron = getNeuronLocalFromGID(neuronGID);
-
+    ncon->sourceCore = getCoreFromGID(neuronGID);
+    ncon->sourceNeuronGID = neuronGID;
     if (LAYER_NET_MODE & OUTPUT_RND){
         if (LAYER_NET_MODE & OUTPUT_UNQ){
             tw_error(TW_LOC," UNIQUE NOT IMP");
@@ -64,7 +68,8 @@ tw_lpid getGridNeuronDest(unsigned int sourceCore, tw_lpid neuronGID) {
     if(ncon->sourceCore != sourceCore){
         tw_error(TW_LOC,"calculated source core != given source core.\n");
     }
-    tw_lpid gidDest = getGIDFromLocalIDs(ncon->destCore, ncon->destNeuron);
+
+    tw_lpid gidDest = ncon->destNeuron;//getGIDFromLocalIDs(ncon->destCore, ncon->destNeuron);
     free(ncon);
     return gidDest;
 }
@@ -157,15 +162,33 @@ bool inFirstLayer(tn_neuron_state *s){
     return false;
 };
 
-
+bool inLastLayer(tn_neuron_state *s){
+    if (s->myCoreID >= CORES_PER_LAYER * (NUM_LAYERS_IN_SIM - 1)){
+        return true;
+    }
+    return false;
+}
 
 void configureGridNeuron(tn_neuron_state *s, tw_lp *lp){
     for (int i = 0; i < NEURONS_IN_CORE; i ++){
         s->synapticConnectivity[i] = 1;
         s->axonTypes[i] = 0;
     }
+
     tw_lpid dest = getNeuronDestInLayer(s->myCoreID, lp->gid);
-    s->outputGID = dest;
+    if(inLastLayer(s)){
+        s->outputGID = 0;
+        s->posThreshold = 9999;
+        s->lambda = 1000;
+        s->epsilon = true;
+
+    }else{
+        s->outputGID = dest;
+    }
+    if(s->outputGID > (SIM_SIZE)){
+        printf("sim size err.");
+    }
+
 }
 
 
