@@ -8,16 +8,47 @@
 unsigned int CORES_PER_LAYER = 0;
 unsigned int CHIPS_PER_LAYER = 0;
 
-tw_lpid gridLinear(id_type sourceCoure, id_type sourceNeuron){
-    //straight grid mapping
-    //get the number of cores in each layer:
-    //Calculate the destination core using the source core and cores per layer:
-    id_type destCore = CORES_PER_LAYER + sourceCoure;
-    //get destination GID using mylocalID and dest core:
-    return getGIDFromLocalIDs(destCore, sourceNeuron);
+
+typedef struct ConInfo{
+    id_type sourceNeuron;
+    id_type destNeuron;
+    id_type sourceCore;
+    id_type destCore;
+    id_type sourceChip;
+    id_type destChip;
+    id_type sourceLayer;
+    id_type destLayer;
+
+
+}conInfo;
+
+
+void getGridLinearMap(conInfo * neuron){
+
+    neuron->sourceNeuron = getNeuronGlobal(neuron->sourceCore, neuron->sourceNeuron);
+
+    neuron->sourceCore = neuron->sourceNeuron / NEURONS_IN_CORE;
+    neuron->sourceChip = neuron->sourceCore / CORES_IN_CHIP;
+    neuron->sourceLayer = neuron->sourceCore / CHIPS_PER_LAYER;
+    neuron->sourceLayer = neuron->sourceChip / CHIPS_PER_LAYER;
+    neuron->destLayer = neuron->sourceLayer + 1;
+    neuron->destChip = ((neuron->destLayer * CHIPS_PER_LAYER)+
+                        (neuron->sourceChip % CHIPS_PER_LAYER));
+    neuron->destCore = ((neuron->destChip * CORES_IN_CHIP) +
+                        (neuron->sourceCore % CORES_IN_CHIP));
+    neuron->destNeuron = ((neuron->destCore * NEURONS_IN_CORE) +
+                          (neuron->sourceNeuron % NEURONS_IN_CORE));
+
+
 }
 
-tw_lpid getGridNeuronDest(unsigned int sourceCoure, unsigned int sourceNeuron){
+
+
+tw_lpid getGridNeuronDest(unsigned int sourceCore, tw_lpid neuronGID) {
+    conInfo * ncon = calloc(sizeof(conInfo),1);
+    //ncon->sourceNeuron = sourceNeuron;
+    ncon->sourceNeuron = getNeuronLocalFromGID(neuronGID);
+
     if (LAYER_NET_MODE & OUTPUT_RND){
         if (LAYER_NET_MODE & OUTPUT_UNQ){
             tw_error(TW_LOC," UNIQUE NOT IMP");
@@ -27,13 +58,21 @@ tw_lpid getGridNeuronDest(unsigned int sourceCoure, unsigned int sourceNeuron){
         return -1; //Random non-unique grid mode
     }
     //linear grid mode:
-    return gridLinear(sourceCoure,sourceNeuron);
+    /** @todo: optimize this */
+
+    getGridLinearMap(ncon);
+    if(ncon->sourceCore != sourceCore){
+        tw_error(TW_LOC,"calculated source core != given source core.\n");
+    }
+    tw_lpid gidDest = getGIDFromLocalIDs(ncon->destCore, ncon->destNeuron);
+    free(ncon);
+    return gidDest;
 }
 
 
-tw_lpid getNeuronDestInLayer(unsigned int sourceCore, unsigned int sourceNeuron ){
+tw_lpid getNeuronDestInLayer(id_type sourceCore, tw_lpid neuronGID) {
     if(LAYER_NET_MODE & GRID_LAYER){
-        return getGridNeuronDest(sourceCore, sourceNeuron);
+        return getGridNeuronDest(sourceCore, neuronGID);
     } else if(LAYER_NET_MODE & CONVOLUTIONAL_LAYER){
         return 0;
     }
@@ -117,14 +156,19 @@ bool inFirstLayer(tn_neuron_state *s){
     }
     return false;
 };
+
+
+
 void configureGridNeuron(tn_neuron_state *s, tw_lp *lp){
     for (int i = 0; i < NEURONS_IN_CORE; i ++){
         s->synapticConnectivity[i] = 1;
         s->axonTypes[i] = 0;
     }
-    tw_lpid dest = getNeuronDestInLayer(s->myCoreID, s->myLocalID);
+    tw_lpid dest = getNeuronDestInLayer(s->myCoreID, lp->gid);
     s->outputGID = dest;
 }
+
+
 
 void configureNeuronInLayer(tn_neuron_state *s, tw_lp *lp){
     switch(LAYER_NET_MODE){

@@ -12,7 +12,7 @@ void setupGrid(int showMapping);
 
 void displayConfig();
 
-tw_lpid getNeuronDestInLayer(unsigned int sourceCore, unsigned int sourceNeuron );
+tw_lpid getNeuronDestInLayer(id_type sourceCore, tw_lpid neuronGID);
 void configureNeuronInLayer(tn_neuron_state *s, tw_lp *lp);
 
 #endif
