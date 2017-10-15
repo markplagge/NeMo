@@ -42,15 +42,18 @@ void getGridLinearMap(conInfo * neuron){
 
     id_type localSourceNeuron = getNeuronLocalFromGID(neuron->sourceNeuronGID);
     neuron->destNeuron = getGIDFromLocalIDs(neuron->destCore, localSourceNeuron);
+    if(neuron->destLayer >= NUM_LAYERS_IN_SIM)
+        neuron->destNeuron = 0;
     if(neuron->destNeuron >= SIM_SIZE){
-        tw_error(TW_LOC, "Invalid dest neuron. DEST gid was"
-                         "%lu, sim size is %lu. "
-                         "\n Neuron source GID was %lu."
-                         "Source N |\t Source Chip |\t SourceLayer |\t destLayer |\t destChip"
-                         " |\t destCore \n"
-                         "%llu\t|%llu\t|%llu\t|%llu\t|%llu\t|%llu\t|"
-                , neuron->destNeuron, SIM_SIZE, neuron->sourceNeuron, neuron->sourceChip,
-                neuron->sourceLayer, neuron->destLayer, neuron->destChip, neuron->destCore);
+        int x = 3;
+//        tw_error(TW_LOC, "Invalid dest neuron. DEST gid was"
+//                         "%lu, sim size is %lu. "
+//                         "\n Neuron source GID was %lu."
+//                         "Source N |\t Source Chip |\t SourceLayer |\t destLayer |\t destChip"
+//                         " |\t destCore \n"
+//                         "%llu\t|%llu\t|%llu\t|%llu\t|%llu\t|%llu\t|"
+//                , neuron->destNeuron, SIM_SIZE, neuron->sourceNeuron, neuron->sourceChip,
+//                neuron->sourceLayer, neuron->destLayer, neuron->destChip, neuron->destCore);
     }
 
 }
@@ -176,7 +179,7 @@ bool inFirstLayer(tn_neuron_state *s){
 };
 
 bool inLastLayer(tn_neuron_state *s){
-    if (s->myCoreID >= CORES_PER_LAYER * (NUM_LAYERS_IN_SIM - 1)){
+    if (s->myCoreID >= CORES_PER_LAYER * (NUM_LAYERS_IN_SIM - 1) || s->outputGID >= SIM_SIZE){
         return true;
     }
     return false;
