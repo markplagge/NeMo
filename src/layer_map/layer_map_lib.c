@@ -42,6 +42,9 @@ void getGridLinearMap(conInfo * neuron){
 
     id_type localSourceNeuron = getNeuronLocalFromGID(neuron->sourceNeuronGID);
     neuron->destNeuron = getGIDFromLocalIDs(neuron->destCore, localSourceNeuron);
+    if(neuron->destNeuron >= SIM_SIZE){
+        tw_error(TW_LOC, "Invalid dest neuron. DEST gid was %lu, sim size is %lu.", neuron->destNeuron, SIM_SIZE);
+    }
 
 }
 
@@ -146,6 +149,9 @@ void setupGrid(int showMapping){
 
         //Grid layer - split cores/chips evenly across network.
         NUM_LAYERS_IN_SIM = NUM_CHIPS_IN_SIM / CHIPS_PER_LAYER;
+        if(NUM_LAYERS_IN_SIM == 0){
+            tw_error(TW_LOC, "Not enough layers defined");
+        }
         CHIPS_PER_LAYER = NUM_CHIPS_IN_SIM /NUM_LAYERS_IN_SIM ;
         CORES_PER_LAYER = CORES_IN_SIM / NUM_LAYERS_IN_SIM;
         //if (NUM_LAYERS_IN_SIM % NUM_CHIPS_IN_SIM)
