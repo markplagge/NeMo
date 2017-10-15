@@ -43,7 +43,14 @@ void getGridLinearMap(conInfo * neuron){
     id_type localSourceNeuron = getNeuronLocalFromGID(neuron->sourceNeuronGID);
     neuron->destNeuron = getGIDFromLocalIDs(neuron->destCore, localSourceNeuron);
     if(neuron->destNeuron >= SIM_SIZE){
-        tw_error(TW_LOC, "Invalid dest neuron. DEST gid was %lu, sim size is %lu.", neuron->destNeuron, SIM_SIZE);
+        tw_error(TW_LOC, "Invalid dest neuron. DEST gid was"
+                         "%lu, sim size is %lu. "
+                         "\n Neuron source GID was %lu."
+                         "Source N |\t Source Chip |\t SourceLayer |\t destLayer |\t destChip"
+                         " |\t destCore \n"
+                         "%llu\t|%llu\t|%llu\t|%llu\t|%llu\t|%llu\t|"
+                , neuron->destNeuron, SIM_SIZE, neuron->sourceNeuron, neuron->sourceChip,
+                neuron->sourceLayer, neuron->destLayer, neuron->destChip, neuron->destCore);
     }
 
 }
@@ -81,7 +88,7 @@ tw_lpid getGridNeuronDest(unsigned int sourceCore, tw_lpid neuronGID) {
 tw_lpid getNeuronDestInLayer(id_type sourceCore, tw_lpid neuronGID) {
     if(LAYER_NET_MODE & GRID_LAYER){
         return getGridNeuronDest(sourceCore, neuronGID);
-    } else if(LAYER_NET_MODE & CONVOLUTIONAL_LAYER){
+    } else (LAYER_NET_MODE & CONVOLUTIONAL_LAYER){
         return 0;
     }
 
