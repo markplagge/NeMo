@@ -88,7 +88,7 @@ tw_lpid getGridNeuronDest(unsigned int sourceCore, tw_lpid neuronGID) {
 tw_lpid getNeuronDestInLayer(id_type sourceCore, tw_lpid neuronGID) {
     if(LAYER_NET_MODE & GRID_LAYER){
         return getGridNeuronDest(sourceCore, neuronGID);
-    } else (LAYER_NET_MODE & CONVOLUTIONAL_LAYER){
+    } else if (LAYER_NET_MODE & CONVOLUTIONAL_LAYER){
         return 0;
     }
 
