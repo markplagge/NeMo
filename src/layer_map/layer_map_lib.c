@@ -24,6 +24,10 @@ typedef struct ConInfo{
 }conInfo;
 
 
+
+
+
+
 void getGridLinearMap(conInfo * neuron){
 
 
