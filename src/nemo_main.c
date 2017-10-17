@@ -16,7 +16,7 @@ size_type SYNAPSES_IN_CORE = 0;
 size_type CORE_SIZE = 0;
 size_type LPS_PER_PE = 0;
 
-bool IS_RAND_NETWORK = true;
+bool IS_RAND_NETWORK = false;
 bool BULK_MODE = false;
 bool DEBUG_MODE = false;
 bool SAVE_MEMBRANE_POTS = false;
@@ -84,7 +84,7 @@ char * LAYER_LAYOUT;
  *
  */
 bool FILE_OUT = false;
-bool FILE_IN = true;
+bool FILE_IN = false;
 
 /**
  * outFile - basic output file handler.
@@ -107,8 +107,8 @@ const tw_optdef app_opt[] = {
 		//Alternatively, you need to specify config files."),
 		TWOPT_FLAG("netin", FILE_IN,
 				   "Load network information from a file. If set,"
-						   "a network file name must be specified.\n If off, a randomly "
-						   "generated benchmark model will be used."),
+						   "a network file name must be specified.\n"
+                           "This will set random network, sat network, and layer network modes off. "),
 		//TWOPT_CHAR("nfn", NETWORK_CFG_FN, "Input Network File Name"),
 		//TWOPT_CHAR("sfn", SPIKE_IN_FN, "Spike input file name"),
 		// TWOPT_UINT("tm", testingMode, "Choose a test suite to run. 0=no tests,
@@ -283,6 +283,11 @@ void testNeuronOut() {
  *
  */
 void init_nemo(){
+    /// SANTIY CHECKS:
+    if (FILE_IN && (IS_SAT_NET || IS_RAND_NETWORK || GRID_ENABLE))
+        tw_error(TW_LOC, "Multiple modes implemented - Can not load file and have random network.");
+    if (GRID_ENABLE && IS_RAND_NETWORK)
+        tw_error(TW_LOC, "Can not have random network and grid/layer network ");
     if (SAT_NET_COREMODE > 2){
         tw_error(TW_LOC, "Please choose a valid SAT mode if using SAT. \n"
                 "Can be 0,1,2");
@@ -316,6 +321,9 @@ void init_nemo(){
 		////////////////////////
 		int spkCT = loadSpikesFromFile(SPIKE_FILE);
 		printf("Read %i spikes\n", spkCT);
+        GRID_ENABLE = false;
+        IS_RAND_NETWORK = false;
+        IS_SAT_NET = false;
 
 	}
 
@@ -339,7 +347,8 @@ void init_nemo(){
 	NUM_CHIPS_IN_SIM = CORES_IN_SIM / CORES_IN_CHIP;
 	CHIPS_PER_RANK = 1;
     //Layer / Grid Mode setup:
-    setupGrid(0);
+    if(GRID_ENABLE)
+        setupGrid(0);
 
 }
 unsigned char mapTests(){
