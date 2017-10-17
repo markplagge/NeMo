@@ -1,3 +1,13 @@
 [submodule "ROSS"]
 	path = ROSS
+
 	url = https://github.com/carothersc/ROSS.git
+
+[submodule "src/lib/c11t"]
+	path = src/lib/c11t
+	url = https://github.com/jtsiomb/c11threads.git
+
+[submodule "lua"]
+	path = lua
+	url = https://github.com/markplagge/lua.git
+	branch = lua-5.1

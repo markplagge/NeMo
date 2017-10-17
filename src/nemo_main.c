@@ -2,15 +2,15 @@
 // Created by Mark Plagge on 5/25/16.
 //
 
-#include <stdio.h>
 #include "nemo_main.h"
 #include "./IO/IOStack.h"
 #include "./layer_map/layer_map_lib.h"
 /** \addtogroup Globals 
+#define TESTIO 0
  * @{  */
 
 size_type CORES_IN_SIM = 16;
-size_type AXONS_IN_CORE = NEURONS_IN_CORE;
+// size_type AXONS_IN_CORE = NEURONS_IN_CORE;
 size_type SIM_SIZE = 1025;
 size_type SYNAPSES_IN_CORE = 0;
 size_type CORE_SIZE = 0;
@@ -19,14 +19,16 @@ size_type LPS_PER_PE = 0;
 bool IS_RAND_NETWORK = true;
 bool BULK_MODE = false;
 bool DEBUG_MODE = false;
-bool SAVE_MEMBRANE_POTS  = false;
-bool SAVE_SPIKE_EVTS  = false;
-bool SAVE_NEURON_OUTS = false;
+bool SAVE_MEMBRANE_POTS = false;
+bool SAVE_SPIKE_EVTS = true;
+bool SAVE_NETWORK_STRUCTURE = true;
 bool PHAS_VAL = false;
 //bool TONIC_SPK_VAL = false;
 bool TONIC_BURST_VAL = false;
 bool PHASIC_BURST_VAL = false;
 bool VALIDATION = false;
+bool MPI_SAVE = false;
+bool BINARY_OUTPUT = false;
 
 //bool MPI_SAVE = false;
 bool BINARY_OUTPUT = false;
@@ -34,6 +36,8 @@ unsigned int DO_DUMPI = false;
 
 char * inputFileName = "nemo_in";
 char * neuronFireFileName = "fire_record";
+char *NEURON_FIRE_R_FN = "fire_record";
+char *NETWORK_CFG_FN = "nemo_model.nfg1";
 
 unsigned int CORES_IN_CHIP = 4096;
 unsigned int CORES_IN_CHIP;
@@ -69,34 +73,49 @@ unsigned int RND_GRID = 0;
 unsigned int RND_UNIQ = 0;
 unsigned int UNEVEN_LAYERS = 0;
 char * LAYER_LAYOUT;
+//int N_FIRE_BUFF_SIZE = 32;
+//int N_FIRE_LINE_SIZE = 512;
+
+
+
 //
 /**
  * @FILE_OUT - is set to true if NeMo is saving output files
  * @FILE_IN - is set to true if NeMo is reading a file.
- * 
+ *
  */
 bool FILE_OUT = false;
-bool FILE_IN = false;
+bool FILE_IN = true;
 
 /**
  * outFile - basic output file handler.
  */
-FILE *outFile;
 
 
 int testingMode = 0;
 
-
 //-----------------------Non global testing vars---------//
 
-char * couchAddress = "192.168.2.3";
-
+char *couchAddress = "192.168.2.3";
 
 /** @} */
 /**
  * app_opt - Application Options. Manages the options for NeMo's run.
  */
 const tw_optdef app_opt[] = {
+		TWOPT_GROUP("Input Parameters"),
+		//	TWOPT_FLAG("rand_net", IS_RAND_NETWORK, "Generate a random network?
+		//Alternatively, you need to specify config files."),
+		TWOPT_FLAG("netin", FILE_IN,
+				   "Load network information from a file. If set,"
+						   "a network file name must be specified.\n If off, a randomly "
+						   "generated benchmark model will be used."),
+		//TWOPT_CHAR("nfn", NETWORK_CFG_FN, "Input Network File Name"),
+		//TWOPT_CHAR("sfn", SPIKE_IN_FN, "Spike input file name"),
+		// TWOPT_UINT("tm", testingMode, "Choose a test suite to run. 0=no tests,
+		// 1=mapping tests"),
+		TWOPT_GROUP("General Network Parameters"),
+		// TWOPT_GROUP("Randomized (ID Matrix) Network Parameters"),
 	TWOPT_FLAG("rand", IS_RAND_NETWORK, "Generate a random network? Alternatively, "
             "you need to specify config files."),
 	TWOPT_FLAG("sat", IS_SAT_NET,"Generate a SAT network with n% core/neuron connectivity"),
@@ -145,12 +164,11 @@ const tw_optdef app_opt[] = {
 
 };
 
-
 /**
  * model_lps - contains the LP type defs for NeMo
  */
 tw_lptype model_lps[] = {
-	{
+		{
 
         (init_f)axon_init,
         (pre_run_f)NULL,
@@ -182,6 +200,9 @@ tw_lptype model_lps[] = {
     }
     ,
         { 0 } };
+
+
+
 
 /**
  * @brief      Displays NeMo's initial run size configuration.
@@ -227,35 +248,40 @@ void displayModelSettings()
 //    bool SAT_NET_STOC = false;
 //    bool IS_SAT_NET = false;
 }
+
 /** @brief Does initial tests of Neuron Output subsystem.
- * If subsystem tests are on, then this will "simulate" a series of neuron firing events after
+ * If subsystem tests are on, then this will "simulate" a series of neuron
+ * firing events after
  * initializing file systems.
  *
  * Tests file closing function as well.
  */
 
-void testNeuronOut(){
-    SAVE_SPIKE_EVTS = true;
+void testNeuronOut() {
+	SAVE_SPIKE_EVTS = true;
 	initOutFiles();
 
-    for (int i = 0; i < 4096; i ++){
-        saveNeuronFire(random() + i, 0,0,1024);
-    }
-    closeFiles();
-
+	for (int i = 0; i < 4096; i++) {
+		saveNeuronFire(random() + i, 0, 0, 1024);
+	}
+	closeFiles();
 }
 
 /**
  * @brief      Initializes NeMo
- * 
- * First, this function checks for potential file IO, and creates file handles for use.
- * 
- * Based on the file_in option, the function then sets the neuron, axon, and synapse 
- * function pointers to the proper values. Default is the IBM TrueNorth neuron model.
- * If NeMo is reading a file, then we set the size of the sim based on the model config file.
- * 
+ *
+ * First, this function checks for potential file IO, and creates file handles
+ * for use.
+ *
+ * Based on the file_in option, the function then sets the neuron, axon, and
+ * synapse
+ * function pointers to the proper values. Default is the IBM TrueNorth neuron
+ * model.
+ * If NeMo is reading a file, then we set the size of the sim based on the model
+ * config file.
+ *
  * The rest of this function manages ROSS initialization and setup. When done,
- * 
+ *
  */
 void init_nemo(){
     if (SAT_NET_COREMODE > 2){
@@ -263,43 +289,51 @@ void init_nemo(){
                 "Can be 0,1,2");
     }
 	VALIDATION = PHAS_VAL || TONIC_BURST_VAL || PHASIC_BURST_VAL;
-	FILE_OUT = SAVE_SPIKE_EVTS || SAVE_NEURON_OUTS || 
-				SAVE_MEMBRANE_POTS || VALIDATION;
+	FILE_OUT = SAVE_SPIKE_EVTS || SAVE_NETWORK_STRUCTURE || SAVE_MEMBRANE_POTS ||
+			   VALIDATION;
 
 	FILE_IN = !IS_RAND_NETWORK;
-    FILE_IN = false;
-
 	if (FILE_OUT){
 		//Init file output handles
 		initOutFiles();
-		if(g_tw_mynode == 0){
+		openOutputFiles("network_def.csv");
+		initDataStructures(g_tw_nlp);
+		if (g_tw_mynode == 0) {
+
 			printf("Output Files Init.\n");
 		}
 	}
 
-	if (FILE_IN){
-		//Init File Input Handles
-		//reconfigure cores_in_sim and neurons_in_sim based on loaded file.
-		//override default LP function pointers
-		
+	if (FILE_IN) {
+		// Init File Input Handles
+		printf("Network Input Active");
+		printf("Filename specified: %s\n", MODEL_FILE);
+		//spikeFileName = SPIKE_IN_FN;
+		// INPUT Model file init here:
+///////////////////////////////////////////////
+		initModelInput(CORES_IN_SIM);
+
+// INPUT SPIKE FILE init HERE:
+		////////////////////////
+		int spkCT = loadSpikesFromFile(SPIKE_FILE);
+		printf("Read %i spikes\n", spkCT);
+
 	}
 
-	
-	AXONS_IN_CORE = NEURONS_IN_CORE;
-	SYNAPSES_IN_CORE = 1;//(NEURONS_IN_CORE * AXONS_IN_CORE);
-    
+	// AXONS_IN_CORE = NEURONS_IN_CORE;
+	SYNAPSES_IN_CORE = 1; //(NEURONS_IN_CORE * AXONS_IN_CORE);
+
 	CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
 	SIM_SIZE = CORE_SIZE * CORES_IN_SIM;
 
 	g_tw_nlp = SIM_SIZE / tw_nnodes();
 	g_tw_lookahead = 0.001;
-    g_tw_lp_types = model_lps;
-    g_tw_lp_typemap = lpTypeMapper;
+	g_tw_lp_types = model_lps;
+	g_tw_lp_typemap = lpTypeMapper;
 
+	/// EVENTS PER PE SETTING
+	g_tw_events_per_pe = NEURONS_IN_CORE * AXONS_IN_CORE; // magic number
 
-
-	///EVENTS PER PE SETTING
-	g_tw_events_per_pe = NEURONS_IN_CORE * AXONS_IN_CORE ; //magic number
 
     LPS_PER_PE = g_tw_nlp / g_tw_npe;
 
@@ -309,66 +343,63 @@ void init_nemo(){
     setupGrid(0);
 
 }
-
-
-
 unsigned char mapTests(){
     return 0;
 }
-
 /**
  * @brief      NeMo Main entry point
  *
  * @param[in]  argc  The argc
  * @param      argv  The argv
  *
- 
+
  */
-int main(int argc, char*argv[]) {
+
+int main(int argc, char *argv[]) {
+//	char *NETWORK_FILE_NAME = calloc(256, sizeof(char));
+//	strcpy(NETWORK_FILE_NAME, "nemo_model.csv");
+//	char *SPIKE_FILE_NAME = calloc(256, sizeof(char));
+//	strcpy(SPIKE_FILE_NAME, "nemo_spike.csv");
 	tw_opt_add(app_opt);
 	tw_init(&argc, &argv);
     //call nemo init
     init_nemo();
+if(nonC11 == 1)
+	printf("Non C11 compliant compiler detected.\n");
 
+	if (nonC11 == 1)
+		printf("Non C11 compliant compiler detected.\n");
 
+	//    if (testingMode == 1 ) {
+	//        unsigned char mapResult = 0;
+	//        mapResult = mapResult | mapTests();
+	//
+	//        if(mapResult & INVALID_AXON){
+	//            printf("Creted invalid axon.\n");
+	//            }
+	//        if (mapResult & INVALID_SYNAPSE){
+	//            printf("Created invalid synapse.\n");
+	//        }
+	//        if (mapResult & INVALID_NEURON){
+	//            printf("Created invalid neuron.\n");
+	//        }
+	//
+	//
+	//        return mapResult;
+	//    }
+	// Define LPs:
+	tw_define_lps(LPS_PER_PE, sizeof(messageData));
+	tw_lp_setup_types();
 
-	
-    if (testingMode == 1 ) {
-        unsigned char mapResult = 0;
-        mapResult = mapResult | mapTests();
-
-        if(mapResult & INVALID_AXON){
-            printf("Creted invalid axon.\n");
-            }
-        if (mapResult & INVALID_SYNAPSE){
-            printf("Created invalid synapse.\n");
-        }
-        if (mapResult & INVALID_NEURON){
-            printf("Created invalid neuron.\n");
-        }
-
-
-        return mapResult;
-    }
-    //Define LPs:
-    tw_define_lps(LPS_PER_PE, sizeof(messageData));
-    tw_lp_setup_types();
-
-    if (g_tw_mynode == 0) {
-        displayModelSettings();
-    }
-    //neuron fire output testing function.
-	//testNeuronOut();
-	
-    tw_run();
-	
-	if(FILE_OUT)
-		printf("File output complete.");
-		//closeFiles();
-	if(FILE_IN)
-		printf("File input set but not implemented yet.");
-	
-    tw_end();
-	
-
+	if (g_tw_mynode == 0) {
+		displayModelSettings();
+	}
+	tw_run();
+	if (SAVE_NETWORK_STRUCTURE) {
+		closeOutputFiles();
+	}
+	if (FILE_OUT) {
+		closeFiles();
+	}
+	tw_end();
 }

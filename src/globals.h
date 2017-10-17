@@ -10,7 +10,7 @@
 #define __NEMO_GLOBALS_H__
 
 #define BGQ 1
-
+#define NET_IO_DEBUG 1
 
 #include <inttypes.h>
 #include <stdbool.h>
@@ -24,9 +24,14 @@
  *	or compile-time option 
  * @{ */
 
-#define SAVE_NEURON_STATS
+#define SAVE_NEURON_STATS 1
 
 /**@}*/
+/**
+ * Neuron file read buffer size - for reading CSV files.
+ */
+#define NEURON_BUFFER_SZ  32
+#define MAX_NEURON_PARAMS  65536
 
 #define TXT_HEADER "****************************************************************************\n"
 #define TH printf( TXT_HEADER );
@@ -48,7 +53,17 @@ typedef uint64_t size_type; //!< size_type holds sizes of the sim - core size, n
 typedef uint64_t stat_type;
 /**@}*/
 
-/* @defgroup gmacros Global Macros and Related Functions
+/** @defgroup cmacros Global Dynamic Typing casting macros for file IO */
+/** @{ */
+#define ATOX(x) _Generic((x), \
+double: atof,\
+long: atol,\
+int: atoi,\
+float: atof
+
+
+
+/** @defgroup gmacros Global Macros and Related Functions
  *Global Macros */
 /**@{ */
 
@@ -76,6 +91,11 @@ weight_type iiABS(weight_type in);
   * Functions that manage big tick and little ticks
   */
   /** @{ */
+
+/** Macro for use within globals. 
+ Assumes that there is a tw_lp pointer called lp in the function it is used.
+ */
+#define JITTER (tw_rand_unif(lp->rng) / 10000)
 
 /**
  *  Gets the next event time, based on a random function. Moved here to allow for
@@ -131,6 +151,10 @@ enum lpTypeVals {
     SYNAPSE = 1,
     NEURON = 2
 };
+enum neuronTypeVals {
+	NA = 0,
+    TN = 1
+};
 
 /**
  * @brief      test result flag.
@@ -141,10 +165,9 @@ enum mapTestResults {
   INVALID_NEURON = 1 << 3 //!< Neuron was not properly defined.
 };
 
-typedef enum NeuronTypes {
-    TrueNorth = 0
-} neuronTypes;
-/** @defgroup laynet Basic Layer Network Settings @{ */
+//typedef enum NeuronTypes {
+//    TrueNorth = 0
+//} neuronTypes;
 
 typedef enum LayerTypes{
     NON_LAYER =          0,
@@ -174,34 +197,70 @@ typedef struct Ms{
 	};
 	
 	
-    union{
+	// union{
         id_type axonID; //!< Axon ID for neuron value lookups.
-        //bool * neuronConn;
-    };
-	//unsigned long dumpiID;
+        bool * neuronConn;
+	//};
     //message tracking values:
 #ifdef SAVE_MSGS
-//    union {
-//        uint64_t uuid;
-//        struct {
-//            uint16_t idp1;
-//            uint16_t idp2;
-//            uint32_t idp3;
-//        };
-//    };
-   // tw_lpid originGID;
-    //char originComponent;
+	union {
+        uint64_t uuid;
+        struct {
+            uint16_t idp1;
+            uint16_t idp2;
+            uint32_t idp3;
+        };
+    };
+    tw_lpid originGID;
+    char originComponent;
 
 	//tw_stime msgCreationTime;
 #endif
-
-
-
-
-   
-
 }messageData;
  /**@}*/
+
+/** \defgroup IOStructs Input/Output structs @{ */
+/** Structs for managing neuron reads */
+typedef struct CsvNeuron{
+    int fld_num;
+    int req_core_id;
+    int req_local_id;
+    int foundNeuron;
+    char rawDatM[MAX_NEURON_PARAMS][NEURON_BUFFER_SZ];
+//	char *rawDatP[NEURON_BUFFER_SZ];
+//    char **rawDat;
+
+}csvNeuron;
+/**
+ * SpikeElem / spikeElem is a struct that holds the raw spike data
+ * from a CSV file. The data is stored in a simclist list. One spike
+ * is stored in each spikeElem.
+ */
+typedef struct SpikeElem{
+    long scheduledTime;
+    long destCore;
+    long destAxon;
+}spikeElem;
+
+/**
+ * NeuronMembraneRecord stores an active neuron's membrane potential.
+ * This is used to save and store membrane potential / neuron activity
+ * during a simulation run. Used by output.c
+ */
+typedef struct NeuronMembraneRecord{
+	tw_stime tickTime;
+	volt_type membranePot;
+	id_type neuronCore;
+	id_type neuronID;
+}neuronMembraneRecord;
+
+
+
+
+
+
+
+/** @} */
 
 #endif //NEMO_GLOBALS_H
 #ifndef EXTERN
@@ -218,7 +277,7 @@ EXT size_type  LP_PER_KP;
 EXT bool IS_RAND_NETWORK;
 EXT size_type CORES_IN_SIM;
 
-EXT size_type AXONS_IN_CORE;
+//EXT size_type AXONS_IN_CORE;
 EXT size_type SIM_SIZE;
 EXT size_type CORE_SIZE;
 EXT size_type SYNAPSES_IN_CORE;
@@ -227,7 +286,7 @@ EXT bool BULK_MODE;
 EXT bool DEBUG_MODE;
 EXT bool SAVE_MEMBRANE_POTS ;
 EXT bool SAVE_SPIKE_EVTS ; //!< Toggles saving spike events
-EXT bool SAVE_NEURON_OUTS;
+EXT bool SAVE_NETWORK_STRUCTURE;
 
 //EXT bool MPI_SAVE;
 EXT bool BINARY_OUTPUT;
@@ -246,12 +305,8 @@ EXT unsigned int CORES_IN_CHIP;
 EXT unsigned int NUM_CHIPS_IN_SIM;
 EXT unsigned int CHIPS_PER_RANK;
 
-/** @defgroup fileNames File Names
- * Vars that manage file names for IO  @{*/
-EXT char * inputFileName;
-EXT char * neuronFireFileName;
 
-/** @} */
+EXT char * NEURON_FIRE_R_FN	;
 
 
 /** @defgroup ctime Compute Time Parameters
@@ -311,3 +366,11 @@ EXT int N_FIRE_LINE_SIZE;
 //#define N_FIRE_LINE_SIZE 128
 /** @} */
 #endif
+
+
+/** @defgroup fileNames File Names
+ * Vars that manage file names for IO.
+ * These variables are declared/init in input.c and
+ * output.c @{*/
+
+/** @} */

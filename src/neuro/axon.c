@@ -59,7 +59,53 @@ void axon_init(axonState *s, tw_lp *lp)
     //big.
 	static int specAxons = 0;
     s->axtype = "NORM";
-    if(PHAS_VAL) {//one phasic axon:
+	
+	if(FILE_IN){
+
+		s->sendMsgCount = 0;
+		s->axonID = getAxonLocal(lp->gid);
+		s->destSynapse = getSynapseFromAxon(lp->gid);
+		id_type core = getCoreFromGID(lp->gid);
+
+		spikeElem * spk = getSpike(core,s->axonID);
+		while(spk != NULL){
+			tw_stime sched_event = floor(spk->scheduledTime) + JITTER;
+			tw_event *saxe = tw_event_new(lp->gid, sched_event, lp);
+			messageData *data = (messageData * ) tw_event_data(saxe);
+			data->axonID = s->axonID;
+			data->eventType = AXON_OUT;
+			tw_event_send(saxe);
+			free(spk);
+			spk = getSpike(core, s->axonID);
+		}
+		
+//		s->sendMsgCount = 0;
+//		s->axonID = getAxonLocal(lp->gid);
+//		s->destSynapse = getSynapseFromAxon(lp->gid);
+//
+//		//SLOW SLOW way to load spikes - need to optimize //
+//		id_type core = getCoreFromGID(lp->gid);
+//		spikeRecord * spk = getRecord(core, s->axonID);
+//
+//		while(spk != NULL){
+//
+//			tw_stime sched_event = floor(spk->scheduledTime) + JITTER;
+//			tw_event *saxe = tw_event_new(lp->gid, sched_event, lp);
+//
+//			messageData *data = (messageData *) tw_event_data(saxe);
+//			data->axonID = s->axonID;
+//			data->eventType = AXON_OUT;
+//			tw_event_send(saxe);
+//			//free(spk);
+//			spk = getRecord(core, s->axonID);
+//
+//		}
+//
+
+		specAxons ++;
+		
+		
+	}else if(PHAS_VAL) {//one phasic axon:
         if (specAxons == 0){
             //crPhasicAxon(s, lp);
             specAxons ++;
@@ -81,13 +127,15 @@ void axon_init(axonState *s, tw_lp *lp)
         //crTonicBurstingAxon(s, lp);
 		printf("Phasic bursting validation not available in this version of NeMo\n");
         specAxons ++;
-    }else if(FILE_IN){
-        //Do file processing - load in the initial spikes here.
-        if (g_tw_mynode == 0){
-            tw_printf(TW_LOC,"Axon ID %llu attempted file load.\n",s->axonID);
-        }
-    }
-    else { //else this is a random network for benchmarking.
+//    }else if(FILE_IN){
+//        //Do file processing - load in the initial spikes here.
+//        if (g_tw_mynode == 0){
+//			//why would an axon want to load a file?
+//			//tw_printf(TW_LOC,"Axon ID %llu attempted file load.\n",s->axonID);
+//			
+//        }
+//    }
+	} else { //else this is a random network for benchmarking.
         s->sendMsgCount = 0;
         s->axonID = getAxonLocal(lp->gid);
         s->destSynapse = getSynapseFromAxon(lp->gid);
@@ -97,19 +145,6 @@ void axon_init(axonState *s, tw_lp *lp)
         data->eventType = AXON_OUT;
         data->axonID = s->axonID;
 		tw_event_send(axe);
-//		if (SAVE_MSGS){
-//			if(!writeInit){
-//				messageTrace = createCSV("message_log", g_tw_mynode, g_tw_npe -1);
-//				writeInit = true;
-//				
-//			}
-//			
-//			axon_mark_message(s, data, lp->gid, lp);
-//			/** @todo add message save code to io stack
-//			 * */
-//			// save message //
-//			
-//		}
 		
     }
 
