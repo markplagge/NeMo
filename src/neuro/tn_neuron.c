@@ -32,7 +32,8 @@ enum arrayFtr{
 //TODO: move this to a sane location or possibly replace with nice functions.
 #define nextToI()	atoi(raw.rawDatM[currentFld++]);
 
-
+//File output handle.
+FILE * dumpi_out;
 /** \defgroup TN_Function_hdrs True North Function headers
  * TrueNorth Neuron leak, integrate, and fire function forward decs.
  * @{ */
@@ -240,14 +241,14 @@ void resetNone(void *neuronState) {
  we store the leak voltage in the membrane potential, and override it with a new
  value. */
 void TNFire(tn_neuron_state *st, void *l) {
-	tw_lp *lp = (tw_lp *) l;
-	// DEBUG
-	//	tw_lpid outid = st->dendriteGlobalDest;
-	//	tw_lp *destLP = tw_getlp(outid);
-	//	printf("Sending message to %llu\n", destLP->gid);
-    if (st->isOutputNeuron){
+    tw_lp *lp = (tw_lp *) l;
+    // DEBUG
+    //	tw_lpid outid = st->dendriteGlobalDest;
+    //	tw_lp *destLP = tw_getlp(outid);
+    //	printf("Sending message to %llu\n", destLP->gid);
+    if (st->isOutputNeuron) {
         /////output neurons do not send messages to the rest of the model.
-    }else {
+    } else {
         tw_lp *lp = (tw_lp *) l;
         // DEBUG
         //	tw_lp *destLP = tw_getlp(outid);
@@ -261,11 +262,12 @@ void TNFire(tn_neuron_state *st, void *l) {
 
         data->eventType = NEURON_OUT;
         data->localID = st->myLocalID;
-    if (isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))) {
-        data->isRemote = st->myCoreID;
-    }
+        if (isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))) {
+            data->isRemote = st->myCoreID;
+        }
         tw_event_send(newEvent);
-  st->firedLast = true;
+        st->firedLast = true;
+    }
 }
 
 bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp,
@@ -1126,21 +1128,16 @@ void TN_init(tn_neuron_state *s, tw_lp *lp) {
 	}else{
     TN_create_simple_neuron(s, lp);
     //This if statement should not be needed, due to check in setupGrud.
-	if( (LAYER_NET_MODE & GRID_LAYER) || (LAYER_NET_MODE & CONVOLUTIONAL_LAYER)){
+	if( (LAYER_NET_MODE & GRID_LAYER) || (LAYER_NET_MODE & CONVOLUTIONAL_LAYER)) {
         configureNeuronInLayer(s, lp);
-	if(IS_SAT_NET){
+    }else if(IS_SAT_NET){
     }
 		TN_create_saturation_neuron(s,lp);
 	}
 
-	if (DEBUG_MODE) {
-		printf(
-				"Neuron type %s, num: %u checking in with GID %llu and dest %llu \n",
-				s->neuronTypeDesc, s->myLocalID, lp->gid, s->outputGID);
-	}
-	}
-
 }
+
+
 
 void TN_forward_event(tn_neuron_state *s, tw_bf *CV, messageData *m,
 					  tw_lp *lp) {
@@ -1182,20 +1179,20 @@ void TN_reverse_event(tn_neuron_state* s, tw_bf* CV, messageData* m,
 /** TN_commit is a function called on commit. This is used for management of
  * neurons! */
 void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
-	// if neuron has fired and save neuron fire events is enabled, save this
-	// event.
-	if (SAVE_SPIKE_EVTS && cv->c0) {
-		saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID);
-	}
-	// save simulated dumpi trace if inter core and dumpi trace is on
-	if (cv->c31 && DO_DUMPI) {
-	/** @TODO: Add dumpi save flag to config. */
+    // if neuron has fired and save neuron fire events is enabled, save this
+    // event.
+    if (SAVE_SPIKE_EVTS && cv->c0) {
+        saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID);
+    }
+    // save simulated dumpi trace if inter core and dumpi trace is on
+    if (cv->c31 && DO_DUMPI) {
+        /** @TODO: Add dumpi save flag to config. */
         //saveMPIMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp),
 
         //			   dumpi_out);
-		setrnd(lp);
-		saveSendMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp), 0, dumpi_out);
-
+        setrnd(lp);
+        saveSendMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp), 0, dumpi_out);
+    }
 }
 
 /** @todo: fix this remote value */
@@ -1207,11 +1204,10 @@ void prhdr(bool *display, char *hdr) {
 	}
 	 */
 }
-#ifdef NET_IO_DEBUG
-	closeTestFile();
-#endif
+
 
 void TN_final(tn_neuron_state *s, tw_lp *lp) {
+    static int fileOpen = 1;
 	if (DO_DUMPI && fileOpen) {
 		fclose(dumpi_out);
 		fileOpen = 0;

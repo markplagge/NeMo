@@ -16,7 +16,7 @@ bool neuronFireFileOpen;
 bool outputFileOpen;
 
 
-int N_FIRE_BUFF_SIZE = 32;
+//int N_FIRE_BUFF_SIZE = 32;
 //Names of output files
 char * neuronFireFinalFN;
 char * neuronRankFN;

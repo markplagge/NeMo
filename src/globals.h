@@ -359,7 +359,7 @@ EXT char * LAYER_LAYOUT;
 /** POSIX Neuron Fire record Buffer Size */
 EXT int N_FIRE_BUFF_SIZE;
 //#define N_FIRE_BUFF_SIZE 32
-
+EXT bool SAVE_NEURON_OUTS;
 /** POSIX Neuron Fire record line buffer size.
  * For text mode only, sets the length of strings stored in the neuron fire buffer*/
 EXT int N_FIRE_LINE_SIZE;

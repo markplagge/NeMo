@@ -29,9 +29,8 @@ bool PHASIC_BURST_VAL = false;
 bool VALIDATION = false;
 bool MPI_SAVE = false;
 bool BINARY_OUTPUT = false;
+bool SAVE_NEURON_OUTS = false;
 
-//bool MPI_SAVE = false;
-bool BINARY_OUTPUT = false;
 unsigned int DO_DUMPI = false;
 
 char * inputFileName = "nemo_in";
@@ -366,9 +365,6 @@ int main(int argc, char *argv[]) {
     init_nemo();
 if(nonC11 == 1)
 	printf("Non C11 compliant compiler detected.\n");
-
-	if (nonC11 == 1)
-		printf("Non C11 compliant compiler detected.\n");
 
 	//    if (testingMode == 1 ) {
 	//        unsigned char mapResult = 0;

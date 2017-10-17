@@ -134,8 +134,8 @@ set(model_srcs
         IO/spike_reader.h
         IO/neuron_output.c
         IO/model_reader.c
-        neuro/tn_neuron_struct.h)
-        nemo_main.h tests/tomacs_exp.c tests/tomacs_exp.h
+        neuro/tn_neuron_struct.h
+        nemo_main.h tests/tomacs_exp.c tests/tomacs_exp.h)
 
 
 

@@ -38,11 +38,8 @@ compile_commands.json
 .idea/NeMo.iml
 
 .idea/NeMo.iml
-<<<<<<< HEAD
-=======
 
 
->>>>>>> origin/Develop
 \.idea/
 
 __pycache__/
@@ -55,20 +52,16 @@ cmake-build-release/src/
 
 cmake-build-release/
 
-<<<<<<< HEAD
 cmake-build-debug
 cmake-build-release
 .idea/
 
 src/lib/
 
-*.pyc
 
 scripts/__pycache__/
-=======
 scripts/ol_api/t1\.csv
 
 scripts/tn_api/__init__.pyc
 
 *.pyc
->>>>>>> origin/Develop
