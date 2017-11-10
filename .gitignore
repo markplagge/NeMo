@@ -65,3 +65,7 @@ scripts/ol_api/t1\.csv
 scripts/tn_api/__init__.pyc
 
 *.pyc
+
+scripts/\.DS_Store
+
+\.DS_Store

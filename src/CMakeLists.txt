@@ -145,6 +145,6 @@ if(USE_LUA_JIT)
     TARGET_LINK_LIBRARIES(NeMo ROSS luajit m)
 
 else()
-    TARGET_LINK_LIBRARIES(NeMo ROSS liblua_static m)
+    TARGET_LINK_LIBRARIES(NeMo ROSS liblua m)
 endif()
 
