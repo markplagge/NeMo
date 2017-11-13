@@ -1062,6 +1062,11 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp* lp){
     st->resetMode = resetMode;
     st->isActiveNeuron = isActiveNeuron;
     st->isOutputNeuron = isOutputNeuron;
+    if(g_tw_mynode == 0){
+    	if(st->myLocalID==NEURONS_IN_CORE - 1 || st->myLocalID == 0){
+		printf("Completed loading neurons in core %i", st->myCoreID);
+	}
+    }
     
     
 }

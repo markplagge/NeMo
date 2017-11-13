@@ -363,6 +363,19 @@ EXT bool SAVE_NEURON_OUTS;
 /** POSIX Neuron Fire record line buffer size.
  * For text mode only, sets the length of strings stored in the neuron fire buffer*/
 EXT int N_FIRE_LINE_SIZE;
+
+/** dumpi noise/squash generation toggle - for reading in model files that ignore
+ * spike files or for squashing spike times.
+ * Mode 1: Will read in the spike CSV file to determine the
+ * input axons, then will make those axons spike every tick to generate traffic.
+ * Mode 2: Will read in the spike CSV file as normal, but it will compress the input
+ * to be sequentially incrementing spike times. For example, if an axon is supposed
+ * to fire at time 1, 4, 10, this axon will spike at times 0,1,2.
+ *
+ * Default is 0: No spike modifications.s
+ */
+EXT char DUMPI_NOISE;
+
 //#define N_FIRE_LINE_SIZE 128
 /** @} */
 #endif

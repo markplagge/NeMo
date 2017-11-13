@@ -57,10 +57,14 @@ int countLines(FILE *fileHandle){
 }
 
 void initModelInput(unsigned long maxNeurons){
+	if(g_tw_mynode == 0)
+		printf("Model config file init\n");
 	L = luaL_newstate();
 	luaL_openlibs(L);
 	int s = luaL_loadfile(L, MODEL_FILE);
 
+	if(g_tw_mynode ==0)
+		printf("File loaded - starting parsing...\n");
 	if(!s)
 		s = lua_pcall(L, 0, LUA_MULTRET, 0);
 
@@ -98,6 +102,8 @@ void initModelInput(unsigned long maxNeurons){
 
 		lua_pop(L, 1);
 	}
+	if(g_tw_mynode == 0)
+		printf("Parsing of configfile complete.");
 
 }
 

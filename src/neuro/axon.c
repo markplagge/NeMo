@@ -60,7 +60,7 @@ void axon_init(axonState *s, tw_lp *lp)
 	static int specAxons = 0;
     s->axtype = "NORM";
 	
-	if(FILE_IN){
+	if(0){ //FILE_IN){
 
 		s->sendMsgCount = 0;
 		s->axonID = getAxonLocal(lp->gid);
@@ -78,7 +78,10 @@ void axon_init(axonState *s, tw_lp *lp)
 			free(spk);
 			spk = getSpike(core, s->axonID);
 		}
-		
+
+
+
+
 //		s->sendMsgCount = 0;
 //		s->axonID = getAxonLocal(lp->gid);
 //		s->destSynapse = getSynapseFromAxon(lp->gid);
