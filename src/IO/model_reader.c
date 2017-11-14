@@ -160,13 +160,19 @@ long lGetParam(int isArray, long * arrayParam){
 	return -1;
 }
 
-
+void clearNeuron(int curCoreID, int curLocalID){
+	lua_getglobal(L, "clearNeuron");
+	lua_pushinteger(L, curCoreID);
+	lua_pushinteger(L, curLocalID);
+	lua_pushstring(L, "TN");
+	lua_call(L, 3, 0);
+}
 //check to see if a neuron exists in the config file
 bool neuronExists(){
 	lua_getglobal(L, "doesNeuronExist");
 	lua_pushnumber(L, curCoreID);
 	lua_pushnumber(L, curLocalID);
-	lua_pushstring(L, curType);
+	lua_pushstring(L, "TN");
 	lua_call(L, 3, 1);
 	return (lua_toboolean(L, -1) == true);
 
@@ -190,7 +196,10 @@ int lookupAndPrimeNeuron(long coreID, long localID, char * nt){
 	return -1;
 }
 
+
+
 long lGetAndPushParam(char *paramName, int isArray, long *arrayParam) {
+
 	lPushParam(paramName);
 	return lGetParam(isArray, arrayParam);
 
@@ -219,3 +228,6 @@ char* luT(char * nemoName){
 }
 
 
+void clearStack(){
+	lua_settop(L, 0);
+}

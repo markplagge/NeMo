@@ -69,3 +69,5 @@ scripts/tn_api/__init__.pyc
 scripts/\.DS_Store
 
 \.DS_Store
+
+build/

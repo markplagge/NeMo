@@ -16,7 +16,7 @@ set (LuaD "${CMAKE_CURRENT_SOURCE_DIR}/lua")
 # LUA Options
 #SET(USE_LUA_JIT FALSE BOOL)
 option(USE_LUA_JIT "Use JIT lua project for scripting" OFF)
-#SET(USE_LUA_JIT TRUE)
+#sSET(USE_LUA_JIT TRUE)
 ADD_SUBDIRECTORY(${RD})
 
 if(USE_LUA_JIT)

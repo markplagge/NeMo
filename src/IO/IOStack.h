@@ -171,14 +171,14 @@ void initModelInput(unsigned long maxNeurons);
  */
 char* luT( char * nemoName);
 
-
+void clearNeuron(int curCoreID, int curLocalID);
 
 /**
  * closeModelInput closes the LUA parser after the model has been loaded.
  * Do this once the neurons have be initialized.
  */
 void closeModelInput();
-
+void clearStack();
 /** @} */
 
 #endif //NEMO_IOSTACK_H

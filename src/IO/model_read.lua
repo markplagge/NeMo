@@ -14,7 +14,20 @@ function loadFile(filename)
 end
 
 function genID(ncore,nlocal,ntype)
-    local nid = ntype .. "_" .. ncore .."_"..nlocal
+	function gen()
+		local nid = string.format(ntype .. "_%G_%G",ncore,nlocal)
+		return nid
+	end
+	local status, result = pcall(gen)
+	if status then
+		return result
+	end
+	print("Error when converting ")
+	print("type,core,local")
+	print(ntype .. "," .. ncore .. "," .. nlocal)
+	print(result)
+
+--    local nid = ntype .. "_" .. ncore .."_"..nlocal
     return nid
 end
 
@@ -31,13 +44,18 @@ function getNeuronParam(ncore, nlocal, ntype, paramName)
     return rv[paramName]
 end
 
+function clearNeuron(ncore,nlocal,ntype,paramName)
+	local nttl = genID(ncore,nlocal,ntype)
+	neurons[nttl] = nil
+end
+
 function doesNeuronExist(ncore, nlocal, ntype)
-    --print("Nexist from " .. ncore .. " | " .. nlocal .. " | " .. ntype)
 
     if getNeuron(ncore,nlocal,ntype) == nil then
         return false
-    else
+    else	
         return true
+
     end
 
 end
@@ -78,7 +96,7 @@ function modelErr(ncore, nlocal,ntype, paramName, errno, fn)
 
         print("Param misconfigured. Check parameter: \n" .. findLine(gg,paramName,fn))
     end
-
+	print("Exists!")	print("Exists!")
     --see if the parameter is in the file at all
 
 

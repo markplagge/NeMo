@@ -968,7 +968,7 @@ int safeGetArr(int direct,  char * lutName, char * dirName, long vars[],
     return validation;
 }
 //**** Some loader helper macros.
-//TODO: Move these helper macros somewhere better! .
+//! @TODO: Move these helper macros somewhere better! .
 #define LGT(V) ( lGetAndPushParam( luT( (V) ) , 0, NULL ) )
 #define GA(N,T) (getArray( (#N) , &(N), (T) ))
 #define TID core, nid, "TN"
@@ -984,9 +984,10 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp* lp){
 	
 	outputCore = lGetAndPushParam("destCore", 0, NULL);
 	outputLID = lGetAndPushParam("destLocal", 0, NULL);
-	if (outputCore < 0){
+	if (outputCore < 0 || outputLID < 0){
 		st->outputGID = 0;
 		st->isOutputNeuron = true;
+
 
 	} else{
 		outputGID = getAxonGlobal(outputCore, outputLID);
@@ -1005,8 +1006,8 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp* lp){
 	bool epsilon = 				LGT("epsilon");
 	bool c = 					LGT("c");
 	bool kappa = 				LGT("kappa");
-	bool isActiveNeuron = 		LGT("isActiveNeuron");
-
+	//bool isActiveNeuron = 		LGT("isActiveNeuron");
+    bool isActiveNeuron = true;
 	volt_type alpha = lGetAndPushParam("alpha", 0, NULL);
 	volt_type beta = lGetAndPushParam("beta", 0, NULL);
 
@@ -1062,13 +1063,17 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp* lp){
     st->resetMode = resetMode;
     st->isActiveNeuron = isActiveNeuron;
     st->isOutputNeuron = isOutputNeuron;
-    if(g_tw_mynode == 0){
-    	if(st->myLocalID==NEURONS_IN_CORE - 1 || st->myLocalID == 0){
-		printf("Completed loading neurons in core %i", st->myCoreID);
-	}
+//    if(g_tw_mynode == 0){
+//    	if(st->myLocalID==NEURONS_IN_CORE - 1 || st->myLocalID == 0){
+//		printf("Completed loading neurons in core %i", st->myCoreID);
+//	}
+//    }
+    if(outputGID >= SIM_SIZE){
+       // printf("err cond 1.\n");
+        //st->isActiveNeuron = false;
     }
-    
-    
+   clearNeuron(core, nid);
+    clearStack();
 }
 
 /** @} */
@@ -1190,7 +1195,7 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
         saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID);
     }
     // save simulated dumpi trace if inter core and dumpi trace is on
-    if (cv->c31 && DO_DUMPI) {
+    if (cv->c31 &&  ( DO_DUMPI || CORES_IN_CHIP == 1)) {
         /** @TODO: Add dumpi save flag to config. */
         //saveMPIMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp),
 
