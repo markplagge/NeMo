@@ -179,6 +179,7 @@ void clearNeuron(int curCoreID, int curLocalID);
  */
 void closeModelInput();
 void clearStack();
+void closeLua();
 /** @} */
 
 #endif //NEMO_IOSTACK_H

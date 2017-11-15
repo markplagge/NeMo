@@ -189,7 +189,7 @@ tw_lptype model_lps[] = {
     },
     {
         (init_f)TN_init,
-        (pre_run_f)NULL,
+        (pre_run_f)TN_pre_run,
         (event_f)TN_forward_event,
         (revent_f)TN_reverse_event,
         (commit_f) TN_commit	,

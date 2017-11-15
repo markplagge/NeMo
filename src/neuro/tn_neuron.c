@@ -1108,6 +1108,16 @@ void TNCreateFromFile(tn_neuron_state* s, tw_lp* lp){
 	
 }
 
+
+void TN_pre_run(tn_neuron_state *s, tw_lp *me){
+static int clean = 0;
+if (!clean) {
+	closeLua();
+	clean = 1;
+}
+}
+
+
 /** /defgroup TN_ROSS_HANDLERS
  * Implementations of TN functions that are called by ross. Forward, reverse,
  * init, etc.

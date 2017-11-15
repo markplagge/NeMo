@@ -227,6 +227,9 @@ char* luT(char * nemoName){
 
 }
 
+void closeLua(){
+	lua_close(L);
+}
 
 void clearStack(){
 	lua_settop(L, 0);
