@@ -150,6 +150,8 @@ class ConfigFile(object):
     def calcMPNeuron(self,neuron):
         self.datQueue.put( f"{neuron.toNeMoStr()}" )
 
+
+
     def finishMP(self):
         while not self.datQueue.empty():
             d = self.datQueue.get()
@@ -174,7 +176,7 @@ class Spike(object):
 
     def __init__(self, time, destCore, destAxon):
         self.time = time
-        self.destcore = destCore
+        self.destCore =  destCore
         self.destAxon = destAxon
 
     def toCSV(self):

@@ -9,7 +9,7 @@ import jsoncomment.package.comments as comments
 
 import numpy as np
 from tqdm import tqdm
-from joblib import Parallel, delayed
+from joblib import Parallel, delayed, Memory
 from tn_nf2_api import TN, Spike, ConfigFile
 
 try:
@@ -265,6 +265,7 @@ def readTN(filename):
 	:param filename: 
 	:return: A tuple of the model info, neuron types defined in the model, a list of crossbars, and a list of the cores
 	"""
+    print("Loadfing templates from JSON file...")
     data = open(filename, 'r').readlines()
     data = comments.json_preprocess(data)
     tnData = json.loads(data, object_pairs_hook=parse_object_pairs)
@@ -360,10 +361,42 @@ def populateArray(inputArr, lines):
 
 """Main Model JSON reader"""
 
+gmodel = []
+gneuronTypes = []
+gcrossbars = []
+gcores = []
+gtemplates =[]
+
+def createCFGProdCon(cores,crossbars,nc,neuronTemplates,cfgFile,compWork, coreWork):
+    def rundmc():
+        while not compWork.empty() or not coreWork.empty():
+            v = compWork.get()
+            for c in v:
+                cfgFile.addNeuron(c)
+
+    for ch in cores:
+        coreWork.put([ch])
+
+    with concurrent.futures.ProcessPoolExecutor() as e:
+        workers = []
+        parsers = []
+        for i in range(0,mp.cpu_count()):
+            workers.append(e.submit(neuronCSVWorker,ch,crossbars,nc,neuronTemplates))
+            parsers.append(e.submit(rundmc,))
+            for p in tqdm(as_completed(workers), desc="JSON Parsing", position=0):
+                pass
+            for q in tqdm(as_completed(parsers), desc="assembling"):
+                pass
+    return cfgFile
+
+def rundmc(ch,crossbars,nc,neuronTemplates,dq):
+        datum = neuronCSVFut(ch,crossbars,nc,neuronTemplates)
+        for v in datum:
+            dq.push(v)
 
 def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
     model, neuronTypes, crossbars, cores = readTN(filename)
-
+    print("Configuring templates from JSON file")
     neuronTemplates = getNeuronModels(neuronTypes)
     nullNeuron = TN(256, 4)
     nullNeuron.S = [0, 0, 0, 0]
@@ -373,25 +406,86 @@ def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
 
     neuronTemplates = ntmp
     nc = 0
-
+    gmodel = model
+    gneuronTypes = neuronTypes
+    gcrossbars = crossbars
+    gtemplates = neuronTemplates
     cfgFile = ConfigFile(modelFN, nc=len(cores))
 
     print("Generating CSV...")
     data = []
-    # for ch in cores:
-    # 	ch = [ch]
-    # 	data = data + neuronCSVFut(ch,crossbars,nc,neuronTemplates)
 
-    #	data = Parallel(n_jobs= mp.cpu_count(),verbose=51)(delayed(neuronCSVFut)([ch],crossbars,nc,neuronTemplates) for ch in cores)
+    compWork = mp.Queue()
+    coreWork = mp.Queue()
 
 
+    print()
 
-    # [[cfgFile.addNeuron(v) for v in n] for n in data]
+    print("Priming JSON conversion...")
+    nw = int(mp.cpu_count())
 
-    # with concurrent.futures.ProcessPoolExecutor(max_workers=int(mp.cpu_count()/2)) as e:
-    with concurrent.futures.ProcessPoolExecutor(max_workers=mp.cpu_count()) as e:
+    manager = mp.Manager()
+    compWork = manager.Queue()
+    coreWork = manager.Queue()
+    corect = 0
+    for ch in cores:
+        coreWork.put([ch])
+        corect += 1
+    wrkrs = []
+    # for i in range(nw):
+    #     p = mp.Process(target=neuronCSVWorker,args=(crossbars,nc,neuronTemplates,coreWork,compWork))
+    #     p.start()
+    #
+    #     wrkrs.append(p)
+    #
+    # for
+    with concurrent.futures.ProcessPoolExecutor(max_workers=nw) as e:
+        f = []
+        tw = []
+        for i in range(nw):
+
+            f.append(e.submit(neuronCSVWorker,crossbars,nc,neuronTemplates,coreWork,compWork))
+        #for _ in tqdm(as_completed(f), position=0,total=nw):
+        print("Converting JSON Neurons...")
+
+        with(tqdm(total=corect,position=0,desc="Parsing core data...")) as tq:
+            cc=0
+
+            while(not compWork.empty() or not coreWork.empty()):
+                    cc += 1
+                    for d in tqdm(compWork.get(), position=1,desc="Converting core"):
+                        cfgFile.addNeuron(d)
+                    tq.update(cc)
+                    cc = 0
+            tq.update(cc)
+
+    return cfgFile
+
+    # with concurrent.futures.ProcessPoolExecutor(max_workers=mp.cpu_count()) as e:
+    #     f = []
+    #     for ch in cores:
+    #         ch = [ch]
+    #         f.append(e.submit(rundmc, ch, crossbars, nc, neuronTemplates,cfgFile.neuronQueue))
+    #     print("Running JSON--> NeMo neuron conversion...")
+    #     for dti in tqdm(as_completed(f), desc="Parsing core data and assembling text",position=0):
+    #         while(not cfgFile.neuronQueue.empty()):
+    #             cfgFile.calcMPNeuron(cfgFile.neuronQueue.get())
+    #
+    #     cfgFile.finishMP()
+
+    #return cfgFile
+
+
+    data = Parallel(n_jobs=mp.cpu_count(), verbose=10)(
+        delayed(neuronCSVFut)([cores[i]], crossbars,nc,neuronTemplates) for i in range(len(cores)))
+    for d in tqdm(data,position=0):
+        for v in tqdm(d, position=1):
+            cfgFile.addNeuron(v)
+    return cfgFile
+    with concurrent.futures.ProcessPoolExecutor(max_workers=mp.cpu_count(),batch_size=32) as e:
         f = []
         thd = []
+
         for ch in cores:
             ch = [ch]
             f.append(e.submit(neuronCSVFut, ch, crossbars, nc, neuronTemplates))
@@ -404,13 +498,14 @@ def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
         }
         print("Running JSON neuron conversion...")
 
-        for dti in tqdm(as_completed(f), desc="Parsing TN Core Data", position=0):
+        for dti in tqdm(as_completed(f), desc="Parsing TN Core Data", total=len(f), position=0):
             #data.append(dti.result())
             data = dti.result()
+           # thd.append(e.submit(rundmc, data))
             for v in tqdm(data, position=1, desc="Generating config data from core"):
                 cfgFile.addNeuron(v)
 
-        print("assembling text")
+        print("assembling text...")
         for proc in tqdm(as_completed(thd)):
             pass
 
@@ -423,12 +518,19 @@ def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
     # cfgFile.neuron_text = cfgFile.neuron_text + data
     return cfgFile
 
+
 neuronQueue = mp.Queue()
 
 def compileNeuronTxt(neurons):
     pass
 
-def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
+def neuronCSVWorker(crossbars, nc, neuronTemplates,coreWork,compWork):
+    while not coreWork.empty():
+        compWork.put(neuronCSVFut(coreWork.get(),crossbars,nc,neuronTemplates))
+
+
+
+def neuronCSVFut(cores, crossbars=0, nc=0, neuronTemplates=0):
     """
 	Multiprocessing parser for TrueNorth
 	:param cores: 
@@ -437,7 +539,6 @@ def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
 	:param neuronTemplates: 
 	:return: 
 	"""
-
     d = ""
     coreNeuronTypes = np.zeros(256, dtype=np.int32)
     destCores = np.zeros(256, dtype=np.int32)
