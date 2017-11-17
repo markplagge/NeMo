@@ -339,7 +339,7 @@ void init_nemo(){
 	g_tw_lp_typemap = lpTypeMapper;
 
 	/// EVENTS PER PE SETTING
-	g_tw_events_per_pe = NEURONS_IN_CORE * AXONS_IN_CORE; // magic number
+	g_tw_events_per_pe = NEURONS_IN_CORE * AXONS_IN_CORE * 128; // magic number
 
 
     LPS_PER_PE = g_tw_nlp / g_tw_npe;

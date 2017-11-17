@@ -405,8 +405,9 @@ def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
         print("Running JSON neuron conversion...")
 
         for dti in tqdm(as_completed(f), desc="Parsing TN Core Data", position=0):
-            data.append(dti.result())
-            for v in tqdm(dti.result(), position=1, desc="Generating config data from core"):
+            #data.append(dti.result())
+            data = dti.result()
+            for v in tqdm(data, position=1, desc="Generating config data from core"):
                 cfgFile.addNeuron(v)
 
         print("assembling text")
@@ -425,7 +426,7 @@ def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
 neuronQueue = mp.Queue()
 
 def compileNeuronTxt(neurons):
-
+    pass
 
 def neuronCSVFut(cores, crossbars, nc, neuronTemplates):
     """
