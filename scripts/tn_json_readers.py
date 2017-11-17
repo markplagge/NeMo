@@ -458,7 +458,11 @@ def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
                     tq.update(cc)
                     cc = 0
             tq.update(cc)
-
+    #emg cleanup:
+    print("JSON convert Complete... cleaning up and continuing processing.")
+    while(not compWork.empty()):
+        for d in compWork.get():
+            cfgFile.addNeuron(d)
     return cfgFile
 
     # with concurrent.futures.ProcessPoolExecutor(max_workers=mp.cpu_count()) as e:
