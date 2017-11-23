@@ -120,7 +120,7 @@ def fastLoadPushRunner(localFileList):
 def fastLoadDB(file_list):
 
 	chunks = 32
-	worker_file_lists = []
+	worker_file_lists = [''] * chunks
 	cworker = 0
 	for i in range(0,chunks):
 		worker_file_lists[i] = []
@@ -134,7 +134,7 @@ def fastLoadDB(file_list):
 	running_procs = []
 	with concurrent.futures.ProcessPoolExecutor(max_workers=16) as executor:
 
-		with progressbar.ProgressBar(max_value=property.UnknownLength) as bar:
+		with progressbar.ProgressBar() as bar:
 			for worker_files in worker_file_lists:
 				running_procs.append(executor.submit(fastLoadPushRunner, worker_files))
 				bar.update(1)
@@ -161,7 +161,7 @@ def bulkLoadForDB(file_list):
 	cfiles = 0
 	if type == "pg":
 		pass
-	print (" loading into postgres...")
+	print (" loading into postgres bulk...")
 	conn = initSQL()
 	c = conn.cursor()
 
