@@ -181,7 +181,9 @@ class Spike(object):
 
     def toCSV(self):
         return f"{self.time},{self.destCore},{self.destAxon}\n"
-
+    
+    def toDB(self):
+        return (self.time, self.destCore, self.destAxon)
 
 if __name__ == '__main__':
     n = TN(numSynapsesPerCore=256, weightsPerNeuron=4)

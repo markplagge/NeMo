@@ -5,6 +5,7 @@
 #include "../IO/IOStack.h"
 #include "../dumpi.h"
 #include "../IO/spike_reader.h"
+#include "../IO/spike_db_reader.h"
 typedef struct AxonState {
 	stat_type sendMsgCount;
 	tw_lpid destSynapse;

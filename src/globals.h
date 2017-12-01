@@ -130,6 +130,14 @@ tw_stime getNextBigTick(tw_lp *lp, tw_lpid neuronID);
 /**@}*/
 
 tw_stime getNextSynapseHeartbeat(tw_lp *lp);
+
+/**
+ * String concat that returns a pointer to the very end of the string.
+ * @param dest
+ * @param src
+ * @return
+ */
+char* mystrcat( char* dest, char* src );
 /** @defgroup global_structs_enums Global Structs and Enums
   * Global structs and enums, including event types, lp types, and the message structure
   */

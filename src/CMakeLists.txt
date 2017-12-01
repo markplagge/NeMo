@@ -3,6 +3,7 @@ project(NeMo)
 enable_testing()
 
 INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR} ${lmdir} )
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/lib/simclist)
 set (CMAKE_EXPORT_COMPILE_COMMANDS 1 )
 set (NON11 0 CACHE BOOL "Non C11 Compliant Compiler?")
 
@@ -40,6 +41,7 @@ endif()
 
 ##NeMo uses a few C11 features, including generic macros. We assume standard C11
 ##behaviors.
+set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -lsqlite3")
 if(${NON11})
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99")
@@ -63,6 +65,7 @@ set(NeMo_NEURONS_IN_CORE 256 CACHE STRING "The number of neurons in each simulat
 set(NeMo_NUM_WEIGHTS_IN_NEURON 4 CACHE STRING "How many weights does a neuron have? (4 is TN default)")
 set(NeMo_MODEL_FILE "./nemo_model.nfg1" CACHE STRING "Location and name of the NeMo Model Config File")
 set(NeMo_SPIKE_FILE "./nemo_spike.csv" CACHE STRING "Location and name of the NeMo input spike file")
+set(NeMo_DEBUG  0 CACHE BOOL "Debug mode")
 # set(NeMo_SAVE_MSG FALSE CACHE BOOL "Save message paths to CSV or Couch? (debug messages)")
 # set(NeMo_SAVE_MSG_COUCH FALSE CACHE BOOL "Save message paths directly to couch?")
 # set(NeMo_COUCH_ADD "None" CACHE STRING "The IP address:PORT of the couch database if used")
@@ -117,8 +120,7 @@ set(model_srcs
 
         lib/csv.h
         lib/libcsv.c
-        lib/simclist.h
-        lib/simclist.c
+
 
 
 
@@ -129,22 +131,32 @@ set(model_srcs
         IO/output.c
         nemo_config.h 
         dumpi.c dumpi.h
-        layer_map/layer_map_lib.h layer_map/layer_map_lib.c
-        IO/spike_reader.c
-        IO/spike_reader.h
+        layer_map/layer_map_lib.h
+        layer_map/layer_map_lib.c
+
+
         IO/neuron_output.c
         IO/model_reader.c
+        IO/spike_db_reader.h
+        IO/spike_db_reader.c
         neuro/tn_neuron_struct.h
-        nemo_main.h tests/tomacs_exp.c tests/tomacs_exp.h)
+        nemo_main.h tests/tomacs_exp.c tests/tomacs_exp.h lib/itrlve.h lib/itrlve.c)
 
-
+#REMOVED:
+#IO/spike_reader.c
+#IO/spike_reader.h
 
 ADD_EXECUTABLE(NeMo  ${model_srcs})
+#if (SQLITE_BUILD_STATIC)
+#	set(SQLIB "${SQLITE_STATIC_NAME}")
+#else()
+#	set(SQLIB "${SQLITE_DYNAMIC_NAME}")
+#endif()
 
 if(USE_LUA_JIT)
-    TARGET_LINK_LIBRARIES(NeMo ROSS luajit m)
+    TARGET_LINK_LIBRARIES(NeMo ROSS luajit sqlite3 simclist m)
 
 else()
-    TARGET_LINK_LIBRARIES(NeMo ROSS liblua m)
+	TARGET_LINK_LIBRARIES(NeMo ROSS liblua sqlite3 simclist m)
 endif()
-
+ 

@@ -94,6 +94,9 @@ typedef struct TN_MODEL {
     //!neuron j?
     /** stochastic weight mode selection. $b_j^{G_i}$ */
     bool weightSelection[4];
+    int firecount;
+    tw_stime lastFire;
+
 
     // TODO - print address offsets fof structs for performance
 

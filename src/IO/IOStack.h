@@ -8,11 +8,19 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../globals.h"
-#include "../lib/simclist.h"
+#include "../lib/simclist/simclist.h"
 #include "../nemo_config.h"
+#include "../lib/itrlve.h"
 //#include "../lib/lua.h"
 //#include "../lib/lualib.h"
 //#include "../lib/lauxlib.h"
+
+/** Macro wrappers for interleaving time/axonids */
+#define EXTIME(x) EXHIGH(x)
+#define EXAXON(x) EXLOW(x)
+
+uint64_t interleave(uint32_t time, uint32_t axid );
+
 /** External filename variables */
 
 extern char * NEURON_FIRE_R_FN	;
@@ -49,13 +57,34 @@ struct tnCSV{
     char params[128];
 };
 
-/** @defgroup spin Spike Input Functions @{ */
-/**
- * opens the spike file.
- * @param filename Optional - if provided will overrride the global variable.
- * @return status - 0 if good.
- */
 
+/** @defgroup spin Spike Input Functions @{ */
+
+
+/* Spike Loading Functions (generics) */
+
+int getSpikesFromAxon(void * timeList, id_type core, id_type axonID);
+/**
+ * Core-wise spike loading. Synapse calls this function with its core and and inited list. returns num of
+ * spikes and a populated list.
+ * @param timeList A list populated with interleaved time->axonID structs
+ * @param core the coreID of the synapse
+ * @return the number of spikes in the input file.
+ */
+int getSpikesFromSynapse(void * timeList, id_type core);
+/**
+ * Core-wise spike counter. Synapse calls this function to see if there are spikes in the input file for this
+ * particular core.
+ * @param core The local coreID of the synapse.
+ * @return number of spikes
+ */
+int getNumSpikesForCore(id_type core);
+
+int spikeFromSynapseComplete(void * timeList);
+
+int spikeFromAxonComplete(void * timeList);
+
+int openSpikeFile();
 int closeSpikeFile();
 
 int loadSpikesFromFile(char * filename);
@@ -181,5 +210,6 @@ void closeModelInput();
 void clearStack();
 void closeLua();
 /** @} */
+
 
 #endif //NEMO_IOSTACK_H

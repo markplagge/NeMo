@@ -10,7 +10,8 @@ include(ExternalProject)
 set (RD "${CMAKE_CURRENT_SOURCE_DIR}/ROSS/")
 set (ND "${CMAKE_CURRENT_SOURCE_DIR}/src/")
 set (LuaD "${CMAKE_CURRENT_SOURCE_DIR}/lua")
-
+set (SQLD "${CMAKE_CURRENT_SOURCE_DIR}/sqlite/")
+set (simcld "${CMAKE_CURRENT_SOURCE_DIR}/src/lib/simclist")
 
 #cmake_policy(SET CMP0012 OLD)
 # LUA Options
@@ -18,6 +19,8 @@ set (LuaD "${CMAKE_CURRENT_SOURCE_DIR}/lua")
 option(USE_LUA_JIT "Use JIT lua project for scripting" OFF)
 #sSET(USE_LUA_JIT TRUE)
 ADD_SUBDIRECTORY(${RD})
+ADD_SUBDIRECTORY(${SQLD})
+ADD_SUBDIRECTORY(${simcld})
 
 if(USE_LUA_JIT)
     message(STATUS "LUA JIT PROJECT" )

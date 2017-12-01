@@ -5,7 +5,7 @@
 #define NEMO_SYNAPSE_H
 #include "../globals.h"
 #include "../mapping.h"
-
+#include "../IO/IOStack.h"
 
 
 
@@ -21,5 +21,6 @@ void synapse_init(synapseState *s, tw_lp *lp);
 void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp);
 void synapse_reverse(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp);
 void synapse_final(synapseState *s, tw_lp *lp);
+void synapse_pre_run(synapseState *s, tw_lp *lp);
 
 #endif //NEMO_SYNAPSE_H

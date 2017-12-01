@@ -1,3 +1,5 @@
+import sqlite3
+import tempfile
 import concurrent.futures
 import copy
 import json
@@ -11,7 +13,7 @@ import numpy as np
 from tqdm import tqdm
 from joblib import Parallel, delayed, Memory
 from tn_nf2_api import TN, Spike, ConfigFile
-
+import pandas
 try:
 
     from numba import jit
@@ -422,7 +424,7 @@ def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
     print()
 
     print("Priming JSON conversion...")
-    nw = int(mp.cpu_count())
+    nw = int(mp.cpu_count() / 2)
 
     manager = mp.Manager()
     compWork = manager.Queue()
@@ -616,13 +618,53 @@ def readSpikeJSON(filename):
 def readSpikeFile(filename, type='json'):
     return readSpikeJSON(filename)
 
+def line_prepender(filename, line):
+    with open(filename, 'r+') as f:
+        content = f.read()
+        f.seek(0, 0)
+        f.write(line.rstrip('\r\n') + '\n' + content)
+
 
 def readAndSaveSpikeFile(filename, type="json", saveFile="spikes.csv"):
     spikes = readSpikeFile(filename, type)
 
     out = [s.toCSV() for s in spikes]
+    fp = tempfile.SpooledTemporaryFile(max_size=8192,mode='w+t')
+    fp.writelines(out)
     with open(saveFile, 'w') as f:
         f.writelines(out)
+
+
+
+#    fp = tempfile.TemporaryFile(mode='w+t')
+
+#    fp.write("time,core,axon\n")
+#    with open(saveFile, 'r') as f:
+#        fp.writelines(f.read())
+    fp.seek(0)
+    df = pandas.read_csv(fp, header=None,names=["time","core","axon"])
+
+    fp.close()
+    print("sqlite generation - post csv parsing...")
+    #SQLITE DB FOR SPIKES:
+    fn = saveFile.split('.')[0] + ".sqlite"
+    #    con.execute(tblcreate)
+    
+        
+    
+    con = sqlite3.connect(fn)
+    df.to_sql('input_spikes',con,if_exists='replace',index=False)
+
+    #c = conn.cursor()
+    tblcreate = '''CREATE TABLE "input_spikes"(
+	"time" Integer,
+	"core" Integer,
+	"axon" Integer );'''
+    indxcreate = '''CREATE INDEX "idx1" ON "input_spikes"( "core" DESC, "axon" DESC ); '''
+    con.execute(indxcreate)
+#    rawdat = [s.toDB() for s in spikes] 
+#    con.executemany("INSERT INTO input_spikes(time,core,axon) values (?,?,?)", rawdat)
+    con.close()
 
 
 if __name__ == '__main__':

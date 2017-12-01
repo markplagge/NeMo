@@ -14,7 +14,7 @@
 #endif
 
 
-#define DEBUG 1
+
 /** DUMPI TEXT FILE PERMS
  * <mpiType> <src> <dst> <wallStart> <wallStop> <cpuStart>
  * <cpuStop> <count> <dataType> <comm> <tag>

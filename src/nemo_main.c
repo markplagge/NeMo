@@ -5,7 +5,9 @@
 #include "nemo_main.h"
 #include "./IO/IOStack.h"
 #include "./layer_map/layer_map_lib.h"
-/** \addtogroup Globals 
+
+
+/** \addtogroup Globals
 #define TESTIO 0
  * @{  */
 
@@ -183,7 +185,7 @@ tw_lptype model_lps[] = {
         (event_f)synapse_event,
         (revent_f)synapse_reverse,
         (commit_f) NULL,
-        (final_f)NULL,
+        (final_f)synapse_final,
         (map_f)getPEFromGID, 
         sizeof(synapseState)
     },
@@ -208,7 +210,6 @@ tw_lptype model_lps[] = {
  */
 void displayModelSettings()
 {
-//	char *header = { '*'
 //    if(g_tw_mynode == 0){
 //    for (int i = 0; i < 30; i++)
 //    {
@@ -218,6 +219,11 @@ void displayModelSettings()
     double cores_per_node = CORES_IN_SIM / tw_nnodes() ;
     char *netMode = FILE_IN ? "file defined":"random benchmark";
     printf("\n");
+#ifdef DEBUG
+    TH
+    printf("* \tDebug Mode Enabled.\n");
+#endif
+    TH
     printf("* \t %i Neurons per core (cmake defined), %llu cores in sim.\n", NEURONS_IN_CORE, CORES_IN_SIM);
     STT("%i LPs (including Axons and Super Synapse) Per Core", CORE_SIZE);
     printf("* \t %f cores per PE, giving %llu LPs per pe.\n", cores_per_node, g_tw_nlp);
@@ -312,15 +318,18 @@ void init_nemo(){
 		// Init File Input Handles
 		printf("Network Input Active");
 		printf("Filename specified: %s\n", MODEL_FILE);
-		//spikeFileName = SPIKE_IN_FN;
+        printf("Spike file: %s\n", SPIKE_FILE);
+		//SPIKE_IN_FN = SPIKE_FILE;
 		// INPUT Model file init here:
 ///////////////////////////////////////////////
 		initModelInput(CORES_IN_SIM);
 
 // INPUT SPIKE FILE init HERE:
 		////////////////////////
-		int spkCT = loadSpikesFromFile(SPIKE_FILE);
-		printf("Read %i spikes\n", spkCT);
+        openSpikeFile();
+		//connectToDB(SPIKE_FILE);
+		//int spkCT = loadSpikesFromFile(SPIKE_FILE);
+		//printf("Read %i spikes\n", spkCT);
         GRID_ENABLE = false;
         IS_RAND_NETWORK = false;
         IS_SAT_NET = false;
@@ -373,7 +382,7 @@ int main(int argc, char *argv[]) {
     //call nemo init
     init_nemo();
 if(nonC11 == 1)
-	printf("Non C11 compliant compiler detected.\n");
+	printf("Non C11 com pliant compiler detected.\n");
 
 	//    if (testingMode == 1 ) {
 	//        unsigned char mapResult = 0;

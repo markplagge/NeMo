@@ -56,7 +56,7 @@ cmake-build-debug
 cmake-build-release
 .idea/
 
-src/lib/
+
 
 
 scripts/__pycache__/
@@ -71,3 +71,15 @@ scripts/\.DS_Store
 \.DS_Store
 
 build/
+
+*.nfg1
+scripts/cf100_spike.csv
+scripts/ex1_spike.csv
+nemo_spike.csv
+*.sqlite
+*.json
+*.sfcp
+*.tnbm
+*.bin
+*.mat
+*.conf

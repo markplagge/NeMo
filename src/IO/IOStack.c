@@ -16,6 +16,9 @@ bool inputFileOpen;
 
 
 
+uint64_t interleave(uint32_t time, uint32_t axid ){
+    return combine(time, axid);
+}
 
 
 

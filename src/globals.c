@@ -79,6 +79,15 @@ void debugMsg(char * m, char * d){
 	printf("%s %s", m,d);
 }
 
+char* mystrcat( char* dest, char* src )
+{
+    while (*dest) dest++;
+    while (*dest++ = *src++);
+    return --dest;
+}
+
+
+
 //char * charf()      { return    "%c";}
 //char * scharf()     { return    "%hhd";}
 //char * sshortf()    { return       "%hd";}
