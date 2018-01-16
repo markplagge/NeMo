@@ -25,9 +25,9 @@ char *cntq = "select count(input_spikes.time)\n"
 /**
  * Core sql query building block 1
  */
-char *coreq1 = "SELECT input_spikes.time, input_spikes.axon\n"
-    "FROM   input_spikes\n"
-    "WHERE input_spikes.core = ";
+char *coreq1 = "SELECT \"input_spikes\".\"time\", \"input_spikes\".\"axon\"\n"
+    "FROM   \"input_spikes\"\n"
+    "WHERE \"input_spikes\".\"core\" = ";
 /**
  * core sql query building block 1 - counter.
  */
@@ -183,17 +183,24 @@ char *errmsg;
 
 int doesCoreHaveSpikesDB(id_type core) {
   //query stored in fullQ.
-  assembleCoreQuery(0, core);
+  assembleCoreQuery(1, core);
   errmsg = calloc(sizeof(char), 1024);
-  int rc = sqlite3_exec(spikedb, fullQ, coreCountCB, NULL, errmsg);
+  int rc;
+  sqlite3_stmt *res;
+  rc = sqlite3_prepare_v2(spikedb, fullQ, -1, &res, 0);
+  //rc = sqlite3_exec(spikedb, fullQ, coreCountCB, NULL, errmsg);
   if (rc != SQLITE_OK) {
     TH
     printf("\n\nSQLITE error\n");
-    STT("Message: %s", errmsg);
+    printf("SQL ERROR TRACKING \n errmsg pre: %s \n\n. Error Code %i\n", sqlite3_errmsg(spikedb), rc);
     tw_error(TW_LOC, "\nSQL query: %s \n Core: %llu", fullQ, core);
   }
+  int cntr = 0;
+  if (sqlite3_step(res) == SQLITE_ROW){
+    cntr ++;
+  }
   free(errmsg);
-  return dbct;
+  return cntr;
 }
 
 int getSpikesSynapseDB(void *timeList, id_type core) {
@@ -202,6 +209,7 @@ int getSpikesSynapseDB(void *timeList, id_type core) {
   sqlite3_stmt *res;
   int rc = sqlite3_prepare_v2(spikedb, fullQ, -1, &res, 0);
   if (rc != SQLITE_OK) {
+
     tw_error(TW_LOC, "SQL Error - unable to execute statement %s\n", sqlite3_errmsg(spikedb));
   }
   int cntr = 0;
@@ -259,7 +267,7 @@ int getSpikesFromAxonSQL(void *M, id_type coreID, id_type axonID) {
     sqlite3_bind_int64(res, 1, axonID);
     sqlite3_bind_int64(res, 2, coreID);
   } else {
-    tw_error(TW_LOC, "SQL Error - unable to execute statement %s\n", sqlite3_errmsg(spikedb));
+    tw_error(TW_LOC, "SQL Error - unable to execute statement: Details: %s\n", sqlite3_errmsg(spikedb));
 
   }
   int cntr = 0;
@@ -301,6 +309,17 @@ int connectToDB(char *filename) {
 
     }
     st = loadOrSaveDb(spikedb, filename, 0);
+    if (st){
+      if (g_tw_mynode == 0){
+        printf("\n\nDisk based sql backup enabled.");
+        st = sqlite3_close(spikedb);
+        st = sqlite3_open_v2(filename, &spikedb,SQLITE_OPEN_READONLY|SQLITE_OPEN_NOMUTEX, NULL);
+        if(st){
+          tw_error(TW_LOC, "Database open error: Code: %i \n Message %s\n filename: %s\n",
+                   st,sqlite3_errmsg(spikedb), filename);
+        }
+      }
+    }
     spikedb_isopen = 1;
   }
   return st;

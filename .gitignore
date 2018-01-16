@@ -83,3 +83,9 @@ nemo_spike.csv
 *.bin
 *.mat
 *.conf
+
+scripts/dumpi_virt-0_rnk0\.txt
+
+scripts/results\.log
+
+scripts/testtbl1

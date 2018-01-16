@@ -295,7 +295,7 @@ EXT bool DEBUG_MODE;
 EXT bool SAVE_MEMBRANE_POTS ;
 EXT bool SAVE_SPIKE_EVTS ; //!< Toggles saving spike events
 EXT bool SAVE_NETWORK_STRUCTURE;
-
+EXT unsigned int SAVE_OUTPUT_NEURON_EVTS;
 //EXT bool MPI_SAVE;
 EXT bool BINARY_OUTPUT;
 

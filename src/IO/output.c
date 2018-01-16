@@ -143,7 +143,7 @@ void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid des
  */
 
 void setFileNames(){
-	if(SAVE_SPIKE_EVTS){
+	if(SAVE_SPIKE_EVTS || SAVE_OUTPUT_NEURON_EVTS){
 		setNeuronNetFileName();
 	}
 }
@@ -151,7 +151,7 @@ void setFileNames(){
 void initOutFiles(){
 	setFileNames();
 	int tv = N_FIRE_BUFF_SIZE;
-	if(SAVE_SPIKE_EVTS) {
+	if(SAVE_SPIKE_EVTS || SAVE_OUTPUT_NEURON_EVTS) {
 		if(BINARY_OUTPUT) {
 			neuronFireBufferBIN = (neuronFireStruct *) tw_calloc(TW_LOC,"OUTPUT",tv, sizeof(neuronFireStruct));
 			neuronFireFile = fopen(neuronRankFN, "wb");

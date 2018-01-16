@@ -280,16 +280,16 @@ void resetNone(void *neuronState) {
  value. */
 void TNFire(tn_neuron_state *st, void *l) {
 
-  tw_lp *lp = (tw_lp *) l;
+  //tw_lp *lp = (tw_lp *) l;
 
 
   // DEBUG
   //	tw_lpid outid = st->dendriteGlobalDest;
   //	tw_lp *destLP = tw_getlp(outid);
   //	printf("Sending message to %llu\n", destLP->gid);
-  if (st->isOutputNeuron) {
-    /////output neurons do not send messages to the rest of the model.
-  } else {
+
+
+  //} else {
     tw_lp *lp = (tw_lp *) l;
     // DEBUG
     //	tw_lp *destLP = tw_getlp(outid);
@@ -308,7 +308,7 @@ void TNFire(tn_neuron_state *st, void *l) {
     }
     tw_event_send(newEvent);
     st->firedLast = true;
-  }
+  //}
 }
 
 bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp,
@@ -368,7 +368,7 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp,
     willFire = (willFire && fireTimingCheck(st,lp));
     bf->c0 = bf->c0 || willFire;
 
-    if (willFire) {
+    if (willFire && !st->isOutputNeuron) {
       TNFire(st, lp);
       //check for intra-core communications -
       //setting bit 31 as toggle for send communication
@@ -378,9 +378,12 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp,
       } else {
         bf->c31 = 0;
       }
+      /** bf->c10 is an output neuron fire state checker. True means the neuron fired this turn. */
+      bf->c10 = 1;
 
       // st->fireCount++;
     }
+
 
     st->lastActiveTime = tw_now(lp);
 
@@ -425,6 +428,7 @@ void TNReceiveReverseMessage(tn_neuron_state *st, messageData *M, tw_lp *lp,
     // reverse computation of fire and reset functions here.
     /**@todo implement neuron fire/reset reverse computation functions */
     st->firedLast = false;
+
   }
   if (bf->c13) {
     st->heartbeatOut = !st->heartbeatOut;
@@ -1248,6 +1252,10 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
   if (SAVE_SPIKE_EVTS && cv->c0) {
     saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID);
   }
+  if (s->isOutputNeuron && SAVE_OUTPUT_NEURON_EVTS && cv->c10) {
+      /////output neurons do not send messages to the rest of the model. But we save the output.
+      saveNeuronFire(getNextBigTick(lp,s->myLocalID),s->myCoreID,s->myLocalID,s->outputGID);
+    }
   // save simulated dumpi trace if inter core and dumpi trace is on
   if (cv->c31 && (DO_DUMPI || CORES_IN_CHIP == 1)) {
     /** @TODO: Add dumpi save flag to config. */
