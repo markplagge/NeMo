@@ -266,7 +266,7 @@ void testNeuronOut() {
   initOutFiles();
 
   for (int i = 0; i < 4096; i++) {
-    saveNeuronFire(random() + i, 0, 0, 1024);
+    saveNeuronFire(random() + i, 0, 0, 1024,1,1,1);
   }
   closeFiles();
 }
