@@ -1250,11 +1250,12 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
   // if neuron has fired and save neuron fire events is enabled, save this
   // event.
   if (SAVE_SPIKE_EVTS && cv->c0) {
-    saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID);
+    saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),0);
   }
   if (s->isOutputNeuron && SAVE_OUTPUT_NEURON_EVTS && cv->c10) {
       /////output neurons do not send messages to the rest of the model. But we save the output.
-      saveNeuronFire(getNextBigTick(lp,s->myLocalID),s->myCoreID,s->myLocalID,s->outputGID);
+      saveNeuronFire(getNextBigTick(lp,s->myLocalID),s->myCoreID, s->myLocalID, s->outputGID,
+                     getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID,1));
     }
   // save simulated dumpi trace if inter core and dumpi trace is on
   if (cv->c31 && (DO_DUMPI || CORES_IN_CHIP == 1)) {

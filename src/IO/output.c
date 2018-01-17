@@ -99,7 +99,8 @@ void setNeuronNetFileName(){
 	
 }
 
-void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid destGID){
+void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid destGID, unsigned int destCore,
+                    unsigned int destLocal, unsigned int isOutput){
 	if (neuronFirePoolPos >= N_FIRE_BUFF_SIZE){
 		flushNeuron();
 	}
@@ -112,8 +113,9 @@ void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid des
 		neuronFireBufferBIN[neuronFirePoolPos].ne = '|';
 		
 	}else {
-		sprintf(neuronFireBufferTXT[neuronFirePoolPos], "%.30f,%i,%u,%llu",
-		        timestamp, core, local, destGID);
+
+		sprintf(neuronFireBufferTXT[neuronFirePoolPos], "%.30f,%i,%u,%llu,%u,%u,%u",
+		        timestamp, core, local, destGID,destCore,destLocal,isOutput);
 	}
 	
 	++ neuronFirePoolPos;
@@ -163,6 +165,7 @@ void initOutFiles(){
 				neuronFireBufferTXT[i] = (char *) tw_calloc(TW_LOC, "OUTPUT", tv, sizeof(char *));
 			}
 			neuronFireFile = fopen(neuronRankFN, "w");
+          fprintf(neuronFireFile,"timestamp,core,local,destGID,destCore,destNeuron,isOutput?");
 		}
 //
 //        MPI_File_open(MPI_COMM_WORLD,mpiFileName,
