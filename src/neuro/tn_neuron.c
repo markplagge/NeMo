@@ -1012,7 +1012,7 @@ int safeGetArr(int direct, char *lutName, char *dirName, long vars[],
 void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {
   int extraParamCache = 32;
   // Set up neuron - first non array params:
-  long outputGID = 0;
+  tw_lpid outputGID = 0;
   long outputCore;
   long outputLID;
   id_type core = getCoreFromGID(lp->gid);
