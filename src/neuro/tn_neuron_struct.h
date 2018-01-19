@@ -96,6 +96,8 @@ typedef struct TN_MODEL {
     bool weightSelection[4];
     int firecount;
     tw_stime lastFire;
+  long outputNeuronDest;
+  long outputCoreDest;
 
 
     // TODO - print address offsets fof structs for performance

@@ -19,42 +19,42 @@
 #define EXTIME(x) EXHIGH(x)
 #define EXAXON(x) EXLOW(x)
 
-uint64_t interleave(uint32_t time, uint32_t axid );
+uint64_t interleave(uint32_t time, uint32_t axid);
 
 /** External filename variables */
 
-extern char * NEURON_FIRE_R_FN	;
-extern char * NETWORK_CFG_FN 	;
-extern char * SPIKE_IN_FN 		;
+extern char *NEURON_FIRE_R_FN;
+extern char *NETWORK_CFG_FN;
+extern char *SPIKE_IN_FN;
 #define SAVE_ALL_NEURON_PARAMS 1
 #define DBG_MODEL_MSGS 0
-enum modelReadMode{
-    START_READ,
-    MODEL_HDR,
-    N_TYPE,
-    N_CORE,
-    N_LOCAL,
-    N_CONNECTIVITY,
-    N_AXONTYPES,
-    N_SGI,
-    N_SP,
-    N_BV,
-    N_PARAMS
+enum modelReadMode {
+  START_READ,
+  MODEL_HDR,
+  N_TYPE,
+  N_CORE,
+  N_LOCAL,
+  N_CONNECTIVITY,
+  N_AXONTYPES,
+  N_SGI,
+  N_SP,
+  N_BV,
+  N_PARAMS
 };
 /**
  * struct tnCSV stores the values read in via the multi-file system.
  */
-struct tnCSV{
-    unsigned int fldNumber;
-    enum modelReadMode rm;
-    long coreID;
-    long localID;
-    char connectivity[AXONS_IN_CORE];
-    char axontypes[AXONS_IN_CORE];
-    char sgi[NUM_NEURON_WEIGHTS];
-    char sp[NUM_NEURON_WEIGHTS];
-    char bv[NUM_NEURON_WEIGHTS];
-    char params[128];
+struct tnCSV {
+  unsigned int fldNumber;
+  enum modelReadMode rm;
+  long coreID;
+  long localID;
+  char connectivity[AXONS_IN_CORE];
+  char axontypes[AXONS_IN_CORE];
+  char sgi[NUM_NEURON_WEIGHTS];
+  char sp[NUM_NEURON_WEIGHTS];
+  char bv[NUM_NEURON_WEIGHTS];
+  char params[128];
 };
 
 
@@ -63,7 +63,7 @@ struct tnCSV{
 
 /* Spike Loading Functions (generics) */
 
-int getSpikesFromAxon(void * timeList, id_type core, id_type axonID);
+int getSpikesFromAxon(void *timeList, id_type core, id_type axonID);
 /**
  * Core-wise spike loading. Synapse calls this function with its core and and inited list. returns num of
  * spikes and a populated list.
@@ -71,7 +71,7 @@ int getSpikesFromAxon(void * timeList, id_type core, id_type axonID);
  * @param core the coreID of the synapse
  * @return the number of spikes in the input file.
  */
-int getSpikesFromSynapse(void * timeList, id_type core);
+int getSpikesFromSynapse(void *timeList, id_type core);
 /**
  * Core-wise spike counter. Synapse calls this function to see if there are spikes in the input file for this
  * particular core.
@@ -80,16 +80,16 @@ int getSpikesFromSynapse(void * timeList, id_type core);
  */
 int getNumSpikesForCore(id_type core);
 
-int spikeFromSynapseComplete(void * timeList);
+int spikeFromSynapseComplete(void *timeList);
 
-int spikeFromAxonComplete(void * timeList);
+int spikeFromAxonComplete(void *timeList);
 
 int openSpikeFile();
 int closeSpikeFile();
 
-int loadSpikesFromFile(char * filename);
+int loadSpikesFromFile(char *filename);
 
-spikeElem * getSpike(long destCore, long destAxon);
+spikeElem *getSpike(long destCore, long destAxon);
 
 int getSpikeCount();
 
@@ -107,20 +107,20 @@ void closeFiles();
 
 
 void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid destGID, unsigned int destCore,
-					unsigned int destLocal, unsigned int isOutput);
-void openOutputFiles(char * outputFileName);
+                    unsigned int destLocal, unsigned int isOutput);
+void openOutputFiles(char *outputFileName);
 void initDataStructures(int simSize);
 void closeOutputFiles();
 void saveIndNeuron(void *n);
 /** @} */
 
 /** @defgroup modelReading @{ */
-typedef enum P_TYPES{
-	LONGARRAY,
-	UNSIGNEDLONGARRAY,
-	LONG,
-	UNSIGNEDLONG
-}p_types;
+typedef enum P_TYPES {
+  LONGARRAY,
+  UNSIGNEDLONGARRAY,
+  LONG,
+  UNSIGNEDLONG
+} p_types;
 /**
  * More complex auto populate neuron function. Given the coreID, localID, a state strut, and some defs,
  * will blindly fill in the struct with data.
@@ -132,8 +132,7 @@ typedef enum P_TYPES{
  * @param paramTypes A list of paramter types.
  * @return 0 if everything is fine. -1 if fail.
  */
-int populateNeuron(long coreID, long localID, void * neuron, char nt[2], char ** paramList, p_types* paramTypes);
-
+int populateNeuron(long coreID, long localID, void *neuron, char nt[2], char **paramList, p_types *paramTypes);
 
 /** lookupNeuron finds a neuron in the config file, and pushes it's table to the top of the lua stack.
  * Call this function first, then call lPushParam() followed by lGetParam()
@@ -142,14 +141,14 @@ int populateNeuron(long coreID, long localID, void * neuron, char nt[2], char **
  * @param nt NeuronType: can be "TN"
  * @return -1 if not found, 0 if found.
  */
-int lookupAndPrimeNeuron(long coreID, long localID, char * nt);
+int lookupAndPrimeNeuron(long coreID, long localID, char *nt);
 
 /**
  * Once a neuron is selected, this pushes a parameter from the table to the top of the stack .
  * Run this after lookupNeuron()
  * @param paramName
  */
-void lPushParam(char* paramName);
+void lPushParam(char *paramName);
 
 /**
  * onece a parameter is pushed (see lpushParam()), this extracts the parameter.
@@ -160,7 +159,7 @@ void lPushParam(char* paramName);
  * @return
  */
 
-long lGetParam(int isArray, long * arrayParam);
+long lGetParam(int isArray, long *arrayParam);
 
 /**
  * Returns a specific global model configuration parameter.
@@ -169,7 +168,7 @@ long lGetParam(int isArray, long * arrayParam);
  * @param modelParamName
  * @return
  */
-long getModelParam(char* modelParamName);
+long getModelParam(char *modelParamName);
 
 /**
  * a helper function that calls lPushParam then lGetParam.
@@ -180,11 +179,10 @@ long getModelParam(char* modelParamName);
  */
 long lGetAndPushParam(char *paramName, int isArray, long *arrayParam);
 
-
-/** 
+/**
  * A model read error helper function */
 
-void getModelErrorInfo(int ncore, int nlocal, char * ntype, char * paramName, int errorno);
+void getModelErrorInfo(int ncore, int nlocal, char *ntype, char *paramName, int errorno);
 
 /**
  * Prepares the model file for loadiing. Loads the file into memory and stores it in a list.
@@ -199,7 +197,7 @@ void initModelInput(unsigned long maxNeurons);
  * @param nemoName
  * @return
  */
-char* luT( char * nemoName);
+char *luT(char *nemoName);
 
 void clearNeuron(int curCoreID, int curLocalID);
 

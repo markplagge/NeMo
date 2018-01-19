@@ -290,24 +290,24 @@ void TNFire(tn_neuron_state *st, void *l) {
 
 
   //} else {
-    tw_lp *lp = (tw_lp *) l;
-    // DEBUG
-    //	tw_lp *destLP = tw_getlp(outid);
-    //	tw_lpid outid = st->dendriteGlobalDest;
-    //	printf("Sending message to %llu\n", destLP->gid);
+  tw_lp *lp = (tw_lp *) l;
+  // DEBUG
+  //	tw_lp *destLP = tw_getlp(outid);
+  //	tw_lpid outid = st->dendriteGlobalDest;
+  //	printf("Sending message to %llu\n", destLP->gid);
 
-    // DEBUG
-    tw_stime nextHeartbeat = getNextBigTick(lp, st->myLocalID);
-    tw_event *newEvent = tw_event_new(st->outputGID, nextHeartbeat, lp);
-    messageData *data = (messageData *) tw_event_data(newEvent);
+  // DEBUG
+  tw_stime nextHeartbeat = getNextBigTick(lp, st->myLocalID);
+  tw_event *newEvent = tw_event_new(st->outputGID, nextHeartbeat, lp);
+  messageData *data = (messageData *) tw_event_data(newEvent);
 
-    data->eventType = NEURON_OUT;
-    data->localID = st->myLocalID;
-    if (isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))) {
-      data->isRemote = st->myCoreID;
-    }
-    tw_event_send(newEvent);
-    st->firedLast = true;
+  data->eventType = NEURON_OUT;
+  data->localID = st->myLocalID;
+  if (isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))) {
+    data->isRemote = st->myCoreID;
+  }
+  tw_event_send(newEvent);
+  st->firedLast = true;
   //}
 }
 
@@ -331,82 +331,81 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp,
     /// @TODO: possibly need to aggregate inputs on the same channel? If
     /// validation isn't working check this.
 
-  case SYNAPSE_OUT:
-    st->drawnRandomNumber = tw_rand_integer(
-        lp->rng, 0,
-        st->largestRandomValue);  //!<- @BUG This might be creating
-    //! non-deterministic errors
-    TNIntegrate(m->axonID, st, lp);
-    // next, we will check if a heartbeat message should be sent
-    if (st->heartbeatOut == false) {
-      tw_stime time = getNextBigTick(lp, st->myLocalID);
-      st->heartbeatOut = true;
-      bf->c13 =
-          1;  // C13 indicates that the heartbeatout flag has been changed.
-      TNSendHeartbeat(st, time, lp);
+    case SYNAPSE_OUT:
+      st->drawnRandomNumber = tw_rand_integer(
+          lp->rng, 0,
+          st->largestRandomValue);  //!<- @BUG This might be creating
+      //! non-deterministic errors
+      TNIntegrate(m->axonID, st, lp);
+      // next, we will check if a heartbeat message should be sent
+      if (st->heartbeatOut == false) {
+        tw_stime time = getNextBigTick(lp, st->myLocalID);
+        st->heartbeatOut = true;
+        bf->c13 =
+            1;  // C13 indicates that the heartbeatout flag has been changed.
+        TNSendHeartbeat(st, time, lp);
 
-      // set message flag indicating that the heartbeat msg has been sent
-    }
-    break;
-
-  case NEURON_HEARTBEAT: st->heartbeatOut = false;
-    // set message flag indicating that the heartbeat msg has been sent
-    bf->c13 =
-        1;  // C13 indicates that the heartbeatout flag has been changed.
-
-    // Currently operates - leak->fire->(reset)
-    st->drawnRandomNumber =
-        tw_rand_integer(lp->rng, 0, st->largestRandomValue);
-
-    TNNumericLeakCalc(st, tw_now(lp));
-    // linearLeak( st, tw_now(lp));
-    ringing(st, m->neuronVoltage);
-
-    // willFire = neuronShouldFire(st, lp); //removed and replaced with
-    // fireFloorCelingReset
-    willFire = TNfireFloorCelingReset(st, lp);
-    willFire = (willFire && fireTimingCheck(st,lp));
-    bf->c0 = bf->c0 || willFire;
-
-    if (willFire && !st->isOutputNeuron) {
-      TNFire(st, lp);
-      //check for intra-core communications -
-      //setting bit 31 as toggle for send communication
-      if (isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))) {
-        bf->c31 = 1;
-        //m->dumpiID = tw_rand_ulong(lp->rng,0,ULONG_MAX - 1);
-      } else {
-        bf->c31 = 0;
+        // set message flag indicating that the heartbeat msg has been sent
       }
-      /** bf->c10 is an output neuron fire state checker. True means the neuron fired this turn. */
-      bf->c10 = 1;
+      break;
 
-      // st->fireCount++;
-    }
-
-
-    st->lastActiveTime = tw_now(lp);
-
-
-    // do we still have more than the threshold volts left? if so,
-    // send a heartbeat out that will ensure the neuron fires again.
-    // Or if we are as self-firing neuron.
-    ///@TODO: Add detection of self-firing neuron state.
-    ///@TODO: Ensure bf-c13 state validity here for reverse computations
-    if (TNShouldFire(st, lp) && st->heartbeatOut == false) {
-      tw_stime time = getNextBigTick(lp, st->myLocalID);
-      st->heartbeatOut = true;
+    case NEURON_HEARTBEAT: st->heartbeatOut = false;
       // set message flag indicating that the heartbeat msg has been sent
       bf->c13 =
           1;  // C13 indicates that the heartbeatout flag has been changed.
-      TNSendHeartbeat(st, time, lp);
-    }
-    break;
-  default:
-    // Error condition - non-valid input.
-    tw_error(TW_LOC, "Neuron (%i,%i) received invalid message type, %i \n ",
-             st->myCoreID, st->myLocalID, m->eventType);
-    break;
+
+      // Currently operates - leak->fire->(reset)
+      st->drawnRandomNumber =
+          tw_rand_integer(lp->rng, 0, st->largestRandomValue);
+
+      TNNumericLeakCalc(st, tw_now(lp));
+      // linearLeak( st, tw_now(lp));
+      ringing(st, m->neuronVoltage);
+
+      // willFire = neuronShouldFire(st, lp); //removed and replaced with
+      // fireFloorCelingReset
+      willFire = TNfireFloorCelingReset(st, lp);
+      willFire = (willFire && fireTimingCheck(st, lp));
+      bf->c0 = bf->c0 || willFire;
+
+      if (willFire && !st->isOutputNeuron) {
+        TNFire(st, lp);
+        //check for intra-core communications -
+        //setting bit 31 as toggle for send communication
+        if (isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))) {
+          bf->c31 = 1;
+          //m->dumpiID = tw_rand_ulong(lp->rng,0,ULONG_MAX - 1);
+        } else {
+          bf->c31 = 0;
+        }
+        /** bf->c10 is an output neuron fire state checker. True means the neuron fired this turn. */
+        bf->c10 = 1;
+
+        // st->fireCount++;
+      }
+
+      st->lastActiveTime = tw_now(lp);
+
+
+      // do we still have more than the threshold volts left? if so,
+      // send a heartbeat out that will ensure the neuron fires again.
+      // Or if we are as self-firing neuron.
+      ///@TODO: Add detection of self-firing neuron state.
+      ///@TODO: Ensure bf-c13 state validity here for reverse computations
+      if (TNShouldFire(st, lp) && st->heartbeatOut == false) {
+        tw_stime time = getNextBigTick(lp, st->myLocalID);
+        st->heartbeatOut = true;
+        // set message flag indicating that the heartbeat msg has been sent
+        bf->c13 =
+            1;  // C13 indicates that the heartbeatout flag has been changed.
+        TNSendHeartbeat(st, time, lp);
+      }
+      break;
+    default:
+      // Error condition - non-valid input.
+      tw_error(TW_LOC, "Neuron (%i,%i) received invalid message type, %i \n ",
+               st->myCoreID, st->myLocalID, m->eventType);
+      break;
   }
   // self-firing neuron (spont.)
   if (st->isSelfFiring && st->heartbeatOut == false) {
@@ -868,37 +867,37 @@ void parseCSVCreateTN(tn_neuron_state *st, csvNeuron raw) {
   int pos = 0;
   for (int i = 0; i < lenOfArrayParams; i++) {
     switch (arrayNum) {
-    case CONN: st->synapticConnectivity[pos] = nextToI(); // atoi(raw.rawDatM[currentFld ++]);
-      break;
-    case AXTP: st->axonTypes[pos] = nextToI();
-      break;
-    case SGI: sigma[pos] = nextToI();
-      break;
-    case SP: S[pos] = nextToI();
-      break;
-    case BV: st->weightSelection[pos] = nextToI();
-      break;
+      case CONN: st->synapticConnectivity[pos] = nextToI(); // atoi(raw.rawDatM[currentFld ++]);
+        break;
+      case AXTP: st->axonTypes[pos] = nextToI();
+        break;
+      case SGI: sigma[pos] = nextToI();
+        break;
+      case SP: S[pos] = nextToI();
+        break;
+      case BV: st->weightSelection[pos] = nextToI();
+        break;
 
     }
     switch (arrayNum) {
-    case CONN:
-    case AXTP:
-      if (pos == NEURONS_IN_CORE - 1) {
-        arrayNum++;
-        pos = 0;
-      } else {
-        pos++;
-      }
-      break;
-    case SGI:
-    case SP:
-    case BV:
-      if (pos == NUM_NEURON_WEIGHTS - 1) {
-        arrayNum++;
-        pos = 0;
-      } else {
-        pos++;
-      }
+      case CONN:
+      case AXTP:
+        if (pos == NEURONS_IN_CORE - 1) {
+          arrayNum++;
+          pos = 0;
+        } else {
+          pos++;
+        }
+        break;
+      case SGI:
+      case SP:
+      case BV:
+        if (pos == NUM_NEURON_WEIGHTS - 1) {
+          arrayNum++;
+          pos = 0;
+        } else {
+          pos++;
+        }
 
     }
   }
@@ -1024,6 +1023,9 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {
   if (outputCore < 0 || outputLID < 0) {
     //st->outputGID = 0;
     st->isOutputNeuron = true;
+    printf("Output neuron created.");
+    st->outputCoreDest = outputCore;
+    st->outputNeuronDest = outputLID;
 
   } else {
     outputGID = getAxonGlobal(outputCore, outputLID);
@@ -1249,14 +1251,23 @@ void TN_reverse_event(tn_neuron_state *s, tw_bf *CV, messageData *m,
 void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
   // if neuron has fired and save neuron fire events is enabled, save this
   // event.
-  if (SAVE_SPIKE_EVTS && cv->c0) {
-    saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),0);
-  }
-  if (s->isOutputNeuron && SAVE_OUTPUT_NEURON_EVTS && cv->c10) {
-      /////output neurons do not send messages to the rest of the model. But we save the output.
-      saveNeuronFire(getNextBigTick(lp,s->myLocalID),s->myCoreID, s->myLocalID, s->outputGID,
-                     getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),1);
+  //if (SAVE_SPIKE_EVTS && cv->c0) {
+  //  saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),0);
+  //}
+  if ((s->isOutputNeuron && SAVE_OUTPUT_NEURON_EVTS && cv->c10) || (SAVE_SPIKE_EVTS && cv -> c0)) {
+    unsigned int outCore;
+    unsigned int outNeuron;
+    if(s->isOutputNeuron){
+      outCore = s->outputCoreDest;
+      outNeuron = s->outputNeuronDest;
+    }else{
+      outCore = getCoreFromGID(s->outputGID);
+      outNeuron = getLocalFromGID(s->outputGID);
     }
+    /////output neurons do not send messages to the rest of the model. But we save the output.
+    saveNeuronFire(getNextBigTick(lp, s->myLocalID), s->myCoreID, s->myLocalID, s->outputGID,
+                   outCore, outNeuron, s->isOutputNeuron);
+  }
   // save simulated dumpi trace if inter core and dumpi trace is on
   if (cv->c31 && (DO_DUMPI || CORES_IN_CHIP == 1)) {
     /** @TODO: Add dumpi save flag to config. */

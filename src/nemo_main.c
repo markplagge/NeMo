@@ -43,7 +43,7 @@ unsigned int CORES_IN_CHIP = 4096;
 unsigned int CORES_IN_CHIP;
 unsigned int NUM_CHIPS_IN_SIM;
 unsigned int CHIPS_PER_RANK;
-int N_FIRE_BUFF_SIZE = 32;
+//int N_FIRE_BUFF_SIZE = 32;
 int N_FIRE_LINE_SIZE = 512;
 
 long double COMPUTE_TIME = 0.0000000002;
@@ -141,7 +141,7 @@ const tw_optdef app_opt[] = {
                SAVE_MEMBRANE_POTS,
                "Save neuron membrane potential values (enabled by default when running a validation model"),
     TWOPT_FLAG("svs", SAVE_SPIKE_EVTS, "Save neuron spike event times and info"),
-    TWOPT_FLAG("svouts", SAVE_OUTPUT_NEURON_EVTS,"Save output neuron spikes"),
+    TWOPT_FLAG("svouts", SAVE_OUTPUT_NEURON_EVTS, "Save output neuron spikes"),
     TWOPT_GROUP("Integrated Bio Model Testing"),
     TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
     TWOPT_FLAG("tonb", TONIC_BURST_VAL, "Tonic bursting Neuron Validation"),
@@ -266,7 +266,7 @@ void testNeuronOut() {
   initOutFiles();
 
   for (int i = 0; i < 4096; i++) {
-    saveNeuronFire(random() + i, 0, 0, 1024,1,1,1);
+    saveNeuronFire(random() + i, 0, 0, 1024, 1, 1, 1);
   }
   closeFiles();
 }

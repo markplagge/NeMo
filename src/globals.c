@@ -1,20 +1,20 @@
 #include "globals.h"
 
-int iIABS(int vals){
+int iIABS(int vals) {
 #ifdef X86ASM
-        int result;
-        asm ("movl  %[valI], %%eax;"
-                "cdq;"
-                "xor %%edx, %%eax;"
-                "sub %%edx, %%eax;"
-                "movl %%eax, %[resI];"
-        : [resI] "=r" (result)
-        : [valI] "r" (vals)
-        : "cc","%eax", "%ebx");
-        return result;
-    return -1;
+  int result;
+  asm ("movl  %[valI], %%eax;"
+          "cdq;"
+          "xor %%edx, %%eax;"
+          "sub %%edx, %%eax;"
+          "movl %%eax, %[resI];"
+  : [resI] "=r" (result)
+  : [valI] "r" (vals)
+  : "cc","%eax", "%ebx");
+  return result;
+return -1;
 #endif
-	return IABS(vals);
+  return IABS(vals);
 }
 
 
@@ -42,8 +42,6 @@ tw_stime bigTickRate = 1;
  */
 tw_stime littleTick = 0.0001;
 
-
-
 /**
  * @brief      Gets the next event time. This is a jitter
  *
@@ -52,38 +50,34 @@ tw_stime littleTick = 0.0001;
  * @return     The next event time. Is a jitter value that is < 0.0001.
  */
 tw_stime getNextEventTime(tw_lp *lp) {
-    return JITTER  + littleTick;
+  return JITTER + littleTick;
 }
-
 
 /**
  * Gets the next event time for synapse internal heartbeats - 
  
  */
 
-tw_stime getNextSynapseHeartbeat(tw_lp *lp){
-	return JITTER + littleTick;
+tw_stime getNextSynapseHeartbeat(tw_lp *lp) {
+  return JITTER + littleTick;
 }
 
-
-tw_stime getCurrentBigTick(tw_stime now){
+tw_stime getCurrentBigTick(tw_stime now) {
   return floor(now);
 }
 
-
-tw_stime getNextBigTick(tw_lp *lp, tw_lpid neuronID) {    
-    return JITTER + bigTickRate;
+tw_stime getNextBigTick(tw_lp *lp, tw_lpid neuronID) {
+  return JITTER + bigTickRate;
 }
 
-void debugMsg(char * m, char * d){
-	printf("%s %s", m,d);
+void debugMsg(char *m, char *d) {
+  printf("%s %s", m, d);
 }
 
-char* mystrcat( char* dest, char* src )
-{
-    while (*dest) dest++;
-    while (*dest++ = *src++);
-    return --dest;
+char *mystrcat(char *dest, char *src) {
+  while (*dest) dest++;
+  while (*dest++ = *src++);
+  return --dest;
 }
 
 
