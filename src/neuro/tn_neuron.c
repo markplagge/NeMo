@@ -1022,7 +1022,7 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {
   outputCore = lGetAndPushParam("destCore", 0, NULL);
   outputLID = lGetAndPushParam("destLocal", 0, NULL);
   if (outputCore < 0 || outputLID < 0) {
-    st->outputGID = 0;
+    //st->outputGID = 0;
     st->isOutputNeuron = true;
 
   } else {
