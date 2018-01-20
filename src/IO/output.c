@@ -162,8 +162,8 @@ void setNeuronNetFileName() {
 
 }
 
-void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid destGID, int destCore,
-                    int destLocal, unsigned int isOutput) {
+void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid destGID, long destCore,
+                    long destLocal, unsigned int isOutput) {
   if (neuronFirePoolPos >= N_FIRE_BUFF_SIZE) {
     flushNeuron();
   }
@@ -177,7 +177,7 @@ void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid des
 
   } else {
 
-    sprintf(neuronFireBufferTXT[neuronFirePoolPos], "%.30f,%i,%u,%llu,%i,%i,%u",
+    sprintf(neuronFireBufferTXT[neuronFirePoolPos], "%.30f,%i,%u,%llu,%l,%l,%u",
             timestamp, core, local, destGID, destCore, destLocal, isOutput);
   }
 

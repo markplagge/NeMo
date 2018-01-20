@@ -1007,9 +1007,9 @@ int safeGetArr(int direct, char *lutName, char *dirName, long vars[],
 //**** Some loader helper macros.
 //! @TODO: Move these helper macros somewhere better! .
 #define LGT(V) ( lGetAndPushParam( luT( (V) ) , 0, NULL ) )
-#define GA(N, T) (getArray( (#N) , &(N), (T) ))
+//#define GA(N, T) (getArray( (#N) , &(N), (T) ))
 #define TID core, nid, "TN"
-void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {
+void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {n
   int extraParamCache = 32;
   // Set up neuron - first non array params:
   tw_lpid outputGID = 0;
@@ -1255,8 +1255,8 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
   //  saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),0);
   //}
   if ((s->isOutputNeuron && SAVE_OUTPUT_NEURON_EVTS && cv->c10) || (SAVE_SPIKE_EVTS && cv -> c0)) {
-    unsigned int outCore;
-    unsigned int outNeuron;
+    long outCore;
+    long outNeuron;
     if(s->isOutputNeuron){
       outCore = s->outputCoreDest;
       outNeuron = s->outputNeuronDest;

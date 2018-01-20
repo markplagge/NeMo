@@ -106,8 +106,8 @@ void closeFiles();
 
 
 
-void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid destGID, int destCore,
-                    int destLocal, unsigned int isOutput);
+void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid destGID, long destCore,
+                    long destLocal, unsigned int isOutput);
 void openOutputFiles(char *outputFileName);
 void initDataStructures(int simSize);
 void closeOutputFiles();
