@@ -1023,7 +1023,7 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {
   if (outputCore < 0 || outputLID < 0) {
     //st->outputGID = 0;
     st->isOutputNeuron = true;
-    printf("Output neuron created.");
+
     st->outputCoreDest = outputCore;
     st->outputNeuronDest = outputLID;
 
