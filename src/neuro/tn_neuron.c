@@ -1009,7 +1009,7 @@ int safeGetArr(int direct, char *lutName, char *dirName, long vars[],
 #define LGT(V) ( lGetAndPushParam( luT( (V) ) , 0, NULL ) )
 //#define GA(N, T) (getArray( (#N) , &(N), (T) ))
 #define TID core, nid, "TN"
-void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {n
+void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {
   int extraParamCache = 32;
   // Set up neuron - first non array params:
   tw_lpid outputGID = 0;
