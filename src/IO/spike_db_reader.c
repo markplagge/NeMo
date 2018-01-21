@@ -328,7 +328,7 @@ int connectToDB(char *filename) {
 int closeDB(char *filename) {
   int st = 0;
   if (spikedb_isopen == 1) {
-    st = sqlite3_close_v2(&spikedb);
+    st = sqlite3_close_v2(spikedb);
     spikedb_isopen = 0;
   }
 
