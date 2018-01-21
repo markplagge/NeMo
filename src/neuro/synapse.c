@@ -177,8 +177,10 @@ void synapse_final(synapseState *s, tw_lp *lp) {
 
 }
 void synapse_pre_run(synapseState *s, tw_lp *lp) {
-  if (closeSpikeFile()) {
-    tw_error(TW_LOC, "Error closing database.\n");
+  static int should_close = 1;
+  if (should_close){
+    closeSpikeFile();
+    should_close = 0;
   }
 }
 

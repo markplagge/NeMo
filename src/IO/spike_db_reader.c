@@ -332,7 +332,7 @@ int closeDB(char *filename) {
     spikedb_isopen = 0;
   }
 
-  return st;
+  return (st==SQLITE_OK);
 }
 /** @defgroup spin Spike Input Functions @{ */
 /**
