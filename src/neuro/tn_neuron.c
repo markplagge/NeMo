@@ -1140,7 +1140,7 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {
  */
 void TNCreateFromFile(tn_neuron_state *s, tw_lp *lp) {
 
-
+  static int needannounce = 1;
   //first, get our Neuron IDs:
   id_type core = getCoreFromGID(lp->gid);
   id_type nid = getNeuronLocalFromGID(lp->gid);
@@ -1158,9 +1158,13 @@ void TNCreateFromFile(tn_neuron_state *s, tw_lp *lp) {
   } else {
     TNPopulateFromFile(s, lp);
   }
-//  if(s->isOutputNeuron){
-//    printf("output neuron created.\n");
-//  }
+
+  if(needannounce && (g_tw_mynode == 0) && s->isOutputNeuron){
+    printf("output neuron created.\n");
+    printf("Neuron CORE: %lli - LID: %lli - Dest Core: %li  Local: %li \n", s->myCoreID,s->myLocalID, s->outputCoreDest,
+            s->outputNeuronDest);
+    needannounce = 0;
+  }
 
 }
 
