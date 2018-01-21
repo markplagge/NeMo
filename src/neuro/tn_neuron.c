@@ -368,20 +368,26 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp,
       willFire = (willFire && fireTimingCheck(st, lp));
       bf->c0 = bf->c0 || willFire;
 
-      if (willFire && !st->isOutputNeuron) {
-        TNFire(st, lp);
-        //check for intra-core communications -
-        //setting bit 31 as toggle for send communication
-        if (isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))) {
-          bf->c31 = 1;
-          //m->dumpiID = tw_rand_ulong(lp->rng,0,ULONG_MAX - 1);
-        } else {
-          bf->c31 = 0;
-        }
-        /** bf->c10 is an output neuron fire state checker. True means the neuron fired this turn. */
-        bf->c10 = 1;
+      if (willFire) {
+        if (!st->isOutputNeuron) {
+          TNFire(st, lp);
+          //check for intra-core communications -
+          //setting bit 31 as toggle for send communication
+          if (isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))) {
+            bf->c31 = 1;
+            //m->dumpiID = tw_rand_ulong(lp->rng,0,ULONG_MAX - 1);
+          } else {
+            bf->c31 = 0;
+          }
 
-        // st->fireCount++;
+
+
+          // st->fireCount++;
+        }else{
+          /** bf->c10 is an output neuron fire state checker. True means the neuron fired this turn. */
+          bf->c10 = 1;
+
+        }
       }
 
       st->lastActiveTime = tw_now(lp);
