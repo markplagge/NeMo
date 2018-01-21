@@ -21,7 +21,7 @@ bool IS_RAND_NETWORK = false;
 bool BULK_MODE = false;
 bool DEBUG_MODE = false;
 bool SAVE_MEMBRANE_POTS = false;
-bool SAVE_SPIKE_EVTS = true;
+bool SAVE_SPIKE_EVTS = false;
 bool SAVE_NETWORK_STRUCTURE = true;
 bool PHAS_VAL = false;
 //bool TONIC_SPK_VAL = false;
@@ -260,16 +260,16 @@ void displayModelSettings() {
  *
  * Tests file closing function as well.
  */
-
-void testNeuronOut() {
-  SAVE_SPIKE_EVTS = true;
-  initOutFiles();
-
-  for (int i = 0; i < 4096; i++) {
-    saveNeuronFire(random() + i, 0, 0, 1024, 1, 1, 1);
-  }
-  closeFiles();
-}
+//
+//void testNeuronOut() {
+//  SAVE_SPIKE_EVTS = true;
+//  initOutFiles();
+//
+//  for (int i = 0; i < 4096; i++) {
+//    saveNeuronFire(random() + i, 0, 0, 1024, 1, 1, 1);
+//  }
+//  closeFiles();
+//}
 
 /**
  * @brief      Initializes NeMo
