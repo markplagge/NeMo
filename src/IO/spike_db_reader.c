@@ -331,7 +331,8 @@ int closeDB(char *filename) {
     st = sqlite3_close_v2(&spikedb);
     spikedb_isopen = 0;
   }
-  return 0;
+
+  return st;
 }
 /** @defgroup spin Spike Input Functions @{ */
 /**
@@ -367,7 +368,7 @@ int openSpikeFile() {
  * @return
  */
 int closeSpikeFile() {
-  closeDB(SPIKE_FILE);
+  return closeDB(SPIKE_FILE);
 }
 
 /**

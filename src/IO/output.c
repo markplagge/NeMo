@@ -4,7 +4,7 @@
 #include "output.h"
 //#include <pthread.h>
 //#include <stdatomic.h>
-
+#include "../lib/rqueue.h"
 #include <unistd.h>
 //#include "../lib/c11t/c11threads.h"
 // POSIX File handles for non MPI IO file writing
@@ -33,68 +33,56 @@ int neuronFireCompletedFiles = 0;
 char **neuronFireBufferTXT;
 
 
-//multithreading fileIO for sim performance
+/** @defgroup THDIO threaded fileIO for sim performance @{ */
 
-/*
-pthread_mutex_t *bufferLock;
-typedef struct Queue
-{
-  //Implement this with two ints - one is the current
-  //writing location, the other is the current reading location.
-  //if they are equal....
-  char * stk[N_FIRE_BUFF_SIZE];
-  char * front;
-  char * rear;
-  int size;
-  atomic_flag *isEmpty;
-  atomic_flag *workDone;
+/**
+ * The ringbuffer queue that handles data to be saved to disk.
+ */
+rqueue_t *outputDataQ;
+/**
+ * The minimum number of elements in the Q before we start saving data to disk.
+ */
+int minBufferSz = 100;
+/**
+ * rq_size is the size of the async Q for threads. Adjust this for performance - maybe make a flag?
+ */
+int rq_size = 4098;
 
-}queue;
 
-void enque(queue *s, char *data){
-  // pushes and sets atomic flag to true - if it is set
-  // blocks when queue is full
-  while (s->size >= N_FIRE_BUFF_SIZE){
-    sleep(1);
-  }
-  s->size ++;
-  s->rear = (s->stk[s->size]);
-  s->stk[s->size] = data;
-  atomic_flag_clear(s->isEmpty);
+const char poison = '!';
+void thOutput(char * data){
+  fprintf(neuronFireFile, "%s\n", neuronFireBufferTXT[neuronFirePoolPos]);
 }
-int pop(queue *q, char *data){
-
-  while(atomic_flag_test_and_set(q->isEmpty)){
-    //IF GLOBAL THREAD SHUTDOWN HAPPENS,
-    //QUIT
-    sleep(1);
-  }
-  atomic_flag_clear(q->isEmpty);
-  while(q->front){
-
-  }
-
+char * dequeue(void * queue){
+  return (char *) rqueue_read((rqueue_t *) queue);
 }
-typedef struct {
-  int buf[N_FIRE_BUFF_SIZE];
-
-};
-pthread_t writerThread;
-int startWritingThread(){
-  int result;
-  result = pthread_mutex_init(bufferLock,NULL);
+int enqueue(void * queue, char * data){
+  return rqueue_write((rqueue_t *) queue, data);
+}
+void *outputWorker(){
+  bool working = true;
+  while(working){
+    char * data = rqueue_read(outputDataQ);
+    if(data){
+      if(data[0] == poison){
+        working = false;
+        free(data);
+      }else{
+        thOutput(data);
+        free(data);
+      }
+    }
+  }
+}
+/**
+ * initializes threads and sets up queue for file io
+ */
+void initThreading(){
 
 }
 
-void fileWriter(){
-//get access to bufffer list
-  int status = pthread_mutex_lock(bufferLock);
-  //check status
-  //call flush neuron
 
-
-
-} */
+/** @} */
 
 /** neuronFireStruct contains the in-memory representation of a neuron spike event. Used for binary
  * data saving of neuron events. This struct will be used both in MPI and in POSIX file IO. Currently, MPI-IO is
@@ -228,7 +216,9 @@ void initOutFiles() {
         neuronFireBufferTXT[i] = (char *) tw_calloc(TW_LOC, "OUTPUT", tv, sizeof(char *));
       }
       neuronFireFile = fopen(neuronRankFN, "w");
-      fprintf(neuronFireFile, "timestamp,core,local,destGID,destCore,destNeuron,isOutput?");
+      if(g_tw_mynode == 0) {
+        fprintf(neuronFireFile, "timestamp,core,local,destGID,destCore,destNeuron,isOutput?\n");
+      }
     }
 //
 //        MPI_File_open(MPI_COMM_WORLD,mpiFileName,

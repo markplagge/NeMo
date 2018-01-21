@@ -1158,6 +1158,9 @@ void TNCreateFromFile(tn_neuron_state *s, tw_lp *lp) {
   } else {
     TNPopulateFromFile(s, lp);
   }
+//  if(s->isOutputNeuron){
+//    printf("output neuron created.\n");
+//  }
 
 }
 
@@ -1269,7 +1272,7 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
                    outCore, outNeuron, s->isOutputNeuron);
   }
   // save simulated dumpi trace if inter core and dumpi trace is on
-  if (cv->c31 && (DO_DUMPI || CORES_IN_CHIP == 1)) {
+  if (cv->c31 && DO_DUMPI)  {
     /** @TODO: Add dumpi save flag to config. */
     //saveMPIMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp),
 

@@ -185,7 +185,7 @@ tw_lptype model_lps[] = {
         sizeof(axonState)},
     {
         (init_f) synapse_init,
-        (pre_run_f) NULL,
+        (pre_run_f) synapse_pre_run,
         (event_f) synapse_event,
         (revent_f) synapse_reverse,
         (commit_f) NULL,
