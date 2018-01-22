@@ -1278,7 +1278,7 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
       outNeuron = getLocalFromGID(s->outputGID);
     }
     /////output neurons do not send messages to the rest of the model. But we save the output.
-    saveNeuronFire(getNextBigTick(lp, s->myLocalID), s->myCoreID, s->myLocalID, s->outputGID,
+    saveNeuronFire(tw_now(lp) + 1, s->myCoreID, s->myLocalID, s->outputGID,
                    outCore, outNeuron, s->isOutputNeuron);
   }
   // save simulated dumpi trace if inter core and dumpi trace is on
