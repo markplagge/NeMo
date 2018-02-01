@@ -135,7 +135,7 @@ const tw_optdef app_opt[] = {
     TWOPT_FLAG("bulk", BULK_MODE, "Is this sim running in bulk mode?"),
     TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
     TWOPT_FLAG("network",
-               SAVE_NEURON_OUTS,
+               SAVE_NETWORK_STRUCTURE ,
                "Save neuron output axon IDs on creation - Creates a map of the neural network."),
     TWOPT_FLAG("svm",
                SAVE_MEMBRANE_POTS,
