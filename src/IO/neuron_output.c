@@ -25,17 +25,22 @@ void openOutputFiles(char * outputFileName){
 //    strcat(ncfgfn,outputFileName);
 //    strcat(ncfgfn,".bin");
     char netfn[255] = {'\0'};
+    printf("LN28\n");
     sprintf(netfn,"network_config_%i.csv", g_tw_mynode);
+    printf("LN30\n");
     outNetworkCfgFile = fopen(netfn,"wb");
+    printf("LN31\n");
     netfn[0] = '\0';
     sprintf(netfn,"neuron_config%i.csv", g_tw_mynode);
     outNeuronCfgFile =fopen(netfn, "wb");
-    fprintf(outNetworkCfgFile, "Core,NeuronID,DestCore,DestAxon\n");
+    printf("LN36\n");
+    //fprintf(outNetworkCfgFile, "Core,NeuronID,DestCore,DestAxon\n");
     fprintf(outNeuronCfgFile, "Core,NeuronID");
     for(int i = 0; i < NEURONS_IN_CORE; i++){
         fprintf(outNeuronCfgFile, ",axon_%i", i);
     }
     fprintf(outNeuronCfgFile,"\n");
+    printf("LN43\n");
 //    outNeuronCfgFile = fopen(ncfgfn, "wb");
 
 }
