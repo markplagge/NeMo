@@ -92,7 +92,7 @@ void saveNetworkStructure(){
             tn_neuron_state *n = (tn_neuron_state * ) tw_getlp(ngid);
             sprintf(lntxt,"%llu, %llu",n->myCoreID,n->myLocalID);
             for(int ax = 0; ax < NEURONS_IN_CORE; ax ++){
-                
+
                 sprintf(lntxt,"%s,%llu",lntxt,n->synapticWeight[n->axonTypes[ax]] && n->synapticConnectivity[ax]);
             }
             strcat(lntxt,"\n");

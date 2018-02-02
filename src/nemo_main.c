@@ -407,6 +407,7 @@ int main(int argc, char *argv[]) {
   if (g_tw_mynode == 0) {
     displayModelSettings();
   }
+  printf("Network staring...\n");
   if(SAVE_NETWORK_STRUCTURE){
     saveNetworkStructure();
   }
