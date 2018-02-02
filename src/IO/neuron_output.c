@@ -82,12 +82,12 @@ void saveIndNeuron(void *ns) {
 }
 
 void saveNetworkStructure(){
-    //char * lntxt = calloc(sizeof(char), 65535);
+    char * lntxt = calloc(sizeof(char), 65535);
     printf("Starting network save");
-    char lntxt[NEURONS_IN_CORE * CORES_IN_SIM];
+    //char lntxt[NEURONS_IN_CORE * CORES_IN_SIM * 2];
 
     for(int core = 0; core < CORES_IN_SIM; core++){
-        for(int neuron = 0; neuron < NEURONS_IN_CORE;neuron ++){
+        for(int neuron = 0; neuron < NEURONS_IN_CORE; neuron ++){
             tw_lpid ngid = getNeuronGlobal(core, neuron);
             tn_neuron_state *n = (tn_neuron_state * ) tw_getlp(ngid);
             sprintf(lntxt,"%llu, %llu",n->myCoreID,n->myLocalID);
@@ -103,7 +103,7 @@ void saveNetworkStructure(){
     }
     //save the file;
     fprintf(outNeuronCfgFile,lntxt);
-
+    free(lntxt);
     //free(lntxt);
     openOutputFiles("network_def.csv");
     initDataStructures(g_tw_nlp);
