@@ -24,13 +24,16 @@ void openOutputFiles(char * outputFileName){
 //    strcat(ncfgfn, "full_");
 //    strcat(ncfgfn,outputFileName);
 //    strcat(ncfgfn,".bin");
-
-    outNetworkCfgFile = fopen(outputFileName,"wb");
-    outNeuronCfgFile =fopen("neuron_connections.csv", "wb");
+    char netfn[255] = {'\0'};
+    sprintf(netfn,"network_config_%i.csv", g_tw_mynode);
+    outNetworkCfgFile = fopen(netfn,"wb");
+    netfn[0] = '\0';
+    sprintf(netfn,"neuron_config%i.csv", g_tw_mynode);
+    outNeuronCfgFile =fopen(netfn, "wb");
     fprintf(outNetworkCfgFile, "Core,NeuronID,DestCore,DestAxon\n");
-    fprintf(outNeuronCfgFile, "Core,NeuronID,");
+    fprintf(outNeuronCfgFile, "Core,NeuronID");
     for(int i = 0; i < NEURONS_IN_CORE; i++){
-        fprintf(outNeuronCfgFile, "axon_%i", i);
+        fprintf(outNeuronCfgFile, ",axon_%i", i);
     }
     fprintf(outNeuronCfgFile,"\n");
 //    outNeuronCfgFile = fopen(ncfgfn, "wb");
@@ -80,6 +83,7 @@ void saveIndNeuron(void *ns) {
 
 void saveNetworkStructure(){
     //char * lntxt = calloc(sizeof(char), 65535);
+    printf("Starting network save");
     char lntxt[NEURONS_IN_CORE * CORES_IN_SIM];
 
     for(int core = 0; core < CORES_IN_SIM; core++){
