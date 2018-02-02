@@ -89,8 +89,8 @@ void saveNetworkStructure() {
   printf("Starting network save");
   //char lntxt[NEURONS_IN_CORE * CORES_IN_SIM * 2];
 
-  for (int core = 0; core < CORES_IN_SIM; core++) {
-    for (int neuron = 0; neuron < NEURONS_IN_CORE / CORES_IN_SIM; neuron++) {
+  for (int core = 0; core < CORES_IN_SIM / g_tw_npe; core++) {
+    for (int neuron = 0; neuron < NEURONS_IN_CORE ; neuron++) {
       tw_lpid ngid = getNeuronGlobal(core, neuron);
       tn_neuron_state *n = (tn_neuron_state *) tw_getlocal_lp(ngid);
       sprintf(lntxt, "%llu, %llu", n->myCoreID, n->myLocalID);
@@ -120,7 +120,7 @@ void saveNetworkStructure() {
 
   int neuronsStartAt = AXONS_IN_CORE + 1;
   fprintf(outNetworkCfgFile, "Core,NeuronID,DestCore,DestAxon\n");
-  for (int core = 0; core < CORES_IN_SIM /; core++) {
+  for (int core = 0; core < CORES_IN_SIM ; core++) {
     for (int neuron = 0; neuron < NEURONS_IN_CORE; neuron++) {
       //save neuron connections to CSV file:
       tw_lpid ngid = getNeuronGlobal(core, neuron);
