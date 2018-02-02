@@ -94,7 +94,7 @@ void saveNetworkStructure(){
     for(int core = 0; core < CORES_IN_SIM; core++){
         for(int neuron = 0; neuron < NEURONS_IN_CORE; neuron ++){
             tw_lpid ngid = getNeuronGlobal(core, neuron);
-            tn_neuron_state *n = (tn_neuron_state * ) tw_getlp(ngid);
+            tn_neuron_state *n = (tn_neuron_state * ) tw_getlocal_lp(ngid);
             sprintf(lntxt,"%llu, %llu",n->myCoreID,n->myLocalID);
             for(int ax = 0; ax < NEURONS_IN_CORE; ax ++){
 
