@@ -380,6 +380,7 @@ int main(int argc, char *argv[]) {
   tw_init(&argc, &argv);
   //call nemo init
   init_nemo();
+  printf("\n Completed initial setup and model loading.\n");
   if (nonC11 == 1)
     printf("Non C11 com pliant compiler detected.\n");
 
