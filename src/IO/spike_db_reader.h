@@ -17,7 +17,7 @@ int getSpikeMessageDataFromAxon(int *M, id_type coreID, id_type axonID);
 int getSpikeMessageDataFromSynapse(messageData * M, id_type coreID, id_type synapseID);
 
 int checkIfSpikesExistForAxon(id_type coreID, id_type axonID);
-
+int loadOrSaveDb(sqlite3 *pInMemory, const char *zFilename, int isSave) ;
 
 int connectToDB(char * filename);
 int closeDB(char* filename);

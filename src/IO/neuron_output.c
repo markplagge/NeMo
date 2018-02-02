@@ -7,7 +7,7 @@
 #include "ross.h"
 #include "../mapping.h"
 #include <string.h>
-
+#include <string.h>
 
 FILE * membraneFile;
 FILE * outSpikeFile;
@@ -26,7 +26,13 @@ void openOutputFiles(char * outputFileName){
 //    strcat(ncfgfn,".bin");
 
     outNetworkCfgFile = fopen(outputFileName,"wb");
+    outNeuronCfgFile =fopen("neuron_connections.csv", "wb");
     fprintf(outNetworkCfgFile, "Core,NeuronID,DestCore,DestAxon\n");
+    fprintf(outNeuronCfgFile, "Core,NeuronID,");
+    for(int i = 0; i < NEURONS_IN_CORE; i++){
+        fprintf(outNeuronCfgFile, "axon_%i", i);
+    }
+    fprintf(outNeuronCfgFile,"\n");
 //    outNeuronCfgFile = fopen(ncfgfn, "wb");
 
 }
@@ -38,6 +44,7 @@ void closeOutputFiles(){
     }
 
     fclose(outNetworkCfgFile);
+    fclose(outNeuronCfgFile);
 }
 void initDataStructures(int simSize){
     list_init(& networkStructureList);
@@ -70,8 +77,29 @@ void saveIndNeuron(void *ns) {
         }
     }
 }
-void saveNetworkStructure(){
 
+void saveNetworkStructure(){
+    //char * lntxt = calloc(sizeof(char), 65535);
+    char lntxt[NEURONS_IN_CORE * CORES_IN_SIM];
+
+    for(int core = 0; core < CORES_IN_SIM; core++){
+        for(int neuron = 0; neuron < NEURONS_IN_CORE;neuron ++){
+            tw_lpid ngid = getNeuronGlobal(core, neuron);
+            tn_neuron_state *n = (tn_neuron_state * ) tw_getlp(ngid);
+            sprintf(lntxt,"%llu, %llu",n->myCoreID,n->myLocalID);
+            for(int ax = 0; ax < NEURONS_IN_CORE; ax ++){
+                sprintf(lntxt,"%s,%llu",lntxt,n->weightSelection[ax] * n->synapticConnectivity[ax]);
+            }
+            strcat(lntxt,"\n");
+
+        }
+        strcat(lntxt, "\n");
+
+    }
+    //save the file;
+    fprintf(outNeuronCfgFile,lntxt);
+
+    //free(lntxt);
     openOutputFiles("network_def.csv");
     initDataStructures(g_tw_nlp);
 

@@ -112,6 +112,8 @@ void openOutputFiles(char *outputFileName);
 void initDataStructures(int simSize);
 void closeOutputFiles();
 void saveIndNeuron(void *n);
+void saveNetworkStructure();
+
 /** @} */
 
 /** @defgroup modelReading @{ */
@@ -121,6 +123,27 @@ typedef enum P_TYPES {
   LONG,
   UNSIGNEDLONG
 } p_types;
+
+typedef struct NeuroConnect{
+  uint64_t myCoreID;
+  uint64_t neuronID;
+  uint64_t destCore;
+  uint64_t destAxon;
+  uint64_t * conArray;
+  uint64_t * weights;
+}neruoCon;
+typedef struct NeuroSpike{
+  uint64_t myCoreID;
+  uint64_t neuronID;
+  uint64_t destCore;
+  uint64_t destAxon;
+  //long long double destTime;
+}neuroSpike;
+int writeNeuronConnections(neruoCon *neuronData);
+int writeNeuronSpike(neuroSpike *spikeInfo);
+
+
+
 /**
  * More complex auto populate neuron function. Given the coreID, localID, a state strut, and some defs,
  * will blindly fill in the struct with data.

@@ -407,6 +407,9 @@ int main(int argc, char *argv[]) {
   if (g_tw_mynode == 0) {
     displayModelSettings();
   }
+  if(SAVE_NETWORK_STRUCTURE){
+    saveNetworkStructure();
+  }
   tw_run();
   if (SAVE_NETWORK_STRUCTURE) {
     closeOutputFiles();

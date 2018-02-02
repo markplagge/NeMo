@@ -1218,6 +1218,9 @@ void TN_init(tn_neuron_state *s, tw_lp *lp) {
     }
     TN_create_saturation_neuron(s, lp);
   }
+  if(SAVE_NETWORK_STRUCTURE){
+
+  }
 
 }
 
