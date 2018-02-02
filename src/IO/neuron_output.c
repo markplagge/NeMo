@@ -93,23 +93,28 @@ void saveNetworkStructure() {
     for (int neuron = 0; neuron < NEURONS_IN_CORE ; neuron++) {
       tw_lpid ngid = getNeuronGlobal(core, neuron);
       tn_neuron_state *n = (tn_neuron_state *) tw_getlocal_lp(ngid);
-      sprintf(lntxt, "%llu, %llu", n->myCoreID, n->myLocalID);
+      //sprintf(lntxt, "%llu, %llu", n->myCoreID, n->myLocalID);
+      fprintf(outNeuronCfgFile, "%llu, %llu", n->myCoreID, n->myLocalID);
       neuronConnToSCSV(n, lxtxt);
 
       for (int ax = 0; ax < NEURONS_IN_CORE; ax++) {
         sprintf(lntxt, "%s,%llu", lntxt, n->synapticWeight[n->axonTypes[ax]] && n->synapticConnectivity[ax]);
+        fprintf(outNeuronCfgFile, "%s,%llu", lntxt, n->synapticWeight[n->axonTypes[ax]] && n->synapticConnectivity[ax]);
       }
-      strcat(lntxt, "\n");
+      //strcat(lntxt, "\n");
+      fprintf(outNeuronCfgFile, "\n");
 
     }
     fprintf(outNetworkCfgFile, "%s", lxtxt);
-    fprintf(outNeuronCfgFile, lntxt);
+    //fprintf(outNeuronCfgFile, lntxt);
     lntxt[0] = '\0';
     lxtxt[0] = '\0';
 
-    strcat(lntxt, "\n");
+    //strcat(lntxt, "\n");
 
   }
+  fclose(outNeuronCfgFile);
+  fclose(outNetworkCfgFile);
   //save the file;
 
   free(lntxt);
