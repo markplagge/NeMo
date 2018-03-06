@@ -1036,6 +1036,8 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {
   } else {
     outputGID = getAxonGlobal(outputCore, outputLID);
     st->outputGID = outputGID;
+    st->outputCoreDest = outputCore;
+    st->outputNeuronDest = outputLID;
 
   }
   char *v1 = luT("lambda");
@@ -1180,6 +1182,9 @@ void TN_pre_run(tn_neuron_state *s, tw_lp *me) {
     closeLua();
     clean = 1;
   }
+  if(SAVE_NETWORK_STRUCTURE){
+    saveNeuronPreRun();
+  }
 }
 
 /** /defgroup TN_ROSS_HANDLERS
@@ -1198,6 +1203,10 @@ void TN_init(tn_neuron_state *s, tw_lp *lp) {
       free(fn);
       fileInit = 1;
     }
+  }
+  if (fileInit == 0 || fileInit == 1){
+    printf("Starting tn network init\n");
+    fileInit = 3;
   }
   static int pairedNeurons = 0;
   static bool announced = false;
@@ -1219,6 +1228,7 @@ void TN_init(tn_neuron_state *s, tw_lp *lp) {
     TN_create_saturation_neuron(s, lp);
   }
   if(SAVE_NETWORK_STRUCTURE){
+    saveNeuronNetworkStructure(s);
 
   }
 
@@ -1270,6 +1280,7 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
   //if (SAVE_SPIKE_EVTS && cv->c0) {
   //  saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),0);
   //}
+
   if ((s->isOutputNeuron && SAVE_OUTPUT_NEURON_EVTS && cv->c10) || (SAVE_SPIKE_EVTS && cv -> c0)) {
     long outCore;
     long outNeuron;
@@ -1281,9 +1292,12 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
       outNeuron = getLocalFromGID(s->outputGID);
     }
     /////output neurons do not send messages to the rest of the model. But we save the output.
-    saveNeuronFire(tw_now(lp) + 1, s->myCoreID, s->myLocalID, s->outputGID,
-                   outCore, outNeuron, s->isOutputNeuron);
+    if(SAVE_SPIKE_EVTS || SAVE_OUTPUT_NEURON_EVTS) {
+      saveNeuronFire(tw_now(lp) + 1, s->myCoreID, s->myLocalID, s->outputGID,
+                     outCore, outNeuron, s->isOutputNeuron);
+    }
   }
+
   // save simulated dumpi trace if inter core and dumpi trace is on
   if (cv->c31 && DO_DUMPI)  {
     /** @TODO: Add dumpi save flag to config. */

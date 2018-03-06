@@ -6,6 +6,7 @@
   This file contains functions used to parse the text model configuration.
  */
 
+#include <sys/stat.h>
 #include "IOStack.h"
 /* Input uses standard lua 5.1. However, these includes may be switched out
  * with luaJIT in the future. Maintain lua 5.1 / partial 5.2 compatiblility. */
@@ -15,6 +16,7 @@
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
+#include<sys/mman.h>
 
 /**
  * L -> Global (to the model def) state of the lua file
@@ -56,7 +58,42 @@ void initModelInput(unsigned long maxNeurons) {
     printf("Model config file init\n");
   L = luaL_newstate();
   luaL_openlibs(L);
-  int s = luaL_loadfile(L, MODEL_FILE);
+
+  int s;
+s = luaL_loadfile(L, MODEL_FILE);
+/*  FILE *mdl_file;
+  struct stat buf;
+  stat(MODEL_FILE,&buf);
+  off_t fsize = buf.st_size;
+  FILE * fp = fopen(MODEL_FILE,"r");
+  int fd = fileno(fp);
+
+//  printf("malloc load \n");
+//  char * fileCont = malloc(fsize +=1);
+//  char c;
+//  int ctr = 0;
+//  while ((c = fgetc(fp)) != EOF){
+//    fileCont[ctr ++] = c;
+//  }
+
+  //mmap fun
+  char * modelFile = mmap(0,fsize+1,PROT_READ,MAP_PRIVATE,fd,0);
+  printf("mapped file - loading model into lua parser.\n");
+
+
+  s = luaL_dostring(L, modelFile);
+  //s = luaL_dostring(L, fileCont);
+
+
+
+  printf("lua model loaded. Unloading file.\n");
+  munmap(modelFile, fsize+1);
+  //free(fileCont);
+
+  printf("model unloaded.\n");
+
+*/
+
 
   if (g_tw_mynode == 0)
     printf("File loaded - starting parsing...\n");

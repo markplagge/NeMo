@@ -22,7 +22,7 @@ bool BULK_MODE = false;
 bool DEBUG_MODE = false;
 bool SAVE_MEMBRANE_POTS = false;
 bool SAVE_SPIKE_EVTS = false;
-bool SAVE_NETWORK_STRUCTURE = true;
+bool SAVE_NETWORK_STRUCTURE = false;
 bool PHAS_VAL = false;
 //bool TONIC_SPK_VAL = false;
 bool TONIC_BURST_VAL = false;
@@ -31,7 +31,6 @@ bool VALIDATION = false;
 bool MPI_SAVE = false;
 bool BINARY_OUTPUT = false;
 bool SAVE_NEURON_OUTS = false;
-
 unsigned int DO_DUMPI = false;
 
 char *inputFileName = "nemo_in";
@@ -168,7 +167,13 @@ const tw_optdef app_opt[] = {
     TWOPT_END()
 
 };
-
+void spikech(int ln){
+#ifdef DEBUG
+  char * dm;
+  dm = SAVE_SPIKE_EVTS ? "Spike events on\n": "Spike Events off\n";
+  printf("\n%s at lin %i\n", dm,ln);
+#endif
+}
 /**
  * model_lps - contains the LP type defs for NeMo
  */
@@ -288,6 +293,7 @@ void displayModelSettings() {
  *
  */
 void init_nemo() {
+  spikech(294);
   /// SANTIY CHECKS:
   if (FILE_IN && (IS_SAT_NET || IS_RAND_NETWORK || GRID_ENABLE))
     tw_error(TW_LOC, "Multiple modes implemented - Can not load file and have random network.");
@@ -300,18 +306,20 @@ void init_nemo() {
   VALIDATION = PHAS_VAL || TONIC_BURST_VAL || PHASIC_BURST_VAL;
   FILE_OUT = SAVE_SPIKE_EVTS || SAVE_NETWORK_STRUCTURE || SAVE_MEMBRANE_POTS ||
       VALIDATION;
-
+  spikech(307);
   FILE_IN = !IS_RAND_NETWORK;
   if (FILE_OUT) {
     //Init file output handles
     initOutFiles();
-    openOutputFiles("network_def.csv");
+    if(SAVE_NETWORK_STRUCTURE)
+      openOutputFiles("network_def.csv");
     initDataStructures(g_tw_nlp);
     if (g_tw_mynode == 0) {
 
       printf("Output Files Init.\n");
     }
   }
+  spikech(320);
 
   if (FILE_IN) {
     // Init File Input Handles
@@ -371,12 +379,15 @@ unsigned char mapTests() {
 
  */
 
+
+
 int main(int argc, char *argv[]) {
 //	char *NETWORK_FILE_NAME = calloc(256, sizeof(char));
 //	strcpy(NETWORK_FILE_NAME, "nemo_model.csv");
 //	char *SPIKE_FILE_NAME = calloc(256, sizeof(char));
 //	strcpy(SPIKE_FILE_NAME, "nemo_spike.csv");
   tw_opt_add(app_opt);
+  spikech(388);
   tw_init(&argc, &argv);
   //call nemo init
   init_nemo();
@@ -408,10 +419,10 @@ int main(int argc, char *argv[]) {
   if (g_tw_mynode == 0) {
     displayModelSettings();
   }
-  printf("Network staring...\n");
-  if(SAVE_NETWORK_STRUCTURE){
-    saveNetworkStructure();
-  }
+//  printf("Network staring...\n");
+//  if(SAVE_NETWORK_STRUCTURE){
+//    saveNetworkStructure();
+//  }
   tw_run();
   if (SAVE_NETWORK_STRUCTURE) {
     closeOutputFiles();

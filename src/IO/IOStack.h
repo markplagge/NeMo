@@ -131,7 +131,7 @@ typedef struct NeuroConnect{
   uint64_t destAxon;
   uint64_t * conArray;
   uint64_t * weights;
-}neruoCon;
+}neuroCon;
 typedef struct NeuroSpike{
   uint64_t myCoreID;
   uint64_t neuronID;
@@ -139,10 +139,11 @@ typedef struct NeuroSpike{
   uint64_t destAxon;
   //long long double destTime;
 }neuroSpike;
-int writeNeuronConnections(neruoCon *neuronData);
+int writeNeuronConnections(neuroCon *neuronData);
 int writeNeuronSpike(neuroSpike *spikeInfo);
 
-
+void saveNeuronNetworkStructure(void *n);
+void saveNeuronPreRun();
 
 /**
  * More complex auto populate neuron function. Given the coreID, localID, a state strut, and some defs,
