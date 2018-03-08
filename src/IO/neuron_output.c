@@ -16,6 +16,9 @@ list_t networkStructureList;
 list_t membranePotList;
 
 rqueue_t *nc_data_q;
+rqueue_t *th_en;
+rqueue_t *spike_data;
+
 pthread_t filethread;
 pthread_attr_t thread_att;
 
@@ -37,7 +40,7 @@ void openOutputFiles(char *outputFileName) {
   outNetworkCfgFile = fopen(netfn, "wb");
   printf("LN31\n");
   char netfn2[255] = {'\0'};
-  sprintf(netfn, "neuron_config%i.csv", g_tw_mynode);
+  sprintf(netfn2, "neuron_config%i.csv", g_tw_mynode);
   outNeuronCfgFile = fopen(netfn2, "wb");
   printf("LN36\n");
   fprintf(outNetworkCfgFile, "Core,NeuronID,DestCore,DestAxon\n");

@@ -257,7 +257,8 @@ char *luT(char *nemoName) {
 }
 
 void closeLua() {
-  lua_close(L);
+  if(L)
+    lua_close(L);
 }
 
 void clearStack() {
