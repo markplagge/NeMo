@@ -33,6 +33,7 @@ except:
 
 
 from tqdm import tqdm
+from multiprocessing import *
 
 from joblib import Parallel, delayed
 
@@ -251,6 +252,11 @@ def compareSpikeDF(df1, df2):
 
 
 
+def mrfunct(df1, df2, how, s,fn):
+    merged = df1.merge(df2,indicator=True, how=how)
+    if(s):
+        merged.to_csv(fn)
+
 
 
 
@@ -264,17 +270,21 @@ def findmissing(svm,df1 = None, df2 = None):
     if df2 == None:
         df2 = pd.read_pickle('nemo_data.dat')
 
-    mergedO = df1.merge(df2, indicator=True, how='outer')
-    mergedL = df1.merge(df2, indicator=True, how='left')
-    mergedI = df1.merge(df2, indicator=True, how='inner')
+    hows = ["outer","left","inner"]
+    p1 = multiprocessing.Process(target=mrfunct,args=[df1,df2,hows[0],svm,f"spike_merge_{hows[0]}.csv"])
+    p2 = multiprocessing.Process(target=mrfunct, args=[df1, df2, hows[1], svm, f"spike_merge_{hows[1]}.csv"])
+    p3 = multiprocessing.Process(target=mrfunct,args=[df1,df2,hows[2],svm,f"spike_merge_{hows[2]}.csv"])
+    #mergedO = df1.merge(df2, indicator=True, how='outer')
+    #mergedL = df1.merge(df2, indicator=True, how='left')
+    #mergedI = df1.merge(df2, indicator=True, how='inner')
 
 
 
 
-    if svm:
-        mergedO.to_csv('spike_merge_outer.csv')
-        mergedL.to_csv('spike_merge_left.csv')
-        mergedI.to_csv('spike_merge_iner.csv')
+    #if svm:
+    #    mergedO.to_csv('spike_merge_outer.csv')
+    #    mergedL.to_csv('spike_merge_left.csv')
+    #    mergedI.to_csv('spike_merge_iner.csv')
 
     compareSpikeDF(df1, df2)
 

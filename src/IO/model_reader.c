@@ -60,7 +60,7 @@ void initModelInput(unsigned long maxNeurons) {
   luaL_openlibs(L);
 
   int s;
-s = luaL_loadfile(L, MODEL_FILE);
+  s = luaL_loadfile(L, MODEL_FILE);
 /*  FILE *mdl_file;
   struct stat buf;
   stat(MODEL_FILE,&buf);

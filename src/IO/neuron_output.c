@@ -18,7 +18,6 @@ list_t membranePotList;
 rqueue_t *nc_data_q;
 rqueue_t *th_en;
 rqueue_t *spike_data;
-
 pthread_t filethread;
 pthread_attr_t thread_att;
 
