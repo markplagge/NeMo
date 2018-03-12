@@ -62,9 +62,10 @@ long: atol,\
 int: atoi,\
 float: atof
 
+#define MAX_RANKS_FILES  65535
 
-
-/** @defgroup gmacros Global Macros and Related Functions
+/**@}
+ * @defgroup gmacros Global Macros and Related Functions
  *Global Macros */
 /**@{ */
 
@@ -286,7 +287,7 @@ EXT bool IS_RAND_NETWORK;
 EXT size_type CORES_IN_SIM;
 
 //EXT size_type AXONS_IN_CORE;
-EXT size_type SIM_SIZE;
+
 EXT size_type CORE_SIZE;
 EXT size_type SYNAPSES_IN_CORE;
 
@@ -365,11 +366,14 @@ EXT char *LAYER_LAYOUT;
  * */
 
 
+EXT char *luaConfigFile; //!< Stores LUA configuration file in memory for performance increase.
+EXT long isBin;
 //#define N_FIRE_BUFF_SIZE 32
 EXT bool SAVE_NEURON_OUTS;
 /** POSIX Neuron Fire record line buffer size.
  * For text mode only, sets the length of strings stored in the neuron fire buffer*/
 EXT int N_FIRE_LINE_SIZE;
+
 
 /** dumpi noise/squash generation toggle - for reading in model files that ignore
  * spike files or for squashing spike times.

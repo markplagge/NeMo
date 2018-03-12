@@ -14,8 +14,6 @@
 #define EXLOW(x) (uint32_t) (x)
 #define EXHIGH(x) (uint32_t) (x >> 32)
 
-
-
 uint64_t combine(unsigned int high, unsigned int low);
 
 #endif //SUPERNEMO_MORTON_H

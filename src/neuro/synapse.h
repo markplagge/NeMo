@@ -7,16 +7,14 @@
 #include "../mapping.h"
 #include "../IO/IOStack.h"
 
-
-
 typedef struct SynapseState {
-	stat_type msgSent;
-	tw_stime lastBigTick;
-	id_type myCore;
-	tw_bf neuronBF[NEURONS_IN_CORE];
-	unsigned long randCount[NEURONS_IN_CORE];
-	bool connectionGrid[NEURONS_IN_CORE][NEURONS_IN_CORE];
-}synapseState;
+  stat_type msgSent;
+  tw_stime lastBigTick;
+  id_type myCore;
+  tw_bf neuronBF[NEURONS_IN_CORE];
+  unsigned long randCount[NEURONS_IN_CORE];
+  bool connectionGrid[NEURONS_IN_CORE][NEURONS_IN_CORE];
+} synapseState;
 void synapse_init(synapseState *s, tw_lp *lp);
 void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp);
 void synapse_reverse(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp);

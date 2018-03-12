@@ -124,21 +124,21 @@ typedef enum P_TYPES {
   UNSIGNEDLONG
 } p_types;
 
-typedef struct NeuroConnect{
+typedef struct NeuroConnect {
   uint64_t myCoreID;
   uint64_t neuronID;
   uint64_t destCore;
   uint64_t destAxon;
-  uint64_t * conArray;
-  uint64_t * weights;
-}neuroCon;
-typedef struct NeuroSpike{
+  uint64_t *conArray;
+  uint64_t *weights;
+} neuroCon;
+typedef struct NeuroSpike {
   uint64_t myCoreID;
   uint64_t neuronID;
   uint64_t destCore;
   uint64_t destAxon;
   //long long double destTime;
-}neuroSpike;
+} neuroSpike;
 int writeNeuronConnections(neuroCon *neuronData);
 int writeNeuronSpike(neuroSpike *spikeInfo);
 

@@ -151,7 +151,7 @@ bool fireTimingCheck(tn_neuron_state *s, tw_lp *lp) {
   unsigned long currentBigTick = getCurrentBigTick(now);
   unsigned long prevBigTick = getCurrentBigTick(s->lastFire);
 
-  if (currentBigTick == 0) { //big tick is zero so we are at first
+  if (currentBigTick==0) { //big tick is zero so we are at first
     s->firecount++;
     return true;
   }
@@ -161,7 +161,7 @@ bool fireTimingCheck(tn_neuron_state *s, tw_lp *lp) {
     s->firecount = 1;
     s->lastFire = now;
     return true;
-  } else if (currentBigTick == prevBigTick) { //fire request on the same tick - error condition 1
+  } else if (currentBigTick==prevBigTick) { //fire request on the same tick - error condition 1
     s->firecount++;
 
 //#ifdef DEBUG
@@ -331,90 +331,90 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp,
     /// @TODO: possibly need to aggregate inputs on the same channel? If
     /// validation isn't working check this.
 
-    case SYNAPSE_OUT:
-      st->drawnRandomNumber = tw_rand_integer(
-          lp->rng, 0,
-          st->largestRandomValue);  //!<- @BUG This might be creating
-      //! non-deterministic errors
-      TNIntegrate(m->axonID, st, lp);
-      // next, we will check if a heartbeat message should be sent
-      if (st->heartbeatOut == false) {
-        tw_stime time = getNextBigTick(lp, st->myLocalID);
-        st->heartbeatOut = true;
-        bf->c13 =
-            1;  // C13 indicates that the heartbeatout flag has been changed.
-        TNSendHeartbeat(st, time, lp);
+  case SYNAPSE_OUT:
+    st->drawnRandomNumber = tw_rand_integer(
+        lp->rng, 0,
+        st->largestRandomValue);  //!<- @BUG This might be creating
+    //! non-deterministic errors
+    TNIntegrate(m->axonID, st, lp);
+    // next, we will check if a heartbeat message should be sent
+    if (st->heartbeatOut==false) {
+      tw_stime time = getNextBigTick(lp, st->myLocalID);
+      st->heartbeatOut = true;
+      bf->c13 =
+          1;  // C13 indicates that the heartbeatout flag has been changed.
+      TNSendHeartbeat(st, time, lp);
 
-        // set message flag indicating that the heartbeat msg has been sent
+      // set message flag indicating that the heartbeat msg has been sent
+    }
+    break;
+
+  case NEURON_HEARTBEAT: st->heartbeatOut = false;
+    // set message flag indicating that the heartbeat msg has been sent
+    bf->c13 =
+        1;  // C13 indicates that the heartbeatout flag has been changed.
+
+    // Currently operates - leak->fire->(reset)
+    st->drawnRandomNumber =
+        tw_rand_integer(lp->rng, 0, st->largestRandomValue);
+
+    TNNumericLeakCalc(st, tw_now(lp));
+    // linearLeak( st, tw_now(lp));
+    ringing(st, m->neuronVoltage);
+
+    // willFire = neuronShouldFire(st, lp); //removed and replaced with
+    // fireFloorCelingReset
+    willFire = TNfireFloorCelingReset(st, lp);
+    willFire = (willFire && fireTimingCheck(st, lp));
+    bf->c0 = bf->c0 || willFire;
+
+    if (willFire) {
+      if (!st->isOutputNeuron) {
+        TNFire(st, lp);
+        //check for intra-core communications -
+        //setting bit 31 as toggle for send communication
+        if (isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))) {
+          bf->c31 = 1;
+          //m->dumpiID = tw_rand_ulong(lp->rng,0,ULONG_MAX - 1);
+        } else {
+          bf->c31 = 0;
+        }
+
+
+
+        // st->fireCount++;
+      } else {
+        /** bf->c10 is an output neuron fire state checker. True means the neuron fired this turn. */
+        bf->c10 = 1;
+
       }
-      break;
+    }
 
-    case NEURON_HEARTBEAT: st->heartbeatOut = false;
+    st->lastActiveTime = tw_now(lp);
+
+
+    // do we still have more than the threshold volts left? if so,
+    // send a heartbeat out that will ensure the neuron fires again.
+    // Or if we are as self-firing neuron.
+    ///@TODO: Add detection of self-firing neuron state.
+    ///@TODO: Ensure bf-c13 state validity here for reverse computations
+    if (TNShouldFire(st, lp) && st->heartbeatOut==false) {
+      tw_stime time = getNextBigTick(lp, st->myLocalID);
+      st->heartbeatOut = true;
       // set message flag indicating that the heartbeat msg has been sent
       bf->c13 =
           1;  // C13 indicates that the heartbeatout flag has been changed.
-
-      // Currently operates - leak->fire->(reset)
-      st->drawnRandomNumber =
-          tw_rand_integer(lp->rng, 0, st->largestRandomValue);
-
-      TNNumericLeakCalc(st, tw_now(lp));
-      // linearLeak( st, tw_now(lp));
-      ringing(st, m->neuronVoltage);
-
-      // willFire = neuronShouldFire(st, lp); //removed and replaced with
-      // fireFloorCelingReset
-      willFire = TNfireFloorCelingReset(st, lp);
-      willFire = (willFire && fireTimingCheck(st, lp));
-      bf->c0 = bf->c0 || willFire;
-
-      if (willFire) {
-        if (!st->isOutputNeuron) {
-          TNFire(st, lp);
-          //check for intra-core communications -
-          //setting bit 31 as toggle for send communication
-          if (isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))) {
-            bf->c31 = 1;
-            //m->dumpiID = tw_rand_ulong(lp->rng,0,ULONG_MAX - 1);
-          } else {
-            bf->c31 = 0;
-          }
-
-
-
-          // st->fireCount++;
-        }else{
-          /** bf->c10 is an output neuron fire state checker. True means the neuron fired this turn. */
-          bf->c10 = 1;
-
-        }
-      }
-
-      st->lastActiveTime = tw_now(lp);
-
-
-      // do we still have more than the threshold volts left? if so,
-      // send a heartbeat out that will ensure the neuron fires again.
-      // Or if we are as self-firing neuron.
-      ///@TODO: Add detection of self-firing neuron state.
-      ///@TODO: Ensure bf-c13 state validity here for reverse computations
-      if (TNShouldFire(st, lp) && st->heartbeatOut == false) {
-        tw_stime time = getNextBigTick(lp, st->myLocalID);
-        st->heartbeatOut = true;
-        // set message flag indicating that the heartbeat msg has been sent
-        bf->c13 =
-            1;  // C13 indicates that the heartbeatout flag has been changed.
-        TNSendHeartbeat(st, time, lp);
-      }
-      break;
-    default:
-      // Error condition - non-valid input.
-      tw_error(TW_LOC, "Neuron (%i,%i) received invalid message type, %i \n ",
-               st->myCoreID, st->myLocalID, m->eventType);
-      break;
+      TNSendHeartbeat(st, time, lp);
+    }
+    break;
+  default:
+    // Error condition - non-valid input.
+    tw_error(TW_LOC, "Neuron (%i,%i) received invalid message type, %i \n ",
+             st->myCoreID, st->myLocalID, m->eventType);
+    break;
   }
   // self-firing neuron (spont.)
-  if (st->isSelfFiring && st->heartbeatOut == false) {
+  if (st->isSelfFiring && st->heartbeatOut==false) {
     tw_stime time = getNextBigTick(lp, st->myLocalID);
     st->heartbeatOut = true;
     // set message flag indicating that the heartbeat msg has been sent
@@ -425,7 +425,7 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp,
 }
 void TNReceiveReverseMessage(tn_neuron_state *st, messageData *M, tw_lp *lp,
                              tw_bf *bf) {
-  if (M->eventType == NEURON_HEARTBEAT) {
+  if (M->eventType==NEURON_HEARTBEAT) {
     // reverse heartbeat message
     st->SOPSCount--;
   }
@@ -457,7 +457,7 @@ void TNReceiveReverseMessage(tn_neuron_state *st, messageData *M, tw_lp *lp,
  */
 void ringing(void *nsv, volt_type oldVoltage) {
   tn_neuron_state *ns = (tn_neuron_state *) nsv;
-  if (ns->epsilon && (SGN(ns->membranePotential) != SGN(oldVoltage))) {
+  if (ns->epsilon && (SGN(ns->membranePotential)!=SGN(oldVoltage))) {
     ns->membranePotential = 0;
   }
 }
@@ -469,7 +469,7 @@ void TNIntegrate(id_type synapseID, tn_neuron_state *st, void *lp) {
   // DEBUG CODE REMOVE FOR PRODUCTION:
   // id_type myid = st->myLocalID;
 
-  if (con == 0)
+  if (con==0)
     return;
   // printf("id-%llu, sid-%llu, connect: %i\n",myid, synapseID,con);
   // weight_type stw = st->synapticWeight[at];
@@ -498,7 +498,7 @@ void TNSendHeartbeat(tn_neuron_state *st, tw_stime time, void *lp) {
   data->localID = st->myLocalID;
   data->eventType = NEURON_HEARTBEAT;
   tw_event_send(newEvent);
-  if (st->heartbeatOut == false) {
+  if (st->heartbeatOut==false) {
     tw_error(TW_LOC,
              "Error - neuron sent heartbeat without setting HB to true\n");
   }
@@ -553,14 +553,14 @@ bool TNfireFloorCelingReset(tn_neuron_state *ns, tw_lp *lp) {
       ns->posThreshold + ns->drawnRandomNumber) {
     // reset:
     ns->membranePotential =
-        ((DT(gamma)) * Vrst) +
-            ((DT(gamma - 1)) * (Vj - (alpha + ns->drawnRandomNumber))) +
-            ((DT(gamma - 2)) * Vj);
+        ((DT(gamma))*Vrst) +
+            ((DT(gamma - 1))*(Vj - (alpha + ns->drawnRandomNumber))) +
+            ((DT(gamma - 2))*Vj);
     // volt_type mp = ns->membranePotential;
     shouldFire = true;
   } else if (ns->membranePotential <
-      (-1 * (beta * ns->kappa +
-          (beta + ns->drawnRandomNumber) * (1 - ns->kappa)))) {
+      (-1*(beta*ns->kappa +
+          (beta + ns->drawnRandomNumber)*(1 - ns->kappa)))) {
     // volt_type x = ns->membranePotential;
     // x = ((-1 * beta) * ns->kappa);
     //        volt_type s1,s2,s3,s4;
@@ -572,11 +572,11 @@ bool TNfireFloorCelingReset(tn_neuron_state *ns, tw_lp *lp) {
     //		//x = s1 + (s2 + s3 + s4);
 
     ns->membranePotential =
-        (((-1 * beta) * ns->kappa) +
-            (((-1 * (DT(gamma))) * Vrst) +
-                ((DT((gamma - 1))) *
+        (((-1*beta)*ns->kappa) +
+            (((-1*(DT(gamma)))*Vrst) +
+                ((DT((gamma - 1)))*
                     (ns->membranePotential + (beta + ns->drawnRandomNumber))) +
-                ((DT((gamma - 2))) * ns->membranePotential)) *
+                ((DT((gamma - 2)))*ns->membranePotential))*
                 (1 - ns->kappa));
   }
   return shouldFire;
@@ -593,7 +593,7 @@ void TNPostIntegrate(tn_neuron_state *st, tw_stime time, tw_lp *lp,
   if (willFire) {  // neuron will/did fire:
     // st->doReset(st);
   } else if (st->membranePotential <
-      -1 * (st->negThreshold * st->resetVoltage +
+      -1*(st->negThreshold*st->resetVoltage +
           (st->negThreshold + st->drawnRandomNumber))) {
     // sanity variables for the formulaic reset/bounce instead of calling
     // functions:
@@ -604,28 +604,38 @@ void TNPostIntegrate(tn_neuron_state *st, tw_stime time, tw_lp *lp,
     volt_type R = st->resetVoltage;
     volt_type V = st->membranePotential;
     st->membranePotential =
-        (-(B * K) +
-            (-(DT(G)) * R + DT(G - 1) * (V + (B + n)) + DT(G - 2) * V) * (1 - K));
+        (-(B*K) +
+            (-(DT(G))*R + DT(G - 1)*(V + (B + n)) + DT(G - 2)*V)*(1 - K));
   }
 }
 
 void TNNumericLeakCalc(tn_neuron_state *st, tw_stime now) {
   // shortcut for calcuation - neurons do not leak if:
   // lambda is zero:
-  if (st->lambda == 0)
+  if (st->lambda==0)
     return;
   // calculate current time since last leak --- LEAK IS TERRIBLE FOR THIS:
   uint_fast32_t numberOfBigTicksSinceLastLeak =
       getCurrentBigTick(now) - getCurrentBigTick(st->lastLeakTime);
   // then run the leak function until we've caught up:
+  volt_type newMP = st->membranePotential;
+  short lamb = st->lambda;
+  short drawnRandom = st->drawnRandomNumber;
+  short c = st->c;
+  int64_t omega = st->sigma_l*(1 - st->epsilon) +
+      SGN(st->membranePotential)*st->sigma_l*st->epsilon;
   for (; numberOfBigTicksSinceLastLeak > 0; numberOfBigTicksSinceLastLeak--) {
-    int64_t omega = st->sigma_l * (1 - st->epsilon) +
-        SGN(st->membranePotential) * st->sigma_l * st->epsilon;
+//    int64_t omega = st->sigma_l * (1 - st->epsilon) +
+//        SGN(st->membranePotential) * st->sigma_l * st->epsilon;
 
-    st->membranePotential =
-        st->membranePotential + (omega * ((1 - st->c) * st->lambda)) +
-            (st->c & (BINCOMP(st->lambda, st->drawnRandomNumber)));
+//    st->membranePotential =
+//        st->membranePotential + (omega * ((1 - st->c) * st->lambda)) +
+//            (st->c & (BINCOMP(st->lambda, st->drawnRandomNumber)));
+    //st->membranePotential =
+    newMP += (omega*((1 - st->c)*lamb)) +
+        (c & (BINCOMP(lamb, drawnRandom)));
   }
+  st->membranePotential = newMP;
   st->lastLeakTime = now;
 }
 
@@ -669,7 +679,7 @@ void tn_create_neuron(id_type coreID, id_type nID,
                       tn_neuron_state *n, int signalDelay,
                       uint64_t destGlobalID, int destAxonID) {
   for (int i = 0; i < 4; i++) {
-    n->synapticWeight[i] = sigma[i] * S[i];
+    n->synapticWeight[i] = sigma[i]*S[i];
     n->weightSelection[i] = b[i];
   }
   for (int i = 0; i < NEURONS_IN_CORE; i++) {
@@ -733,7 +743,7 @@ void tn_create_neuron_encoded_rv(
                    kappa, n, signalDelay, destGlobalID, destAxonID);
   n->sigmaVR = sigmaVR;
   n->encodedResetVoltage = VR;
-  n->resetVoltage = (n->sigmaVR * (pow(2, n->encodedResetVoltage) - 1));
+  n->resetVoltage = (n->sigmaVR*(pow(2, n->encodedResetVoltage) - 1));
 }
 
 /**
@@ -849,7 +859,7 @@ void TN_create_saturation_neuron(tn_neuron_state *s, tw_lp *lp) {
   s->posThreshold = SAT_NET_THRESH;
   s->negThreshold = (0 - SAT_NET_THRESH);
   numCreated++;
-  if (numCreated >= NEURONS_IN_CORE * CORES_IN_SIM) {
+  if (numCreated >= NEURONS_IN_CORE*CORES_IN_SIM) {
     printf("SAT network finished init \n");
     clearBucket();
   }
@@ -868,48 +878,48 @@ void parseCSVCreateTN(tn_neuron_state *st, csvNeuron raw) {
   short S[NUM_NEURON_WEIGHTS];
 
   // for array features, this is the number of elements total to be loaded.
-  int lenOfArrayParams = (NEURONS_IN_CORE * 2) + (NUM_NEURON_WEIGHTS * 3);
+  int lenOfArrayParams = (NEURONS_IN_CORE*2) + (NUM_NEURON_WEIGHTS*3);
   void *datum;
   int pos = 0;
   for (int i = 0; i < lenOfArrayParams; i++) {
     switch (arrayNum) {
-      case CONN: st->synapticConnectivity[pos] = nextToI(); // atoi(raw.rawDatM[currentFld ++]);
-        break;
-      case AXTP: st->axonTypes[pos] = nextToI();
-        break;
-      case SGI: sigma[pos] = nextToI();
-        break;
-      case SP: S[pos] = nextToI();
-        break;
-      case BV: st->weightSelection[pos] = nextToI();
-        break;
+    case CONN: st->synapticConnectivity[pos] = nextToI(); // atoi(raw.rawDatM[currentFld ++]);
+      break;
+    case AXTP: st->axonTypes[pos] = nextToI();
+      break;
+    case SGI: sigma[pos] = nextToI();
+      break;
+    case SP: S[pos] = nextToI();
+      break;
+    case BV: st->weightSelection[pos] = nextToI();
+      break;
 
     }
     switch (arrayNum) {
-      case CONN:
-      case AXTP:
-        if (pos == NEURONS_IN_CORE - 1) {
-          arrayNum++;
-          pos = 0;
-        } else {
-          pos++;
-        }
-        break;
-      case SGI:
-      case SP:
-      case BV:
-        if (pos == NUM_NEURON_WEIGHTS - 1) {
-          arrayNum++;
-          pos = 0;
-        } else {
-          pos++;
-        }
+    case CONN:
+    case AXTP:
+      if (pos==NEURONS_IN_CORE - 1) {
+        arrayNum++;
+        pos = 0;
+      } else {
+        pos++;
+      }
+      break;
+    case SGI:
+    case SP:
+    case BV:
+      if (pos==NUM_NEURON_WEIGHTS - 1) {
+        arrayNum++;
+        pos = 0;
+      } else {
+        pos++;
+      }
 
     }
   }
   //set up weights:
   for (int i = 0; i < NUM_NEURON_WEIGHTS; i++) {
-    st->synapticWeight[i] = sigma[i] * S[i];
+    st->synapticWeight[i] = sigma[i]*S[i];
   }
   st->epsilon = nextToI();
   st->sigma_l = nextToI();
@@ -925,7 +935,7 @@ void parseCSVCreateTN(tn_neuron_state *st, csvNeuron raw) {
   short VR = nextToI();
   short sigmaVR = nextToI();
   sigmaVR = SGN(sigmaVR);
-  st->resetVoltage = (sigmaVR * (pow(2, VR) - 1));
+  st->resetVoltage = (sigmaVR*(pow(2, VR) - 1));
   st->encodedResetVoltage = VR;
 
   st->resetMode = nextToI();
@@ -996,9 +1006,9 @@ int safeGetArr(int direct, char *lutName, char *dirName, long vars[],
     pn = lutName;
   }
   ++validation;
-  if (validation == expectedParams) {
+  if (validation==expectedParams) {
     return validation;
-  } else if (validation == 0) {
+  } else if (validation==0) {
     modelErr(pn, MODEL_FILE, cid, lid, ntype, errtps[0], 917);
 
   } else if (validation < expectedParams && validation > 0) {
@@ -1074,31 +1084,31 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {
 
   validation = safeGetArr(0, "synapticConnectivity", NULL, vars, NEURONS_IN_CORE, TID);
 //	validation = lGetAndPushParam(luT("synapticConnectivity"), 1, vars);
-  if (validation > 0 && validation == NEURONS_IN_CORE) {
+  if (validation > 0 && validation==NEURONS_IN_CORE) {
     for (int i = 0; i < validation; i++)
       synapticConnectivity[i] = vars[i];
   }
   validation = safeGetArr(0, "axonTypes", NULL, vars, NEURONS_IN_CORE, TID);
 //	validation = lGetAndPushParam(luT("axonTypes"), 1, vars);
-  if (validation > 0 && validation == NEURONS_IN_CORE) {
+  if (validation > 0 && validation==NEURONS_IN_CORE) {
     for (int i = 0; i < validation; i++)
       axonTypes[i] = vars[i];
   }
   validation = safeGetArr(0, "sigma", NULL, vars, NUM_NEURON_WEIGHTS, TID);
 //	validation = lGetAndPushParam(luT("sigma"), 1, vars);
-  if (validation > 0 && validation == NUM_NEURON_WEIGHTS) {
+  if (validation > 0 && validation==NUM_NEURON_WEIGHTS) {
     for (int i = 0; i < validation; i++)
       sigma[i] = vars[i];
   }
   validation = safeGetArr(1, NULL, "S", vars, NUM_NEURON_WEIGHTS, TID);
 //	validation = lGetAndPushParam("S", 1, vars);
-  if (validation > 0 && validation == NUM_NEURON_WEIGHTS) {
+  if (validation > 0 && validation==NUM_NEURON_WEIGHTS) {
     for (int i = 0; i < validation; i++)
       S[i] = vars[i];
   }
   validation = safeGetArr(1, NULL, "b", vars, NUM_NEURON_WEIGHTS, TID);
 //	validation = lGetAndPushParam(luT("b"), 1, vars);
-  if (validation > 0 && validation == NUM_NEURON_WEIGHTS) {
+  if (validation > 0 && validation==NUM_NEURON_WEIGHTS) {
     for (int i = 0; i < validation; i++)
       b[i] = vars[i];
   }
@@ -1167,10 +1177,13 @@ void TNCreateFromFile(tn_neuron_state *s, tw_lp *lp) {
     TNPopulateFromFile(s, lp);
   }
 
-  if(needannounce && (g_tw_mynode == 0) && s->isOutputNeuron){
+  if (needannounce && (g_tw_mynode==0) && s->isOutputNeuron) {
     printf("output neuron created.\n");
-    printf("Neuron CORE: %lli - LID: %lli - Dest Core: %li  Local: %li \n", s->myCoreID,s->myLocalID, s->outputCoreDest,
-            s->outputNeuronDest);
+    printf("Neuron CORE: %lli - LID: %lli - Dest Core: %li  Local: %li \n",
+           s->myCoreID,
+           s->myLocalID,
+           s->outputCoreDest,
+           s->outputNeuronDest);
     needannounce = 0;
   }
 
@@ -1182,7 +1195,7 @@ void TN_pre_run(tn_neuron_state *s, tw_lp *me) {
     closeLua();
     clean = 1;
   }
-  if(SAVE_NETWORK_STRUCTURE){
+  if (SAVE_NETWORK_STRUCTURE) {
     saveNeuronPreRun();
   }
 }
@@ -1204,7 +1217,7 @@ void TN_init(tn_neuron_state *s, tw_lp *lp) {
       fileInit = 1;
     }
   }
-  if (fileInit == 0 || fileInit == 1){
+  if (fileInit==0 || fileInit==1) {
     printf("Starting tn network init\n");
     fileInit = 3;
   }
@@ -1227,7 +1240,7 @@ void TN_init(tn_neuron_state *s, tw_lp *lp) {
     }
     TN_create_saturation_neuron(s, lp);
   }
-  if(SAVE_NETWORK_STRUCTURE){
+  if (SAVE_NETWORK_STRUCTURE) {
     saveNeuronNetworkStructure(s);
 
   }
@@ -1281,25 +1294,25 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
   //  saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),0);
   //}
 
-  if ((s->isOutputNeuron && SAVE_OUTPUT_NEURON_EVTS && cv->c10) || (SAVE_SPIKE_EVTS && cv -> c0)) {
+  if ((s->isOutputNeuron && SAVE_OUTPUT_NEURON_EVTS && cv->c10) || (SAVE_SPIKE_EVTS && cv->c0)) {
     long outCore;
     long outNeuron;
-    if(s->isOutputNeuron){
+    if (s->isOutputNeuron) {
       outCore = s->outputCoreDest;
       outNeuron = s->outputNeuronDest;
-    }else{
+    } else {
       outCore = getCoreFromGID(s->outputGID);
       outNeuron = getLocalFromGID(s->outputGID);
     }
     /////output neurons do not send messages to the rest of the model. But we save the output.
-    if(SAVE_SPIKE_EVTS || SAVE_OUTPUT_NEURON_EVTS) {
+    if (SAVE_SPIKE_EVTS || SAVE_OUTPUT_NEURON_EVTS) {
       saveNeuronFire(tw_now(lp) + 1, s->myCoreID, s->myLocalID, s->outputGID,
                      outCore, outNeuron, s->isOutputNeuron);
     }
   }
 
   // save simulated dumpi trace if inter core and dumpi trace is on
-  if (cv->c31 && DO_DUMPI)  {
+  if (cv->c31 && DO_DUMPI) {
     /** @TODO: Add dumpi save flag to config. */
     //saveMPIMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp),
 
@@ -1325,7 +1338,7 @@ void TN_final(tn_neuron_state *s, tw_lp *lp) {
     fclose(dumpi_out);
     fileOpen = 0;
   }
-  if (g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
+  if (g_tw_synchronization_protocol==OPTIMISTIC_DEBUG) {
     // Alpha, SOPS should be zero. HeartbeatOut should be false.
     char *em = (char *) calloc(1024, sizeof(char));
     char *hdr = "------ Neuron Optimistic Debug Check -----";
@@ -1335,12 +1348,12 @@ void TN_final(tn_neuron_state *s, tw_lp *lp) {
     bool dsp = false;
     sprintf(em, "%s\n Core: %i Local: %i \n", hdr, s->myCoreID, s->myLocalID);
 
-    if (s->membranePotential != 0) {
+    if (s->membranePotential!=0) {
       prhdr(&dsp, em);
     }
-    if (s->SOPSCount != 0) {
+    if (s->SOPSCount!=0) {
       prhdr(&dsp, em);
-      if (s->heartbeatOut != false) {
+      if (s->heartbeatOut!=false) {
       }
       prhdr(&dsp, em);
     }

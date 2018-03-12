@@ -75,7 +75,8 @@ void debugMsg(char *m, char *d) {
 }
 
 char *mystrcat(char *dest, char *src) {
-  while (*dest) dest++;
+  while (*dest)
+    dest++;
   while (*dest++ = *src++);
   return --dest;
 }

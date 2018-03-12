@@ -5,7 +5,6 @@
 //#include <pthread.h>
 //#include <stdatomic.h>
 #include "../lib/rqueue.h"
-#include <unistd.h>
 //#include "../lib/c11t/c11threads.h"
 // POSIX File handles for non MPI IO file writing
 
@@ -48,26 +47,25 @@ int minBufferSz = 100;
  */
 int rq_size = 4098;
 
-
 const char poison = '!';
-void thOutput(char * data){
+void thOutput(char *data) {
   fprintf(neuronFireFile, "%s\n", neuronFireBufferTXT[neuronFirePoolPos]);
 }
-char * dequeue(void * queue){
+char *dequeue(void *queue) {
   return (char *) rqueue_read((rqueue_t *) queue);
 }
-int enqueue(void * queue, char * data){
+int enqueue(void *queue, char *data) {
   return rqueue_write((rqueue_t *) queue, data);
 }
-void *outputWorker(){
+void *outputWorker() {
   bool working = true;
-  while(working){
-    char * data = rqueue_read(outputDataQ);
-    if(data){
-      if(data[0] == poison){
+  while (working) {
+    char *data = rqueue_read(outputDataQ);
+    if (data) {
+      if (data[0]==poison) {
         working = false;
         free(data);
-      }else{
+      } else {
         thOutput(data);
         free(data);
       }
@@ -77,7 +75,7 @@ void *outputWorker(){
 /**
  * initializes threads and sets up queue for file io
  */
-void initThreading(){
+void initThreading() {
 
 }
 
@@ -216,7 +214,7 @@ void initOutFiles() {
         neuronFireBufferTXT[i] = (char *) tw_calloc(TW_LOC, "OUTPUT", tv, sizeof(char *));
       }
       neuronFireFile = fopen(neuronRankFN, "w");
-      if(g_tw_mynode == 0) {
+      if (g_tw_mynode==0) {
         fprintf(neuronFireFile, "timestamp,core,local,destGID,destCore,destNeuron,isOutput?\n");
       }
     }
@@ -234,7 +232,7 @@ void closeFiles() {
   fclose(neuronFireFile);
 //    MPI_File_close(neuronFireFileMPI);
   MPI_Barrier(MPI_COMM_WORLD); // wait for everyone to catch up.
-  if (g_tw_mynode == 0) {
+  if (g_tw_mynode==0) {
 
     FILE *finalout = fopen("neuron_spike_evts.csv", "w");
     fprintf(finalout, "timestamp,neuron_core,neuron_local,destGID\n");

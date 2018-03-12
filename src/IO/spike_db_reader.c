@@ -4,7 +4,6 @@
 
 
 #include "spike_db_reader.h"
-#include "../nemo_config.h"
 
 sqlite3 *spikedbFile;
 sqlite3 *spikedb;
@@ -69,7 +68,7 @@ int loadOrSaveDb(sqlite3 *pInMemory, const char *zFilename, int isSave) {
   /* Open the database file identified by zFilename. Exit early if this fails
   ** for any reason. */
   rc = sqlite3_open(zFilename, &pFile);
-  if (rc == SQLITE_OK) {
+  if (rc==SQLITE_OK) {
 
     /* If this is a 'load' operation (isSave==0), then data is copied
     ** from the database file just opened to database pInMemory.
@@ -113,6 +112,7 @@ long execCountCallback(void *nu, int argc, char **argv, char **azColName) {
 int spikeQueryCallback(void *splist, int argc, char **argv, char **colName) {
   list_t *spikelist = (list_t *) splist;
   for (int i = 0; i < argc; i++) {
+
     list_append(spikelist, strtol(argv[i], NULL, 10));
   }
   /** @todo move *splist to a global value if possible - we don't really need to calloc it every time... */
@@ -180,7 +180,6 @@ static int coreQueryCB(void *userData, int c_num, char **c_vals, char **c_names)
 }
 char *errmsg;
 
-
 int doesCoreHaveSpikesDB(id_type core) {
   //query stored in fullQ.
   assembleCoreQuery(1, core);
@@ -189,15 +188,15 @@ int doesCoreHaveSpikesDB(id_type core) {
   sqlite3_stmt *res;
   rc = sqlite3_prepare_v2(spikedb, fullQ, -1, &res, 0);
   //rc = sqlite3_exec(spikedb, fullQ, coreCountCB, NULL, errmsg);
-  if (rc != SQLITE_OK) {
+  if (rc!=SQLITE_OK) {
     TH
     printf("\n\nSQLITE error\n");
     printf("SQL ERROR TRACKING \n errmsg pre: %s \n\n. Error Code %i\n", sqlite3_errmsg(spikedb), rc);
     tw_error(TW_LOC, "\nSQL query: %s \n Core: %llu", fullQ, core);
   }
   int cntr = 0;
-  if (sqlite3_step(res) == SQLITE_ROW){
-    cntr ++;
+  if (sqlite3_step(res)==SQLITE_ROW) {
+    cntr++;
   }
   free(errmsg);
   return cntr;
@@ -208,14 +207,14 @@ int getSpikesSynapseDB(void *timeList, id_type core) {
   errmsg = calloc(sizeof(char), 1024);
   sqlite3_stmt *res;
   int rc = sqlite3_prepare_v2(spikedb, fullQ, -1, &res, 0);
-  if (rc != SQLITE_OK) {
+  if (rc!=SQLITE_OK) {
 
     tw_error(TW_LOC, "SQL Error - unable to execute statement %s\n", sqlite3_errmsg(spikedb));
   }
   int cntr = 0;
   //int step = sqlite3_step(res);
   list_t *splist = (list_t *) timeList;
-  while (sqlite3_step(res) == SQLITE_ROW) {
+  while (sqlite3_step(res)==SQLITE_ROW) {
     uint32_t time = sqlite3_column_int(res, 0);
     uint32_t axon = sqlite3_column_int(res, 1);
     uint64_t val = interleave(time, axon);
@@ -228,7 +227,7 @@ int getSpikesSynapseDB(void *timeList, id_type core) {
 
 
   //int rc = sqlite3_exec(spikedb, fullQ, coreQueryCB,timeList, errmsg);
-  if (rc != SQLITE_OK) {
+  if (rc!=SQLITE_OK) {
     TH
     printf("\n\nSQLITE error in full query\n");
     STT("Message: %s", errmsg);
@@ -263,7 +262,7 @@ int getSpikesFromAxonSQL(void *M, id_type coreID, id_type axonID) {
       "FROM     input_spikes\n"
       "WHERE    ( input_spikes.axon = ?  ) AND ( input_spikes.core = ?  );";
   rc = sqlite3_prepare_v2(spikedb, query, -1, &res, 0);
-  if (rc == SQLITE_OK) {
+  if (rc==SQLITE_OK) {
     sqlite3_bind_int64(res, 1, axonID);
     sqlite3_bind_int64(res, 2, coreID);
   } else {
@@ -272,11 +271,11 @@ int getSpikesFromAxonSQL(void *M, id_type coreID, id_type axonID) {
   }
   int cntr = 0;
   int step = sqlite3_step(res);
-  if (step == SQLITE_ROW) {
+  if (step==SQLITE_ROW) {
 
     list_attributes_copy(spikelist, list_meter_int64_t, 1);
 
-    while (step == SQLITE_ROW) {
+    while (step==SQLITE_ROW) {
       long sptime = sqlite3_column_int64(res, 0);
       list_append(spikelist, &sptime);
       cntr++;
@@ -300,7 +299,7 @@ int checkIfSpikesExistForAxon(id_type coreID, id_type axonID) {
 
 int connectToDB(char *filename) {
   int st = -999;
-  if (spikedb_isopen == 0) {
+  if (spikedb_isopen==0) {
     st = sqlite3_open(":memory:", &spikedb);
     //st = sqlite3_open_v2(filename, &spikedbFile, SQLITE_OPEN_READONLY|SQLITE_OPEN_NOMUTEX, NULL);
     //st = sqlite3_open_v2(filename,&spikedbFile, SQLITE_OPEN_READONLY, NULL);
@@ -309,14 +308,14 @@ int connectToDB(char *filename) {
 
     }
     st = loadOrSaveDb(spikedb, filename, 0);
-    if (st){
-      if (g_tw_mynode == 0){
+    if (st) {
+      if (g_tw_mynode==0) {
         printf("\n\nDisk based sql backup enabled.");
         st = sqlite3_close(spikedb);
-        st = sqlite3_open_v2(filename, &spikedb,SQLITE_OPEN_READONLY|SQLITE_OPEN_NOMUTEX, NULL);
-        if(st){
+        st = sqlite3_open_v2(filename, &spikedb, SQLITE_OPEN_READONLY | SQLITE_OPEN_NOMUTEX, NULL);
+        if (st) {
           tw_error(TW_LOC, "Database open error: Code: %i \n Message %s\n filename: %s\n",
-                   st,sqlite3_errmsg(spikedb), filename);
+                   st, sqlite3_errmsg(spikedb), filename);
         }
       }
     }
@@ -327,7 +326,7 @@ int connectToDB(char *filename) {
 }
 int closeDB(char *filename) {
   int st = 0;
-  if (spikedb_isopen == 1) {
+  if (spikedb_isopen==1) {
     st = sqlite3_close_v2(spikedb);
     spikedb_isopen = 0;
   }

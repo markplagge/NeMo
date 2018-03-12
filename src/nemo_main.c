@@ -3,7 +3,6 @@
 //
 
 #include "nemo_main.h"
-#include "./IO/IOStack.h"
 #include "./layer_map/layer_map_lib.h"
 
 /** \addtogroup Globals
@@ -33,6 +32,8 @@ bool BINARY_OUTPUT = false;
 bool SAVE_NEURON_OUTS = false;
 unsigned int DO_DUMPI = false;
 
+char *luaConfigFile;
+long isBin = 0;
 char *inputFileName = "nemo_in";
 char *neuronFireFileName = "fire_record";
 char *NEURON_FIRE_R_FN = "fire_record";
@@ -134,7 +135,7 @@ const tw_optdef app_opt[] = {
     TWOPT_FLAG("bulk", BULK_MODE, "Is this sim running in bulk mode?"),
     TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
     TWOPT_FLAG("network",
-               SAVE_NETWORK_STRUCTURE ,
+               SAVE_NETWORK_STRUCTURE,
                "Save neuron output axon IDs on creation - Creates a map of the neural network."),
     TWOPT_FLAG("svm",
                SAVE_MEMBRANE_POTS,
@@ -167,12 +168,12 @@ const tw_optdef app_opt[] = {
     TWOPT_END()
 
 };
-void spikech(int ln){
-#ifdef DEBUG
-  char * dm;
-  dm = SAVE_SPIKE_EVTS ? "Spike events on\n": "Spike Events off\n";
-  printf("\n%s at lin %i\n", dm,ln);
-#endif
+void spikech(int ln) {
+//#ifdef DEBUG
+//  char * dm;
+//  dm = SAVE_SPIKE_EVTS ? "Spike events on\n": "Spike Events off\n";
+//  printf("\n%s at lin %i\n", dm,ln);
+//#endif
 }
 /**
  * model_lps - contains the LP type defs for NeMo
@@ -220,7 +221,7 @@ void displayModelSettings() {
 //        printf("*");
 //    }
   TH
-  double cores_per_node = CORES_IN_SIM / tw_nnodes();
+  double cores_per_node = CORES_IN_SIM/tw_nnodes();
   char *netMode = FILE_IN ? "file defined" : "random benchmark";
   printf("\n");
 #ifdef DEBUG
@@ -229,7 +230,7 @@ void displayModelSettings() {
 #endif
   TH
   printf("* \t %i Neurons per core (cmake defined), %llu cores in sim.\n", NEURONS_IN_CORE, CORES_IN_SIM);
-  STT("%i LPs (including Axons and Super Synapse) Per Core", CORE_SIZE);
+  STT("%llu LPs (including Axons and Super Synapse) Per Core", CORE_SIZE);
   printf("* \t %f cores per PE, giving %llu LPs per pe.\n", cores_per_node, g_tw_nlp);
   printf("* \t Neurons have %i axon types (cmake defined)\n", NUM_NEURON_WEIGHTS);
   printf("* \t Network is a %s network.\n", netMode);
@@ -239,7 +240,7 @@ void displayModelSettings() {
   TH
   printf("* \tChip Sim Info:\n");
   printf("* \tCores per chip: %i\n", CORES_IN_CHIP);
-  printf("* \tReported chips in sim: %llu\n", (long) coreToChip(CORES_IN_SIM));
+  printf("* \tReported chips in sim: %ld\n", (long) coreToChip(CORES_IN_SIM));
   TH
   STT("SAT NET ENABLED: %i", IS_SAT_NET);
   STT("SAT net stoc. mode: %i", SAT_NET_STOC);
@@ -258,24 +259,85 @@ void displayModelSettings() {
 //    bool IS_SAT_NET = false;
 }
 
-/** @brief Does initial tests of Neuron Output subsystem.
- * If subsystem tests are on, then this will "simulate" a series of neuron
- * firing events after
- * initializing file systems.
- *
- * Tests file closing function as well.
- */
-//
-//void testNeuronOut() {
-//  SAVE_SPIKE_EVTS = true;
-//  initOutFiles();
-//
-//  for (int i = 0; i < 4096; i++) {
-//    saveNeuronFire(random() + i, 0, 0, 1024, 1, 1, 1);
-//  }
-//  closeFiles();
-//}
+char *luaMemLoader(char *luaConfigFilePath) {
+  char *binVersion = alloca(sizeof(char)*5192);
+  strcpy(binVersion, luaConfigFilePath);
+  char *ext = strstr(binVersion, ".nfg1");
+  FILE *luaFile;
 
+  if (ext!=NULL) {
+    strncpy(ext, ".nbin", 5);
+    printf("\n----\n%s\n", binVersion);
+  }
+
+  if (0 && access(binVersion, F_OK)!=-1) {
+    luaFile = fopen(binVersion, "rb");
+    isBin = 1;
+    tw_printf(TW_LOC, "Loaded binary file at %s\n", binVersion);
+  } else {
+    luaFile = fopen(luaConfigFilePath, "r");
+    tw_printf(TW_LOC, "Loaded text file at %s\n", luaConfigFilePath);
+  }
+  if (luaFile!=NULL) {
+    fseek(luaFile, 0, SEEK_END);
+    long numbytes = ftell(luaFile);
+    fseek(luaFile, 0L, SEEK_SET);
+    char *luaData = calloc(numbytes, sizeof(char));
+    if (luaData==NULL) {
+      tw_error(TW_LOC, "Could not allocate %li bytes for config file.", numbytes);
+    }
+    if (isBin) {
+      fread(luaData, numbytes, 1, luaFile);
+      isBin = numbytes;
+    } else {
+      fread(luaData, sizeof(char), numbytes, luaFile);
+    }
+
+    fclose(luaFile);
+    return luaData;
+  } else {
+    tw_error(TW_LOC, "Could not read config file %s", luaConfigFilePath);
+  }
+
+}
+
+/**
+ * @brief New method for loading LUA config file.
+ *
+ * Function runs
+ * @param luaConfigFilePath
+ */
+void luaLoader(char *luaConfigFilePath) {
+  //Loads LUA file into memory. Will operate either 1 to 1 with number of ranks if
+  //the number of ranks are below a threshold, otherwise it will load the file from rank 0 and MPI_ISEND
+  //the rank data.
+
+
+
+
+  if (g_tw_npe <= MAX_RANKS_FILES) {
+    char *luaData = luaMemLoader(luaConfigFilePath);
+    luaConfigFile = luaData;
+    if (strlen(luaData) < 30 && isBin==0) {
+      tw_error(TW_LOC, "Error loading config file into memory. ");
+    } else if (isBin==1) {
+      if (g_tw_mynode==0) {
+        tw_printf(TW_LOC, "Loaded binary file with %li elements.", strlen(luaData));
+      }
+    } else {
+
+      if (g_tw_mynode==0) {
+        tw_printf(TW_LOC, "Loaded config file - total size %li", strlen(luaData));
+      }
+    }
+  }
+}
+
+void luaLoaderClean() {
+  if (g_tw_npe <= MAX_RANKS_FILES) {
+    free(luaConfigFile);
+  }
+}
 /**
  * @brief      Initializes NeMo
  *
@@ -311,10 +373,10 @@ void init_nemo() {
   if (FILE_OUT) {
     //Init file output handles
     initOutFiles();
-    if(SAVE_NETWORK_STRUCTURE)
+    if (SAVE_NETWORK_STRUCTURE)
       openOutputFiles("network_def.csv");
     initDataStructures(g_tw_nlp);
-    if (g_tw_mynode == 0) {
+    if (g_tw_mynode==0) {
 
       printf("Output Files Init.\n");
     }
@@ -323,12 +385,15 @@ void init_nemo() {
 
   if (FILE_IN) {
     // Init File Input Handles
-    printf("Network Input Active");
-    printf("Filename specified: %s\n", MODEL_FILE);
-    printf("Spike file: %s\n", SPIKE_FILE);
+    if (g_tw_mynode==0) {
+      printf("Network Input Active");
+      printf("Config Filename specified: %s\n", MODEL_FILE);
+      printf("Spike file: %s\n", SPIKE_FILE);
+    }
     //SPIKE_IN_FN = SPIKE_FILE;
     // INPUT Model file init here:
 ///////////////////////////////////////////////
+    luaLoader(MODEL_FILE);
     initModelInput(CORES_IN_SIM);
 
 // INPUT SPIKE FILE init HERE:
@@ -347,20 +412,20 @@ void init_nemo() {
   SYNAPSES_IN_CORE = 1; //(NEURONS_IN_CORE * AXONS_IN_CORE);
 
   CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
-  SIM_SIZE = CORE_SIZE * CORES_IN_SIM;
+  SIM_SIZE = CORE_SIZE*CORES_IN_SIM;
 
-  g_tw_nlp = SIM_SIZE / tw_nnodes();
+  g_tw_nlp = SIM_SIZE/tw_nnodes();
   g_tw_lookahead = 0.001;
   g_tw_lp_types = model_lps;
   g_tw_lp_typemap = lpTypeMapper;
 
   /// EVENTS PER PE SETTING
-  g_tw_events_per_pe = NEURONS_IN_CORE * AXONS_IN_CORE * 128; // magic number
+  g_tw_events_per_pe = NEURONS_IN_CORE*AXONS_IN_CORE*128; // magic number
 
 
-  LPS_PER_PE = g_tw_nlp / g_tw_npe;
+  LPS_PER_PE = g_tw_nlp/g_tw_npe;
 
-  NUM_CHIPS_IN_SIM = CORES_IN_SIM / CORES_IN_CHIP;
+  NUM_CHIPS_IN_SIM = CORES_IN_SIM/CORES_IN_CHIP;
   CHIPS_PER_RANK = 1;
   //Layer / Grid Mode setup:
   if (GRID_ENABLE)
@@ -392,7 +457,7 @@ int main(int argc, char *argv[]) {
   //call nemo init
   init_nemo();
   printf("\n Completed initial setup and model loading.\n");
-  if (nonC11 == 1)
+  if (nonC11==1)
     printf("Non C11 com pliant compiler detected.\n");
 
   //    if (testingMode == 1 ) {
@@ -416,7 +481,7 @@ int main(int argc, char *argv[]) {
   tw_define_lps(LPS_PER_PE, sizeof(messageData));
   tw_lp_setup_types();
 
-  if (g_tw_mynode == 0) {
+  if (g_tw_mynode==0) {
     displayModelSettings();
   }
 //  printf("Network staring...\n");

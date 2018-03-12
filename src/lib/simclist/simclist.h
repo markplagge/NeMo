@@ -33,12 +33,11 @@ extern "C" {
 
 /* Be friend of both C90 and C99 compilers */
 #if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
-    /* "inline" and "restrict" are keywords */
+/* "inline" and "restrict" are keywords */
 #else
 #   define inline           /* inline */
 #   define restrict         /* restrict */
 #endif
-
 
 /**
  * Type representing list hashes.
@@ -49,13 +48,13 @@ typedef int32_t list_hash_t;
 
 #ifndef SIMCLIST_NO_DUMPRESTORE
 typedef struct {
-    uint16_t version;       /* dump version */
-    int64_t timestamp;      /* when the list has been dumped, microseconds from UNIX epoch */
-    uint32_t list_size;
-    uint32_t list_numels;
-    list_hash_t list_hash;       /* hash of the list when dumped, or 0 if invalid */
-    uint32_t dumpsize;
-    int consistent;         /* 1 if the dump is verified complete/consistent; 0 otherwise */
+  uint16_t version;       /* dump version */
+  int64_t timestamp;      /* when the list has been dumped, microseconds from UNIX epoch */
+  uint32_t list_size;
+  uint32_t list_numels;
+  list_hash_t list_hash;       /* hash of the list when dumped, or 0 if invalid */
+  uint32_t dumpsize;
+  int consistent;         /* 1 if the dump is verified complete/consistent; 0 otherwise */
 } list_dump_info_t;
 #endif
 
@@ -144,54 +143,54 @@ typedef void *(*element_unserializer)(const void *restrict data, uint32_t *restr
 
 /* [private-use] list entry -- olds actual user datum */
 struct list_entry_s {
-    void *data;
+  void *data;
 
-    /* doubly-linked list service references */
-    struct list_entry_s *next;
-    struct list_entry_s *prev;
+  /* doubly-linked list service references */
+  struct list_entry_s *next;
+  struct list_entry_s *prev;
 };
 
 /* [private-use] list attributes */
 struct list_attributes_s {
-    /* user-set routine for comparing list elements */
-    element_comparator comparator;
-    /* user-set routing for seeking elements */
-    element_seeker seeker;
-    /* user-set routine for determining the length of an element */
-    element_meter meter;
-    int copy_data;
-    /* user-set routine for computing the hash of an element */
-    element_hash_computer hasher;
-    /* user-set routine for serializing an element */
-    element_serializer serializer;
-    /* user-set routine for unserializing an element */
-    element_unserializer unserializer;
+  /* user-set routine for comparing list elements */
+  element_comparator comparator;
+  /* user-set routing for seeking elements */
+  element_seeker seeker;
+  /* user-set routine for determining the length of an element */
+  element_meter meter;
+  int copy_data;
+  /* user-set routine for computing the hash of an element */
+  element_hash_computer hasher;
+  /* user-set routine for serializing an element */
+  element_serializer serializer;
+  /* user-set routine for unserializing an element */
+  element_unserializer unserializer;
 };
 
 /** list object */
 typedef struct {
-    struct list_entry_s *head_sentinel;
-    struct list_entry_s *tail_sentinel;
-    struct list_entry_s *mid;
+  struct list_entry_s *head_sentinel;
+  struct list_entry_s *tail_sentinel;
+  struct list_entry_s *mid;
 
-    unsigned int numels;
+  unsigned int numels;
 
-    /* array of spare elements */
-    struct list_entry_s **spareels;
-    unsigned int spareelsnum;
+  /* array of spare elements */
+  struct list_entry_s **spareels;
+  unsigned int spareelsnum;
 
 #ifdef SIMCLIST_WITH_THREADS
-    /* how many threads are currently running */
-    unsigned int threadcount;
+  /* how many threads are currently running */
+  unsigned int threadcount;
 #endif
 
-    /* service variables for list iteration */
-    int iter_active;
-    unsigned int iter_pos;
-    struct list_entry_s *iter_curentry;
+  /* service variables for list iteration */
+  int iter_active;
+  unsigned int iter_pos;
+  struct list_entry_s *iter_curentry;
 
-    /* list attributes */
-    struct list_attributes_s attrs;
+  /* list attributes */
+  struct list_attributes_s attrs;
 } list_t;
 
 /**
@@ -762,7 +761,7 @@ int list_restore_file(list_t *restrict l, const char *restrict filename, size_t 
 #endif
 
 /* ready-made comparators, meters and hash computers */
-                                /* comparator functions */
+/* comparator functions */
 /**
  * ready-made comparator for int8_t elements.
  * @see list_attributes_comparator()
@@ -829,7 +828,7 @@ int list_comparator_double(const void *a, const void *b);
  */
 int list_comparator_string(const void *a, const void *b);
 
-                                /*          metric functions        */
+/*          metric functions        */
 /**
  * ready-made metric function for int8_t elements.
  * @see list_attributes_copy()
@@ -896,7 +895,7 @@ size_t list_meter_double(const void *el);
  */
 size_t list_meter_string(const void *el);
 
-                                /*          hash functions          */
+/*          hash functions          */
 /**
  * ready-made hash function for int8_t elements.
  * @see list_attributes_hash_computer()

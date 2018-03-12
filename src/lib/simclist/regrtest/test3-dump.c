@@ -20,38 +20,37 @@
             (((uint64_t)(x) & 0x00000000000000ffULL) << 56)))   \
         )
 
-
 size_t meter(const void *el) {
-    return sizeof(unsigned long long int);
+  return sizeof(unsigned long long int);
 }
 
 void *elserial(const void *el, uint32_t *len) {
-    unsigned long long *x;
+  unsigned long long *x;
 
-    *len = sizeof(unsigned long long);
-    x = malloc(*len);
-    *x = hton64(*(unsigned long long *)el);
+  *len = sizeof(unsigned long long);
+  x = malloc(*len);
+  *x = hton64(*(unsigned long long *) el);
 
-    return x;
+  return x;
 }
 
 int main() {
-    list_t l;
-    unsigned long long int data;
+  list_t l;
+  unsigned long long int data;
 
-    list_init(& l);
-    list_attributes_copy(&l, meter, 1);
-    list_attributes_serializer(&l, elserial);
+  list_init(&l);
+  list_attributes_copy(&l, meter, 1);
+  list_attributes_serializer(&l, elserial);
 
-    for (data = 1; data < N; data++) {
-        list_append(& l, & data);
-    }
-    if (list_dump_file(&l, "mylistdump.simc") == 0 && errno != 0) {
-        printf("fuck off\n");
-    }
+  for (data = 1; data < N; data++) {
+    list_append(&l, &data);
+  }
+  if (list_dump_file(&l, "mylistdump.simc")==0 && errno!=0) {
+    printf("fuck off\n");
+  }
 
-    list_destroy(& l);
+  list_destroy(&l);
 
-    return 0;
+  return 0;
 }
 

@@ -4,5 +4,5 @@
 
 #include "itrlve.h"
 uint64_t combine(unsigned int high, unsigned int low) {
-return (((uint64_t) high << 32) | ((uint64_t) low));
+  return (((uint64_t) high << 32) | ((uint64_t) low));
 }

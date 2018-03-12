@@ -72,9 +72,9 @@ void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp) {
   if (M->axonID > AXONS_IN_CORE)
     tw_error(TW_LOC, "Invalid AXON value within synapse system.");
 
-  if (M->eventType == SYNAPSE_HEARTBEAT) {
+  if (M->eventType==SYNAPSE_HEARTBEAT) {
     //Heartbeat message
-    if (M->synapseCounter != 0) {
+    if (M->synapseCounter!=0) {
       //unsigned long sc = M->synapseCounter - 1;
       sendSynapseHB(s, bf, M, lp, M->synapseCounter);
     }
@@ -88,7 +88,7 @@ void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp) {
     tw_event_send(sout);
     ++s->msgSent;
 
-  } else if (M->eventType == AXON_OUT) {
+  } else if (M->eventType==AXON_OUT) {
     sendSynapseHB(s, bf, M, lp, NEURONS_IN_CORE);
   }
 
@@ -147,9 +147,9 @@ void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp) {
 
 void synapse_reverse(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp) {
 
-  if (M->eventType == AXON_OUT) {
+  if (M->eventType==AXON_OUT) {
 
-  } else if (M->eventType == SYNAPSE_HEARTBEAT) {
+  } else if (M->eventType==SYNAPSE_HEARTBEAT) {
     --s->msgSent;
   }
   unsigned long count = M->rndCallCount;
@@ -161,14 +161,14 @@ void synapse_reverse(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp) {
 void synapse_final(synapseState *s, tw_lp *lp) {
   //do some stats here if needed.
   static int announce = 0;
-  if (!announce && g_tw_mynode == 0){
+  if (!announce && g_tw_mynode==0) {
     tw_printf(TW_LOC, "Scheduled %llu events from file.\n", numScheduledEvents);
     announce = 1;
   }
-  if (g_tw_synchronization_protocol == OPTIMISTIC_DEBUG) {
+  if (g_tw_synchronization_protocol==OPTIMISTIC_DEBUG) {
     char *shdr = "Synapse Error\n";
 
-    if (s->msgSent != 0) {
+    if (s->msgSent!=0) {
       printf("%s ", shdr);
       char *m = "Message Sent Val ->";
       //debugMsg(m, s->msgSent);
@@ -178,7 +178,7 @@ void synapse_final(synapseState *s, tw_lp *lp) {
 }
 void synapse_pre_run(synapseState *s, tw_lp *lp) {
   static int should_close = 1;
-  if (should_close){
+  if (should_close) {
     closeSpikeFile();
     should_close = 0;
   }

@@ -57,7 +57,6 @@ typedef enum {
  */
 rqueue_t *rqueue_create(size_t size, rqueue_mode_t mode);
 
-
 /**
  * @brief Change the mode of an existing ringbuffer
  * @param rb : A valid pointer to a rqueue_t structure

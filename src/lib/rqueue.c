@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <inttypes.h>
 #include <sched.h>
 #include "atomic_defs.h"
 #include "rqueue.h"
@@ -25,21 +24,21 @@
 #endif
 
 typedef struct _rqueue_page_s {
-  void               *value;
+  void *value;
   struct _rqueue_page_s *next;
   struct _rqueue_page_s *prev;
 } PACK_IF_NECESSARY rqueue_page_t;
 
 struct _rqueue_s {
-  rqueue_page_t             *head;
-  rqueue_page_t             *tail;
-  rqueue_page_t             *commit;
-  rqueue_page_t             *reader;
+  rqueue_page_t *head;
+  rqueue_page_t *tail;
+  rqueue_page_t *commit;
+  rqueue_page_t *reader;
   rqueue_free_value_callback_t free_value_cb;
-  size_t                     size;
-  int                     mode;
-  uint64_t                writes;
-  uint64_t                reads;
+  size_t size;
+  int mode;
+  uint64_t writes;
+  uint64_t reads;
   int read_sync;
   int write_sync;
   int num_writers;
@@ -120,7 +119,7 @@ void rqueue_destroy(rqueue_t *rb) {
     rqueue_page_t *p = page;
     page = RQUEUE_FLAG_OFF(p->next, RQUEUE_FLAG_ALL);
     rqueue_destroy_page(p, rb->free_value_cb);
-  } while (__builtin_expect(page != rb->head, 1));
+  } while (__builtin_expect(page!=rb->head, 1));
 
   // release the reader page as well
   rqueue_destroy_page(rb->reader, rb->free_value_cb);
@@ -143,8 +142,7 @@ void *rqueue_read(rqueue_t *rb) {
       rqueue_page_t *next = ATOMIC_READ(head->next);
       rqueue_page_t *old_next = ATOMIC_READ(rb->reader->next);
 
-      if (rb->reader == commit || rqueue_isempty(rb))
-      { // nothing to read
+      if (rb->reader==commit || rqueue_isempty(rb)) { // nothing to read
         ATOMIC_CAS(rb->read_sync, 1, 0);
         continue;
       }
@@ -162,7 +160,7 @@ void *rqueue_read(rqueue_t *rb) {
           next->prev = rb->reader;
           rb->reader = head; // the head is the new reader
           v = ATOMIC_READ(rb->reader->value);
-          if (v == NULL) {
+          if (v==NULL) {
             ATOMIC_CAS(rb->read_sync, 1, 0);
             continue;
           }
@@ -220,7 +218,7 @@ rqueue_write(rqueue_t *rb, void *value) {
     }
     head = ATOMIC_READ(rb->head);
 
-    if (rb->mode == RQUEUE_MODE_BLOCKING && commit == temp_page && temp_page != head && next_page != head) {
+    if (rb->mode==RQUEUE_MODE_BLOCKING && commit==temp_page && temp_page!=head && next_page!=head) {
       if (retries++ < RQUEUE_MAX_RETRIES) {
         ATOMIC_CAS(rb->tail, temp_page, next_page);
         ATOMIC_DECREMENT(rb->num_writers);
@@ -240,7 +238,7 @@ rqueue_write(rqueue_t *rb, void *value) {
       }
     }
 
-    if (RQUEUE_CHECK_FLAG(ATOMIC_READ(temp_page->next), RQUEUE_FLAG_HEAD) || (next_page == head && !rqueue_isempty(rb))) {
+    if (RQUEUE_CHECK_FLAG(ATOMIC_READ(temp_page->next), RQUEUE_FLAG_HEAD) || (next_page==head && !rqueue_isempty(rb))) {
       /* TODO - FIXME
        if (rb->mode == RQUEUE_MODE_BLOCKING) {
           if (ATOMIC_CAS(rb->read_sync, 0, 1)) { // TODO - it shouldn't be necessary to synchronize with the reader
@@ -263,7 +261,7 @@ rqueue_write(rqueue_t *rb, void *value) {
               ATOMIC_CAS(rb->read_sync, 1, 0);
           }
        } else if (rb->mode == RQUEUE_MODE_OVERWRITE && commit == temp_page) { */
-      if (rb->mode == RQUEUE_MODE_OVERWRITE && ATOMIC_READ(commit->next) == temp_page) {  // DELETE ME WHEN FIXED
+      if (rb->mode==RQUEUE_MODE_OVERWRITE && ATOMIC_READ(commit->next)==temp_page) {  // DELETE ME WHEN FIXED
         if (ATOMIC_CAS(rb->read_sync, 0, 1)) { // TODO - it shouldn't be necessary to synchronize with the reader
           // we need to advance the head if in overwrite mode ...otherwise we must stop
           //fprintf(stderr, "Will advance head and overwrite old data\n");
@@ -298,24 +296,22 @@ rqueue_write(rqueue_t *rb, void *value) {
     if (!RQUEUE_CHECK_FLAG(ATOMIC_READ(temp_page->next), RQUEUE_FLAG_HEAD)) {
       tail = ATOMIC_CAS_RETURN(rb->tail, temp_page, next_page);
     }
-  } while (tail != temp_page && retries++ < RQUEUE_MAX_RETRIES);
+  } while (tail!=temp_page && retries++ < RQUEUE_MAX_RETRIES);
 
-  if (!tail || tail != temp_page) {
+  if (!tail || tail!=temp_page) {
     ATOMIC_DECREMENT(rb->num_writers);
     ATOMIC_CAS(rb->write_sync, 1, 0);
     return -1;
   }
-
 
   void *old_value = ATOMIC_READ(tail->value);
   ATOMIC_CAS(tail->value, old_value, value);
   if (old_value && rb->free_value_cb)
     rb->free_value_cb(old_value);
 
-
   ATOMIC_INCREMENT(rb->writes);
 
-  if (ATOMIC_READ(rb->num_writers) == 1)
+  if (ATOMIC_READ(rb->num_writers)==1)
     ATOMIC_CAS(rb->commit, ATOMIC_READ(rb->commit), tail);
   ATOMIC_DECREMENT(rb->num_writers);
   ATOMIC_CAS(rb->write_sync, 1, 0);
@@ -351,9 +347,13 @@ char *rqueue_stats(rqueue_t *rb) {
                "tail_next:   %p \n"
                "commit:      %p \n"
                "commit_next: %p \n"
-               "reads:       %"PRId64" \n"
-               "writes:      %"PRId64" \n"
-               "mode:        %s \n",
+               "reads:       %"
+               PRId64
+               " \n"
+                   "writes:      %"
+               PRId64
+               " \n"
+                   "mode:        %s \n",
            ATOMIC_READ(rb->reader),
            ATOMIC_READ(rb->head),
            ATOMIC_READ(rb->tail),
@@ -362,21 +362,19 @@ char *rqueue_stats(rqueue_t *rb) {
            ATOMIC_READ(ATOMIC_READ(rb->commit)->next),
            ATOMIC_READ(rb->reads),
            ATOMIC_READ(rb->writes),
-           rb->mode == RQUEUE_MODE_BLOCKING ? "blocking" : "overwrite");
+           rb->mode==RQUEUE_MODE_BLOCKING ? "blocking" : "overwrite");
 
   return buf;
 }
 
-int rqueue_isempty(rqueue_t *rb)
-{
+int rqueue_isempty(rqueue_t *rb) {
   rqueue_page_t *head = ATOMIC_READ(rb->head);
   rqueue_page_t *commit = ATOMIC_READ(rb->commit);
   rqueue_page_t *tail = ATOMIC_READ(rb->tail);
-  return ((rb->reader == commit || (head == tail && commit != tail) || ATOMIC_READ(rb->writes) == 0));
+  return ((rb->reader==commit || (head==tail && commit!=tail) || ATOMIC_READ(rb->writes)==0));
 }
 
-size_t rqueue_size(rqueue_t *rb)
-{
+size_t rqueue_size(rqueue_t *rb) {
   return rb->size;
 }
 

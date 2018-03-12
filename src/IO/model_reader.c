@@ -16,7 +16,6 @@
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
-#include<sys/mman.h>
 
 /**
  * L -> Global (to the model def) state of the lua file
@@ -39,8 +38,8 @@ int countLines(FILE *fileHandle) {
   int ch;
   int charsOnCurrentLine = 0;
   int count = 0;
-  while ((ch = fgetc(fileHandle)) != EOF) {
-    if (ch == '\n') {
+  while ((ch = fgetc(fileHandle))!=EOF) {
+    if (ch=='\n') {
       count++;
       charsOnCurrentLine = 0;
     } else {
@@ -54,13 +53,20 @@ int countLines(FILE *fileHandle) {
 }
 
 void initModelInput(unsigned long maxNeurons) {
-  if (g_tw_mynode == 0)
+  if (g_tw_mynode==0)
     printf("Model config file init\n");
   L = luaL_newstate();
   luaL_openlibs(L);
 
   int s;
-  s = luaL_loadfile(L, MODEL_FILE);
+  //s = luaL_loadfile(L, MODEL_FILE);
+  if (isBin) {
+    s = luaL_loadbuffer(L, luaConfigFile, isBin, "nc");
+  } else {
+    s = luaL_loadstring(L, luaConfigFile);
+  }
+
+
 /*  FILE *mdl_file;
   struct stat buf;
   stat(MODEL_FILE,&buf);
@@ -95,7 +101,7 @@ void initModelInput(unsigned long maxNeurons) {
 */
 
 
-  if (g_tw_mynode == 0)
+  if (g_tw_mynode==0)
     printf("File loaded - starting parsing...\n");
   if (!s)
     s = lua_pcall(L, 0, LUA_MULTRET, 0);
@@ -103,7 +109,7 @@ void initModelInput(unsigned long maxNeurons) {
   //show any errors
   if (s) {
     printf("Error: %s \n", lua_tostring(L, -1));
-    tw_error(TW_LOC, "MDL_LOAD", "Unable to load config file %s \n", MODEL_FILE);
+    tw_error(TW_LOC, "MDL_LOAD", "Unable to parse config file  %s (from within LUA) \n", MODEL_FILE);
 
     lua_pop(L, 1);
   }
@@ -134,7 +140,7 @@ void initModelInput(unsigned long maxNeurons) {
 
     lua_pop(L, 1);
   }
-  if (g_tw_mynode == 0)
+  if (g_tw_mynode==0)
     printf("Parsing of configfile complete.");
 
 }
@@ -165,7 +171,7 @@ long getLuaArray(long *arr) {
   lua_pushvalue(L, -1);
   lua_pushnil(L);
   int elnum = 0;
-  while (lua_next(L, -2) != 0) {
+  while (lua_next(L, -2)!=0) {
     lua_pushvalue(L, -2);
 
     const char *key = lua_tostring(L, -1);
@@ -205,7 +211,7 @@ bool neuronExists() {
   lua_pushnumber(L, curLocalID);
   lua_pushstring(L, "TN");
   lua_call(L, 3, 1);
-  return (lua_toboolean(L, -1) == true);
+  return (lua_toboolean(L, -1)==true);
 
 }
 
@@ -257,8 +263,15 @@ char *luT(char *nemoName) {
 }
 
 void closeLua() {
-  if(L)
+  if (L) {
     lua_close(L);
+    if (g_tw_npe <= MAX_RANKS_FILES) {
+      if (g_tw_mynode==0) {
+        tw_printf(TW_LOC, "Load complete - freeing config file.\n");
+      }
+      free(luaConfigFile);
+    }
+  }
 }
 
 void clearStack() {

@@ -20,45 +20,44 @@
             (((uint64_t)(x) & 0x00000000000000ffULL) << 56)))   \
         )
 
-
 void *elunserial(const void *el, uint32_t *len) {
-    unsigned long long *x;
+  unsigned long long *x;
 
-    *len = sizeof(unsigned long long);
-    x = malloc(*len);
-    *x = hton64(*(unsigned long long *)el);
+  *len = sizeof(unsigned long long);
+  x = malloc(*len);
+  *x = hton64(*(unsigned long long *) el);
 
-    return x;
+  return x;
 }
 
 int main() {
-    list_t l;
-    unsigned long long int data, val;
-    unsigned int mem;
+  list_t l;
+  unsigned long long int data, val;
+  unsigned int mem;
 
-    list_init(& l);
-    list_attributes_unserializer(&l, elunserial);
+  list_init(&l);
+  list_attributes_unserializer(&l, elunserial);
 
-    mem = list_restore_file(&l, "mylistdump.simc");
-    if (mem == 0 && errno != 0) {
-        perror("open");
-        printf("fuck off\n");
-    } else {
-        printf("Restored successfully:\n");
-        printf("N els: %u\nmemread: %u\n", list_size(&l), mem);
-        for (data = 1; data < N; data++) {
-            val = *(unsigned long long *)list_get_at(&l, (unsigned int)data-1);
-            if (data != val) {
-                printf("Wrong data. Pos %llu, expected %llu, got %llu\n", data-1, data, val);
-                return 0;
-            }
-            printf("%lld ", val);
-        }
-        printf("\n");
+  mem = list_restore_file(&l, "mylistdump.simc");
+  if (mem==0 && errno!=0) {
+    perror("open");
+    printf("fuck off\n");
+  } else {
+    printf("Restored successfully:\n");
+    printf("N els: %u\nmemread: %u\n", list_size(&l), mem);
+    for (data = 1; data < N; data++) {
+      val = *(unsigned long long *) list_get_at(&l, (unsigned int) data - 1);
+      if (data!=val) {
+        printf("Wrong data. Pos %llu, expected %llu, got %llu\n", data - 1, data, val);
+        return 0;
+      }
+      printf("%lld ", val);
     }
+    printf("\n");
+  }
 
-    list_destroy(& l);
+  list_destroy(&l);
 
-    return 0;
+  return 0;
 }
 

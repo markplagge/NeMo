@@ -22,7 +22,6 @@
         _o = ATOMIC_READ(_v);\
 }
 
-
 #ifdef THREAD_SAFE
 
 #define __POSIX_C_SOURCE
