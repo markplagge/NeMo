@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <sched.h>
+#include <inttypes.h>
 #include "atomic_defs.h"
 #include "rqueue.h"
 
