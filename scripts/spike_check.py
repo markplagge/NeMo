@@ -81,7 +81,7 @@ def _connect_mongo(host, port, username, password, db):
 
     return conn[db]
 
-def read_mongo(db='spikev', collection='mnist_tn', query={}, host='128.213.23.222', port=27017, username=None, password=None,
+def read_mongo(db='spikev', collection='cf_tn', query={}, host='128.213.23.222', port=27017, username=None, password=None,
                no_id=True, kvo=None):
     """ Read from Mongo and Store into DataFrame """
 
@@ -117,7 +117,7 @@ def createPandasData(host):
     #Generate two pandas dataframes
     nemo_query = { "destCore": {"$lte": -10}, "timestamp": {"$lte": 278}}
     mnist_tn_df = read_mongo(host=host)
-    mnist_nemo_df = read_mongo(host=host,collection='mnist_nemo',kvo=keyMatch(),query=nemo_query)
+    mnist_nemo_df = read_mongo(host=host,collection='cf_nemo',kvo=keyMatch(),query=nemo_query)
     return (mnist_tn_df,mnist_nemo_df)
 
 @click.group()

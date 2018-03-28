@@ -1293,7 +1293,14 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
   //if (SAVE_SPIKE_EVTS && cv->c0) {
   //  saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),0);
   //}
-
+  static int displayFlag = 0;
+  if(displayFlag == 0){
+    if(s->myCoreID == 4041){
+      printf("------------------------------------------------------------------------------------------------\n");
+      printf("Neuron 4041 commit fn. Dest neuron is %i\n", s->outputNeuronDest);
+      displayFlag = 1;
+    }
+  }
   if ((s->isOutputNeuron && SAVE_OUTPUT_NEURON_EVTS && cv->c10) || (SAVE_SPIKE_EVTS && cv->c0)) {
     long outCore;
     long outNeuron;
