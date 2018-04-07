@@ -458,7 +458,7 @@ int main(int argc, char *argv[]) {
   init_nemo();
   printf("\n Completed initial setup and model loading.\n");
   if (nonC11==1)
-    printf("Non C11 com pliant compiler detected.\n");
+    printf("Non C11 compliant compiler detected.\n");
 
   //    if (testingMode == 1 ) {
   //        unsigned char mapResult = 0;

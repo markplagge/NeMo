@@ -19,6 +19,7 @@ set (simcld "${CMAKE_CURRENT_SOURCE_DIR}/src/lib/simclist")
 option(USE_LUA_JIT "Use JIT lua project for scripting" OFF)
 #sSET(USE_LUA_JIT TRUE)
 ADD_SUBDIRECTORY(${RD})
+
 ADD_SUBDIRECTORY(${SQLD})
 ADD_SUBDIRECTORY(${simcld})
 
