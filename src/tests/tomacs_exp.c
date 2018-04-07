@@ -20,7 +20,7 @@ int *synCoreBucket;
 //bool IS_SAT_NET;
 
 //! Neurons have connectivityProb probability of having a connection.
-float connectivityProb = 0.2 ; // (float) SAT_NET_PERCENT / 100;
+float connectivityProb = 0.2; // (float) SAT_NET_PERCENT / 100;
 //! when connected,  axons will have this weight
 int connectedWeight = 1;
 /**
@@ -30,62 +30,61 @@ int connectedWeight = 1;
  * @param lp
  *
  */
-void shuffle(int *pool, unsigned long n, tw_lp *lp){
-	long j;
+void shuffle(int *pool, unsigned long n, tw_lp *lp) {
+  long j;
 
-	for (unsigned long i = n-1; i > 0; i--){
-		j = tw_rand_integer(lp->rng,0,i);
-		int x = pool[i];
-		pool[i] = pool[j];
-		pool[j] = x;
-	}
-
+  for (unsigned long i = n - 1; i > 0; i--) {
+    j = tw_rand_integer(lp->rng, 0, i);
+    int x = pool[i];
+    pool[i] = pool[j];
+    pool[j] = x;
+  }
 
 }
 
-void  getCoreConnBkt(tw_lp *lp, bool * coreConArr){
-	static int isInit = 0;
-	static id_type lastCore = 0;
-	static int idx = 0;
-	id_type cCore = getCoreFromGID(lp->gid);
+void getCoreConnBkt(tw_lp *lp, bool *coreConArr) {
+  static int isInit = 0;
+  static id_type lastCore = 0;
+  static int idx = 0;
+  id_type cCore = getCoreFromGID(lp->gid);
 
-	unsigned long synCoreBktSize = NEURONS_IN_CORE * AXONS_IN_CORE;
-	if (isInit == 0) {
-		synCoreBucket = tw_calloc(TW_LOC, "bucketData", sizeof(int), synCoreBktSize);
+  unsigned long synCoreBktSize = NEURONS_IN_CORE*AXONS_IN_CORE;
+  if (isInit==0) {
+    synCoreBucket = tw_calloc(TW_LOC, "bucketData", sizeof(int), synCoreBktSize);
 
-	}
-	if(cCore != lastCore || isInit == 0){
-		int ctr = 0;
-        bool err = true;
-        if (isInit != 0) {
-            if (cCore != lastCore + 1) {
-                tw_printf(TW_LOC, "CB err - new core is not incremental: ");
+  }
+  if (cCore!=lastCore || isInit==0) {
+    int ctr = 0;
+    bool err = true;
+    if (isInit!=0) {
+      if (cCore!=lastCore + 1) {
+        tw_printf(TW_LOC, "CB err - new core is not incremental: ");
 
-            } else if (cCore < lastCore) {
-                tw_printf(TW_LOC, "CB err - new core is `earlier` than oldCore: ");
-            } else {
-                err = false;
-            }
+      } else if (cCore < lastCore) {
+        tw_printf(TW_LOC, "CB err - new core is `earlier` than oldCore: ");
+      } else {
+        err = false;
+      }
 
-            if (err) {
-                tw_printf(TW_LOC, "LastCore: %lu NewCore %lu", lastCore, cCore);
-                tw_printf(TW_LOC, "*****************************\n");
-            }
-        }else{
-            isInit = 1;
-        }
-		for (int i = 0; i < SAT_NET_PERCENT; i ++){
-			synCoreBucket[i] = true;
-		}
+      if (err) {
+        tw_printf(TW_LOC, "LastCore: %lu NewCore %lu", lastCore, cCore);
+        tw_printf(TW_LOC, "*****************************\n");
+      }
+    } else {
+      isInit = 1;
+    }
+    for (int i = 0; i < SAT_NET_PERCENT; i++) {
+      synCoreBucket[i] = true;
+    }
 //
 //		long long pbr = (int)(floorf(synCoreBktSize * ((float)SAT_NET_PERCENT / 100.0)));
 //        //or for pure stochastic mode:
 //		for (int i = 0; i < synCoreBktSize; i ++){
 //			synCoreBucket[i] = i < pbr;
 //		}
-		shuffle(synCoreBucket,synCoreBktSize,lp);
-		lastCore = cCore;
-		idx = 0;
+    shuffle(synCoreBucket, synCoreBktSize, lp);
+    lastCore = cCore;
+    idx = 0;
 //        long double tmp = 0.0;
 //        for(int i = 0; i < synCoreBktSize; i ++){
 //            tmp += synCoreBucket[i];
@@ -93,46 +92,44 @@ void  getCoreConnBkt(tw_lp *lp, bool * coreConArr){
 //        tmp /= synCoreBktSize;
 //        tw_printf(TW_LOC, "bucket created with %Lf connections vs %i %% calculated.", tmp, SAT_NET_PERCENT);
 
-	}
-	for(int i = 0; i < AXONS_IN_CORE; i++){
-		coreConArr[i] = (bool)synCoreBucket[idx];
-		idx ++;
-	}
-
+  }
+  for (int i = 0; i < AXONS_IN_CORE; i++) {
+    coreConArr[i] = (bool) synCoreBucket[idx];
+    idx++;
+  }
 
 }
-void clearBucket(){
-	free(synCoreBucket);
+void clearBucket() {
+  free(synCoreBucket);
 }
-void setNeuronPoolMode(tw_lp *lp, bool *synapticConGrid){
-	int min = 0;
+void setNeuronPoolMode(tw_lp *lp, bool *synapticConGrid) {
+  int min = 0;
 
-	int scg[AXONS_IN_CORE];
-	memset(scg,0,sizeof scg);
-	for(int i = 0; i < SAT_NET_PERCENT; i ++){
-		scg[i] = 1;
-	}
-	shuffle( scg,AXONS_IN_CORE,lp);
-	for(int i = 0; i < AXONS_IN_CORE; i ++){
-		synapticConGrid[i] = scg[i];
-	}
-
+  int scg[AXONS_IN_CORE];
+  memset(scg, 0, sizeof scg);
+  for (int i = 0; i < SAT_NET_PERCENT; i++) {
+    scg[i] = 1;
+  }
+  shuffle(scg, AXONS_IN_CORE, lp);
+  for (int i = 0; i < AXONS_IN_CORE; i++) {
+    synapticConGrid[i] = scg[i];
+  }
 
 }
 void getSynapticConnectivity(bool *synapticConGrid, tw_lp *lp) {
 
-	if(SAT_NET_COREMODE == 1){
-		getCoreConnBkt(lp,synapticConGrid);
+  if (SAT_NET_COREMODE==1) {
+    getCoreConnBkt(lp, synapticConGrid);
 
-	}else if (SAT_NET_COREMODE == 2){
-		setNeuronPoolMode(lp, synapticConGrid);
-	}else{
-		//per axon method
-		for(int i = 0; i < AXONS_IN_CORE; i++){
-			synapticConGrid[i] = tw_rand_unif(lp->rng) > connectivityProb;
-		}
+  } else if (SAT_NET_COREMODE==2) {
+    setNeuronPoolMode(lp, synapticConGrid);
+  } else {
+    //per axon method
+    for (int i = 0; i < AXONS_IN_CORE; i++) {
+      synapticConGrid[i] = tw_rand_unif(lp->rng) > connectivityProb;
+    }
 
-	}
+  }
 
 }
 

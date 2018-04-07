@@ -1,0 +1,58 @@
+* 1.5   Nov 2010
+    - improve performance of list_init() (thanks L. Rousseau)
+    - fix assert() failure up to mid pointer not NULLed on cleared lists (thanks L. Rousseau)
+
+* 1.4.4rc4 Apr 2010
+    - fix compilation warnings on Solaris (thanks Joerg Schilling, Ludovic Rousseau)
+
+* 1.4.4rc3 Mar 2010
+    - fix speculation in list dumping causing possible broken dumps (thanks Richard Krakhofer)
+
+* 1.4.4rc2 Mar 2010
+    - add function list_delete() to delete by element (thanks Ludovic Rousseau)
+
+* 1.4.4rc1 Aug 2009
+    - support compilers without C99 capabilities
+    - change API for list_hash() (and add SIMCLIST_ALLOW_LOCATIONBASED_HASHES)
+
+* 1.4.3 Apr 2009
+    - fix return values of list_empty()
+
+* 1.4.2 Mar 2009
+    - make return values of list_dump_file() and list_restore_file() consistent
+    - allow to disable compilation of dump/restore features to save memory on
+    ultra-constrained devices
+
+* 1.4.1 Jan 2009
+    - define EPROTO for those operating systems that don't define it
+    - SimCList celebrates 2 years and over 2000 downloads <8-D
+
+* 1.4   Dec 2008
+    - interface changes:
+        - _restore*() and _dump*() functions now write length in argument
+        - list_seek() no longer returns a constant reference
+        - decorate with "restrict" qualifiers => now requires C99 support from compiler
+    - minor improvements in documentation
+
+* 1.3.1 Jan 2008
+    - fix portability issue when compiling on some OSes
+
+* 1.3   Nov 2007
+    - support custom element seek
+    - support for dumping/restoring lists on files
+
+* 1.2   Jun 2007
+    - natively support transparent inclusion in C++ apps
+    - use sentinels to improve performance on list traversals
+    - fix list_insert_at that could output inconsistent lists
+        when inserting into even-sized lists in position 0
+
+* 1.1   Apr 2007
+    - use freelists for improving memory allocation performance
+    - fix list_concat() that could output inconsistent lists
+    - new ready-made comparators, metric and hashing functions for
+        the most common types (numeric and strings)
+    - new list_find() function
+
+* 1.0   Jan 2007
+    - first release to public

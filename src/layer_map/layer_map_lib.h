@@ -5,7 +5,6 @@
 #include <ross.h>
 #include "../nemo_main.h"
 
-
 void setupGrid(int showMapping);
 
 /**@} */

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 set(CMAKE_C_STANDARD 99)
-ADD_COMPILE_OPTIONS(-std=gnu99)
+#ADD_COMPILE_OPTIONS(-std=gnu99)
 #set(CMAKE_C_FLAGS "${CMAKE_C_CFLAGS} -std=gnu99")
 project(SuperNeMo)
 enable_testing()
@@ -10,14 +10,18 @@ include(ExternalProject)
 set (RD "${CMAKE_CURRENT_SOURCE_DIR}/ROSS/")
 set (ND "${CMAKE_CURRENT_SOURCE_DIR}/src/")
 set (LuaD "${CMAKE_CURRENT_SOURCE_DIR}/lua")
-
+set (SQLD "${CMAKE_CURRENT_SOURCE_DIR}/sqlite/")
+set (simcld "${CMAKE_CURRENT_SOURCE_DIR}/src/lib/simclist")
 
 #cmake_policy(SET CMP0012 OLD)
 # LUA Options
 #SET(USE_LUA_JIT FALSE BOOL)
 option(USE_LUA_JIT "Use JIT lua project for scripting" OFF)
-#SET(USE_LUA_JIT TRUE)
+#sSET(USE_LUA_JIT TRUE)
 ADD_SUBDIRECTORY(${RD})
+
+ADD_SUBDIRECTORY(${SQLD})
+ADD_SUBDIRECTORY(${simcld})
 
 if(USE_LUA_JIT)
     message(STATUS "LUA JIT PROJECT" )

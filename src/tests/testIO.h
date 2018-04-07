@@ -15,9 +15,6 @@ int testCloseInput();
 int testPreParseNetwork();
 int testNeuronRead();
 
-
-
-
 #endif //SUPERNEMO_TESTIO_H
 
 

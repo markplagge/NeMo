@@ -14,7 +14,7 @@
 #endif
 
 
-#define DEBUG 1
+
 /** DUMPI TEXT FILE PERMS
  * <mpiType> <src> <dst> <wallStart> <wallStop> <cpuStart>
  * <cpuStop> <count> <dataType> <comm> <tag>
@@ -39,9 +39,8 @@ char *generateIsend(size_type sourceChip, size_type destChip, double twTimeSend,
  */
 char *generateIrecv(size_type sourceChip, size_type destChip, double twTimeSbend, unsigned long dumpID);
 
-
 void saveMPIMessage(id_type sourceCore, id_type destCore, double twTimeSend,
-                    FILE * outputFile);
+                    FILE *outputFile);
 
 size_type coreToChip(size_type coreID);
 
@@ -50,10 +49,10 @@ size_type coreToRank(size_type coreID);
 bool isDestInterchip(id_type core1, id_type core2);
 
 void saveSendMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, unsigned long dumpID,
-					 FILE *outputFile);
+                     FILE *outputFile);
 void saveRecvMessage(unsigned long long sourceCore, unsigned long long destCore, double twTime, unsigned long dumpID,
-					 FILE *outputFile);
+                     FILE *outputFile);
 
-void setrnd(tw_lp * lp);
+void setrnd(tw_lp *lp);
 
 #endif //SUPERNEMO_DUMPI_H
