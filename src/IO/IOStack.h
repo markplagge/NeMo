@@ -62,7 +62,7 @@ struct tnCSV {
 
 
 /* Spike Loading Functions (generics) */
-
+/** Not used in NeMo2 */
 int getSpikesFromAxon(void *timeList, id_type core, id_type axonID);
 /**
  * Core-wise spike loading. Synapse calls this function with its core and and inited list. returns num of

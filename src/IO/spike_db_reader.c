@@ -202,6 +202,16 @@ int doesCoreHaveSpikesDB(id_type core) {
   return cntr;
 }
 
+
+
+/**
+ *Function that populates a linked list with input spike information:
+ * Spikes are stored as a single 64 bit integer using the interleave function.
+ * @param timeList An initialized simclist linked list that stores unsigned 64 bit ints
+ * @param core The core that spikes should be for
+ * @return error message.
+ */
+
 int getSpikesSynapseDB(void *timeList, id_type core) {
   assembleCoreQuery(1, core);
   errmsg = calloc(sizeof(char), 1024);

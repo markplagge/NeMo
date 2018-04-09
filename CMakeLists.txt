@@ -3,9 +3,11 @@ set(CMAKE_C_STANDARD 99)
 #ADD_COMPILE_OPTIONS(-std=gnu99)
 #set(CMAKE_C_FLAGS "${CMAKE_C_CFLAGS} -std=gnu99")
 project(SuperNeMo)
+
 enable_testing()
 include(ExternalProject)
 
+set(CMAKE_C_FLAGS "${CMAKE_C_CFLAGS} -pthread ")
 
 set (RD "${CMAKE_CURRENT_SOURCE_DIR}/ROSS/")
 set (ND "${CMAKE_CURRENT_SOURCE_DIR}/src/")

@@ -10,14 +10,27 @@ void scheduleSp(tw_stime time, id_type axonID, tw_lp *lp) {
   tw_event_send(synapsePrime);
   numScheduledEvents++;
 }
-
+/**
+ * Loads all input spikes from the SQLite database that are going to this neurosynaptic core.
+ *
+ * @param s My State
+ * @param lp My LP
+ *
+ */
 void loadSynapseSpikesFile(synapseState *s, tw_lp *lp) {
   list_t spikelist;
   id_type myCore = s->myCore;
+
+  //query the spike database for the number of spikes scheduled for this core
   int nspikes = getNumSpikesForCore(myCore);
+
+  //if there are spikes to read in, do so:
   if (nspikes) {
+    //Store the spikes in a linked list
     list_init(&spikelist);
     list_attributes_copy(&spikelist, list_meter_int64_t, 1);
+
+    //This is the call to the SQLite wrapper functions.
     int res = getSpikesFromSynapse(&spikelist, myCore);
 
     list_iterator_start(&spikelist);
@@ -27,6 +40,11 @@ void loadSynapseSpikesFile(synapseState *s, tw_lp *lp) {
       uint32_t time = EXTIME(ilv);
       uint32_t axid = EXAXON(ilv);
 
+      //This call schedules the input spike - for all
+      //input spikes in the input spike file (that are supposed to
+      //go to this core), scheduleSP needs to be called.
+      //time and axid are the pulled data fields from the config file,
+      // lp is the LP variable (passed in at the top of the function
       scheduleSp(time, axid, lp);
 
     }
