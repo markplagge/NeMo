@@ -383,7 +383,9 @@ void init_nemo() {
   }
   spikech(320);
 
+
   if (FILE_IN) {
+    tw_printf(TW_LOC,"File input starting.");
     // Init File Input Handles
     if (g_tw_mynode==0) {
       printf("Network Input Active");
