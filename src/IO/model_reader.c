@@ -143,6 +143,7 @@ void initModelInput(unsigned long maxNeurons) {
   if (g_tw_mynode==0)
     printf("Parsing of configfile complete.");
 
+
 }
 
 void lPushParam(char *paramName) {

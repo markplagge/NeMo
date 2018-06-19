@@ -130,7 +130,7 @@ const tw_optdef app_opt[] = {
     TWOPT_UINT("chip", CORES_IN_CHIP, "The number of neurosynaptic cores contained in one chip"),
     TWOPT_ULONGLONG("cores", CORES_IN_SIM, "number of cores in simulation"),
     //TWOPT_ULONGLONG("neurons", NEURONS_IN_CORE, "number of neurons (and axons) in sim"),
-    TWOPT_GROUP("Data Gathering Settings"),
+       TWOPT_GROUP("Data Gathering Settings"),
 
     TWOPT_FLAG("bulk", BULK_MODE, "Is this sim running in bulk mode?"),
     TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
