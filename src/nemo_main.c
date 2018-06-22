@@ -398,6 +398,7 @@ void init_nemo() {
     luaLoader(MODEL_FILE);
     initModelInput(CORES_IN_SIM);
 
+
 // INPUT SPIKE FILE init HERE:
     ////////////////////////
     openSpikeFile();
