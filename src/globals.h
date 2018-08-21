@@ -16,7 +16,11 @@
 #include <stdbool.h>
 #include <limits.h>
 #include <math.h>
+#ifdef __cplusplus
+#include "nemo_config.h"
+#else
 #include <nemo_config.h>
+#endif
 #include "ross.h"
 
 /** @defgroup tempConfig Temporary configuration globals
@@ -42,7 +46,7 @@
  */
 /**@{  */
 
-typedef uint_fast64_t
+typedef int_fast64_t
     id_type; //!< id type is used for local mapping functions - there should be $n$ of them depending on CORE_SIZE
 typedef int32_t volt_type; //!< volt_type stores voltage values for membrane potential calculations
 typedef int64_t weight_type;//!< seperate type for synaptic weights.

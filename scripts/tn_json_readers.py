@@ -1,19 +1,21 @@
-import sqlite3
-import tempfile
 import concurrent.futures
 import copy
 import json
 import multiprocessing as mp
+import sqlite3
+import tempfile
 from collections import OrderedDict
 from concurrent.futures import as_completed
+from time import sleep
 
 import jsoncomment.package.comments as comments
-
 import numpy as np
-from tqdm import tqdm
-from joblib import Parallel, delayed, Memory
-from tn_nf2_api import TN, Spike, ConfigFile
 import pandas
+from joblib import Parallel, delayed
+from tn_nf2_api import ConfigFileDebug
+from tn_nf2_api import TN, Spike, ConfigFile
+from tqdm import tqdm
+
 try:
 
     from numba import jit
@@ -53,7 +55,6 @@ def hex_byte_to_bits(hex_byte):
     bits_string = binary_byte[2:].zfill(8)
     return [int(bit) for bit in bits_string]
 
-
 def make_unique(key, dct):
     """
 	Makes each element of a JSON file unique - for parsing the TN JSON files since they have multiple identical keys/
@@ -72,11 +73,14 @@ def make_unique(key, dct):
 
 def parse_object_pairs(pairs):
     dct = OrderedDict()
-    for key, value in pairs:
-        if key in dct:
-            key = make_unique(key, dct)
-        dct[key] = value
-    return dct
+    ttl = max(max([len(x) for x in pairs]), len(pairs))
+    with tqdm(total=ttl, desc="Parsing JSON...", leave=False) as pbar:
+        for key, value in pairs:
+            if key in dct:
+                key = make_unique(key, dct)
+            dct[key] = value
+            pbar.update(1)
+        return dct
 
 
 """TN defines some generic neuron types. These functions return values based on those parameters"""
@@ -267,7 +271,7 @@ def readTN(filename):
 	:param filename: 
 	:return: A tuple of the model info, neuron types defined in the model, a list of crossbars, and a list of the cores
 	"""
-    print("Loadfing templates from JSON file...")
+    print("Loading templates from JSON file...")
     data = open(filename, 'r').readlines()
     data = comments.json_preprocess(data)
     tnData = json.loads(data, object_pairs_hook=parse_object_pairs)
@@ -312,6 +316,7 @@ def readTN(filename):
         neuronTypes[nk]['nid'] = n_num
 
     crossbarDat = parseCrossbar(crossbarDat, mdl['crossbarSize'])
+    print
     return (mdl, neuronTypes, crossbarDat, coreDat)
 
 
@@ -396,7 +401,8 @@ def rundmc(ch,crossbars,nc,neuronTemplates,dq):
         for v in datum:
             dq.push(v)
 
-def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
+
+def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1', debug=True):
     model, neuronTypes, crossbars, cores = readTN(filename)
     print("Configuring templates from JSON file")
     neuronTemplates = getNeuronModels(neuronTypes)
@@ -412,7 +418,11 @@ def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
     gneuronTypes = neuronTypes
     gcrossbars = crossbars
     gtemplates = neuronTemplates
-    cfgFile = ConfigFile(modelFN, nc=len(cores))
+    if debug:
+        cfgFile = ConfigFileDebug(modelFN, nc=len(cores))
+    else:
+        cfgFile = ConfigFile(modelFN, nc=len(cores))
+
 
     print("Generating CSV...")
     data = []
@@ -442,6 +452,7 @@ def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
     #
     # for
     with concurrent.futures.ProcessPoolExecutor(max_workers=nw) as e:
+        # with concurrent.futures.ThreadPoolExecutor(max_workers=1) as e:
         f = []
         tw = []
         for i in range(nw):
@@ -449,22 +460,34 @@ def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
             f.append(e.submit(neuronCSVWorker,crossbars,nc,neuronTemplates,coreWork,compWork))
         #for _ in tqdm(as_completed(f), position=0,total=nw):
         print("Converting JSON Neurons...")
-
+        cur_core = 0
         with(tqdm(total=corect,position=0,desc="Parsing core data...")) as tq:
             cc=0
 
             while(not compWork.empty() or not coreWork.empty()):
                     cc += 1
-                    for d in tqdm(compWork.get(), position=1,desc="Converting core"):
+                    for d in tqdm(compWork.get(), position=1, desc="Converting core " + str(cur_core), leave=False):
                         cfgFile.addNeuron(d)
                     tq.update(cc)
                     cc = 0
             tq.update(cc)
+            cur_core += 1
+            sleep(.1)
     #emg cleanup:
     print("JSON convert Complete... cleaning up and continuing processing.")
     while(not compWork.empty()):
         for d in compWork.get():
             cfgFile.addNeuron(d)
+    with open('core_0_errs.out', 'w') as c_zero:
+        with open('core_0_counts.csv', 'w') as c_zcsv:
+            c_zcsv.write('my_core,num_zeros\n')
+
+            while not neuron_csv_problems.empty():
+                cd = neuron_csv_problems.get()
+
+                c_zero.write("CoreID:{} , NumZeros {}\n".format(cd[0], cd[1]))
+                c_zcsv.write("{},{}\n".format(cd[0], cd[1]))
+
     return cfgFile
 
     # with concurrent.futures.ProcessPoolExecutor(max_workers=mp.cpu_count()) as e:
@@ -526,6 +549,7 @@ def createNeMoCFGFromJson(filename, modelFN='nemo_model.nfg1'):
 
 
 neuronQueue = mp.Queue()
+neuron_csv_problems = mp.Queue()
 
 def compileNeuronTxt(neurons):
     pass
@@ -547,7 +571,8 @@ def neuronCSVFut(cores, crossbars=0, nc=0, neuronTemplates=0):
 	"""
     d = ""
     coreNeuronTypes = np.zeros(256, dtype=np.int32)
-    destCores = np.zeros(256, dtype=np.int32)
+    # destCores = np.zeros(256, dtype=np.int32)
+    destCores = np.full(256, -100, dtype=np.int32)
     destAxons = np.zeros(256, dtype=np.int32)
     destDelays = np.zeros(256, dtype=np.int32)
 
@@ -562,6 +587,17 @@ def neuronCSVFut(cores, crossbars=0, nc=0, neuronTemplates=0):
         populateArray(destAxons, (core['neurons']['destAxons']))
         populateArray(destDelays, (core['neurons']['destDelays']))
         coreID = core['id']
+
+        ## Debug line item ##
+        if np.count_nonzero(destCores) < 256:
+            # cc0 = np.count_nonzero(destCores == 0)
+            cc0 = len(destCores) - np.count_nonzero(destCores)
+            prob = "---INFO---" + "Core {} has {} connections to core 0! \n"
+            probmsg = "SOURCE CORE: {} - NUM_ZERO: {} \n".format(coreID, cc0)
+            neuron_csv_problems.put([coreID, cc0])
+
+            # print("Core " + str(coreID)  + " has " + str(256 - np.count_nonzero(destCores) + " connections to core 0! "))
+
 
         # synapse types:
         tl = crossbar[0]
@@ -646,7 +682,7 @@ def readAndSaveSpikeFile(filename, type="json", saveFile="spikes.csv"):
 
     fp.close()
     print("sqlite generation - post csv parsing...")
-    #SQLITE DB FOR SPIKES:
+    #SQLITE DB FOR SPIKES:
     fn = saveFile.split('.')[0] + ".sqlite"
     #    con.execute(tblcreate)
     
@@ -676,8 +712,8 @@ if __name__ == '__main__':
     # readAndSaveSpikeFile('./test/ex1_spikes.sfti', saveFile='nemo_spike.csv')
 
     print("Neil JSON load")
-    n_mod = createNeMoCFGFromJson('/Users/mplagge/development/NeMo/scripts/test/NM/mnist_neil.json',
-                                  '/Users/mplagge/development/NeMo/scripts/nemo_model.nfg1')
+    n_mod = createNeMoCFGFromJson('./th_corelet_net.json',
+                                  './test_model.nfg1')
     n_mod.closeFile()
 
     readAndSaveSpikeFile('/Users/mplagge/development/NeMo/scripts/test/NM/mnist_neil_spikes.sfci',

@@ -1,24 +1,16 @@
-import multiprocessing
-import subprocess
-
-import json
-import scipy
-from collections import defaultdict
-import networkx as nx
-import click
 import glob
-import numpy as np
+import json
+from collections import defaultdict
 
+import click
 import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
 import tqdm
-
-from numpy.core import float128, float64, double
-import pandas as pd
-from scipy.io import mmwrite
-
 from analysis_utils import MultiFileWorker
-from analysis_utils import NeMoGraph
-from analysis_utils import NeMoGraphLin,NeMoGraphLinCore
+from analysis_utils import NeMoGraphLin, NeMoGraphLinCore
+from numpy.core import double
+from scipy.io import mmwrite
 
 nemo_csv_format = ['timestamp','core','local','destGID','destCore','destNeuron','isOutput?']
 nemo_csv_src_flds = [1,2]
@@ -33,10 +25,6 @@ nemo_csv_used_dtypes = [('f0',double)] +  dt2 # * (len(nemo_csv_used_cols) -1)
 
 import os
 import multiprocessing as mp
-from multiprocessing.pool import ThreadPool as tpool
-
-
-
 
 
 #process file function
@@ -419,6 +407,12 @@ def cli(nemo_csv_folder, nemo_csv_name,save_file_name,save_count_name,
     fns = nemo_csv_folder + "./" + nemo_csv_name
     files = glob.glob(fns)
     click.echo(click.style("Loading spike data...", fg='blue'))
+    click.secho("Found the following files: \n " + "\n".join([x for x in files]), fg='green')
+    # click.secho(str(files), fg='green')
+    # print(len(files))
+    if not isinstance(files, list) or len(files) == 0:
+        click.secho("No files found. Exiting...", fg='red')
+        exit(1)
 
     if nemo_g_version == 1:
         do_graph_via_class(save_file_name,files)

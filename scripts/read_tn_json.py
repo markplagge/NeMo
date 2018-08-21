@@ -1,7 +1,7 @@
-import click
-import os
-from tn_json_readers import createNeMoCFGFromJson, readAndSaveSpikeFile
 import shutil
+
+import click
+from tn_json_readers import createNeMoCFGFromJson, readAndSaveSpikeFile
 
 
 class nOpts:
@@ -14,11 +14,15 @@ class nOpts:
 # @click.option('--cores', default=1024, help="The number of NS cores to simulate NOT IMPLEMENTED")
 @click.option('--jmodel', help="The TN JSON file to read")
 @click.option('--jspike', help="The TN JSON spike file to read")
-def cli(modelname, jmodel, jspike):
+@click.option('--nospike', help='Do not read spikes', default=False, is_flag=True)
+@click.option('--debug', help='activate debug mode', default=False, is_flag=True)
+def cli(modelname, jmodel, jspike, nospike, debug):
     ctx = nOpts(modelname)
 
     ctx.jspike = jspike
     ctx.jmodel = jmodel
+    ctx.nospike = nospike
+    ctx.debug = debug
     readJSON(ctx)
 
 
@@ -26,12 +30,19 @@ def readJSON(ctx):
     outPrefix = ctx.csvFN
     modelFile = ctx.jmodel
     spikeFile = ctx.jspike
+    debug = ctx.debug
+    v = ctx.nospike
 
-    click.echo("Starting SPIKE parsing. Will take some time.")
-    
-    readAndSaveSpikeFile(filename=spikeFile, saveFile=outPrefix + "_spike.csv")
-    click.echo("Starting JSON read - will take some time.")
-    df = createNeMoCFGFromJson(modelFile, outPrefix + "_model")
+    if v:
+        click.secho("Spike db generation disabled...", fg='red')
+
+    if not v:
+        click.secho("Starting SPIKE parsing. Will take some time.", fg='blue')
+        readAndSaveSpikeFile(filename=spikeFile, saveFile=outPrefix + "_spike.csv")
+    else:
+        click.secho('Specified no spike file reading. Continuing.', fg='blue')
+    click.secho("Starting JSON read - will take some time.", fg='green')
+    df = createNeMoCFGFromJson(modelFile, outPrefix + "_model", debug)
     df.closeFile()
 
     # remove the first two lines per new spec:

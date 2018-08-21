@@ -139,7 +139,9 @@ set(model_srcs
 #IO/spike_reader.c
 #IO/spike_reader.h
 
+
 ADD_EXECUTABLE(NeMo ${model_srcs})
+
 #if (SQLITE_BUILD_STATIC)
 #	set(SQLIB "${SQLITE_STATIC_NAME}")
 #else()

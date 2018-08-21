@@ -15,6 +15,7 @@ set (LuaD "${CMAKE_CURRENT_SOURCE_DIR}/lua")
 set (SQLD "${CMAKE_CURRENT_SOURCE_DIR}/sqlite/")
 set (simcld "${CMAKE_CURRENT_SOURCE_DIR}/src/lib/simclist")
 
+set(MLD_D "${CMAKE_CURRENT_SOURCE_DIR}/lib/model_reader")
 #cmake_policy(SET CMP0012 OLD)
 # LUA Options
 #SET(USE_LUA_JIT FALSE BOOL)
@@ -24,6 +25,7 @@ ADD_SUBDIRECTORY(${RD})
 
 ADD_SUBDIRECTORY(${SQLD})
 ADD_SUBDIRECTORY(${simcld})
+
 
 if(USE_LUA_JIT)
     message(STATUS "LUA JIT PROJECT" )
@@ -37,6 +39,7 @@ endif()
 
 
 ADD_SUBDIRECTORY(${ND})
+add_subdirectory(${MLD_D})
 #find_package(MPI REQUIRED)
 
 
@@ -62,5 +65,5 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/src/IO/model_read.lua ${CMAKE_CURRENT
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/src/IO/tn_types.lua ${CMAKE_CURRENT_BINARY_DIR}/bin/tn_types.lua COPYONLY)
 
 
+#Model Reader Lib and Exe:
 
-#TODO: Add targets to the build-tree export set

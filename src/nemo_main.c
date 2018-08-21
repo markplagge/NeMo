@@ -3,7 +3,6 @@
 //
 
 #include "nemo_main.h"
-#include "./layer_map/layer_map_lib.h"
 
 /** \addtogroup Globals
 #define TESTIO 0
@@ -58,6 +57,7 @@ unsigned int SAT_NET_LEAK = 1;
 unsigned int SAT_NET_STOC = false;
 unsigned int IS_SAT_NET = false;
 unsigned int SAVE_OUTPUT_NEURON_EVTS = false;
+
 /**@} */
 
 
@@ -134,13 +134,13 @@ const tw_optdef app_opt[] = {
 
     TWOPT_FLAG("bulk", BULK_MODE, "Is this sim running in bulk mode?"),
     TWOPT_FLAG("dbg", DEBUG_MODE, "Debug message printing"),
-    TWOPT_FLAG("network",
+    TWOPT_FLAG("svnet",
                SAVE_NETWORK_STRUCTURE,
                "Save neuron output axon IDs on creation - Creates a map of the neural network."),
     TWOPT_FLAG("svm",
                SAVE_MEMBRANE_POTS,
                "Save neuron membrane potential values (enabled by default when running a validation model"),
-    TWOPT_FLAG("svs", SAVE_SPIKE_EVTS, "Save neuron spike event times and info"),
+    TWOPT_FLAG("svs", SAVE_SPIKE_EVTS, "Save neuron spike event times and info (all spike events, not just output)"),
     TWOPT_FLAG("svouts", SAVE_OUTPUT_NEURON_EVTS, "Save output neuron spikes"),
     TWOPT_GROUP("Integrated Bio Model Testing"),
     TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
@@ -227,6 +227,7 @@ void displayModelSettings() {
 #ifdef DEBUG
   TH
   printf("* \tDebug Mode Enabled.\n");
+  STT("\t Save Network Structure? %i ", SAVE_NETWORK_STRUCTURE);
 #endif
   TH
   printf("* \t %i Neurons per core (cmake defined), %llu cores in sim.\n", NEURONS_IN_CORE, CORES_IN_SIM);
@@ -237,6 +238,7 @@ void displayModelSettings() {
   printf("* \t Neuron stats:\n");
   printf("* \tCalculated sim_size is %llu\n", SIM_SIZE);
   printf("* \tSave Messages: %i \n", SAVE_MSGS);
+  STT("Save network structure? %i ", SAVE_NETWORK_STRUCTURE);
   TH
   printf("* \tChip Sim Info:\n");
   printf("* \tCores per chip: %i\n", CORES_IN_CHIP);
@@ -454,9 +456,11 @@ int main(int argc, char *argv[]) {
 //	strcpy(NETWORK_FILE_NAME, "nemo_model.csv");
 //	char *SPIKE_FILE_NAME = calloc(256, sizeof(char));
 //	strcpy(SPIKE_FILE_NAME, "nemo_spike.csv");
+
   tw_opt_add(app_opt);
   spikech(388);
   tw_init(&argc, &argv);
+//  SAVE_NETWORK_STRUCTURE = 0;
   //call nemo init
   init_nemo();
   printf("\n Completed initial setup and model loading.\n");

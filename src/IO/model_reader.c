@@ -14,8 +14,6 @@
 //#include "../lib/lua/lualib.h"
 //#include "../lib/lua/lauxlib.h"
 #include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
 
 /**
  * L -> Global (to the model def) state of the lua file
@@ -33,6 +31,7 @@ char *tnLuaLU = "tn_types.lua";
 long curCoreID, curLocalID;
 char *curType;
 unsigned long maxNeurons;
+
 
 int countLines(FILE *fileHandle) {
   int ch;
@@ -186,12 +185,12 @@ long getLuaArray(long *arr) {
   return elnum - 1;
 }
 
-long lGetParam(int isArray, long *arrayParam) {
+long long lGetParam(int isArray, long *arrayParam) {
 
   if (isArray) {
     return getLuaArray(arrayParam);
   } else {
-    long value = lua_tointeger(L, -1);
+    long long value = lua_tointeger(L, -1);
     return value;
   }
 

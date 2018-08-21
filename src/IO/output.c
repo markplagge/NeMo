@@ -163,7 +163,7 @@ void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid des
 
   } else {
 
-    sprintf(neuronFireBufferTXT[neuronFirePoolPos], "%f,%i,%u,%llu,%li,%li,%u",
+    sprintf(neuronFireBufferTXT[neuronFirePoolPos], "%f,%lli,%lli,%llu,%li,%li,%u",
             timestamp, core, local, destGID, destCore, destLocal, isOutput);
   }
 

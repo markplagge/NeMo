@@ -183,7 +183,7 @@ void lPushParam(char *paramName);
  * @return
  */
 
-long lGetParam(int isArray, long *arrayParam);
+long long int lGetParam(int isArray, long *arrayParam);
 
 /**
  * Returns a specific global model configuration parameter.

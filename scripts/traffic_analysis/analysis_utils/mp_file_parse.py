@@ -1,10 +1,9 @@
-import multiprocessing.pool as mpool
 import multiprocessing as mp
+import multiprocessing.pool as mpool
 import os
 from collections import defaultdict
 
 import tqdm
-
 
 
 class MultiFileWorker():
@@ -107,6 +106,7 @@ class MultiFileWorker():
     def parse_files(self):
         workers = []
         results = []
+        print("using " + str(self.nworkers) + " to read data.")
         with mpool.Pool(self.nworkers) as pool:
             max_pos = self.nworkers + 1
             for filename in self.file_list:

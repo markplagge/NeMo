@@ -32,19 +32,19 @@ void openOutputFiles(char *outputFileName) {
 //    strcat(ncfgfn,outputFileName);
 //    strcat(ncfgfn,".bin");
     char netfn[255] = {'\0'};
-    printf("LN28\n");
+//    printf("LN28\n");
     sprintf(netfn, "network_config_%i.csv", g_tw_mynode);
-    printf("LN30\n");
+//    printf("LN30\n");
     outNetworkCfgFile = fopen(netfn, "wb");
-    printf("LN31\n");
+//    printf("LN31\n");
     char netfn2[255] = {'\0'};
-    sprintf(netfn2, "neuron_config%i.csv", g_tw_mynode);
+    sprintf(netfn2, "neuron_config_%i.csv", g_tw_mynode);
     outNeuronCfgFile = fopen(netfn2, "wb");
-    printf("LN36\n");
+//    printf("LN36\n");
     fprintf(outNetworkCfgFile, "Core,NeuronID,DestCore,DestAxon\n");
     fprintf(outNeuronCfgFile, "Core,NeuronID,DestCore,DestAxon,");
     for (int i = 0; i < NEURONS_IN_CORE; i++) {
-      fprintf(outNeuronCfgFile, ",in_axon_%i", i);
+      fprintf(outNeuronCfgFile, ",input_axon_%i", i);
     }
     fprintf(outNeuronCfgFile, "\n");
     printf("LN43\n");
@@ -53,7 +53,9 @@ void openOutputFiles(char *outputFileName) {
   }
 }
 void closeOutputFiles() {
+  tw_printf(TW_LOC, "Closing output files..");
   while (list_size(&networkStructureList) > 0) {
+
     char *line = list_get_at(&networkStructureList, 0);
     fprintf(outNetworkCfgFile, line);
     list_delete_at(&networkStructureList, 0);
@@ -64,6 +66,7 @@ void closeOutputFiles() {
 }
 void initDataStructures(int simSize) {
   list_init(&networkStructureList);
+
   list_attributes_copy(&networkStructureList, list_meter_string, 1);
 
 }
@@ -86,13 +89,14 @@ void saveIndNeuron(void *ns) {
   list_append(&networkStructureList, line);
   if (list_size(&networkStructureList) > maxNetworkListSize) {
     while (list_size(&networkStructureList) > 0) {
-      char *line = list_get_at(&networkStructureList, 0);
-      fprintf(outNetworkCfgFile, line);
+      char *l = list_get_at(&networkStructureList, 0);
+      fprintf(outNetworkCfgFile, l);
       list_delete_at(&networkStructureList, 0);
 
     }
   }
 }
+
 int threaded = 1;
 void saveIndNeuronTh(tn_neuron_state *ns) {
   char line[NEURONS_IN_CORE] = {'\0'};
@@ -101,9 +105,10 @@ void saveIndNeuronTh(tn_neuron_state *ns) {
 
 }
 void *fileWorker() {
-  printf("\nWorker thread started.\n");
+  printf("---------------------\nWorker thread started.\n--------------------");
+  fflush(stdout);
   do {
-    if (rqueue_isempty(is_working)!=0) {
+    if (rqueue_isempty(is_working)==0) {
       char *nd = (char *) rqueue_read(is_working);
       if (nd[0]=='1') {
         threaded = false;
@@ -133,6 +138,7 @@ void *fileWorker() {
       }
       //fprintf(outNeuronCfgFile, "\n");
       fprintf(outNeuronCfgFile, "%s\n", ncon);
+      fflush(outNeuronCfgFile);
     }
   } while (threaded);
   printf("worker complete.\n");
@@ -140,6 +146,9 @@ void *fileWorker() {
 
 int isSetup = 0;
 void saveNeuronNetworkStructure(void *n) {
+//#ifdef DEBUG
+//  tw_printf(TW_LOC,"Neuron Data saving thread startup.\n");
+//#endif
 
   //neuroCon *ndat = calloc(sizeof(ne uroCon),1);
   if (isSetup==0) {
@@ -170,9 +179,9 @@ void saveNeuronPreRun() {
   if (isSetup) {
     isSetup = 0;
     rqueue_write(nc_data_q, NULL);
-    // pthread_join(filethread,NULL);
+    pthread_join(filethread, NULL);
     fclose(outNeuronCfgFile);
-    fclose(outNeuronCfgFile);
+    fclose(outNetworkCfgFile);
 
   }
 }
@@ -218,8 +227,8 @@ void saveNetworkStructure() {
   fclose(outNetworkCfgFile);
   //save the file;
 
-  free(lntxt);
-  free(lxtxt);
+  //free(lntxt);
+  //free(lxtxt);
   //free(lntxt);
   return;
   initDataStructures(g_tw_nlp);
