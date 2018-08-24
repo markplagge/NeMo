@@ -2,15 +2,16 @@ project(ModelReader)
 include(ExternalProject)
 set(CMAKE_CXX_STANDARD 14)
 set(reader_srcs
-        main.cpp)
+        main.cpp test_data.hh)
 set(lib_srcs
         tn_parser.hh
         tn_parser.cpp
-        lib/picojson.h lib/json_dto.hh)
+        extern/json_dto.hh utils.cpp utils.hh)
 
-set(RapidJSON_INCLUDE_DIRS lib)
+set(RapidJSON_INCLUDE_DIRS extern)
 
-#ADD_SUBDIRECTORY(../lib/rapidjson ${CMAKE_BINARY_DIR}/lib)
+
+#ADD_SUBDIRECTORY(../libs/rapidjson ${CMAKE_BINARY_DIR}/libs)
 INCLUDE_DIRECTORIES(
         ${MPI_INCLUDE_PATH}
         ${CMAKE_CURRENT_BINARY_DIR}

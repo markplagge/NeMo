@@ -729,7 +729,16 @@ void tn_create_neuron(id_type coreID, id_type nID,
   n->isSelfFiring =
       false;  //!@TODO: Add logic to support self-firing (spontanious) neurons
 }
-
+void tn_create_neuron_encoded_rv_non_global(
+                                        int coreID, int nID, bool synapticConnectivity[NEURONS_IN_CORE],
+                                        short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
+                                        bool epsilon, int sigma_l, int lambda, bool c, int alpha,
+                                        int beta, int TM, int VR, int sigmaVR, int gamma, bool kappa,
+                                        tn_neuron_state *n, int signalDelay, int destCoreID,
+                                       int destAxonID){
+    uint64_t dest_global = getNeuronGlobal(destCoreID, destAxonID);
+    tn_create_neuron_encoded_rv(coreID, nID, synapticConnectivity, G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta, TM, VR, sigmaVR, gamma, kappa, n, signalDelay, dest_global, destAxonID);
+}
 void tn_create_neuron_encoded_rv(
     id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
     short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
