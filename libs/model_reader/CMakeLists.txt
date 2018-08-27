@@ -2,13 +2,22 @@ project(ModelReader)
 include(ExternalProject)
 set(CMAKE_CXX_STANDARD 14)
 set(reader_srcs
-        main.cpp test_data.hh)
+        main.cpp tests/test_data.hh)
 set(lib_srcs
         tn_parser.hh
         tn_parser.cpp
         extern/json_dto.hh utils.cpp utils.hh)
 
 set(RapidJSON_INCLUDE_DIRS extern)
+message(STATUS "RJSON FLAGS: ${CMAKE_CXX_FLAGS}")
+
+## Testing Options:
+set(TN_READER_TEST 1 CACHE BOOL "Enable testing of TN Reader?")
+if(TN_READER_TEST)
+    add_definitions(-DSRC_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
+        add_definitions(-DDEBUG)
+        set(DEBUG 1)
+        endif()
 
 
 #ADD_SUBDIRECTORY(../libs/rapidjson ${CMAKE_BINARY_DIR}/libs)
@@ -18,6 +27,15 @@ INCLUDE_DIRECTORIES(
         ${ROSS_SOURCE_DIR}
         ${ROSS_BINARY_DIR})
 
+if(USE_SSE4_2)
+    add_definitions(-DRAPIDJSON_SSE42)
+    message("RJSON using sse 4.2")
+elseif(USE_SSE_2)
+    add_definitions(-DRAPIDJSON_SSE2)
+    message("RJSON using SSE 2")
+else()
+    message("No SIMD enabled for RJSON")
+endif()
 
 ADD_LIBRARY(ModelReaderLib ${lib_srcs})
 ADD_EXECUTABLE(ModelReaderBin ${reader_srcs})

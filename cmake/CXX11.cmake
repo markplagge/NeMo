@@ -36,6 +36,9 @@ endmacro()
 macro(enable_cxx11)
     if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "xl" OR CMAKE_CXX_COMPILER_ID STREQUAL "xl_r")
+        message(" -- Need to set IBM XL C++ compiler to >= C++11 " )
+
     endif()
 endmacro()
 

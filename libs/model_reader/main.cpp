@@ -5,7 +5,7 @@
 #include <cstdio>
 #include "tn_parser.hh"
 #include "json_dto.hh"
-#include "test_data.hh"
+#include "tests/test_data.hh"
 
 
 
@@ -60,8 +60,16 @@ string create_new_array(string json_string){
   string return_val;
   return return_val;
 }
+string extract_cores(string json_string){
+
+}
+#define tm(x) (x) = #x ;
 void testDTO() {
-  string fn = "/Users/markplagge/dev/NeMo/scripts/model/th_corelet_net.json";
+#ifdef DEBUG
+  string test;
+  tm(test);
+  cout << "ROOT: " << SRC_ROOT;
+  string fn = SRC_ROOT"/tests/tn_test_cf100.json";
   string data = load_file_into_memory(fn);
   auto msg = json_dto::from_json<core,kParseCommentsFlag>(data);
   auto msg2 = json_dto::from_json<core_holder,kParseCommentsFlag>(test_json_1core);
@@ -69,6 +77,55 @@ void testDTO() {
 
   auto msg4 = json_dto::from_json<multi_core,kParseCommentsFlag>(test_multi_core_processed);
   create_new_array(data);
+#endif
+}
+
+void testCoreGen(){
+#ifdef DEBUG
+  string fn = SRC_ROOT"/tests/tn_test_cf100.json";
+  string data = load_file_into_memory(fn);
+  Document jdoc;
+  jdoc.Parse<kParseCommentsFlag>(data);
+  cout << jdoc["core"].IsArray() << "\n";
+  cout << jdoc["core"].IsObject() << "\n";
+  cout << jdoc["core"].IsArray() << "\n";
+  cout << jdoc["core"].GetObject().HasMember("metadata");
+
+  Document document;
+  document.Parse<kParseCommentsFlag>(data);
+  static const char* kTypeNames[] =
+      { "Null", "False", "True", "Object", "Array", "String", "Number" };
+
+  for (Value::ConstMemberIterator itr = document.MemberBegin();
+       itr != document.MemberEnd(); ++itr)
+  {
+    printf("Type of member %s is %s\n",
+           itr->name.GetString(), kTypeNames[itr->value.GetType()]);
+    //auto x = itr->value.GetObject();
+//    cout << "\n" << x["id"].GetInt() << "\n";
+//    cout << itr->value.GetObject()["id"].GetInt() << "\n";
+  }
+  for (auto& m : document.GetObject())
+    printf("Type of member %s is %s\n",
+           m.name.GetString(), kTypeNames[m.value.GetType()]);
+//  for ( : document.FindMember()){
+//    cout << it->value.GetObject()["id"].GetInt() << "\n";
+//  }
+cout << "\n\n ------------------------------------ \n \n";
+for (Value::ConstMemberIterator itr = document.FindMember("core"); itr != document.MemberEnd(); ++ itr){
+  cout << "Member core's ID using find member: " <<
+                                                 itr->value.GetObject()["id"].GetInt() <<"\n";
+  auto arr = itr->value.GetObject()["neurons"]["destCores"].GetArray();
+  for (auto &x : arr){
+    if (x.IsString()){
+      cout << x.GetString();
+    }else{
+      cout <<"int " << x.GetInt64();
+    }
+
+  }
+}
+#endif
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 void tests() {
@@ -227,7 +284,18 @@ void tests() {
 }
 
 int main(int argc, char *argv[]) {
-  testDTO();
+//#ifdef DEBUG
+//  string test1 = "54x10";
+//  string test2 = "5:10";
+//  std::string::size_type pos;
+//  int v1 = stoi(test1,&pos,10);
+//  string t2 = test1.substr(pos + 1);
+//  int v2 = stoi(t2,NULL,10);
+//  cout << "v1 " << v1 << " -- v2  " << "\n";
+//  return 0;
+//  testDTO();
+//  testCoreGen();
+//#else
     string filename;
     if (argc != 3) {
         cout << "TN -> NeMo Parser \n Usage: parser PATH_TO_TN_JSON_FILE PATH_TO_TN_SPIKE_FILE\n";
@@ -245,5 +313,5 @@ int main(int argc, char *argv[]) {
     TN_Main model = create_tn_data(filename);
     cout << "\n Created Model. \n";
     
-
+//#endif
 }

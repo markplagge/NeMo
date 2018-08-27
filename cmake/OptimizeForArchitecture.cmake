@@ -568,6 +568,7 @@ endmacro()
 
 macro(OptimizeForArchitecture)
    if("${CMAKE_SYSTEM_PROCESSOR}" MATCHES "(x86|AMD64)")
+      message("Detected x86|amd64")
       set(TARGET_ARCHITECTURE "auto" CACHE STRING "CPU architecture to optimize for. \
 Using an incorrect setting here can result in crashes of the resulting binary because of invalid instructions used. \
 Setting the value to \"auto\" will try to optimize for the architecture where cmake is called. \
@@ -600,6 +601,7 @@ Other supported values are: \"none\", \"generic\", TODO...")
    endif()
 
    if("${CMAKE_SYSTEM_PROCESSOR}" MATCHES "(x86|AMD64)")
+      message(STATUS "HANDLE X86")
       OFA_HandleX86Options()
    elseif("${CMAKE_SYSTEM_PROCESSOR}" MATCHES "(arm|aarch32|aarch64)")
       OFA_HandleArmOptions()
