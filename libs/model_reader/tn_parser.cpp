@@ -544,7 +544,7 @@ typedef struct metadata{
   string layerType;
 }core_metadata;
 
-#define assign(name) (name) = ob[#name]
+
 
 /**
  * converts string values to an integer array - based on TN spec.
@@ -565,7 +565,7 @@ typedef struct metadata{
       num_cols++;
       seglist.push_back(segment);
     }
-    if (num_cols == 1) {
+    if (num_cols == 2) {
       //iterate from pos 0 to pos 1.
       int start = stoi(seglist[0], NULL, 10);
       int end = stoi(seglist[1], NULL, 10);
@@ -577,15 +577,17 @@ typedef struct metadata{
 //      for (int i = start; i < end; i++) {
 //        result.push_back(i);
 //      }
-    } else if (num_cols == 2) {
+    } else if (num_cols == 3) {
       //two colons means:
       //start:increment:end
       std::string::size_type pos;
       int start = stoi(tn_value,&pos,10);
       pos ++;
-      int increment = stoi(tn_value.substr(pos),&pos,10);
+      string sub1 = tn_value.substr(pos);
+      int increment = stoi(sub1,&pos,10);
       pos ++;
-      int end = stoi(tn_value.substr(pos), &pos,10);
+      string sub2 = sub1.substr(pos);
+      int end = stoi(sub2, &pos,10);
       while (start <= end){
         result.push_back(start);
         start += increment;
@@ -616,43 +618,146 @@ typedef struct metadata{
 
  }
 
+ int convert_and_add_value(int *&vals,string val){
+   vector<int> valv = convert_tn_arr(val);
+   for(auto it : valv){
+     *vals = it;
+     vals ++;
+   }
+ }
+ int convert_and_add_value(int *&vals,  int val){
+   *vals = val;
+   vals ++;
+ }
+ void convert_and_add_value(int *&vals, const Value & val){
+   if (val.IsString()){
+     convert_and_add_value(vals,val.GetString());
+   }else if(val.IsInt()){
+     convert_and_add_value(vals,val.GetInt());
+   }else{
+     cout << "Invalid conversion value! \n ";
+
+   }
+ }
+
+
+
+// int convert_and_add_value(int *vals, int arr_pos,rapidjson::GenericObject obj){
+//
+// }
+/**
+ * assign (v, name) - macro to reduce code size in the TN_Core::init_core_from_itr() function.
+ * Simply extracts the value called name form v, and assigns it to the variabled named name.
+ */
+#define assign(v, name) (name) = (v)[#name]
+
 /**
 * sets up this TN_Core object from the iterator - json doc object.
 * @param itr
 */
 void TN_Core::init_core_from_itr(Value::ConstMemberIterator itr) {
   //itr->value.GetObject()
-  auto ob = itr->value.GetObject();
+  auto main_obj = itr->value.GetObject();
+  auto meta_obj = main_obj["metadata"].GetObject();
+  auto neuron_obj = main_obj["neurons"].GetObject();
 //  coreletClass = ob["coreletClass"].GetString();
 //  coreletID = ob["coreletId"].GetInt();
 //  coreNumber = ob["coreNumber"].GetInt();
-  assign(coreletClass).GetString();
-  assign(coreletID).GetInt();
-  assign(coreNumber).GetInt();
-  assign(timeScaleExponent).GetInt();
-  assign(rngSeed).GetUint();
-  crossbar_name = ob["crossbar"]["name"].GetString();
-  assign(layerNumber).GetInt();
-  assign(layerType).GetString();
+
+
+  //base core data:
+  //"id":4,
+  //		"timeScaleExponent":0,
+  //		"rngSeed":4294967295,
+  assign(main_obj, timeScaleExponent).GetInt();
+  assign(main_obj, rngSeed).GetUint();
+  assign(main_obj, id).GetUint();
+
+
+  // Metadata ----
+  //		"metadata":{
+  //			"coreletClass":"th_corelet_layer_cores",
+  //			"coreletId":2,
+  //			"coreNumber":4,
+  //			"parentCoreletId":[3,1,0],
+  //			"layerNumber":2,
+  //			"layerType":"conv"
+
+  assign(meta_obj,coreletClass).GetString();
+  assign(meta_obj,coreletId).GetInt();
+  assign(meta_obj,coreNumber).GetInt();
+  assign(meta_obj,layerNumber).GetInt();
+  assign(meta_obj,layerType).GetString();
+
+
+
+  crossbar_name = main_obj["crossbar"]["name"].GetString();
+
   // Parse Arrays:
-  for (auto &el : ob["metadata"]["parentCoreletId"].GetArray()){
-    parentCorletID.push_back(el.GetInt());
+  for (auto &el : main_obj["metadata"]["parentCoreletId"].GetArray()){
+    parentCorletId.push_back(el.GetInt());
   }
   //Parse the dendrites, types, destCores, destAxons, destDelays arrays:
   //dendrites:
+  //Debug Code:
+  vector<int> testDendrite;
+
   int arr_pos = 0;
-  for (auto &el : ob["neurons"]["dendrites"].GetArray()){
+#ifdef DEBUG
+  for (auto &el : neuron_obj["dendrites"].GetArray()){
     if (el.IsString()){
       vector<int> vals = convert_tn_arr(el.GetString());
       for (auto it : vals){
         dendrites[arr_pos] = it;
         arr_pos ++;
+
+        testDendrite.push_back(it);
+
       }
     }else{
       dendrites[arr_pos] = el.GetInt();
+
+      testDendrite.push_back(el.GetInt());
+
       arr_pos ++;
     }
   }
+#endif
+
+  //Test code:
+  arr_pos = 0;
+  int *d_ptr = dendrites;
+  for(auto &el : neuron_obj["dendrites"].GetArray()){
+    convert_and_add_value(d_ptr,el);
+  }
+#ifdef DEBUG
+  int test_v = 0;
+  for(auto x: testDendrite){
+    if (dendrites[test_v] != x){
+      cout << "Found error in dendrite array.\n";
+    }
+    test_v ++;
+  }
+#endif
+  // added function wrapper for the next ones:
+  arr_pos = 0;
+  int *t_ptr = types;
+  for (auto &el : neuron_obj["types"].GetArray()){
+    convert_and_add_value(t_ptr,el);
+  }
+  int *dc_ptr = destCores;
+  for (auto &el : neuron_obj["destCores"].GetArray()){
+    convert_and_add_value(dc_ptr,el);
+  }
+  int *da_ptr = destAxons;
+  for (auto &el : neuron_obj["destAxons"].GetArray()) {
+    convert_and_add_value(da_ptr,el);
+  }
+  int *dd_ptr = destDelays;
+  for (auto &el : neuron_obj["destDelays"].GetArray()) {
+    convert_and_add_value(dd_ptr,el);
+  }
+
 
 
 //  assign("parentCoreletId").GetArray();
@@ -679,6 +784,17 @@ map<int, TN_Core> generate_cores_from_json(rapidjson::Document &document) {
 
   return core_lib;
 }
+
+//TN_Neuron_Type TN_Main::generate_neuron_from_id(int coreID, int neuronID) {
+  //first we need the core:
+  TN_Core core = TN_Cores[to_string(coreID)];
+  //next, each core has
+  TN_Crossbar_Type crossbar = TN_Crossbar_Type_library[]
+}
+
+
+
+
 /**
  * create_tn_data: preps the neuron model from the json file. Given a JSON file (TN FORMAT),
  * this will generate the crossbar array templates, the neuron templates, and then generate the
@@ -731,9 +847,9 @@ TN_Main create_tn_data(string filename) {
   model.TN_Neuron_Library = neuron_types;
 
   auto n_type_arr = json_doc["neuronTypes"].GetArray();
-  for (auto &it : n_type_arr) {
-    cout << "NTI" << it["name"].GetString() << "\n";
-  }
+//  for (auto &it : n_type_arr) {
+//    cout << "NTI" << it["name"].GetString() << "\n";
+//  }
 
   map<int, TN_Core> core_lib;
   core_lib = generate_cores_from_json(json_doc);

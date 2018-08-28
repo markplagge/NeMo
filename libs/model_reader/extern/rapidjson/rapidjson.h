@@ -140,7 +140,7 @@
     \brief Enable RapidJSON support for \c std::string
 
     By defining this preprocessor symbol to \c 1, several convenience functions for using
-    \ref rapidjson::GenericValue with \c std::string are enabled, especially
+    \ref rapidjson::aaValue with \c std::string are enabled, especially
     for construction and comparison.
 
     \hideinitializer

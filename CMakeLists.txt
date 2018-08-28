@@ -28,22 +28,25 @@ endif(AUTO_MPI)
 enable_testing()
 include(ExternalProject)
 
-
-
-# Set up some base commands:
+#
+#
+## Set up some base commands:
 message("ARCH:${ARCH}|")
 set(arch_chk ${ARCH})
 if (arch_chk STREQUAL "x86_64")
-    include(AddCompilerFlag)
     include(OptimizeForArchitecture)
     message("Auto opt inabled")
     OptimizeForArchitecture()
+    foreach(flag ${Vc_ARCHITECTURE_FLAGS})
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${flag}")
+    endforeach()
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
     message("Clang/GNU Compiler detected")
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native -mtune=native")
     set (CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -march=native -mtune=native")
 endif()
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread ")
+
 
 #Sub Project Directories
 set (RD "${CMAKE_CURRENT_SOURCE_DIR}/ROSS/")

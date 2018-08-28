@@ -13,6 +13,7 @@
 //#include "../lib/lua/lua.h"
 //#include "../lib/lua/lualib.h"
 //#include "../lib/lua/lauxlib.h"
+
 #include "lua.h"
 
 /**
@@ -126,6 +127,7 @@ void initModelInput(unsigned long maxNeurons) {
   }
   LT = luaL_newstate();
   luaL_openlibs(LT);
+
   s = luaL_loadfile(LT, tnLuaLU);
 
   if (!s)

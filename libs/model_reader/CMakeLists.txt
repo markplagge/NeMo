@@ -19,7 +19,8 @@ if(TN_READER_TEST)
         set(DEBUG 1)
         endif()
 
-
+## Standards needed for rapidjson / model reader
+add_definitions(-DRAPIDJSON_HAS_STDSTRING=1)
 #ADD_SUBDIRECTORY(../libs/rapidjson ${CMAKE_BINARY_DIR}/libs)
 INCLUDE_DIRECTORIES(
         ${MPI_INCLUDE_PATH}
@@ -29,6 +30,7 @@ INCLUDE_DIRECTORIES(
 
 if(USE_SSE4_2)
     add_definitions(-DRAPIDJSON_SSE42)
+        set(CMAKE_CXX"-march=native -mtune=native")
     message("RJSON using sse 4.2")
 elseif(USE_SSE_2)
     add_definitions(-DRAPIDJSON_SSE2)

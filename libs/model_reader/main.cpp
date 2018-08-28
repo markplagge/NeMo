@@ -282,8 +282,28 @@ void tests() {
 
 
 }
-
+void test_itr(int *&vals){
+  for (int i = 0; i < 5; i ++){
+    *vals = i;
+    vals ++;
+  }
+}
 int main(int argc, char *argv[]) {
+  int testVals[16] = {-1};
+  int *p = testVals;
+  int *ptr = testVals;
+  test_itr(ptr);
+  for(auto x : testVals){
+    cout << x << " " ;
+  }
+  cout << "\n" << "test ptr: " << ptr << "\n";
+  *ptr = 100;
+  cout << "\n" << "change ptr 100: " << ptr << "\n";
+  for(auto x : testVals){
+    cout << x << " " ;
+  }
+
+  cout << "\n";
 //#ifdef DEBUG
 //  string test1 = "54x10";
 //  string test2 = "5:10";

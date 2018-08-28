@@ -14,7 +14,8 @@
 //#include "../lib/lua.h"
 //#include "../lib/lualib.h"
 //#include "../lib/lauxlib.h"
-
+#include <lauxlib.h>
+#include <lualib.h>
 /** Macro wrappers for interleaving time/axonids */
 #define EXTIME(x) EXHIGH(x)
 #define EXAXON(x) EXLOW(x)

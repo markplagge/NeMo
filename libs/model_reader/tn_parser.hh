@@ -1,14 +1,14 @@
 //
 // Created by Mark Plagge on 8/8/18.
 //
-/* Some setup for SSE2/4 and rapidjson */
-#if not defined(RAPIDJSON_SSE42) || not defined(RAPIDJSON_SSE2)
-#ifdef __SSE4_2__
-#define RAPIDJSON_SSE42 1
-#elif __SSE2__
-#define RAPIDJSON_SSE2 1
-#endif
-#endif
+/* Some setup for SSE2/4 and rapidjson - Removed and migrated to CMAKE */
+//#if not defined(RAPIDJSON_SSE42) || not defined(RAPIDJSON_SSE2)
+//#ifdef __SSE4_2__
+//#define RAPIDJSON_SSE42 1
+//#elif __SSE2__
+//#define RAPIDJSON_SSE2 1
+//#endif
+//#endif
 
 #include "rapidjson/document.h"
 #include "rapidjson/prettywriter.h"
@@ -41,12 +41,24 @@ vector<bool> hex2bool_insert(char hex);
 vector<bool> fullhex2bool(string hexstr);
 
 class TN_State_Wrapper {
-public:
+private:
+
   tn_neuron_state *tn;
+public:
+  tn_neuron_state *getTn() const {
+    return tn;
+  }
+  void setTn(tn_neuron_state *tn) {
+    TN_State_Wrapper::tn = tn;
+  }
+
+public:
+
   TN_State_Wrapper() {
     tn = (tn_neuron_state *) calloc(sizeof(tn_neuron_state), 1);
 
   }
+
 };
 
 class TN_Neuron_Core {
@@ -180,9 +192,9 @@ class TN_Core {
 private:
   //void convert_tn_arr(string tn_value);
   string coreletClass;
-  int coreletID;
+  int coreletId;
   int coreNumber;
-  vector<int> parentCorletID;
+  vector<int> parentCorletId;
   int layerNumber;
   string layerType;
   int id;
@@ -216,9 +228,11 @@ public:
   map<string, TN_Crossbar_Type> TN_Crossbar_Type_library;
   map<string, TN_Neuron_Core> TN_Neuron_Core_Library;
   map<int, TN_Neuron_Type> TN_Neuron_Library;
-  map<string, TN_Core> TN_Cores;
+
+  TN_State_Wrapper *generate_neuron_from_id(int coreID, int neuronID);
 
 };
+
 
 class TN_State_Worker {
 private:
@@ -493,35 +507,6 @@ public:
   TN_Wrapper get_neuron(string name);
 private:
   map<string, TN_Wrapper> neuron_types;
-
-};
-
-class TNParser {
-public:
-
-  TNParser(string filename) {
-    this->filename = filename;
-  }
-  TNParser() {
-    string fn = "./th_small_test.json";
-    this->filename = fn;
-  }
-
-  void parse_tn_json();
-  void create_lua();
-
-private:
-  string create_tn_string(string prototype_name);
-  string create_tn_string();
-  void load_file();
-  void write_lua_line();
-  void write_lua_header();
-  string filename;
-  ofstream json_file;
-  NeuronTypeLib neuron_templates;
-  map<string, CrossbarType> crossbar_templates;
-
-//  map<string,TN_Wrapper> neurons;
 
 };
 
