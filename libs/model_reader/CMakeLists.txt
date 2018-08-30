@@ -6,7 +6,8 @@ set(reader_srcs
 set(lib_srcs
         tn_parser.hh
         tn_parser.cpp
-        extern/json_dto.hh utils.cpp utils.hh)
+        extern/json_dto.hh utils.cpp utils.hh
+        extern/json.hpp)
 
 set(RapidJSON_INCLUDE_DIRS extern)
 message(STATUS "RJSON FLAGS: ${CMAKE_CXX_FLAGS}")

@@ -11,3 +11,7 @@
 	path = lua
 	url = https://github.com/markplagge/lua.git
 	branch = lua-5.1
+
+[submodule "libs/model_reader/extern/json"]
+	path = libs/model_reader/extern/json
+	url = https://github.com/nlohmann/json.git
