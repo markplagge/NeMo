@@ -22,12 +22,16 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include "json_dto.hh"
+//#include "json_dto.hh"
 #include <ross.h>
-#include "../../src/globals.h"
-#include "../../src/neuro/tn_neuron_struct.h"
 #include "utils.hh"
 #include <regex>
+#include "json.hpp"
+#include <stdio.h>
+#include "../../src/globals.h"
+#include "../../src/neuro/tn_neuron_struct.h"
+
+using json = nlohmann::json;
 //#include "../../src/neuro/tn_neuron.h"
 using namespace rapidjson;
 using namespace std;
@@ -35,49 +39,79 @@ using namespace std;
 #define CORE_SIZE 256
 #define AXONS_IN_CORE 256
 #define SYNAPSES_IN_CORE 1
+#define NUM_NEURON_WEIGHTS 4
 
 int char2int(char input);
 vector<bool> hex2bool_insert(char hex);
 vector<bool> fullhex2bool(string hexstr);
+/** json struct wrapper */
+struct tn_neuron_state_vecs{
+  tn_neuron_state *n;
+  vector<int> axonTypeVec;
+  vector<int> synapticWeightVec;
+  vector<bool> synapticConVec;
+  vector<bool> weightSelVec;
+};
+//void init_tn_neuron_state_vecs(*tn_neuron_state_vecs nvec,*tn_neuron_state n);
 
+/**
+ * Main Wrapper for the TN Struct used in NeMo
+ * Creates a new tn_neuron_state on construction
+ * Will contain to data functionality as well.
+ */
 class TN_State_Wrapper {
 private:
-
   tn_neuron_state *tn;
+
 public:
-  tn_neuron_state *getTn() const {
+  bool isValid;
+  int write_bin_data(int big_end, ostream out);
+  string generate_csv();
+  json generate_json(json j);
+  string generate_pycode();
+  tn_neuron_state *getTn() {
     return tn;
   }
-  void setTn(tn_neuron_state *tn) {
-    TN_State_Wrapper::tn = tn;
-  }
-
-public:
-
   TN_State_Wrapper() {
-    tn = (tn_neuron_state *) calloc(sizeof(tn_neuron_state), 1);
-
+    isValid = true;
   }
+  void init_empty() {
+    tn = (tn_neuron_state *) calloc(sizeof(tn_neuron_state), 1);
+    for (int i = 0; i < AXONS_IN_CORE; i++) {
+      tn->axonTypes[i] = -1;
+      tn->synapticConnectivity[i] = false;
+    }
+    for (int j = 0; j < NUM_NEURON_WEIGHTS; ++j) {
+      tn->synapticWeight[j] = -1;
+      tn->weightSelection[j] = false;
+
+    }
+  }
+  void initialize_state(vector<int> input_axon_connectivity,
+                        vector<short> input_axon_types,
+                        int output_core,
+                        int output_neuron,
+                        int source_core,
+                        int source_local,
+                        int dest_delay);
+
+  void initialize_state(int input_axon_connectivity[],
+                        short input_axon_types[],
+                        int output_core,
+                        int output_neuron,
+                        int source_core,
+                        int source_local,
+                        int dest_delay);
+
+  void initialize_state(tn_neuron_state *ext_n);
+  char *generate_lua();
 
 };
 
-class TN_Neuron_Core {
-  string type;
-  int source;
-  int dest_core;
-  int dest_axon;
-  int delay;
-};
-
-class TN_Crossbar_Row {
-public:
-
-  string type;
-  vector<bool> crossbar_row;
-  TN_Crossbar_Row(string synapse_row, string type);
-
-};
 class TN_Crossbar_Type {
+private:
+  short get_type(int loc);
+  short get_type(string type);
 public:
   string name;
   vector<vector<bool>> rows;
@@ -85,6 +119,7 @@ public:
   void add_synapse_row(string type, string synapses);
   void add_synapse_rows(vector<string> types, vector<string> synapses);
   vector<bool> get_connectivity(int neuron);
+  vector<short> get_types(int neuron);
 };
 
 class TN_Neuron_Type {
@@ -120,17 +155,24 @@ public:
   void set_name(string name);
   string get_name();
   int get_name_id();
-  tn_neuron_state *new_neuron_state(vector<int> input_axon_connectivity,
+  TN_State_Wrapper new_neuron_state(vector<unsigned int> input_axon_connectivity,
                                     vector<short> input_axon_types,
                                     int output_core,
                                     int output_neuron,
                                     int source_core,
                                     int source_local,
                                     int dest_delay);
+  TN_State_Wrapper new_neuron_state(TN_Crossbar_Type crossbar, int output_core, int output_neuron, int source_core,
+                                    int dest_delay, int neuron_id);
   void init_neuron_from_json_doc(Document json_doc);
   void init_neuron_from_json_arr(rapidjson::GenericValue<rapidjson::UTF8<char>,
                                                          rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> > &json_array);
+
+  /**
+   * TN_Neuron_Type() - inits the map-key pair system used for finding variables in the JSON file.
+   */
   TN_Neuron_Type() {
+
     var_types["name"] = 0;
     var_types["class"] = 1;
     var_types["sigma0"] = 2;
@@ -160,19 +202,26 @@ public:
   }
 
 };
+typedef struct Core_info {
+  int type;
+  int dendrite;
+  int destCore;
+  int destAxon;
+  int destDelay;
+} core_info;
 /**
  "core":{
-		"metadata":{
-			"coreletClass":"th_corelet_layer_cores",
-			"coreletId":2,
-			"coreNumber":4,
-			"parentCoreletId":[3,1,0],
-			"layerNumber":2,
-			"layerType":"conv"
-		},
-		"id":4,
-		"timeScaleExponent":0,
-		"rngSeed":4294967295,
+        "metadata":{
+            "coreletClass":"th_corelet_layer_cores",
+            "coreletId":2,
+            "coreNumber":4,
+            "parentCoreletId":[3,1,0],
+            "layerNumber":2,
+            "layerType":"conv"
+        },
+        "id":4,
+        "timeScaleExponent":0,
+        "rngSeed":4294967295,
 
 "neurons":{
 
@@ -190,6 +239,7 @@ public:
  */
 class TN_Core {
 private:
+
   //void convert_tn_arr(string tn_value);
   string coreletClass;
   int coreletId;
@@ -210,13 +260,29 @@ private:
   string crossbar_name;
 public:
 
- //void init(rapidjson::GenericObject obj);
+  int getLayerNumber() const;
+  const string &getLayerType() const;
+  int getId() const;
+  const string &getCrossbar_name() const;
+public:
+
+  //void init(rapidjson::GenericObject obj);
   void init();
- void init_core_from_itr(Value::ConstMemberIterator itr);
 
+  void init_core_from_itr(Value::ConstMemberIterator itr);
+  int get_dendrite_for_neuron(int neuronID);
+  int get_neuron_type(int neuronID);
+  int get_neuron_dest_core(int neuronID);
+  int get_neuron_axon(int neuronID);
+  int get_neuron_delay(int neuronID);
 
+  core_info *get_neuron_info(int neuronID);
 
 };
+
+/**
+ * TN_Main - Main wrapper class for the neuron model. Contains TN_Neuron
+ */
 class TN_Main {
 public:
   int core_count;
@@ -226,287 +292,110 @@ public:
 
   int rngSeed;
   map<string, TN_Crossbar_Type> TN_Crossbar_Type_library;
-  map<string, TN_Neuron_Core> TN_Neuron_Core_Library;
+  map<int, TN_Core> TN_Neuron_Core_Library;
   map<int, TN_Neuron_Type> TN_Neuron_Library;
 
-  TN_State_Wrapper *generate_neuron_from_id(int coreID, int neuronID);
+  TN_State_Wrapper generate_neuron_from_id(int coreID, int neuronID);
+  tn_neuron_state *generate_neurons_in_core_struct(int coreID);
+  vector<TN_State_Wrapper> generate_neurons_in_core_vec(int coreID);
+
+  map<int, TN_State_Wrapper> generate_all_neurons_wrap();
+
+  //Debug options
 
 };
 
+typedef enum OUT_MODE_E {
+  TN_OUT_CSV = 0x01,
+  TN_OUT_BIN = 0x02,
+  TN_OUT_LUA = 0x04,
+  TN_OUT_PY = 0x08,
+  TN_OUT_JSON = 0x010
+} out_mode_opt;
 
-class TN_State_Worker {
+/**
+ * TN_Output
+ * Class that wraps output functionality for the neuron model,
+ * Manages files and data.
+ */
+class TN_Output {
 private:
+  TN_Main main_model;
   vector<TN_State_Wrapper> neurons;
-//  map<string,TN_Core_Map> cores;
-  map<string, TN_Crossbar_Type> crossbars;
+  string output_filename;
+  string out_fn_csv;
+  string out_fn_bin;
+  string out_fn_lua;
+  string out_fn_py;
+  string out_fn_json;
+  unsigned char output_mode;
+
+  int write_csv();
+  int write_bin();
+  int write_lua();
+  int write_py();
+  int write_json();
 
 public:
-  void parse_tn_json();
-};
+  TN_Output(string filename, TN_Main model, unsigned char output_mode) {
+    main_model = model;
+    output_filename = filename;
+    this->output_mode = output_mode;
+    int mask = 1;
+    std::size_t found_ext;
 
-class TN_Wrapper {
-public:
-  //Giant parameterized TN_Wrapper creation with variable numbers of sigmas and stuff?
-  //Giant parameterized TN_Wrapper creation
-  tn_neuron_state *create_tn_state() {
+    for(const auto &x : model.TN_Neuron_Core_Library){
+      for (auto n : model.generate_neurons_in_core_vec(x.first)) {
+        neurons.push_back(n);
 
-  }
-  void init(string name,
-            string tn_class,
-            int sigma0,
-            int sigma1,
-            int sigma2,
-            int sigma3,
-            int s0,
-            int s1,
-            int s2,
-            int s3,
-            bool b0,
-            bool b1,
-            bool b2,
-            bool b3,
-            int sigma_lambda,
-            int lambda,
-            bool c,
-            bool epsilon,
-            int alpha,
-            int beta,
-            int TM,
-            int gamma,
-            bool kappa,
-            int sigma_VR,
-            int VR,
-            int V) {
-    this->name = name;
-    this->tn_id = tn_class;
-    this->sigmas.insert(this->sigmas.end(), {sigma0, sigma1, sigma2, sigma3});
-    s.insert(s.end(), {s0, s1, s2, s3});
-    b.insert(b.end(), {b0, b1, b2, b3});
-    sigma_lmbda = sigma_lambda;
-    lmbda = lambda;
-    this->c = c;
-    this->epsilon = epsilon;
-    this->alpha = alpha;
-    this->beta = beta;
-    this->TM = TM;
-    this->gamma = gamma;
-    this->kappa = kappa;
-    this->sigmaVR = sigma_VR;
-    this->VR = VR;
-    this->V = V;
+      }
 
-  }
-  /*{"name":"N0000001F","class":"NeuronGeneral",
- * "sigma0":-1,"sigma1":1,"sigma2":1,"sigma3":1,
- * "s0":1,"s1":1,"s2":0,"s3":0,"b0":false,"b1":false,
- * "b2":false,"b3":false,"sigma_lambda":1,"lambda":5,
- * "c_lambda":false,"epsilon":false,"alpha":1,"beta":0,
- * "TM":0,"gamma":0,"kappa":true ,"sigma_VR":1,"VR":0,"V":0} */
-  const string &getClass() const {
-    return tn_id;
-  }
+    }
 
-  void init_tn_struct();
 
-  /**
-   * creates default TN Neuron
-   */
-  TN_Wrapper() {
-    init("default", "default", 0, 0, 0, 0, 0, 0, 0, 0,
-         false, false, false, false, 0, 0,
-         false, false,
-         0, 0, 0, 0,
-         false,
-         0, 0, 0);
-  }
-  TN_Wrapper(Value &jsVal) {
-    const char *p = "neuronTypes";
-    //Value &jsVal;  = jsVa;
-    init(
-        jsVal["name"].GetString(),
-        jsVal["class"].GetString(),
-        jsVal["sigma0"].GetInt(),
-        jsVal["sigma1"].GetInt(),
-        jsVal["sigma2"].GetInt(),
-        jsVal["sigma3"].GetInt(),
-        jsVal["s0"].GetInt(),
-        jsVal["s1"].GetInt(),
-        jsVal["s2"].GetInt(),
-        jsVal["s3"].GetInt(),
-        jsVal["b0"].GetBool(),
-        jsVal["b1"].GetBool(),
-        jsVal["b2"].GetBool(),
-        jsVal["b3"].GetBool(),
-        jsVal["sigma_lambda"].GetInt(),
-        jsVal["lambda"].GetInt(),
-        jsVal["c_lambda"].GetBool(),
-        jsVal["epsilon"].GetBool(),
-        jsVal["alpha"].GetInt(),
-        jsVal["beta"].GetInt(),
-        jsVal["TM"].GetInt(),
-        jsVal["gamma"].GetInt(),
-        jsVal["kappa"].GetBool(),
-        jsVal["sigma_VR"].GetInt(),
-        jsVal["VR"].GetInt(),
-        jsVal["V"].GetInt()
-    );
-  }
-  TN_Wrapper(Value &jsVal, int pos) {
-    const char *p = "neuronTypes";
-    //Value &jsVal;  = jsVa;
-    init(
-        jsVal["name"].GetString(),
-        jsVal["class"].GetString(),
-        jsVal["sigma0"].GetInt(),
-        jsVal["sigma1"].GetInt(),
-        jsVal["sigma2"].GetInt(),
-        jsVal["sigma3"].GetInt(),
-        jsVal["s0"].GetInt(),
-        jsVal["s1"].GetInt(),
-        jsVal["s2"].GetInt(),
-        jsVal["s3"].GetInt(),
-        jsVal["b0"].GetBool(),
-        jsVal["b1"].GetBool(),
-        jsVal["b2"].GetBool(),
-        jsVal["b3"].GetBool(),
-        jsVal["sigma_lambda"].GetInt(),
-        jsVal["lambda"].GetInt(),
-        jsVal["c_lambda"].GetBool(),
-        jsVal["epsilon"].GetBool(),
-        jsVal["alpha"].GetInt(),
-        jsVal["beta"].GetInt(),
-        jsVal["TM"].GetInt(),
-        jsVal["gamma"].GetInt(),
-        jsVal["kappa"].GetBool(),
-        jsVal["sigma_VR"].GetInt(),
-        jsVal["VR"].GetInt(),
-        jsVal["V"].GetInt()
-    );
-    //Document level code
-//    init(
-//        jsVal[p][pos]["name"].GetString(),
-//        jsVal[p][pos]["class"].GetString(),
-//        jsVal[p][pos]["sigma0"].GetInt(),
-//        jsVal[p][pos]["sigma1"].GetInt(),
-//        jsVal[p][pos]["sigma2"].GetInt(),
-//        jsVal[p][pos]["sigma3"].GetInt(),
-//        jsVal[p][pos]["s0"].GetInt(),
-//        jsVal[p][pos]["s1"].GetInt(),
-//        jsVal[p][pos]["s2"].GetInt(),
-//        jsVal[p][pos]["s3"].GetInt(),
-//        jsVal[p][pos]["b0"].GetBool(),
-//        jsVal[p][pos]["b1"].GetBool(),
-//        jsVal[p][pos]["b2"].GetBool(),
-//        jsVal[p][pos]["b3"].GetBool(),
-//        jsVal[p][pos]["sigma_lambda"].GetInt(),
-//        jsVal[p][pos]["lambda"].GetInt(),
-//        jsVal[p][pos]["c_lambda"].GetBool(),
-//        jsVal[p][pos]["epsilon"].GetBool(),
-//        jsVal[p][pos]["alpha"].GetInt(),
-//        jsVal[p][pos]["beta"].GetInt(),
-//        jsVal[p][pos]["TM"].GetInt(),
-//        jsVal[p][pos]["gamma"].GetInt(),
-//        jsVal[p][pos]["kappa"].GetInt(),
-//        jsVal[p][pos]["sigma_VR"].GetInt(),
-//        jsVal[p][pos]["VR"].GetInt(),
-//        jsVal[p][pos]["V"].GetInt()
-//        );
+
+    while (output_mode) {
+      switch (output_mode & mask) {
+      case TN_OUT_CSV:cout << "Output CSV file. \n";
+        found_ext = filename.find("csv");
+        if (found_ext == std::string::npos) {
+          out_fn_csv = filename + ".csv";
+        }
+        break;
+      case TN_OUT_BIN:cout << "Output BIN file. \n";
+        found_ext = filename.find("dat");
+        if (found_ext == std::string::npos) {
+          out_fn_csv = filename + ".dat";
+        }
+        break;
+      case TN_OUT_LUA:cout << "Output LUA file \n";
+        found_ext =  filename.find("nfg1");
+        if (found_ext == std::string::npos) {
+          out_fn_csv = filename + ".nfg1";
+        }
+        break;
+      case TN_OUT_PY:cout << "Output PY File \n";
+        found_ext = filename.find("py");
+        if (found_ext != std::string::npos) {
+          out_fn_csv = filename + ".py";
+        }
+        break;
+      case TN_OUT_JSON:
+        found_ext = filename.find("json");
+        if (found_ext != std::string::npos) {
+          out_fn_csv = filename + ".json";
+        }
+        break;
+      }
+      output_mode &= ~mask;
+      mask <<= 1;
+
+    }
 
   }
-  template<typename Json_Io>
-  void json_io(Json_Io &io) {
-    io & json_dto::mandatory("name", name) &
-        json_dto::mandatory("class", tn_id) &
-        json_dto::mandatory("sigma0", sigma0) &
-        json_dto::mandatory("sigma1", sigma1) &
-        json_dto::mandatory("sigma2", sigma2) &
-        json_dto::mandatory("sigma3", sigma3) &
-        json_dto::mandatory("s0", s0) &
-        json_dto::mandatory("s1", s1) &
-        json_dto::mandatory("s2", s2) &
-        json_dto::mandatory("s3", s3) &
-        json_dto::mandatory("b0", b0) &
-        json_dto::mandatory("b1", b1) &
-        json_dto::mandatory("b2", b2) &
-        json_dto::mandatory("b3", b3) &
-        json_dto::mandatory("sigma_lambda", sigma_lmbda) &
-        json_dto::mandatory("lambda", lmbda) &
-        json_dto::mandatory("c_lambda", c) &
-        json_dto::mandatory("epsilon", epsilon) &
-        json_dto::mandatory("alpha", alpha) &
-        json_dto::mandatory("beta", beta) &
-        json_dto::mandatory("TM", TM) &
-        json_dto::mandatory("gamma", gamma) &
-        json_dto::mandatory("kappa", kappa) &
-        json_dto::mandatory("sigma_VR", sigmaVR) &
-        json_dto::mandatory("VR", VR) &
-        json_dto::mandatory("V", V);
-  }
-private:
 
-  string name;
-public:
-  const string &getName() const;
-  void setName(const string &name);
-  tn_neuron_state *tn_state;
-private:
-  string tn_id;
-  vector<int> sigmas;
-  vector<int> s;
-  vector<bool> b;
-  bool epsilon;
-  int sigma_lmbda;
-  int lmbda;
-  bool c;
-  int alpha;
-  int beta;
-  int TM;
-  int gamma;
-  bool kappa;
-  int sigmaVR;
-  int VR;
-  int V;
-  // holders for ind. data:
-  int sigma0;
-  int sigma1;
-  int sigma2;
-  int sigma3;
-  int s0;
-  int s1;
-  int s2;
-  int s3;
-  bool b0;
-  bool b1;
-  bool b2;
-  bool b3;
+  int write_data();
 
-};
-
-class model_info {
-  int coreCount;
-  string neuronClass;
-  int crossbarSize;
-  string crossbarclass;
-
-};
-class CrossbarRow {
-  string type;
-  string synapses;
-  int synapse_values[];
-};
-class CrossbarType {
-  string name;
-  vector<CrossbarRow> crossbar;
-
-};
-
-class NeuronTypeLib {
-public:
-  //neuron_type_library()
-  void gen_type_map(Value &n_types);
-  TN_Wrapper get_neuron(string name);
-private:
-  map<string, TN_Wrapper> neuron_types;
 
 };
 

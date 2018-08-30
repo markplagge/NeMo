@@ -88,16 +88,20 @@ typedef struct TN_MODEL {
 
   bool isActiveNeuron; /**!< If true, this neuron is an inactive one in the
 						  simulation */
+
+
+  int firecount;
+  tw_stime lastFire;
+  long outputNeuronDest;
+  long outputCoreDest;
+
   int axonTypes[AXONS_IN_CORE];
   int synapticWeight[NUM_NEURON_WEIGHTS];
   bool synapticConnectivity[AXONS_IN_CORE];  //!< is there a connection between axon i and
   //!neuron j?
   /** stochastic weight mode selection. $b_j^{G_i}$ */
-  bool weightSelection[4];
-  int firecount;
-  tw_stime lastFire;
-  long outputNeuronDest;
-  long outputCoreDest;
+  bool weightSelection[NUM_NEURON_WEIGHTS];
+
 
 
   // TODO - print address offsets fof structs for performance

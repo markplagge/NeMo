@@ -302,8 +302,12 @@ int main(int argc, char *argv[]) {
   for(auto x : testVals){
     cout << x << " " ;
   }
-
   cout << "\n";
+
+  string test_e = "S1";
+  std::string::size_type pos;
+  test_e[0] = ' ';
+  cout << "Result: " << stoi(test_e,&pos,10) << "\n";
 //#ifdef DEBUG
 //  string test1 = "54x10";
 //  string test2 = "5:10";
@@ -317,21 +321,44 @@ int main(int argc, char *argv[]) {
 //  testCoreGen();
 //#else
     string filename;
+    string save_file;
     if (argc != 3) {
         cout << "TN -> NeMo Parser \n Usage: parser PATH_TO_TN_JSON_FILE PATH_TO_TN_SPIKE_FILE\n";
         cout << " Got " << argc << " arguments";
         //Testing code:
         filename = "/Users/markplagge/dev/NeMo/scripts/model/th_corelet_net.json";
+        save_file = "neuron_model";
     }else{
         filename = argv[1];
+        save_file = argv[2];
     }
 
   cout <<"----Parsing----\n";
   //Test crossbar logic
   //char *filename = "/Users/markplagge/dev/NeMo/scripts/model/th_corelet_net.json";
     
-    TN_Main model = create_tn_data(filename);
-    cout << "\n Created Model. \n";
-    
+  TN_Main model = create_tn_data(filename);
+  cout << "\n Created Model. \n";
+
+  unsigned char o;
+  o =  TN_OUT_CSV | TN_OUT_LUA | TN_OUT_PY | TN_OUT_BIN;
+  TN_Output output_test("filename",model,o);
+
+  //test a core's neuron creation.
+  vector<TN_State_Wrapper> core_4_test = model.generate_neurons_in_core_vec(4);
+  json j;
+  j = core_4_test[0].generate_json(j);
+  cout << j.dump() << "\n";
+  for (auto it:core_4_test){
+    cout << it.getTn()->myLocalID << ",";
+
+  }
+  cout << "\n testing JSON \n ";
+
+  TN_Output out(save_file,model,TN_OUT_JSON );
+
+
+
+
 //#endif
 }
