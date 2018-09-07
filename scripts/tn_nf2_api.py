@@ -1,6 +1,8 @@
-import io
-import numpy as np
 import multiprocessing as mp
+
+import click
+import numpy as np
+
 
 class TN(object):
     type = "TN"
@@ -23,7 +25,7 @@ class TN(object):
     gamma = 0  # Vj(t) reset mode
     kappa = 0  # negative reset mode, sets negative threshold mode to reset or saturate
     signalDelay = 0  # TN Signal Delay option.
-    destCore = 0  # dest simulation core
+    destCore = -100  # dest simulation core
     destLocal = 0  # dest simulation neuron
     outputNeuron = 0  # is this a neuron that belongs to an output layer?
     selfFiring = 0  # is this neuron capable of spontaneous firing?
@@ -81,6 +83,8 @@ class TN(object):
 
     def toNeMoStr(self):
         self.setOut()
+        if self.destCore == 0:
+            click.secho("Neuron {},{} has core 0 destination!".format(self.coreID, self.localID))
         self.sanity_check()
 
         hdr = ["type", "coreID", "localID"]
@@ -118,8 +122,9 @@ class ConfigFile(object):
     fileDat = []
     neuronQueue = mp.Queue()
     datQueue = mp.Queue()
-
+    done_announce = False
     def __init__(self, destFileName, nc=1024, npc=256, nw=4):
+        click.secho("Main TN reader class init function", fg='yellow')
         if ".nfg1" not in destFileName:
             destFileName = f"{destFileName}.nfg1"
         self.ns_cores = nc
@@ -142,10 +147,17 @@ class ConfigFile(object):
         self.fhandle.close()
 
     def addNeuron(self, neuron):
+        if not self.done_announce:
+            click.secho("Adding Neuron.", fg="yellow")
+            self.done_announce = True
         self.fileDat.append(f"{neuron.toNeMoStr()}")
+
 
     def addMPNeuron(self, neuron):
         self.neuronQueue.put(neuron)
+        if not self.done_announce:
+            self.done_announce = True
+            click.secho("Adding MP Neuron.", fg="red")
 
     def calcMPNeuron(self,neuron):
         self.datQueue.put( f"{neuron.toNeMoStr()}" )
@@ -158,8 +170,31 @@ class ConfigFile(object):
             self.fileDat.append(d)
 
 
+import collections
 
 
+class ConfigFileDebug(ConfigFile):
+    def __init__(self, destFileName, nc=1024, npc=256, nw=4):
+        click.secho("Debug Config File active", fg='yellow')
+        super().__init__(destFileName, nc, npc, nw)
+        # debugfn = self.destination.replace('.nfg1','_debug.csv')
+        debugfn = self.destination + "_debug.csv"
+        self.debugFile = open(debugfn, 'w')
+
+        click.secho("Saving degug info to " + debugfn, fg="green", bold=True)
+        self.debugFile.write("source_core,dest_core")
+        self.core_cons = collections.defaultdict(int)
+        click.secho('Debug init.', fg="yellow")
+
+    def addNeuron(self, neuron):
+        self.core_cons[str(neuron.coreID)] = neuron.destCore
+        super().addNeuron(neuron)
+
+    def closeFile(self):
+        for k in self.core_cons.keys():
+            self.debugFile.write(f"{k},{self.core_cons[k]}\n")
+        self.debugFile.close()
+        super().closeFile()
 
 
 

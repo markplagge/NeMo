@@ -11,8 +11,8 @@
 #define USE_COUCH @USE_COUCH@
 #define COUCH_ADDRESS "@NeMo_COUCH_ADD@"
 #define nonC11  @NON11@
-#define MODEL_FILE "@NeMo_MODEL_FILE@"
-#define SPIKE_FILE "@NeMo_SPIKE_FILE@"
+//#define MODEL_FILE "@NeMo_MODEL_FILE@"
+//#define SPIKE_FILE "@NeMo_SPIKE_FILE@"
 /** Run-Time options. Defaults are set in cmake. Variables are declared in globals.h. */
 #define DEBUG @NeMo_DEBUG@
 

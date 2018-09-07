@@ -3,7 +3,6 @@
 //
 
 #include "tn_neuron.h"
-#include "../layer_map/layer_map_lib.h"
 
 /** Testing Values @{*/
 #ifdef NET_IO_DEBUG
@@ -730,7 +729,16 @@ void tn_create_neuron(id_type coreID, id_type nID,
   n->isSelfFiring =
       false;  //!@TODO: Add logic to support self-firing (spontanious) neurons
 }
-
+void tn_create_neuron_encoded_rv_non_global(
+                                        int coreID, int nID, bool synapticConnectivity[NEURONS_IN_CORE],
+                                        short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
+                                        bool epsilon, int sigma_l, int lambda, bool c, int alpha,
+                                        int beta, int TM, int VR, int sigmaVR, int gamma, bool kappa,
+                                        tn_neuron_state *n, int signalDelay, int destCoreID,
+                                       int destAxonID){
+    uint64_t dest_global = getNeuronGlobal(destCoreID, destAxonID);
+    tn_create_neuron_encoded_rv(coreID, nID, synapticConnectivity, G_i, sigma, S, b, epsilon, sigma_l, lambda, c, alpha, beta, TM, VR, sigmaVR, gamma, kappa, n, signalDelay, dest_global, destAxonID);
+}
 void tn_create_neuron_encoded_rv(
     id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
     short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
@@ -952,13 +960,16 @@ void parseCSVCreateTN(tn_neuron_state *st, csvNeuron raw) {
     globalDest = getGIDFromLocalIDs(destCore, destLocal);
   }
   TN_set_neuron_dest(signalDelay, globalDest, st);
-  if (destCore < 0) {
-    st->outputGID = -1;
-  }
-
   st->isOutputNeuron = nextToI();
   st->isSelfFiring = nextToI();
   st->isActiveNeuron = true;
+  if (destCore < 0) {
+    st->outputGID = getGIDFromLocalIDs(CORES_IN_SIM + 1, NEURONS_IN_CORE + 1);
+    st->isSelfFiring = true;
+
+  }
+
+
   //set up PRNG masks:
 
 
@@ -967,6 +978,7 @@ void parseCSVCreateTN(tn_neuron_state *st, csvNeuron raw) {
 
 }
 #define LB sprintf(em, "%s\n%s", em,linebreak)
+
 void modelErr(char *element, char *filename, id_type coreID, id_type lID, char *tp, char *fnDat, int codeline) {
   char *em = calloc(4096, sizeof(char));
   char *linebreak = calloc(128, sizeof(char));
@@ -1009,23 +1021,28 @@ int safeGetArr(int direct, char *lutName, char *dirName, long vars[],
   if (validation==expectedParams) {
     return validation;
   } else if (validation==0) {
-    modelErr(pn, MODEL_FILE, cid, lid, ntype, errtps[0], 917);
+    modelErr(pn, NEMO_MODEL_FILE_PATH, cid, lid, ntype, errtps[0], 917);
 
   } else if (validation < expectedParams && validation > 0) {
-    modelErr(pn, MODEL_FILE, cid, lid, ntype, errtps[1], 917);
+    modelErr(pn, NEMO_MODEL_FILE_PATH, cid, lid, ntype, errtps[1], 917);
   } else if (validation > expectedParams) {
-    modelErr(pn, MODEL_FILE, cid, lid, ntype, errtps[3], 917);
+    modelErr(pn, NEMO_MODEL_FILE_PATH, cid, lid, ntype, errtps[3], 917);
   } else {
-    modelErr(pn, MODEL_FILE, cid, lid, ntype, errtps[2], 917);
+    modelErr(pn, NEMO_MODEL_FILE_PATH, cid, lid, ntype, errtps[2], 917);
   }
   return validation;
 }
 //**** Some loader helper macros.
+//! Debug network
+FILE *core_connectivity_map;
 //! @TODO: Move these helper macros somewhere better! .
 #define LGT(V) ( lGetAndPushParam( luT( (V) ) , 0, NULL ) )
 //#define GA(N, T) (getArray( (#N) , &(N), (T) ))
 #define TID core, nid, "TN"
+static long num_neg_found = 0;
 void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {
+  static int core_con_open = 0;
+
   int extraParamCache = 32;
   // Set up neuron - first non array params:
   tw_lpid outputGID = 0;
@@ -1036,6 +1053,17 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {
 
   outputCore = lGetAndPushParam("destCore", 0, NULL);
   outputLID = lGetAndPushParam("destLocal", 0, NULL);
+#ifdef DEBUG
+  static int found_one = 0;
+
+  if (outputCore < -100) {
+    if (found_one==0) {
+      tw_printf(TW_LOC, "Found a negative core! Good! %lli", outputCore);
+      found_one = 1;
+    }
+    num_neg_found++;
+  }
+#endif
   if (outputCore < 0 || outputLID < 0) {
     //st->outputGID = 0;
     st->isOutputNeuron = true;
@@ -1146,9 +1174,11 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {
     // printf("err cond 1.\n");
     //st->isActiveNeuron = false;
   }
+
   clearNeuron(core, nid);
   clearStack();
 }
+
 
 /** @} */
 /** attempts to find this neuron's def. from the file input.
@@ -1159,22 +1189,29 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {
 void TNCreateFromFile(tn_neuron_state *s, tw_lp *lp) {
 
   static int needannounce = 1;
+
   //first, get our Neuron IDs:
   id_type core = getCoreFromGID(lp->gid);
   id_type nid = getNeuronLocalFromGID(lp->gid);
   s->myCoreID = core;
   s->myLocalID = nid;
   char *nt = "TN";
-  int nNotFound = lookupAndPrimeNeuron(core, nid, nt);
-  if (DBG_MODEL_MSGS) {
-    printf("Found status: %i \n ", nNotFound);
-  }
 
-  if (nNotFound) {
-    s->isActiveNeuron = false;
+  //If we are using JSON, call the JSON loader lib instead of the LUA stack
+  if(NEMO_MODEL_IS_TN_JSON){
+    loadNeuronFromJSON(core,nid,s);
+  }else {
+    int nNotFound = lookupAndPrimeNeuron(core, nid, nt);
+    if (DBG_MODEL_MSGS) {
+      printf("Found status: %i \n ", nNotFound);
+    }
 
-  } else {
-    TNPopulateFromFile(s, lp);
+    if (nNotFound) {
+      s->isActiveNeuron = false;
+
+    } else {
+      TNPopulateFromFile(s, lp);
+    }
   }
 
   if (needannounce && (g_tw_mynode==0) && s->isOutputNeuron) {
@@ -1191,12 +1228,37 @@ void TNCreateFromFile(tn_neuron_state *s, tw_lp *lp) {
 
 void TN_pre_run(tn_neuron_state *s, tw_lp *me) {
   static int clean = 0;
+  static int core_con_open = 0;
   if (!clean) {
+#ifdef DEBUG
+    tw_printf(TW_LOC, "Lua cleanup from neuron.\n");
+    tw_printf(TW_LOC, " Found %lli debug cores.\n", num_neg_found);
+#endif
     closeLua();
     clean = 1;
   }
+//  if (SAVE_NETWORK_STRUCTURE) {
+//    saveNeuronPreRun();
+//  }
   if (SAVE_NETWORK_STRUCTURE) {
+    if (core_con_open==0) {
+#ifdef DEBUG
+      tw_printf(TW_LOC, "Core Connectivity Map Init.\n");
+#endif
+      char *fn = calloc(128, sizeof(char));
+      sprintf(fn, "core_con_r%li.csv", g_tw_mynode);
+      core_connectivity_map = fopen(fn, "w");
+      free(fn);
+      core_con_open = 1;
+      if (g_tw_mynode==0) {
+        fprintf(core_connectivity_map, "from_core,to_core\n");
+      }
+
+    }
+
+    fprintf(core_connectivity_map, "%llu,%llu\n", s->myCoreID, getCoreFromGID(s->outputGID));
     saveNeuronPreRun();
+
   }
 }
 
@@ -1207,6 +1269,18 @@ void TN_pre_run(tn_neuron_state *s, tw_lp *me) {
  * */
 
 void TN_init(tn_neuron_state *s, tw_lp *lp) {
+#ifdef DEBUG
+  static an = 0;
+  if (!an) {
+    if (SAVE_NETWORK_STRUCTURE) {
+      tw_printf(TW_LOC, "SAVING NETWORK STRUCTURE\n");
+    } else {
+      tw_printf(TW_LOC, "NOT SAVING NETWORK STRUCTURE\n");
+    }
+    an = 1;
+  }
+
+#endif
   static u_int8_t fileInit = 0;
   if (DO_DUMPI) {
     if (!fileInit) {
@@ -1241,8 +1315,13 @@ void TN_init(tn_neuron_state *s, tw_lp *lp) {
     TN_create_saturation_neuron(s, lp);
   }
   if (SAVE_NETWORK_STRUCTURE) {
+    //tw_printf(TW_LOC,"Network structure saving...\n");
     saveNeuronNetworkStructure(s);
 
+  } else {
+//#ifdef DEBUG
+//    tw_printf(TW_LOC, "Not saving network structure?\n");
+//#endif
   }
 
 }
@@ -1285,6 +1364,12 @@ void TN_reverse_event(tn_neuron_state *s, tw_bf *CV, messageData *m,
     tw_rand_reverse_unif(lp->rng);
 }
 
+/* Debug - special case - core 0 seems to be hyper-active */
+#ifdef DEBUG
+FILE *debug_core;
+int debug_core_open = 0;
+#endif
+
 /** TN_commit is a function called on commit. This is used for management of
  * neurons! */
 void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
@@ -1294,8 +1379,8 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
   //  saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),0);
   //}
   static int displayFlag = 0;
-  if(displayFlag == 0){
-    if(s->myCoreID == 4041){
+  if (displayFlag==0) {
+    if (s->myCoreID==4041) {
       printf("------------------------------------------------------------------------------------------------\n");
       printf("Neuron 4041 commit fn. Dest neuron is %i\n", s->outputNeuronDest);
       displayFlag = 1;
@@ -1312,7 +1397,7 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
       outNeuron = getLocalFromGID(s->outputGID);
     }
     /////output neurons do not send messages to the rest of the model. But we save the output.
-    if (SAVE_SPIKE_EVTS || SAVE_OUTPUT_NEURON_EVTS) {
+    if (SAVE_OUTPUT_NEURON_EVTS) {
       saveNeuronFire(tw_now(lp) + 1, s->myCoreID, s->myLocalID, s->outputGID,
                      outCore, outNeuron, s->isOutputNeuron);
     }
@@ -1327,6 +1412,30 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
     setrnd(lp);
     saveSendMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp), 0, dumpi_out);
   }
+#ifdef DEBUG
+  // Debug - special log case for neuron 0
+  if (!debug_core_open) {
+    debug_core_open = 1;
+    debug_core = fopen("debug_core_0.csv", "w");
+    fprintf(debug_core, "TYPE,CORE_ID,NEURON_ID,SEND_GID,SEND_CORE,SEND_AXON,TIME,RCV_FROM_AXON\n");
+  }
+  if (getCoreFromGID(lp->gid)==0) { //&& cv->c0){
+    // core 0 fired
+    char tp;
+    int recv_axon = -1;
+    if (cv->c0) {
+      tp = 'S';
+//      fprintf(debug_core,"%c,%llu,%llu,%llu,%li,%li,%f,%i\n",tp,s->myCoreID,s->myLocalID,s->outputGID,
+//              s->outputCoreDest,s->outputNeuronDest,tw_now(lp),recv_axon);
+    } else {
+      tp = 'R';
+      recv_axon = m->localID;
+    }
+    fprintf(debug_core, "%c,%llu,%llu,%llu,%li,%li,%f,%i\n", tp, s->myLocalID, s->myCoreID, s->outputGID,
+            s->outputCoreDest, s->outputNeuronDest, tw_now(lp), recv_axon);
+
+  }
+#endif
 }
 
 /** @todo: fix this remote value */
@@ -1341,9 +1450,17 @@ void prhdr(bool *display, char *hdr) {
 
 void TN_final(tn_neuron_state *s, tw_lp *lp) {
   static int fileOpen = 1;
+  if (fileOpen) {
+    if (DO_DUMPI) {
+      fclose(dumpi_out);
+      fileOpen = 0;
+    }
+    if (SAVE_NETWORK_STRUCTURE) {
+      fclose(core_connectivity_map);
+    }
+  }
   if (DO_DUMPI && fileOpen) {
-    fclose(dumpi_out);
-    fileOpen = 0;
+
   }
   if (g_tw_synchronization_protocol==OPTIMISTIC_DEBUG) {
     // Alpha, SOPS should be zero. HeartbeatOut should be false.

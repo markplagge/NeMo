@@ -126,13 +126,13 @@ int testImport() {
 
 char *genSelectQuery(id_type axon, id_type core) {
   char *query = calloc(sizeof(char), 1024);
-  sprintf(query, "%s %i %s %i %s", q1, axon, q2, core, q3);
+  sprintf(query, "%s %lli %s %lli %s", q1, axon, q2, core, q3);
   return query;
 }
 
 char *genCountQuery(id_type axon, id_type core) {
   char *query = calloc(sizeof(char), 1024);
-  sprintf(query, "%s %i %s %i %s", cntq, axon, q2, core, q3);
+  sprintf(query, "%s %lli %s %lli %s", cntq, axon, q2, core, q3);
   return query;
 }
 
@@ -368,7 +368,7 @@ int spikeFromAxonComplete(void *timeList) {
  * @return
  */
 int openSpikeFile() {
-  connectToDB(SPIKE_FILE);
+  connectToDB(NEMO_SPIKE_FILE_PATH);
   fullQ = (char *) calloc(sizeof(char), 2048);
   coreSTR = (char *) calloc(sizeof(char), 1024);
 }
@@ -377,7 +377,7 @@ int openSpikeFile() {
  * @return
  */
 int closeSpikeFile() {
-  return closeDB(SPIKE_FILE);
+  return closeDB(NEMO_SPIKE_FILE_PATH);
 }
 
 /**

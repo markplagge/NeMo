@@ -16,7 +16,11 @@
 #include <stdbool.h>
 #include <limits.h>
 #include <math.h>
+#ifdef __cplusplus
+#include "nemo_config.h"
+#else
 #include <nemo_config.h>
+#endif
 #include "ross.h"
 
 /** @defgroup tempConfig Temporary configuration globals
@@ -42,7 +46,7 @@
  */
 /**@{  */
 
-typedef uint_fast64_t
+typedef int_fast64_t
     id_type; //!< id type is used for local mapping functions - there should be $n$ of them depending on CORE_SIZE
 typedef int32_t volt_type; //!< volt_type stores voltage values for membrane potential calculations
 typedef int64_t weight_type;//!< seperate type for synaptic weights.
@@ -389,12 +393,17 @@ EXT char DUMPI_NOISE;
 
 //#define N_FIRE_LINE_SIZE 128
 /** @} */
-#endif
+
 
 
 /** @defgroup fileNames File Names
  * Vars that manage file names for IO.
- * These variables are declared/init in input.c and
- * output.c @{*/
-
+ * These variables include the paths to the model file,
+ * the path to the spike input file,
+ * and file loading options.
+ * @{*/
+EXT char NEMO_MODEL_FILE_PATH[512];
+EXT char NEMO_SPIKE_FILE_PATH[512];
+EXT bool NEMO_MODEL_IS_TN_JSON;
 /** @} */
+#endif
