@@ -2,7 +2,7 @@
 // Created by Mark Plagge on 8/8/18.
 //
 
-#include "tn_parser.hh"
+#include "include/tn_parser.hh"
 
 int char2int(char input) {
 
@@ -941,13 +941,15 @@ TN_State_Wrapper TN_Main::generate_neuron_from_id(int coreID, int neuronID) {
         prototype.new_neuron_state(crossbar, neuron->destCore, neuron->destAxon, coreID, neuron->destDelay, neuronID);
     return result_neuron;
   } else {
-    printf("Missing neuron prototype:\n Type: %i\t|coreID: %i\t|LocalID: %i \n", neuron->type, coreID, neuronID);
+    //printf("Missing neuron prototype:\n Type: %i\t|coreID: %i\t|LocalID: %i \n", neuron->type, coreID, neuronID);
+
 
     TN_State_Wrapper error_neuron;
-    error_neuron.isValid = false;
+    //error_neuron.isValid = false;
     return error_neuron;
   }
 }
+
 
 tn_neuron_state *TN_Main::generate_neurons_in_core_struct(int coreID) {
   tn_neuron_state *neuron_array = (tn_neuron_state *) calloc(NEURONS_IN_CORE, sizeof(tn_neuron_state));
@@ -1002,6 +1004,39 @@ int TN_Output::write_json(){
   file << j << std::endl;
   file.close();
   return result;
+}
+
+int TN_Output::write_data(){
+  int mask = 1;
+  unsigned char output_mode = this->output_mode;
+  while (output_mode) {
+    switch (output_mode & mask) {
+    case TN_OUT_CSV:
+      cout << "Output CSV file. \n";
+
+      break;
+    case TN_OUT_BIN:
+      cout << "Output BIN file. \n";
+
+      break;
+    case TN_OUT_LUA:
+      cout << "Output LUA file \n";
+
+      break;
+    case TN_OUT_PY:
+      cout << "Output PY File \n";
+
+      break;
+    case TN_OUT_JSON:
+    cout  <<"Output JSON\n";
+    this->write_json();
+      break;
+    default:break;
+    }
+    output_mode &= ~mask;
+    mask <<= 1;
+
+  }
 }
 /**
  * create_tn_data: preps the neuron model from the json file. Given a JSON file (TN FORMAT),

@@ -386,6 +386,7 @@ public:
           out_fn_csv = filename + ".json";
         }
         break;
+      default:break;
       }
       output_mode &= ~mask;
       mask <<= 1;
