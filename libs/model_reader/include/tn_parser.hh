@@ -24,12 +24,19 @@
 #include <vector>
 //#include "json_dto.hh"
 #include <ross.h>
-#include "utils.hh"
+#include "../src/utils.hh"
 #include <regex>
 #include "json.hpp"
 #include <stdio.h>
-#include "../../src/globals.h"
-#include "../../src/neuro/tn_neuron_struct.h"
+#include "../../../src/globals.h"
+#include "../../../src/neuro/tn_neuron_struct.h"
+#include "tqdm.h"
+#include <iomanip>
+
+#ifdef USE_OMP
+#include <omp.h>
+#endif
+
 
 using json = nlohmann::json;
 //#include "../../src/neuro/tn_neuron.h"
@@ -40,6 +47,16 @@ using namespace std;
 #define AXONS_IN_CORE 256
 #define SYNAPSES_IN_CORE 1
 #define NUM_NEURON_WEIGHTS 4
+
+typedef enum OUT_MODE_E {
+  TN_OUT_CSV = 1,
+  TN_OUT_BIN = 2,
+  TN_OUT_LUA = 4,
+  TN_OUT_PY = 8,
+  TN_OUT_JSON = 10,
+  TN_OUT_BIN_SPLIT = 12
+} out_mode_opt;
+
 
 int char2int(char input);
 vector<bool> hex2bool_insert(char hex);
@@ -65,18 +82,26 @@ private:
 
 public:
   bool isValid;
+  int myCore;
   int write_bin_data(int big_end, ostream out);
   string generate_csv();
   json generate_json(json j);
   string generate_pycode();
+
+
+//  ~TN_State_Wrapper(){
+//    delete(tn);
+//  }
   tn_neuron_state *getTn() {
     return tn;
   }
   TN_State_Wrapper() {
+    tn = (tn_neuron_state *) calloc(sizeof(tn_neuron_state),1);
     isValid = true;
   }
   void init_empty() {
-    tn = (tn_neuron_state *) calloc(sizeof(tn_neuron_state), 1);
+    //tn = (tn_neuron_state *) calloc(sizeof(tn_neuron_state), 1);
+     //this->tn = tn;
     for (int i = 0; i < AXONS_IN_CORE; i++) {
       tn->axonTypes[i] = -1;
       tn->synapticConnectivity[i] = false;
@@ -87,6 +112,7 @@ public:
 
     }
   }
+
   void initialize_state(vector<int> input_axon_connectivity,
                         vector<short> input_axon_types,
                         int output_core,
@@ -164,6 +190,17 @@ public:
                                     int dest_delay);
   TN_State_Wrapper new_neuron_state(TN_Crossbar_Type crossbar, int output_core, int output_neuron, int source_core,
                                     int dest_delay, int neuron_id);
+  void new_neuron_state_init_struct(TN_Crossbar_Type crossbar, int output_core, int output_neuron, int source_core,
+                                    int dest_delay, int neuron_id,tn_neuron_state *n);
+  void new_neuron_state_init_struct(vector<unsigned int> input_axon_connectivity,
+                                    vector<short> input_axon_types,
+                                    int output_core,
+                                    int output_neuron,
+                                    int source_core,
+                                    int source_local,
+                                    int dest_delay,
+                                    tn_neuron_state *n);
+
   void init_neuron_from_json_doc(Document json_doc);
   void init_neuron_from_json_arr(rapidjson::GenericValue<rapidjson::UTF8<char>,
                                                          rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> > &json_array);
@@ -276,7 +313,7 @@ public:
   int get_neuron_axon(int neuronID);
   int get_neuron_delay(int neuronID);
 
-  core_info *get_neuron_info(int neuronID);
+  core_info get_neuron_info(int neuronID);
 
 };
 
@@ -284,6 +321,11 @@ public:
  * TN_Main - Main wrapper class for the neuron model. Contains TN_Neuron
  */
 class TN_Main {
+private:
+  TN_Neuron_Type cur_prototype;
+  TN_Crossbar_Type cur_crossbar;
+  bool set_current_prot_cros(unsigned long coreID, unsigned long neuronID);
+  core_info cur_neuron;
 public:
   int core_count;
   string neuron_class;
@@ -295,8 +337,9 @@ public:
   map<int, TN_Core> TN_Neuron_Core_Library;
   map<int, TN_Neuron_Type> TN_Neuron_Library;
 
-  TN_State_Wrapper generate_neuron_from_id(int coreID, int neuronID);
-  tn_neuron_state *generate_neurons_in_core_struct(int coreID);
+  TN_State_Wrapper generate_neuron_from_id(unsigned long coreID, unsigned long neuronID);
+  tn_neuron_state *generate_neurons_in_core_struct(unsigned long coreID);
+  void populate_neuron_from_id(unsigned long coreID, unsigned long neuronID, tn_neuron_state *n);
   vector<TN_State_Wrapper> generate_neurons_in_core_vec(int coreID);
 
   map<int, TN_State_Wrapper> generate_all_neurons_wrap();
@@ -305,13 +348,7 @@ public:
 
 };
 
-typedef enum OUT_MODE_E {
-  TN_OUT_CSV = 0x01,
-  TN_OUT_BIN = 0x02,
-  TN_OUT_LUA = 0x04,
-  TN_OUT_PY = 0x08,
-  TN_OUT_JSON = 0x010
-} out_mode_opt;
+
 
 /**
  * TN_Output
@@ -320,6 +357,8 @@ typedef enum OUT_MODE_E {
  */
 class TN_Output {
 private:
+  json main_json;
+  int json_init;
   TN_Main main_model;
   vector<TN_State_Wrapper> neurons;
   string output_filename;
@@ -328,74 +367,34 @@ private:
   string out_fn_lua;
   string out_fn_py;
   string out_fn_json;
+  json generate_json(int start_core, int end_core);
   unsigned char output_mode;
+  ofstream binary_out_file;
+  #ifdef  USE_OMP
+  int write_json_mp(int start_core, int end_core);
+  json generate_json_mp(int start_core, int end_core);
+  #endif
+
 
   int write_csv();
+#ifdef USE_OMP
+  int write_bin_mp();
+#endif
+  void write_bin_header();
+  int write_bin_split();
+
   int write_bin();
   int write_lua();
   int write_py();
   int write_json();
+  int write_json(int start_core, int end_core);
 
 public:
-  TN_Output(string filename, TN_Main model, unsigned char output_mode) {
-    main_model = model;
-    output_filename = filename;
-    this->output_mode = output_mode;
-    int mask = 1;
-    std::size_t found_ext;
-
-    for(const auto &x : model.TN_Neuron_Core_Library){
-      for (auto n : model.generate_neurons_in_core_vec(x.first)) {
-        neurons.push_back(n);
-
-      }
-
-    }
-
-
-
-    while (output_mode) {
-      switch (output_mode & mask) {
-      case TN_OUT_CSV:cout << "Output CSV file. \n";
-        found_ext = filename.find("csv");
-        if (found_ext == std::string::npos) {
-          out_fn_csv = filename + ".csv";
-        }
-        break;
-      case TN_OUT_BIN:cout << "Output BIN file. \n";
-        found_ext = filename.find("dat");
-        if (found_ext == std::string::npos) {
-          out_fn_csv = filename + ".dat";
-        }
-        break;
-      case TN_OUT_LUA:cout << "Output LUA file \n";
-        found_ext =  filename.find("nfg1");
-        if (found_ext == std::string::npos) {
-          out_fn_csv = filename + ".nfg1";
-        }
-        break;
-      case TN_OUT_PY:cout << "Output PY File \n";
-        found_ext = filename.find("py");
-        if (found_ext != std::string::npos) {
-          out_fn_csv = filename + ".py";
-        }
-        break;
-      case TN_OUT_JSON:
-        found_ext = filename.find("json");
-        if (found_ext != std::string::npos) {
-          out_fn_csv = filename + ".json";
-        }
-        break;
-      default:break;
-      }
-      output_mode &= ~mask;
-      mask <<= 1;
-
-    }
-
-  }
+  TN_Output(string filename, TN_Main model, unsigned char output_mode) ;
 
   int write_data();
+  int write_data(int start_core, int end_core);
+  tn_neuron_state *get_neuron_struct(int core, int neuron_id);
 
 
 };

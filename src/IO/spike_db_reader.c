@@ -368,7 +368,7 @@ int spikeFromAxonComplete(void *timeList) {
  * @return
  */
 int openSpikeFile() {
-  connectToDB(SPIKE_FILE);
+  connectToDB(NEMO_SPIKE_FILE_PATH);
   fullQ = (char *) calloc(sizeof(char), 2048);
   coreSTR = (char *) calloc(sizeof(char), 1024);
 }
@@ -377,7 +377,7 @@ int openSpikeFile() {
  * @return
  */
 int closeSpikeFile() {
-  return closeDB(SPIKE_FILE);
+  return closeDB(NEMO_SPIKE_FILE_PATH);
 }
 
 /**

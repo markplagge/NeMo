@@ -86,19 +86,26 @@ char *LAYER_LAYOUT;
  */
 bool FILE_OUT = false;
 bool FILE_IN = false;
-
 /**
  * outFile - basic output file handler.
  */
-
-
 int testingMode = 0;
-
 //-----------------------Non global testing vars---------//
-
-char *couchAddress = "192.168.2.3";
-
+//char *couchAddress = "192.168.2.3";
 /** @} */
+
+
+/** @addtogroup fileNames
+ *
+ * @{
+ */
+
+char NEMO_MODEL_FILE_PATH[512] = {'\0'};
+char NEMO_SPIKE_FILE_PATH[512] = {'\0'};
+bool NEMO_MODEL_IS_TN_JSON = false;
+/** @} */
+
+
 /**
  * app_opt - Application Options. Manages the options for NeMo's run.
  */
@@ -110,6 +117,10 @@ const tw_optdef app_opt[] = {
                "Load network information from a file. If set,"
                    "a network file name must be specified.\n"
                    "This will set random network, sat network, and layer network modes off. "),
+
+    TWOPT_CHAR("model",NEMO_MODEL_FILE_PATH,"Path to NeMo model file or TN JSON File."),
+    TWOPT_CHAR("spikes", NEMO_SPIKE_FILE_PATH, "Path to NeMo Spike File"),
+    TWOPT_FLAG("tn_json", NEMO_MODEL_IS_TN_JSON, "Is the input model file in TN JSON format?"),
     //TWOPT_CHAR("nfn", NETWORK_CFG_FN, "Input Network File Name"),
     //TWOPT_CHAR("sfn", SPIKE_IN_FN, "Spike input file name"),
     // TWOPT_UINT("tm", testingMode, "Choose a test suite to run. 0=no tests,
@@ -240,19 +251,29 @@ void displayModelSettings() {
   printf("* \tSave Messages: %i \n", SAVE_MSGS);
   STT("Save network structure? %i ", SAVE_NETWORK_STRUCTURE);
   TH
+
   printf("* \tChip Sim Info:\n");
   printf("* \tCores per chip: %i\n", CORES_IN_CHIP);
   printf("* \tReported chips in sim: %ld\n", (long) coreToChip(CORES_IN_SIM));
   TH
-  STT("SAT NET ENABLED: %i", IS_SAT_NET);
-  STT("SAT net stoc. mode: %i", SAT_NET_STOC);
-  STT("SAT NET Weight: %u %%", SAT_NET_PERCENT);
-  STT("SAT mode set to %u ", SAT_NET_COREMODE)
-  printf("* \t Modes: (0) - Neuron %%, (1) - Core Pool, (2) Neuron Pool \n");
-  TH
-  printf("* \tLayer Network Parameters \n");
-  displayConfig();
-  printf("\n");
+  if(FILE_IN){
+    STT("Neuron model input file: %s ", NEMO_MODEL_FILE_PATH);
+    STT("Neuron spike input file: %s ", NEMO_SPIKE_FILE_PATH);
+    char * inputMode = NEMO_MODEL_IS_TN_JSON ? "TN JSON format" : "NeMo NFG Format";
+    STT("Model input mode is %s\n", inputMode);
+    TH
+  }else {
+    STT("SAT NET ENABLED: %i", IS_SAT_NET);
+    STT("SAT net stoc. mode: %i", SAT_NET_STOC);
+    STT("SAT NET Weight: %u %%", SAT_NET_PERCENT);
+    STT("SAT mode set to %u ", SAT_NET_COREMODE)
+    printf("* \t Modes: (0) - Neuron %%, (1) - Core Pool, (2) Neuron Pool \n");
+    TH
+    printf("* \tLayer Network Parameters \n");
+    displayConfig();
+    printf("\n");
+  }
+
 //    unsigned int SAT_NET_PERCENT = 2;
 //    bool SAT_NET_COREMODE = false;
 //    unsigned int SAT_NET_THRESH = 2;
@@ -359,8 +380,12 @@ void luaLoaderClean() {
 void init_nemo() {
   spikech(294);
   /// SANTIY CHECKS:
-  if (FILE_IN && (IS_SAT_NET || IS_RAND_NETWORK || GRID_ENABLE))
+  if (FILE_IN && (IS_SAT_NET || IS_RAND_NETWORK || GRID_ENABLE)) {
+    printf("Found file in option: %i and sat mode option %i, rand network %i, grid mode %i\n", FILE_IN,IS_SAT_NET,IS_RAND_NETWORK,GRID_ENABLE);
     tw_error(TW_LOC, "Multiple modes implemented - Can not load file and have random network.");
+
+  }
+
   if (GRID_ENABLE && IS_RAND_NETWORK)
     tw_error(TW_LOC, "Can not have random network and grid/layer network ");
   if (SAT_NET_COREMODE > 2) {
@@ -371,7 +396,7 @@ void init_nemo() {
   FILE_OUT = SAVE_SPIKE_EVTS || SAVE_NETWORK_STRUCTURE || SAVE_MEMBRANE_POTS ||
       VALIDATION;
   spikech(307);
-  FILE_IN = !IS_RAND_NETWORK;
+  //FILE_IN = !IS_RAND_NETWORK;
   if (FILE_OUT) {
     //Init file output handles
     initOutFiles();
@@ -391,15 +416,19 @@ void init_nemo() {
     // Init File Input Handles
     if (g_tw_mynode==0) {
       printf("Network Input Active");
-      printf("Config Filename specified: %s\n", MODEL_FILE);
-      printf("Spike file: %s\n", SPIKE_FILE);
+      printf("Config Filename specified: %s\n", NEMO_MODEL_FILE_PATH);
+//      printf("Spike file: %s\n", SPIKE_FILE);
     }
     //SPIKE_IN_FN = SPIKE_FILE;
     // INPUT Model file init here:
 ///////////////////////////////////////////////
-    luaLoader(MODEL_FILE);
-    initModelInput(CORES_IN_SIM);
-
+// Call the new JSON input function
+if(NEMO_MODEL_IS_TN_JSON) {
+  initJSON(NEMO_MODEL_FILE_PATH);
+}else {
+  luaLoader(NEMO_MODEL_FILE_PATH);
+  initModelInput(CORES_IN_SIM);
+}
 
 // INPUT SPIKE FILE init HERE:
     ////////////////////////
@@ -435,11 +464,9 @@ void init_nemo() {
   //Layer / Grid Mode setup:
   if (GRID_ENABLE)
     setupGrid(0);
+}
 
-}
-unsigned char mapTests() {
-  return 0;
-}
+
 /**
  * @brief      NeMo Main entry point
  *
@@ -448,9 +475,6 @@ unsigned char mapTests() {
  *
 
  */
-
-
-
 int main(int argc, char *argv[]) {
 //	char *NETWORK_FILE_NAME = calloc(256, sizeof(char));
 //	strcpy(NETWORK_FILE_NAME, "nemo_model.csv");
@@ -460,7 +484,7 @@ int main(int argc, char *argv[]) {
   tw_opt_add(app_opt);
   spikech(388);
   tw_init(&argc, &argv);
-//  SAVE_NETWORK_STRUCTURE = 0;
+
   //call nemo init
   init_nemo();
   printf("\n Completed initial setup and model loading.\n");

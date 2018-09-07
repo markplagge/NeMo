@@ -393,12 +393,17 @@ EXT char DUMPI_NOISE;
 
 //#define N_FIRE_LINE_SIZE 128
 /** @} */
-#endif
+
 
 
 /** @defgroup fileNames File Names
  * Vars that manage file names for IO.
- * These variables are declared/init in input.c and
- * output.c @{*/
-
+ * These variables include the paths to the model file,
+ * the path to the spike input file,
+ * and file loading options.
+ * @{*/
+EXT char NEMO_MODEL_FILE_PATH[512];
+EXT char NEMO_SPIKE_FILE_PATH[512];
+EXT bool NEMO_MODEL_IS_TN_JSON;
 /** @} */
+#endif

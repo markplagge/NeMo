@@ -53,8 +53,10 @@ int countLines(FILE *fileHandle) {
 }
 
 void initModelInput(unsigned long maxNeurons) {
+
   if (g_tw_mynode==0)
     printf("Model config file init\n");
+
   L = luaL_newstate();
   luaL_openlibs(L);
 
@@ -109,7 +111,7 @@ void initModelInput(unsigned long maxNeurons) {
   //show any errors
   if (s) {
     printf("Error: %s \n", lua_tostring(L, -1));
-    tw_error(TW_LOC, "MDL_LOAD", "Unable to parse config file  %s (from within LUA) \n", MODEL_FILE);
+    tw_error(TW_LOC, "MDL_LOAD", "Unable to parse config file  %s (from within LUA) \n", NEMO_MODEL_FILE_PATH);
 
     lua_pop(L, 1);
   }
@@ -163,7 +165,7 @@ void getModelErrorInfo(int ncore, int nlocal, char *ntype, char *paramName, int 
   lua_pushstring(L, ntype);
   lua_pushstring(L, paramName);
   lua_pushnumber(L, errorno);
-  lua_pushstring(L, MODEL_FILE);
+  lua_pushstring(L, NEMO_MODEL_FILE_PATH);
 
   lua_call(L, 6, 0);
 }

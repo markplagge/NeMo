@@ -16,6 +16,7 @@
 //#include "../lib/lauxlib.h"
 #include <lauxlib.h>
 #include <lualib.h>
+#include "../../libs/model_reader/include/model_reader_wrapper.h"
 /** Macro wrappers for interleaving time/axonids */
 #define EXTIME(x) EXHIGH(x)
 #define EXAXON(x) EXLOW(x)
@@ -235,5 +236,11 @@ void clearStack();
 void closeLua();
 /** @} */
 
+/** @defgroup new_io New C++ backed IO stack functions */
 
+void loadNeuronFromJSON(id_type neuronCore, id_type neuronLocal,tn_neuron_state *n);
+void initJSON(char *jsonFilename);
+void closeJSON();
+
+/**@}*/
 #endif //NEMO_IOSTACK_H

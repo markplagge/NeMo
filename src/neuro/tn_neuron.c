@@ -1021,14 +1021,14 @@ int safeGetArr(int direct, char *lutName, char *dirName, long vars[],
   if (validation==expectedParams) {
     return validation;
   } else if (validation==0) {
-    modelErr(pn, MODEL_FILE, cid, lid, ntype, errtps[0], 917);
+    modelErr(pn, NEMO_MODEL_FILE_PATH, cid, lid, ntype, errtps[0], 917);
 
   } else if (validation < expectedParams && validation > 0) {
-    modelErr(pn, MODEL_FILE, cid, lid, ntype, errtps[1], 917);
+    modelErr(pn, NEMO_MODEL_FILE_PATH, cid, lid, ntype, errtps[1], 917);
   } else if (validation > expectedParams) {
-    modelErr(pn, MODEL_FILE, cid, lid, ntype, errtps[3], 917);
+    modelErr(pn, NEMO_MODEL_FILE_PATH, cid, lid, ntype, errtps[3], 917);
   } else {
-    modelErr(pn, MODEL_FILE, cid, lid, ntype, errtps[2], 917);
+    modelErr(pn, NEMO_MODEL_FILE_PATH, cid, lid, ntype, errtps[2], 917);
   }
   return validation;
 }
@@ -1189,22 +1189,29 @@ void TNPopulateFromFile(tn_neuron_state *st, tw_lp *lp) {
 void TNCreateFromFile(tn_neuron_state *s, tw_lp *lp) {
 
   static int needannounce = 1;
+
   //first, get our Neuron IDs:
   id_type core = getCoreFromGID(lp->gid);
   id_type nid = getNeuronLocalFromGID(lp->gid);
   s->myCoreID = core;
   s->myLocalID = nid;
   char *nt = "TN";
-  int nNotFound = lookupAndPrimeNeuron(core, nid, nt);
-  if (DBG_MODEL_MSGS) {
-    printf("Found status: %i \n ", nNotFound);
-  }
 
-  if (nNotFound) {
-    s->isActiveNeuron = false;
+  //If we are using JSON, call the JSON loader lib instead of the LUA stack
+  if(NEMO_MODEL_IS_TN_JSON){
+    loadNeuronFromJSON(core,nid,s);
+  }else {
+    int nNotFound = lookupAndPrimeNeuron(core, nid, nt);
+    if (DBG_MODEL_MSGS) {
+      printf("Found status: %i \n ", nNotFound);
+    }
 
-  } else {
-    TNPopulateFromFile(s, lp);
+    if (nNotFound) {
+      s->isActiveNeuron = false;
+
+    } else {
+      TNPopulateFromFile(s, lp);
+    }
   }
 
   if (needannounce && (g_tw_mynode==0) && s->isOutputNeuron) {
