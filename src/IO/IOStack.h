@@ -144,6 +144,7 @@ int writeNeuronConnections(neuroCon *neuronData);
 int writeNeuronSpike(neuroSpike *spikeInfo);
 
 void saveNeuronNetworkStructure(void *n);
+void saveNetworkStructureMPI();
 void saveNeuronPreRun();
 
 /**

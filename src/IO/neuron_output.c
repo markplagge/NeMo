@@ -25,6 +25,11 @@ int maxNeuronStruct = 512;
 int maxNetworkListSize = 1024;
 void openOutputFiles(char *outputFileName) {
   if (SAVE_NETWORK_STRUCTURE) {
+#ifdef DEBUG
+    if(g_tw_mynode == 0){
+      tw_printf(TW_LOC, "Saving network structure file.\n");
+    }
+#endif
 
 
 //    char ncfgfn[128] = {"\0"};
@@ -188,6 +193,44 @@ void saveNeuronPreRun() {
   }
 }
 
+void saveNetworkStructureMPI(){
+  char * network_mpi_out_filename = "network_config_mpi.csv";
+  static int file_open = 0;
+  MPI_File net_file;
+  MPI_File_open(MPI_COMM_WORLD,network_mpi_out_filename,MPI_MODE_WRONLY|MPI_MODE_CREATE,MPI_INFO_NULL,&net_file);
+  //compute the offset based on the size of the data.
+  //declare the CSV header
+  MPI_Offset offset = 0 ;
+  long num_neurons_per_rank = (CORES_IN_SIM * NEURONS_IN_CORE) /g_tw_npe;
+  long entry_size = sizeof(char) * 16; // each entry will contain 16 chars. Will include the ',' chars (so a total of 15 digits).
+  //core, neuronID, DC, DA, axon_conn_list, axon_types, weights, weight_mode, newline
+  long size_of_params = (4 + AXONS_IN_CORE + AXONS_IN_CORE + NUM_NEURON_WEIGHTS + NUM_NEURON_WEIGHTS + 1) * entry_size;
+  //we need to save a line for each neuron:
+  long long total_write_size  = CORES_IN_SIM * NEURONS_IN_CORE * size_of_params;
+  long rank_write_size = total_write_size / num_neurons_per_rank;
+  //and the offset is the total write size / num_neurons_per_ranks (since the write size is neuron-based)
+  offset = rank_write_size * g_tw_mynode;
+  char * neuron_data = calloc(sizeof(char), rank_write_size);
+  // populate neuron data with values:
+#define ld "%15d,"
+int neuron_start = num_neurons_per_rank * g_tw_mynode;
+for(int i = neuron_start; i < num_neurons_per_rank; i ++) {
+  tw_lpid wanted_neuron = getGIDFromLocalIDs(i / NEURONS_IN_CORE, i % NEURONS_IN_CORE);
+  tn_neuron_state *n = tw_getlocal_lp(wanted_neuron);
+   sprintf(neuron_data,"%s" ld ld ld ld,neuron_data,n->myCoreID,n->myLocalID,getCoreFromGID(n->outputGID),getNeuronLocalFromGID(n->outputGID));
+   for(int j = 0; j < AXONS_IN_CORE; j ++){
+     sprintf(neuron_data, "%s" ld, neuron_data,n->synapticConnectivity[i]);
+   }
+}
+  MPI_File_write_at_all(net_file,offset,neuron_data,rank_write_size,MPI_CHAR,MPI_STATUS_IGNORE);
+
+}
+
+/**
+ * non-threaded version of the saveNeuronNetworkStructure() function. Rather than taking
+ * a single neuron's state and using a thread to write out the data, this function saves the neuron state through
+ * one large loop.
+ */
 void saveNetworkStructure() {
   //openOutputFiles("network_def.csv");
   char *lntxt = calloc(sizeof(char), 65535);
