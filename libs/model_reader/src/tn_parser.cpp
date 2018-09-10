@@ -1362,15 +1362,17 @@ TN_Main create_tn_data(string filename) {
 //                       std::istreambuf_iterator<char>());
 cout << "\n - filename : " << filename << "\n";
   //string json_str = load_file_into_memory(filename);
+  printf("Starting...\n");
   Document json_doc;
   char * json_str;
   FILE *f = fopen("textfile.txt", "rb");
   fseek(f, 0, SEEK_END);
   long fsize = ftell(f);
   fseek(f, 0, SEEK_SET);  //same as rewind(f);
-  json_str = (char *) malloc(fsize + 1);
+  json_str = (char *) malloc(fsize + 1024);
   fread(json_str,fsize,1,f);
   fclose(f);
+  printf("Read file. Parsing \n");
   json_doc.Parse<kParseCommentsFlag>(json_str);
   //std::ifstream json_file(filename);
   //json_doc.ParseStream<kParseCommentsFlag>(json_file);

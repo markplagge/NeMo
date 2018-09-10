@@ -57,6 +57,10 @@ else()
     message("No SIMD enabled for RJSON")
 endif()
 
+if(ARCH STREQUAL "ppc64le")
+    add_definitions(-RAPIDJSON_ENDIAN=1)
+    message("Rapidjson is running in big endian mode.")
+endif()
 ADD_LIBRARY(ModelReaderLib ${lib_srcs})
 ADD_EXECUTABLE(ModelReaderBin ${reader_srcs})
 
