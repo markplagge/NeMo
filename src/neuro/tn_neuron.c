@@ -1259,7 +1259,7 @@ void TN_pre_run(tn_neuron_state *s, tw_lp *me) {
     if (core_con_open==0) {
 #ifdef DEBUG
       tw_printf(TW_LOC, "Core Connectivity Map Init.\n");
-      saveNetworkStructureMPI();
+      //saveNetworkStructureMPI();
 #endif
       char *fn = calloc(128, sizeof(char));
       sprintf(fn, "core_con_r%li.csv", g_tw_mynode);

@@ -195,46 +195,50 @@ void saveNeuronPreRun() {
 
 void saveNetworkStructureMPI(){
   char * network_mpi_out_filename = "network_config_mpi.csv";
-  static int file_open = 0;
-  MPI_File net_file;
-  MPI_File_open(MPI_COMM_WORLD,network_mpi_out_filename,MPI_MODE_WRONLY|MPI_MODE_CREATE,MPI_INFO_NULL,&net_file);
-  //compute the offset based on the size of the data.
-  //declare the CSV header
-  MPI_Offset offset = 0 ;
-  long num_neurons_per_rank = (CORES_IN_SIM * NEURONS_IN_CORE) /g_tw_npe;
-  long entry_size = sizeof(char) * 16; // each entry will contain 16 chars. Will include the ',' chars (so a total of 15 digits).
-  //core, neuronID, DC, DA, axon_conn_list, axon_types, weights, weight_mode, newline
-  long size_of_params = (4 + AXONS_IN_CORE + AXONS_IN_CORE + NUM_NEURON_WEIGHTS + NUM_NEURON_WEIGHTS + 1) * entry_size;
-  //we need to save a line for each neuron:
-  long long total_write_size  = CORES_IN_SIM * NEURONS_IN_CORE * size_of_params;
-  long rank_write_size = total_write_size / g_tw_npe;
-  //and the offset is the total write size / num_neurons_per_ranks (since the write size is neuron-based)
-  offset = rank_write_size * g_tw_mynode;
-  char * neuron_data = calloc(sizeof(char), rank_write_size);
-  // populate neuron data with values:
+  static int done = 0;   if(done == 0) {
+    MPI_File net_file;
+    MPI_File_open(MPI_COMM_WORLD, network_mpi_out_filename, MPI_MODE_WRONLY | MPI_MODE_CREATE, MPI_INFO_NULL,
+                  &net_file);
+    //compute the offset based on the size of the data.
+    //declare the CSV header
+    MPI_Offset offset = 0;
+    long num_neurons_per_rank = (CORES_IN_SIM * NEURONS_IN_CORE) / g_tw_npe;
+    long entry_size = sizeof(char) *
+                      16; // each entry will contain 16 chars. Will include the ',' chars (so a total of 15 digits).
+    //core, neuronID, DC, DA, axon_conn_list, axon_types, weights, weight_mode, newline
+    long size_of_params =
+            (4 + AXONS_IN_CORE + AXONS_IN_CORE + NUM_NEURON_WEIGHTS + NUM_NEURON_WEIGHTS + 1) * entry_size;
+    //we need to save a line for each neuron:
+    long long total_write_size = CORES_IN_SIM * NEURONS_IN_CORE * size_of_params;
+    long rank_write_size = total_write_size / g_tw_npe;
+    //and the offset is the total write size / num_neurons_per_ranks (since the write size is neuron-based)
+    offset = rank_write_size * g_tw_mynode;
+    char *neuron_data = calloc(sizeof(char), rank_write_size);
+    // populate neuron data with values:
 #define ld "%15d,"
-int neuron_start = num_neurons_per_rank * g_tw_mynode;
-for(int i = neuron_start; i < num_neurons_per_rank; i ++) {
-  tw_lpid wanted_neuron = getGIDFromLocalIDs(i / NEURONS_IN_CORE, i % NEURONS_IN_CORE);
-  tn_neuron_state *n = tw_getlocal_lp(wanted_neuron)->cur_state;
-  sprintf(neuron_data, "%s" ld ld ld ld, neuron_data, n->myCoreID, n->myLocalID, getCoreFromGID(n->outputGID),
-          getNeuronLocalFromGID(n->outputGID));
-  for (int j = 0; j < AXONS_IN_CORE; j++) {
-    sprintf(neuron_data, "%s" ld, neuron_data, n->synapticConnectivity[i]);
+    int neuron_start = num_neurons_per_rank * g_tw_mynode;
+    for (int i = neuron_start; i < num_neurons_per_rank; i++) {
+      tw_lpid wanted_neuron = getGIDFromLocalIDs(i / NEURONS_IN_CORE, i % NEURONS_IN_CORE);
+      tn_neuron_state *n = tw_getlocal_lp(wanted_neuron)->cur_state;
+      sprintf(neuron_data, "%s" ld ld ld ld, neuron_data, n->myCoreID, n->myLocalID, getCoreFromGID(n->outputGID),
+              getNeuronLocalFromGID(n->outputGID));
+      for (int j = 0; j < AXONS_IN_CORE; j++) {
+        sprintf(neuron_data, "%s" ld, neuron_data, n->synapticConnectivity[i]);
+      }
+      for (int j = 0; j < AXONS_IN_CORE; j++) {
+        sprintf(neuron_data, "%s" ld, neuron_data, n->axonTypes[i]);
+      }
+      for (int j = 0; j < NUM_NEURON_WEIGHTS; j++) {
+        sprintf(neuron_data, "%s" ld, neuron_data, n->synapticWeight[i]);
+      }
+      for (int j = 0; j < NUM_NEURON_WEIGHTS; j++) {
+        sprintf(neuron_data, "%s", ld, neuron_data, n->weightSelection[i]);
+      }
+      sprintf("%s\n", neuron_data);
+    }
+    MPI_File_write_at_all(net_file, offset, neuron_data, rank_write_size, MPI_CHAR, MPI_STATUS_IGNORE);
+    done = 1;
   }
-  for (int j = 0; j < AXONS_IN_CORE; j++) {
-    sprintf(neuron_data, "%s" ld, neuron_data, n->axonTypes[i]);
-  }
-  for (int j = 0; j < NUM_NEURON_WEIGHTS; j++) {
-    sprintf(neuron_data, "%s" ld, neuron_data, n->synapticWeight[i]);
-  }
-  for (int j = 0; j < NUM_NEURON_WEIGHTS; j++) {
-    sprintf(neuron_data, "%s", ld, neuron_data, n->weightSelection[i]);
-  }
-  sprintf("%s\n",neuron_data);
-}
-  MPI_File_write_at_all(net_file,offset,neuron_data,rank_write_size,MPI_CHAR,MPI_STATUS_IGNORE);
-
 }
 
 /**
