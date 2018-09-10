@@ -207,7 +207,7 @@ void saveNetworkStructureMPI(){
   long size_of_params = (4 + AXONS_IN_CORE + AXONS_IN_CORE + NUM_NEURON_WEIGHTS + NUM_NEURON_WEIGHTS + 1) * entry_size;
   //we need to save a line for each neuron:
   long long total_write_size  = CORES_IN_SIM * NEURONS_IN_CORE * size_of_params;
-  long rank_write_size = total_write_size / num_neurons_per_rank;
+  long rank_write_size = total_write_size / g_tw_npe;
   //and the offset is the total write size / num_neurons_per_ranks (since the write size is neuron-based)
   offset = rank_write_size * g_tw_mynode;
   char * neuron_data = calloc(sizeof(char), rank_write_size);
@@ -216,11 +216,22 @@ void saveNetworkStructureMPI(){
 int neuron_start = num_neurons_per_rank * g_tw_mynode;
 for(int i = neuron_start; i < num_neurons_per_rank; i ++) {
   tw_lpid wanted_neuron = getGIDFromLocalIDs(i / NEURONS_IN_CORE, i % NEURONS_IN_CORE);
-  tn_neuron_state *n = tw_getlocal_lp(wanted_neuron);
-   sprintf(neuron_data,"%s" ld ld ld ld,neuron_data,n->myCoreID,n->myLocalID,getCoreFromGID(n->outputGID),getNeuronLocalFromGID(n->outputGID));
-   for(int j = 0; j < AXONS_IN_CORE; j ++){
-     sprintf(neuron_data, "%s" ld, neuron_data,n->synapticConnectivity[i]);
-   }
+  tn_neuron_state *n = tw_getlocal_lp(wanted_neuron)->cur_state;
+  sprintf(neuron_data, "%s" ld ld ld ld, neuron_data, n->myCoreID, n->myLocalID, getCoreFromGID(n->outputGID),
+          getNeuronLocalFromGID(n->outputGID));
+  for (int j = 0; j < AXONS_IN_CORE; j++) {
+    sprintf(neuron_data, "%s" ld, neuron_data, n->synapticConnectivity[i]);
+  }
+  for (int j = 0; j < AXONS_IN_CORE; j++) {
+    sprintf(neuron_data, "%s" ld, neuron_data, n->axonTypes[i]);
+  }
+  for (int j = 0; j < NUM_NEURON_WEIGHTS; j++) {
+    sprintf(neuron_data, "%s" ld, neuron_data, n->synapticWeight[i]);
+  }
+  for (int j = 0; j < NUM_NEURON_WEIGHTS; j++) {
+    sprintf(neuron_data, "%s", ld, neuron_data, n->weightSelection[i]);
+  }
+  sprintf("%s\n",neuron_data);
 }
   MPI_File_write_at_all(net_file,offset,neuron_data,rank_write_size,MPI_CHAR,MPI_STATUS_IGNORE);
 
