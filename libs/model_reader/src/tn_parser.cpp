@@ -1361,11 +1361,19 @@ TN_Main create_tn_data(string filename) {
 //  std::string json_str((std::istreambuf_iterator<char>(json_file)),
 //                       std::istreambuf_iterator<char>());
 cout << "\n - filename : " << filename << "\n";
-  string json_str = load_file_into_memory(filename);
-
+  //string json_str = load_file_into_memory(filename);
   Document json_doc;
+  char * json_str;
+  FILE *f = fopen("textfile.txt", "rb");
+  fseek(f, 0, SEEK_END);
+  long fsize = ftell(f);
+  fseek(f, 0, SEEK_SET);  //same as rewind(f);
+  json_str = (char *) malloc(fsize + 1);
+  fread(json_str,fsize,1,f);
+  fclose(f);
   json_doc.Parse<kParseCommentsFlag>(json_str);
-
+  //std::ifstream json_file(filename);
+  //json_doc.ParseStream<kParseCommentsFlag>(json_file);
   //First create the main core object
   TN_Main model;
   //populate the model data.
@@ -1409,6 +1417,7 @@ cout << "\n - filename : " << filename << "\n";
   long num_cores_in_js = model.core_count;
   tw_printf(TW_LOC, "Model loaded - found %li cores defined neurons\n", num_cores_in_js);
 #endif
+  free(json_str);
   return model;
 }
 
