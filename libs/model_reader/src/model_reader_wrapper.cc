@@ -29,7 +29,7 @@ tn_neuron_state *get_neuron_state_array(int my_core) {
   return c_model.generate_neurons_in_core_struct(my_core);
 }
 
-void create_neuron_model(char *filename) {
+void load_and_init_json_model(char *filename) {
   printf("\n\n\n -------- Loading neuron model file %s \n", filename);
   c_model = create_tn_data(filename);
 }

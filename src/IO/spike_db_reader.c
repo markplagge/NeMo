@@ -33,6 +33,10 @@ char *coreq1 = "SELECT \"input_spikes\".\"time\", \"input_spikes\".\"axon\"\n"
 char *corect1 = "SELECT count(input_spikes.time)\nFROM input_spikes\nWHERE input_spikes.core = ";
 
 /**
+ * SQL Count query (all spikes)
+ */
+char *countFullQ = "select count(*) from input_spikes;";
+/**
  * String query buffers
  */
 char *fullQ;
@@ -309,6 +313,16 @@ int checkIfSpikesExistForAxon(id_type coreID, id_type axonID) {
 
 int connectToDB(char *filename) {
   int st = -999;
+  if(spikedb_isopen == 0){
+      st = sqlite3_open_v2(filename, &spikedb, SQLITE_OPEN_READONLY | SQLITE_OPEN_NOMUTEX,NULL);
+      if(st){
+          tw_error(TW_LOC, "Database open error: Code: %i \n Message %s\n filename: %s\n",
+                   st, sqlite3_errmsg(spikedb), filename);
+      }
+      spikedb_isopen = 1;
+      return st;
+  }
+  /*
   if (spikedb_isopen==0) {
     st = sqlite3_open(":memory:", &spikedb);
     //st = sqlite3_open_v2(filename, &spikedbFile, SQLITE_OPEN_READONLY|SQLITE_OPEN_NOMUTEX, NULL);
@@ -332,7 +346,7 @@ int connectToDB(char *filename) {
     spikedb_isopen = 1;
   }
   return st;
-
+*/
 }
 int closeDB(char *filename) {
   int st = 0;
@@ -363,6 +377,11 @@ int getSpikesFromAxon(void *timeList, id_type core, id_type axonID) {
 int spikeFromAxonComplete(void *timeList) {
   list_destroy((list_t *) timeList);
 }
+static int callback(void *count, int argc, char **argv, char **azColName) {
+    int *c = count;
+    *c = atoi(argv[0]);
+    return 0;
+}
 /**
  * Override - generic function - opens and inits the spike file. Here opens connection to the SQL database
  * @return
@@ -371,6 +390,20 @@ int openSpikeFile() {
   connectToDB(NEMO_SPIKE_FILE_PATH);
   fullQ = (char *) calloc(sizeof(char), 2048);
   coreSTR = (char *) calloc(sizeof(char), 1024);
+  sqlite3_stmt *res;
+  int result_count;
+    char *zErrMsg = 0;
+  int rc = sqlite3_exec(spikedb, countFullQ,callback,&result_count,zErrMsg);
+  //int rc = sqlite3_prepare_v2(spikedb, countFullQ, -1, &res, 0);
+
+    return result_count;
+  if(rc == SQLITE_ERROR){
+      return -1;
+  }
+  else{
+    return result_count;
+  }
+
 }
 /**
  * Override -- generic function - closes the spike file. Here closes the SQL database.

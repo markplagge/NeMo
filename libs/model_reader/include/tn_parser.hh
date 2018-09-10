@@ -315,6 +315,7 @@ public:
 
   core_info get_neuron_info(int neuronID);
 
+
 };
 
 /**

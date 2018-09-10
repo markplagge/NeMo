@@ -373,7 +373,7 @@ EXT char *LAYER_LAYOUT;
 EXT char *luaConfigFile; //!< Stores LUA configuration file in memory for performance increase.
 EXT long isBin;
 //#define N_FIRE_BUFF_SIZE 32
-EXT bool SAVE_NEURON_OUTS;
+
 /** POSIX Neuron Fire record line buffer size.
  * For text mode only, sets the length of strings stored in the neuron fire buffer*/
 EXT int N_FIRE_LINE_SIZE;
@@ -406,4 +406,5 @@ EXT char NEMO_MODEL_FILE_PATH[512];
 EXT char NEMO_SPIKE_FILE_PATH[512];
 EXT bool NEMO_MODEL_IS_TN_JSON;
 /** @} */
+
 #endif

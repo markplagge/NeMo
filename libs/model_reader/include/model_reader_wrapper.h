@@ -21,7 +21,7 @@ tn_neuron_state *get_neuron_state(unsigned long my_core, unsigned long neuron_id
 void init_neuron_state(unsigned long my_core, unsigned long neuron_id, tn_neuron_state *n);
 tn_neuron_state *get_neuron_state_array(int my_core);
 //TN_Main create_tn_data(char * filename);
-void create_neuron_model(char * filename);
+void load_and_init_json_model(char *filename);
 int serial_load_json(char *json_filename);
 void clean_up(TN_Main* m);
 void create_neuron_model_mpi(char * filename, int my_rank,int num_ranks);

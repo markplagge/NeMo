@@ -241,15 +241,15 @@ void displayModelSettings() {
   STT("\t Save Network Structure? %i ", SAVE_NETWORK_STRUCTURE);
 #endif
   TH
-  printf("* \t %i Neurons per core (cmake defined), %llu cores in sim.\n", NEURONS_IN_CORE, CORES_IN_SIM);
-  STT("%llu LPs (including Axons and Super Synapse) Per Core", CORE_SIZE);
-  printf("* \t %f cores per PE, giving %llu LPs per pe.\n", cores_per_node, g_tw_nlp);
+  printf("* \t %i Neurons per core (cmake defined), %lu cores in sim.\n", NEURONS_IN_CORE, CORES_IN_SIM);
+  STT("%lu LPs (including Axons and Super Synapse) Per Core", CORE_SIZE);
+  printf("* \t %f cores per PE, giving %lu LPs per pe.\n", cores_per_node, g_tw_nlp);
   printf("* \t Neurons have %i axon types (cmake defined)\n", NUM_NEURON_WEIGHTS);
   printf("* \t Network is a %s network.\n", netMode);
   printf("* \t Neuron stats:\n");
-  printf("* \tCalculated sim_size is %llu\n", SIM_SIZE);
+  printf("* \tCalculated sim_size is %lu\n", SIM_SIZE);
   printf("* \tSave Messages: %i \n", SAVE_MSGS);
-  STT("Save network structure? %i ", SAVE_NETWORK_STRUCTURE);
+
   TH
 
   printf("* \tChip Sim Info:\n");
@@ -392,6 +392,10 @@ void init_nemo() {
     tw_error(TW_LOC, "Please choose a valid SAT mode if using SAT. \n"
         "Can be 0,1,2");
   }
+#ifdef DEBUG
+  if(SAVE_NETWORK_STRUCTURE)
+      tw_printf(TW_LOC, "Saving network structure\n");
+#endif
   VALIDATION = PHAS_VAL || TONIC_BURST_VAL || PHASIC_BURST_VAL;
   FILE_OUT = SAVE_SPIKE_EVTS || SAVE_NETWORK_STRUCTURE || SAVE_MEMBRANE_POTS ||
       VALIDATION;
@@ -401,6 +405,9 @@ void init_nemo() {
     //Init file output handles
     initOutFiles();
     if (SAVE_NETWORK_STRUCTURE)
+#ifdef DEBUG
+        tw_printf(TW_LOC, "Saving network structure for sure.\n");
+#endif
       openOutputFiles("network_def.csv");
     initDataStructures(g_tw_nlp);
     if (g_tw_mynode==0) {
@@ -415,9 +422,9 @@ void init_nemo() {
     tw_printf(TW_LOC,"File input starting.");
     // Init File Input Handles
     if (g_tw_mynode==0) {
-      printf("Network Input Active");
+      printf("Network Input Active - ");
       printf("Config Filename specified: %s\n", NEMO_MODEL_FILE_PATH);
-//      printf("Spike file: %s\n", SPIKE_FILE);
+      printf("Spike file: %s\n", NEMO_SPIKE_FILE_PATH);
     }
     //SPIKE_IN_FN = SPIKE_FILE;
     // INPUT Model file init here:
@@ -432,7 +439,8 @@ if(NEMO_MODEL_IS_TN_JSON) {
 
 // INPUT SPIKE FILE init HERE:
     ////////////////////////
-    openSpikeFile();
+    int num_spikes = openSpikeFile();
+tw_printf(TW_LOC,"SQLITE Spike DB loaded, found %i spikes.\n", num_spikes);
     //connectToDB(SPIKE_FILE);
     //int spkCT = loadSpikesFromFile(SPIKE_FILE);
     //printf("Read %i spikes\n", spkCT);

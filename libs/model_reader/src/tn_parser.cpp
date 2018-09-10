@@ -1009,6 +1009,10 @@ int TN_Core::getId() const {
 const string &TN_Core::getCrossbar_name() const {
   return crossbar_name;
 }
+
+
+
+
 bool TN_Main::set_current_prot_cros(unsigned long coreID, unsigned long neuronID) {
   TN_Core core = TN_Neuron_Core_Library[coreID];
   //core_info *neuron = core.get_neuron_info(neuronID);
@@ -1401,7 +1405,10 @@ cout << "\n - filename : " << filename << "\n";
   core_lib = generate_cores_from_json(json_doc);
   model.TN_Neuron_Core_Library = core_lib;
   //return the main model.
-
+#ifdef DEBUG
+  long num_cores_in_js = model.core_count;
+  tw_printf(TW_LOC, "Model loaded - found %li cores defined neurons\n", num_cores_in_js);
+#endif
   return model;
 }
 

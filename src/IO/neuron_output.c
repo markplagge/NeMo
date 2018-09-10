@@ -152,16 +152,18 @@ void saveNeuronNetworkStructure(void *n) {
 
   //neuroCon *ndat = calloc(sizeof(ne uroCon),1);
   if (isSetup==0) {
+#ifdef DEBUG
     printf("Thread starting \n");
+#endif
     nc_data_q = rqueue_create(5192, RQUEUE_MODE_BLOCKING);
     is_working = rqueue_create(1, RQUEUE_MODE_BLOCKING);
 
     printf("\n q created.\n");
 
     int res = pthread_create(&filethread, NULL, fileWorker, NULL);
-
+#ifdef DEBUG
     printf("result was %i\n", res);
-
+#endif
     isSetup = 1;
   }
   int fullctr = 0;

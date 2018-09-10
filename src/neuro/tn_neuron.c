@@ -408,8 +408,16 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp,
     break;
   default:
     // Error condition - non-valid input.
+#ifdef DEBUG
+tw_printf(TW_LOC, "Invalid message type received. Dumping information..."
+                  "\n message source: %li "
+                  "\n message o gid %lu:\n"
+                  "---",
+                  m->localID, m->originGID);
+#endif
     tw_error(TW_LOC, "Neuron (%i,%i) received invalid message type, %i \n ",
              st->myCoreID, st->myLocalID, m->eventType);
+
     break;
   }
   // self-firing neuron (spont.)
@@ -1200,6 +1208,13 @@ void TNCreateFromFile(tn_neuron_state *s, tw_lp *lp) {
   //If we are using JSON, call the JSON loader lib instead of the LUA stack
   if(NEMO_MODEL_IS_TN_JSON){
     loadNeuronFromJSON(core,nid,s);
+    if(s->outputCoreDest < 0 ){
+      s->outputGID = 0;
+      s->isOutputNeuron = 1;
+
+    }else{
+      s->outputGID = getGIDFromLocalIDs(core,nid);
+    }
   }else {
     int nNotFound = lookupAndPrimeNeuron(core, nid, nt);
     if (DBG_MODEL_MSGS) {
@@ -1370,6 +1385,40 @@ FILE *debug_core;
 int debug_core_open = 0;
 #endif
 
+/**
+ * TN_save_events - Saves an event to the output file.
+ * Moved this functionality into it's own function to make testing easier.
+ * Will call the neuron event save function if this neuron sent a spike AND:
+ * if SAVE_SPIKE_EVTS is set,
+ * or if isOutputNeuron is true AND SAVE_OUTPUT_NEURON_EVTS is set.
+ * Default output core/neuron is -909 to catch possible invalid values.
+ * @param s
+ * @param csv
+ * @param m
+ * @param lp
+ */
+void TN_save_events(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp){
+    if(SAVE_OUTPUT_NEURON_EVTS || SAVE_SPIKE_EVTS){ //if we are saving events, do work!
+      long outCore = -909;
+      long outNeuron = -909;
+        if(s->isOutputNeuron && SAVE_OUTPUT_NEURON_EVTS && cv->c10) {
+          outCore = s->outputCoreDest;
+          outNeuron = s->outputNeuronDest;
+        }else if(SAVE_SPIKE_EVTS && cv->c31){ //else if (SAVE_SPIKE_EVTS && (cv->c0 || cv->c31) {
+
+            outCore = getCoreFromGID(lp->gid);
+            outNeuron = getNeuronLocalFromGID(lp->gid);
+        }else{
+            //not a spike event or not saving messages.
+            return;
+        }
+        //we are saving events.
+        saveNeuronFire(tw_now(lp) + 1, s->myCoreID, s->myLocalID, s->outputGID,
+                       outCore, outNeuron, s->isOutputNeuron);
+    }
+
+}
+
 /** TN_commit is a function called on commit. This is used for management of
  * neurons! */
 void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
@@ -1378,6 +1427,7 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
   //if (SAVE_SPIKE_EVTS && cv->c0) {
   //  saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),0);
   //}
+#ifdef DEBUG
   static int displayFlag = 0;
   if (displayFlag==0) {
     if (s->myCoreID==4041) {
@@ -1386,22 +1436,26 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
       displayFlag = 1;
     }
   }
-  if ((s->isOutputNeuron && SAVE_OUTPUT_NEURON_EVTS && cv->c10) || (SAVE_SPIKE_EVTS && cv->c0)) {
-    long outCore;
-    long outNeuron;
-    if (s->isOutputNeuron) {
-      outCore = s->outputCoreDest;
-      outNeuron = s->outputNeuronDest;
-    } else {
-      outCore = getCoreFromGID(s->outputGID);
-      outNeuron = getLocalFromGID(s->outputGID);
-    }
-    /////output neurons do not send messages to the rest of the model. But we save the output.
-    if (SAVE_OUTPUT_NEURON_EVTS) {
-      saveNeuronFire(tw_now(lp) + 1, s->myCoreID, s->myLocalID, s->outputGID,
-                     outCore, outNeuron, s->isOutputNeuron);
-    }
-  }
+#endif
+  /// Save output neuron events
+  // can save either all spike even
+  TN_save_events(s,cv,m,lp);
+//  if ((s->isOutputNeuron && SAVE_OUTPUT_NEURON_EVTS && cv->c10) || (SAVE_SPIKE_EVTS && cv->c0)) {
+//    long outCore;
+//    long outNeuron;
+//    if (s->isOutputNeuron) {
+//      outCore = s->outputCoreDest;
+//      outNeuron = s->outputNeuronDest;
+//    } else {
+//      outCore = getCoreFromGID(s->outputGID);
+//      outNeuron = getLocalFromGID(s->outputGID);
+//    }
+//    /////output neurons do not send messages to the rest of the model. But we save the output.
+//    if (SAVE_OUTPUT_NEURON_EVTS) {
+//      saveNeuronFire(tw_now(lp) + 1, s->myCoreID, s->myLocalID, s->outputGID,
+//                     outCore, outNeuron, s->isOutputNeuron);
+//    }
+ // }
 
   // save simulated dumpi trace if inter core and dumpi trace is on
   if (cv->c31 && DO_DUMPI) {
