@@ -17,11 +17,28 @@ void signal_handler(int s){
   std::exit(1); // will call the correct exit func, no unwinding of the stack though
 }
 
+#ifdef DEBUG
+#include "extern/rapidjson/encodedstream.h"
+void test_bgr(){
+  Document c_str_test;
 
-
+  //c_str_test.Parse<kParseCommentsFlag,(test_cstr_big);
+  StringStream str_stream(test_cstr_big);
+//EncodedInputStream<UTF16LE<>, StringStream> eis(str_stream);
+  Document d;
+  d.Parse(test_cstr_big);
+  TN_Main model;
+  model.core_count = d["model"]["coreCount"].GetInt();
+  cout << "Core Count: " << model.core_count << "\n";
+}
+#endif
 
 int main(int argc, char *argv[]) {
   // Nice Control-C
+#ifdef DEBUG
+test_bgr();
+#endif
+
   struct sigaction sigIntHandler;
   sigIntHandler.sa_handler = signal_handler;
   sigemptyset(&sigIntHandler.sa_mask);
