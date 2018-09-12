@@ -1374,6 +1374,9 @@ cout << "\n - filename : " << filename << "\n";
   fclose(f);
   printf("Read file. Parsing \n");
   json_doc.Parse<kParseCommentsFlag>(json_str);
+
+
+
   //std::ifstream json_file(filename);
   //json_doc.ParseStream<kParseCommentsFlag>(json_file);
   //First create the main core object

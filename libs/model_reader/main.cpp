@@ -19,25 +19,40 @@ void signal_handler(int s){
 
 #ifdef DEBUG
 #include "extern/rapidjson/encodedstream.h"
-void test_bgr(){
+#define RRED(x) rang::style::reset << rang::fg::red << (x) << rang::style::reset
+#define RBLU(x) rang::style::reset << rang::fg::blue << (x) << rang::style::reset
+#define pl cout << "At line " << RBLU(__LINE__ ) << "\n"
+#define pause cout << RBLU("Press enter... \n"); cin >> temp;
+void test_bgr(string filename){
+  cout << "New code. \n";
+  int temp;
   Document c_str_test;
-
   //c_str_test.Parse<kParseCommentsFlag,(test_cstr_big);
-  StringStream str_stream(test_cstr_big);
 //EncodedInputStream<UTF16LE<>, StringStream> eis(str_stream);
   Document d;
-  d.Parse(test_cstr_big);
+  pl;
+  d.Parse<kParseCommentsFlag>(test_cstr_big);
+  pl;
   TN_Main model;
+  pl;
+  cout << "Result : " << d.GetParseError() <<" \n";
+
+  cout << "Member 'model': " << RRED(d.HasMember("model")) << "\n";
+  pl;
+  cout << "Member 'model':coreCount: " << RRED(d["model"].HasMember("coreCount")) << "\n";
+  cout << d["model"]["coreCount"].GetInt();
+  pl;
   model.core_count = d["model"]["coreCount"].GetInt();
+  pl;
   cout << "Core Count: " << model.core_count << "\n";
+  pl;
+
 }
 #endif
 
 int main(int argc, char *argv[]) {
   // Nice Control-C
-#ifdef DEBUG
-test_bgr();
-#endif
+
 
   struct sigaction sigIntHandler;
   sigIntHandler.sa_handler = signal_handler;
@@ -68,9 +83,13 @@ test_bgr();
   if(!do_json && !do_bin && !do_nfg) {
     cout << std::endl << rang::style::reset << rang::fg::red << rang::style::bold;
     cout << "You must specifiy at least one of [-j,-b,-n]" << rang::style::reset <<std::endl;
-    cout << rang::fg::blue << "Exiting...." << endl;
+    cout << rang::fg::blue << "Exiting...." << rang::style::reset << endl;
     exit(2);
   }
+#ifdef DEBUG
+cout <<rang::style::reset << rang::fg::blue <<"Running debug / testing tests \n" << rang::style::reset;
+  test_bgr(filename);
+#endif
   unsigned char o = 0;
   if(do_json){
     o = o | TN_OUT_JSON;

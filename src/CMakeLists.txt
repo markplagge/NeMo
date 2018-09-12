@@ -7,7 +7,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/lib/simclist)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 set(NON11 0 CACHE BOOL "Non C11 Compliant Compiler?")
 set(USE_MODEL_RDR 1 CACHE BOOL "Use NeMo JSON Model reader lib?")
-
+set(USE_HEADER_DATA 1 CACHE BOOL "Use a premade header file for neuron data loading?" )
 if (USE_LUA_JIT)
     message(AUTHOR_WARNING "USE JIT: ${USE_LUA_JIT}")
 

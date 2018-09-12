@@ -16,6 +16,7 @@ void loadNeuronFromJSON(id_type neuronCore, id_type neuronLocal, tn_neuron_state
 }
 
 void initJSON(char *jsonFilename){
+
   load_and_init_json_model(jsonFilename);
 }
 
