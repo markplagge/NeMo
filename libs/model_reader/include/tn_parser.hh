@@ -11,6 +11,7 @@
 //#endif
 
 #include "rapidjson/document.h"
+#define RAPIDJSON_PARSE_DEFAULT_FLAGS KParseCommentFlags
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/istreamwrapper.h"

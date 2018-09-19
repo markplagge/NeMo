@@ -2,13 +2,11 @@
 // Created by Mark Plagge on 8/8/18.
 //
 
+
 #include <cstdio>
 #include "include/tn_parser.hh"
-#include "json_dto.hh"
-#include "tests/test_data.hh"
 #include "extern/rang.hh"
 #include "extern/CLI11.hh"
-#include <csignal>
 //#include "extern/argh.hh"
 
 void signal_handler(int s){
@@ -18,24 +16,59 @@ void signal_handler(int s){
 }
 
 #ifdef DEBUG
-#include "extern/rapidjson/encodedstream.h"
 #define RRED(x) rang::style::reset << rang::fg::red << (x) << rang::style::reset
 #define RBLU(x) rang::style::reset << rang::fg::blue << (x) << rang::style::reset
 #define pl cout << "At line " << RBLU(__LINE__ ) << "\n"
 #define pause cout << RBLU("Press enter... \n"); cin >> temp;
+
 void test_bgr(string filename){
   cout << "New code. \n";
   int temp;
   Document c_str_test;
-  //c_str_test.Parse<kParseCommentsFlag,(test_cstr_big);
-//EncodedInputStream<UTF16LE<>, StringStream> eis(str_stream);
+//  std::vector<char> data(test_cstr_big, test_cstr_big+ size);
+  cout << "Starting tests of secondary JSON library.\n";
+  char short_test[] = "{\n"
+                      "  /* General model parameters */\n"
+                      "  \"model\":{\n"
+                      "    \"coreCount\":4042,\n"
+                      "    \"neuronclass\":\"NeuronGeneral\",\n"
+                      "    \"crossbarSize\":256,\n"
+                      "    \"crossbarclass\":\"CrossbarBinary\",\n"
+                      "    \"buildKey64\":\"20180312T181135_CPEmakeModel_37D8A05D623E7F6AC67EECBF929EDFBBE09\",\n"
+                      "    \"networking\":\"INTRA\",\n"
+                      "    \"useCrossbarPrototypes\":true\n"
+                      "  },\n"
+                      "  /* Crossbar type library */\n"
+                      "  \"crossbarTypes\":[\n"
+                      "    {\n"
+                      "      \"name\":\"coreProt0002603\",\n"
+                      "      \"crossbar\":{\n"
+                      "        /* Row parameters */\n"
+                      "        \"rows\":[\n"
+                      "          /* Parameters */\n"
+                      "          {\"type\":\"S0\",\"synapses\":\"51 40 C0 90 90 4B 83 00 12 80 02 01 18 38 A0 40 51 40 C0 90 90 4B 83 00 12 80 02 01 18 38 A0 40\"},\n"
+                      "          {\"type\":\"S1\",\"synapses\":\"A0 00 11 61 04 84 00 B8 08 24 19 70 41 00 0C 03 A0 00 11 61 04 84 00 B8 08 24 19 70 41 00 0C 03\"}]}\n"
+                      "}]}";
+
+  char buffer[sizeof(short_test)];
+  memcpy(buffer, short_test, sizeof(short_test));
+
+  Document jx;
+  cout << "Endian set to (1 is big): " << RAPIDJSON_ENDIAN << "\n" << "is 64 bit? " << RAPIDJSON_64BIT << "\n";
+
+  jx.ParseInsitu<kParseCommentsFlag>(buffer);
+//jx.Parse<kParseCommentsFlag>(short_test);
+  cout << "JX Result: " << jx.GetParseError() << " " << rapidjson::GetParseError_En(jx.GetParseError()) << " \n ";
+  cout << "JX done: " << RRED(jx["model"]["networking"].GetString()) << "\n";
+  cout << " ---- \n ";
+
   Document d;
   pl;
   d.Parse<kParseCommentsFlag>(test_cstr_big);
   pl;
   TN_Main model;
   pl;
-  cout << "Result : " << d.GetParseError() <<" \n";
+  cout << "Result : " << d.GetParseError() << "CODE: " << rapidjson::GetParseError_En(d.GetParseError()) << " \n";
 
   cout << "Member 'model': " << RRED(d.HasMember("model")) << "\n";
   pl;

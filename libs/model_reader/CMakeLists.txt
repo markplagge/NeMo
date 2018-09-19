@@ -58,7 +58,7 @@ else()
 endif()
 
 if(ARCH STREQUAL "ppc64le")
-    add_definitions(-RAPIDJSON_ENDIAN=1)
+    add_definitions(-DRAPIDJSON_ENDIAN=1)
     message("Rapidjson is running in big endian mode.")
 endif()
 ADD_LIBRARY(ModelReaderLib ${lib_srcs})

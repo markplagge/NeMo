@@ -1378,6 +1378,7 @@ cout << "\n - filename : " << filename << "\n";
 
 
   //std::ifstream json_file(filename);
+  //std::ifstream json_file(filename);
   //json_doc.ParseStream<kParseCommentsFlag>(json_file);
   //First create the main core object
   TN_Main model;
