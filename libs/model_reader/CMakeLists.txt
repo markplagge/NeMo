@@ -79,7 +79,7 @@ endif()
 if(ARCH STREQUAL "ppc64le")
     add_definitions(-DRAPIDJSON_ENDIAN=1)
 
-        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
+        #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
     message("Rapidjson is running in big endian mode.")
 endif()
 
