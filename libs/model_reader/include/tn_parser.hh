@@ -10,11 +10,16 @@
 //#endif
 //#endif
 
-#include "rapidjson/document.h"
+#include <rapidjson/document.h>
+#include <rapidjson/prettywriter.h>
+#include <rapidjson/filereadstream.h>
+#include <rapidjson/istreamwrapper.h>
+#include <rapidjson/error/en.h>
+#include <rapidjson/error/error.h>
+
 #define RAPIDJSON_PARSE_DEFAULT_FLAGS KParseCommentFlags
-#include "rapidjson/prettywriter.h"
-#include "rapidjson/filereadstream.h"
-#include "rapidjson/istreamwrapper.h"
+
+
 #include <cstdio>
 #include <iostream>
 #include <fstream>
@@ -27,11 +32,11 @@
 #include <ross.h>
 #include "../src/utils.hh"
 #include <regex>
-#include "json.hpp"
+#include "../extern/json.hpp"
 #include <stdio.h>
 #include "../../../src/globals.h"
 #include "../../../src/neuro/tn_neuron_struct.h"
-#include "tqdm.h"
+#include "../extern/tqdm.h"
 #include <iomanip>
 
 #ifdef USE_OMP

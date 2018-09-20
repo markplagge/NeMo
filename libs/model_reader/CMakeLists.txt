@@ -1,20 +1,20 @@
 project(ModelReader)
 include(ExternalProject)
 set(CMAKE_CXX_STANDARD 14)
+set(RJSON_PATH CACHE PATH "./extern/rapidjson" )
 set(reader_srcs
         main.cpp tests/test_data.hh extern/CLI11.hh extern/rang.hh)
 set(lib_srcs
         include/tn_parser.hh
         src/tn_parser.cpp
-        extern/json_dto.hh src/utils.cpp src/utils.hh
+       src/utils.cpp src/utils.hh
         extern/json.hpp
         extern/tqdm.h
         include/model_reader_wrapper.h
         src/model_reader_wrapper.cc)
 
-set(RapidJSON_INCLUDE_DIRS extern)
-message(STATUS "RJSON FLAGS: ${CMAKE_CXX_FLAGS}")
 set(TN_READER_OMP 1 CACHE BOOL "Enable OMP?")
+
 if(TN_READER_OMP)
     find_package(OpenMP)
         if (OPENMP_FOUND)
@@ -46,26 +46,47 @@ INCLUDE_DIRECTORIES(
         ${ROSS_SOURCE_DIR}
         ${ROSS_BINARY_DIR})
 
+
+
 if(USE_SSE4_2)
     add_definitions(-DRAPIDJSON_SSE42)
+        set(RAPIDJSON_USE_SSE42 TRUE)
         set(CMAKE_CXX"-march=native -mtune=native")
     message("RJSON using sse 4.2")
 elseif(USE_SSE_2)
     add_definitions(-DRAPIDJSON_SSE2)
+        set(RAPIDJSON_USE_SSE42 TRUE)
     message("RJSON using SSE 2")
 else()
     message("No SIMD enabled for RJSON")
 endif()
 
+find_package(RapidJSON PATHS RJSON_PATH)
+find_package(RapidJSON PATHS RJSON_PATH CONFIG)
+#find_package(rapidjson)
+if(RapidJSON_FOUND)
+    message("Found RapidJSON through macro")
+    message("RJSON custom flags: ${RapidJSON_CXX_FLAGS}")
+    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${RapidJSON_CXX_FLAGS})
+else()
+    set(RapidJSON_INCLUDE_DIRS extern)
+    message("Did not find rapidjson - using internal build")
+endif()
+
+#message(STATUS "RJSON FLAGS: ${CMAKE_CXX_FLAGS}")
+
 if(ARCH STREQUAL "ppc64le")
     add_definitions(-DRAPIDJSON_ENDIAN=1)
+        SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -std=c++1y)
     message("Rapidjson is running in big endian mode.")
 endif()
+
 ADD_LIBRARY(ModelReaderLib ${lib_srcs})
 ADD_EXECUTABLE(ModelReaderBin ${reader_srcs})
 
 target_include_directories(ModelReaderLib PUBLIC
         ${RapidJSON_INCLUDE_DIRS}
+
         )
 set_target_properties(ModelReaderBin
         PROPERTIES

@@ -7,7 +7,8 @@
 #include "include/tn_parser.hh"
 #include "extern/rang.hh"
 #include "extern/CLI11.hh"
-//#include "extern/argh.hh"
+#include "extern/argh.hh"
+#include "tests/test_data.hh"
 
 void signal_handler(int s){
   std::cout << std::endl << rang::style::reset << rang::fg::red << rang::style ::bold;
@@ -84,14 +85,6 @@ void test_bgr(string filename){
 #endif
 
 int main(int argc, char *argv[]) {
-  // Nice Control-C
-
-
-  struct sigaction sigIntHandler;
-  sigIntHandler.sa_handler = signal_handler;
-  sigemptyset(&sigIntHandler.sa_mask);
-  sigIntHandler.sa_flags = 0;
-  sigaction(SIGINT, &sigIntHandler, nullptr);
 
   CLI::App app{"NeMo JSON Parser"};
 
