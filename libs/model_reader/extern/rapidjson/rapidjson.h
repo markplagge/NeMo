@@ -14,9 +14,7 @@
 
 #ifndef RAPIDJSON_RAPIDJSON_H_
 #define RAPIDJSON_RAPIDJSON_H_
-/// OK Going to try this:
-#define RAPIDJSON_HAS_STDSTRING 1
-#define RAPIDJSON_HAS_CXX11_RVALUE_REFS 1
+
 /*!\file rapidjson.h
     \brief common definitions and configuration
     
@@ -140,7 +138,7 @@
     \brief Enable RapidJSON support for \c std::string
 
     By defining this preprocessor symbol to \c 1, several convenience functions for using
-    \ref rapidjson::aaValue with \c std::string are enabled, especially
+    \ref rapidjson::GenericValue with \c std::string are enabled, especially
     for construction and comparison.
 
     \hideinitializer
@@ -166,7 +164,7 @@
 */
 #ifndef RAPIDJSON_NO_INT64DEFINE
 //!@cond RAPIDJSON_HIDDEN_FROM_DOXYGEN
-#if defined(_MSC_VER) && (_MSC_VER < 1800)    // Visual Studio 2013
+#if defined(_MSC_VER) && (_MSC_VER < 1800)	// Visual Studio 2013
 #include "msinttypes/stdint.h"
 #include "msinttypes/inttypes.h"
 #else
@@ -216,9 +214,9 @@
 #ifndef RAPIDJSON_ENDIAN
 // Detect with GCC 4.6's macro
 #  ifdef __BYTE_ORDER__
-#    if __BYTE_ORDER__==__ORDER_LITTLE_ENDIAN__
+#    if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
 #      define RAPIDJSON_ENDIAN RAPIDJSON_LITTLEENDIAN
-#    elif __BYTE_ORDER__==__ORDER_BIG_ENDIAN__
+#    elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 #      define RAPIDJSON_ENDIAN RAPIDJSON_BIGENDIAN
 #    else
 #      error Unknown machine endianness detected. User needs to define RAPIDJSON_ENDIAN.
@@ -310,8 +308,8 @@
 #endif
 #endif // RAPIDJSON_48BITPOINTER_OPTIMIZATION
 
-#if RAPIDJSON_48BITPOINTER_OPTIMIZATION==1
-#if RAPIDJSON_64BIT!=1
+#if RAPIDJSON_48BITPOINTER_OPTIMIZATION == 1
+#if RAPIDJSON_64BIT != 1
 #error RAPIDJSON_48BITPOINTER_OPTIMIZATION can only be set to 1 when RAPIDJSON_64BIT=1
 #endif
 #define RAPIDJSON_SETPOINTER(type, p, x) (p = reinterpret_cast<type *>((reinterpret_cast<uintptr_t>(p) & static_cast<uintptr_t>(RAPIDJSON_UINT64_C2(0xFFFF0000, 0x00000000))) | reinterpret_cast<uintptr_t>(reinterpret_cast<const void*>(x))))
@@ -351,10 +349,9 @@
     \c RAPIDJSON_SIMD to indicate the availability of the optimized code.
 */
 #if defined(RAPIDJSON_SSE2) || defined(RAPIDJSON_SSE42) \
- || defined(RAPIDJSON_NEON) || defined(RAPIDJSON_DOXYGEN_RUNNING)
+    || defined(RAPIDJSON_NEON) || defined(RAPIDJSON_DOXYGEN_RUNNING)
 #define RAPIDJSON_SIMD
 #endif
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // RAPIDJSON_NO_SIZETYPEDEFINE
@@ -414,7 +411,7 @@ RAPIDJSON_NAMESPACE_END
 
 // Prefer C++11 static_assert, if available
 #ifndef RAPIDJSON_STATIC_ASSERT
-#if __cplusplus >= 201103L || (defined(_MSC_VER) && _MSC_VER >= 1800)
+#if __cplusplus >= 201103L || ( defined(_MSC_VER) && _MSC_VER >= 1800 )
 #define RAPIDJSON_STATIC_ASSERT(x) \
    static_assert(x, RAPIDJSON_STRINGIFY(x))
 #endif // C++11
@@ -485,12 +482,12 @@ RAPIDJSON_NAMESPACE_END
 
 //!@cond RAPIDJSON_HIDDEN_FROM_DOXYGEN
 
-#define RAPIDJSON_MULTILINEMACRO_BEGIN do {
+#define RAPIDJSON_MULTILINEMACRO_BEGIN do {  
 #define RAPIDJSON_MULTILINEMACRO_END \
 } while((void)0, 0)
 
 // adopted from Boost
-#define RAPIDJSON_VERSION_CODE(x, y, z) \
+#define RAPIDJSON_VERSION_CODE(x,y,z) \
   (((x)*100000) + ((y)*100) + (z))
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -501,7 +498,7 @@ RAPIDJSON_NAMESPACE_END
     RAPIDJSON_VERSION_CODE(__GNUC__,__GNUC_MINOR__,__GNUC_PATCHLEVEL__)
 #endif
 
-#if defined(__clang__) || (defined(RAPIDJSON_GNUC) && RAPIDJSON_GNUC >= RAPIDJSON_VERSION_CODE(4, 2, 0))
+#if defined(__clang__) || (defined(RAPIDJSON_GNUC) && RAPIDJSON_GNUC >= RAPIDJSON_VERSION_CODE(4,2,0))
 
 #define RAPIDJSON_PRAGMA(x) _Pragma(RAPIDJSON_STRINGIFY(x))
 #define RAPIDJSON_DIAG_PRAGMA(x) RAPIDJSON_PRAGMA(GCC diagnostic x)
@@ -509,7 +506,7 @@ RAPIDJSON_NAMESPACE_END
     RAPIDJSON_DIAG_PRAGMA(ignored RAPIDJSON_STRINGIFY(RAPIDJSON_JOIN(-W,x)))
 
 // push/pop support in Clang and GCC>=4.6
-#if defined(__clang__) || (defined(RAPIDJSON_GNUC) && RAPIDJSON_GNUC >= RAPIDJSON_VERSION_CODE(4, 6, 0))
+#if defined(__clang__) || (defined(RAPIDJSON_GNUC) && RAPIDJSON_GNUC >= RAPIDJSON_VERSION_CODE(4,6,0))
 #define RAPIDJSON_DIAG_PUSH RAPIDJSON_DIAG_PRAGMA(push)
 #define RAPIDJSON_DIAG_POP  RAPIDJSON_DIAG_PRAGMA(pop)
 #else // GCC >= 4.2, < 4.6
@@ -559,7 +556,7 @@ RAPIDJSON_NAMESPACE_END
 #ifndef RAPIDJSON_HAS_CXX11_NOEXCEPT
 #if defined(__clang__)
 #define RAPIDJSON_HAS_CXX11_NOEXCEPT __has_feature(cxx_noexcept)
-#elif (defined(RAPIDJSON_GNUC) && (RAPIDJSON_GNUC >= RAPIDJSON_VERSION_CODE(4, 6, 0)) && defined(__GXX_EXPERIMENTAL_CXX0X__)) || \
+#elif (defined(RAPIDJSON_GNUC) && (RAPIDJSON_GNUC >= RAPIDJSON_VERSION_CODE(4,6,0)) && defined(__GXX_EXPERIMENTAL_CXX0X__)) || \
     (defined(_MSC_VER) && _MSC_VER >= 1900) || \
     (defined(__SUNPRO_CC) && __SUNPRO_CC >= 0x5140 && defined(__GXX_EXPERIMENTAL_CXX0X__))
 #define RAPIDJSON_HAS_CXX11_NOEXCEPT 1
@@ -585,7 +582,7 @@ RAPIDJSON_NAMESPACE_END
 #ifndef RAPIDJSON_HAS_CXX11_RANGE_FOR
 #if defined(__clang__)
 #define RAPIDJSON_HAS_CXX11_RANGE_FOR __has_feature(cxx_range_for)
-#elif (defined(RAPIDJSON_GNUC) && (RAPIDJSON_GNUC >= RAPIDJSON_VERSION_CODE(4, 6, 0)) && defined(__GXX_EXPERIMENTAL_CXX0X__)) || \
+#elif (defined(RAPIDJSON_GNUC) && (RAPIDJSON_GNUC >= RAPIDJSON_VERSION_CODE(4,6,0)) && defined(__GXX_EXPERIMENTAL_CXX0X__)) || \
       (defined(_MSC_VER) && _MSC_VER >= 1700) || \
       (defined(__SUNPRO_CC) && __SUNPRO_CC >= 0x5140 && defined(__GXX_EXPERIMENTAL_CXX0X__))
 #define RAPIDJSON_HAS_CXX11_RANGE_FOR 1
@@ -595,6 +592,30 @@ RAPIDJSON_NAMESPACE_END
 #endif // RAPIDJSON_HAS_CXX11_RANGE_FOR
 
 //!@endcond
+
+//! Assertion (in non-throwing contexts).
+ /*! \ingroup RAPIDJSON_CONFIG
+    Some functions provide a \c noexcept guarantee, if the compiler supports it.
+    In these cases, the \ref RAPIDJSON_ASSERT macro cannot be overridden to
+    throw an exception.  This macro adds a separate customization point for
+    such cases.
+
+    Defaults to C \c assert() (as \ref RAPIDJSON_ASSERT), if \c noexcept is
+    supported, and to \ref RAPIDJSON_ASSERT otherwise.
+ */
+
+///////////////////////////////////////////////////////////////////////////////
+// RAPIDJSON_NOEXCEPT_ASSERT
+
+#ifdef RAPIDJSON_ASSERT_THROWS
+#if RAPIDJSON_HAS_CXX11_NOEXCEPT
+#define RAPIDJSON_NOEXCEPT_ASSERT(x)
+#else
+#define RAPIDJSON_NOEXCEPT_ASSERT(x) RAPIDJSON_ASSERT(x)
+#endif // RAPIDJSON_HAS_CXX11_NOEXCEPT
+#else
+#define RAPIDJSON_NOEXCEPT_ASSERT(x) RAPIDJSON_ASSERT(x)
+#endif // RAPIDJSON_ASSERT_THROWS
 
 ///////////////////////////////////////////////////////////////////////////////
 // new/delete
@@ -619,13 +640,13 @@ RAPIDJSON_NAMESPACE_BEGIN
 
 //! Type of JSON value
 enum Type {
-  kNullType = 0,      //!< null
-  kFalseType = 1,     //!< false
-  kTrueType = 2,      //!< true
-  kObjectType = 3,    //!< object
-  kArrayType = 4,     //!< array
-  kStringType = 5,    //!< string
-  kNumberType = 6     //!< number
+    kNullType = 0,      //!< null
+    kFalseType = 1,     //!< false
+    kTrueType = 2,      //!< true
+    kObjectType = 3,    //!< object
+    kArrayType = 4,     //!< array 
+    kStringType = 5,    //!< string
+    kNumberType = 6     //!< number
 };
 
 RAPIDJSON_NAMESPACE_END

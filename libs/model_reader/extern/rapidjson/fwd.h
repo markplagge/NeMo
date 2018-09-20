@@ -38,24 +38,24 @@ struct Transcoder;
 
 class CrtAllocator;
 
-template<typename BaseAllocator>
+template <typename BaseAllocator>
 class MemoryPoolAllocator;
 
 // stream.h
 
-template<typename Encoding>
+template <typename Encoding>
 struct GenericStringStream;
 
 typedef GenericStringStream<UTF8<char> > StringStream;
 
-template<typename Encoding>
+template <typename Encoding>
 struct GenericInsituStringStream;
 
 typedef GenericInsituStringStream<UTF8<char> > InsituStringStream;
 
 // stringbuffer.h
 
-template<typename Encoding, typename Allocator>
+template <typename Encoding, typename Allocator>
 class GenericStringBuffer;
 
 typedef GenericStringBuffer<UTF8<char>, CrtAllocator> StringBuffer;
@@ -70,7 +70,7 @@ class FileWriteStream;
 
 // memorybuffer.h
 
-template<typename Allocator>
+template <typename Allocator>
 struct GenericMemoryBuffer;
 
 typedef GenericMemoryBuffer<CrtAllocator> MemoryBuffer;
@@ -84,7 +84,7 @@ struct MemoryStream;
 template<typename Encoding, typename Derived>
 struct BaseReaderHandler;
 
-template<typename SourceEncoding, typename TargetEncoding, typename StackAllocator>
+template <typename SourceEncoding, typename TargetEncoding, typename StackAllocator>
 class GenericReader;
 
 typedef GenericReader<UTF8<char>, UTF8<char>, CrtAllocator> Reader;
@@ -101,44 +101,44 @@ class PrettyWriter;
 
 // document.h
 
-template<typename Encoding, typename Allocator>
+template <typename Encoding, typename Allocator> 
 struct GenericMember;
 
-template<bool Const, typename Encoding, typename Allocator>
+template <bool Const, typename Encoding, typename Allocator>
 class GenericMemberIterator;
 
 template<typename CharType>
 struct GenericStringRef;
 
-template<typename Encoding, typename Allocator>
+template <typename Encoding, typename Allocator> 
 class GenericValue;
 
 typedef GenericValue<UTF8<char>, MemoryPoolAllocator<CrtAllocator> > Value;
 
-template<typename Encoding, typename Allocator, typename StackAllocator>
+template <typename Encoding, typename Allocator, typename StackAllocator>
 class GenericDocument;
 
 typedef GenericDocument<UTF8<char>, MemoryPoolAllocator<CrtAllocator>, CrtAllocator> Document;
 
 // pointer.h
 
-template<typename ValueType, typename Allocator>
+template <typename ValueType, typename Allocator>
 class GenericPointer;
 
 typedef GenericPointer<Value, CrtAllocator> Pointer;
 
 // schema.h
 
-template<typename SchemaDocumentType>
+template <typename SchemaDocumentType>
 class IGenericRemoteSchemaDocumentProvider;
 
-template<typename ValueT, typename Allocator>
+template <typename ValueT, typename Allocator>
 class GenericSchemaDocument;
 
 typedef GenericSchemaDocument<Value, CrtAllocator> SchemaDocument;
 typedef IGenericRemoteSchemaDocumentProvider<SchemaDocument> IRemoteSchemaDocumentProvider;
 
-template<
+template <
     typename SchemaDocumentType,
     typename OutputHandler,
     typename StateAllocator>
