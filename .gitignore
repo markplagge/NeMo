@@ -88,3 +88,27 @@ scripts/dumpi_virt-0_rnk0\.txt
 scripts/results\.log
 
 scripts/testtbl1
+
+scripts/test/NM/mnist_neil_filter\.json
+
+scripts/test/th_corelet_net_decoderParams\.json
+
+scripts/test/th_corelet_net_encoderParams\.json
+
+scripts/test/th_corelet_net_filter\.json
+
+scripts/test/neil2/mnist_neil2_filter\.json
+
+scripts/test/NM/
+
+\.vscode/
+
+scripts/old_api_csv/ol_api/
+
+scripts/sobel/sobelTiles_filter\.json
+
+scripts/sobel/sobelTiles\.json
+
+scripts/test/cifar100/
+
+scripts/test/neil2/
