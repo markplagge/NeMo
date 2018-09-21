@@ -77,7 +77,6 @@ scripts/cf100_spike.csv
 scripts/ex1_spike.csv
 nemo_spike.csv
 *.sqlite
-*.json
 *.sfcp
 *.tnbm
 *.bin
