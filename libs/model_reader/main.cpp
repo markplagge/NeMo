@@ -9,6 +9,7 @@
 #include "extern/CLI11.hh"
 #include "extern/argh.hh"
 #include "tests/test_data.hh"
+#define RAPIDJSON_PARSE_DEFAULT_FLAGS KParseCommentFlags
 
 void signal_handler(int s){
   std::cout << std::endl << rang::style::reset << rang::fg::red << rang::style ::bold;
@@ -82,8 +83,26 @@ void test_bgr(string filename){
   pl;
 
 }
-#endif
 
+int test_file_reads(){
+    const char* boot_camp_fn = "./tests/BootCampExample11.json";
+    const char* th_test_fn = "./tests/tn_test_cf100.json";
+    Document boot_camp;
+    FILE* fp = fopen(boot_camp_fn,"r");
+    char readBuffer[65535];
+    FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+    boot_camp.ParseStream<kParseCommentsFlag>(is);
+    cout << boot_camp["model"]["coreCount"].GetInt() << " <- CC \n";
+    cout << RRED("Finished first test.\n");
+    TN_Main model = create_tn_data(boot_camp_fn);
+    TN_Output out("./BootCampEx_parsed.json",model,TN_OUT_JSON);
+    out.write_data();
+
+    fclose(fp);
+
+
+}
+#endif
 int main(int argc, char *argv[]) {
 
   CLI::App app{"NeMo JSON Parser"};
@@ -94,7 +113,10 @@ int main(int argc, char *argv[]) {
   bool do_bin;
   bool do_nfg;
   bool do_bin_file_per_core;
-
+  bool do_p9_test;
+#ifdef DEBUG
+  app.add_flag("-p", do_p9_test, "do power9 test")->mandatory(false);
+#endif
   app.add_flag("-j", do_json, "Save JSON file - for debug/test.");
   app.add_flag("-b", do_bin, "Save binary file. Please ensure endianness is correct!");
   app.add_flag("-n", do_nfg, "Save NeMo LUA-based config file. Uses the soon-to-be depricated NeMo lua config syntax.");
@@ -106,16 +128,19 @@ int main(int argc, char *argv[]) {
 
   CLI11_PARSE(app,argc,argv);
 
+#ifdef DEBUG
+cout <<rang::style::reset << rang::fg::blue <<"Running debug / testing tests \n" << rang::style::reset;
+if(do_p9_test)
+    test_bgr(filename);
+test_file_reads();
+#endif
   if(!do_json && !do_bin && !do_nfg) {
     cout << std::endl << rang::style::reset << rang::fg::red << rang::style::bold;
     cout << "You must specifiy at least one of [-j,-b,-n]" << rang::style::reset <<std::endl;
     cout << rang::fg::blue << "Exiting...." << rang::style::reset << endl;
     exit(2);
   }
-#ifdef DEBUG
-cout <<rang::style::reset << rang::fg::blue <<"Running debug / testing tests \n" << rang::style::reset;
-  test_bgr(filename);
-#endif
+
   unsigned char o = 0;
   if(do_json){
     o = o | TN_OUT_JSON;

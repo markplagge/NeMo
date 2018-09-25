@@ -873,8 +873,14 @@ void TN_Core::init_core_from_itr(Value::ConstMemberIterator itr) {
   assign(meta_obj, coreletClass).GetString();
   assign(meta_obj, coreletId).GetInt();
   assign(meta_obj, coreNumber).GetInt();
-  assign(meta_obj, layerNumber).GetInt();
-  assign(meta_obj, layerType).GetString();
+  if(meta_obj.HasMember("layerNumber")) {
+    assign(meta_obj, layerNumber).GetInt();
+    assign(meta_obj, layerType).GetString();
+  }else{
+    layerNumber = 0;
+    layerType="None";
+  }
+
 
   crossbar_name = main_obj["crossbar"]["name"].GetString();
 

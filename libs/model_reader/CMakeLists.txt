@@ -33,9 +33,12 @@ endif()
 set(TN_READER_TEST 1 CACHE BOOL "Enable testing of TN Reader?")
 if(TN_READER_TEST)
     add_definitions(-DSRC_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
-        add_definitions(-DDEBUG)
-        set(DEBUG 1)
-        endif()
+    add_definitions(-DDEBUG)
+    set(DEBUG 1)
+    message("Set up config files from ${CMAKE_CURRENT_SOURCE_DIR}/tests to ${CMAKE_BINARY_DIR}/bin/tests")
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/tests/BootCampExample11.json" ${CMAKE_BINARY_DIR}/bin/tests/BootCampExample11.json COPYONLY)
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/tests/tn_test_cf100.json" ${CMAKE_BINARY_DIR}/bin/tests/tn_test_cf100.json COPYONLY)
+endif()
 
 ## Standards needed for rapidjson / model reader
 add_definitions(-DRAPIDJSON_HAS_STDSTRING=1)
@@ -77,10 +80,10 @@ endif()
 #message(STATUS "RJSON FLAGS: ${CMAKE_CXX_FLAGS}")
 
 if(ARCH STREQUAL "ppc64le")
-    add_definitions(-DRAPIDJSON_ENDIAN=1)
+    #add_definitions(-DRAPIDJSON_ENDIAN=1)
 
         #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
-    message("Rapidjson is running in big endian mode.")
+    #message("Rapidjson is running in big endian mode.")
 endif()
 
 ADD_LIBRARY(ModelReaderLib ${lib_srcs})
@@ -97,3 +100,4 @@ set_target_properties(ModelReaderBin
 
 target_link_libraries(ModelReaderLib ROSS m)
 target_link_libraries(ModelReaderBin ModelReaderLib)
+
