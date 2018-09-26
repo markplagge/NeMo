@@ -42,8 +42,8 @@ if (arch_chk STREQUAL "x86_64")
     endforeach()
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
     message("Clang/GNU Compiler detected")
-    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native -mtune=native")
-    set (CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -march=native -mtune=native")
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mtune=native")
+    set (CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS}  -mtune=native")
 endif()
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread ")
 
@@ -107,7 +107,7 @@ set(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS} -L${CMAKE_CURRENT_BINARY_DI
 set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -L${CMAKE_BINARY_DIR}/sqlite")
 set(CMAKE_STATIC_LINKER_FLAGS "${CMAKE_STATIC_LINKER_FLAGS} -L${CMAKE_BINARY_DIR}/sqlite")
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -L${CMAKE_BINARY_D1IR}/sqlite")
-set(CMAKE_C_FLAGS -D_Float32=float -D_Float64='long double' -D_Float32x=double -D_Float64x='long double'  -D__PURE_INTEL_C99_HEADERS__  ${CMAKE_C_FLAGS} )
-set(CMAKE_CXX_FLAGS -D_Float32=float -D_Float64='long double' -D_Float32x=double -D_Float64x='long double' -D__PURE_INTEL_C99_HEADERS__ ${CMAKE_CXX_FLAGS})
+#set(CMAKE_C_FLAGS -D_Float32=float -D_Float64='long double' -D_Float32x=double -D_Float64x='long double'  -D__PURE_INTEL_C99_HEADERS__  ${CMAKE_C_FLAGS} )
+#set(CMAKE_CXX_FLAGS -D_Float32=float -D_Float64='long double' -D_Float32x=double -D_Float64x='long double' -D__PURE_INTEL_C99_HEADERS__ ${CMAKE_CXX_FLAGS})
 #Model Reader Lib and Exe:
 

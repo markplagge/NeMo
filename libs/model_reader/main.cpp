@@ -129,9 +129,17 @@ int main(int argc, char *argv[]) {
   CLI11_PARSE(app,argc,argv);
 
 #ifdef DEBUG
-cout <<rang::style::reset << rang::fg::blue <<"Running debug / testing tests \n" << rang::style::reset;
-if(do_p9_test)
-    test_bgr(filename);
+    const char *endian_mode = RAPIDJSON_ENDIAN == RAPIDJSON_LITTLEENDIAN ? "Little Endian" : "Big Endian";
+    const char *std_str = RAPIDJSON_HAS_STDSTRING ? "Has STDSTRING" : "No STDSTRING ";
+    cout << rang::style::reset << rang::fg::green << rang::style::underline << "Configured RapidJSON Settings: \n" << rang::style::reset;
+    cout << rang::fg::blue<< endian_mode << "\n" << rang::style::underline<< "Cx11: " <<rang::style::reset <<
+         rang::fg::blue << "RangeFor: " <<RAPIDJSON_HAS_CXX11_RANGE_FOR << "\tNoExcept: "
+         << RAPIDJSON_HAS_CXX11_NOEXCEPT << "\trvalue_refs: " << RAPIDJSON_HAS_CXX11_RVALUE_REFS << "\n64 Bit: " << RAPIDJSON_64BIT
+         << "\n48 Bit Intel Pack: " << RAPIDJSON_48BITPOINTER_OPTIMIZATION <<"\n" << std_str
+         << rang::style::reset;
+    cout <<rang::style::reset << rang::fg::blue <<"Running debug / testing tests \n" << rang::style::reset;
+    if(do_p9_test)
+        test_bgr(filename);
 test_file_reads();
 #endif
   if(!do_json && !do_bin && !do_nfg) {
