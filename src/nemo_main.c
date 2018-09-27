@@ -103,6 +103,7 @@ int testingMode = 0;
 char NEMO_MODEL_FILE_PATH[512] = {'\0'};
 char NEMO_SPIKE_FILE_PATH[512] = {'\0'};
 bool NEMO_MODEL_IS_TN_JSON = false;
+bool NEMO_MODEL_IS_BINARY = false;
 /** @} */
 
 
@@ -118,9 +119,10 @@ const tw_optdef app_opt[] = {
                    "a network file name must be specified.\n"
                    "This will set random network, sat network, and layer network modes off. "),
 
-    TWOPT_CHAR("model",NEMO_MODEL_FILE_PATH,"Path to NeMo model file or TN JSON File."),
+    TWOPT_CHAR("model",NEMO_MODEL_FILE_PATH,"Path to NeMo model file, binary neuron file, or TN JSON File."),
     TWOPT_CHAR("spikes", NEMO_SPIKE_FILE_PATH, "Path to NeMo Spike File"),
     TWOPT_FLAG("tn_json", NEMO_MODEL_IS_TN_JSON, "Is the input model file in TN JSON format?"),
+    TWOPT_FLAG("tn_bin", NEMO_MODEL_IS_BINARY, "Is the input model file in processed TN binary format?"),
     //TWOPT_CHAR("nfn", NETWORK_CFG_FN, "Input Network File Name"),
     //TWOPT_CHAR("sfn", SPIKE_IN_FN, "Spike input file name"),
     // TWOPT_UINT("tm", testingMode, "Choose a test suite to run. 0=no tests,
@@ -432,7 +434,10 @@ void init_nemo() {
 // Call the new JSON input function
 if(NEMO_MODEL_IS_TN_JSON) {
   initJSON(NEMO_MODEL_FILE_PATH);
-}else {
+}else if(NEMO_MODEL_IS_BINARY) {
+  openBinaryModelFile(NEMO_MODEL_FILE_PATH);
+  setupBinaryNeurons();
+}else{
   luaLoader(NEMO_MODEL_FILE_PATH);
   initModelInput(CORES_IN_SIM);
 }

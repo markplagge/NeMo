@@ -67,6 +67,20 @@ set(NeMo_DEBUG 0 CACHE BOOL "Debug mode")
 # set(NeMo_COUCH_ADD "None" CACHE STRING "The IP address:PORT of the couch database if used")
 #
 
+## KDTREE Library Options:
+OPTION(KD_fastalloc "KD-Tree Lib: Use fastalloc? " ON )
+set(KD_pthread  CACHE BOOL "KD-Tree: Use pthreads? " ON )
+if(KD_fastalloc)
+    add_definitions(-DUSE_LIST_NODE_ALLOCATOR=1)
+endif()
+if(KD_pthread)
+    #set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -lpthreads")
+else()
+    add_definitions(-DNO_PTHREADS)
+endif()
+
+
+
 
 set(SAVE_MSGS 0)
 set(USE_COUCH 0)
@@ -133,7 +147,7 @@ set(model_srcs
         IO/spike_db_reader.c
         neuro/tn_neuron_struct.h
 
-        nemo_main.h tests/tomacs_exp.c tests/tomacs_exp.h lib/itrlve.h lib/itrlve.c lib/rqueue.c lib/rqueue.h lib/atomic_defs.h IO/model_reader_js.c)
+        nemo_main.h tests/tomacs_exp.c tests/tomacs_exp.h lib/itrlve.h lib/itrlve.c lib/rqueue.c lib/rqueue.h lib/atomic_defs.h IO/model_reader_js.c lib/kdtree/kdtree.c lib/kdtree/kdtree.h)
 
 #REMOVED:
 #IO/spike_reader.c

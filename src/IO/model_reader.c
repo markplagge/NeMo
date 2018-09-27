@@ -8,6 +8,7 @@
 
 #include <sys/stat.h>
 #include "IOStack.h"
+#include "../lib/kdtree/kdtree.h"
 /* Input uses standard lua 5.1. However, these includes may be switched out
  * with luaJIT in the future. Maintain lua 5.1 / partial 5.2 compatiblility. */
 //#include "../lib/lua/lua.h"
@@ -15,6 +16,87 @@
 //#include "../lib/lua/lauxlib.h"
 
 #include "lua.h"
+#include "../neuro/tn_neuron_struct.h"
+
+
+/**@{ Binary Reader Code */
+FILE *bin_file;
+int bin_file_open = 0;
+void *kd, *set;
+tn_neuron_state **state_vec;
+long num_n;
+
+int openBinaryModelFile(char * binFileName){
+  if(bin_file_open == 0){
+    bin_file = fopen(binFileName,"rb");
+    bin_file_open = 1;
+  }
+  return errno;
+}
+
+long setupBinaryNeurons(){
+    //load metadata from file:
+    long num_neurons;
+    fscanf(bin_file,"%li\n",&num_neurons);
+    state_vec = calloc(num_neurons, sizeof(tn_neuron_state*));
+    //Load neurons into array of neurons:
+    //tn_neuron_state **bin_neurons = tw_calloc(TW_LOC,"TEMP_KD",sizeof(tn_neuron_state*), num_neurons);
+    //fread(bin_neurons,sizeof(bin_neurons[0]), num_neurons,bin_file);
+    //loaded neurons. Store them in the KD tree:
+    kd = kd_create(2);
+    for(int i = 0; i < num_neurons; i ++){
+        //tn_neuron_state *n = bin_neurons[i];
+        tn_neuron_state *n = tw_calloc(TW_LOC,"Binary Neuron", sizeof(tn_neuron_state),1);
+        state_vec[i] = n;
+        fread(n,sizeof(n), 1,bin_file);
+        int core_id = n->myCoreID;
+        int local_id = n->myLocalID;
+        float id[] = {core_id,local_id};
+        kd_insertf(kd,id,n);
+    }
+    num_n = num_neurons;
+    return num_neurons;
+}
+
+void loadNeuronFromBIN(id_type neuronCore, id_type neuronLocal, tn_neuron_state *n){
+    tn_neuron_state *old_state = n;
+    float pos[] = {neuronCore,neuronLocal};
+    struct kdres *res = kd_nearestf(kd,pos);
+    tn_neuron_state *new_state;
+    new_state = kd_res_itemf( res,pos);
+    if(new_state->myLocalID == neuronLocal && new_state->myCoreID == neuronCore){
+#ifdef DEBUG
+        static int anc = 0;
+        if(anc == 0) {
+            tw_printf(TW_LOC, "Found Neuron.\n");
+            anc = 1;
+        }
+#endif
+
+        memcpy(n,new_state,sizeof(tn_neuron_state));
+    }
+
+    kd_res_free(res);
+}
+
+void closeBinaryModelFile(){
+    static data_free = 0;
+    if (bin_file_open){
+        fclose(bin_file);
+    }
+    //free kd tree...
+    if(data_free == 0){
+        data_free = 1;
+        for(int i = 0; i < num_n; i ++){
+            free(state_vec[i]);
+        }
+        free(state_vec);
+        kd_free(kd);
+    }
+
+
+}
+/**@}*/
 
 /**
  * L -> Global (to the model def) state of the lua file

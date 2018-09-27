@@ -242,5 +242,30 @@ void loadNeuronFromJSON(id_type neuronCore, id_type neuronLocal,tn_neuron_state 
 void initJSON(char *jsonFilename);
 void closeJSON();
 
+/**
+ * for reading in TN neuron structs saved to file. Currently this binary system only handles TN LPs saved from
+ * the JSON parser.
+ * @param binFileName
+ * @return
+ */
+int openBinaryModelFile(char * binFileName);
+/**
+ * Initializes the library of neuron structs from the binary file.
+ * @return the number of neurons loaded.
+ */
+long setupBinaryNeurons();
+/**
+ * initializes the given neuron, if it exists in the neuron library.
+ * @param neuronCore
+ * @param neuronLocal
+ * @param n
+ */
+void loadNeuronFromBIN(id_type neuronCore, id_type neuronLocal,tn_neuron_state *n);
+
+
+/**
+ * Closes the binary file and frees the library of neurons.
+ */
+void closeBinaryModelFile();
 /**@}*/
 #endif //NEMO_IOSTACK_H

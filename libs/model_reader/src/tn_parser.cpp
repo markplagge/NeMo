@@ -1320,8 +1320,31 @@ int TN_Output::write_bin() {
   json j = generate_json(0,0);
   vector<std::uint8_t> v_mpack = json::to_msgpack(j);
 
+
   bof.write((char*) v_mpack.data(), v_mpack.size() * sizeof(tn_neuron_state));
   bof.close();
+
+  //testing straight C binary output.
+  //will write 1 line of text - metadata, then one line containing the number of TN Neurons.
+  //Then will output full neuron data.
+
+  //first create a neuron array:
+  auto **neur_array = (tn_neuron_state **) calloc(this->neurons.size(),sizeof(tn_neuron_state *));
+  //now create some neurons:
+  int icr = 0;
+  for(auto nwrap : neurons){
+      tn_neuron_state *n = nwrap.getTn();
+      neur_array[icr] = n;
+  }
+  //now set up metadata:
+  long num_neurons = neurons.size();
+  //open file:
+  string sec_b = "raw_bin_" + out_fn_bin;
+  FILE *f = fopen(sec_b.c_str(),"wb");
+  fprintf(f,"%li\n",num_neurons);
+  fwrite(neur_array,sizeof(tn_neuron_state),num_neurons,f);
+  fclose(f);
+
 
   return 0;
 }

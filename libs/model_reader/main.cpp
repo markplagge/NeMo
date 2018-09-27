@@ -92,6 +92,8 @@ int test_file_reads(){
     char readBuffer[65535];
     FileReadStream is(fp, readBuffer, sizeof(readBuffer));
     boot_camp.ParseStream<kParseCommentsFlag>(is);
+    cout << "Result was " << GetParseError_En( boot_camp.GetParseError()) << " \n";
+    
     cout << boot_camp["model"]["coreCount"].GetInt() << " <- CC \n";
     cout << RRED("Finished first test.\n");
     TN_Main model = create_tn_data(boot_camp_fn);
@@ -145,9 +147,11 @@ int main(int argc, char *argv[]) {
 # elif defined(_LITTLE_ENDIAN)
     cout << "LE Defined as " << _LITLE_ENDIAN <<"\n";
 #endif
-    
-    if(do_p9_test)
+
+    if(do_p9_test) {
+        cout << "BGRS Testing start \n";
         test_bgr(filename);
+    }
 test_file_reads();
 #endif
   if(!do_json && !do_bin && !do_nfg) {
