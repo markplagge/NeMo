@@ -881,110 +881,7 @@ void TN_create_saturation_neuron(tn_neuron_state *s, tw_lp *lp) {
   }
 }
 
-void parseCSVCreateTN(tn_neuron_state *st, csvNeuron raw) {
-  st->myCoreID = raw.req_core_id;
-  st->myLocalID = raw.req_local_id;
-  int currentFld = 3; //Data starts at 4th element: "TN",CORE,LOCAL,....
 
-  // Set up neuron params in arrays:
-  // Synaptic Connectivity, Gi, SigmaG, S, B
-  enum arrayFtr arrayNum = CONN;
-  //Calculation needed for neurosynaptic weights (sigma[i] * S[i]), so store sigma and S in arrays
-  short sigma[NUM_NEURON_WEIGHTS];
-  short S[NUM_NEURON_WEIGHTS];
-
-  // for array features, this is the number of elements total to be loaded.
-  int lenOfArrayParams = (NEURONS_IN_CORE*2) + (NUM_NEURON_WEIGHTS*3);
-  void *datum;
-  int pos = 0;
-  for (int i = 0; i < lenOfArrayParams; i++) {
-    switch (arrayNum) {
-    case CONN: st->synapticConnectivity[pos] = nextToI(); // atoi(raw.rawDatM[currentFld ++]);
-      break;
-    case AXTP: st->axonTypes[pos] = nextToI();
-      break;
-    case SGI: sigma[pos] = nextToI();
-      break;
-    case SP: S[pos] = nextToI();
-      break;
-    case BV: st->weightSelection[pos] = nextToI();
-      break;
-
-    }
-    switch (arrayNum) {
-    case CONN:
-    case AXTP:
-      if (pos==NEURONS_IN_CORE - 1) {
-        arrayNum++;
-        pos = 0;
-      } else {
-        pos++;
-      }
-      break;
-    case SGI:
-    case SP:
-    case BV:
-      if (pos==NUM_NEURON_WEIGHTS - 1) {
-        arrayNum++;
-        pos = 0;
-      } else {
-        pos++;
-      }
-
-    }
-  }
-  //set up weights:
-  for (int i = 0; i < NUM_NEURON_WEIGHTS; i++) {
-    st->synapticWeight[i] = sigma[i]*S[i];
-  }
-  st->epsilon = nextToI();
-  st->sigma_l = nextToI();
-  st->lambda = nextToI();
-  st->c = nextToI();
-
-  st->posThreshold = nextToI();
-  st->negThreshold = nextToI();
-
-  st->thresholdPRNMask = nextToI();
-  st->thresholdPRNMask = pow(2, st->thresholdPRNMask) - 1;
-
-  short VR = nextToI();
-  short sigmaVR = nextToI();
-  sigmaVR = SGN(sigmaVR);
-  st->resetVoltage = (sigmaVR*(pow(2, VR) - 1));
-  st->encodedResetVoltage = VR;
-
-  st->resetMode = nextToI();
-  st->kappa = nextToI();
-  st->omega = 0;
-
-  int signalDelay = nextToI();
-  int destCore = nextToI();
-  int destLocal = nextToI();
-  st->dendriteLocal = destLocal;
-  tw_lpid globalDest = 0;
-  if (destCore >= 0) {
-    //Output Only Neuron:
-    globalDest = getGIDFromLocalIDs(destCore, destLocal);
-  }
-  TN_set_neuron_dest(signalDelay, globalDest, st);
-  st->isOutputNeuron = nextToI();
-  st->isSelfFiring = nextToI();
-  st->isActiveNeuron = true;
-  if (destCore < 0) {
-    st->outputGID = getGIDFromLocalIDs(CORES_IN_SIM + 1, NEURONS_IN_CORE + 1);
-    st->isSelfFiring = true;
-
-  }
-
-
-  //set up PRNG masks:
-
-
-  //final insurance that state is consistent:
-  assert(st->largestRandomValue < 256);
-
-}
 #define LB sprintf(em, "%s\n%s", em,linebreak)
 
 void modelErr(char *element, char *filename, id_type coreID, id_type lID, char *tp, char *fnDat, int codeline) {
@@ -1215,7 +1112,15 @@ void TNCreateFromFile(tn_neuron_state *s, tw_lp *lp) {
     }else{
       s->outputGID = getGIDFromLocalIDs(core,nid);
     }
-  }else {
+  }else if(NEMO_MODEL_IS_BINARY){
+    //load the binary file info.
+    bool found = loadNeuronFromBIN(core,nid,s);
+    if(!found){
+      s->isActiveNeuron = false;
+    }
+
+
+  }else{
     int nNotFound = lookupAndPrimeNeuron(core, nid, nt);
     if (DBG_MODEL_MSGS) {
       printf("Found status: %i \n ", nNotFound);

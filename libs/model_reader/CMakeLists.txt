@@ -18,15 +18,15 @@ set(TN_READER_OMP 1 CACHE BOOL "Enable OMP?")
 if(TN_READER_OMP)
     find_package(OpenMP)
         if (OPENMP_FOUND)
-            message(STATUS "Found OpenMP")
+            message(STATUS "Found OpenMP - set options")
             add_definitions(-DUSE_OMP=1)
 
             set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
             set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
             set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
-
+        else()
+            message(STATUS "Did not find OpenMP - not enabled.")
         endif()
-    message(STATUS "Did not find OpenMP - not enabled.")
 endif()
 
 ## Testing Options:

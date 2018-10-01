@@ -130,6 +130,10 @@ int main(int argc, char *argv[]) {
 
   CLI11_PARSE(app,argc,argv);
 
+#ifdef USE_OMP
+  printf("Using OpenMP for loops.\n");
+#endif
+  
 #ifdef DEBUG
     const char *endian_mode = RAPIDJSON_ENDIAN == RAPIDJSON_LITTLEENDIAN ? "Little Endian" : "Big Endian";
     const char *std_str = RAPIDJSON_HAS_STDSTRING ? "Has STDSTRING" : "No STDSTRING ";
@@ -156,7 +160,7 @@ test_file_reads();
 #endif
   if(!do_json && !do_bin && !do_nfg) {
     cout << std::endl << rang::style::reset << rang::fg::red << rang::style::bold;
-    cout << "You must specifiy at least one of [-j,-b,-n]" << rang::style::reset <<std::endl;
+    cout << "You must specify at least one of [-j,-b,-n]" << rang::style::reset <<std::endl;
     cout << rang::fg::blue << "Exiting...." << rang::style::reset << endl;
     exit(2);
   }
@@ -183,7 +187,6 @@ test_file_reads();
     
   TN_Main model = create_tn_data(filename);
   cout << "\n Created Model. \n";
-
   TN_Output out(save_file,model,o );
   cout << "\n saving json file  to " << save_file << "\n";
   out.write_data();

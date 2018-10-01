@@ -1339,7 +1339,9 @@ int TN_Output::write_bin() {
   //now set up metadata:
   long num_neurons = neurons.size();
   //open file:
-  string sec_b = "raw_bin_" + out_fn_bin;
+  string sec_b = out_fn_bin;
+  replace(sec_b,".json","");
+  replace(sec_b,".dat","_raw.bin");
   FILE *f = fopen(sec_b.c_str(),"wb");
   fprintf(f,"%li\n",num_neurons);
   fwrite(neur_array,sizeof(tn_neuron_state),num_neurons,f);

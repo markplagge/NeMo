@@ -435,6 +435,11 @@ void init_nemo() {
 if(NEMO_MODEL_IS_TN_JSON) {
   initJSON(NEMO_MODEL_FILE_PATH);
 }else if(NEMO_MODEL_IS_BINARY) {
+#ifdef DEBUG
+    if(g_tw_mynode==0){
+        tw_printf(TW_LOC, "Loading pre-processesd binary file from %s \n",NEMO_MODEL_FILE_PATH);
+    }
+#endif
   openBinaryModelFile(NEMO_MODEL_FILE_PATH);
   setupBinaryNeurons();
 }else{

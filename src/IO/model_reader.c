@@ -58,12 +58,13 @@ long setupBinaryNeurons(){
     return num_neurons;
 }
 
-void loadNeuronFromBIN(id_type neuronCore, id_type neuronLocal, tn_neuron_state *n){
+bool loadNeuronFromBIN(id_type neuronCore, id_type neuronLocal, tn_neuron_state *n){
     tn_neuron_state *old_state = n;
     float pos[] = {neuronCore,neuronLocal};
     struct kdres *res = kd_nearestf(kd,pos);
     tn_neuron_state *new_state;
     new_state = kd_res_itemf( res,pos);
+    bool found = false;
     if(new_state->myLocalID == neuronLocal && new_state->myCoreID == neuronCore){
 #ifdef DEBUG
         static int anc = 0;
@@ -74,9 +75,11 @@ void loadNeuronFromBIN(id_type neuronCore, id_type neuronLocal, tn_neuron_state 
 #endif
 
         memcpy(n,new_state,sizeof(tn_neuron_state));
+        found = true;
     }
 
     kd_res_free(res);
+    return found;
 }
 
 void closeBinaryModelFile(){
