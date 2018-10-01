@@ -133,7 +133,7 @@ int main(int argc, char *argv[]) {
 #ifdef USE_OMP
   printf("Using OpenMP for loops.\n");
 #endif
-  
+
 #ifdef DEBUG
     const char *endian_mode = RAPIDJSON_ENDIAN == RAPIDJSON_LITTLEENDIAN ? "Little Endian" : "Big Endian";
     const char *std_str = RAPIDJSON_HAS_STDSTRING ? "Has STDSTRING" : "No STDSTRING ";
