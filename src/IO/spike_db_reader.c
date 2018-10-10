@@ -382,6 +382,7 @@ static int callback(void *count, int argc, char **argv, char **azColName) {
     *c = atoi(argv[0]);
     return 0;
 }
+
 /**
  * Override - generic function - opens and inits the spike file. Here opens connection to the SQL database
  * @return
@@ -410,7 +411,9 @@ int openSpikeFile() {
  * @return
  */
 int closeSpikeFile() {
+
   return closeDB(NEMO_SPIKE_FILE_PATH);
+
 }
 
 /**

@@ -1310,7 +1310,7 @@ void TN_save_events(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp){
         if(s->isOutputNeuron && SAVE_OUTPUT_NEURON_EVTS && cv->c10) {
           outCore = s->outputCoreDest;
           outNeuron = s->outputNeuronDest;
-        }else if(SAVE_SPIKE_EVTS && cv->c31){ //else if (SAVE_SPIKE_EVTS && (cv->c0 || cv->c31) {
+        }else if(SAVE_SPIKE_EVTS && (cv->c0 || cv->c31)){ //else if (SAVE_SPIKE_EVTS && (cv->c0 || cv->c31) {
 
             outCore = getCoreFromGID(lp->gid);
             outNeuron = getNeuronLocalFromGID(lp->gid);
@@ -1365,7 +1365,6 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
 
   // save simulated dumpi trace if inter core and dumpi trace is on
   if (cv->c31 && DO_DUMPI) {
-    /** @TODO: Add dumpi save flag to config. */
     //saveMPIMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp),
 
     //			   dumpi_out);

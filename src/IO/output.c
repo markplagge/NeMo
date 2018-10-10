@@ -147,9 +147,11 @@ void setNeuronNetFileName() {
   sprintf(neuronFireFinalFN, "%s_final.csv", NEURON_FIRE_R_FN);
 
 }
-
+//! @todo remove this once done debugging.
+unsigned long num_save_ops =0 ;
 void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid destGID, long destCore,
                     long destLocal, unsigned int isOutput) {
+    num_save_ops ++;
   if (neuronFirePoolPos >= N_FIRE_BUFF_SIZE) {
     flushNeuron();
   }
@@ -237,6 +239,7 @@ void closeFiles() {
     FILE *finalout = fopen("neuron_spike_evts.csv", "w");
     fprintf(finalout, "timestamp,neuron_core,neuron_local,destGID\n");
     fclose(finalout);
+    printf("Attempted to write %lu spikes to file \n",num_save_ops);
   }
 
 }
