@@ -1303,26 +1303,27 @@ int debug_core_open = 0;
  * @param m
  * @param lp
  */
-void TN_save_events(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp){
-    if(SAVE_OUTPUT_NEURON_EVTS || SAVE_SPIKE_EVTS){ //if we are saving events, do work!
-      long outCore = -909;
-      long outNeuron = -909;
-        if(s->isOutputNeuron && SAVE_OUTPUT_NEURON_EVTS && cv->c10) {
-          outCore = s->outputCoreDest;
-          outNeuron = s->outputNeuronDest;
-        }else if(SAVE_SPIKE_EVTS && (cv->c0 || cv->c31)){ //else if (SAVE_SPIKE_EVTS && (cv->c0 || cv->c31) {
+void TN_save_events(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
 
-            outCore = getCoreFromGID(lp->gid);
-            outNeuron = getNeuronLocalFromGID(lp->gid);
-        }else{
-            //not a spike event or not saving messages.
-            return;
+    if (SAVE_OUTPUT_NEURON_EVTS || SAVE_SPIKE_EVTS) { //if we are saving events, do work!
+        long outCore = -909;
+        long outNeuron = -909;
+        unsigned int fired = cv->c0 | cv->c31 | cv->c10;
+
+        if (fired > 0) {
+            outCore = s->outputCoreDest;
+            outNeuron = s->outputNeuronDest;
+            //! @todo We can use s->isOutputNeuron to check if the neuron is an "output layer" rather than relying on the bitfield
+            if (SAVE_OUTPUT_NEURON_EVTS && cv->c10 &&
+                !SAVE_SPIKE_EVTS) { //if save_oputput_neuron_events is active, then we save only output spikes.
+                saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID, outCore, outNeuron,
+                               s->isOutputNeuron);
+            } else { //if SAVE_SPIKE_EVENTS is on - save all spikes. But don't call this twice (if SAVE_OUTPUT_NEURON_EVTS is on, don't write twice.
+                saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID, outCore, outNeuron,
+                               s->isOutputNeuron);
+            }
         }
-        //we are saving events.
-        saveNeuronFire(tw_now(lp) + 1, s->myCoreID, s->myLocalID, s->outputGID,
-                       outCore, outNeuron, s->isOutputNeuron);
     }
-
 }
 
 /** TN_commit is a function called on commit. This is used for management of
@@ -1346,23 +1347,6 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
   /// Save output neuron events
   // can save either all spike even
   TN_save_events(s,cv,m,lp);
-//  if ((s->isOutputNeuron && SAVE_OUTPUT_NEURON_EVTS && cv->c10) || (SAVE_SPIKE_EVTS && cv->c0)) {
-//    long outCore;
-//    long outNeuron;
-//    if (s->isOutputNeuron) {
-//      outCore = s->outputCoreDest;
-//      outNeuron = s->outputNeuronDest;
-//    } else {
-//      outCore = getCoreFromGID(s->outputGID);
-//      outNeuron = getLocalFromGID(s->outputGID);
-//    }
-//    /////output neurons do not send messages to the rest of the model. But we save the output.
-//    if (SAVE_OUTPUT_NEURON_EVTS) {
-//      saveNeuronFire(tw_now(lp) + 1, s->myCoreID, s->myLocalID, s->outputGID,
-//                     outCore, outNeuron, s->isOutputNeuron);
-//    }
- // }
-
   // save simulated dumpi trace if inter core and dumpi trace is on
   if (cv->c31 && DO_DUMPI) {
     //saveMPIMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp),
