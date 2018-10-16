@@ -120,6 +120,15 @@ int test_file_reads(){
 
     fclose(fp);
 
+    Document th_test;
+    FILE* fp2 = fopen(th_test_fn, "r");
+    char readBuffer2[65535];
+    FileReadStream is2(fp, readBuffer2, sizeof(readBuffer));
+    th_test.ParseStream<kParseCommentsFlag>(is2);
+    cout << "\n\n ------------------- \n  CF100 Test Result: " << GetParseError_En(th_test.GetParseError()) << "\n";
+    cout << th_test["model"]["coreCount"].GetInt() << " <- CC \n";
+
+
 
 }
 #endif
