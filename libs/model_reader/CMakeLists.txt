@@ -1,6 +1,6 @@
 project(ModelReader)
 include(ExternalProject)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 11)
 set(RJSON_PATH CACHE PATH "./extern/rapidjson" )
 set(reader_srcs
         main.cpp tests/test_data.hh extern/CLI11.hh extern/rang.hh)
@@ -13,7 +13,7 @@ set(lib_srcs
         include/model_reader_wrapper.h
         src/model_reader_wrapper.cc)
 
-set(TN_READER_OMP 1 CACHE BOOL "Enable OMP?")
+set(TN_READER_OMP 1 CACHE BOOL "Enable OP?")
 
 if(TN_READER_OMP)
     find_package(OpenMP)
@@ -83,6 +83,7 @@ if(ARCH STREQUAL "ppc64le")
     #add_definitions(-DRAPIDJSON_ENDIAN=1)
         add_definitions(-DRAPIDJSON_ENDIAN=0)
         SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
+        message("ModelReader set to use ppc64le config")
 
         #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
     #message("Rapidjson is running in big endian mode.")
