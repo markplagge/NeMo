@@ -1400,11 +1400,15 @@ cout << "\n - filename : " << filename << "\n";
   fseek(f, 0, SEEK_END);
   long fsize = ftell(f);
   fseek(f, 0, SEEK_SET);  //same as rewind(f);
-  json_str = (char *) calloc(fsize +1024, 1);
-  fread(json_str,fsize,1,f);
-  fclose(f);
+  json_str = (char *) calloc(fsize +4096, 1);
+  //fread(json_str,fsize,1,f);
+  //
+  FileReadStream is(f,json_str, sizeof(json_str));
+
   printf("Read file. Parsing \n");
-  json_doc.Parse<kParseCommentsFlag>(json_str);
+  //json_doc.Parse<kParseCommentsFlag>(json_str);
+  json_doc.ParseStream<kParseCommentsFlag>(is);
+  cout <<"Parsing status : " << GetParseError_En(json_doc.GetParseError()) << "\n";
 
 
 
@@ -1455,6 +1459,7 @@ cout << "\n - filename : " << filename << "\n";
   tw_printf(TW_LOC, "Model loaded - found %li cores defined neurons\n", num_cores_in_js);
 #endif
   free(json_str);
+  fclose(f);
   return model;
 }
 
