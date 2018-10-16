@@ -29,37 +29,55 @@ void test_bgr(string filename){
   Document c_str_test;
 //  std::vector<char> data(test_cstr_big, test_cstr_big+ size);
   cout << "Starting tests of secondary JSON library.\n";
-  char short_test[] = "{\n"
-                      "  /* General model parameters */\n"
-                      "  \"model\":{\n"
-                      "    \"coreCount\":4042,\n"
-                      "    \"neuronclass\":\"NeuronGeneral\",\n"
-                      "    \"crossbarSize\":256,\n"
-                      "    \"crossbarclass\":\"CrossbarBinary\",\n"
-                      "    \"buildKey64\":\"20180312T181135_CPEmakeModel_37D8A05D623E7F6AC67EECBF929EDFBBE09\",\n"
-                      "    \"networking\":\"INTRA\",\n"
-                      "    \"useCrossbarPrototypes\":true\n"
-                      "  },\n"
-                      "  /* Crossbar type library */\n"
-                      "  \"crossbarTypes\":[\n"
-                      "    {\n"
-                      "      \"name\":\"coreProt0002603\",\n"
-                      "      \"crossbar\":{\n"
-                      "        /* Row parameters */\n"
-                      "        \"rows\":[\n"
-                      "          /* Parameters */\n"
-                      "          {\"type\":\"S0\",\"synapses\":\"51 40 C0 90 90 4B 83 00 12 80 02 01 18 38 A0 40 51 40 C0 90 90 4B 83 00 12 80 02 01 18 38 A0 40\"},\n"
-                      "          {\"type\":\"S1\",\"synapses\":\"A0 00 11 61 04 84 00 B8 08 24 19 70 41 00 0C 03 A0 00 11 61 04 84 00 B8 08 24 19 70 41 00 0C 03\"}]}\n"
-                      "}]}";
-
+//  char short_test[] = "{\n"
+//                      "  /* General model parameters */\n"
+//                      "  \"model\":{\n"
+//                      "    \"coreCount\":4042,\n"
+//                      "    \"neuronclass\":\"NeuronGeneral\",\n"
+//                      "    \"crossbarSize\":256,\n"
+//                      "    \"crossbarclass\":\"CrossbarBinary\",\n"
+//                      "    \"buildKey64\":\"20180312T181135_CPEmakeModel_37D8A05D623E7F6AC67EECBF929EDFBBE09\",\n"
+//                      "    \"networking\":\"INTRA\",\n"
+//                      "    \"useCrossbarPrototypes\":true\n"
+//                      "  },\n"
+//                      "  /* Crossbar type library */\n"
+//                      "  \"crossbarTypes\":[\n"
+//                      "    {\n"
+//                      "      \"name\":\"coreProt0002603\",\n"
+//                      "      \"crossbar\":{\n"
+//                      "        /* Row parameters */\n"
+//                      "        \"rows\":[\n"
+//                      "          /* Parameters */\n"
+//                      "          {\"type\":\"S0\",\"synapses\":\"51 40 C0 90 90 4B 83 00 12 80 02 01 18 38 A0 40 51 40 C0 90 90 4B 83 00 12 80 02 01 18 38 A0 40\"},\n"
+//                      "          {\"type\":\"S1\",\"synapses\":\"A0 00 11 61 04 84 00 B8 08 24 19 70 41 00 0C 03 A0 00 11 61 04 84 00 B8 08 24 19 70 41 00 0C 03\"}]}\n"
+//                      "}]}";
+char short_test[] = "{\n"
+                    "  \"model\":{\n"
+                    "    \"coreCount\":4042,\n"
+                    "    \"neuronclass\":\"NeuronGeneral\",\n"
+                    "    \"crossbarSize\":256,\n"
+                    "    \"crossbarclass\":\"CrossbarBinary\",\n"
+                    "    \"buildKey64\":\"20180312T181135_CPEmakeModel_37D8A05D623E7F6AC67EECBF929EDFBBE09\",\n"
+                    "    \"networking\":\"INTRA\",\n"
+                    "    \"useCrossbarPrototypes\":true\n"
+                    "  },\n"
+                    "  \"crossbarTypes\":[\n"
+                    "    {\n"
+                    "      \"name\":\"coreProt0002603\",\n"
+                    "      \"crossbar\":{\n"
+                    "            \"rows\":[\n"
+                    "              {\"type\":\"S0\",\"synapses\":\"51 40 C0 90 90 4B 83 00 12 80 02 01 18 38 A0 40 51 40 C0 90 90 4B 83 00 12 80 02 01 18 38 A0 40\"},\n"
+                    "          {\"type\":\"S1\",\"synapses\":\"A0 00 11 61 04 84 00 B8 08 24 19 70 41 00 0C 03 A0 00 11 61 04 84 00 B8 08 24 19 70 41 00 0C 03\"}]}\n"
+                    "}]}";
   char buffer[sizeof(short_test)];
   memcpy(buffer, short_test, sizeof(short_test));
-
+  cout << " Buffer is: \n" << buffer << "\n";
   Document jx;
   cout << "Endian set to (1 is big): " << RAPIDJSON_ENDIAN << "\n" << "is 64 bit? " << RAPIDJSON_64BIT << "\n";
-
-  jx.ParseInsitu<kParseCommentsFlag>(buffer);
-//jx.Parse<kParseCommentsFlag>(short_test);
+  //jx.Parse<kParseCommentsFlag>(buffer);
+  string cen = kParseCommentsFlag & kParseDefaultFlags ? " Enabled ":" Disabled";
+  cout <<"Default flags set - comments: " << cen <<"\n";
+  jx.Parse(short_test);
   cout << "JX Result: " << jx.GetParseError() << " " << rapidjson::GetParseError_En(jx.GetParseError()) << " \n ";
   cout << "JX done: " << RRED(jx["model"]["networking"].GetString()) << "\n";
   cout << " ---- \n ";
