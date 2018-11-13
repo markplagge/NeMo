@@ -17,7 +17,7 @@
 #include <rapidjson/error/en.h>
 #include <rapidjson/error/error.h>
 
-#define RAPIDJSON_PARSE_DEFAULT_FLAGS KParseCommentFlags
+//#define RAPIDJSON_PARSE_DEFAULT_FLAGS KParseCommentFlags
 
 
 #include <cstdio>
