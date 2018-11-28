@@ -64,7 +64,7 @@ ADD_SUBDIRECTORY(${RD})
 if (arch_chk STREQUAL "x86_64")
     SET (TARGET ROSS PROPERTY CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 endif()
-ADD_SUBDIRECTORY(${SQLD})
+#ADD_SUBDIRECTORY(${SQLD})
 ADD_SUBDIRECTORY(${simcld})
 
 if(USE_LUA_JIT)
@@ -102,6 +102,10 @@ set_target_properties( NeMo
 configure_file("demo.csv" "${CMAKE_BINARY_DIR}/bin/demo.csv" COPYONLY)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/src/IO/model_read.lua ${CMAKE_CURRENT_BINARY_DIR}/bin/model_read.lua COPYONLY)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/src/IO/tn_types.lua ${CMAKE_CURRENT_BINARY_DIR}/bin/tn_types.lua COPYONLY)
+
+find_package(sqlite3)
+include_directories(${SQLITE3_INCLUDE_DIRS})
+target_link_libraries (NeMo ${SQLITE3_LIBRARIES})
 
 set(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS} -L${CMAKE_CURRENT_BINARY_DIR}/sqlite)
 set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -L${CMAKE_BINARY_DIR}/sqlite")
