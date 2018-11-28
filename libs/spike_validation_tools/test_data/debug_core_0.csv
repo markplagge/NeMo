@@ -1,1 +1,3 @@
-TYPE,CORE_ID,NEURON_ID,SEND_GID,SEND_CORE,SEND_AXON,TIME,RCV_FROM_AXON
+version https://git-lfs.github.com/spec/v1
+oid sha256:ac6b4f9d1fa6f1027ed28f266a51f6519c94bb3e92693dd0b28e94151da222db
+size 71
