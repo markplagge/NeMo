@@ -126,11 +126,11 @@ def get_ranks(root_path,filename_pattern):
 
 
 
-def read_files_dsk(root_path,filename_pattern,compresssion=True):
+def read_files_dsk(root_path,filename_pattern,comp=True):
     rp = pathlib.Path(root_path)
     dts = {x: np.int64 for x in _names_[1:]}
     dts["timestamp"] = np.float64
-    if compression:
+    if comp:
         filenames = rp.glob(filename_pattern)
         dfs = [delayed(pd.read_csv)(fn) for fn in filenames ]
         df = dd.from_delayed(dfs)

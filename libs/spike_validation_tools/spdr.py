@@ -20,3 +20,5 @@ scheduler_file = "/shared/share/superneuro/dask_work/scheduler.json"
 
 
 c = Client(scheduler_file=dask_sched_file)
+
+nscs_data,nemo_data = spike_comps.init_data(nscs_filename,nemo_folder,nemo_pattern,"")
