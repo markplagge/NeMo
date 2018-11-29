@@ -6,7 +6,7 @@ from concurrent.futures import ProcessPoolExecutor as process_pool
 import dask.dataframe as dd
 import dask.bag as db
 import dask.array as da
-
+from dask.delayed import delayed
 import tempfile
 import os
 import glob
@@ -126,11 +126,16 @@ def get_ranks(root_path,filename_pattern):
 
 
 
-def read_files_dsk(root_path,filename_pattern):
+def read_files_dsk(root_path,filename_pattern,compresssion=True):
     rp = pathlib.Path(root_path)
     dts = {x: np.int64 for x in _names_[1:]}
     dts["timestamp"] = np.float64
-    df = dd.read_csv(root_path + filename_pattern, blocksize=g_blocksize, names=_names_, dtype=dts, delimiter=',', comment="t")
+    if compression:
+        filenames = rp.glob(filename_pattern)
+        dfs = [delayed(pd.read_csv)(fn) for fn in filenames ]
+        df = dd.from_delayed(dfs)
+    else:
+        df = dd.read_csv(root_path + filename_pattern, blocksize=g_blocksize, names=_names_, dtype=dts, delimiter=',', comment="t")
     return df
 
 
@@ -145,8 +150,12 @@ def read_nemo_spike_files(root_path="./",filename_pattern="fire_record_rank_*.cs
     matched_files = find_spike_files(root_path,filename_pattern)
     if matched_files:
         if dask:
+            if ".gz" in filename_pattern:
+                compression = True
+            else:
+                compression = False
             print("Chunk Size is " + str(g_blocksize))
-            return read_files_dsk(root_path,filename_pattern)
+            return read_files_dsk(root_path,filename_pattern,compression)
 
         if np:
             return np_read_spikes(matched_files,mt)
