@@ -111,10 +111,11 @@ class SpikeQuery_SCN_DCN(SpikeQuery):
         super().run_query()
 
         self.result = {}
-        click.secho("Running both_query...",fg="blue")
+        click.secho("Running both_query only...",fg="blue")
         with click_spinner.spinner():
             result = self.in_both.compute()
             self.result['in_both'] = result
+        """
         click.secho("Running in_nemo filter", fg="blue")
         with click_spinner.spinner():
             result = self.in_nemo.compute()
@@ -123,7 +124,7 @@ class SpikeQuery_SCN_DCN(SpikeQuery):
         with click_spinner.spinner():
             result = self.in_nscs.compute()
             self.result['in_nscs'] = result
-
+"""
         click.secho("Completed running.")
 
 
@@ -137,12 +138,12 @@ class SpikeQuery_SCN_DCN(SpikeQuery):
 
 
         outer_join = df.merge(nscs_df,nemo_df,how="outer",on=self.fields,indicator=True)#.sort_values("timestamp_x")
-        in_nscs = outer_join[outer_join ['_merge'] == 'left_only']
-        in_nemo = outer_join[outer_join ['_merge'] == 'right_only']
+        #in_nscs = outer_join[outer_join ['_merge'] == 'left_only']
+        #in_nemo = outer_join[outer_join ['_merge'] == 'right_only']
         in_both = outer_join[outer_join ['_merge'] == 'both']
 
-        self.in_nemo = in_nemo
-        self.in_nscs = in_nscs
+        #self.in_nemo = in_nemo
+        #self.in_nscs = in_nscs
         self.in_both = in_both
 
 
