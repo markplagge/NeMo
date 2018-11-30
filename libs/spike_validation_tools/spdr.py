@@ -24,7 +24,7 @@ ip = "128.213.17.109"
 diag = 9999
 mem = "12GB"
 #c = Client(scheduler_file=dask_sched_file)
-client = Client(n_workers=2,diagnostics_port=diag,ip=ip)
+client = Client(n_workers=10,diagnostics_port=diag,ip=ip)
 
 
 nscs_data,nemo_data = spike_comps.init_data(nscs_filename,nemo_folder,nemo_pattern,"")
