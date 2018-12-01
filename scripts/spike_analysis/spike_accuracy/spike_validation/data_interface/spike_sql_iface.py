@@ -16,8 +16,8 @@ class SpikeDataInterface():
     def __init__(self,connection_dsn='sqlite:///:./spike_data.sqlite',create_new=True,nscs_data=None,nemo_data=None):
         ## I want this class to handle both pandas and dask dataframes if we are creating a new table:
         if create_new:
-            assert(nscs_data != None)
-            assert(nemo_data != None)
+            #assert(nscs_data != None)
+            #assert(nemo_data != None)
             if isinstance(nemo_data, df.DataFrame):
                 self.nemo_data = nemo_data.compute()
                 del(nemo_data)
