@@ -114,3 +114,5 @@ scripts/test/cifar100/
 scripts/test/neil2/
 
 scripts/analysis/spike_accuracy/test_data/cifar_model/
+
+scripts/spike_analysis/spike_accuracy/\.spyproject/
