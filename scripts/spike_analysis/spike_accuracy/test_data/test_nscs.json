@@ -1,3 +1,50 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a3daece8215d0460e60f9258d513ece6b7129e7b2089b6324f1295427259e213
-size 4683
+{"class":"SpikeWriter","encoding":"TEXT","nscsVersion":"1.4.0"}
+{"version":"sfto1.0", "defaultDestinationDelay" : 1}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":4,"destCore":1130,"destAxon":102,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":10,"destCore":874,"destAxon":190,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":14,"destCore":874,"destAxon":88,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":18,"destCore":874,"destAxon":20,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":19,"destCore":874,"destAxon":4,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":20,"destCore":874,"destAxon":50,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":21,"destCore":1130,"destAxon":106,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":25,"destCore":1130,"destAxon":186,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":26,"destCore":1130,"destAxon":36,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":31,"destCore":874,"destAxon":186,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":33,"destCore":874,"destAxon":26,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":34,"destCore":874,"destAxon":152,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":35,"destCore":1130,"destAxon":104,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":37,"destCore":874,"destAxon":172,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":38,"destCore":1130,"destAxon":22,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":40,"destCore":1130,"destAxon":44,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":45,"destCore":1130,"destAxon":24,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":48,"destCore":874,"destAxon":212,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":49,"destCore":1130,"destAxon":42,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":50,"destCore":1130,"destAxon":168,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":54,"destCore":1130,"destAxon":146,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":55,"destCore":1130,"destAxon":202,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":56,"destCore":874,"destAxon":0,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":57,"destCore":874,"destAxon":102,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":69,"destCore":1130,"destAxon":84,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":70,"destCore":1130,"destAxon":212,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":73,"destCore":1130,"destAxon":172,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":74,"destCore":1130,"destAxon":90,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":78,"destCore":1130,"destAxon":228,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":79,"destCore":1130,"destAxon":232,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":81,"destCore":1130,"destAxon":108,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":86,"destCore":874,"destAxon":64,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":93,"destCore":874,"destAxon":204,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":96,"destCore":874,"destAxon":196,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":97,"destCore":874,"destAxon":192,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":99,"destCore":874,"destAxon":80,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":101,"destCore":874,"destAxon":74,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":105,"destCore":874,"destAxon":32,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":107,"destCore":874,"destAxon":56,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":112,"destCore":874,"destAxon":138,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":114,"destCore":1130,"destAxon":182,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":122,"destCore":1130,"destAxon":28,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":130,"destCore":1130,"destAxon":103,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":136,"destCore":874,"destAxon":191,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":140,"destCore":874,"destAxon":89,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":144,"destCore":874,"destAxon":21,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":145,"destCore":874,"destAxon":5,"destDelay":1}}
+{"spike":{"srcTime":0,"srcCore":0,"srcNeuron":146,"destCore":874,"destAxon":51,"destDelay":1}}
