@@ -1,9 +1,3 @@
-timestamp,core,local,destGID,destCore,destNeuron,isOutput?
-3.031378,1,0,3,5
-3.031378,1,1,3,6
-3.031378,1,2,3,7
-3.031378,2,0,4,9
-3.031378,2,1,4,10
-3.031378,2,2,4,11
-3.031378,2,3,4,12
-6,0,0,99,99
+version https://git-lfs.github.com/spec/v1
+oid sha256:96f908f39e2cbaff13816f770a1474fdd3a65e9d8fbbeeda5c5162cbff503715
+size 192
