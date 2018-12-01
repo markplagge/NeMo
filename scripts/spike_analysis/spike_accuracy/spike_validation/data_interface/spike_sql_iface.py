@@ -9,7 +9,7 @@ import dask
 import pandas as pd
 
 
-class spike_data_iface():
+class SpikeDataInterface():
     table_base_name = 'spike_'
     return_pandas = False
     return_dask = False
