@@ -100,8 +100,9 @@ modes=['thread','proc','cluster']
 @click.option('--one_shot', default=False, help="One Shot mode? Ignores caching options and runs as a complete"
                                                 "dask graph")
 @click.option('--out_data_fn',default="./spike_counts.csv")
+@click.option('--exist', default=False, is_flag=True, help="Does the DB already exist? (prevents loading new files)")
 #@click.option('--db_dsn',default="")
-def compare_nscs_nemo(nscs_file,nemo_folder,nemo_pattern,mode,database,refresh,a,one_shot,out_data_fn):
+def compare_nscs_nemo(nscs_file,nemo_folder,nemo_pattern,mode,database,refresh,a,one_shot,out_data_fn,exist):
     if mode == 'proc':
         dask.config.set(scheduler="processes")
     elif mode == 'cluster':
@@ -123,7 +124,7 @@ def compare_nscs_nemo(nscs_file,nemo_folder,nemo_pattern,mode,database,refresh,a
     ## test tables:
     #eng = sqlalchemy.create_engine(database)
     #c = eng.connect()
-    if refresh:
+    if refresh or not exist:
         click.echo("Creating table.")
         nscs_data,nemo_data = init_data(nscs_file,nemo_folder,nemo_pattern,mode)
         iface = spike_accuracy.SpikeDataInterface(database,refresh,nscs_data,nemo_data)

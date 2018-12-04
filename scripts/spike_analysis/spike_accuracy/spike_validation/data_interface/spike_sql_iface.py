@@ -100,8 +100,8 @@ class SpikeDataInterface():
     def create_table(self):
         with self.eng.connect() as con:
             assert(isinstance(self.nemo_data,pd.DataFrame))
-            self.nemo_data.to_sql(self.ne_table,con,if_exists='replace')
-            self.nscs_data.to_sql(self.ns_table,con,if_exists='replace')
+            self.nemo_data.to_sql(self.ne_table,con,if_exists='replace',chunksize=65545)
+            self.nscs_data.to_sql(self.ns_table,con,if_exists='replace',chunksize=65545)
             self.ns_table_g = self.ns_table + "_grps"
             self.ne_table_g = self.ne_table + "_grps"
 
