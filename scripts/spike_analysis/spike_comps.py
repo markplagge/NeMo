@@ -8,7 +8,7 @@ import pathlib
 import click_spinner
 from click_spinner import spinner
 
-from spike_accuracy.spike_validation import read_nscs_spikes, read_nemo_spike_files
+from .spike_validation import read_nscs_spikes, read_nemo_spike_files
 
 import concurrent
 from dask.distributed import Client, progress
@@ -82,18 +82,26 @@ def data_analysis(nscs_data,nemo_data,mode,cached=False):
 def one_shot(nscs_file,nemo_folder,nemo_pattern,mode,**kwargs):
     pass
 
+def gen_sql(nscs_data,nemo_data):
+    pass
+
+
+import sqlalchemy
+from sqlalchemy import create_engine
 modes=['mp','def','custom']
 @click.command()
 @click.argument('nscs_file',type=click.Path(exists=True))
 @click.option('-n','--nemo_folder',help="Path to nemo files")
 @click.option('-np','--nemo_pattern',default="fire_record_rank_*.csv")
 @click.option('-m','--mode',default="def",type=click.Choice(modes))
-@click.option('-d', '--data_folder', default="./")
+@click.option('-d', '--database', default="postgres://plaggm@localhost")
 @click.option('-r', '--refresh', default=False,help="Refresh cached data?")
 @click.option('-a', default=True,help="Run analysis?")
 @click.option('--one_shot', default=False, help="One Shot mode? Ignores caching options and runs as a complete"
                                                 "dask graph")
-def compare_nscs_nemo(nscs_file,nemo_folder,nemo_pattern,mode,data_folder,refresh,a,one_shot):
+@click.option('--out_data_fn',default="./spike_counts.csv")
+#@click.option('--db_dsn',default="")
+def compare_nscs_nemo(nscs_file,nemo_folder,nemo_pattern,mode,database,refresh,a,one_shot,out_data_fn):
     nscs_data_file = 'nscs_data.dat'
     nemo_data_file = 'nemo_data.dat'
 
@@ -102,7 +110,34 @@ def compare_nscs_nemo(nscs_file,nemo_folder,nemo_pattern,mode,data_folder,refres
     if(one_shot):
         one_shot(nscs_file,nemo_folder,nemo_pattern,mode)
         return 0
-    p = pathlib.Path(data_folder)
+
+
+    ## test tables:
+    #eng = sqlalchemy.create_engine(database)
+    #c = eng.connect()
+    if refresh:
+        nscs_data,nemo_data = init_data(nscs_file,nemo_folder,nemo_pattern,mode)
+        iface = spike_accuracy.SpikeDataInterface(database,refresh,nscs_data,nemo_data)
+    else:
+        iface = spike_accuracy.SpikeDataInterface(database,refresh)
+
+    click.echo("Database connected. Generating spike report")
+    sqobj = spike_accuracy.MissingSpikeSQL(iface)
+    click.echo("will generate report with spike counts and missing values")
+    qo = spike_accuracy.SpikeQuery_SCN_DCN()
+    qo.run_full_q = True
+    sqobj.add_query_object(qo)
+    sqobj.execute_queries()
+    click.echo("results generated. saving to " + out_data_fn)
+    results = sqobj.get_query_results()
+    i = 0
+    for r in results:
+        r.to_csv(str(i) + out_data_fn)
+        i += 1
+    click.echo("done!")
+    return
+
+
     if(p.exists()):
         if mode == 'custom':
             client = init_client_ovr()
@@ -131,6 +166,27 @@ def compare_nscs_nemo(nscs_file,nemo_folder,nemo_pattern,mode,data_folder,refres
         click.secho("invalid data folder chosen.")
         return 2
 
-
+import spike_accuracy
 if __name__ == '__main__':
+    ## DEMO MODE:
+
+    dask.config.set(scheduler='processes')
+    # qf = spike_accuracy.SpikeDataInterface("postgres://plaggm@localhost", create_new=False)
+    # qf.ne_table = "nemo_spike"
+    # qf.ns_table = "nscs_spike"
+    # qf.test_gq(qf.ne_table, 500)
+    # msq = spike_accuracy.MissingSpikeSQL(qf)
+    # qo = spike_accuracy.SpikeQuery_SCN_DCN()
+    # qo.run_full_q=True
+    # msq.add_query_object(qo)
+    # msq.execute_queries()
+    # results = msq.query_objects[0].result
+    # r = results.compute()
+    # print("found  " + str(len(results))+ " records.")
+    # r.to_csv("spike_demo.csv")
+
+
+
+
+
     compare_nscs_nemo()
