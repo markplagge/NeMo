@@ -27,6 +27,9 @@ class SpikeDataInterface():
             if isinstance(nscs_data, df.DataFrame):
                 self.nscs_data = nscs_data.compute()
                 del(nscs_data)
+            else:
+                self.nscs_data = nscs_data
+
         self.ns_table = self.table_base_name + "nscs"
         self.ne_table = self.table_base_name + "nemo"
         self.eng = create_engine(connection_dsn)

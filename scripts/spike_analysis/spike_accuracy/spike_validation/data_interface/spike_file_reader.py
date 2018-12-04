@@ -38,7 +38,7 @@ def parse_and_save(nscs_file_path, nemo_file_path, nemo_pattern='fire_record_ran
 error_message = ""
 _names_ = ["timestamp","core","local","destGID","destCore","destNeuron","isOutput?"]
 _names_ = ['timestamp','srcCore','srcNeuron','destGID','destCore','destAxon','isOutput?']
-g_blocksize = 128e6
+g_blocksize = 100e6
 def file_reader(filename):
     skip_first = False
     if "_0.csv" in filename:

@@ -88,12 +88,12 @@ def gen_sql(nscs_data,nemo_data):
 
 import sqlalchemy
 from sqlalchemy import create_engine
-modes=['mp','def','custom']
+modes=['thread','proc','cluster']
 @click.command()
 @click.argument('nscs_file',type=click.Path(exists=True))
 @click.option('-n','--nemo_folder',help="Path to nemo files")
 @click.option('-np','--nemo_pattern',default="fire_record_rank_*.csv")
-@click.option('-m','--mode',default="def",type=click.Choice(modes))
+@click.option('-m','--mode',default="thread",type=click.Choice(modes))
 @click.option('-d', '--database', default="postgres://plaggm@localhost")
 @click.option('-r', '--refresh', default=False,help="Refresh cached data?",is_flag=True)
 @click.option('-a', default=True,help="Run analysis?")
@@ -102,9 +102,17 @@ modes=['mp','def','custom']
 @click.option('--out_data_fn',default="./spike_counts.csv")
 #@click.option('--db_dsn',default="")
 def compare_nscs_nemo(nscs_file,nemo_folder,nemo_pattern,mode,database,refresh,a,one_shot,out_data_fn):
+    if mode == 'proc':
+        dask.config.set(scheduler="processes")
+    elif mode == 'cluster':
+        c = Client(processes=True)
+        print("using client / cluster mode:")
+        print(c)
+
     nscs_data_file = 'nscs_data.dat'
     nemo_data_file = 'nemo_data.dat'
-
+    if not nemo_folder.endswith('/'):
+        nemo_folder = nemo_folder +"/"
     #if data folder exists, and temp data files are there, and refresh is false,
     #reuse existing data.
     if(one_shot):
@@ -136,6 +144,10 @@ def compare_nscs_nemo(nscs_file,nemo_folder,nemo_pattern,mode,database,refresh,a
         r.to_csv(str(i) + out_data_fn)
         i += 1
     click.echo("done!")
+
+    if mode == 'cluster':
+        c.close()
+
     return
 
 
