@@ -8,7 +8,7 @@ import pathlib
 import click_spinner
 from click_spinner import spinner
 
-from .spike_validation import read_nscs_spikes, read_nemo_spike_files
+from spike_accuracy.spike_validation import read_nscs_spikes, read_nemo_spike_files
 
 import concurrent
 from dask.distributed import Client, progress
@@ -95,7 +95,7 @@ modes=['mp','def','custom']
 @click.option('-np','--nemo_pattern',default="fire_record_rank_*.csv")
 @click.option('-m','--mode',default="def",type=click.Choice(modes))
 @click.option('-d', '--database', default="postgres://plaggm@localhost")
-@click.option('-r', '--refresh', default=False,help="Refresh cached data?")
+@click.option('-r', '--refresh', default=False,help="Refresh cached data?",is_flag=True)
 @click.option('-a', default=True,help="Run analysis?")
 @click.option('--one_shot', default=False, help="One Shot mode? Ignores caching options and runs as a complete"
                                                 "dask graph")
@@ -116,11 +116,12 @@ def compare_nscs_nemo(nscs_file,nemo_folder,nemo_pattern,mode,database,refresh,a
     #eng = sqlalchemy.create_engine(database)
     #c = eng.connect()
     if refresh:
+        click.echo("Creating table.")
         nscs_data,nemo_data = init_data(nscs_file,nemo_folder,nemo_pattern,mode)
         iface = spike_accuracy.SpikeDataInterface(database,refresh,nscs_data,nemo_data)
+        iface.create_table()
     else:
         iface = spike_accuracy.SpikeDataInterface(database,refresh)
-
     click.echo("Database connected. Generating spike report")
     sqobj = spike_accuracy.MissingSpikeSQL(iface)
     click.echo("will generate report with spike counts and missing values")

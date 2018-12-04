@@ -1,5 +1,6 @@
 #import comparisons
-from .comparisons import SpikeQuery,SpikeQuery_SCN_DCN,SpikeQuery_SCN_DCN_Time
+from .comparisons import SpikeQuery,SpikeQuery_SCN_DCN,SpikeQuery_SCN_DCN_Time,MissingSpikeSQL
+
 from .comparisons import MissingSpikes as QueryHolder
 from .data_interface import *
 from .data_interface.spike_file_reader import read_nemo_spike_files,read_nscs_spikes,parse_and_save

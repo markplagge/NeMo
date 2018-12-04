@@ -10,6 +10,11 @@ import concurrent.futures
 import weakref
 import click_spinner
 
+from .data_interface.spike_sql_iface import SpikeDataInterface
+
+
+
+
 class MissingSpikes(object):
     """
     Missing spikes - object that manages spike comparisons with NeMo and NSCS spikes, or NEMO and NEMO spikes.
@@ -65,6 +70,18 @@ class MissingSpikes(object):
             for qo in tqdm(self.query_objects, desc="running queries"):
                 qo.run_query()
 
+class MissingSpikeSQL(MissingSpikes):
+    query_objects = []
+    def __init__(self,data_iface,parallel_q=False):
+        self.data_iface = data_iface
+        self.parallel_q = parallel_q
+        assert(isinstance(self.data_iface,SpikeDataInterface))
+
+    def add_query_object(self,qobject):
+        assert(isinstance(qobject,SpikeQuery))
+        qobject.parent = self
+        self.query_objects.append(qobject)
+
 
 class SpikeQuery(object):
     """Default SpikeQuery object.
@@ -105,15 +122,84 @@ class SpikeQuery_SCN_DCN(SpikeQuery):
         self.in_both = None
         self.in_nscs = None
         self.in_nemo = None
-        self.mege_filename='in_both.csv'
+        self.merge_filename='in_both.csv'
+        self.do_chunks = False
+        self.run_full_q = False
 
     def run_query(self):
         super().run_query()
 
         self.result = {}
         click.secho("Executing outer join query.")
+        click.secho("TODO: override sql iface to return dask dataframes.")
+
+        if isinstance(self.parent, MissingSpikeSQL):
+
+            max_qup = 512
+            c_core = 0
+            nf = 0
+            pending = []
+            results = []
+            ## SQL GRP Q
+            #end_core = self.parent.data_iface.get_max_src_core()
+            end_core = 4096
+            if self.run_full_q:
+                ## Don't always do dask here...
+                if self.parent.parallel_q:
+                    return -1
+                else:
+                    self.parent.data_iface.return_dask = True
+                    print("running large query group result")
+                    ns_gp, ne_gp = self.parent.data_iface.get_spike_counts_all()
+                    print("Sql got")
+
+                    #assert(isinstance(ns_gp,pd.DataFrame))
+                    #assert(isinstance(ne_gp,dask.dataframe.DataFrame))
+                    r = ns_gp.merge(ne_gp,how='outer',indicator=True)
+                    self.result = r
+                    return r
+
+            elif self.parent.parallel_q:
+                return -1
+            else:
+                ### Always do DASK here...
+                self.parent.data_iface.return_dask = True
+                #with open(self.merge_filename, 'w') as out_file:
+                for i in tqdm(range(0,end_core + 1),position=2,desc="running sql group queries"):
+
+
+
+                    ns_gp,ne_gp = self.parent.data_iface.get_spike_counts_by_core(i)
+
+                    #do a merge:
+                    pending.append(df.merge(ns_gp,ne_gp,how="outer",on=self.fields,indicator=True))
+
+                    c_core += 1
+                    if c_core > max_qup and self.do_chunks:
+                        vx_result = df.concat(df.concat(pending).compute())
+                        #results.append(vx_result)
+                        with open(self.merge_filename,'a') as out_file:
+                            vx_result = pd.DataFrame(vx_result)
+                            if nf == 0:
+                                hdr = True
+                                nf = 1
+                            else:
+                                hdr = False
+                            vx_result.to_csv(out_file,header=hdr)
+                        c_core = 0
+                        pending = []
+
+
+
+                #compute results:
+                if self.do_chunks:
+                    result =pd.DataFrame( df.concat(pending).compute())
+                    result.to_csv(self.merge_filename)
+                    ## and maybe not this if we are memory bound...
+                    return result
+
         nscs_data_full = self.parent.nscs_df
-        nemo_data_full = self.paent.nemo_data
+        nemo_data_full = self.parent.nemo_data
         ## try a core-wise query setup first:
         max_core = max(nscs_data_full['destCore'].max().compute(),nemo_data_full.max().compute())
         group_results = []
@@ -150,18 +236,19 @@ class SpikeQuery_SCN_DCN(SpikeQuery):
         builds the query, and stores it as dask values
         :return:
         """
-        #nscs_df = self.parent.nscs_df#self.parent.nscs_df
-        #nemo_df = self.parent.nemo_df#self.parent.nemo_df
+        if isinstance(self.parent,MissingSpikeSQL):
+            nscs_df = self.parent.nscs_df#self.parent.nscs_df
+            nemo_df = self.parent.nemo_df#self.parent.nemo_df
 
 
-        #outer_join = df.merge(nscs_df,nemo_df,how="outer",on=self.fields,indicator=True)#.sort_values("timestamp_x")
-        #in_nscs = outer_join[outer_join ['_merge'] == 'left_only']
-        #in_nemo = outer_join[outer_join ['_merge'] == 'right_only']
-        #in_both = outer_join[outer_join ['_merge'] == 'both']
+            outer_join = df.merge(nscs_df,nemo_df,how="outer",on=self.fields,indicator=True)#.sort_values("timestamp_x")
+            in_nscs = outer_join[outer_join ['_merge'] == 'left_only']
+            in_nemo = outer_join[outer_join ['_merge'] == 'right_only']
+            in_both = outer_join[outer_join ['_merge'] == 'both']
 
-        #self.in_nemo = in_nemo
-        #self.in_nscs = in_nscs
-        #self.in_both = in_both
+            self.in_nemo = in_nemo
+            self.in_nscs = in_nscs
+            self.in_both = in_both
 
 
 
@@ -199,6 +286,7 @@ if __name__ == '__main__':
 
     spike_results = MissingSpikes(d1,d2)
     spike_results.add_query_object(SpikeQuery_SCN_DCN("full"))
+
     spike_results.execute_queries()
     results = spike_results.get_query_results('full')
     for k,v in results.items():
