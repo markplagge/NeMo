@@ -1,41 +1,238 @@
+import multiprocessing
+
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
-
+from sqlalchemy import exists
 import dask.dataframe as df
+from tqdm import tqdm
+
+from spike_accuracy.spike_validation.data_interface.spike_file_reader import read_nscs_spikes_chunks
+from concurrent.futures.process import SimpleQueue
+df_runner_q = SimpleQueue()
+try:
+    from psycopg2cffi import compat
+    compat.register()
+except:
+    pass
 
 import dask
+import numpy as np
 
 import pandas as pd
+#from enum import Flag, auto
+from flags import Flags
+
+class STAT(Flags):
+
+    NEMO_TABLE_OK = ()
+    NSCS_TABLE_OK = ()
+    NEMO_VIEW_OK = ()
+    NSCS_VIEW_OK = ()
+
+    NEMO_TABLE_ERR = ()
+    NSCS_TABLE_ERR = ()
+    NEMO_VIEW_ERR = ()
+    NSCS_VIEW_ERR = ()
+
+    FILE_LOADED = ()
+    NULL_INPUT_DATA = ()
+    QUERY_ERROR = ()
+    DATABASE_ERROR = ()
+    DATABASE_OKAY = ()
+    NOT_INIT = ()
+    START_INIT = ()
+
 
 
 class SpikeDataInterface():
     table_base_name = 'spike_'
     return_pandas = False
     return_dask = False
-    def __init__(self,connection_dsn='sqlite:///:./spike_data.sqlite',create_new=True,nscs_data=None,nemo_data=None):
+    def __set_status(self,new):
+        self.status = self.status | new
+
+    def __init__(self,connection_dsn='sqlite:///:./spike_data.sqlite',create_new=True,nscs_data=None,nemo_data=None,ns_file=True,ne_file=False):
+        self.ns_table = self.table_base_name + "nscs"
+        self.ne_table = self.table_base_name + "nemo"
+        self.ns_table_g = self.ns_table + "_grps"
+        self.ne_table_g = self.ne_table + "_grps"
+        self.eng = create_engine(connection_dsn)
+        self.dsn = connection_dsn
+        self.status = STAT.NOT_INIT
+        self.table_result = 0
+        self.view_result = 0
+
+
         ## I want this class to handle both pandas and dask dataframes if we are creating a new table:
+        self.status = STAT.START_INIT
         if create_new:
             #assert(nscs_data != None)
             #assert(nemo_data != None)
+            # if nemo_data == None:
+            #     self.__set_status(STAT.NULL_INPUT_DATA)
+            if ne_file == True: # got a file, not a pre-loaded file
+                print("Not implemented.")
+
             if isinstance(nemo_data, df.DataFrame):
                 self.nemo_data = nemo_data.compute()
                 del(nemo_data)
             #elif isinstance(nemo_data_)
             else:
                 self.nemo_data = nemo_data
-            if isinstance(nscs_data, df.DataFrame):
+
+            # if nscs_data == None:
+            #     self.__set_status(STAT.NULL_INPUT_DATA)
+            if ns_file == True:
+                assert(isinstance(nscs_data,str))
+                self.create_nscs_tbl_chunk(nscs_data)
+
+            elif isinstance(nscs_data, df.DataFrame):
                 self.nscs_data = nscs_data.compute()
                 del(nscs_data)
             else:
                 self.nscs_data = nscs_data
+        else:
+            result = self.get_table_data()
+            self.table_result = result[0]
+            self.view_result = result[1]
 
-        self.ns_table = self.table_base_name + "nscs"
-        self.ne_table = self.table_base_name + "nemo"
-        self.eng = create_engine(connection_dsn)
 
 
-        ### Set up table:
+    def df_runner(self):
+        eng = create_engine(self.dsn)
+        con = eng.connect()
+        print("SQL Runner started.")
+        tbl,all_dicts = df_runner_q.get()
+        while "end" not in tbl:
+            keys = {k for d in all_dicts for k in d}
+            merged_dict = {k: [d.get(k, np.nan) for d in all_dicts] for k in keys}
+
+            ld = pd.DataFrame.from_dict(merged_dict)
+            if len(ld) == 0:
+                print("ERROR LD WAS 0")
+                print(ld)
+                exit(-1)
+            ld.to_sql(tbl, con, if_exists="append")
+            tbl,all_dicts = df_runner_q.get()
+
+
+
+    def create_nscs_tbl_chunk(self,filename):
+        cc = 0
+        max_chunk = 4096
+        all_dicts = []
+        #vals = ['timestamp','srcCore','srcNeuron','destGID','destCore','destAxon','isOutput?']
+        ## try threaded mode
+        runners = []
+        done = []
+        num_thds = 5
+        for i in range(0,num_thds):
+            runner = multiprocessing.Process(target=self.df_runner)
+            runner.start()
+            runners.append(runner)
+
+        ##threaded:
+        for line in read_nscs_spikes_chunks(filename):
+            all_dicts.append(line)
+            cc += 1
+            if cc >= max_chunk:
+                df_runner_q.put((self.ns_table,all_dicts))
+                all_dicts = []
+                cc = 0
+        for i in range(0, num_thds):
+            df_runner_q.put(["end","end"])
+        running = True
+        while running:
+            if len(done) == num_thds:
+                running = False
+
+            for thd in tqdm(runners,desc="waiting for workers..."):
+                if thd.is_alive():
+                    done.append('d')
+                    thd.close()
+
+
+
+        return
+        ##non-threaded:
+        for line in read_nscs_spikes_chunks(filename):
+            all_dicts.append(line)
+            cc += 1
+            if cc >= max_chunk:
+                keys = {k for d in all_dicts for k in d}
+                merged_dict = {k: [d.get(k, np.nan) for d in all_dicts] for k in keys}
+
+                ld = pd.DataFrame.from_dict(merged_dict)
+                ld.to_sql(self.ns_table,self.eng.connect(),if_exists="append")
+                all_dicts = []
+                cc = 0
+
+
+    def create_nemo_tbl_chunk(self,filename):
+        pass
+
+    def get_table_data(self):
+        m = "loaded"
+        if self.__do_tables_exit():
+            tbl = "tables ok"
+        else:
+            tbl = "tbls not okay"
+        if self.__do_views_exist():
+            view = "views ok"
+        else:
+            view = "views not okay"
+
+        return [tbl,view]
+
+    def __do_views_exist(self):
+        views = sqlalchemy.inspect(self.eng).get_view_names()
+        nview_exist = False
+        nsview_exist = False
+        for v in views:
+            if self.ns_table_g in v:
+                nsview_exist =True
+            if self.ne_table_g in v:
+                nview_exist = True
+
+
+        # nview_exist = self.eng.dialect.has_view(self.eng,self.ne_table_g)
+
+        # nsview_exist = self.eng.dialect.has_view(self.eng,self.ns_table_g)
+        if nsview_exist:
+            self.__set_status(STAT.NSCS_VIEW_OK)
+        else:
+            self.__set_status(STAT.NSCS_VIEW_ERR)
+
+        if nview_exist:
+            self.__set_status(STAT.NEMO_VIEW_OK)
+        else:
+            self.__set_status(STAT.NEMO_VIEW_ERR)
+
+        return nview_exist and nsview_exist
+
+
+
+
+    def __do_tables_exit(self):
+        nemo_exist = self.eng.dialect.has_table(self.eng,self.ne_table)
+        if nemo_exist:
+            self.__set_status(STAT.NEMO_TABLE_OK)
+        else:
+            self.__set_status(STAT.NEMO_TABLE_ERR)
+
+        nscs_exist = self.eng.dialect.has_table(self.eng,self.ne_table)
+        if nscs_exist:
+            self.__set_status(STAT.NSCS_TABLE_OK)
+        else:
+            self.__set_status(STAT.NSCS_TABLE_ERR)
+
+        return nemo_exist and nscs_exist
+
+        #with self.eng.connect() as con:
+
+
+
 
     def __gen_core_query(self,core_id,tbl):
         qry = f'SELECT "srcneuon", "destcore","destaxon","timestamp" FROM {tbl} WHERE srccore = {core_id}'
@@ -89,6 +286,7 @@ class SpikeDataInterface():
 
 
     def mview_query(self,stbl):
+
         qry = f'create MATERIALIZED VIEW {stbl}_grps AS \n ' \
             f'select "srcCore", "srcNeuron","destCore","destAxon", COUNT("timestamp") ' \
             f'as num_spikes from {stbl} \n' \
@@ -113,6 +311,10 @@ class SpikeDataInterface():
             con.execute(text(view_1_q))
             con.execute(text(view_2_q))
 
+    def create_view(self, op_table):
+        view_q = self.mview_query(op_table)
+        with self.eng.connect() as con:
+            con.execute(text(view_q))
 
 
     def exec_arb_q(self,query):

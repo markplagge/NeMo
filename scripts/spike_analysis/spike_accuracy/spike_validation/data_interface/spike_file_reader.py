@@ -213,7 +213,18 @@ def read_nscs_spikes(nscs_file_name):
 
     return data
 
+def read_nscs_spikes_chunks(nscs_file_name):
+    print("chunk loader")
+    with tempfile.NamedTemporaryFile(delete=False) as tmp:
+        fn = tmp.name
+        print("temp: ")
+        print(fn)
+        cmd = "tail -n +3 " + nscs_file_name + " > " + fn
+        print("running " + cmd)
+        popen_method(cmd)
 
+        for line in open(fn,'r'):
+            yield json_callback(line)
 
     #else:
     #    error_message = "Could not open NSCS spike file " + tn_file_name
