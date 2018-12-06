@@ -116,3 +116,9 @@ scripts/test/neil2/
 scripts/analysis/spike_accuracy/test_data/cifar_model/
 
 scripts/spike_analysis/spike_accuracy/\.spyproject/
+
+scripts/spike_analysis/spike_analysis\.egg-info/
+
+scripts/spike_analysis/spike_accuracy/test_data/
+
+scripts/spike_analysis/dask-worker-space/

@@ -1,9 +1,0 @@
-fire_record_rank_0.csv.xz filter=lfs diff=lfs merge=lfs -text
-fire_record_rank_1.csv.xz filter=lfs diff=lfs merge=lfs -text
-fire_record_rank_2.csv.xz filter=lfs diff=lfs merge=lfs -text
-test_nscs.json filter=lfs diff=lfs merge=lfs -text
-debug_core_0.csv filter=lfs diff=lfs merge=lfs -text
-demo.csv filter=lfs diff=lfs merge=lfs -text
-neuron_spike_evts.csv filter=lfs diff=lfs merge=lfs -text
-ross.csv filter=lfs diff=lfs merge=lfs -text
-test_fire_0.csv filter=lfs diff=lfs merge=lfs -text
