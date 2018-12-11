@@ -1,5 +1,5 @@
 #import comparisons
-from .comparisons import SpikeQuery,SpikeQuery_SCN_DCN,SpikeQuery_SCN_DCN_Time,MissingSpikeSQL
+from .comparisons import SpikeQuery,SpikeQuery_SCN_DCN,SpikeQuery_SCN_DCN_Time,MissingSpikeSQL,SpikeQuery_SCN_DCN_SQL_GRP,SpikeQuery_FULL_SRC_COMP
 
 from .comparisons import MissingSpikes as QueryHolder
 from .data_interface import *

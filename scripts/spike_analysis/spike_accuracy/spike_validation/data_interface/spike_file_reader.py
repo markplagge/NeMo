@@ -38,6 +38,7 @@ def parse_and_save(nscs_file_path, nemo_file_path, nemo_pattern='fire_record_ran
 error_message = ""
 _names_ = ["timestamp","core","local","destGID","destCore","destNeuron","isOutput?"]
 _names_ = ['timestamp','srcCore','srcNeuron','destGID','destCore','destAxon','isOutput?']
+
 g_blocksize = 100e6
 def file_reader(filename):
     skip_first = False
@@ -194,6 +195,15 @@ def json_callback(line):
     dt['timestamp'] = dt['srcTime'] + dt['destDelay']
     return dt
 
+def json_callback_clear(line):
+    if 'spike' in line:
+        sp = json.loads(line)
+        dt = sp['spike']
+        dt['timestamp'] = dt['srcTime'] + dt['destDelay']
+        return dt
+    else:
+        dt = {v:-1 for v in _names_}
+        return dt
 
 
 def read_nscs_spikes(nscs_file_name):
@@ -213,7 +223,27 @@ def read_nscs_spikes(nscs_file_name):
 
     return data
 
+
 def read_nscs_spikes_chunks(nscs_file_name):
+    print("chunk loader")
+    ptn = 5
+    with open(nscs_file_name, 'r') as file:
+        i = 0
+        in_file = False
+        for line in file:
+            if i < ptn:
+                print(line)
+                i += 1
+
+            if not in_file:
+                if '"spike"' in line:
+                    in_file = True
+            if in_file:
+                yield json_callback(line)
+
+
+
+def read_nscs_spikes_chunks_old(nscs_file_name):
     print("chunk loader")
     with tempfile.NamedTemporaryFile(delete=False) as tmp:
         fn = tmp.name

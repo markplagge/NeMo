@@ -86,7 +86,9 @@ class MissingSpikeSQL(MissingSpikes):
 class SpikeQuery(object):
     """Default SpikeQuery object.
     Runs no query by default."""
-    def __init__(self,fields,name):
+    def __init__(self, fields=None, name="Base"):
+        if fields is None:
+            fields = ["A", "B"]
         assert(isinstance(fields,list))
         self.fields = fields
         self.name = name
@@ -97,6 +99,7 @@ class SpikeQuery(object):
         self.result =[]
 
     def get_result(self):
+
         return self.result
 
     def build_query(self):
@@ -107,6 +110,76 @@ class SpikeQuery_SCN_DCN_Time(SpikeQuery):
     def __init__(self,name="time_delta"):
         fdl = ['srcCore', 'srcNeuron', 'destCore', 'destAxon']
         super().__init__(fdl,name)
+
+class SpikeQuery_FULL_SRC_COMP(SpikeQuery):
+
+    def run_query(self):
+        """By default executes the dask query, since build_query sets up the Q into
+        pending dask dataframes"""
+        print("running full results")
+        self.results = {}
+        self.results["full"] = self.full.compute()
+        self.results["nemo"] = self.ne_only.compute()
+        self.results["nscs"] = self.ns_only.compute()
+        return self.results
+
+        # ns_gp, ne_gp = self.parent.data_iface.get_spike_counts_all()
+        # r = ns_gp.merge(ne_gp, how='outer', indicator=True)
+        # # df = df.mask(df == 'PASS', '0').mask(df == 'FAIL', '1')
+        # r = r.mask(r == 'left_only', 'nscs_only').mask(r == 'right_only', 'nemo_only')
+        # self.result = r
+
+
+        return r
+
+    def build_query(self):
+        ns_gp, ne_gp = self.parent.data_iface.get_spike_counts_all()
+        r = ns_gp.merge(ne_gp, how='outer', indicator=True)
+        # df = df.mask(df == 'PASS', '0').mask(df == 'FAIL', '1')
+        def repl(col):
+            if "left_only" in col:
+                return "nscs_only"
+            if "right_only" in col:
+                return "nemo_only"
+
+        #r = r.mask(r == 'left_only', 'nscs_only').mask(r == 'right_only', 'nemo_only')
+        r = r['_merge'] = r['_merge'].map(repl)
+        #in_nscs = outer_join[outer_join['_merge'] == 'left_only']
+        self.full = r
+        self.ns_only = r[r['_merge'] == 'nscs_only']
+        self.ne_only = r[r['_merge'] == 'nemo_only']
+        print("Built Query")
+
+
+
+class SpikeQuery_SCN_DCN_SQL_GRP(SpikeQuery):
+
+    def run_query(self):
+        super().run_query()
+        #self.result = {}
+        query = """
+ select spike_nemo_grps."srcCore" as nemo_src_core,
+        spike_nemo_grps."srcNeuron" as nemo_src_neuron,
+        spike_nemo_grps."destCore" as nemo_dest_core,
+        spike_nemo_grps."destAxon" as nemo_dest_axon,
+        spike_nemo_grps."num_spikes" as nemo_num_spikes,
+        spike_nscs_grps."srcCore" as tn_src_core,
+        spike_nscs_grps."srcNeuron" as tn_src_neuron,
+        spike_nscs_grps."destCore" as tn_dest_core,
+        spike_nscs_grps."destAxon" as tn_dest_axon,
+        spike_nscs_grps."num_spikes" as tn_num_spikes
+ from spike_nemo_grps
+full outer join  spike_nscs_grps
+on spike_nemo_grps."srcNeuron" = spike_nscs_grps."srcNeuron" and
+   spike_nemo_grps."srcCore" = spike_nscs_grps."srcCore" and
+   spike_nemo_grps."destAxon" = spike_nscs_grps."destAxon" and
+   spike_nemo_grps."destCore" = spike_nscs_grps."destCore"
+"""
+        self.result = self.parent.data_iface.exec_arb_q(query)
+        #working_df = df.from_pandas(self.result,chunksize=1024)
+
+        return self.result
+
 
 class SpikeQuery_SCN_DCN(SpikeQuery):
     """Query for Soruce neurons, cores & dest neurons, cores
@@ -126,12 +199,14 @@ class SpikeQuery_SCN_DCN(SpikeQuery):
         self.do_chunks = False
         self.run_full_q = False
 
+
     def run_query(self):
         super().run_query()
 
         self.result = {}
         click.secho("Executing outer join query.")
         click.secho("TODO: override sql iface to return dask dataframes.")
+
 
         if isinstance(self.parent, MissingSpikeSQL):
 
@@ -143,6 +218,11 @@ class SpikeQuery_SCN_DCN(SpikeQuery):
             ## SQL GRP Q
             #end_core = self.parent.data_iface.get_max_src_core()
             end_core = 4096
+
+
+
+
+
             if self.run_full_q:
                 ## Don't always do dask here...
                 if self.parent.parallel_q:
@@ -214,7 +294,7 @@ class SpikeQuery_SCN_DCN(SpikeQuery):
                 ## right, do this.
                 group_results.append(nscs_groups.compute())
         group_df = pd.concat(group_results)
-        group_df.to_csv(self.mege_filename,delimiter=',')
+        group_df.to_csv(self.merge_filename,delimiter=',')
         return group_df
         #    result = self.in_both.compute()
         #    self.result['in_both'] = result
@@ -240,11 +320,14 @@ class SpikeQuery_SCN_DCN(SpikeQuery):
             nscs_df = self.parent.nscs_df#self.parent.nscs_df
             nemo_df = self.parent.nemo_df#self.parent.nemo_df
 
-
             outer_join = df.merge(nscs_df,nemo_df,how="outer",on=self.fields,indicator=True)#.sort_values("timestamp_x")
+
+
             in_nscs = outer_join[outer_join ['_merge'] == 'left_only']
             in_nemo = outer_join[outer_join ['_merge'] == 'right_only']
             in_both = outer_join[outer_join ['_merge'] == 'both']
+            #df = df.mask(df == 'PASS', '0').mask(df == 'FAIL', '1')
+
 
             self.in_nemo = in_nemo
             self.in_nscs = in_nscs
