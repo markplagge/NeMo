@@ -29,9 +29,19 @@ tn_neuron_state *get_neuron_state_array(int my_core) {
   return c_model.generate_neurons_in_core_struct(my_core);
 }
 
-void load_and_init_json_model(char *filename) {
+void load_and_init_json_model(char *filename, int node) {
   printf("\n\n\n -------- Loading neuron model file %s \n", filename);
   c_model = create_tn_data(filename);
+#ifdef DEBUG
+  if(node == 0) {
+    printf("Node0: Debug model file enabled.\n");
+    string csv_dbg = c_model.generate_debug_csv();
+    FILE *of = fopen("converted_nscs_debug.csv", "w");
+    fprintf(of, csv_dbg.c_str());
+    fclose(of);
+    printf("Maximum core found: %i \n", c_model.get_max_core());
+  }
+#endif
 }
 
 int serial_load_json(char *json_filename) {

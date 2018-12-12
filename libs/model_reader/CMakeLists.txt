@@ -50,11 +50,13 @@ INCLUDE_DIRECTORIES(
         ${ROSS_BINARY_DIR})
 
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 
 if(USE_SSE4_2)
     add_definitions(-DRAPIDJSON_SSE42)
         set(RAPIDJSON_USE_SSE42 TRUE)
-        set(CMAKE_CXX"-march=native -mtune=native")
+        set(CMAKE_CXX "-march=native -mtune=native")
     message("RJSON using sse 4.2")
 elseif(USE_SSE_2)
     add_definitions(-DRAPIDJSON_SSE2)

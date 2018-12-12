@@ -95,6 +95,7 @@ public:
   string generate_pycode();
 
 
+
 //  ~TN_State_Wrapper(){
 //    delete(tn);
 //  }
@@ -333,17 +334,22 @@ private:
   TN_Crossbar_Type cur_crossbar;
   bool set_current_prot_cros(unsigned long coreID, unsigned long neuronID);
   core_info cur_neuron;
+  unsigned long max_queried_core;
 public:
   int core_count;
   string neuron_class;
   int crossbar_size;
   string crossbar_class;
-
   int rngSeed;
   map<string, TN_Crossbar_Type> TN_Crossbar_Type_library;
   map<int, TN_Core> TN_Neuron_Core_Library;
   map<int, TN_Neuron_Type> TN_Neuron_Library;
 
+
+  void set_max_queried_core(unsigned long coreID);
+  unsigned long get_max_queried_core();
+  int  get_max_core();
+  string generate_debug_csv();
   TN_State_Wrapper generate_neuron_from_id(unsigned long coreID, unsigned long neuronID);
   tn_neuron_state *generate_neurons_in_core_struct(unsigned long coreID);
   void populate_neuron_from_id(unsigned long coreID, unsigned long neuronID, tn_neuron_state *n);
