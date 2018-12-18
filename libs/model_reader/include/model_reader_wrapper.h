@@ -13,6 +13,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 typedef struct TN_MODEL tn_neuron_state;
 typedef struct TN_State_Wrapper TN_State_Wrapper;
 typedef struct TN_Main TN_Main;

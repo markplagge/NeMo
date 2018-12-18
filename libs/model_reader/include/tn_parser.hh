@@ -42,8 +42,9 @@
 #ifdef USE_OMP
 #include <omp.h>
 #endif
-
-
+#ifndef ulong
+#define ulong unsigned long
+#endif
 using json = nlohmann::json;
 //#include "../../src/neuro/tn_neuron.h"
 using namespace rapidjson;

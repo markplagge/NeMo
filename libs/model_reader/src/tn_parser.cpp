@@ -783,7 +783,7 @@ if (debug_item != std::string::npos){
             //iterate from pos 0 to pos 1.
             int start = stoi(seglist[0], NULL, 10);
             int end = stoi(seglist[1], NULL, 10);
-            int second_end = end + start;
+            //int second_end = end + start;
             while (start <= end) {
                 result.push_back(start);
                 start++;
