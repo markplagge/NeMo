@@ -762,10 +762,16 @@ vector<int> convert_tn_arr(const string &tn_value) {
     stringstream tn_value_str(tn_value);
     vector<int> result;
     //debug:
+#ifdef DEBUG
+std::size_t debug_item = tn_value.find("28:-11:6");
+if (debug_item != std::string::npos){
+    cout <<"f2\n";
+}
     std::size_t found_dbg = tn_value.find("178:181");
     if (found_dbg != std::string::npos) {
         cout << "... \n";
     }
+#endif
     if (found_c != std::string::npos) {
         int num_cols = 0;
         //Found a ":" - so we iterate through the values
@@ -796,9 +802,17 @@ vector<int> convert_tn_arr(const string &tn_value) {
             pos++;
             string sub2 = sub1.substr(pos);
             int end = stoi(sub2, &pos, 10);
-            while (start <= end) {
-                result.push_back(start);
-                start += increment;
+            if (end <= start){
+                //decrementing...
+                while (start >= end){
+                    result.push_back(start);
+                    start += increment;
+                }
+            }else{
+                while (start <= end) {
+                    result.push_back(start);
+                    start += increment;
+                }
             }
 //      for (int i = start; i < end; i ++){
 //        result.push_back(start);
@@ -1172,13 +1186,36 @@ TN_State_Wrapper TN_Main::generate_neuron_from_id(unsigned long coreID, unsigned
     }*/
 }
 
+#ifdef DEBUG
+FILE * mcsv;
+#endif
+
 void TN_Main::populate_neuron_from_id(unsigned long coreID, unsigned long neuronID, tn_neuron_state *n) {
+#ifdef DEBUG
+    static int fo = 0;
+
+    if (!fo){
+        mcsv=fopen("missing_cores.csv","w");
+        fo = 1;
+        fprintf(mcsv,"missing_core,missing_neuron\n");
+    }
+#endif
     if (set_current_prot_cros(coreID, neuronID)) {
         // initialize tn_neuron_state *n
         cur_prototype.new_neuron_state_init_struct(cur_crossbar, cur_neuron.destCore,
                                                    cur_neuron.destAxon, coreID, cur_neuron.destDelay, neuronID, n);
     } else {
         //set tn_neuron_state to an inactive neuron (using dest_core -1024 as debug info)
+#ifdef DEBUG
+static int announce = 0;
+if (announce == 0) {
+    printf("Did not find CORE:NEURON prototype:\n %lu : %lu\n", coreID, neuronID);
+    printf("Suppressing further output.\n");
+    announce++;
+}
+    fprintf(mcsv,"%lu,%lu\n",coreID,neuronID);
+
+#endif
         n->outputCoreDest = -1024;
         n->isActiveNeuron = 0;
     }

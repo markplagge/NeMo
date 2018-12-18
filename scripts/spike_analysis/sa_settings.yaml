@@ -3,20 +3,20 @@ context:
   cfgfile: ./sa_settings.yaml
   database: postgres://postgres@localhost
   mode: proc
-  nemo_folder: /shared/share/superneuro/validation_models/cifar_results/bgrs_cifar_300/
+  nemo_folder: /home/plaggm/cci_drives/nemo_new/build_bgrs/bin/ 
   nemo_pattern: fire_record_rank_*.csv
-  nscs: /shared/share/superneuro/validation_models/cifar_results/cifar_100_op/model/th_corelet_net_output_spikes_tee0.json
+  nscs: /shared/share/superneuro/models/cifar/th_corelet_net_spikes0.json
   nscs_cl: true
-  refresh: false
+  refresh: true
   save_cfg: true
   use_cfg: true
 dask_cluster_settings:
   address: null
   memory_limit: null
-  n_workers: 5
+  n_workers: 20
   processes: true
   threads_per_worker: 5
-database: postgres://plaggm@localhost
+database: postgres://postgres@localhost
 default_dask_cluster: true
 mode: proc
 spike_match_file: ./output.csv
