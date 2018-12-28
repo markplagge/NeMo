@@ -167,8 +167,9 @@ def save_cfg(ctx):
 @cli.command()
 @click.option('--out_data_fn' ,default="./spike_counts.csv", help="Spike (mis)match CSV file will be saved here.")
 @click.option('-C', default=False, help="Generate CORE->CORE communication pattern statistics",is_flag=True)
+@click.option('--no_nscs', default=False, is_flag=True, help="Do not do NSCS analysis.")
 @click.pass_context
-def data_analysis(ctx ,out_data_fn,c):
+def data_analysis(ctx ,out_data_fn,c,no_nscs):
     click.secho("Connecting to " + ctx.obj['database'] + " for data analysis" ,fg="green")
     iface = ctx.obj.get('iface')
 
@@ -233,17 +234,18 @@ def data_analysis(ctx ,out_data_fn,c):
 
 @cli.command()
 @click.option('--nscs',default=None, help="Path to NSCS file")
+@click.option('--load_nscs', default=True, is_flag=True, help="Load NSCS Spikes")
 @click.option('-n' ,'--nemo_folder' ,default = None, help="Path to nemo files")
 @click.option('-np' ,'--nemo_pattern' ,default="fire_record_rank_*.csv")
 @click.option('-r', '--refresh', default=False ,help="Refresh cached data? If specified, will reload data into the DB"
               ,is_flag=True)
 @click.option('--nscs_cl', default=False, is_flag=True, help="Load the NSCS file in small chunks into the postgres database.")
 @click.pass_context
-def load_data(ctx ,nscs ,nemo_folder ,nemo_pattern ,refresh ,nscs_cl):
+def load_data(ctx, nscs, load_nscs, nemo_folder, nemo_pattern, refresh, nscs_cl):
     global config
     #main cli entrypoint loads this
     database = ctx.obj['database']
-
+    ctx.obj['load_nscs'] = load_nscs
     #are we loading the config file? if so, check for defaults and override
     if ctx.obj['use_cfg']:
         try:
@@ -323,7 +325,7 @@ def load_data(ctx ,nscs ,nemo_folder ,nemo_pattern ,refresh ,nscs_cl):
         except:
             click.secho("Could not load nemo data from " + nemo_folder ,fg="red")
 
-    if status.NSCS_TABLE_ERR or refresh:
+    if (status.NSCS_TABLE_ERR or refresh) and  load_nscs:
         if nscs_cl:
             nscs_data = nscs
         else:
@@ -338,6 +340,8 @@ def load_data(ctx ,nscs ,nemo_folder ,nemo_pattern ,refresh ,nscs_cl):
     click.secho("Database connected and generated." ,fg="green")
     click.secho("Can now run analysis mode.")
 
+
+@cli.command()
 
 
 
