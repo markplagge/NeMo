@@ -257,12 +257,18 @@ class SpikeDataInterface():
         return self.run_dual_queries(ns_qry, ne_qry)
 
     def mview_query(self, stbl):
-
-        qry = f'create MATERIALIZED VIEW {stbl}_grps AS \n ' \
-            f'select "srcCore", "srcNeuron","destCore","destAxon", COUNT("timestamp") ' \
-            f'as num_spikes from {stbl} \n' \
-            f'group by "srcCore", "srcNeuron","destCore","destAxon" \n' \
-            f'order by "srcCore" ASC;'
+        if "postgres" in self.dbname:
+            qry = f'create MATERIALIZED VIEW {stbl}_grps AS \n ' \
+                f'select "srcCore", "srcNeuron","destCore","destAxon", COUNT("timestamp") ' \
+                f'as num_spikes from {stbl} \n' \
+                f'group by "srcCore", "srcNeuron","destCore","destAxon" \n' \
+                f'order by "srcCore" ASC;'
+        else:
+            qry = f'create VIEW {stbl}_grps AS \n ' \
+                f'select "srcCore", "srcNeuron","destCore","destAxon", COUNT("timestamp") ' \
+                f'as num_spikes from {stbl} \n' \
+                f'group by "srcCore", "srcNeuron","destCore","destAxon" \n' \
+                f'order by "srcCore" ASC;'
 
         return qry
 
