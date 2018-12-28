@@ -167,44 +167,50 @@ class SpikeDataInterface():
         return [tbl, view]
 
     def __do_views_exist(self):
-        views = sqlalchemy.inspect(self.eng).get_view_names()
-        nview_exist = False
-        nsview_exist = False
-        for v in views:
-            if self.ns_table_g in v:
-                nsview_exist = True
-            if self.ne_table_g in v:
-                nview_exist = True
+        try:
+            views = sqlalchemy.inspect(self.eng).get_view_names()
+            nview_exist = False
+            nsview_exist = False
+            for v in views:
+                if self.ns_table_g in v:
+                    nsview_exist = True
+                if self.ne_table_g in v:
+                    nview_exist = True
 
-        # nview_exist = self.eng.dialect.has_view(self.eng,self.ne_table_g)
+            # nview_exist = self.eng.dialect.has_view(self.eng,self.ne_table_g)
 
-        # nsview_exist = self.eng.dialect.has_view(self.eng,self.ns_table_g)
-        if nsview_exist:
-            self.__set_status(STAT.NSCS_VIEW_OK)
-        else:
-            self.__set_status(STAT.NSCS_VIEW_ERR)
+            # nsview_exist = self.eng.dialect.has_view(self.eng,self.ns_table_g)
+            if nsview_exist:
+                self.__set_status(STAT.NSCS_VIEW_OK)
+            else:
+                self.__set_status(STAT.NSCS_VIEW_ERR)
 
-        if nview_exist:
-            self.__set_status(STAT.NEMO_VIEW_OK)
-        else:
-            self.__set_status(STAT.NEMO_VIEW_ERR)
+            if nview_exist:
+                self.__set_status(STAT.NEMO_VIEW_OK)
+            else:
+                self.__set_status(STAT.NEMO_VIEW_ERR)
 
-        return nview_exist and nsview_exist
+            return nview_exist and nsview_exist
+        except:
+            return False
 
     def __do_tables_exist(self):
-        nemo_exist = self.eng.dialect.has_table(self.eng, self.ne_table)
-        if nemo_exist:
-            self.__set_status(STAT.NEMO_TABLE_OK)
-        else:
-            self.__set_status(STAT.NEMO_TABLE_ERR)
+        try:
+            nemo_exist = self.eng.dialect.has_table(self.eng, self.ne_table)
+            if nemo_exist:
+                self.__set_status(STAT.NEMO_TABLE_OK)
+            else:
+                self.__set_status(STAT.NEMO_TABLE_ERR)
 
-        nscs_exist = self.eng.dialect.has_table(self.eng, self.ns_table)
-        if nscs_exist:
-            self.__set_status(STAT.NSCS_TABLE_OK)
-        else:
-            self.__set_status(STAT.NSCS_TABLE_ERR)
+            nscs_exist = self.eng.dialect.has_table(self.eng, self.ns_table)
+            if nscs_exist:
+                self.__set_status(STAT.NSCS_TABLE_OK)
+            else:
+                self.__set_status(STAT.NSCS_TABLE_ERR)
 
-        return nemo_exist and nscs_exist
+            return nemo_exist and nscs_exist
+        except:
+            return False
 
         # with self.eng.connect() as con:
 
