@@ -341,7 +341,7 @@ def load_data(ctx, nscs, load_nscs, nemo_folder, nemo_pattern, refresh, nscs_cl)
     click.secho("Can now run analysis mode.")
 
 
-@cli.command()
+
 
 
 
