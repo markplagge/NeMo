@@ -269,3 +269,5 @@ bool loadNeuronFromBIN(id_type neuronCore, id_type neuronLocal, tn_neuron_state 
 void closeBinaryModelFile();
 /**@}*/
 #endif //NEMO_IOSTACK_H
+void saveNeuronFireDebug(tw_stime timestamp, id_type core, id_type local, tw_lpid destGID, long destCore,
+                         long destLocal, unsigned int isOutput);

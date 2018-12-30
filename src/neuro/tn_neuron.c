@@ -1259,7 +1259,8 @@ void TN_forward_event(tn_neuron_state *s, tw_bf *CV, messageData *m,
     // saveNeruonState(s->myLocalID, s->myCoreID, s->membranePotential,
     // tw_now(lp));
   }
-
+// This is the primary entry point to the neuron behavior.
+// Add metrics and stats around this function.
   bool fired = TNReceiveMessage(s, m, lp, CV);
   s->SOPSCount++;
   /**@todo save message trace here: */
@@ -1313,6 +1314,17 @@ void TN_save_events(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
         if (fired > 0) {
             outCore = s->outputCoreDest;
             outNeuron = s->outputNeuronDest;
+            /** @todo: This is a debug line - this is not perm. Remove this once
+             * debugging of the spike saving / data output stack is complete.
+             */
+            if (SAVE_SPIKE_EVTS | SAVE_NEURON_STATS | SAVE_OUTPUT_NEURON_EVTS) {
+                saveNeuronFire(tw_now(lp),getCoreFromGID(lp->gid),getLocalFromGID(lp->gid),
+                        s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),s->isOutputNeuron);
+                saveNeuronFireDebug(tw_now(lp),getCoreFromGID(lp->gid),getLocalFromGID(lp->gid),
+                                    s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),s->isOutputNeuron);
+            }
+            /////////////////////////////DEBUG END ///////////////////
+            /*
             //! @todo We can use s->isOutputNeuron to check if the neuron is an "output layer" rather than relying on the bitfield
             if (SAVE_OUTPUT_NEURON_EVTS && cv->c10 &&
                 !SAVE_SPIKE_EVTS) { //if save_oputput_neuron_events is active, then we save only output spikes.
@@ -1321,7 +1333,7 @@ void TN_save_events(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
             } else { //if SAVE_SPIKE_EVENTS is on - save all spikes. But don't call this twice (if SAVE_OUTPUT_NEURON_EVTS is on, don't write twice.
                 saveNeuronFire(tw_now(lp), s->myCoreID, s->myLocalID, s->outputGID, outCore, outNeuron,
                                s->isOutputNeuron);
-            }
+            }*/
         }
     }
 }

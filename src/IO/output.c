@@ -170,8 +170,21 @@ void saveNeuronFire(tw_stime timestamp, id_type core, id_type local, tw_lpid des
   }
 
   ++neuronFirePoolPos;
-}
 
+}
+FILE *neuron_output_dbg;
+void saveNeuronFireDebug(tw_stime timestamp, id_type core, id_type local, tw_lpid destGID, long destCore,
+                          long destLocal, unsigned int isOutput){
+  static int file_open = 0;
+  if (file_open == 0){
+    char fn[1024] = {'\0'};
+    sprintf(fn,"d_fire_record_rank_%ui.csv",g_tw_mynode);
+    neuron_output_dbg = fopen(fn,"w");
+    file_open = 1;
+    fprintf(neuron_output_dbg,"timestamp,srcCore,srcNeuron,destGID,destCore,destAxon,isOutput\n");
+  }
+  fprintf(neuron_output_dbg,"%f,%lli,%lli,%llu,%li,%li,%u",timestamp, core, local, destGID, destCore, destLocal, isOutput);
+}
 /** @} */
 
 
