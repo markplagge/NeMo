@@ -94,7 +94,7 @@ class SpikeDataInterface():
         self.status = self.status | new
 
     def __init__(self, connection_dsn='sqlite:///:./spike_data.sqlite', create_new=True, nscs_data=None, nemo_data=None,
-                 ns_file=True, ne_file=False, check_only=False):
+                 ns_file=True, ne_file=False, check_only=False, no_nemo = False, no_nscs = False):
         """
 
         :param connection_dsn:
@@ -104,8 +104,15 @@ class SpikeDataInterface():
         :param ns_file:
         :param ne_file:
         :param use_grobber: do we use the posgresql grobbing system to load the data?
+        :param no_nemo: if true, then no NeMo data is loaded
+        :param no_nscs: if true, then no NSCS data is loaded
         """
-        self.dbname = connection_dsn.split("//")[1].split("@")[0]
+        connection_dsn = connection_dsn.lstrip().lstrip("'").rstrip().rstrip("'").lstrip('"').rstrip('"')
+        if "posgres" in connection_dsn:
+            self.dbname = connection_dsn.split("//")[1].split("@")[0]
+        if "mssql" in connection_dsn:
+            self.dbname = connection_dsn.split("//")[1].split("/")[-1].split("?")[0]
+
         self.schema_name = 'public'
 
         self.ns_table = self.table_base_name + "nscs"
@@ -120,6 +127,8 @@ class SpikeDataInterface():
         self.create_new = create_new
         self.ns_file = ns_file
         self.ne_file = ne_file
+        self.no_nemo = no_nemo
+        self.no_nscs = no_nscs
 
         ## I want this class to handle both pandas and dask dataframes if we are creating a new table:
         self.status = STAT.START_INIT
@@ -263,7 +272,7 @@ class SpikeDataInterface():
         return self.run_dual_queries(ns_qry, ne_qry)
 
     def mview_query(self, stbl):
-        if "postgres" in self.dbname:
+        if "postgres" in self.dsn:
             qry = f'create MATERIALIZED VIEW {stbl}_grps AS \n ' \
                 f'select "srcCore", "srcNeuron","destCore","destAxon", COUNT("timestamp") ' \
                 f'as num_spikes from {stbl} \n' \
@@ -387,6 +396,7 @@ class SpikeDataInterface():
 
     def do_ncv(self):
         self.nemo_data.to_csv('nemo_concat.csv',sep=",")
+
     def create_nemo_table(self, con):
         #working_data = multiprocessing.SimpleQueue()
         #rt = threading.Thread(target=self.do_ncv)
@@ -401,7 +411,7 @@ class SpikeDataInterface():
 
         chunks = self.splitDataFrameIntoSmaller(self.nemo_data, 50000)
         print("spawning processes")
-        with concurrent.futures.ThreadPoolExecutor(max_workers=40) as pool:
+        with concurrent.futures.ProcessPoolExecutor(max_workers=40) as pool:
             # results = pool.map(nemo_table_runner,chunks)
             results = [pool.submit(nemo_table_runner, dfrm, self.dsn, self.ne_table) for dfrm in chunks]
             #dln = len(self.nemo_data)
@@ -435,14 +445,16 @@ class SpikeDataInterface():
         print("Table/Data init")
         with self.eng.connect() as con:
             if self.create_new or self.status.NEMO_TABLE_ERR or self.status.NEMO_TABLE_OK != True:
-                print("saving NeMo table")
-                self.create_nemo_table(con)
+                if not self.no_nemo:
+                    print("saving NeMo table")
+                    self.create_nemo_table(con)
             if self.create_new or self.status.NSCS_TABLE_ERR or self.status.NSCS_TABLE_OK != True:
-                print("saving NSCS Tables")
-                if self.ns_file:
-                    self.create_nscs_tbl_chunk(self.nscs_data)
-                else:
-                    self.create_nscs_table(con)
+                if not self.no_nscs:
+                    print("saving NSCS Tables")
+                    if self.ns_file:
+                        self.create_nscs_tbl_chunk(self.nscs_data)
+                    else:
+                        self.create_nscs_table(con)
 
             self.ns_table_g = self.ns_table + "_grps"
             self.ne_table_g = self.ne_table + "_grps"

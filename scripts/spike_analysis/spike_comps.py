@@ -234,18 +234,20 @@ def data_analysis(ctx ,out_data_fn,c,no_nscs):
 
 @cli.command()
 @click.option('--nscs',default=None, help="Path to NSCS file")
-@click.option('--load_nscs', default=True, is_flag=True, help="Load NSCS Spikes")
+@click.option('--no_load_nscs', default=False, is_flag=True, help="Don't load NSCS Spikes")
 @click.option('-n' ,'--nemo_folder' ,default = None, help="Path to nemo files")
 @click.option('-np' ,'--nemo_pattern' ,default="fire_record_rank_*.csv")
+@click.option('--no_load_nemo', default=False, is_flag=True, help="Don't load nemo spikes")
 @click.option('-r', '--refresh', default=False ,help="Refresh cached data? If specified, will reload data into the DB"
               ,is_flag=True)
 @click.option('--nscs_cl', default=False, is_flag=True, help="Load the NSCS file in small chunks into the postgres database.")
 @click.pass_context
-def load_data(ctx, nscs, load_nscs, nemo_folder, nemo_pattern, refresh, nscs_cl):
+def load_data(ctx, nscs, no_load_nscs, nemo_folder, nemo_pattern, no_load_nemo, refresh, nscs_cl):
     global config
     #main cli entrypoint loads this
     database = ctx.obj['database']
-    ctx.obj['load_nscs'] = load_nscs
+    ctx.obj['no_load_nscs'] = no_load_nscs
+    ctx.obj['no_load_nemo'] = no_load_nemo
     #are we loading the config file? if so, check for defaults and override
     if ctx.obj['use_cfg']:
         try:
@@ -319,13 +321,13 @@ def load_data(ctx, nscs, load_nscs, nemo_folder, nemo_pattern, refresh, nscs_cl)
     nscs_data = None
     nemo_data = None
     ## See if we can load files:
-    if status.NEMO_TABLE_ERR or refresh:
+    if (status.NEMO_TABLE_ERR or refresh) and not no_load_nemo:
         try:
             nemo_data = spike_accuracy.read_nemo_spike_files(nemo_folder ,nemo_pattern)
         except:
             click.secho("Could not load nemo data from " + nemo_folder ,fg="red")
 
-    if (status.NSCS_TABLE_ERR or refresh) and  load_nscs:
+    if (status.NSCS_TABLE_ERR or refresh) and  not no_load_nscs:
         if nscs_cl:
             nscs_data = nscs
         else:
@@ -335,7 +337,7 @@ def load_data(ctx, nscs, load_nscs, nemo_folder, nemo_pattern, refresh, nscs_cl)
                 click.secho("Could not load NSCS JSON file: " + nscs, fg="red")
 
     ## Files are loaded. Create the SQL data interface
-    iface = spike_accuracy.SpikeDataInterface(database ,refresh ,nscs_data ,nemo_data ,nscs_cl)
+    iface = spike_accuracy.SpikeDataInterface(database ,refresh ,nscs_data ,nemo_data ,nscs_cl,no_nemo = no_load_nemo,no_nscs=no_load_nscs)
     ctx.obj['iface'] = iface
     click.secho("Database connected and generated." ,fg="green")
     click.secho("Can now run analysis mode.")
