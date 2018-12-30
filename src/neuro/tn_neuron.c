@@ -1307,6 +1307,9 @@ int debug_core_open = 0;
 void TN_save_events(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
 
     //if (SAVE_OUTPUT_NEURON_EVTS || SAVE_SPIKE_EVTS) { //if we are saving events, do work!
+    /** @todo REMOVE THIS ONCE LIVE !!!! */
+  saveNeuronFireDebug(tw_now(lp),getCoreFromGID(lp->gid),getLocalFromGID(lp->gid),
+                      s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),s->isOutputNeuron);
         long outCore = -909;
         long outNeuron = -909;
         unsigned int fired = cv->c0 | cv->c31 | cv->c10;
@@ -1320,8 +1323,7 @@ void TN_save_events(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
             if (SAVE_SPIKE_EVTS | SAVE_NEURON_STATS | SAVE_OUTPUT_NEURON_EVTS) {
                 saveNeuronFire(tw_now(lp),getCoreFromGID(lp->gid),getLocalFromGID(lp->gid),
                         s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),s->isOutputNeuron);
-                saveNeuronFireDebug(tw_now(lp),getCoreFromGID(lp->gid),getLocalFromGID(lp->gid),
-                                    s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),s->isOutputNeuron);
+
             }
             /////////////////////////////DEBUG END ///////////////////
             /*

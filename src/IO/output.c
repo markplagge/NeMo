@@ -176,7 +176,7 @@ FILE *neuron_output_dbg;
 void saveNeuronFireDebug(tw_stime timestamp, id_type core, id_type local, tw_lpid destGID, long destCore,
                           long destLocal, unsigned int isOutput){
   static int file_open = 0;
-  if (file_open == 0){
+  if (!file_open){
     if (g_tw_mynode == 0){
       tw_printf(TW_LOC,"init debug spike file\n");
     }
