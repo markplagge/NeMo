@@ -186,7 +186,7 @@ void saveNeuronFireDebug(tw_stime timestamp, id_type core, id_type local, tw_lpi
     file_open = 1;
     fprintf(neuron_output_dbg,"timestamp,srcCore,srcNeuron,destGID,destCore,destAxon,isOutput\n");
   }
-  fprintf(neuron_output_dbg,"%f,%lli,%lli,%llu,%li,%li,%u",timestamp, core, local, destGID, destCore, destLocal, isOutput);
+  fprintf(neuron_output_dbg,"%f,%lli,%lli,%llu,%li,%li,%u\n",timestamp, core, local, destGID, destCore, destLocal, isOutput);
 }
 /** @} */
 
