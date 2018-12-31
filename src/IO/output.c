@@ -181,7 +181,7 @@ void saveNeuronFireDebug(tw_stime timestamp, id_type core, id_type local, tw_lpi
       tw_printf(TW_LOC,"init debug spike file\n");
     }
     char fn[1024] = {'\0'};
-    sprintf(fn,"d_fire_record_rank_%ui.csv",g_tw_mynode);
+    sprintf(fn,"d_fire_record_rank_%li.csv",g_tw_mynode);
     neuron_output_dbg = fopen(fn,"w");
     file_open = 1;
     fprintf(neuron_output_dbg,"timestamp,srcCore,srcNeuron,destGID,destCore,destAxon,isOutput\n");
