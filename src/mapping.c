@@ -109,7 +109,7 @@ id_type getNeuronLocalFromGID(tw_lpid gid) {
 
 
   //then return the neuron local ID. Assuming super synapse configuration of 1 synapse per core:
-  return local - AXONS_IN_CORE - 1; /** @todo fix types here for potential large core sizes. */
+      return local - AXONS_IN_CORE - 1; /** @todo fix types here for potential large core sizes. */
   //return local - (AXONS_IN_CORE + SYNAPSES_IN_CORE) ;
 
 }

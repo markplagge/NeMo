@@ -241,6 +241,43 @@ void saveNetworkStructureMPI(){
   }
 }
 
+void debug_neuron_connections(tn_neuron_state *n,tw_lp *lp){
+  static FILE *rank_output;
+  static int rank_output_open = 0;
+  if (! rank_output_open ) {
+    rank_output_open = 1;
+    char fn[256] = {'\0'};
+    sprintf(fn,"debug_neuron_connection_rank_%li.csv",g_tw_mynode);
+    rank_output = fopen(fn,"w");
+    fprintf(rank_output,"gid,core,neuron,destCore,destNeuron,destGid");
+
+    for(int i = 0; i < NUM_NEURON_WEIGHTS; i ++){
+            fprintf(rank_output,"weight_%i,", i);
+    }
+    for (int i = 0; i < AXONS_IN_CORE; i ++){
+      fprintf(rank_output, "input_%i_connection,",i);
+    }
+    for (int i = 0; i < AXONS_IN_CORE ; i ++){
+      fprintf(rank_output, "input_%i_type,",i);
+    }
+    fprintf(rank_output,"\n");
+
+  }
+
+  char axon_types[65535] = {'\0'};
+  char axon_con[65535] = {'\0'};
+  fprintf(rank_output,"%li,%li,%li,%li,%li,%li", lp->gid, n->myCoreID,n->myLocalID,
+          n->outputCoreDest,n->outputNeuronDest,n->outputGID);
+  for(int i = 0; i < NUM_NEURON_WEIGHTS; i ++){
+    fprintf(rank_output,"%i,",n->synapticWeight[i]);
+  }
+  for(int i = 0; i < AXONS_IN_CORE; i ++){
+    sprintf(axon_types,"%i,",n->axonTypes[i]);
+    sprintf(axon_con,"%i,", n->synapticConnectivity[i]);
+  }
+  fprintf(rank_output,"%s%s\n",axon_con,axon_types);
+
+}
 /**
  * non-threaded version of the saveNeuronNetworkStructure() function. Rather than taking
  * a single neuron's state and using a thread to write out the data, this function saves the neuron state through

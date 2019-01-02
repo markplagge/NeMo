@@ -372,12 +372,7 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp,
         TNFire(st, lp);
         //check for intra-core communications -
         //setting bit 31 as toggle for send communication
-        if (isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))) {
-          bf->c31 = 1;
-          //m->dumpiID = tw_rand_ulong(lp->rng,0,ULONG_MAX - 1);
-        } else {
-          bf->c31 = 0;
-        }
+
 
 
 
@@ -387,6 +382,12 @@ bool TNReceiveMessage(tn_neuron_state *st, messageData *m, tw_lp *lp,
         bf->c10 = 1;
 
       }
+        if (isDestInterchip(st->myCoreID, getCoreFromGID(st->outputGID))) {
+            bf->c31 = 1;
+            //m->dumpiID = tw_rand_ulong(lp->rng,0,ULONG_MAX - 1);
+        } else {
+            bf->c31 = 0;
+        }
     }
 
     st->lastActiveTime = tw_now(lp);
@@ -1147,6 +1148,11 @@ void TNCreateFromFile(tn_neuron_state *s, tw_lp *lp) {
 }
 
 void TN_pre_run(tn_neuron_state *s, tw_lp *me) {
+    /** @todo: remove this once debugging connections is done
+    //DUMB CSV DEBUG
+     */
+    debug_neuron_connections(s,me);
+
   static int clean = 0;
   static int core_con_open = 0;
   if (!clean) {
@@ -1308,12 +1314,12 @@ void TN_save_events(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
 
     //if (SAVE_OUTPUT_NEURON_EVTS || SAVE_SPIKE_EVTS) { //if we are saving events, do work!
     /** @todo REMOVE THIS ONCE LIVE !!!! */
-  saveNeuronFireDebug(tw_now(lp),getCoreFromGID(lp->gid),getLocalFromGID(lp->gid),
-                      s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),s->isOutputNeuron);
+
+//  saveNeuronFireDebug(tw_now(lp),getCoreFromGID(lp->gid),getLocalFromGID(lp->gid),
+//                      s->outputGID,getCoreFromGID(s->outputGID),getLocalFromGID(s->outputGID),s->isOutputNeuron);
         long outCore = -909;
         long outNeuron = -909;
         unsigned int fired = cv->c0 | cv->c31 | cv->c10;
-
         if (fired > 0) {
             outCore = s->outputCoreDest;
             outNeuron = s->outputNeuronDest;

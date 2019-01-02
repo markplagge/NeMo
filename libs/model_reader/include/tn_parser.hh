@@ -299,7 +299,7 @@ private:
 
   int dendrites[256];
   int types[256];
-  int destCores[256];
+  long destCores[256];
   int destAxons[256];
   int destDelays[256];
   string crossbar_name;

@@ -189,6 +189,13 @@ void tn_create_neuron_encoded_rv_non_global(
                                 signalDelay,
                                 dest_global,
                                 destAxonID);
+if (destCoreID < -2){
+    printf("output neuron init.\n");
+    if (n->outputCoreDest != destCoreID){
+        printf("error - bad neuron output value.");
+    }
+
+}
 }
 
 void TN_State_Wrapperinitialize_state(vector<int> input_axon_connectivity,
@@ -847,24 +854,47 @@ int convert_and_add_value(int *&vals, string val) {
         vals++;
     }
 }
+int convert_and_add_value(long *&vals, string val) {
+    vector<int> valv = convert_tn_arr(val);
+    for (auto it : valv) {
+        *vals = it;
+        vals++;
+    }
+}
+
 
 int convert_and_add_value(int *&vals, int val) {
     *vals = val;
     vals++;
 }
-
+int convert_and_add_value(long *&vals, long val) {
+    *vals = val;
+    vals++;
+    }
 void convert_and_add_value(int *&vals, const Value &val) {
+
     if (val.IsString()) {
         string val_s = val.GetString();
         convert_and_add_value(vals, val_s);
     } else if (val.IsInt()) {
-        convert_and_add_value(vals, val.GetInt());
+        convert_and_add_value(vals, val.GetInt64());
     } else {
         cout << "Invalid conversion value! \n ";
 
     }
 }
+void convert_and_add_value(long *&vals, const Value &val) {
 
+    if (val.IsString()) {
+        string val_s = val.GetString();
+        convert_and_add_value(vals, val_s);
+    } else if (val.IsInt()) {
+        convert_and_add_value(vals, val.GetInt64());
+    } else {
+        cout << "Invalid conversion value! \n ";
+
+    }
+}
 
 
 // int convert_and_add_value(int *vals, int arr_pos,rapidjson::GenericObject obj){
@@ -974,7 +1004,7 @@ void TN_Core::init_core_from_itr(Value::ConstMemberIterator itr) {
     for (auto &el : neuron_obj["types"].GetArray()) {
         convert_and_add_value(t_ptr, el);
     }
-    int *dc_ptr = destCores;
+    long int *dc_ptr = destCores;
     for (auto &el : neuron_obj["destCores"].GetArray()) {
         convert_and_add_value(dc_ptr, el);
     }
@@ -986,6 +1016,7 @@ void TN_Core::init_core_from_itr(Value::ConstMemberIterator itr) {
     for (auto &el : neuron_obj["destDelays"].GetArray()) {
         convert_and_add_value(dd_ptr, el);
     }
+
 
 
 
@@ -1112,9 +1143,9 @@ int TN_Main::get_max_core() {
     }
     return largest_core;
 }
-void concat_debug_csv(std::stringstream &stream,ulong core, ulong neuron, ulong destcore, ulong destaxon){
+void concat_debug_csv(std::stringstream &stream,long core, long neuron, long destcore, long destaxon){
     char tv[65535] = {'\0'};
-    sprintf(tv,"%lu,%lu,%lu,%lu\n",core,neuron,destcore,destaxon);
+    sprintf(tv,"%li,%li,%li,%li\n",core,neuron,destcore,destaxon);
     stream << tv;
 
 }
@@ -1133,8 +1164,13 @@ void concat_debug_csv(std::stringstream &stream,ulong core, ulong neuron, ulong 
          auto core = core_pair.second;
          for (int nid = 0; nid <= 255; nid ++) {
              auto neuron_info = core.get_neuron_info(nid);
-             int destCore = neuron_info.destCore;
-             int destAxon = neuron_info.destAxon;
+             long destCore = neuron_info.destCore;
+             long destAxon = neuron_info.destAxon;
+#ifdef DEBUG
+             if (destCore > 4096){
+                 cout << "Error in neuron sys. \n" << neuron_info.destCore;
+             }
+#endif
              concat_debug_csv(stream, sourceCore, nid, destCore, destAxon);
          }
 

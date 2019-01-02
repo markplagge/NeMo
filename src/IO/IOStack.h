@@ -267,7 +267,13 @@ bool loadNeuronFromBIN(id_type neuronCore, id_type neuronLocal, tn_neuron_state 
  * Closes the binary file and frees the library of neurons.
  */
 void closeBinaryModelFile();
-/**@}*/
-#endif //NEMO_IOSTACK_H
+
+/** @todo: Deug functions - can remove once missing spikes are found */
 void saveNeuronFireDebug(tw_stime timestamp, id_type core, id_type local, tw_lpid destGID, long destCore,
                          long destLocal, unsigned int isOutput);
+void debug_neuron_connections(tn_neuron_state *n,tw_lp *lp);
+
+
+
+/**@}*/
+#endif //NEMO_IOSTACK_H
