@@ -1148,14 +1148,22 @@ void TNCreateFromFile(tn_neuron_state *s, tw_lp *lp) {
 }
 
 void TN_pre_run(tn_neuron_state *s, tw_lp *me) {
-    /** @todo: remove this once debugging connections is done
-    //DUMB CSV DEBUG
-     */
-    debug_neuron_connections(s,me);
+
 
   static int clean = 0;
   static int core_con_open = 0;
-  if (!clean) {
+
+    /** @todo: remove this once debugging connections is done
+      //DUMB CSV DEBUG
+       */
+    debug_neuron_connections(s,me);
+    if(!clean){
+        debug_init_neuron_json();
+    }
+    debug_add_neuron_to_json(s,me);
+/////////////////////////
+
+    if (!clean) {
 #ifdef DEBUG
     tw_printf(TW_LOC, "Lua cleanup from neuron.\n");
     tw_printf(TW_LOC, " Found %lli debug cores.\n", num_neg_found);
@@ -1414,6 +1422,8 @@ void prhdr(bool *display, char *hdr) {
 void TN_final(tn_neuron_state *s, tw_lp *lp) {
   static int fileOpen = 1;
   if (fileOpen) {
+      /////////// DEBUG CODE REMOVE WHEN DONE /////////////
+      debug_close_neuron_json();
     if (DO_DUMPI) {
       fclose(dumpi_out);
       fileOpen = 0;

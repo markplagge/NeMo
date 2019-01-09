@@ -27,6 +27,12 @@ int serial_load_json(char *json_filename);
 void clean_up(TN_Main* m);
 void create_neuron_model_mpi(char * filename, int my_rank,int num_ranks);
 void clean_up_obj();
+/** @todo: DEBUG CODE REMOVE WHEN DONE */
+void debug_add_neuron_to_json(tn_neuron_state *s, tw_lp *lp);
+ void debug_init_neuron_json();
+ void debug_close_neuron_json();
+ 
+
 #ifdef __cplusplus
 }
 #endif

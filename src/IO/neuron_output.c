@@ -47,7 +47,7 @@ void openOutputFiles(char *outputFileName) {
     outNeuronCfgFile = fopen(netfn2, "wb");
 //    printf("LN36\n");
     fprintf(outNetworkCfgFile, "Core,NeuronID,DestCore,DestAxon\n");
-    fprintf(outNeuronCfgFile, "Core,NeuronID,DestCore,DestAxon,");
+    fprintf(outNeuronCfgFile, "Core,NeuronID,DestCore,DestAxon");
     for (int i = 0; i < NEURONS_IN_CORE; i++) {
       fprintf(outNeuronCfgFile, ",input_axon_%i", i);
     }
@@ -245,6 +245,9 @@ void debug_neuron_connections(tn_neuron_state *n,tw_lp *lp){
   static FILE *rank_output;
   static int rank_output_open = 0;
   if (! rank_output_open ) {
+    if (g_tw_mynode == 0){
+      tw_printf(TW_LOC,"Neuron Network Debug File init.\n");
+    }
     rank_output_open = 1;
     char fn[256] = {'\0'};
     sprintf(fn,"debug_neuron_connection_rank_%li.csv",g_tw_mynode);
@@ -258,9 +261,12 @@ void debug_neuron_connections(tn_neuron_state *n,tw_lp *lp){
       fprintf(rank_output, "input_%i_connection,",i);
     }
     for (int i = 0; i < AXONS_IN_CORE ; i ++){
-      fprintf(rank_output, "input_%i_type,",i);
+      fprintf(rank_output, "input_%i_type",i);
+      if(i < AXONS_IN_CORE - 1){
+        fprintf(rank_output, ",");
+      }
     }
-    fprintf(rank_output,"\n");
+    fprintf(rank_output, "\n");
 
   }
 
@@ -269,13 +275,16 @@ void debug_neuron_connections(tn_neuron_state *n,tw_lp *lp){
   fprintf(rank_output,"%li,%li,%li,%li,%li,%li", lp->gid, n->myCoreID,n->myLocalID,
           n->outputCoreDest,n->outputNeuronDest,n->outputGID);
   for(int i = 0; i < NUM_NEURON_WEIGHTS; i ++){
-    fprintf(rank_output,"%i,",n->synapticWeight[i]);
+    fprintf(rank_output,",%i",n->synapticWeight[i]);
   }
+
   for(int i = 0; i < AXONS_IN_CORE; i ++){
-    sprintf(axon_types,"%i,",n->axonTypes[i]);
-    sprintf(axon_con,"%i,", n->synapticConnectivity[i]);
+    sprintf(axon_types,"%s,%i",axon_types,n->axonTypes[i]);
+    sprintf(axon_con,"%s,%i",axon_con, n->synapticConnectivity[i]);
   }
+
   fprintf(rank_output,"%s%s\n",axon_con,axon_types);
+  fflush(rank_output);
 
 }
 /**

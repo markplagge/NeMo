@@ -83,6 +83,7 @@ def nemo_table_runner(p_dataframe, dsn, table):
         # p_dataframe = pd.DataFrame(p_dataframe)
         p_dataframe.to_sql(table, conn, if_exists='append')
 
+       
 
 class SpikeDataInterface():
     table_base_name = 'spike_'
@@ -490,3 +491,58 @@ class SpikeDataInterface():
             m1 = con.execute(text(maxq1))
             m2 = con.execute(text(maxq2))
             return max(m1, m2)
+
+
+class ModelDataInterface(SpikeDataInterface):
+    
+    def __init__(self,dbg_json_path,nparts=64,dbg_json_table_name="nemo_network",use_dask=True,**kwargs):
+        
+        kwargs['check_only'] = True
+        super().__init__(**kwargs)
+        self.nparts=64
+        self.dbg_json_path = dbg_json_path
+        self.dbg_json_table_name = dbg_json_table_name
+        self.use_dask = use_dask
+
+    def load_dbg_json(self):
+        print("loading data")
+        json_path = self.dbg_json_path
+        if self.use_dask:
+            data = df.read_json(json_path).repartition(npartitions=self.nparts)
+        else:
+            data = pd.read_json(json_path)
+        self.data = data
+    
+    def dask_sql_wkr(element):
+       pass
+
+    def create_table(self):
+        if not self.use_dask:
+            single = self.data.iloc[0]
+        else:
+            single = self.data.loc[0].compute()
+
+        single = pd.DataFrame(single)
+        single.to_sql(self.dbg_json_table_name,self.eng.connect(),if_exists="overwrite")
+        print("Maybe not needed...")
+
+    def put_net_in_db(self):
+        print("adding data to sql")
+        if self.data == None:
+            print("Error - no data loaded")
+            return
+        else:
+            if self.use_dask:
+                self.create_table()
+                self.data.map_partitions(lambda frame: frame.to_sql(self.dbg_json_table_name,con=self.eng.connect(),if_exists="append"))
+            else:
+                self.data.to_sql(self.dbg_json_table_name,con=self.eng.connect(),if_exists="overwrite",chunksize=8192)
+        print("added data.")
+ 
+
+if __name__ == "__main__":
+   print("testing json loader")
+   dsn = "postgresql://postgres:localhost"
+   dbg_path = "/shared/share/superneuro/NeMo/cmake-build-debug/bin/neuron_structure_debug.json"
+   iface = ModelDataInterface(dbg_path,connection_dsn=dsn)
+   

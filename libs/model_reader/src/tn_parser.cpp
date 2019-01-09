@@ -190,7 +190,7 @@ void tn_create_neuron_encoded_rv_non_global(
                                 dest_global,
                                 destAxonID);
 if (destCoreID < -2){
-    printf("output neuron init.\n");
+    //printf("output neuron init.\n");
     if (n->outputCoreDest != destCoreID){
         printf("error - bad neuron output value.");
     }
