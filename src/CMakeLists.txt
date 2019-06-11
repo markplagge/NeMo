@@ -28,7 +28,7 @@ set(NeMo_COUCH_ADD "None" CACHE STRING "The IP address:PORT of the couch databas
 ## Pras' data files
 set(NeMo_WEIGHT_FILE "weights.csv" CACHE STRING "Pras' weight file")
 set(NeMo_DATA_FILE "data.csv" CACHE STRING "Pras' data file")
-
+set(NeMo_PRAS_MODE 1 CACHE BOOL "Pras Mode")
 ###
 
 set(SAVE_MSGS 0)

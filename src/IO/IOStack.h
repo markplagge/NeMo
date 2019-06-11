@@ -33,12 +33,17 @@ typedef struct SpikeData{
     int dest;
     double dest_time;
 }spikeData;
-void prGetWeights(int *weights, long long coreID, long long neuronID);
+//hooks for file IO:
 
+
+
+void prGetWeights(int *weights, long long coreID, long long neuronID);
 /**
- * Loads ALL spike data from the file  and returns it as a spike array.
- * @return initialized! array of spikeData structs
+ *  * Loads ALL spike data from the file  and returns it as a spike array.
+ * @return number of spikes loaded
+ * @param spikeArray spike array to hold spikes. Will be realloced - do not
+ * init it.
  */
-spikeData * prLoadSpikeData();
+int prLoadSpikeData(spikeData * spikeArray);
 
 #endif //NEMO_IOSTACK_H

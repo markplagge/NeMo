@@ -3,4 +3,5 @@
 #define NUM_NEURON_WEIGHTS 4
 #define PR_WEIGHT_FILE "weights.csv"
 #define PR_DATA_FILE "data.csv"
+#define PRAS_MODE 1
 #endif

@@ -71,7 +71,18 @@ void axon_init(axonState *s, tw_lp *lp)
         specAxons ++;
     }else if(FILE_IN){
         //Do file processing - load in the initial spikes here.
+        //PRAS MODE
+        if(PRAS_MODE && s->axonID == 0){
+            tw_printf(TW_LOC, "Axon 0 in PRAS mode - loading initial spike data");
+            spikeData *spikesFromFile = NULL;
+            int numLoaded = prLoadSpikeData(spikesFromFile);
+            for(int i = 0; i < numLoaded; i ++){
+                // do the spike load
+            }
+
+        }
         if (g_tw_mynode == 0){
+
             tw_printf(TW_LOC,"Axon ID %llu attempted file load.\n",s->axonID);
         }
     }
