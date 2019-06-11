@@ -4,17 +4,25 @@
 
 #include "IOStack.h"
 #include "../nemo_config.h"
+#include <iostream>
+#include <fstream>
 
 FILE *weightsFP;
 FILE *dataFP;
+
+
 void prGetWeights(int *weights, long long coreID, long long neuronID){
-    static int isWOpen = 0;
-    if (!isWOpen) {
-        weightsFP = fopen(PR_WEIGHT_FILE, "r");
-        isWOpen = 1;
-    }
+    std::ifstream weightsFile(PR_WEIGHT_FILE);
+
+//   static int isWOpen = 0;
+//    if (!isWOpen) {
+//        weightsFP = fopen(PR_WEIGHT_FILE, "r");
+
+//        isWOpen = 1;
+ //  }
     //get the data from the file
-    
+
+
 }
 FILE * inputFile;
 bool inputFileOpen;

@@ -9,7 +9,8 @@
 #define SAVE_MSGS @SAVE_MSGS@
 #define USE_COUCH @USE_COUCH@
 #define COUCH_ADDRESS "@NeMo_COUCH_ADD@"
-
+#define PR_WEIGHT_FILE "@NeMo_WEIGHT_FILE@"
+#define PR_DATA_FILE "@NeMo_DATA_FILE"
 /** Run-Time options. Defaults are set in cmake. Variables are declared in globals.h. */
 
 

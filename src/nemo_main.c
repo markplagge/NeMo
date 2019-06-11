@@ -33,6 +33,7 @@ bool VALIDATION = false;
 char * inputFileName = "nemo_in";
 char * neuronFireFileName = "fire_record";
 
+
 int N_FIRE_BUFF_SIZE = 32;
 int N_FIRE_LINE_SIZE = 512;
 
@@ -79,6 +80,7 @@ const tw_optdef app_opt[] = {
     	TWOPT_FLAG("phval", PHAS_VAL, "Phasic Neuron Validation"),
     	TWOPT_FLAG("tonb",TONIC_BURST_VAL, "Tonic bursting Neuron Validation"),
     	TWOPT_FLAG("phb", PHASIC_BURST_VAL, "Phasic Bursting Neuron Validation"),
+
     TWOPT_END()
 
 };

@@ -25,6 +25,10 @@ set(NeMo_SAVE_MSG FALSE CACHE BOOL "Save message paths to CSV or Couch? (debug m
 set(NeMo_SAVE_MSG_COUCH FALSE CACHE BOOL "Save message paths directly to couch?")
 set(NeMo_COUCH_ADD "None" CACHE STRING "The IP address:PORT of the couch database if used")
 
+## Pras' data files
+set(NeMo_WEIGHT_FILE "weights.csv" CACHE STRING "Pras' weight file")
+set(NeMo_DATA_FILE "data.csv" CACHE STRING "Pras' data file")
+###
 
 set(SAVE_MSGS 0)
 set(USE_COUCH 0)
@@ -74,7 +78,7 @@ set(model_srcs
         mapping.h
 
 
-        IO/IOStack.c
+        IO/IOStack.cpp
         IO/IOStack.h
 
         IO/output.h
