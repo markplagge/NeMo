@@ -7,7 +7,7 @@ set (CMAKE_EXPORT_COMPILE_COMMANDS 1 )
 
 ##NeMo uses a few C11 features, including generic macros. We assume standard C11
 ##behaviors.
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11")
 
 ## Model Version
@@ -28,6 +28,7 @@ set(NeMo_COUCH_ADD "None" CACHE STRING "The IP address:PORT of the couch databas
 ## Pras' data files
 set(NeMo_WEIGHT_FILE "weights.csv" CACHE STRING "Pras' weight file")
 set(NeMo_DATA_FILE "data.csv" CACHE STRING "Pras' data file")
+
 ###
 
 set(SAVE_MSGS 0)
@@ -78,7 +79,7 @@ set(model_srcs
         mapping.h
 
 
-        IO/IOStack.cpp
+        IO/IOStack.c
         IO/IOStack.h
 
         IO/output.h

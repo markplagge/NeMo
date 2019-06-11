@@ -4,15 +4,14 @@
 
 #include "IOStack.h"
 #include "../nemo_config.h"
-#include <iostream>
-#include <fstream>
+
 
 FILE *weightsFP;
 FILE *dataFP;
 
 
 void prGetWeights(int *weights, long long coreID, long long neuronID){
-    std::ifstream weightsFile(PR_WEIGHT_FILE);
+
 
 //   static int isWOpen = 0;
 //    if (!isWOpen) {
@@ -26,22 +25,6 @@ void prGetWeights(int *weights, long long coreID, long long neuronID){
 }
 FILE * inputFile;
 bool inputFileOpen;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void saveEvent(tw_stime timestamp, char sourceType, id_type core, id_type local,
                id_type destCore, id_type destLocal){
