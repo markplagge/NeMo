@@ -1,0 +1,13 @@
+--netin
+#--model=/home/plaggm/th_sm.json
+#--spikes=/shared/share/superneuro/models/cifar/cifar_100_spike.sqlite
+--cores=8192
+--tn_json
+--svs
+--svm
+--dmp
+--chip=2
+--end=10
+--synch=5
+--svs
+--extramem=75535

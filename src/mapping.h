@@ -115,7 +115,4 @@ id_type getAxonLocal(tw_lpid gid);
  */
 tw_lpid getSynapseFromAxon(tw_lpid axon_id);
 
-
-
-
 #endif //NEMO_MAPPING_H

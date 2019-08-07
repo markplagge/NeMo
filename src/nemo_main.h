@@ -17,6 +17,6 @@
 #include "./tests/nemo_tests.h"
 #include "./IO/IOStack.h"
 #include "./IO/spike_reader.h"
-
+#include "IO/spike_db_reader.h"
 
 #endif //NEMO_NEMO_MAIN_H

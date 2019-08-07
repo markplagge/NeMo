@@ -36,8 +36,7 @@
  * @return     an array of tw_lpid's
  * 
  */
-tw_lpid * testCreateLPID(int neuronsPerCore, int totalLPs);
-
+tw_lpid *testCreateLPID(int neuronsPerCore, int totalLPs);
 
 /**
  * \ingroup nemo_tests
@@ -47,7 +46,7 @@ tw_lpid * testCreateLPID(int neuronsPerCore, int totalLPs);
  * @return     Returns an array of tw_lps - perfect for checking that the create lp function
  * has created the right types of lps.
  */
-int ** testCreateLPs();
+int **testCreateLPs();
 
 
 
@@ -71,9 +70,8 @@ bool runSynapseTests(int neuronsInCore, int cores);
  *
  * @return     returns the initalized synapse state.
  */
-synapseState * testCreateSynapse(synapseState *s, tw_lp *lp);
+synapseState *testCreateSynapse(synapseState *s, tw_lp *lp);
 
 id_type testSynapseOutput(id_type axonInput);
-
 
 #endif

@@ -57,7 +57,7 @@ s<sub>j</sub><sup>Gi</sup> must have 4 parameters specified.
 | σ VR              	| Reset potential sign bit                                                                                                                                                	|
 | ɣ                 	| Gamma value for neuron                                                                                                                                                  	|
 | ϰ                 	| Kappa value for neuron                                                                                                                                                  	|
-| signal Delay      	| The TN signal delay. This is the number of TrueNorth ticks taken for this neuron's spike to be received                                                                 	|
+| signal Delay      	| The TN_Wrapper signal delay. This is the number of TrueNorth ticks taken for this neuron's spike to be received                                                                 	|
 | destCore          	| The neuron's destination neurosynaptic core.                                                                                                                            	|
 | destAxon          	| The neuron's destination axon.                                                                                                                                          	|
 
