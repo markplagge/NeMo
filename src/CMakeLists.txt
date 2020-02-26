@@ -115,6 +115,9 @@ set(model_srcs
         neuro/tn_neuron.c
         neuro/tn_neuron.h
 
+        neuro/tn_fcfs_neuron.h
+        neuro/tn_fcfs_neuron.c
+
         tests/nemo_tests.h
         tests/synapse_test.c
         tests/bio_validation.c
