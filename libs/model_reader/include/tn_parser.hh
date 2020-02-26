@@ -9,7 +9,7 @@
 //#define RAPIDJSON_SSE2 1
 //#endif
 //#endif
-
+#include "rapidjson/document.h"
 #include <rapidjson/document.h>
 #include <rapidjson/prettywriter.h>
 #include <rapidjson/filereadstream.h>
