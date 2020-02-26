@@ -16,15 +16,17 @@
 #include <rand-clcg4.h>
 
 
+typedef struct SpikeMessage{
+    int ndims;
+    double spike_values[];
+}spike_message;
+
 
 typedef struct FcfsCoreState{
     int num_running_cores;
-
     int current_running_size;
-
     /** How long to check on process Q? */
     int process_tick_time;
-
     tw_stime  last_active_time;
     proc_queue * waiting_q;
     proc_queue * running_q;

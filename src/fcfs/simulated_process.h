@@ -24,6 +24,7 @@ typedef enum{
 typedef struct SimulatedProcess{
     int PID;
     int needed_cores;
+
     int needed_run_time;
     int total_wait_time;
     int total_run_time;
