@@ -10,3 +10,5 @@ Benchmarks and results of the first edition of *NeMo* is available at the [ACM D
 Version 0.1.0 supports generating probabilistic networks for benchmarking purposes. It also only supports the IBM TrueNorth neuron specification, [available here](http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=6707077&tag=1).
 
 [![Stories in Ready](https://badge.waffle.io/markplagge/NeMo.svg?label=ready&title=Ready)](http://waffle.io/markplagge/NeMo)
+
+** EN DEV BRANCH **
