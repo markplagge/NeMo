@@ -3,9 +3,6 @@
 
 	url = https://github.com/carothersc/ROSS.git
 
-[submodule "src/lib/c11t"]
-	path = src/extern/c11t
-	url = https://github.com/jtsiomb/c11threads.git
 
 [submodule "lua"]
 	path = lua
