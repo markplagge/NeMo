@@ -4,8 +4,8 @@
 #include "output.h"
 //#include <pthread.h>
 //#include <stdatomic.h>
-#include "../lib/rqueue.h"
-//#include "../lib/c11t/c11threads.h"
+#include "../extern/rqueue.h"
+//#include "../extern/c11t/c11threads.h"
 // POSIX File handles for non MPI IO file writing
 
 FILE *outputFile;

@@ -2,10 +2,21 @@
 project(NeMo)
 enable_testing()
 
+#### Ensure that the proper CMAKE plugins are loaded:
+SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+
+
+
 INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR} ${lmdir})
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/lib/simclist)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/extern/simclist)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
-set(NON11 0 CACHE BOOL "Non C11 Compliant Compiler?")
+set(NON11 0 )
+include(CXX11)
+check_for_cxx11_compiler(CXX+11)
+if (CXX+11 EQUAL 0)
+    message(FATAL_ERROR "Need at least CXX11 support to compile")
+endif()
+
 set(USE_MODEL_RDR 1 CACHE BOOL "Use NeMo JSON Model reader lib?")
 set(USE_HEADER_DATA 1 CACHE BOOL "Use a premade header file for neuron data loading?" )
 if (USE_LUA_JIT)
@@ -41,6 +52,7 @@ endif ()
 ##behaviors.
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lsqlite3")
 if (${NON11})
+    message(FATAL_ERROR "Must use a c11 compatible compiler")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99")
 else ()
@@ -127,8 +139,8 @@ set(model_srcs
         mapping.h
 
 
-        lib/csv.h
-        lib/libcsv.c
+        extern/csv.h
+        extern/libcsv.c
 
 
         IO/IOStack.c
@@ -147,12 +159,19 @@ set(model_srcs
         IO/spike_db_reader.c
         neuro/tn_neuron_struct.h
 
-        nemo_main.h tests/tomacs_exp.c tests/tomacs_exp.h lib/itrlve.h lib/itrlve.c lib/rqueue.c lib/rqueue.h lib/atomic_defs.h IO/model_reader_js.c lib/kdtree/kdtree.c lib/kdtree/kdtree.h fcfs/tn_fcfs_defs.h neuro/fcfs_core.c neuro/fcfs_core.h fcfs/simulated_process.c fcfs/simulated_process.h fcfs/simulated_process_queue.c fcfs/simulated_process_queue.h)
+        nemo_main.h tests/tomacs_exp.c
+        tests/tomacs_exp.h
+        extern/itrlve.h extern/itrlve.c extern/rqueue.c
+        extern/rqueue.h extern/atomic_defs.h IO/model_reader_js.c
+        extern/kdtree/kdtree.c extern/kdtree/kdtree.h
+        neuro/fcfs_core.c neuro/fcfs_core.h)
 
 #REMOVED:
 #IO/spike_reader.c
 #IO/spike_reader.h
 
+### FCFS Simulated Process Library
+ADD_SUBDIRECTORY(fcfs)
 
 ADD_EXECUTABLE(NeMo ${model_srcs})
 

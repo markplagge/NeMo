@@ -210,7 +210,7 @@ tw_lptype model_lps[] = {
         (commit_f) NULL,
         (final_f) synapse_final,
         (map_f) getPEFromGID,
-        sizeof(synapseState)
+        sizeof(synapse_state)
     },
     {
         (init_f) TN_init,

@@ -1,5 +1,8 @@
-cmake_minimum_required(VERSION 2.8)
-set(CMAKE_C_STANDARD 99)
+cmake_minimum_required(VERSION 3.10)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
+set(CXX_EXTENSIONS true)
+
 #ADD_COMPILE_OPTIONS(-std=gnu99)
 #set(CMAKE_C_FLAGS "${CMAKE_C_CFLAGS} -std=gnu99")
 project(SuperNeMo)
@@ -31,7 +34,7 @@ include(ExternalProject)
 #
 #
 ## Set up some base commands:
-message("ARCH:${ARCH}|")
+message("ARCH:${ARCH}")
 set(arch_chk ${ARCH})
 if (arch_chk STREQUAL "x86_64")
     include(OptimizeForArchitecture)
@@ -53,7 +56,7 @@ set (RD "${CMAKE_CURRENT_SOURCE_DIR}/ROSS/")
 set (ND "${CMAKE_CURRENT_SOURCE_DIR}/src/")
 set (LuaD "${CMAKE_CURRENT_SOURCE_DIR}/lua")
 set (SQLD "${CMAKE_CURRENT_SOURCE_DIR}/sqlite/")
-set (simcld "${CMAKE_CURRENT_SOURCE_DIR}/src/lib/simclist")
+set (simcld "${CMAKE_CURRENT_SOURCE_DIR}/src/extern/simclist")
 set(MLD_D "${CMAKE_CURRENT_SOURCE_DIR}/libs/model_reader")
 #cmake_policy(SET CMP0012 OLD)
 # LUA Options

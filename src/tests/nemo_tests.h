@@ -70,7 +70,7 @@ bool runSynapseTests(int neuronsInCore, int cores);
  *
  * @return     returns the initalized synapse state.
  */
-synapseState *testCreateSynapse(synapseState *s, tw_lp *lp);
+synapse_state *testCreateSynapse(synapse_state *s, tw_lp *lp);
 
 id_type testSynapseOutput(id_type axonInput);
 

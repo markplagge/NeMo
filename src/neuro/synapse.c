@@ -17,7 +17,7 @@ void scheduleSp(tw_stime time, id_type axonID, tw_lp *lp) {
  * @param lp My LP
  *
  */
-void loadSynapseSpikesFile(synapseState *s, tw_lp *lp) {
+void loadSynapseSpikesFile(synapse_state *s, tw_lp *lp) {
   list_t spikelist;
   id_type myCore = s->myCore;
 
@@ -54,7 +54,7 @@ void loadSynapseSpikesFile(synapseState *s, tw_lp *lp) {
   }
 }
 
-void synapse_init(synapseState *s, tw_lp *lp) {
+void synapse_init(synapse_state *s, tw_lp *lp) {
   s->msgSent = 0;
   s->lastBigTick = 0;
   s->myCore = getCoreFromGID(lp->gid);
@@ -68,7 +68,7 @@ void synapse_init(synapseState *s, tw_lp *lp) {
   }
 }
 
-void sendSynapseHB(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp, unsigned long count) {
+void sendSynapseHB(synapse_state *s, tw_bf *bf, messageData *M, tw_lp *lp, unsigned long count) {
 
   tw_event *synapseHB = tw_event_new(lp->gid, getNextSynapseHeartbeat(lp), lp);
   messageData *outData = tw_event_data(synapseHB);
@@ -80,11 +80,11 @@ void sendSynapseHB(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp, unsign
   tw_event_send(synapseHB);
 
 }
-void reverseSynapseHB(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp) {
+void reverseSynapseHB(synapse_state *s, tw_bf *bf, messageData *M, tw_lp *lp) {
   M->synapseCounter++;
 }
 
-void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp) {
+void synapse_event(synapse_state *s, tw_bf *bf, messageData *M, tw_lp *lp) {
   unsigned long randCount = lp->rng->count;
 
   if (M->axonID > AXONS_IN_CORE)
@@ -163,7 +163,7 @@ void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp) {
 
 
 
-void synapse_reverse(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp) {
+void synapse_reverse(synapse_state *s, tw_bf *bf, messageData *M, tw_lp *lp) {
 
   if (M->eventType==AXON_OUT) {
 
@@ -176,7 +176,7 @@ void synapse_reverse(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp) {
   }
 }
 
-void synapse_final(synapseState *s, tw_lp *lp) {
+void synapse_final(synapse_state *s, tw_lp *lp) {
   //do some stats here if needed.
   static int announce = 0;
   if (!announce && g_tw_mynode==0) {
@@ -194,7 +194,7 @@ void synapse_final(synapseState *s, tw_lp *lp) {
   }
 
 }
-void synapse_pre_run(synapseState *s, tw_lp *lp) {
+void synapse_pre_run(synapse_state *s, tw_lp *lp) {
   static int should_close = 1;
   if (should_close) {
     closeSpikeFile();

@@ -14,11 +14,11 @@ typedef struct SynapseState {
   tw_bf neuronBF[NEURONS_IN_CORE];
   unsigned long randCount[NEURONS_IN_CORE];
   bool connectionGrid[NEURONS_IN_CORE][NEURONS_IN_CORE];
-} synapseState;
-void synapse_init(synapseState *s, tw_lp *lp);
-void synapse_event(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp);
-void synapse_reverse(synapseState *s, tw_bf *bf, messageData *M, tw_lp *lp);
-void synapse_final(synapseState *s, tw_lp *lp);
-void synapse_pre_run(synapseState *s, tw_lp *lp);
+} synapse_state;
+void synapse_init(synapse_state *s, tw_lp *lp);
+void synapse_event(synapse_state *s, tw_bf *bf, messageData *M, tw_lp *lp);
+void synapse_reverse(synapse_state *s, tw_bf *bf, messageData *M, tw_lp *lp);
+void synapse_final(synapse_state *s, tw_lp *lp);
+void synapse_pre_run(synapse_state *s, tw_lp *lp);
 
 #endif //NEMO_SYNAPSE_H

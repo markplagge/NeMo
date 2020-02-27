@@ -5,7 +5,7 @@
 #include <pthread.h>
 #include "IOStack.h"
 #include "../neuro/tn_neuron.h"
-#include "../lib/rqueue.h"
+#include "../extern/rqueue.h"
 
 FILE *membraneFile;
 FILE *outSpikeFile;

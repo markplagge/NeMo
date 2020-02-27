@@ -24,7 +24,7 @@ void int2bit(int input, bool v[4]) {
 }
 /** @defgroup nemo_import NeMoFunct
  * These functions are imported from NeMo. They define various neuron creation functions.
- * Rather than link this JSON lib into NeMo (making a NeMo Library), I re-defined the basic
+ * Rather than link this JSON extern into NeMo (making a NeMo Library), I re-defined the basic
  * creation functions here.
  */
 /**

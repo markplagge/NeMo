@@ -8,12 +8,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../globals.h"
-#include "../lib/simclist/simclist.h"
+#include "../extern/simclist/simclist.h"
 #include "../nemo_config.h"
-#include "../lib/itrlve.h"
-//#include "../lib/lua.h"
-//#include "../lib/lualib.h"
-//#include "../lib/lauxlib.h"
+#include "../extern/itrlve.h"
+//#include "../extern/lua.h"
+//#include "../extern/lualib.h"
+//#include "../extern/lauxlib.h"
 #include <lauxlib.h>
 #include <lualib.h>
 #include "../../libs/model_reader/include/model_reader_wrapper.h"

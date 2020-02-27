@@ -8,12 +8,12 @@
 
 #include <sys/stat.h>
 #include "IOStack.h"
-#include "../lib/kdtree/kdtree.h"
+#include "../extern/kdtree/kdtree.h"
 /* Input uses standard lua 5.1. However, these includes may be switched out
  * with luaJIT in the future. Maintain lua 5.1 / partial 5.2 compatiblility. */
-//#include "../lib/lua/lua.h"
-//#include "../lib/lua/lualib.h"
-//#include "../lib/lua/lauxlib.h"
+//#include "../extern/lua/lua.h"
+//#include "../extern/lua/lualib.h"
+//#include "../extern/lua/lauxlib.h"
 
 #include "lua.h"
 #include "../neuro/tn_neuron_struct.h"
