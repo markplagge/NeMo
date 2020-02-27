@@ -7,10 +7,10 @@ OPTION(SIMCLIST_DEBUG
     OFF)
 OPTION(SIMCLIST_THREADING
     "Build with simclist threading enable"
-    OFF)
+    ON)
 OPTION(SIMCLIST_NO_DUMPRESTORE
     "Disable building of dump & restore functionalities"
-    OFF)
+    ON)
 OPTION(SIMCLIST_ALLOW_LOCATIONBASED_HASHES
     "Allow list_hash() to work exclusively on memory locations"
     OFF)

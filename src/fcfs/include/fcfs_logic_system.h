@@ -8,6 +8,7 @@
 
 #ifndef SUPERNEMO_FCFS_LOGIC_SYSTEM_H
 #define SUPERNEMO_FCFS_LOGIC_SYSTEM_H
+#include <simclist.h>
 #define max_proc_time 64
 #ifdef __cplusplus
 extern "C"
@@ -35,31 +36,29 @@ typedef struct SimulatedProcess{
 
 }simulated_process;
 
-struct ProcQNode {
-    struct ProcQNode *next;
-    simulated_process *proc;
-};
-typedef struct ProcQueue{
-    struct ProcQNode *front, *rear;
-} proc_queue;
 
+typedef struct ProcQList{
+    list_t *queue_list;
+}proc_q_list;
 
-
+//simulated_processor defs
 simulated_process *new_simulated_process_cores_time(int n_cores, int time_needed,int pid);
 simulated_process *new_simulated_process_cores(int n_cores, int pid);
-proc_queue *create_queue();
-void proc_q_enqueue(proc_queue *q, simulated_process *p);
-simulated_process *proc_q_dequeue(proc_queue *q);
-void proc_q_tick(proc_queue *q);
-
 void simulated_process_tick(simulated_process *p);
-unsigned int proc_q_size(proc_queue *q);
 
 
-int proc_q_top_cores(proc_queue *q);
+
+//processor queues
+proc_q_list *create_queue_list();
+int proc_q_list_top_needed_cores(proc_q_list *q);
+int proc_q_list_tick(proc_q_list *q);
+simulated_process *proc_q_list_deq(proc_q_list *q);
+int proc_q_list_enq(proc_q_list *q, simulated_process *p);
+int proc_q_list_size(proc_q_list *q);
 
 
-#endif //SUPERNEMO_FCFS_LOGIC_SYSTEM_H
+
 #ifdef __cplusplus
 }
 #endif
+#endif //SUPERNEMO_FCFS_LOGIC_SYSTEM_H

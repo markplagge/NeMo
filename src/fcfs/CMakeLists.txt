@@ -8,16 +8,20 @@ set(FCFS_LIB_SRCS
         src/simulated_process.h
         src/simulated_process_queue.h
         src/simulated_process.c
-        src/simulated_process_queue.c )
+        src/simulated_process_queue.c src/simulated_process_queuelist.c)
 
 add_library(fcfs_logic_system  ${FCFS_LIB_SRCS})
+target_link_libraries(fcfs_logic_system simclist)
 set_property(TARGET fcfs_logic_system PROPERTY CXX_STANDARD 14)
 enable_testing()
 
 set(FCFS_TEST_SRCS
         tests/test_test.cpp tests/test_sim_process_system.cpp)
 if(FCFS_ENABLE_UNIT_TESTS)
+    set(CATCH_CONFIG_ENABLE_BENCHMARKING 1)
+    add_compile_definitions(CATCH_CONFIG_ENABLE_BENCHMARKING)
     add_subdirectory(lib/catch2)
+    set(CATCH_CONFIG_ENABLE_BENCHMARKING 1)
     add_executable(fcfs_tests ${FCFS_TEST_SRCS})
     target_link_libraries(fcfs_tests
             Catch2::Catch2)
@@ -32,6 +36,7 @@ if(FCFS_ENABLE_UNIT_TESTS)
     set(CATCH_BUILD_TESTING OFF)
     set(CATCH_INSTALL_DOCS OFF)
     set(CATCH_INSTALL_HELPERS ON)
+
 
     catch_discover_tests(fcfs_tests )
     ParseAndAddCatchTests(fcfs_tests)
