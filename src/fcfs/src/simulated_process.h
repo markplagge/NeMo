@@ -8,7 +8,7 @@
 
 #ifndef SUPERNEMO_SIMULATED_PROCESS_H
 #define SUPERNEMO_SIMULATED_PROCESS_H
-
+#include "../include/fcfs_logic_system.h"
 
 
 

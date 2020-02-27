@@ -54,3 +54,22 @@ void proc_q_tick(proc_queue *q){
         proc_node_tick(q->front);
     }
 }
+unsigned int proc_q_size(proc_queue *q){
+    if (q->front == NULL){
+        return 0;
+    }
+    int size = 0;
+    struct ProcQNode *temp = q->front;
+    while(temp != NULL){
+        ++ size;
+        temp = temp->next;
+    }
+    return size;
+}
+
+int proc_q_top_cores(proc_queue *q){
+    if (q->front == NULL){
+        return -1;
+    }
+    return q->front->proc->needed_cores;
+}

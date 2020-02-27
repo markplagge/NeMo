@@ -15,6 +15,8 @@ void simulated_process_tick(simulated_process *p){
             ++ p->total_run_time;
             if (p->total_run_time >= p->needed_run_time)
                 p->current_state = COMPLETE;
+
+
             break;
         case COMPLETE:
             break;

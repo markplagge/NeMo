@@ -6,10 +6,13 @@
 
 
 
-#ifndef SUPERNEMO_TN_FCFS_FEATURES_H
-#define SUPERNEMO_TN_FCFS_FEATURES_H
+#ifndef SUPERNEMO_FCFS_LOGIC_SYSTEM_H
+#define SUPERNEMO_FCFS_LOGIC_SYSTEM_H
 #define max_proc_time 64
-
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 typedef enum  {
     WAITING,
     RUNNING,
@@ -48,7 +51,15 @@ proc_queue *create_queue();
 void proc_q_enqueue(proc_queue *q, simulated_process *p);
 simulated_process *proc_q_dequeue(proc_queue *q);
 void proc_q_tick(proc_queue *q);
+
 void simulated_process_tick(simulated_process *p);
+unsigned int proc_q_size(proc_queue *q);
 
 
-#endif //SUPERNEMO_TN_FCFS_FEATURES_H
+int proc_q_top_cores(proc_queue *q);
+
+
+#endif //SUPERNEMO_FCFS_LOGIC_SYSTEM_H
+#ifdef __cplusplus
+}
+#endif
