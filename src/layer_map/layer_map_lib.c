@@ -76,7 +76,7 @@ tw_lpid getGridNeuronDest(unsigned int sourceCore, tw_lpid neuronGID) {
   return gidDest;
 }
 
-tw_lpid getNeuronDestInLayer(id_type sourceCore, tw_lpid neuronGID) {
+tw_lpid get_neuron_dest_in_layer(id_type sourceCore, tw_lpid neuronGID) {
   if (LAYER_NET_MODE & GRID_LAYER) {
     return getGridNeuronDest(sourceCore, neuronGID);
   } else if (LAYER_NET_MODE & CONVOLUTIONAL_LAYER) {
@@ -121,7 +121,7 @@ void displayConfig() {
 /**
  * Setup initializes the layer network parameters
  */
-void setupGrid(int showMapping) {
+void setup_grid(int showMapping) {
   //initialize core params:
   if (GRID_ENABLE) {
     //We are in a layer/grid network.
@@ -174,7 +174,7 @@ void configureGridNeuron(tn_neuron_state *s, tw_lp *lp) {
     s->axonTypes[i] = 0;
   }
 
-  tw_lpid dest = getNeuronDestInLayer(s->myCoreID, lp->gid);
+  tw_lpid dest = get_neuron_dest_in_layer(s->myCoreID, lp->gid);
   if (inLastLayer(s)) {
     s->outputGID = 0;
     s->posThreshold = 9999;

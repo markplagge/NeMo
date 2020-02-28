@@ -18,7 +18,14 @@
 
 
 //** FCFS ALGORITHM CONSTANTS */
+#define RANDOM_PROCS 1
+#if @NeMo_OS_Enabled@
+#define NEMO_OS_MODE 1
+#else
+#define NEMO_OS_MODE 0
+#endif
 
-
-
+//#ifndef NEMO_OS_MODE
+//#define NEMO_OS_MODE 1
+//#endif
 #endif

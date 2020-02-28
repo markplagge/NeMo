@@ -1,9 +1,13 @@
 //
 // Created by Mark Plagge on 5/25/16.
 //
+#include "nemo_config.h"
+
+
 
 #include "nemo_main.h"
-
+#include "layer_map/layer_map_lib.h"
+#include "nemo_os_system.h"
 /** \addtogroup Globals
 #define TESTIO 0
  * @{  */
@@ -382,6 +386,7 @@ void luaLoaderClean() {
 void init_nemo() {
   spikech(294);
   /// SANTIY CHECKS:
+
   if (FILE_IN && (IS_SAT_NET || IS_RAND_NETWORK || GRID_ENABLE)) {
     printf("Found file in option: %i and sat mode option %i, rand network %i, grid mode %i\n", FILE_IN,IS_SAT_NET,IS_RAND_NETWORK,GRID_ENABLE);
     tw_error(TW_LOC, "Multiple modes implemented - Can not load file and have random network.");
@@ -478,10 +483,13 @@ tw_printf(TW_LOC,"SQLITE Spike DB loaded, found %i spikes.\n", num_spikes);
   LPS_PER_PE = g_tw_nlp/g_tw_npe;
 
   NUM_CHIPS_IN_SIM = CORES_IN_SIM/CORES_IN_CHIP;
+  if(NUM_CHIPS_IN_SIM == 0){
+      NUM_CHIPS_IN_SIM = 1;
+  }
   CHIPS_PER_RANK = 1;
   //Layer / Grid Mode setup:
   if (GRID_ENABLE)
-    setupGrid(0);
+    setup_grid(0);
 }
 
 
@@ -494,11 +502,15 @@ tw_printf(TW_LOC,"SQLITE Spike DB loaded, found %i spikes.\n", num_spikes);
 
  */
 int main(int argc, char *argv[]) {
+
 //	char *NETWORK_FILE_NAME = calloc(256, sizeof(char));
 //	strcpy(NETWORK_FILE_NAME, "nemo_model.csv");
 //	char *SPIKE_FILE_NAME = calloc(256, sizeof(char));
 //	strcpy(SPIKE_FILE_NAME, "nemo_spike.csv");
-
+    printf("NMO %i ", NEMO_OS_MODE);
+    if(NEMO_OS_MODE){
+        return(nemo_os_main(argc,argv));
+    }
   tw_opt_add(app_opt);
   spikech(388);
   tw_init(&argc, &argv);
@@ -546,3 +558,4 @@ int main(int argc, char *argv[]) {
   }
   tw_end();
 }
+

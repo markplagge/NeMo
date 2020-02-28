@@ -5,13 +5,13 @@
 #include <ross.h>
 #include "../nemo_main.h"
 
-void setupGrid(int showMapping);
+void setup_grid(int showMapping);
 
 /**@} */
 
 void displayConfig();
 
-tw_lpid getNeuronDestInLayer(id_type sourceCore, tw_lpid neuronGID);
+tw_lpid get_neuron_dest_in_layer(id_type sourceCore, tw_lpid neuronGID);
 void configureNeuronInLayer(tn_neuron_state *s, tw_lp *lp);
 
 #endif

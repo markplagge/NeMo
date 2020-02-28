@@ -32,6 +32,7 @@ typedef struct SimulatedProcess{
     int needed_run_time;
     int total_wait_time;
     int total_run_time;
+    double start_time;
     PROC_STATE current_state;
 
 }simulated_process;
@@ -56,7 +57,7 @@ simulated_process *proc_q_list_deq(proc_q_list *q);
 int proc_q_list_enq(proc_q_list *q, simulated_process *p);
 int proc_q_list_size(proc_q_list *q);
 
-
+double proc_q_list_get_next_start(proc_q_list *q);
 
 #ifdef __cplusplus
 }

@@ -4,15 +4,9 @@
 
 #include "fcfs_core.h"
 
-//int get_top_proc_size(fcfs_core_state *s, int t){
-//    if(s->waiting_q->front != NULL){
-//        return  s->waiting_q->front->proc->needed_run_time;
-//    }else{
-//        return -1;
-//    }
-//
-//}
-//
+
+
+
 //int start_next_proc(fcfs_core_state *s){
 //    simulated_process *p = proc_q_dequeue(s->waiting_q);
 //    if(p == NULL){
@@ -45,3 +39,18 @@
 //spike_message *input_message(fcfs_core_state *s, double timestep, spike_message *input_message);
 
 
+void fcfs_core_init(FcfsCoreState *s, tw_lp *lp){
+
+}
+void fcfs_forward_event(FcfsCoreState *s, tw_bf *CV, FCFSMessage *m, tw_lp *lp ) {
+
+}
+void fcfs_reverse_event(FcfsCoreState *s, tw_bf *CV, FCFSMessage *m, tw_lp *lp ){
+
+}
+void fcfs_commit_event(FcfsCoreState *s, tw_bf *CV, FCFSMessage *m, tw_lp *lp){
+
+}
+void fcfs_final(FcfsCoreState *s, tw_lp *lp){
+
+}

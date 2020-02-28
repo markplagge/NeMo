@@ -51,3 +51,11 @@ proc_q_list *create_queue_list(){
 int proc_q_list_size(proc_q_list *q){
     return list_size(q->queue_list);
 }
+double proc_q_list_get_next_start(proc_q_list *q){
+    double res = -1;
+    simulated_process *p = list_fetch(q);
+    if(p != NULL) {
+        res = p->start_time;
+    }
+    return res;
+}

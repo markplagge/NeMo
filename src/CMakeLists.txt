@@ -77,7 +77,9 @@ set(NeMo_DEBUG 0 CACHE BOOL "Debug mode")
 # set(NeMo_SAVE_MSG FALSE CACHE BOOL "Save message paths to CSV or Couch? (debug messages)")
 # set(NeMo_SAVE_MSG_COUCH FALSE CACHE BOOL "Save message paths directly to couch?")
 # set(NeMo_COUCH_ADD "None" CACHE STRING "The IP address:PORT of the couch database if used")
-#
+
+#set(NeMo_OS_Enabled 1 CACHE BOOL "Build a FCFS system rather than a traditional neuromorphic system?")
+option(NeMo_OS_Enabled "Build NeMoOS" ON)
 
 ## KDTREE Library Options:
 OPTION(KD_fastalloc "KD-Tree Lib: Use fastalloc? " ON )
@@ -115,7 +117,7 @@ SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_BINARY_DIR}/nemo_config.h PROPERTIES
 
 #Source Files:
 set(model_srcs
-        nemo_main.c
+
         globals.h
         globals.c
         neuro/synapse.h
@@ -159,21 +161,31 @@ set(model_srcs
         IO/spike_db_reader.c
         neuro/tn_neuron_struct.h
 
-        nemo_main.h tests/tomacs_exp.c
+        tests/tomacs_exp.c
         tests/tomacs_exp.h
         extern/itrlve.h extern/itrlve.c extern/rqueue.c
         extern/rqueue.h extern/atomic_defs.h IO/model_reader_js.c
         extern/kdtree/kdtree.c extern/kdtree/kdtree.h
-        neuro/fcfs_core.c neuro/fcfs_core.h)
+        neuro/fcfs_core.cpp neuro/fcfs_core.h nemo_os_system.h nemo_os.cpp
+        )
 
 #REMOVED:
 #IO/spike_reader.c
 #IO/spike_reader.h
 
 ### FCFS Simulated Process Library
+#set(nemo_os_srcs )
 ADD_SUBDIRECTORY(fcfs)
 
-ADD_EXECUTABLE(NeMo ${model_srcs})
+#ADD_EXECUTABLE(NeMoOS ${nemo_os_srcs} nemo_main.h ${model_srcs})
+
+set(model_srcs ${model_srcs} ${nemo_os_srcs})
+
+
+ADD_EXECUTABLE(NeMo nemo_main.c nemo_main.h ${model_srcs} )
+
+
+
 
 #if (SQLITE_BUILD_STATIC)
 #	set(SQLIB "${SQLITE_STATIC_NAME}")
@@ -195,3 +207,14 @@ if(USE_MODEL_RDR)
 endif()
 message("-------------lib ${ll}")
 TARGET_LINK_LIBRARIES(NeMo ${ll})
+
+if(NeMo_OS_Enabled)
+    target_link_libraries(NeMo fcfs_logic_system)
+    target_include_directories(NeMo PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/fcfs/include)
+    #target_compile_definitions(NeMo PUBLIC NEMO_OS_MODE 1)
+else()
+    #target_compile_definitions(NeMo PUBLIC NEMO_OS_MODE 0)
+endif()
+
+
+

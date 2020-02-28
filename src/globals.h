@@ -9,6 +9,7 @@
 #ifndef __NEMO_GLOBALS_H__
 #define __NEMO_GLOBALS_H__
 
+
 #define BGQ 1
 #define NET_IO_DEBUG 1
 
@@ -409,3 +410,4 @@ EXT bool NEMO_MODEL_IS_BINARY;
 /** @} */
 
 #endif
+

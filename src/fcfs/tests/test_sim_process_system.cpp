@@ -30,7 +30,7 @@ class ProcListGenerator : public Catch::Generators::IGenerator<std::vector<simul
     int ttl_lists;
 
 public:
-    ProcListGenerator(int min_q_size, int max_q_size, int min_time = 0, int max_time = 65535,
+    ProcListGenerator(int min_q_size, int max_q_size, int min_time = 1, int max_time = 65535,
                       int min_core = 1, int max_core = 4096, int pid_min = 1, int pid_max = 65535) {
         this->vec_pos = 0;
         this->ttl_lists = 0;
@@ -95,7 +95,7 @@ TEST_CASE("Process logic works properly", "[simulated_process]") {
     std::default_random_engine genz;
     std::uniform_int_distribution<int> distribution(32, max_time);
     std::uniform_int_distribution<int> core_dist(16, 4096);
-    std::uniform_int_distribution<int> pid_dist(1, INT_MAX);
+    std::uniform_int_distribution<int> pid_dist(1, 8192);
     auto cores_needed = std::bind(core_dist, genz);
     auto time_needed = std::bind(distribution, genz);
     auto pid = std::bind(pid_dist, genz);
@@ -135,13 +135,15 @@ TEST_CASE("Process logic works properly", "[simulated_process]") {
         REQUIRE(p->total_run_time == p_time_needed);
 
     }
-    auto num_waits = GENERATE(range(1,1000));
+
     SECTION("sim process log wait times properly"){
+        auto num_waits = GENERATE(range(1,1000));
         simulated_process *p = new_simulated_process_cores_time(p_cores_needed, p_time_needed, p_pid);
-        for(int i =0; i < 1024; i ++){
+        for(int i =0; i < num_waits; i ++){
             simulated_process_tick(p);
         }
-        REQUIRE(p->total_wait_time == 1024);
+        REQUIRE(p->total_wait_time == num_waits);
+
     }
 }
 
@@ -150,7 +152,6 @@ TEST_CASE("Process logic works properly", "[simulated_process]") {
 TEST_CASE("Process queue SIMCLIST impl tests", "[simulated_process][queue_list]") {
     auto process_list = GENERATE(take(5, process_list_gen(1, 6000)));
     proc_q_list *q = create_queue_list();
-    auto num_ticks = GENERATE(range(1,10));
 
     SECTION("Enqueue / QLEN test") {
         //tests if a queue can enqueue various numbers of processes
@@ -194,7 +195,11 @@ TEST_CASE("Process queue SIMCLIST impl tests", "[simulated_process][queue_list]"
 
 
     SECTION("Queue process ticks apply wait-time"){
+        auto num_ticks = GENERATE(range(1,50000));
+
         for (auto p : process_list) {
+            p->total_wait_time = 0;
+            p->total_run_time = 0;
             proc_q_list_enq(q, p);
         }
         for (int t = 0; t < num_ticks; t ++){
@@ -204,7 +209,37 @@ TEST_CASE("Process queue SIMCLIST impl tests", "[simulated_process][queue_list]"
         //we ticked num_ticks. Each process should have advanced
         for(int i = 0; i < process_list.size(); i ++){
             simulated_process *p =(simulated_process *) list_get_at(q->queue_list,i);
-            REQUIRE(p->total_wait_time == num_ticks);
+            if(p->total_wait_time != num_ticks) {
+                REQUIRE(p->total_wait_time == num_ticks);
+            }
+        }
+
+    }
+    SECTION("Queue process ticks apply run-time"){
+        auto num_ticks = GENERATE(range(1,50000));
+        for (auto p : process_list) {
+            p->total_wait_time = 0;
+            p->total_run_time = 0;
+            p->current_state = RUNNING;
+            proc_q_list_enq(q, p);
+        }
+        for (int t = 0; t < num_ticks; t ++){
+            proc_q_list_tick(q);
+        }
+        for(int i = 0; i < process_list.size(); i ++){
+            simulated_process *p =(simulated_process *) list_get_at(q->queue_list,i);
+            REQUIRE(p->total_wait_time == 0);
+            int max_runtime = p->needed_run_time;
+            bool runtime_check = p->total_run_time == num_ticks;
+            runtime_check = runtime_check || (p->total_run_time == max_runtime && p->current_state == COMPLETE);
+            if(not runtime_check){
+                CHECK(p->total_run_time == num_ticks);
+                CHECK(p->total_run_time == max_runtime);
+                CHECK(p->current_state == COMPLETE);
+            }
+            REQUIRE(runtime_check);
+
+
         }
 
     }
@@ -268,6 +303,33 @@ TEST_CASE("Simclist VS Custom") {
 
 
     };
+
+    BENCHMARK("Queue-List TICK benchmark"){
+        auto num_ticks = 50000;
+        for (auto p : process_list) {
+            p->total_wait_time = 0;
+            p->total_run_time = 0;
+            p->current_state = RUNNING;
+            proc_q_list_enq(ql, p);
+        }
+        for (int t = 0; t < num_ticks; t ++){
+            proc_q_list_tick(ql);
+        }
+
+    };
+    BENCHMARK("Queue-List TICK benchmark"){
+        auto num_ticks = 50000;
+        for (auto p : process_list) {
+             p->total_wait_time = 0;
+             p->total_run_time = 0;
+             p->current_state = RUNNING;
+             proc_q_enqueue(q, p);
+         }
+         for (int t = 0; t < num_ticks; t ++){
+             proc_q_tick(q);
+         }
+
+    };
 }
 
 
@@ -275,7 +337,7 @@ TEST_CASE("process queue works properly", "[simulated_process][queue]") {
 
     int max_time = 128;
     int max_core = 4096;
-    int pid_max = INT_MAX;
+    int pid_max = 65535;
 
     int min_time = 1;
     int min_core = 1;
