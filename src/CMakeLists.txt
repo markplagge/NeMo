@@ -161,12 +161,11 @@ set(model_srcs
         IO/spike_db_reader.c
         neuro/tn_neuron_struct.h
 
-        tests/tomacs_exp.c
-        tests/tomacs_exp.h
+
         extern/itrlve.h extern/itrlve.c extern/rqueue.c
         extern/rqueue.h extern/atomic_defs.h IO/model_reader_js.c
         extern/kdtree/kdtree.c extern/kdtree/kdtree.h
-        neuro/fcfs_core.cpp neuro/fcfs_core.h nemo_os_system.h nemo_os.cpp
+        neuro/fcfs_core.cpp neuro/fcfs_core.hpp nemo_os_system.h nemo_os.cpp
         )
 
 #REMOVED:
@@ -175,7 +174,7 @@ set(model_srcs
 
 ### FCFS Simulated Process Library
 #set(nemo_os_srcs )
-ADD_SUBDIRECTORY(fcfs)
+ADD_SUBDIRECTORY(libs)
 
 #ADD_EXECUTABLE(NeMoOS ${nemo_os_srcs} nemo_main.h ${model_srcs})
 
@@ -205,11 +204,12 @@ if(USE_MODEL_RDR)
     set(ll ModelReaderLib ${ll})
     message("lib settings: ${ll}")
 endif()
-message("-------------lib ${ll}")
+#message("-------------lib ${ll}")
 TARGET_LINK_LIBRARIES(NeMo ${ll})
 
 if(NeMo_OS_Enabled)
-    target_link_libraries(NeMo fcfs_logic_system)
+    message("----------- Enabling neuro os extensions -----------")
+    target_link_libraries(NeMo fcfs_logic_system neuro_os_config)
     target_include_directories(NeMo PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/fcfs/include)
     #target_compile_definitions(NeMo PUBLIC NEMO_OS_MODE 1)
 else()

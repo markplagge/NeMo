@@ -6,7 +6,9 @@
 #define NEMO_MAPPING_H
 
 #include "globals.h"
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 /**
  * @brief      lpTypeMapper maps a given GID to a lp type - neuron, synapse, axon, etc
  * Assumes neuromorphic hardware grid laout with \f$NxN\f$ - number of neurons == number of axons.
@@ -114,5 +116,7 @@ id_type getAxonLocal(tw_lpid gid);
  * @return     The synapse from axon.
  */
 tw_lpid getSynapseFromAxon(tw_lpid axon_id);
-
+#ifdef __cplusplus
+};
+#endif
 #endif //NEMO_MAPPING_H

@@ -12,7 +12,7 @@
 #include "../globals.h"
 #include "../mapping.h"
 #include "../dumpi.h"
-#include "../tests/tomacs_exp.h"
+//#include "../tests/tomacs_exp.h"
 #include "../nemo_config.h"
 #include "../IO/output.h"
 #include "./tn_neuron_struct.h"
@@ -23,23 +23,26 @@
 #endif
 
 /** DUMPI FILE */
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 
 void tn_create_neuron_encoded_rv(
-    id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
-    short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
-    bool epsilon, short sigma_l, short lambda, bool c, uint32_t alpha,
-    uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa,
-    tn_neuron_state *n, int signalDelay, uint64_t destGlobalID,
-    int destAxonID);
+        id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
+        short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
+        bool epsilon, short sigma_l, short lambda, bool c, uint32_t alpha,
+        uint32_t beta, short TM, short VR, short sigmaVR, short gamma, bool kappa,
+        tn_neuron_state *n, int signalDelay, uint64_t destGlobalID,
+        int destAxonID);
+
 void tn_create_neuron_encoded_rv_non_global(
-                                            int coreID, int nID, bool synapticConnectivity[NEURONS_IN_CORE],
-                                            short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
-                                            bool epsilon, int sigma_l, int lambda, bool c, int alpha,
-                                            int beta, int TM, int VR, int sigmaVR, int gamma, bool kappa,
-                                            tn_neuron_state *n, int signalDelay, int destCoreID,
-                                            int destAxonID);
+        int coreID, int nID, bool synapticConnectivity[NEURONS_IN_CORE],
+        short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],
+        bool epsilon, int sigma_l, int lambda, bool c, int alpha,
+        int beta, int TM, int VR, int sigmaVR, int gamma, bool kappa,
+        tn_neuron_state *n, int signalDelay, int destCoreID,
+        int destAxonID);
 
 /**
  * @brief      True North Forward Event handler
@@ -77,6 +80,7 @@ void TN_init(tn_neuron_state *s, tw_lp *lp);
  * @param me
  */
 void TN_pre_run(tn_neuron_state *s, tw_lp *me);
+
 /**
  * @brief      The TN neuron final function
  *
@@ -93,7 +97,9 @@ void TN_final(tn_neuron_state *s, tw_lp *lp);
 inline tn_neuron_state *TN_convert(void *lpstate);
 
 size_t tn_size(tn_neuron_state *s, tw_lp *lp);
+
 void tn_serialize(tn_neuron_state *s, void *buffer, tw_lp *lp);
+
 void tn_deserialize(tn_neuron_state *s, void *buffer, tw_lp *lp);
 
 //////testing for IO input ///////
@@ -113,5 +119,9 @@ void testCreateTNNeuronFromFile(tn_neuron_state *s, tw_lp *lp);
  * Closes the test file for this rank (if it has not already been closed.)
  */
 void closeTestFile();
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif  // NEMO_TN_NEURON_H

@@ -6,19 +6,30 @@
 #include "../dumpi.h"
 #include "../IO/spike_reader.h"
 #include "../IO/spike_db_reader.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 typedef struct AxonState {
-  stat_type sendMsgCount;
-  tw_lpid destSynapse;
-  id_type axonID;
+    stat_type sendMsgCount;
+    tw_lpid destSynapse;
+    id_type axonID;
 
-  //inputSimulatorState *sim;
+    //inputSimulatorState *sim;
 
-  char *axtype;
+    char *axtype;
 } axonState;
 
 void axon_init(axonState *s, tw_lp *lp);
+
 void axon_event(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp);
+
 void axon_reverse(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp);
+
 void axon_commit(axonState *s, tw_bf *CV, messageData *M, tw_lp *lp);
+
 void axon_final(axonState *s, tw_lp *lp);
+
+#ifdef __cplusplus
+};
+#endif
 #endif

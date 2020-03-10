@@ -860,26 +860,26 @@ void TN_create_simple_neuron(tn_neuron_state *s, tw_lp *lp) {
  */
 void TN_create_saturation_neuron(tn_neuron_state *s, tw_lp *lp) {
 
-  static uint64_t numCreated = 0;
-  bool synapticConnectivity[NEURONS_IN_CORE];
-  getSynapticConnectivity(synapticConnectivity, lp);
-  for (int i = 0; i < NEURONS_IN_CORE; i++) {
-    // s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
-    s->axonTypes[i] = 1;
-    s->synapticConnectivity[i] = synapticConnectivity[i];
-  }
-  for (int i = 0; i < NUM_NEURON_WEIGHTS; i++) {
-    s->synapticWeight[i] = connectedWeight;
-  }
-  s->lambda = SAT_NET_LEAK;
-  s->c = SAT_NET_STOC;
-  s->posThreshold = SAT_NET_THRESH;
-  s->negThreshold = (0 - SAT_NET_THRESH);
-  numCreated++;
-  if (numCreated >= NEURONS_IN_CORE*CORES_IN_SIM) {
-    printf("SAT network finished init \n");
-    clearBucket();
-  }
+//  static uint64_t numCreated = 0;
+//  bool synapticConnectivity[NEURONS_IN_CORE];
+//  getSynapticConnectivity(synapticConnectivity, lp);
+//  for (int i = 0; i < NEURONS_IN_CORE; i++) {
+//    // s->synapticConnectivity[i] = tw_rand_integer(lp->rng, 0, 1);
+//    s->axonTypes[i] = 1;
+//    s->synapticConnectivity[i] = synapticConnectivity[i];
+//  }
+//  for (int i = 0; i < NUM_NEURON_WEIGHTS; i++) {
+//    s->synapticWeight[i] = connectedWeight;
+//  }
+//  s->lambda = SAT_NET_LEAK;
+//  s->c = SAT_NET_STOC;
+//  s->posThreshold = SAT_NET_THRESH;
+//  s->negThreshold = (0 - SAT_NET_THRESH);
+//  numCreated++;
+//  if (numCreated >= NEURONS_IN_CORE*CORES_IN_SIM) {
+//    printf("SAT network finished init \n");
+//    clearBucket();
+//  }
 }
 
 

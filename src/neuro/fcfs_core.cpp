@@ -2,7 +2,7 @@
 // Created by Mark Plagge on 2/26/20.
 //
 
-#include "fcfs_core.h"
+#include "fcfs_core.hpp"
 
 
 
@@ -38,19 +38,22 @@
 //
 //spike_message *input_message(fcfs_core_state *s, double timestep, spike_message *input_message);
 
-
-void fcfs_core_init(FcfsCoreState *s, tw_lp *lp){
-
-}
-void fcfs_forward_event(FcfsCoreState *s, tw_bf *CV, FCFSMessage *m, tw_lp *lp ) {
+// FCFS
+void fcfs_core_init(FCFSCoreState *s, tw_lp *lp){
 
 }
-void fcfs_reverse_event(FcfsCoreState *s, tw_bf *CV, FCFSMessage *m, tw_lp *lp ){
+void fcfs_pre_run(FCFSCoreState *s, tw_lp *lp){
 
 }
-void fcfs_commit_event(FcfsCoreState *s, tw_bf *CV, FCFSMessage *m, tw_lp *lp){
+void fcfs_forward_event(FCFSCoreState *s, tw_bf *CV, FCFSMessage *m, tw_lp *lp ) {
 
 }
-void fcfs_final(FcfsCoreState *s, tw_lp *lp){
+void fcfs_reverse_event(FCFSCoreState *s, tw_bf *CV, FCFSMessage *m, tw_lp *lp ){
+
+}
+void fcfs_commit_event(FCFSCoreState *s, tw_bf *CV, FCFSMessage *m, tw_lp *lp){
+
+}
+void fcfs_final(FCFSCoreState *s, tw_lp *lp){
 
 }

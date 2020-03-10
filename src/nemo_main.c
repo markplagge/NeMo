@@ -42,7 +42,7 @@ char *neuronFireFileName = "fire_record";
 char *NEURON_FIRE_R_FN = "fire_record";
 char *NETWORK_CFG_FN = "nemo_model.nfg1";
 
-unsigned int CORES_IN_CHIP = 4096;
+//unsigned int CORES_IN_CHIP = 4096;
 unsigned int CORES_IN_CHIP;
 unsigned int NUM_CHIPS_IN_SIM;
 unsigned int CHIPS_PER_RANK;

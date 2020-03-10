@@ -9,7 +9,8 @@
 
 #include <ross.h>
 #include "nemo_os_system.h"
-#include "neuro/fcfs_core.h"
+
+#include "neuro/fcfs_core.hpp"
 #include "mapping.h"
 #include "nemo_main.h"
 
@@ -106,6 +107,8 @@ namespace neuro_os {
     }
     void init_nemo_os(){
         SIM_SIZE = CORE_SIZE*CORES_IN_SIM;
+        FILE_OUT = true;
+
     }
 
 }

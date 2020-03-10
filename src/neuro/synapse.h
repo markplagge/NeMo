@@ -3,10 +3,13 @@
 
 #ifndef NEMO_SYNAPSE_H
 #define NEMO_SYNAPSE_H
+
 #include "../globals.h"
 #include "../mapping.h"
 #include "../IO/IOStack.h"
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 typedef struct SynapseState {
   stat_type msgSent;
   tw_stime lastBigTick;
@@ -20,5 +23,7 @@ void synapse_event(synapse_state *s, tw_bf *bf, messageData *M, tw_lp *lp);
 void synapse_reverse(synapse_state *s, tw_bf *bf, messageData *M, tw_lp *lp);
 void synapse_final(synapse_state *s, tw_lp *lp);
 void synapse_pre_run(synapse_state *s, tw_lp *lp);
-
+#ifdef __cplusplus
+};
+#endif
 #endif //NEMO_SYNAPSE_H
