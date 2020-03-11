@@ -13,7 +13,7 @@ int proc_q_list_enq(proc_q_list *q, simulated_process *p){
     return result;
 }
 simulated_process *proc_q_list_deq(proc_q_list *q){
-    simulated_process *p = list_fetch(q->queue_list);
+    simulated_process *p = (simulated_process *)list_fetch(q->queue_list);
     list_delete_at(q->queue_list, 0);
     return p; //returns NULL on fail;
 
@@ -23,7 +23,7 @@ int proc_q_list_tick(proc_q_list *q){
     int erv = list_iterator_start(q->queue_list);
     if(erv){
         simulated_process *p;
-        while ((p = list_iterator_next(q->queue_list))) {
+        while ((p = (simulated_process *)list_iterator_next(q->queue_list))) {
             simulated_process_tick(p);
         }
         erv = list_iterator_stop(q->queue_list);
@@ -34,7 +34,7 @@ int proc_q_list_tick(proc_q_list *q){
     return erv;
 }
 int proc_q_list_top_needed_cores(proc_q_list *q){
-    simulated_process *p = list_fetch(q->queue_list);
+    simulated_process *p = (simulated_process *)list_fetch(q->queue_list);
     if(p) {
         return p->needed_cores;
     }
@@ -53,7 +53,9 @@ int proc_q_list_size(proc_q_list *q){
 }
 double proc_q_list_get_next_start(proc_q_list *q){
     double res = -1;
-    simulated_process *p = list_fetch(q);
+    simulated_process *p = (simulated_process *)list_fetch(q->queue_list);
+
+
     if(p != NULL) {
         res = p->start_time;
     }
