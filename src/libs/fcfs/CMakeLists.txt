@@ -5,18 +5,22 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib/catch2/contrib ${CMAKE_MOD
 
 set(FCFS_LIB_SRCS
         include/fcfs_logic_system.h
-        src/simulated_process.h
-        src/simulated_process_queue.h
-        src/simulated_process.c
-        src/simulated_process_queue.c src/simulated_process_queuelist.c)
+        lib/json.hpp
+        src/SimProcess.cpp
+        src/SimProcess.h
+        src/process_states.h
+        src/SimProcessSerial.cpp
+        src/SimProcessSerial.h
+        src/SimProcessQueue.cpp
+        src/SimProcessQueue.h)
 
 add_library(fcfs_logic_system  ${FCFS_LIB_SRCS})
-target_link_libraries(fcfs_logic_system simclist)
+#target_link_libraries(fcfs_logic_system simclist)
 set_property(TARGET fcfs_logic_system PROPERTY CXX_STANDARD 14)
 enable_testing()
 
 set(FCFS_TEST_SRCS
-        tests/test_test.cpp tests/test_sim_process_system.cpp)
+        tests/test_test.cpp tests/test_sim_process_system.cpp tests/test_sim_process.cpp)
 if(FCFS_ENABLE_UNIT_TESTS)
     set(CATCH_CONFIG_ENABLE_BENCHMARKING 1)
     add_compile_definitions(CATCH_CONFIG_ENABLE_BENCHMARKING)

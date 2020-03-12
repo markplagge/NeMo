@@ -1,1 +1,2 @@
 add_subdirectory(fcfs)
+add_subdirectory(neuro_os_config)

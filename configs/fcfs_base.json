@@ -1,0 +1,1 @@
+{"run_type":"fcfs","chips_per_rank":0,"cores_in_chip":4096,"num_neuro_cores":0,"save_spike_events":false,"stats_file":"./stats_out.csv"}

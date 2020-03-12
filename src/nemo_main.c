@@ -425,7 +425,7 @@ void init_nemo() {
   spikech(320);
 
 
-  if (FILE_IN) {
+  if (FILE_IN && ! NEMO_OS_MODE) {
     tw_printf(TW_LOC,"File input starting.");
     // Init File Input Handles
     if (g_tw_mynode==0) {

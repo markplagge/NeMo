@@ -11,8 +11,8 @@
 #include "../globals.h"
 #include "tn_neuron_struct.h"
 
-#include "../libs/fcfs/src/simulated_process.h"
-#include <stdlib.h>
+#include "../libs/fcfs/include/fcfs_logic_system.h"
+#include <cstdlib>
 constexpr int spike_ndims=2;
 enum class FCFSMessageType{
     WAITING_PROCESS_NUM_CORES,
@@ -42,9 +42,7 @@ struct FCFSCoreState{
     /** How long to check on process Q? */
     int process_tick_time;
     tw_stime  last_active_time;
-    proc_q_list * waiting_q;
-    proc_q_list * running_q;
-    proc_q_list * done_q;
+    neuro_os::sim_proc::SimProcessQueue process_queue;
     tn_neuron_state *inner_core_array[];
     };
 //

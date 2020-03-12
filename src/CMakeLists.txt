@@ -110,6 +110,12 @@ INCLUDE_DIRECTORIES(
         ${MPI_INCLUDE_PATH}
         ${CMAKE_CURRENT_BINARY_DIR})
 #generated config files:
+if(NeMo_OS_Enabled)
+    set(NOS_MODE 1)
+else()
+    set(NOS_MODE 0)
+endif()
+
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/nemo_config.h.in ${CMAKE_CURRENT_BINARY_DIR}/nemo_config.h @ONLY)
 SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/nemo_config.h.in PROPERTIES GENERATED FALSE)
 SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_BINARY_DIR}/nemo_config.h PROPERTIES GENERATED TRUE)
@@ -211,8 +217,12 @@ if(NeMo_OS_Enabled)
     message("----------- Enabling neuro os extensions -----------")
     target_link_libraries(NeMo fcfs_logic_system neuro_os_config)
     target_include_directories(NeMo PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/fcfs/include)
+    configure_file(../configs/fcfs_base.json ${CMAKE_BINARY_DIR}/configs/fcfs_base.json COPYONLY)
+    configure_file(../configs/fcfs_program_set.json ${CMAKE_BINARY_DIR}/configs/fcfs_program_set.json COPYONLY)
+
     #target_compile_definitions(NeMo PUBLIC NEMO_OS_MODE 1)
 else()
+
     #target_compile_definitions(NeMo PUBLIC NEMO_OS_MODE 0)
 endif()
 

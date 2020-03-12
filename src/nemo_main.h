@@ -5,7 +5,7 @@
 #ifndef NEMO_NEMO_MAIN_H
 #define NEMO_NEMO_MAIN_H
 
-#define EXTERN
+#define EXTERN$
 #include "globals.h"
 #undef EXTERN
 #include <stdio.h>
