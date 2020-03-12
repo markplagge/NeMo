@@ -17,11 +17,11 @@
 #include <stdbool.h>
 #include <limits.h>
 #include <math.h>
-#ifdef __cplusplus
-#include "nemo_config.h"
-#else
-#include <nemo_config.h>
-#endif
+    #ifdef __cplusplus
+        #include "nemo_config.h"
+    #else
+        #include <nemo_config.h>
+    #endif
 #include "ross.h"
 
 /** @defgroup tempConfig Temporary configuration globals
@@ -279,7 +279,9 @@ typedef struct NeuronMembraneRecord {
 #endif //NEMO_GLOBALS_H
 #ifndef EXTERN
 #define EXT extern
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 /**
  * \defgroup Globals Global Variables
  * @{
@@ -408,6 +410,8 @@ EXT char NEMO_SPIKE_FILE_PATH[512];
 EXT bool NEMO_MODEL_IS_TN_JSON;
 EXT bool NEMO_MODEL_IS_BINARY;
 /** @} */
-
+#ifdef __cplusplus
+}
+#endif
 #endif
 

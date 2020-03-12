@@ -6,7 +6,7 @@
 
 
 #include <iostream>
-
+#include <fstream>
 #include "libs/neuro_os_config/include/neuro_os_config.h"
 
 #include <ross.h>
@@ -15,18 +15,18 @@
 #include "neuro/fcfs_core.hpp"
 //#include "mapping.h"
 
-#include "../libs/model_reader/include/tn_parser.hh"
-//extern "C" {
-//#include "IO/output.h"
-//}
 
-
+#include "nemo_cpp_interfaces.h"
+#include "mapping.h"
+#include "./neuro/axon.h"
+#include "./neuro/synapse.h"
+#include "./neuro/tn_neuron.h"
 
 //#include "fcfs_logic_system.h"
 //#include "neruo/fcfs_core.h"
 bool DO_RANDOM_PROCESSES = true;
 char NEURO_OS_CONFIG_FILE_PATH[512] = {'\0'};
-size_type LPS_PER_PE;
+extern "C" size_type LPS_PER_PE;
 
 const tw_optdef app_opt[] = {
         TWOPT_GROUP("Simulated Process Mode"),
@@ -133,8 +133,6 @@ namespace neuro_os {
         g_tw_lp_typemap = neuro_os_lp_typemapper;
         g_tw_events_per_pe = NEURONS_IN_CORE * AXONS_IN_CORE * 128;
         LPS_PER_PE = g_tw_nlp / g_tw_npe;
-        initOutFiles();
-        initDataStructures(g_tw_nlp);
         NUM_CHIPS_IN_SIM = 1;
         CHIPS_PER_RANK = 1;
     }
@@ -151,8 +149,8 @@ int nemo_os_main(int argc, char *argv[]){
         fileloc = std::string(NEURO_OS_CONFIG_FILE_PATH);
     }
     std::cout << "Neuro OS Testing\n";
-    std::ifstream i(fileloc);
-    json j;
+    std::ifstream i(fileloc.c_str());
+    nlohmann::json j;
     i >> j;
     auto neuro_os_config = j.get<config::neuro_os_configuration>();
     config::global_neuro_config = std::make_unique<config::neuro_os_configuration>(neuro_os_config);

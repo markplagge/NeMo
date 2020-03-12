@@ -2,7 +2,7 @@
 // Created by Mark Plagge on 5/25/16.
 //
 #include "nemo_config.h"
-
+#include "nemo_cpp_interfaces.h"
 
 
 #include "nemo_main.h"
@@ -559,3 +559,10 @@ int main(int argc, char *argv[]) {
   tw_end();
 }
 
+/** configure nemo from the nemo_os code
+ * function takes a neuro_os::config::neuro_os_configuration
+ * void pointer, then uses that to set global C variables.
+ */
+ void configure_from_nemo_os(struct nemo_global_struct * nemo_os_settings){
+     
+ }
