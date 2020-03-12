@@ -15,8 +15,9 @@
 #include "neuro/fcfs_core.hpp"
 //#include "mapping.h"
 
-
+extern "C" {
 #include "nemo_cpp_interfaces.h"
+}
 #include "mapping.h"
 #include "./neuro/axon.h"
 #include "./neuro/synapse.h"
@@ -117,24 +118,32 @@ namespace neuro_os {
         using config::global_neuro_config;
         FILE_OUT = true;
         GRID_ENABLE = false;
-        IS_SAT_NET = false;
+        IS_SAT_NET = true;
         CORES_IN_CHIP = 1;
-        CORES_PER_LAYER = CORES_IN_SIM;
-        SIM_SIZE = global_neuro_config->num_chips_in_sim();
 
+        CORES_IN_SIM = global_neuro_config->num_neuro_cores;
+
+        nemo_global_struct * global_opts = new(nemo_global_struct);
+        configure_from_nemo_os(global_opts);
+        delete(global_opts);
 
         //CORE_SIZE = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
         auto CS = SYNAPSES_IN_CORE + NEURONS_IN_CORE + AXONS_IN_CORE;
         SIM_SIZE = CS * CORES_IN_SIM;
-        tw_printf(TW_LOC, "Cores in sim: %i", CORES_IN_SIM);
+        tw_printf(TW_LOC, "Cores in sim: %i\n", CORES_IN_SIM);
+
+        NUM_CHIPS_IN_SIM = 1;
+        CHIPS_PER_RANK = 1;
+
         g_tw_nlp = (SIM_SIZE / tw_nnodes()) + 1;
         g_tw_lookahead = 0.001;
         g_tw_lp_types = nos_model_lps;
         g_tw_lp_typemap = neuro_os_lp_typemapper;
         g_tw_events_per_pe = NEURONS_IN_CORE * AXONS_IN_CORE * 128;
         LPS_PER_PE = g_tw_nlp / g_tw_npe;
-        NUM_CHIPS_IN_SIM = 1;
-        CHIPS_PER_RANK = 1;
+
+        /// Base NEMO is configured
+        displayModelSettings();
     }
 
 }
@@ -155,6 +164,9 @@ int nemo_os_main(int argc, char *argv[]){
     auto neuro_os_config = j.get<config::neuro_os_configuration>();
     config::global_neuro_config = std::make_unique<config::neuro_os_configuration>(neuro_os_config);
     init_nemo_os();
+    tw_init(&argc, &argv);
+    tw_define_lps(LPS_PER_PE,sizeof(messageData));
+    tw_lp_setup_types();
 
     return 0;
 }

@@ -1,1 +1,8 @@
-{"run_type":"fcfs","chips_per_rank":0,"cores_in_chip":4096,"num_neuro_cores":0,"save_spike_events":false,"stats_file":"./stats_out.csv"}
+{"run_type":"fcfs",
+  "chips_per_rank":0,
+  "cores_in_chip":4096,
+  "num_neuro_cores":4096,
+  "save_spike_events":true,
+  "stats_file":"./stats_out.csv",
+  "sim_procs": [{"spike_file": "/Users/markplagge/dev/neuro_os/NeMo/test_models/test_core_0_spike.sqlite.db", "model": "/Users/markplagge/dev/neuro_os/NeMo/test_models/th_sm.json"}, {"spike_file": "/Users/markplagge/dev/neuro_os/NeMo/test_models/test_core_0_spike.sqlite.db",
+    "model": "/Users/markplagge/dev/neuro_os/NeMo/test_models/th_sm.json"}]}

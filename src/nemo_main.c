@@ -564,5 +564,5 @@ int main(int argc, char *argv[]) {
  * void pointer, then uses that to set global C variables.
  */
  void configure_from_nemo_os(struct nemo_global_struct * nemo_os_settings){
-     
+     init_nemo();
  }

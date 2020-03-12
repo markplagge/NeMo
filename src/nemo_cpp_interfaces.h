@@ -34,5 +34,5 @@ struct nemo_global_struct{
 
 };
 void configure_from_nemo_os(struct nemo_global_struct * nemo_os_settings);
-
+void displayModelSettings();
 #endif //SUPERNEMO_NEMO_CPP_INTERFACES_H
