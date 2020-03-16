@@ -29,7 +29,7 @@
  *	or compile-time option 
  * @{ */
 
-#define SAVE_NEURON_STATS 1
+#define SAVE_NEURON_STATS 0
 
 /**@}*/
 /**
@@ -159,7 +159,9 @@ enum evtType {
   NEURON_OUT, //!< Message originates from a neuron, and is going to an axion.
   NEURON_HEARTBEAT, //!< Neuron heartbeat messages - for big clock syncronization.
   NEURON_SETUP, //!< Message that contains a neuron's setup information for the synapse - connectivity info
-  GEN_HEARTBEAT //!< Signal generator messages -- used to simulate input for benchmarking.
+  GEN_HEARTBEAT, //!< Signal generator messages -- used to simulate input for benchmarking.
+  NEURO_OS_HEARTBEAT,
+  NEURO_OS_STATE_CHANGE
 };
 enum lpTypeVals {
   AXON = 0,
@@ -194,6 +196,46 @@ typedef enum LayerTypes {
 } layerTypes;
 /**@} */
 
+struct new_neuron {
+    tw_lpid outputGID;
+    thresh_type posThreshold;
+    thresh_type negThreshold;
+    short lambda;
+    short resetMode;
+    short encodedResetVoltage;
+    int sigma_l;
+    bool epsilon;
+    bool c;
+    bool kappa;
+    bool isActiveNeuron;
+    int axonTypes[AXONS_IN_CORE];
+    short synapticWeight[NUM_NEURON_WEIGHTS];
+    bool synapticConnectivity[AXONS_IN_CORE];
+    bool weightSelection[NUM_NEURON_WEIGHTS];
+    
+};
+
+typedef enum FCFSMessageType {
+    FROM_ENCODER,
+    FROM_NODE,
+    FROM_ENSEMBLE,
+    TO_ENCODER,
+    TO_NODE,
+    TO_ENSEMBLE,
+    WAITING_PROCESS_NUM_CORES,
+    RUNNING_PROCESSES_SIZE,
+    AVAIL_CORES,
+    TOTAL_CORES,
+    CAN_ADD_PROCESS,
+};
+struct fcfs_communication {
+    enum FCFSMessageType message_type;
+    unsigned long source_neuron;
+    int encoded_value;
+    double spike_values[1024];
+
+};
+
 //Message Structure (Used Globally so placed here)
 typedef struct Ms {
   enum evtType eventType;
@@ -225,11 +267,18 @@ typedef struct Ms {
       uint32_t idp3;
     };
   };
+    #endif
   tw_lpid originGID;
   char originComponent;
+    union {
+        struct fcfs_communication fcfs_comm_data;
+        struct new_neuron new_neuron_data;
+    };
+    // NEURON CONFIG
+    
 
   //tw_stime msgCreationTime;
-#endif
+
 } messageData;
 /**@}*/
 

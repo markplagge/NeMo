@@ -24,7 +24,7 @@ set(FCFS_TEST_SRCS
 if(FCFS_ENABLE_UNIT_TESTS)
     set(CATCH_CONFIG_ENABLE_BENCHMARKING 1)
     add_compile_definitions(CATCH_CONFIG_ENABLE_BENCHMARKING)
-    add_subdirectory(lib/catch2)
+    #add_subdirectory(lib/catch2)
     set(CATCH_CONFIG_ENABLE_BENCHMARKING 1)
     add_executable(fcfs_tests ${FCFS_TEST_SRCS})
     target_link_libraries(fcfs_tests

@@ -126,6 +126,7 @@ set(model_srcs
 
         globals.h
         globals.c
+        nemo_os_globals.h singleton.h
         neuro/synapse.h
         neuro/synapse.c
 
@@ -184,11 +185,11 @@ ADD_SUBDIRECTORY(libs)
 
 #ADD_EXECUTABLE(NeMoOS ${nemo_os_srcs} nemo_main.h ${model_srcs})
 
-set(model_srcs ${model_srcs} ${nemo_os_srcs})
+set(model_srcs ${model_srcs} ${nemo_os_srcs} )
 
 
 ADD_EXECUTABLE(NeMo nemo_main.c nemo_main.h ${model_srcs} )
-
+add_library(NeMoLib nemo_main.c nemo_main.h ${model_srcs})
 
 
 
@@ -212,18 +213,39 @@ if(USE_MODEL_RDR)
 endif()
 #message("-------------lib ${ll}")
 TARGET_LINK_LIBRARIES(NeMo ${ll})
+target_link_libraries(NeMoLib PUBLIC ${ll})
+
 
 if(NeMo_OS_Enabled)
+    OPTION(NeMo_OS_ENABLE_UNIT_TESTS "Enable NeMo OS Unit testing" ON)
     message("----------- Enabling neuro os extensions -----------")
     target_link_libraries(NeMo fcfs_logic_system neuro_os_config)
+    target_link_libraries(NeMoLib PUBLIC fcfs_logic_system neuro_os_config)
     target_include_directories(NeMo PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/fcfs/include)
+    target_include_directories(NeMoLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/fcfs/include)
     configure_file(../configs/fcfs_base.json ${CMAKE_BINARY_DIR}/configs/fcfs_base.json COPYONLY)
     configure_file(../configs/fcfs_program_set.json ${CMAKE_BINARY_DIR}/configs/fcfs_program_set.json COPYONLY)
 
     #target_compile_definitions(NeMo PUBLIC NEMO_OS_MODE 1)
 else()
-
     #target_compile_definitions(NeMo PUBLIC NEMO_OS_MODE 0)
+endif()
+if(NeMo_OS_ENABLE_UNIT_TESTS)
+    set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/libs/fcfs/lib/catch2/contrib ${CMAKE_MODULE_PATH})
+    message("Enabling NeMo OS Testing")
+    add_executable(nemo_os_tests tests/test_nemo_os.cpp )
+    target_link_libraries(nemo_os_tests PUBLIC Catch2::Catch2 NeMoLib fcfs_logic_system neuro_os_config ${ll} )
+    #target_link_directories(nemo_os_tests )
+    target_include_directories(nemo_os_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/fcfs/include)
+    set_property(TARGET nemo_os_tests PROPERTY CXX_STANDARD 14)
+    include(CTest)
+    include(ParseAndAddCatchTests)
+    include(Catch)
+    set(CATCH_BUILD_TESTING OFF)
+    set(CATCH_INSTALL_DOCS OFF)
+    set(CATCH_INSTALL_HELPERS ON)
+    catch_discover_tests(nemo_os_tests)
+    ParseAndAddCatchTests(nemo_os_tests)
 endif()
 
 

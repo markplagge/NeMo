@@ -1,8 +1,11 @@
-{"run_type":"fcfs",
-  "chips_per_rank":0,
-  "cores_in_chip":4096,
-  "num_neuro_cores":4096,
+{"chips_per_rank":0,
+  "cores_in_chip":64,
+  "num_neuro_cores":64,
+  "proc_file":"/Users/plaggm/dev/neuro_os/NeMo/configs/fcfs_program_set.json",
+  "run_type":"fcfs",
   "save_spike_events":true,
-  "stats_file":"./stats_out.csv",
-  "sim_procs": [{"spike_file": "/Users/markplagge/dev/neuro_os/NeMo/test_models/test_core_0_spike.sqlite.db", "model": "/Users/markplagge/dev/neuro_os/NeMo/test_models/th_sm.json"}, {"spike_file": "/Users/markplagge/dev/neuro_os/NeMo/test_models/test_core_0_spike.sqlite.db",
-    "model": "/Users/markplagge/dev/neuro_os/NeMo/test_models/th_sm.json"}]}
+  "sim_procs":[{"id":0,"model":"/Users/markplagge/dev/neuro_os/NeMo/test_models/th_sm.json",
+              "spike_file":"/Users/plaggm/dev/neuro_os/NeMo/configs/fcfs_program_set.json"},
+              {"id":1,"model":"/Users/markplagge/dev/neuro_os/NeMo/test_models/th_sm.json",
+              "spike_file":"/Users/plaggm/dev/neuro_os/NeMo/configs/fcfs_program_set.json"}],
+  "stats_file":"./stats_out.csv"}

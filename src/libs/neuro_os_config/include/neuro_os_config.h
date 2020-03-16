@@ -8,7 +8,7 @@
 namespace neuro_os {
     namespace config {
         class neuro_os_configuration;
-        std::unique_ptr<neuro_os_configuration> global_neuro_config;
+
     }
 }
 #endif //SUPERNEMO_NEURO_OS_CONFIG_H

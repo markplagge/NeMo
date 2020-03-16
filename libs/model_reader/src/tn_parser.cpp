@@ -853,6 +853,7 @@ int convert_and_add_value(int *&vals, string val) {
         *vals = it;
         vals++;
     }
+    return 0;
 }
 int convert_and_add_value(long *&vals, string val) {
     vector<int> valv = convert_tn_arr(val);
@@ -860,16 +861,19 @@ int convert_and_add_value(long *&vals, string val) {
         *vals = it;
         vals++;
     }
+    return 0;
 }
 
 
 int convert_and_add_value(int *&vals, int val) {
     *vals = val;
     vals++;
+    return 0;
 }
 int convert_and_add_value(long *&vals, long val) {
     *vals = val;
     vals++;
+    return 0;
     }
 void convert_and_add_value(int *&vals, const Value &val) {
 
@@ -1328,7 +1332,7 @@ TN_Output::TN_Output(string filename, TN_Main model, unsigned char output_mode) 
 int TN_Output::write_csv() {
     int result = 0;
     ofstream file(out_fn_csv, std::ostream::out);
-
+    return result;
 }
 
 #ifdef  USE_OMP
@@ -1472,7 +1476,7 @@ int TN_Output::write_bin_split() {
             //     output_files[]
         }
     }
-
+    return 0;
 }
 
 int TN_Output::write_bin() {
@@ -1539,7 +1543,7 @@ int TN_Output::write_data() {
     if (output_mode & TN_OUT_PY) {
         cout << "Will output Python. \n";
     }
-
+    return 0;
 }
 
 /**

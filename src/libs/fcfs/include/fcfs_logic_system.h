@@ -24,11 +24,11 @@ namespace neuro_os {
 //simulated_processor defs
 
         template<class T>
-        class SimProcess;
+        struct SimProcess;
 
-        class SimProcessQueue;
+        struct SimProcessQueue;
 
-        class SimProcessSerial;
+        struct SimProcessSerial;
     }
 
 }

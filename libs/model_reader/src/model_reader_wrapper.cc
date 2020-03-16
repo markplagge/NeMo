@@ -46,6 +46,7 @@ void load_and_init_json_model(char *filename, int node) {
 
 int serial_load_json(char *json_filename) {
   int result = 0;
+    return result;
 
 }
 

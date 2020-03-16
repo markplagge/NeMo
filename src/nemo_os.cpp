@@ -22,13 +22,14 @@ extern "C" {
 #include "./neuro/axon.h"
 #include "./neuro/synapse.h"
 #include "./neuro/tn_neuron.h"
-
+#include "../libs/model_reader/include/tn_parser.hh"
+#include "./nemo_os_globals.h"
 //#include "fcfs_logic_system.h"
 //#include "neruo/fcfs_core.h"
 bool DO_RANDOM_PROCESSES = true;
 char NEURO_OS_CONFIG_FILE_PATH[512] = {'\0'};
 extern "C" size_type LPS_PER_PE;
-
+//std::unique_ptr<neuro_os::config::neuro_os_configuration> global_neuro_config;
 const tw_optdef app_opt[] = {
         TWOPT_GROUP("Simulated Process Mode"),
         TWOPT_FLAG("rproc", DO_RANDOM_PROCESSES,"Randomized Processes?"),
@@ -41,7 +42,7 @@ namespace neuro_os {
     bool is_gid_os(tw_lpid gid){
         //512 cores, 512 neurons = (512 * (512 * 2 + 1)) LPs for TN
         auto num_lps = g_tw_nlp * g_tw_npe;
-        return gid == num_lps;
+        return gid == num_lps - 1;
     }
 
     tw_peid neuro_os_mapping(tw_lpid gid){
@@ -115,13 +116,13 @@ namespace neuro_os {
 
     }
     void init_nemo_os(){
-        using config::global_neuro_config;
-        FILE_OUT = true;
+        using neuro_os::GlobalConfig;
+        FILE_OUT = false;
         GRID_ENABLE = false;
         IS_SAT_NET = true;
         CORES_IN_CHIP = 1;
 
-        CORES_IN_SIM = global_neuro_config->num_neuro_cores;
+        CORES_IN_SIM =GlobalConfig::get_instance()->num_neuro_cores;
 
         nemo_global_struct * global_opts = new(nemo_global_struct);
         configure_from_nemo_os(global_opts);
@@ -157,16 +158,23 @@ int nemo_os_main(int argc, char *argv[]){
     }else {
         fileloc = std::string(NEURO_OS_CONFIG_FILE_PATH);
     }
-    std::cout << "Neuro OS Testing\n";
+
     std::ifstream i(fileloc.c_str());
     nlohmann::json j;
     i >> j;
     auto neuro_os_config = j.get<config::neuro_os_configuration>();
-    config::global_neuro_config = std::make_unique<config::neuro_os_configuration>(neuro_os_config);
+    auto cfg = config::neuro_os_configuration(neuro_os_config);
+    GlobalConfig::get_instance(cfg);
+
+
     init_nemo_os();
     tw_init(&argc, &argv);
     tw_define_lps(LPS_PER_PE,sizeof(messageData));
     tw_lp_setup_types();
-
+    tw_printf(TW_LOC, "Setup LP types...");
+    if (g_tw_mynode==0) {
+        displayModelSettings();
+    }
+    tw_run();
     return 0;
 }

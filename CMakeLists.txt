@@ -81,7 +81,7 @@ else()
             ${LuaD}/src
             ${lua_BINARY_DIR})
 endif()
-
+ADD_SUBDIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/libs/Catch2)
 ADD_SUBDIRECTORY(${ND})
 add_subdirectory(${MLD_D})
 #find_package(MPI REQUIRED)

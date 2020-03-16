@@ -3,7 +3,7 @@
 //
 
 #include "tn_neuron.h"
-
+#include "../layer_map/layer_map_lib.h"
 /** Testing Values @{*/
 #ifdef NET_IO_DEBUG
 //#include "../tests/nemo_tests.h"
@@ -1260,9 +1260,42 @@ void TN_init(tn_neuron_state *s, tw_lp *lp) {
   }
 
 }
-
+/** NeuroOS State Swap */
+void TN_set_new_state(tn_neuron_state *s, tw_bf *CV, messageData *m, tw_lp *lp){
+    s->isActiveNeuron = m->new_neuron_data.isActiveNeuron;
+    if (s->isActiveNeuron){
+        s->c = m->new_neuron_data.c;
+        s->outputGID = m->new_neuron_data.outputGID;
+        s->posThreshold = m->new_neuron_data.posThreshold;
+        s->negThreshold = m->new_neuron_data.negThreshold;
+        s->lambda = m->new_neuron_data.lambda;
+        s->resetMode = m->new_neuron_data.resetMode;
+        s->encodedResetVoltage = m->new_neuron_data.encodedResetVoltage;
+        s->sigma_l = m->new_neuron_data.sigma_l;
+        s->epsilon = m->new_neuron_data.epsilon;
+        s->kappa = m->new_neuron_data.kappa;
+        
+        for(int i = 0; i < AXONS_IN_CORE; i ++ ){
+            s->axonTypes[i] = m->new_neuron_data.axonTypes[i];
+            s->synapticConnectivity[i] = m->new_neuron_data.synapticConnectivity[i];
+            if (i < 4){
+                s->synapticWeight[i] = m->new_neuron_data.synapticWeight[i];
+                s->weightSelection[i] = m->new_neuron_data.weightSelection[i];
+            }
+            
+        }
+    }
+    
+}
 void TN_forward_event(tn_neuron_state *s, tw_bf *CV, messageData *m,
                       tw_lp *lp) {
+    static int state_change_print = 0;
+    
+    if(m->eventType == NEURO_OS_STATE_CHANGE){
+        if(state_change_print == 0)
+            tw_printf(TW_LOC, "Neuron change state\n" );
+        TN_set_new_state(s, CV, m, lp);
+    }
   long start_count = lp->rng->count;
   long ld = s->myLocalID;
   long cd = s->myCoreID;

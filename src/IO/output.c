@@ -71,6 +71,7 @@ void *outputWorker() {
       }
     }
   }
+    return NULL;
 }
 /**
  * initializes threads and sets up queue for file io

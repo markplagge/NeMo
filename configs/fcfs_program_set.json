@@ -1,1 +1,6 @@
-{"process_id"}
+{"current_time":0.0,
+  "waiting": [{"PID": 0, "needed_cores": 12, "needed_run_time": 32,"scheduled_start_time": 0,
+            "total_wait_time": 0, "total_run_time": 0, "current_state": 0, "neuron_state_system": 0}],
+  "pre_waiting": [{"PID": 1, "needed_cores": 12, "needed_run_time": 32,"scheduled_start_time": 10,
+            "total_wait_time": 0, "total_run_time": 0, "current_state": 0, "neuron_state_system": 1}]
+}

@@ -11,7 +11,7 @@
 #include <string>
 namespace neuro_os { namespace sim_proc {
 
-    class SimProcessQueue {
+    struct SimProcessQueue {
         std::deque<SimProcess<int>> waiting_processes;
         std::vector<SimProcess<int>> running_processes;
         std::deque<SimProcess<int>> pre_waiting_processes;

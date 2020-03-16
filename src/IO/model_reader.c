@@ -83,7 +83,7 @@ bool loadNeuronFromBIN(id_type neuronCore, id_type neuronLocal, tn_neuron_state 
 }
 
 void closeBinaryModelFile(){
-    static data_free = 0;
+    static int data_free = 0;
     if (bin_file_open){
         fclose(bin_file);
     }
