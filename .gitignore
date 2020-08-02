@@ -122,3 +122,5 @@ scripts/spike_analysis/spike_analysis\.egg-info/
 scripts/spike_analysis/spike_accuracy/test_data/
 
 scripts/spike_analysis/dask-worker-space/
+
+scripts/spike_analysis/spike_accuracy/test_data.tar.xz
