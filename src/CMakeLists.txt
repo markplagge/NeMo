@@ -147,7 +147,7 @@ set(model_srcs
         IO/spike_db_reader.c
         neuro/tn_neuron_struct.h
 
-        nemo_main.h tests/tomacs_exp.c tests/tomacs_exp.h lib/itrlve.h lib/itrlve.c lib/rqueue.c lib/rqueue.h lib/atomic_defs.h IO/model_reader_js.c lib/kdtree/kdtree.c lib/kdtree/kdtree.h)
+        nemo_main.h tests/tomacs_exp.c tests/tomacs_exp.h lib/itrlve.h lib/itrlve.c lib/rqueue.c lib/rqueue.h lib/atomic_defs.h IO/model_reader_js.c lib/kdtree/kdtree.c lib/kdtree/kdtree.h IO/energy_stats.c)
 
 #REMOVED:
 #IO/spike_reader.c

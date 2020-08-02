@@ -73,9 +73,9 @@ void debug_add_neuron_to_json(tn_neuron_state *s, tw_lp *lp){
   obj.AddMember("gid",lp->gid,allocator);
   obj.AddMember("core",s->myCoreID,allocator);
   obj.AddMember("neuronID",s->myLocalID,allocator);
-  obj.AddMember("destCore",s->outputCoreDest,allocator);
-  obj.AddMember("destNeuron",s->outputNeuronDest,allocator);
-  obj.AddMember("destGID",s->outputGID,allocator);
+  obj.AddMember("destCore",(int64_t )s->outputCoreDest,allocator);
+  obj.AddMember("destNeuron",(int64_t )s->outputNeuronDest,allocator);
+  obj.AddMember("destGID",(int64_t )s->outputGID,allocator);
 
   for(int i = 0; i < AXONS_IN_CORE; i ++){
   //  char axname[512] = {'\0'};

@@ -66,8 +66,8 @@ else()
     message("No SIMD enabled for RJSON")
 endif()
 message("Checking path and local. Path: ${RJSON_PATH}")
-find_package(RapidJSON PATHS RJSON_PATH)
-find_package(RapidJSON PATHS RJSON_PATH CONFIG)
+#find_package(RapidJSON PATHS RJSON_PATH)
+#find_package(RapidJSON PATHS RJSON_PATH CONFIG)
 #find_package(rapidjson)
 if(RapidJSON_FOUND)
     message("Found RapidJSON through macro")
@@ -75,7 +75,7 @@ if(RapidJSON_FOUND)
     message("RJSON custom flags: ${RapidJSON_CXX_FLAGS}")
     set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${RapidJSON_CXX_FLAGS})
 else()
-    set(RapidJSON_INCLUDE_DIRS extern)
+    set(RapidJSON_INCLUDE_DIRS extern/rapidjson)
     message("Did not find rapidjson - using internal build")
 endif()
 
@@ -96,8 +96,9 @@ ADD_EXECUTABLE(ModelReaderBin ${reader_srcs})
 
 target_include_directories(ModelReaderLib PUBLIC
         ${RapidJSON_INCLUDE_DIRS}
-
+        ./extern/rapidjson
         )
+include_directories(./extern/rapidjson ./extern ./extern/json/include/nlohmann)
 set_target_properties(ModelReaderBin
         PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"

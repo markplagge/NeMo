@@ -1259,6 +1259,16 @@ void TN_init(tn_neuron_state *s, tw_lp *lp) {
 //#endif
   }
 
+  s->energy_stat.spike_count = 0;
+  s->energy_stat.rng_count = 0;
+  s->energy_stat.sops_count = 0;
+  s->energy_stat.output_count = 0;
+  s->energy_stat.dest_core = s->outputCoreDest;
+  s->energy_stat.dest_neuron = s->outputNeuronDest;
+  s->energy_stat.my_neuron = s->myLocalID;
+  s->energy_stat.my_core = s->myCoreID;
+
+
 }
 
 void TN_forward_event(tn_neuron_state *s, tw_bf *CV, messageData *m,
@@ -1276,12 +1286,19 @@ void TN_forward_event(tn_neuron_state *s, tw_bf *CV, messageData *m,
 // This is the primary entry point to the neuron behavior.
 // Add metrics and stats around this function.
   bool fired = TNReceiveMessage(s, m, lp, CV);
+
   s->SOPSCount++;
+  s->energy_stat.sops_count ++;
+  if(fired){
+    s->energy_stat.spike_count ++;
+    s->energy_stat.output_count ++;
+  }
   /**@todo save message trace here: */
 
   CV->c0 = fired;  // save fired information for reverse computation.
 
   m->rndCallCount = lp->rng->count - start_count;
+  s->energy_stat.rng_count += m->rndCallCount;
 
 }
 
@@ -1295,7 +1312,11 @@ void TN_reverse_event(tn_neuron_state *s, tw_bf *CV, messageData *m,
 
   TNReceiveReverseMessage(s, m, lp, CV);
   s->SOPSCount--;
-
+  s->energy_stat.sops_count --;
+  if(CV->c0){
+    s->energy_stat.spike_count --;
+    s->energy_stat.output_count --;
+  }
   while (count--)
     tw_rand_reverse_unif(lp->rng);
 }
@@ -1383,6 +1404,10 @@ void TN_commit(tn_neuron_state *s, tw_bf *cv, messageData *m, tw_lp *lp) {
     setrnd(lp);
     saveSendMessage(s->myCoreID, getCoreFromGID(s->outputGID), tw_now(lp), 0, dumpi_out);
   }
+  //save energy stats:
+  int my_gid = g_tw_mynode;
+  save_energy_stats(&s->energy_stat,my_gid);
+
 #ifdef DEBUG
   // Debug - special log case for neuron 0
   if (!debug_core_open) {
