@@ -9,6 +9,7 @@
 
 #ifndef SUPERNEMO_MODEL_READER_WRAPPER_H
 #define SUPERNEMO_MODEL_READER_WRAPPER_H
+#pragma once
 #include <stdbool.h>
 #ifdef __cplusplus
 extern "C" {
