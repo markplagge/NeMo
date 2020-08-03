@@ -36,7 +36,7 @@
 #include <stdio.h>
 #include "../../../src/globals.h"
 #include "../../../src/neuro/tn_neuron_struct.h"
-#include "../extern/tqdm.h"
+//#include "../extern/tqdm.h"
 #include <iomanip>
 
 #ifdef USE_OMP
