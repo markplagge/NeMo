@@ -4,7 +4,7 @@
 
 
 #include "../include/tn_parser.hh"
-#include "../include/model_reader_wrapper.h"
+
 #include <rapidjson/filewritestream.h>
 
 TN_Main c_model;

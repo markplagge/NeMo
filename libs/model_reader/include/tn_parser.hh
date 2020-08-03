@@ -35,7 +35,7 @@
 #include "../src/utils.hh"
 #include <regex>
 #include "../extern/json.hpp"
-#include <stdio.h>
+#include <cstdio>
 #include "../../../src/globals.h"
 #include "../../../src/neuro/tn_neuron_struct.h"
 //#include "../extern/tqdm.h"

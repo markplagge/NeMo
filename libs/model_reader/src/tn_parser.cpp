@@ -493,7 +493,7 @@ void TN_State_Wrapper::init_empty() {
       tn->synapticWeight[j] = -1;
       tn->weightSelection[j] = false;
 
-    
+
   }
 
 };
