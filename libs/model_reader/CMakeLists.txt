@@ -1,6 +1,6 @@
 project(ModelReader)
 include(ExternalProject)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(RJSON_PATH CACHE PATH "./extern/rapidjson" )
 set(reader_srcs
         main.cpp tests/test_data.hh extern/CLI11.hh extern/rang.hh)
@@ -9,7 +9,7 @@ set(lib_srcs
         src/tn_parser.cpp
        src/utils.cpp src/utils.hh
         extern/json.hpp
-        extern/tqdm.h
+        
         include/model_reader_wrapper.h
         src/model_reader_wrapper.cc)
 
