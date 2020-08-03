@@ -479,6 +479,24 @@ json TN_State_Wrapper::generate_json(json j) {
     //ret_v = j.dump();
     return j;
 }
+TN_State_Wrapper::TN_State_Wrapper() {
+    tn = (tn_neuron_state *) calloc(sizeof(tn_neuron_state),1);
+    isValid = true;
+  }
+void TN_State_Wrapper::init_empty() {
+  for (int i = 0; i < AXONS_IN_CORE; i++) {
+    tn->axonTypes[i] = -1;
+    tn->synapticConnectivity[i] = false;
+  }
+
+  for (int j = 0; j < NUM_NEURON_WEIGHTS; ++j) {
+      tn->synapticWeight[j] = -1;
+      tn->weightSelection[j] = false;
+
+    
+  }
+
+};
 
 TN_State_Wrapper TN_Neuron_Type::new_neuron_state(TN_Crossbar_Type crossbar,
                                                   int output_core,
