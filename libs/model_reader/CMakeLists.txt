@@ -69,9 +69,10 @@ message("Checking path and local. Path: ${RJSON_PATH}")
 #find_package(RapidJSON PATHS RJSON_PATH)
 #find_package(RapidJSON PATHS RJSON_PATH CONFIG)
 #find_package(rapidjson)
+find_package(rapidjson)
 if(RapidJSON_FOUND)
     message("Found RapidJSON through macro")
-    message("RapidJSON Path: ${RapidJSON_INCLUDE_DIRS}")
+    message("RapidJSON Path: ${RapidJSON_INCLUDE_DIR} ${RapidJSON_INCLUDE_DIRS} ${RAPIDJSON_INCLUDE_DIRS}")
     message("RJSON custom flags: ${RapidJSON_CXX_FLAGS}")
     set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${RapidJSON_CXX_FLAGS})
 else()
@@ -95,6 +96,9 @@ ADD_LIBRARY(ModelReaderLib ${lib_srcs})
 ADD_EXECUTABLE(ModelReaderBin ${reader_srcs})
 
 target_include_directories(ModelReaderLib PUBLIC
+        ${RapidJSON_INCLUDE_DIR}
+	${RAPIDJSON_INCLUDE_DIRS}
+	${RapidJSON_INCLUDE_DIRS}
         ${RapidJSON_INCLUDE_DIRS}
         ./extern/rapidjson
         )

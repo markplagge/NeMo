@@ -9,6 +9,7 @@
 //#define RAPIDJSON_SSE2 1
 //#endif
 //#endif
+
 #pragma once
 #ifndef SUPERNEMO_TN_PARSER_HH
 #define SUPERNEMO_TN_PARSER_HH
