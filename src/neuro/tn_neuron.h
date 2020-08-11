@@ -4,7 +4,7 @@
 
 #ifndef __NEMO_TN_NEURON_H__
 #define __NEMO_TN_NEURON_H__
-
+#include "./tn_neuron_struct.h"
 #include <math.h>
 #include <assert.h>
 #include <search.h>
@@ -15,7 +15,7 @@
 #include "../tests/tomacs_exp.h"
 #include "../nemo_config.h"
 #include "../IO/output.h"
-#include "./tn_neuron_struct.h"
+
 #define Vj ns->membranePotential
 
 #ifdef NET_IO_DEBUG
@@ -25,7 +25,7 @@
 /** DUMPI FILE */
 
 
-
+typedef struct TN_MODEL tn_neuron_state;
 void tn_create_neuron_encoded_rv(
     id_type coreID, id_type nID, bool synapticConnectivity[NEURONS_IN_CORE],
     short G_i[NEURONS_IN_CORE], short sigma[4], short S[4], bool b[4],

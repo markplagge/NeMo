@@ -479,6 +479,24 @@ json TN_State_Wrapper::generate_json(json j) {
     //ret_v = j.dump();
     return j;
 }
+TN_State_Wrapper::TN_State_Wrapper() {
+    tn = (tn_neuron_state *) calloc(sizeof(tn_neuron_state),1);
+    isValid = true;
+  }
+void TN_State_Wrapper::init_empty() {
+  for (int i = 0; i < AXONS_IN_CORE; i++) {
+    tn->axonTypes[i] = -1;
+    tn->synapticConnectivity[i] = false;
+  }
+
+  for (int j = 0; j < NUM_NEURON_WEIGHTS; ++j) {
+      tn->synapticWeight[j] = -1;
+      tn->weightSelection[j] = false;
+
+
+  }
+
+};
 
 TN_State_Wrapper TN_Neuron_Type::new_neuron_state(TN_Crossbar_Type crossbar,
                                                   int output_core,
@@ -1342,8 +1360,8 @@ json TN_Output::generate_json_mp(int start_core, int end_core) {
     json j_group;
     size_t steps_completed = 0;
     size_t total_steps = neurons.size();
-    tqdm bar;
-    bar.set_label("Generating JSON file");
+//    tqdm bar;
+//    bar.set_label("Generating JSON file");
 //parallel code
 #pragma omp parallel
     {
@@ -1364,7 +1382,7 @@ json TN_Output::generate_json_mp(int start_core, int end_core) {
             steps_completed++;
 
             if (omp_get_thread_num() == 0) {
-                bar.progress(steps_completed, total_steps);
+              //  bar.progress(steps_completed, total_steps);
             };
 
         }
@@ -1403,10 +1421,10 @@ json TN_Output::generate_json(int start_core, int end_core) {
         return main_json;
     }
     json j;
-    tqdm bar;
+//    tqdm bar;
     auto num = neurons.size();
     int count = 0;
-    bar.set_label("Generating JSON structure");
+ //   bar.set_label("Generating JSON structure");
     for (auto neuron_wrap : neurons) {
         if (start_core != end_core) {
             if (neuron_wrap.myCore >= start_core && neuron_wrap.myCore <= end_core) {
@@ -1416,7 +1434,7 @@ json TN_Output::generate_json(int start_core, int end_core) {
             j = neuron_wrap.generate_json(j);
         }
         count++;
-        bar.progress(count, num);
+ //       bar.progress(count, num);
 
     }
     json_init = 1;

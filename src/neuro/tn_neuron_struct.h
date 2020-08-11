@@ -4,10 +4,15 @@
 
 #ifndef SUPERNEMO_TN_NEURON_STRUCT_H
 #define SUPERNEMO_TN_NEURON_STRUCT_H
+
+#include "../IO/IOStack.h"
+#include "../nemo_main.h"
 /**
  * TrueNorth LP Neuron Model struct
  */
 typedef struct TN_MODEL {
+  // big
+  tn_energy energy_stat;
   // 64
   tw_stime
       lastActiveTime;    /**< last time the neuron fired - used for calculating

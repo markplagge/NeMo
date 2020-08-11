@@ -6,18 +6,12 @@
 #include "../neuro/tn_neuron_struct.h"
 
 void loadNeuronFromJSON(id_type neuronCore, id_type neuronLocal, tn_neuron_state *n){
-  init_neuron_state(neuronCore,neuronLocal, n);
-  return;
-  tn_neuron_state *newState = get_neuron_state(neuronCore, neuronLocal);
-  free(n);
-  *n = *newState;
-  n->myCoreID = newState->myCoreID;
-
+  //init_neuron_state(neuronCore,neuronLocal, n);
 }
 
 void initJSON(char *jsonFilename){
 
-  load_and_init_json_model(jsonFilename,g_tw_mynode);
+  //load_and_init_json_model(jsonFilename,g_tw_mynode);
 }
 
 /**

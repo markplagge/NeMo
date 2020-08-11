@@ -212,15 +212,15 @@ void saveNeuronFireDebug(tw_stime timestamp, id_type core, id_type local, tw_lpi
  */
 
 void setFileNames() {
-  if (SAVE_SPIKE_EVTS || SAVE_OUTPUT_NEURON_EVTS) {
+  //if (SAVE_SPIKE_EVTS || SAVE_OUTPUT_NEURON_EVTS) {
     setNeuronNetFileName();
-  }
+  //}
 }
 
 void initOutFiles() {
   setFileNames();
   int tv = N_FIRE_BUFF_SIZE;
-  if (SAVE_SPIKE_EVTS || SAVE_OUTPUT_NEURON_EVTS) {
+  if (SAVE_SPIKE_EVTS || SAVE_OUTPUT_NEURON_EVTS || SAVE_NEURON_STATS) {
     if (BINARY_OUTPUT) {
       neuronFireBufferBIN = (neuronFireStruct *) tw_calloc(TW_LOC, "OUTPUT", tv, sizeof(neuronFireStruct));
       neuronFireFile = fopen(neuronRankFN, "wb");
@@ -246,8 +246,11 @@ void initOutFiles() {
 
 }
 void closeFiles() {
+  close_energy_stat_file();
   flushNeuron();
   fclose(neuronFireFile);
+
+
 //    MPI_File_close(neuronFireFileMPI);
   MPI_Barrier(MPI_COMM_WORLD); // wait for everyone to catch up.
   if (g_tw_mynode==0) {

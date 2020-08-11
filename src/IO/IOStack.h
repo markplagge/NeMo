@@ -16,7 +16,8 @@
 //#include "../lib/lauxlib.h"
 #include <lauxlib.h>
 #include <lualib.h>
-#include "../../libs/model_reader/include/model_reader_wrapper.h"
+//#include "../../libs/model_reader/include/model_reader_wrapper.h"
+//#include "../neuro/tn_neuron_struct.h"
 /** Macro wrappers for interleaving time/axonids */
 #define EXTIME(x) EXHIGH(x)
 #define EXAXON(x) EXLOW(x)
@@ -24,7 +25,7 @@
 uint64_t interleave(uint32_t time, uint32_t axid);
 
 /** External filename variables */
-
+typedef struct TN_MODEL tn_neuron_state;
 extern char *NEURON_FIRE_R_FN;
 
 #define SAVE_ALL_NEURON_PARAMS 1
@@ -57,7 +58,20 @@ struct tnCSV {
   char bv[NUM_NEURON_WEIGHTS];
   char params[128];
 };
+typedef struct TN_ENERGY{
+  stat_type rng_count;
+  stat_type sops_count;
+  stat_type output_count;
+  stat_type spike_count;
+  int my_core;
+  int my_neuron;
+  int dest_core;
+  int dest_neuron;
 
+}tn_energy;
+
+void close_energy_stat_file();
+void save_energy_stats(tn_energy *energy_data, int source_rank);
 
 /** @defgroup spin Spike Input Functions @{ */
 
@@ -238,10 +252,10 @@ void closeLua();
 
 /** @defgroup new_io New C++ backed IO stack functions */
 
-void loadNeuronFromJSON(id_type neuronCore, id_type neuronLocal,tn_neuron_state *n);
+void loadNeuronFromJSON(id_type neuronCore, id_type neuronLocal,
+                          tn_neuron_state *n);
 void initJSON(char *jsonFilename);
 void closeJSON();
-
 /**
  * for reading in TN neuron structs saved to file. Currently this binary system only handles TN LPs saved from
  * the JSON parser.

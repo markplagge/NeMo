@@ -9,7 +9,10 @@
 //#define RAPIDJSON_SSE2 1
 //#endif
 //#endif
-#include "rapidjson/document.h"
+
+#pragma once
+#ifndef SUPERNEMO_TN_PARSER_HH
+#define SUPERNEMO_TN_PARSER_HH
 #include <rapidjson/document.h>
 #include <rapidjson/prettywriter.h>
 #include <rapidjson/filereadstream.h>
@@ -33,10 +36,10 @@
 #include "../src/utils.hh"
 #include <regex>
 #include "../extern/json.hpp"
-#include <stdio.h>
+#include <cstdio>
 #include "../../../src/globals.h"
 #include "../../../src/neuro/tn_neuron_struct.h"
-#include "../extern/tqdm.h"
+//#include "../extern/tqdm.h"
 #include <iomanip>
 
 #ifdef USE_OMP
@@ -103,23 +106,12 @@ public:
   tn_neuron_state *getTn() {
     return tn;
   }
-  TN_State_Wrapper() {
-    tn = (tn_neuron_state *) calloc(sizeof(tn_neuron_state),1);
-    isValid = true;
-  }
-  void init_empty() {
-    //tn = (tn_neuron_state *) calloc(sizeof(tn_neuron_state), 1);
-     //this->tn = tn;
-    for (int i = 0; i < AXONS_IN_CORE; i++) {
-      tn->axonTypes[i] = -1;
-      tn->synapticConnectivity[i] = false;
-    }
-    for (int j = 0; j < NUM_NEURON_WEIGHTS; ++j) {
-      tn->synapticWeight[j] = -1;
-      tn->weightSelection[j] = false;
+  TN_State_Wrapper();
+  void init_empty();
 
-    }
-  }
+  //tn = (tn_neuron_state *) calloc(sizeof(tn_neuron_state), 1);
+  //this->tn = tn;
+
 
   void initialize_state(vector<int> input_axon_connectivity,
                         vector<short> input_axon_types,
@@ -415,7 +407,6 @@ public:
 
 TN_Main create_tn_data(string filename);
 
-#ifndef SUPERNEMO_TN_PARSER_HH
-#define SUPERNEMO_TN_PARSER_HH
+
 
 #endif //SUPERNEMO_TN_PARSER_HH

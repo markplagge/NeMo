@@ -1,6 +1,6 @@
 project(ModelReader)
 include(ExternalProject)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(RJSON_PATH CACHE PATH "./extern/rapidjson" )
 set(reader_srcs
         main.cpp tests/test_data.hh extern/CLI11.hh extern/rang.hh)
@@ -9,7 +9,7 @@ set(lib_srcs
         src/tn_parser.cpp
        src/utils.cpp src/utils.hh
         extern/json.hpp
-        extern/tqdm.h
+
         include/model_reader_wrapper.h
         src/model_reader_wrapper.cc)
 
@@ -66,8 +66,8 @@ else()
     message("No SIMD enabled for RJSON")
 endif()
 message("Checking path and local. Path: ${RJSON_PATH}")
-find_package(RapidJSON PATHS RJSON_PATH)
-find_package(RapidJSON PATHS RJSON_PATH CONFIG)
+#find_package(RapidJSON PATHS RJSON_PATH)
+#find_package(RapidJSON PATHS RJSON_PATH CONFIG)
 #find_package(rapidjson)
 find_package(rapidjson)
 if(RapidJSON_FOUND)
@@ -76,7 +76,7 @@ if(RapidJSON_FOUND)
     message("RJSON custom flags: ${RapidJSON_CXX_FLAGS}")
     set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${RapidJSON_CXX_FLAGS})
 else()
-    set(RapidJSON_INCLUDE_DIR extern)
+    set(RapidJSON_INCLUDE_DIRS extern/rapidjson)
     message("Did not find rapidjson - using internal build")
 endif()
 
@@ -99,8 +99,10 @@ target_include_directories(ModelReaderLib PUBLIC
         ${RapidJSON_INCLUDE_DIR}
 	${RAPIDJSON_INCLUDE_DIRS}
 	${RapidJSON_INCLUDE_DIRS}
-
+        ${RapidJSON_INCLUDE_DIRS}
+        ./extern/rapidjson
         )
+include_directories(./extern/rapidjson ./extern ./extern/json/include/nlohmann)
 set_target_properties(ModelReaderBin
         PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
