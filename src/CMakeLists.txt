@@ -6,7 +6,7 @@ INCLUDE_DIRECTORIES(${ROSS_SOURCE_DIR} ${ROSS_BINARY_DIR} ${lmdir})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/lib/simclist)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 set(NON11 0 CACHE BOOL "Non C11 Compliant Compiler?")
-set(USE_MODEL_RDR 1 CACHE BOOL "Use NeMo JSON Model reader lib?")
+set(USE_MODEL_RDR 0 CACHE BOOL "Use NeMo JSON Model reader lib?")
 set(USE_HEADER_DATA 1 CACHE BOOL "Use a premade header file for neuron data loading?" )
 if (USE_LUA_JIT)
     message(AUTHOR_WARNING "USE JIT: ${USE_LUA_JIT}")
@@ -147,7 +147,9 @@ set(model_srcs
         IO/spike_db_reader.c
         neuro/tn_neuron_struct.h
 
-        nemo_main.h tests/tomacs_exp.c tests/tomacs_exp.h lib/itrlve.h lib/itrlve.c lib/rqueue.c lib/rqueue.h lib/atomic_defs.h IO/model_reader_js.c lib/kdtree/kdtree.c lib/kdtree/kdtree.h IO/energy_stats.c)
+        nemo_main.h tests/tomacs_exp.c
+        tests/tomacs_exp.h lib/itrlve.h
+        lib/itrlve.c lib/rqueue.c lib/rqueue.h lib/atomic_defs.h IO/model_reader_js.c lib/kdtree/kdtree.c lib/kdtree/kdtree.h IO/energy_stats.c)
 
 #REMOVED:
 #IO/spike_reader.c
@@ -171,7 +173,7 @@ else ()
     set(ll liblua ${ll})
 endif ()
 if(USE_MODEL_RDR)
-    set(ll ModelReaderLib ${ll})
+    #set(ll ModelReaderLib ${ll})
     message("lib settings: ${ll}")
 endif()
 message("-------------lib ${ll}")

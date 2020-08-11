@@ -3,6 +3,7 @@
 //
 
 #include "tn_neuron.h"
+#include "../layer_map/layer_map_lib.h"
 
 /** Testing Values @{*/
 #ifdef NET_IO_DEBUG
@@ -1157,10 +1158,10 @@ void TN_pre_run(tn_neuron_state *s, tw_lp *me) {
       //DUMB CSV DEBUG
        */
     debug_neuron_connections(s,me);
-    if(!clean){
-        debug_init_neuron_json();
-    }
-    debug_add_neuron_to_json(s,me);
+//    if(!clean){
+//        debug_init_neuron_json();
+//    }
+//    debug_add_neuron_to_json(s,me);
 /////////////////////////
 
     if (!clean) {
@@ -1263,6 +1264,7 @@ void TN_init(tn_neuron_state *s, tw_lp *lp) {
   s->energy_stat.rng_count = 0;
   s->energy_stat.sops_count = 0;
   s->energy_stat.output_count = 0;
+
   s->energy_stat.dest_core = s->outputCoreDest;
   s->energy_stat.dest_neuron = s->outputNeuronDest;
   s->energy_stat.my_neuron = s->myLocalID;
@@ -1448,7 +1450,7 @@ void TN_final(tn_neuron_state *s, tw_lp *lp) {
   static int fileOpen = 1;
   if (fileOpen) {
       /////////// DEBUG CODE REMOVE WHEN DONE /////////////
-      debug_close_neuron_json();
+      //debug_close_neuron_json();
     if (DO_DUMPI) {
       fclose(dumpi_out);
       fileOpen = 0;

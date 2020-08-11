@@ -27,13 +27,16 @@ double compute_network_distance(int source_core, int dest_core){
   // 17,18,19..31
   int source_x = source_core % 16;
   int source_y = source_core / 16;
-  int dest_x = source_core % 16;
-  int dest_y = source_core / 16;
+  int dest_x = dest_core % 16;
+  int dest_y = dest_core / 16;
 
   double distance = manhattan_distance(source_x, dest_x, source_y, dest_y);
   return distance;
 }
-
+/**
+ * write_header: This function writes the header to the energy
+ * csv file. Should be called once per run.
+ */
 void write_header(){
   fputs("source_core, source_neuron, num_sops, num_rng, num_spikes, "
         "dest_core, network_distance\n",out_file);
@@ -53,13 +56,16 @@ void write_line(tn_energy *energy_data){
 void save_energy_stats(tn_energy *energy_data, int source_rank){
   static bool is_file_init = false;
   if(is_file_init == false){
+
     sprintf(stat_filename_computed,"%s%i.csv", stat_filename_base,source_rank);
+    printf("opening file: %s\n", stat_filename_computed);
     out_file=fopen(stat_filename_computed,"w");
     write_header();
     is_file_init = true;
   }
 
   write_line(energy_data);
+  fflush(out_file);
 
 
 }

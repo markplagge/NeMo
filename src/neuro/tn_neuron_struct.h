@@ -6,6 +6,7 @@
 #define SUPERNEMO_TN_NEURON_STRUCT_H
 
 #include "../IO/IOStack.h"
+#include "../nemo_main.h"
 /**
  * TrueNorth LP Neuron Model struct
  */

@@ -9,7 +9,7 @@ set(lib_srcs
         src/tn_parser.cpp
        src/utils.cpp src/utils.hh
         extern/json.hpp
-        
+
         include/model_reader_wrapper.h
         src/model_reader_wrapper.cc)
 

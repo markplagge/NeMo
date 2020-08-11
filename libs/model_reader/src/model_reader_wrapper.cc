@@ -4,7 +4,6 @@
 
 
 #include "../include/tn_parser.hh"
-
 #include <rapidjson/filewritestream.h>
 
 TN_Main c_model;
@@ -14,8 +13,6 @@ TN_Main create_tn_data(char *filename){
 
 
 extern "C" {
-
-#include "../include/model_reader_wrapper.h"
 tn_neuron_state *get_neuron_state(unsigned long my_core, unsigned long neuron_id) {
   tn_neuron_state * s = c_model.generate_neuron_from_id(my_core,neuron_id).getTn();
   return s;

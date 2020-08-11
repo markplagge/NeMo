@@ -246,9 +246,10 @@ void initOutFiles() {
 
 }
 void closeFiles() {
+  close_energy_stat_file();
   flushNeuron();
   fclose(neuronFireFile);
-  close_energy_stat_file();
+
 
 //    MPI_File_close(neuronFireFileMPI);
   MPI_Barrier(MPI_COMM_WORLD); // wait for everyone to catch up.
